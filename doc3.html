@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Doc Toto Viewer</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-body: #dae8f5;
+    --bg-panel: #e9f4f4;
+    --bg-panel-hover: #f8fafc;
+    --text-main: #163b59;
+    --text-muted: #64748b;
+    --primary: #163b59;
+    --primary-hover: #0f2d44;
+    --accent: #4a8ba8;
+    --accent-light: #e0f2fe;
+    --border: #e2e8f0;
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    --radius: 12px;
+    --radius-pill: 50px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family: 'Nunito', system-ui, -apple-system, sans-serif;
+    background:var(--bg-body);
+    color:var(--text-main);
+    overflow:hidden;
+  }
+
+  .app{display:flex;height:100vh;height:100dvh;}
+
+  /* ---------- SIDEBAR ---------- */
+  .sidebar{
+    width:290px;flex:0 0 290px;background:var(--bg-panel);
+    border-right:1px solid var(--border);
+    display:flex;flex-direction:column;min-height:0;
+    box-shadow: var(--shadow-sm);
+    z-index: 10;
+  }
+  .sidebar-header {
+    padding: 20px 16px 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo-icon {
+    background: var(--accent-light);
+    color: var(--primary);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+  }
+  .sidebar h1{font-size:18px;margin:0;font-weight:800;letter-spacing:-0.3px;}
+  .sidebar .sub{font-size:11.5px;color:var(--text-muted);padding:0 16px 16px;font-weight:600;}
+
+  .search{padding:0 16px 16px;}
+  .search input{
+    width:100%;padding:12px 16px;border-radius:var(--radius-pill);border:1px solid var(--border);
+    background:var(--bg-body);color:var(--text-main);font-size:14px;font-family: inherit;
+    outline:none; font-weight: 600; transition: border-color 0.2s;
+  }
+  .search input:focus{border-color:var(--accent); background: var(--bg-panel);}
+  .search input::placeholder{color: #94a3b8;}
+
+  #fileList{list-style:none;margin:0;padding:0 12px 16px;overflow:auto;flex:1;}
+  .file{
+    display:flex;gap:12px;align-items:center;padding:12px 16px;border-radius:var(--radius);
+    cursor:pointer;font-size:14px;color:var(--text-muted);font-weight:700;
+    white-space:nowrap;overflow:hidden;user-select:none;
+    transition: all 0.2s ease;
+  }
+  .file:hover{background:var(--bg-panel-hover); color: var(--text-main);}
+  .file.active{
+    background:var(--accent-light);color:var(--primary);
+    box-shadow: inset 0 0 0 1px var(--accent);
+  }
+  .file .ico{flex:0 0 auto;font-size:16px;}
+  .file .nm{overflow:hidden;text-overflow:ellipsis;}
+  .none{color:var(--text-muted);font-size:13px;padding:20px;text-align:center;font-weight:600;}
+
+  /* ---------- VIEWER ---------- */
+  .viewer{flex:1;display:flex;flex-direction:column;min-width:0;background:var(--bg-body);}
+
+  /* ---------- TOOLBAR ---------- */
+  .toolbar{
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    padding:14px 24px;border-bottom:1px solid var(--border);background:var(--bg-panel);
+    box-shadow: var(--shadow-sm);
+    z-index: 5;
+  }
+  .title{
+    font-size:15px;color:var(--text-main);font-weight:800;margin-right:auto;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:40%;
+  }
+
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--bg-panel);border:1px solid var(--border);color:var(--text-muted);
+    padding:8px 16px;border-radius:var(--radius-pill);font-size:13.5px;font-weight:700;
+    cursor:pointer;text-decoration:none;transition:.2s; font-family: inherit;
+  }
+  .btn:hover{border-color:var(--accent);color:var(--primary);background:var(--bg-panel-hover);}
+  .btn:active{transform:translateY(1px);}
+
+  .btn-primary {
+    background: var(--primary);
+    color: white;
+    border: 1px solid var(--primary);
+  }
+  .btn-primary:hover {
+    background: var(--primary-hover);
+    border-color: var(--primary-hover);
+    color: white;
+  }
+
+  /* Download button — green so it stands out as an action */
+  .btn-download {
+    background: #e6f4ea;
+    border-color: #a8d5ba;
+    color: #1a6b3f;
+  }
+  .btn-download:hover {
+    background: #d1ebd9;
+    border-color: #4a9d68;
+    color: #0f4a2a;
+  }
+
+  .zoomVal{min-width:46px;text-align:center;font-size:13px;font-weight:800;color:var(--text-main);}
+  .spacer{width:1px;height:24px;background:var(--border);margin:0 4px;}
+  .menuBtn{display:none;}
+
+  /* ---------- STAGE ---------- */
+  .stageWrap{
+    position:relative; flex:1; min-height:0; overflow:hidden;
+    background:var(--bg-body);
+  }
+  .stage{
+    position:absolute; inset:0; overflow:auto;
+    scrollbar-gutter:stable; background:var(--bg-body);
+  }
+  .zoomBox{width:max-content;height:max-content;}
+  .scaler{transform-origin:0 0; width: 100%;}
+
+  #imageContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    min-height: 100%;
+    padding: 30px 20px 80px 20px;
+    gap: 24px;
+  }
+  #imageContainer img {
+    width: 100%;
+    max-width: 900px;
+    height: auto;
+    display: block;
+    background: #f1f5f9;
+    border-radius: 16px;
+    box-shadow: var(--shadow-md);
+    border: 4px solid var(--bg-panel);
+  }
+
+  .empty{
+    position:absolute;inset:0;z-index:2;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:16px;color:var(--text-muted);text-align:center;padding:24px;
+    background:var(--bg-body);
+  }
+  .empty.hidden{display:none;}
+
+  .empty .big-icon {
+    background: var(--accent-light);
+    color: var(--primary);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    margin-bottom: 10px;
+  }
+
+  .empty h2 {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--primary);
+    margin: 0;
+    line-height: 1.2;
+    max-width: 600px;
+  }
+  .empty p {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin: 0;
+    max-width: 500px;
+  }
+  .empty-actions {
+    display: flex;
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  .viewer:fullscreen{background:var(--bg-body);}
+  .viewer:fullscreen .stageWrap{background:var(--bg-body);}
+
+  @media (max-width: 820px){
+    .sidebar{
+      position:fixed;top:0;bottom:0;left:0;z-index:30;
+      transform:translateX(-100%);transition:transform .3s ease;
+      box-shadow:var(--shadow-lg);
+    }
+    .sidebar.open{transform:none;}
+    .menuBtn{display:inline-flex;}
+    .title{max-width:100%;order:-1;width:100%;margin:0 0 8px; text-align: center; font-size: 14px;}
+    .toolbar { padding: 12px 16px; justify-content: center;}
+    .empty h2 { font-size: 24px; }
+    .empty p { font-size: 14px; }
+    .empty-actions { flex-direction: column; width: 100%; max-width: 280px; }
+    .empty-actions .btn { justify-content: center; width: 100%; }
+    .btn-download { width: 100%; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="logo-icon">🫀</div>
+      <h1>ToToZ</h1>
+    </div>
+    <div class="sub" id="folderLabel">Doc Toto's Library</div>
+
+    <div class="search">
+      <input type="search" id="searchInput" placeholder="Search documents…" autocomplete="off">
+    </div>
+
+    <ul id="fileList"></ul>
+  </aside>
+
+  <main class="viewer" id="viewer">
+    <div class="toolbar">
+      <button class="btn menuBtn" id="menuBtn" title="Show files">☰</button>
+      <span class="title" id="docTitle">Doc Toto's Viewer</span>
+
+      <button class="btn" id="btnZoomOut" title="Zoom out (−)">−</button>
+      <span class="zoomVal" id="zoomVal">100%</span>
+      <button class="btn" id="btnZoomIn" title="Zoom in (+)">+</button>
+      <button class="btn" id="btnZoomReset" title="Reset zoom (0)">Reset</button>
+
+      <span class="spacer"></span>
+
+      <button class="btn" id="btnReload" title="Reload (R)">⟳</button>
+
+      <!-- ⭳ Direct-download from Google Drive (hidden until doc with driveUrl opens) -->
+      <a class="btn btn-download" id="btnDownload"
+         href="#" target="_blank" rel="noopener"
+         title="Download the original file from Google Drive"
+         style="display:none;">
+        <span aria-hidden="true">⭳</span> Download
+      </a>
+
+      <button class="btn btn-primary" id="btnFullscreen" title="Fullscreen (F)">⛶ Fullscreen</button>
+    </div>
+
+    <div class="stageWrap" id="stageWrap">
+      <div class="stage" id="stage">
+        <div class="zoomBox" id="zoomBox">
+          <div class="scaler" id="scaler">
+            <div id="imageContainer"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="empty" id="empty">
+        <div class="big-icon">👋</div>
+        <h2>Welcome, Doc Toto!<br>Select a document to begin.</h2>
+        <p>You have access to your 3rd Year course materials. Choose a topic from the sidebar to start reading.</p>
+        <div class="empty-actions">
+          <button class="btn btn-primary" onclick="document.getElementById('menuBtn').click()">📚 Explore Courses</button>
+          <button class="btn" onclick="document.getElementById('btnFullscreen').click()">▶ Watch Intro</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+/* ============================================================
+   1) CONFIGURE YOUR IMAGES HERE
+   ============================================================
+   driveUrl — paste the NORMAL Google Drive share link.
+              The code converts it to a direct-download URL.
+              ⚠️ Must be a FILE link, not a folder.
+   ============================================================ */
+const DOCUMENTS = [
+  {
+    id: 'upperlimb',
+    name: "Upper Limb Bones",
+    // 📎 Paste the normal share link — code handles the rest
+    driveUrl: "https://drive.google.com/file/d/1n1cGli0tZUIx824_4bIlcXn6pZek5YCK/view?usp=drive_link",
+    pages: [
+      "upperlimb-bones/photo_1 (1).jpg",
+      "upperlimb-bones/photo_1 (2).jpg",
+      "upperlimb-bones/photo_1 (3).jpg",
+      "upperlimb-bones/photo_1 (4).jpg",
+      "upperlimb-bones/photo_1 (5).jpg",
+      "upperlimb-bones/photo_1 (6).jpg",
+      "upperlimb-bones/photo_1 (7).jpg",
+      "upperlimb-bones/photo_1 (8).jpg",
+      "upperlimb-bones/photo_1 (9).jpg",
+      "upperlimb-bones/photo_1 (10).jpg",
+      "upperlimb-bones/photo_1 (11).jpg",
+      "upperlimb-bones/photo_1 (12).jpg",
+      "upperlimb-bones/photo_1 (13).jpg",
+      "upperlimb-bones/photo_1 (14).jpg",
+      "upperlimb-bones/photo_1 (15).jpg",
+      "upperlimb-bones/photo_1 (16).jpg",
+      "upperlimb-bones/photo_1 (17).jpg",
+      "upperlimb-bones/photo_1 (18).jpg",
+      "upperlimb-bones/photo_1 (19).jpg",
+      "upperlimb-bones/photo_1 (20).jpg",
+      "upperlimb-bones/photo_1 (21).jpg",
+      "upperlimb-bones/photo_1 (22).jpg",
+      "upperlimb-bones/photo_1 (23).jpg",
+      "upperlimb-bones/photo_1 (24).jpg",
+      "upperlimb-bones/photo_1 (25).jpg",
+      "upperlimb-bones/photo_1 (26).jpg",
+      "upperlimb-bones/photo_1 (27).jpg",
+      "upperlimb-bones/photo_1 (28).jpg",
+      "upperlimb-bones/photo_1 (29).jpg",
+      "upperlimb-bones/photo_1 (30).jpg",
+      "upperlimb-bones/photo_1 (31).jpg",
+      "upperlimb-bones/photo_1 (32).jpg",
+      "upperlimb-bones/photo_1 (33).jpg",
+      "upperlimb-bones/photo_1 (34).jpg",
+    ]
+  },
+  {
+    id: 'AP',
+    name: "Action Potential",
+    // Paste a FILE share link here for direct download
+    driveUrl: "https://drive.google.com/file/d/PASTE_YOUR_LOWERLIMB_FILE_ID/view?usp=drive_link",
+    pages: [
+      "notes/AP/action-potential_1.jpg",
+      "notes/AP/action-potential_2.jpg",
+      "notes/AP/action-potential_3.jpg",
+      "notes/AP/action-potential_4.jpg",
+      "notes/AP/action-potential_5.jpg",
+      "notes/AP/action-potential_6.jpg",
+      "notes/AP/action-potential_7.jpg",
+      "notes/AP/action-potential_8.jpg",
+      "notes/AP/action-potential_9.jpg",
+      "notes/AP/action-potential_10.jpg",
+      "notes/AP/action-potential_11.jpg",
+      "notes/AP/action-potential_12.jpg",
+      "notes/AP/action-potential_13.jpg",
+    ]
+  },
+  {
+    id: 'male-gross',
+    name: "Male Gross Anatomy",
+    driveUrl: "PASTE_YOUR_DRIVE_URL_HERE",
+    pages: [
+      "notes/Male-gross/Male-gross_1.jpg",
+      "notes/Male-gross/Male-gross_2.jpg",
+      "notes/Male-gross/Male-gross_3.jpg",
+      "notes/Male-gross/Male-gross_4.jpg",
+      "notes/Male-gross/Male-gross_5.jpg",
+      "notes/Male-gross/Male-gross_6.jpg",
+      "notes/Male-gross/Male-gross_7.jpg",
+      "notes/Male-gross/Male-gross_8.jpg",
+      "notes/Male-gross/Male-gross_9.jpg",
+      "notes/Male-gross/Male-gross_10.jpg",
+      "notes/Male-gross/Male-gross_11.jpg",
+      "notes/Male-gross/Male-gross_12.jpg",
+      "notes/Male-gross/Male-gross_13.jpg",
+      "notes/Male-gross/Male-gross_14.jpg",
+      "notes/Male-gross/Male-gross_15.jpg",
+      "notes/Male-gross/Male-gross_16.jpg",
+      "notes/Male-gross/Male-gross_17.jpg",
+      "notes/Male-gross/Male-gross_18.jpg",
+      "notes/Male-gross/Male-gross_19.jpg",
+      "notes/Male-gross/Male-gross_20.jpg",
+      "notes/Male-gross/Male-gross_21.jpg",
+      "notes/Male-gross/Male-gross_22.jpg",
+      "notes/Male-gross/Male-gross_23.jpg",
+      "notes/Male-gross/Male-gross_24.jpg",
+      "notes/Male-gross/Male-gross_25.jpg",
+      "notes/Male-gross/Male-gross_26.jpg",
+      "notes/Male-gross/Male-gross_27.jpg",
+      "notes/Male-gross/Male-gross_28.jpg"
+    ]
+  },
+  {
+    id: 'female-gross',
+    name: "Female Gross Anatomy",
+    driveUrl: "PASTE_YOUR_DRIVE_URL_HERE",
+    pages: [
+      "notes/Female-gross/female-gross_1.jpg",
+      "notes/Female-gross/female-gross_2.jpg",
+      "notes/Female-gross/female-gross_3.jpg",
+      "notes/Female-gross/female-gross_4.jpg",
+      "notes/Female-gross/female-gross_5.jpg",
+      "notes/Female-gross/female-gross_6.jpg",
+      "notes/Female-gross/female-gross_7.jpg",
+      "notes/Female-gross/female-gross_8.jpg",
+      "notes/Female-gross/female-gross_9.jpg",
+      "notes/Female-gross/female-gross_10.jpg",
+      "notes/Female-gross/female-gross_11.jpg",
+      "notes/Female-gross/female-gross_12.jpg",
+      "notes/Female-gross/female-gross_13.jpg",
+      "notes/Female-gross/female-gross_14.jpg",
+      "notes/Female-gross/female-gross_15.jpg",
+      "notes/Female-gross/female-gross_16.jpg",
+      "notes/Female-gross/female-gross_17.jpg",
+      "notes/Female-gross/female-gross_18.jpg",
+      "notes/Female-gross/female-gross_19.jpg",
+      "notes/Female-gross/female-gross_20.jpg",
+      "notes/Female-gross/female-gross_21.jpg",
+      "notes/Female-gross/female-gross_22.jpg",
+      "notes/Female-gross/female-gross_23.jpg",
+      "notes/Female-gross/female-gross_24.jpg",
+      "notes/Female-gross/female-gross_25.jpg",
+      "notes/Female-gross/female-gross_26.jpg",
+      "notes/Female-gross/female-gross_27.jpg"
+    ]
+  },
+  {
+    id: 'male-histology',
+    name: "Male Histology Part 1",
+    driveUrl: "PASTE_YOUR_DRIVE_URL_HERE",
+    pages: [
+      // "notes/male-histology2/male-histology_1.jpg",
+      // "notes/male-histology2/male-histology_2.jpg",
+      // "notes/male-histology2/male-histology_3.jpg",
+      // "notes/male-histology2/male-histology_4.jpg",
+      // "notes/male-histology2/male-histology_5.jpg",
+      // "notes/male-histology2/male-histology_6.jpg",
+      // "notes/male-histology2/male-histology_7.jpg",
+      // "notes/male-histology2/male-histology_8.jpg",
+      // "notes/male-histology2/male-histology_9.jpg",
+      // "notes/male-histology2/male-histology_10.jpg",
+      // "notes/male-histology2/male-histology_11.jpg",
+      // "notes/male-histology2/male-histology_12.jpg",
+      // "notes/male-histology2/male-histology_13.jpg",
+      // "notes/male-histology2/male-histology_14.jpg",
+      // "notes/male-histology2/male-histology_15.jpg",
+      // "notes/male-histology2/male-histology_16.jpg",
+      // "notes/male-histology2/male-histology_17.jpg",
+      // "notes/male-histology2/male-histology_18.jpg",
+      "notes/Male-histology/male-histology_1.jpg",
+      "notes/Male-histology/male-histology_2.jpg",
+      "notes/Male-histology/male-histology_3.jpg",
+      "notes/Male-histology/male-histology_4.jpg",
+      "notes/Male-histology/male-histology_5.jpg",
+      "notes/Male-histology/male-histology_6.jpg",
+      "notes/Male-histology/male-histology_7.jpg",
+      "notes/Male-histology/male-histology_8.jpg",
+      "notes/Male-histology/male-histology_9.jpg",
+      "notes/Male-histology/male-histology_10.jpg",
+      "notes/Male-histology/male-histology_11.jpg",
+      "notes/Male-histology/male-histology_12.jpg",
+      "notes/Male-histology/male-histology_13.jpg",
+      "notes/Male-histology/male-histology_14.jpg",
+      "notes/Male-histology/male-histology_15.jpg",
+      "notes/Male-histology/male-histology_16.jpg",
+      "notes/Male-histology/male-histology_17.jpg",
+      "notes/Male-histology/male-histology_18.jpg",
+      "notes/Male-histology/male-histology_19.jpg",
+      "notes/Male-histology/male-histology_10.jpg",
+      "notes/Male-histology/male-histology_21.jpg",
+      "notes/Male-histology/male-histology_22.jpg",
+      "notes/Male-histology/male-histology_23.jpg",
+      "notes/Male-histology/male-histology_24.jpg",
+      "notes/Male-histology/male-histology_25.jpg",
+      "notes/Male-histology/male-histology_26.jpg",
+      "notes/Male-histology/male-histology_27.jpg",
+      "notes/Male-histology/male-histology_28.jpg",
+      "notes/Male-histology/male-histology_29.jpg",
+      "notes/Male-histology/male-histology_30.jpg",
+      "notes/Male-histology/male-histology_31.jpg",
+      "notes/Male-histology/male-histology_32.jpg",
+      "notes/Male-histology/male-histology_33.jpg",
+      "notes/Male-histology/male-histology_34.jpg",
+      "notes/Male-histology/male-histology_35.jpg",
+      "notes/Male-histology/male-histology_36.jpg",
+      "notes/Male-histology/male-histology_37.jpg",
+      "notes/Male-histology/male-histology_38.jpg",
+      "notes/Male-histology/male-histology_39.jpg",
+      "notes/Male-histology/male-histology_40.jpg",
+      "notes/Male-histology/male-histology_41.jpg",
+      "notes/Male-histology/male-histology_42.jpg",
+      "notes/Male-histology/male-histology_43.jpg",
+      "notes/Male-histology/male-histology_44.jpg",
+      "notes/Male-histology/male-histology_45.jpg",
+      "notes/Male-histology/male-histology_46.jpg",
+      "notes/Male-histology/male-histology_47.jpg",
+      "notes/Male-histology/male-histology_48.jpg",
+      "notes/Male-histology/male-histology_49.jpg",
+      "notes/Male-histology/male-histology_50.jpg",
+      "notes/Male-histology/male-histology_51.jpg",
+      "notes/Male-histology/male-histology_52.jpg",
+      "notes/Male-histology/male-histology_53.jpg",
+      "notes/Male-histology/male-histology_54.jpg",
+      "notes/Male-histology/male-histology_55.jpg",
+      "notes/Male-histology/male-histology_56.jpg",
+      "notes/Male-histology/male-histology_57.jpg",
+      "notes/Male-histology/male-histology_58.jpg",
+      // "notes/Male-histology/male-histology_59.jpg",
+      // "notes/Male-histology/male-histology_60.jpg",
+      // "notes/Male-histology/male-histology_61.jpg",
+      // "notes/Male-histology/male-histology_62.jpg",
+      // "notes/Male-histology/male-histology_63.jpg",
+      // "notes/Male-histology/male-histology_64.jpg",
+      // "notes/Male-histology/male-histology_65.jpg",
+      // "notes/Male-histology/male-histology_66.jpg",
+      // "notes/Male-histology/male-histology_67.jpg",
+      // "notes/Male-histology/male-histology_68.jpg"
+    ]
+  },
+  {
+    id: 'male-histology2',
+    name: "Male Histology Part 2",
+    driveUrl: "PASTE_YOUR_DRIVE_URL_HERE",
+    pages: [
+      "notes/male-histology2/male-histology_1.jpg",
+      "notes/male-histology2/male-histology_2.jpg",
+      "notes/male-histology2/male-histology_3.jpg",
+      "notes/male-histology2/male-histology_4.jpg",
+      "notes/male-histology2/male-histology_5.jpg",
+      "notes/male-histology2/male-histology_6.jpg",
+      "notes/male-histology2/male-histology_7.jpg",
+      "notes/male-histology2/male-histology_8.jpg",
+      "notes/male-histology2/male-histology_9.jpg",
+      "notes/male-histology2/male-histology_10.jpg",
+      "notes/male-histology2/male-histology_11.jpg",
+      "notes/male-histology2/male-histology_12.jpg",
+      "notes/male-histology2/male-histology_13.jpg",
+      "notes/male-histology2/male-histology_14.jpg",
+      "notes/male-histology2/male-histology_15.jpg",
+      "notes/male-histology2/male-histology_16.jpg",
+      "notes/male-histology2/male-histology_17.jpg",
+      "notes/male-histology2/male-histology_18.jpg",
+      // "notes/Male-histology/male-histology_36.jpg",
+      // "notes/Male-histology/male-histology_37.jpg",
+      // "notes/Male-histology/male-histology_38.jpg",
+      // "notes/Male-histology/male-histology_39.jpg",
+      // "notes/Male-histology/male-histology_40.jpg",
+      // "notes/Male-histology/male-histology_41.jpg",
+      // "notes/Male-histology/male-histology_42.jpg",
+      // "notes/Male-histology/male-histology_43.jpg",
+      // "notes/Male-histology/male-histology_44.jpg",
+      // "notes/Male-histology/male-histology_45.jpg",
+      // "notes/Male-histology/male-histology_46.jpg",
+      // "notes/Male-histology/male-histology_47.jpg",
+      // "notes/Male-histology/male-histology_48.jpg",
+      // "notes/Male-histology/male-histology_49.jpg",
+      // "notes/Male-histology/male-histology_50.jpg",
+      // "notes/Male-histology/male-histology_51.jpg",
+      // "notes/Male-histology/male-histology_52.jpg",
+      // "notes/Male-histology/male-histology_53.jpg",
+      // "notes/Male-histology/male-histology_54.jpg",
+      // "notes/Male-histology/male-histology_55.jpg",
+      // "notes/Male-histology/male-histology_56.jpg",
+      // "notes/Male-histology/male-histology_57.jpg",
+      // "notes/Male-histology/male-histology_58.jpg",
+      // "notes/Male-histology/male-histology_59.jpg",
+      // "notes/Male-histology/male-histology_60.jpg",
+      // "notes/Male-histology/male-histology_61.jpg",
+      // "notes/Male-histology/male-histology_62.jpg",
+      // "notes/Male-histology/male-histology_63.jpg",
+      // "notes/Male-histology/male-histology_64.jpg",
+      // "notes/Male-histology/male-histology_65.jpg",
+      // "notes/Male-histology/male-histology_66.jpg",
+      // "notes/Male-histology/male-histology_67.jpg",
+      // "notes/Male-histology/male-histology_68.jpg"
+    ]
+  },
+  {
+    id: 'female-histology',
+    name: "Female Histology",
+    driveUrl: "PASTE_YOUR_DRIVE_URL_HERE",
+    pages: [
+      "notes/Female-histology/Female-Histology_8.jpg",
+      "notes/Female-histology/Female-Histology_9.jpg",
+      "notes/Female-histology/Female-Histology_10.jpg",
+      "notes/Female-histology/Female-Histology_11.jpg",
+      "notes/Female-histology/Female-Histology_12.jpg",
+      "notes/Female-histology/Female-Histology_13.jpg",
+      "notes/Female-histology/Female-Histology_14.jpg",
+      "notes/Female-histology/Female-Histology_15.jpg",
+      "notes/Female-histology/Female-Histology_16.jpg",
+      "notes/Female-histology/Female-Histology_17.jpg",
+      "notes/Female-histology/Female-Histology_18.jpg",
+      "notes/Female-histology/Female-Histology_19.jpg",
+      "notes/Female-histology/Female-Histology_20.jpg",
+      "notes/Female-histology/Female-Histology_21.jpg",
+      "notes/Female-histology/Female-Histology_22.jpg",
+      "notes/Female-histology/Female-Histology_23.jpg",
+      "notes/Female-histology/Female-Histology_24.jpg",
+      "notes/Female-histology/Female-Histology_25.jpg",
+      "notes/Female-histology/Female-Histology_26.jpg",
+      "notes/Female-histology/Female-Histology_27.jpg",
+      "notes/Female-histology/Female-Histology_28.jpg",
+      "notes/Female-histology/Female-Histology_29.jpg",
+      "notes/Female-histology/Female-Histology_30.jpg",
+      "notes/Female-histology/Female-Histology_31.jpg",
+      "notes/Female-histology/Female-Histology_32.jpg"
+    ]
+  },
+  {
+    id: 'pelvis-bones2',
+    name: "Pelvic Osteology Part 2",
+    driveUrl: "PASTE_YOUR_DRIVE_URL_HERE",
+    pages: [
+      // "notes/Pelvic-bone/pelvic-bone_1.jpg",
+      // "notes/Pelvic-bone/pelvic-bone_2.jpg",
+      // "notes/Pelvic-bone/pelvic-bone_3.jpg",
+      // "notes/Pelvic-bone/pelvic-bone_4.jpg",
+      // "notes/Pelvic-bone/pelvic-bone_5.jpg",
+      // "notes/Pelvic-bone/pelvic-bone_7.jpg",
+      // "notes/Pelvic-bone/pelvic-bone_8.jpg",
+      // "notes/Pelvic-bone/pelvic-bone_9.jpg",
+      // "notes/Pelvic-bone/pelvic-bone_10.jpg",
+      // "notes/Pelvic-bone/pelvic-bone_11.jpg",
+      // "notes/Pelvic-bone/pelvic-bone_12.jpg",
+      // "notes/Pelvic-bone/pelvic-bone_13.jpg",
+      // "notes/Pelvic-bone/pelvic-bone_14.jpg",
+      // "notes/Pelvic-bone/pelvic-bone_15.jpg",
+      // "notes/Pelvic-bone/pelvic-bone_16.jpg",
+      // "notes/Pelvic-bone/pelvic-bone_17.jpg",
+      // "notes/Pelvic-bone/pelvic-bone_18.jpg",
+      // "notes/Pelvic-bone/pelvic-bone_19.jpg",
+      // "notes/Pelvic-bone/pelvic-bone_20.jpg",
+      // "notes/Pelvic-bone/pelvic-bone_21.jpg",
+      // "notes/Pelvic-bone/pelvic-bone_22.jpg",
+      // "notes/Pelvic-bone/pelvic-bone_23.jpg",
+      // "notes/Pelvic-bone/pelvic-bone_24.jpg",
+      // "notes/Pelvic-bone/pelvic-bone_25.jpg",
+      "notes/Pelvic-bones2/pelvic-bone2_1.jpg",
+      "notes/Pelvic-bones2/pelvic-bone2_2.jpg",
+      "notes/Pelvic-bones2/pelvic-bone2_3.jpg",
+      "notes/Pelvic-bones2/pelvic-bone2_4.jpg",
+      "notes/Pelvic-bones2/pelvic-bone2_5.jpg",
+      "notes/Pelvic-bones2/pelvic-bone2_6.jpg",
+      "notes/Pelvic-bones2/pelvic-bone2_7.jpg",
+      "notes/Pelvic-bones2/pelvic-bone2_8.jpg",
+      "notes/Pelvic-bones2/pelvic-bone2_9.jpg",
+      "notes/Pelvic-bones2/pelvic-bone2_10.jpg",
+      "notes/Pelvic-bones2/pelvic-bone2_11.jpg",
+      "notes/Pelvic-bones2/pelvic-bone2_12.jpg",
+      "notes/Pelvic-bones2/pelvic-bone2_13.jpg",
+      "notes/Pelvic-bones2/pelvic-bone2_14.jpg",
+      "notes/Pelvic-bones2/pelvic-bone2_15.jpg",
+      "notes/Pelvic-bones2/pelvic-bone2_17.jpg",
+      "notes/Pelvic-bones2/pelvic-bone2_18.jpg",
+      "notes/Pelvic-bones2/pelvic-bone2_19.jpg",
+      "notes/Pelvic-bones2/pelvic-bone2_20.jpg",
+      "notes/Pelvic-bones2/pelvic-bone2_21.jpg",
+      "notes/Pelvic-bones2/pelvic-bone2_22.jpg",
+      "notes/Pelvic-bones2/pelvic-bone2_23.jpg"
+    ]
+  },
+  {
+    id: 'pelvis-bones1',
+    name: "Pelvic Osteology Part 1",
+    driveUrl: "PASTE_YOUR_DRIVE_URL_HERE",
+    pages: [
+      "notes/Pelvic-bone/pelvic-bone_1.jpg",
+      "notes/Pelvic-bone/pelvic-bone_2.jpg",
+      "notes/Pelvic-bone/pelvic-bone_3.jpg",
+      "notes/Pelvic-bone/pelvic-bone_4.jpg",
+      "notes/Pelvic-bone/pelvic-bone_5.jpg",
+      "notes/Pelvic-bone/pelvic-bone_7.jpg",
+      "notes/Pelvic-bone/pelvic-bone_8.jpg",
+      "notes/Pelvic-bone/pelvic-bone_9.jpg",
+      "notes/Pelvic-bone/pelvic-bone_10.jpg",
+      "notes/Pelvic-bone/pelvic-bone_11.jpg",
+      "notes/Pelvic-bone/pelvic-bone_12.jpg",
+      "notes/Pelvic-bone/pelvic-bone_13.jpg",
+      "notes/Pelvic-bone/pelvic-bone_14.jpg",
+      "notes/Pelvic-bone/pelvic-bone_15.jpg",
+      "notes/Pelvic-bone/pelvic-bone_16.jpg",
+      "notes/Pelvic-bone/pelvic-bone_17.jpg",
+      "notes/Pelvic-bone/pelvic-bone_18.jpg",
+      "notes/Pelvic-bone/pelvic-bone_19.jpg",
+      "notes/Pelvic-bone/pelvic-bone_20.jpg",
+      "notes/Pelvic-bone/pelvic-bone_21.jpg",
+      "notes/Pelvic-bone/pelvic-bone_22.jpg",
+      "notes/Pelvic-bone/pelvic-bone_23.jpg",
+      "notes/Pelvic-bone/pelvic-bone_24.jpg",
+      "notes/Pelvic-bone/pelvic-bone_25.jpg",
+      // "notes/Pelvic-bones2/pelvic-bone2_1.jpg",
+      // "notes/Pelvic-bones2/pelvic-bone2_2.jpg",
+      // "notes/Pelvic-bones2/pelvic-bone2_3.jpg",
+      // "notes/Pelvic-bones2/pelvic-bone2_4.jpg",
+      // "notes/Pelvic-bones2/pelvic-bone2_5.jpg",
+      // "notes/Pelvic-bones2/pelvic-bone2_6.jpg",
+      // "notes/Pelvic-bones2/pelvic-bone2_7.jpg",
+      // "notes/Pelvic-bones2/pelvic-bone2_8.jpg",
+      // "notes/Pelvic-bones2/pelvic-bone2_9.jpg",
+      // "notes/Pelvic-bones2/pelvic-bone2_10.jpg",
+      // "notes/Pelvic-bones2/pelvic-bone2_11.jpg",
+      // "notes/Pelvic-bones2/pelvic-bone2_12.jpg",
+      // "notes/Pelvic-bones2/pelvic-bone2_13.jpg",
+      // "notes/Pelvic-bones2/pelvic-bone2_14.jpg",
+      // "notes/Pelvic-bones2/pelvic-bone2_15.jpg",
+      // "notes/Pelvic-bones2/pelvic-bone2_17.jpg",
+      // "notes/Pelvic-bones2/pelvic-bone2_18.jpg",
+      // "notes/Pelvic-bones2/pelvic-bone2_19.jpg",
+      // "notes/Pelvic-bones2/pelvic-bone2_20.jpg",
+      // "notes/Pelvic-bones2/pelvic-bone2_21.jpg",
+      // "notes/Pelvic-bones2/pelvic-bone2_22.jpg",
+      // "notes/Pelvic-bones2/pelvic-bone2_23.jpg"
+    ]
+  },
+  {
+    id: 'pelvis-muscles',
+    name: "Pelvic Diaphragm",
+    driveUrl: "PASTE_YOUR_DRIVE_URL_HERE",
+    pages: [
+      "notes/Pelvic-Diaphragm/Pelvic-Diaphragm_1.jpg",
+      "notes/Pelvic-Diaphragm/Pelvic-Diaphragm_2.jpg",
+      "notes/Pelvic-Diaphragm/Pelvic-Diaphragm_3.jpg",
+      "notes/Pelvic-Diaphragm/Pelvic-Diaphragm_4.jpg",
+      "notes/Pelvic-Diaphragm/Pelvic-Diaphragm_5.jpg",
+      "notes/Pelvic-Diaphragm/Pelvic-Diaphragm_6.jpg",
+      "notes/Pelvic-Diaphragm/Pelvic-Diaphragm_7.jpg",
+      "notes/Pelvic-Diaphragm/Pelvic-Diaphragm_8.jpg",
+      "notes/Pelvic-Diaphragm/Pelvic-Diaphragm_9.jpg",
+      "notes/Pelvic-Diaphragm/Pelvic-Diaphragm_10.jpg",
+      "notes/Pelvic-Diaphragm/Pelvic-Diaphragm_11.jpg",
+      "notes/Pelvic-Diaphragm/Pelvic-Diaphragm_12.jpg",
+      "notes/Pelvic-Diaphragm/Pelvic-Diaphragm_13.jpg",
+      "notes/Pelvic-Diaphragm/Pelvic-Diaphragm_14.jpg",
+      "notes/Pelvic-Diaphragm/Pelvic-Diaphragm_15.jpg",
+      "notes/Pelvic-Diaphragm/Pelvic-Diaphragm_16.jpg",
+      // "notes/Perineum/Perineum_8.jpg",
+      // "notes/Perineum/Perineum_9.jpg",
+      // "notes/Perineum/Perineum_10.jpg",
+      // "notes/Perineum/Perineum_11.jpg",
+      // "notes/Perineum/Perineum_12.jpg",
+      // "notes/Perineum/Perineum_13.jpg",
+      // "notes/Perineum/Perineum_14.jpg",
+      // "notes/Perineum/Perineum_15.jpg",
+      // "notes/Perineum/Perineum_16.jpg",
+      // "notes/Perineum/Perineum_17.jpg",
+      // "notes/Perineum/Perineum_18.jpg",
+      // "notes/Perineum/Perineum_19.jpg",
+      // "notes/Perineum/Perineum_20.jpg",
+      // "notes/Perineum/Perineum_21.jpg",
+      // "notes/Perineum/Perineum_22.jpg",
+      // "notes/Perineum/Perineum_23.jpg",
+      // "notes/Perineum/Perineum_24.jpg",
+      // "notes/Perineum/Perineum_25.jpg",
+      // "notes/Perineum/Perineum_26.jpg",
+      // "notes/Perineum/Perineum_27.jpg",
+      // "notes/Perineum/Perineum_28.jpg",
+      // "notes/Perineum/Perineum_29.jpg",
+      // "notes/Perineum/Perineum_30.jpg"
+    ]
+  },
+  {
+    id: 'pelvis-muscles2',
+    name: "Perineum",
+    driveUrl: "PASTE_YOUR_DRIVE_URL_HERE",
+    pages: [
+      // "notes/Pelvic-Diaphragm/Pelvic-Diaphragm_1.jpg",
+      // "notes/Pelvic-Diaphragm/Pelvic-Diaphragm_2.jpg",
+      // "notes/Pelvic-Diaphragm/Pelvic-Diaphragm_3.jpg",
+      // "notes/Pelvic-Diaphragm/Pelvic-Diaphragm_4.jpg",
+      // "notes/Pelvic-Diaphragm/Pelvic-Diaphragm_5.jpg",
+      // "notes/Pelvic-Diaphragm/Pelvic-Diaphragm_6.jpg",
+      // "notes/Pelvic-Diaphragm/Pelvic-Diaphragm_7.jpg",
+      // "notes/Pelvic-Diaphragm/Pelvic-Diaphragm_8.jpg",
+      // "notes/Pelvic-Diaphragm/Pelvic-Diaphragm_9.jpg",
+      // "notes/Pelvic-Diaphragm/Pelvic-Diaphragm_10.jpg",
+      // "notes/Pelvic-Diaphragm/Pelvic-Diaphragm_11.jpg",
+      // "notes/Pelvic-Diaphragm/Pelvic-Diaphragm_12.jpg",
+      // "notes/Pelvic-Diaphragm/Pelvic-Diaphragm_13.jpg",
+      // "notes/Pelvic-Diaphragm/Pelvic-Diaphragm_14.jpg",
+      // "notes/Pelvic-Diaphragm/Pelvic-Diaphragm_15.jpg",
+      // "notes/Pelvic-Diaphragm/Pelvic-Diaphragm_16.jpg",
+      "notes/Perineum/Perineum_1.jpg",
+      "notes/Perineum/Perineum_2.jpg",
+      "notes/Perineum/Perineum_3.jpg",
+      "notes/Perineum/Perineum_4.jpg",
+      "notes/Perineum/Perineum_5.jpg",
+      "notes/Perineum/Perineum_6.jpg",
+      "notes/Perineum/Perineum_7.jpg",
+      "notes/Perineum/Perineum_8.jpg",
+      "notes/Perineum/Perineum_9.jpg",
+      "notes/Perineum/Perineum_10.jpg",
+      "notes/Perineum/Perineum_11.jpg",
+      "notes/Perineum/Perineum_12.jpg",
+      "notes/Perineum/Perineum_13.jpg",
+      "notes/Perineum/Perineum_14.jpg",
+      "notes/Perineum/Perineum_15.jpg",
+      "notes/Perineum/Perineum_16.jpg",
+      "notes/Perineum/Perineum_17.jpg",
+      "notes/Perineum/Perineum_18.jpg",
+      "notes/Perineum/Perineum_19.jpg",
+      "notes/Perineum/Perineum_20.jpg",
+      "notes/Perineum/Perineum_21.jpg",
+      "notes/Perineum/Perineum_22.jpg",
+      "notes/Perineum/Perineum_23.jpg",
+      "notes/Perineum/Perineum_24.jpg",
+      "notes/Perineum/Perineum_25.jpg",
+      "notes/Perineum/Perineum_26.jpg",
+      "notes/Perineum/Perineum_27.jpg",
+      "notes/Perineum/Perineum_28.jpg",
+      "notes/Perineum/Perineum_29.jpg",
+      "notes/Perineum/Perineum_30.jpg"
+    ]
+  },
+
+  {
+    id: 'pelvis-nerves1',
+    name: "Pelvic Neurovasculature Part 1",
+    driveUrl: "PASTE_YOUR_DRIVE_URL_HERE",
+    pages: [
+      "notes/pelvis-supply/Pelvis-supply_1.jpg",
+      "notes/pelvis-supply/Pelvis-supply_2.jpg",
+      "notes/pelvis-supply/Pelvis-supply_3.jpg",
+      "notes/pelvis-supply/Pelvis-supply_4.jpg",
+      "notes/pelvis-supply/Pelvis-supply_5.jpg",
+      "notes/pelvis-supply/Pelvis-supply_6.jpg",
+      "notes/pelvis-supply/Pelvis-supply_7.jpg",
+      "notes/pelvis-supply/Pelvis-supply_8.jpg",
+      "notes/pelvis-supply/Pelvis-supply_9.jpg",
+      "notes/pelvis-supply/Pelvis-supply_10.jpg",
+      "notes/pelvis-supply/Pelvis-supply_11.jpg",
+      "notes/pelvis-supply/Pelvis-supply_12.jpg",
+      "notes/pelvis-supply/Pelvis-supply_13.jpg",
+      "notes/pelvis-supply/Pelvis-supply_14.jpg",
+      "notes/pelvis-supply/Pelvis-supply_16.jpg",
+      "notes/pelvis-supply/Pelvis-supply_15.jpg",
+      "notes/pelvis-supply/Pelvis-supply_16.jpg",
+      "notes/pelvis-supply/Pelvis-supply_17.jpg",
+      "notes/pelvis-supply/Pelvis-supply_18.jpg",
+      "notes/pelvis-supply/Pelvis-supply_19.jpg",
+      "notes/pelvis-supply/Pelvis-supply_20.jpg",
+      "notes/pelvis-supply/Pelvis-supply_21.jpg",
+      "notes/pelvis-supply/Pelvis-supply_22.jpg",
+      "notes/pelvis-supply/Pelvis-supply_23.jpg",
+      "notes/pelvis-supply/Pelvis-supply_24.jpg",
+      "notes/pelvis-supply/Pelvis-supply_25.jpg",
+      "notes/pelvis-supply/Pelvis-supply_26.jpg",
+      "notes/pelvis-supply/Pelvis-supply_27.jpg",
+      "notes/pelvis-supply/Pelvis-supply_28.jpg",
+      "notes/pelvis-supply/Pelvis-supply_29.jpg",
+      "notes/pelvis-supply/Pelvis-supply_30.jpg",
+      "notes/pelvis-supply/Pelvis-supply_31.jpg",
+      "notes/pelvis-supply/Pelvis-supply_32.jpg",
+      "notes/pelvis-supply/Pelvis-supply_33.jpg",
+      "notes/pelvis-supply/Pelvis-supply_34.jpg",
+      "notes/pelvis-supply/Pelvis-supply_35.jpg",
+      "notes/pelvis-supply/Pelvis-supply_36.jpg",
+      "notes/pelvis-supply/Pelvis-supply_37.jpg",
+      "notes/pelvis-supply/Pelvis-supply_38.jpg",
+      "notes/pelvis-supply/Pelvis-supply_39.jpg",
+      "notes/pelvis-supply/Pelvis-supply_40.jpg",
+    ]
+  },
+
+  {
+    id: 'pelvis-nerves2',
+    name: "Pelvic Neurovasculature Part 2",
+    driveUrl: "PASTE_YOUR_DRIVE_URL_HERE",
+    pages: [
+      "notes/pelvis-supply1/pelvis-supply1_1.jpg",
+      "notes/pelvis-supply1/pelvis-supply1_2.jpg",
+      "notes/pelvis-supply1/pelvis-supply1_3.jpg",
+      "notes/pelvis-supply1/pelvis-supply1_4.jpg",
+      "notes/pelvis-supply1/pelvis-supply1_5.jpg",
+      "notes/pelvis-supply1/pelvis-supply1_6.jpg",
+      "notes/pelvis-supply1/pelvis-supply1_7.jpg",
+      "notes/pelvis-supply1/pelvis-supply1_8.jpg",
+      "notes/pelvis-supply1/pelvis-supply1_9.jpg",
+      "notes/pelvis-supply1/pelvis-supply1_10.jpg",
+      "notes/pelvis-supply1/pelvis-supply1_11.jpg",
+      "notes/pelvis-supply1/pelvis-supply1_12.jpg",
+      "notes/pelvis-supply1/pelvis-supply1_13.jpg",
+      "notes/pelvis-supply1/pelvis-supply1_14.jpg",
+      "notes/pelvis-supply1/pelvis-supply1_15.jpg",
+      "notes/pelvis-supply1/pelvis-supply1_16.jpg",
+      "notes/pelvis-supply1/pelvis-supply1_17.jpg",
+      "notes/pelvis-supply1/pelvis-supply1_18.jpg",
+      "notes/pelvis-supply1/pelvis-supply1_19.jpg",
+      "notes/pelvis-supply1/pelvis-supply1_20.jpg",
+      "notes/pelvis-supply1/pelvis-supply1_21.jpg",
+      "notes/pelvis-supply1/pelvis-supply1_22.jpg",
+      "notes/pelvis-supply1/pelvis-supply1_23.jpg",
+      "notes/pelvis-supply1/pelvis-supply1_24.jpg",
+      "notes/pelvis-supply1/pelvis-supply1_25.jpg",
+      "notes/pelvis-supply1/pelvis-supply1_26.jpg",
+      "notes/pelvis-supply1/pelvis-supply1_27.jpg",
+      "notes/pelvis-supply1/pelvis-supply1_28.jpg",
+      "notes/pelvis-supply1/pelvis-supply1_29.jpg",
+      "notes/pelvis-supply1/pelvis-supply1_30.jpg",
+      "notes/pelvis-supply1/pelvis-supply1_31.jpg",
+      "notes/pelvis-supply1/pelvis-supply1_32.jpg",
+      "notes/pelvis-supply1/pelvis-supply1_33.jpg",
+      "notes/pelvis-supply1/pelvis-supply1_34.jpg",
+      "notes/pelvis-supply1/pelvis-supply1_35.jpg",
+      "notes/pelvis-supply1/pelvis-supply1_36.jpg",
+      "notes/pelvis-supply1/pelvis-supply1_37.jpg",
+      "notes/pelvis-supply1/pelvis-supply1_38.jpg",
+      "notes/pelvis-supply1/pelvis-supply1_39.jpg",
+    ]
+  },
+
+  {
+    id: 'pelvis-nerves3',
+    name: "Pelvic Neurovasculature Part 3",
+    driveUrl: "PASTE_YOUR_DRIVE_URL_HERE",
+    pages: [
+      "notes/pelvis-supply2/pelvis-supply2_1.jpg",
+      "notes/pelvis-supply2/pelvis-supply2_2.jpg",
+      "notes/pelvis-supply2/pelvis-supply2_3.jpg",
+      "notes/pelvis-supply2/pelvis-supply2_4.jpg",
+      "notes/pelvis-supply2/pelvis-supply2_5.jpg",
+      "notes/pelvis-supply2/pelvis-supply2_6.jpg",
+      "notes/pelvis-supply2/pelvis-supply2_7.jpg",
+      "notes/pelvis-supply2/pelvis-supply2_8.jpg",
+      "notes/pelvis-supply2/pelvis-supply2_9.jpg",
+      "notes/pelvis-supply2/pelvis-supply2_10.jpg",
+      "notes/pelvis-supply2/pelvis-supply2_11.jpg",
+      "notes/pelvis-supply2/pelvis-supply2_12.jpg",
+      "notes/pelvis-supply2/pelvis-supply2_13.jpg",
+      "notes/pelvis-supply2/pelvis-supply2_14.jpg",
+    ]
+  },
+
+  {
+    id: 'pelvis-nerves',
+    name: "Pelvic Neurovasculature Part 4",
+    driveUrl: "PASTE_YOUR_DRIVE_URL_HERE",
+    pages: [
+      "notes/pelvis-supply3/pelvis-supply3_1.jpg",
+      "notes/pelvis-supply3/pelvis-supply3_2.jpg",
+      "notes/pelvis-supply3/pelvis-supply3_3.jpg",
+      "notes/pelvis-supply3/pelvis-supply3_4.jpg",
+      "notes/pelvis-supply3/pelvis-supply3_5.jpg",
+      "notes/pelvis-supply3/pelvis-supply3_6.jpg",
+      "notes/pelvis-supply3/pelvis-supply3_7.jpg",
+      "notes/pelvis-supply3/pelvis-supply3_8.jpg",
+      "notes/pelvis-supply3/pelvis-supply3_9.jpg",
+      "notes/pelvis-supply3/pelvis-supply3_10.jpg",
+      "notes/pelvis-supply3/pelvis-supply3_11.jpg",
+      "notes/pelvis-supply3/pelvis-supply3_12.jpg",
+      "notes/pelvis-supply3/pelvis-supply3_13.jpg",
+      "notes/pelvis-supply3/pelvis-supply3_14.jpg",
+      "notes/pelvis-supply3/pelvis-supply3_15.jpg",
+      "notes/pelvis-supply3/pelvis-supply3_16.jpg",
+      "notes/pelvis-supply3/pelvis-supply3_17.jpg",
+      "notes/pelvis-supply3/pelvis-supply3_18.jpg",
+      "notes/pelvis-supply3/pelvis-supply3_19.jpg",
+      "notes/pelvis-supply3/pelvis-supply3_20.jpg",
+      "notes/pelvis-supply3/pelvis-supply3_21.jpg",
+      "notes/pelvis-supply3/pelvis-supply3_22.jpg",
+      "notes/pelvis-supply3/pelvis-supply3_23.jpg",
+      "notes/pelvis-supply3/pelvis-supply3_24.jpg",
+      "notes/pelvis-supply3/pelvis-supply3_25.jpg",
+      "notes/pelvis-supply3/pelvis-supply3_26.jpg",
+      "notes/pelvis-supply3/pelvis-supply3_27.jpg",
+      "notes/pelvis-supply3/pelvis-supply3_28.jpg",
+      "notes/pelvis-supply3/pelvis-supply3_29.jpg",
+      "notes/pelvis-supply3/pelvis-supply3_30.jpg",
+      "notes/pelvis-supply3/pelvis-supply3_31.jpg",
+      "notes/pelvis-supply3/pelvis-supply3_32.jpg"
+    ]
+  },
+
+  {
+    id: 'BP',
+    name: "BP Regulation",
+    // Paste a FILE share link here for direct download
+    driveUrl: "https://drive.google.com/file/d/PASTE_YOUR_LOWERLIMB_FILE_ID/view?usp=drive_link",
+    pages: [
+      "notes/Bp-regulation/bp-regulation_1.jpg",
+      "notes/Bp-regulation/bp-regulation_2.jpg",
+      "notes/Bp-regulation/bp-regulation_3.jpg",
+      "notes/Bp-regulation/bp-regulation_4.jpg",
+      "notes/Bp-regulation/bp-regulation_5.jpg",
+      "notes/Bp-regulation/bp-regulation_6.jpg",
+      "notes/Bp-regulation/bp-regulation_7.jpg",
+      "notes/Bp-regulation/bp-regulation_8.jpg",
+      "notes/Bp-regulation/bp-regulation_9.jpg",
+      "notes/Bp-regulation/bp-regulation_10.jpg",
+      "notes/Bp-regulation/bp-regulation_11.jpg",
+    ]
+  },
+  {
+    id: 'skull',
+    name: "Skull & Head",
+    // No driveUrl → no Download button
+    pages: [
+      "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?auto=format&fit=crop&w=800&q=80"
+    ]
+  },
+  {
+    id: 'lowerlimb',
+    name: "Lower Limb Anatomy",
+    // Paste a FILE share link here for direct download
+    driveUrl: "https://drive.google.com/file/d/PASTE_YOUR_LOWERLIMB_FILE_ID/view?usp=drive_link",
+    pages: [
+      "https://images.unsplash.com/photo-1530026405186-ed1f139313f8?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=800&q=80"
+    ]
+  },
+];
+
+/* ============================================================
+   2) ELEMENTS
+   ============================================================ */
+const imageContainer = document.getElementById('imageContainer');
+const stage          = document.getElementById('stage');
+const stageWrap      = document.getElementById('stageWrap');
+const zoomBox        = document.getElementById('zoomBox');
+const scaler         = document.getElementById('scaler');
+const emptyState     = document.getElementById('empty');
+const fileList       = document.getElementById('fileList');
+const searchInput    = document.getElementById('searchInput');
+const docTitle       = document.getElementById('docTitle');
+const zoomVal        = document.getElementById('zoomVal');
+const sidebar        = document.getElementById('sidebar');
+
+const btnZoomIn      = document.getElementById('btnZoomIn');
+const btnZoomOut     = document.getElementById('btnZoomOut');
+const btnZoomReset   = document.getElementById('btnZoomReset');
+const btnReload      = document.getElementById('btnReload');
+const btnFullscreen  = document.getElementById('btnFullscreen');
+const btnDownload    = document.getElementById('btnDownload');
+const menuBtn        = document.getElementById('menuBtn');
+
+/* ============================================================
+   3) STATE & HELPERS
+   ============================================================ */
+let currentDocIndex = -1;
+let zoom = 1;
+
+const ZOOM_OK = (typeof CSS !== 'undefined' && CSS.supports && CSS.supports('zoom', '2'));
+
+/* ============================================================
+   4) GOOGLE DRIVE DIRECT-DOWNLOAD CONVERTER
+   ============================================================
+   Paste any normal share link — this turns it into a URL that
+   makes the browser DOWNLOAD the file instead of opening the
+   Drive preview page.
+
+   Supported inputs:
+     https://drive.google.com/file/d/FILE_ID/view?usp=drive_link
+     https://drive.google.com/open?id=FILE_ID
+     https://drive.google.com/uc?id=FILE_ID&export=download
+
+   Returns null for folder links (Google can't direct-download
+   folders).
+   ============================================================ */
+function toDirectDownload(url) {
+  if (!url) return null;
+
+  if (url.includes('/drive/folders/')) {
+    console.warn(
+      '[ToToZ] Folder links cannot be direct-downloaded by Google Drive. ' +
+      'Share a single FILE (or a ZIP of the folder) instead.'
+    );
+    return null;
+  }
+
+  const match =
+       url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/)   // /file/d/FILE_ID/...
+    || url.match(/[?&]id=([a-zA-Z0-9_-]+)/);      // ?id=FILE_ID
+
+  if (!match) {
+    console.warn('[ToToZ] Could not extract a Google Drive file ID from:', url);
+    return null;
+  }
+
+  return `https://drive.google.com/uc?export=download&id=${match[1]}`;
+}
+
+/* ============================================================
+   5) FILE LIST RENDERING
+   ============================================================ */
+function renderList(filter = ''){
+  const f = filter.trim().toLowerCase();
+  const items = DOCUMENTS
+    .map((doc, index) => ({ doc, index }))
+    .filter(({ doc }) => doc.name.toLowerCase().includes(f));
+
+  fileList.innerHTML = '';
+
+  if (!items.length){
+    fileList.innerHTML = '<li class="none">No documents found</li>';
+    return;
+  }
+
+  items.forEach(({ doc, index }) => {
+    const li = document.createElement('li');
+    li.className = 'file' + (index === currentDocIndex ? ' active' : '');
+    li.title = doc.name;
+    li.innerHTML = `<span class="ico">📄</span><span class="nm">${doc.name}</span>`;
+    li.addEventListener('click', () => openDoc(index));
+    fileList.appendChild(li);
+  });
+}
+
+/* ============================================================
+   6) OPEN DOCUMENT
+   ============================================================ */
+function openDoc(index){
+  currentDocIndex = index;
+  const doc = DOCUMENTS[index];
+
+  docTitle.textContent = doc.name;
+  emptyState.classList.add('hidden');
+
+  /* ---- Download button: convert to direct-download URL ---- */
+  if (doc.driveUrl && doc.driveUrl.trim() !== '') {
+    const directUrl = toDirectDownload(doc.driveUrl);
+
+    if (directUrl) {
+      btnDownload.href = directUrl;
+      btnDownload.setAttribute('download', '');
+      btnDownload.title = `Direct-download "${doc.name}" from Google Drive`;
+    } else {
+      // Folder link or malformed → fall back to opening in a new tab
+      btnDownload.href = doc.driveUrl;
+      btnDownload.removeAttribute('download');
+      btnDownload.title = 'Opens Google Drive (folders cannot be direct-downloaded)';
+    }
+    btnDownload.style.display = 'inline-flex';
+  } else {
+    btnDownload.href = '#';
+    btnDownload.removeAttribute('download');
+    btnDownload.style.display = 'none';
+  }
+
+  /* ---- Render all pages vertically ---- */
+  imageContainer.innerHTML = '';
+
+  doc.pages.forEach((src, pageNum) => {
+    const img = document.createElement('img');
+    img.src = src;
+    img.alt = `${doc.name} - Page ${pageNum + 1}`;
+    img.loading = 'lazy';
+    imageContainer.appendChild(img);
+  });
+
+  zoom = 1;
+  applyZoom();
+  renderList(searchInput.value);
+  closeSidebarMobile();
+
+  stage.scrollTop = 0;
+}
+
+/* ============================================================
+   7) ZOOM CONTROLS
+   ============================================================ */
+function applyZoom(){
+  const w = stage.clientWidth;
+  const h = stage.clientHeight;
+  if (!w || !h) return;
+
+  scaler.style.width = w + 'px';
+
+  if (ZOOM_OK){
+    scaler.style.zoom = zoom;
+    scaler.style.transform = '';
+    zoomBox.style.width  = '';
+    zoomBox.style.height = '';
+  } else {
+    scaler.style.zoom = '';
+    scaler.style.transformOrigin = '0 0';
+    scaler.style.transform = 'scale(' + zoom + ')';
+    zoomBox.style.width  = (w * zoom) + 'px';
+    zoomBox.style.height = (h * zoom) + 'px';
+  }
+  zoomVal.textContent = Math.round(zoom * 100) + '%';
+}
+
+function setZoom(z){
+  zoom = Math.min(4, Math.max(0.25, z));
+  applyZoom();
+}
+
+let rafId = null, settleId = null;
+function scheduleZoom(){
+  if (rafId) cancelAnimationFrame(rafId);
+  rafId = requestAnimationFrame(() => {
+    rafId = requestAnimationFrame(applyZoom);
+  });
+  clearTimeout(settleId);
+  settleId = setTimeout(applyZoom, 180);
+}
+
+new ResizeObserver(scheduleZoom).observe(stageWrap);
+window.addEventListener('resize', scheduleZoom);
+window.addEventListener('orientationchange', scheduleZoom);
+
+/* ============================================================
+   8) FULLSCREEN
+   ============================================================ */
+function isFullscreen(){
+  return !!(document.fullscreenElement || document.webkitFullscreenElement);
+}
+
+function toggleFullscreen(){
+  const el = document.getElementById('viewer');
+  if (!isFullscreen()){
+    const req = el.requestFullscreen || el.webkitRequestFullscreen;
+    if (req) req.call(el);
+  } else {
+    const exit = document.exitFullscreen || document.webkitExitFullscreen;
+    if (exit) exit.call(document);
+  }
+}
+
+['fullscreenchange','webkitfullscreenchange'].forEach(ev => {
+  document.addEventListener(ev, () => {
+    btnFullscreen.innerHTML = isFullscreen() ? '⛶ Exit Fullscreen' : '⛶ Fullscreen';
+    scheduleZoom();
+    setTimeout(applyZoom, 250);
+  });
+});
+
+/* ============================================================
+   9) EVENT LISTENERS
+   ============================================================ */
+btnZoomIn.addEventListener('click',  () => setZoom(zoom + 0.15));
+btnZoomOut.addEventListener('click', () => setZoom(zoom - 0.15));
+btnZoomReset.addEventListener('click', () => setZoom(1));
+btnFullscreen.addEventListener('click', toggleFullscreen);
+btnReload.addEventListener('click', () => { if (currentDocIndex > -1) openDoc(currentDocIndex); });
+
+searchInput.addEventListener('input', e => renderList(e.target.value));
+menuBtn.addEventListener('click', () => sidebar.classList.toggle('open'));
+
+function closeSidebarMobile(){
+  if (window.matchMedia('(max-width: 820px)').matches) sidebar.classList.remove('open');
+}
+
+/* ============================================================
+   10) KEYBOARD SHORTCUTS
+   ============================================================ */
+document.addEventListener('keydown', e => {
+  if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
+
+  switch (e.key){
+    case 'f': case 'F':  toggleFullscreen(); break;
+    case '+': case '=':  setZoom(zoom + 0.15); break;
+    case '-': case '_':  setZoom(zoom - 0.15); break;
+    case '0':            setZoom(1); break;
+    case 'r': case 'R':  if (currentDocIndex > -1) openDoc(currentDocIndex); break;
+    case 'd': case 'D':
+      if (btnDownload.style.display !== 'none') btnDownload.click();
+      break;
+  }
+});
+
+/* ============================================================
+   11) INIT
+   ============================================================ */
+renderList();
+
+/* ---- AUTO-OPEN FROM URL PARAM (?doc=xxx) ---- */
+(function autoOpenFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  const wantedId = params.get('doc');
+  if (!wantedId) return;
+
+  const idx = DOCUMENTS.findIndex(d => d.id === wantedId);
+  if (idx > -1) {
+    openDoc(idx);
+  } else {
+    console.warn(`[ToToZ] No document with id "${wantedId}" was found.`);
+  }
+})();
+
+requestAnimationFrame(applyZoom);
+</script>
+</body>
+</html>
