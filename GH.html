@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Anatomy Quiz • GH & Somatomedins</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: #f1f5f9;
+      padding: 12px 12px 40px;
+      color: #0b1e2e;
+    }
+
+    .app-container {
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    /* header */
+    .quiz-header {
+      background: #12455f;
+      border-radius: 20px 20px 0 0;
+      padding: 18px 20px 16px;
+      color: white;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    .quiz-header .subject {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .quiz-header .subject span {
+      font-weight: 400;
+      opacity: 0.8;
+      font-size: 16px;
+    }
+
+    .quiz-header .meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px 10px;
+      margin-top: 8px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .badge {
+      background: rgba(255, 255, 255, 0.12);
+      padding: 4px 12px;
+      border-radius: 40px;
+      font-size: 12px;
+      letter-spacing: 0.2px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .toggle-group {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .toggle-group .pill {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #d0e2ed;
+      padding: 6px 18px;
+      border-radius: 40px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: default;
+      transition: 0.2s;
+    }
+
+    .toggle-group .pill.active {
+      background: #5fa3c9;
+      border-color: #5fa3c9;
+      color: #0b1e2e;
+      font-weight: 600;
+    }
+
+    /* difficulty buttons */
+    .difficulty-bar {
+      display: flex;
+      gap: 8px;
+      margin: 14px 0 12px;
+      flex-wrap: wrap;
+    }
+
+    .difficulty-btn {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 40px;
+      padding: 8px 24px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #1e3a5f;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+      flex: 1 0 auto;
+    }
+
+    .difficulty-btn:hover {
+      background: #e9f0f7;
+      border-color: #8faec9;
+    }
+
+    .difficulty-btn.active {
+      background: #12455f;
+      border-color: #12455f;
+      color: white;
+      box-shadow: 0 4px 10px rgba(18, 69, 95, 0.2);
+    }
+
+    /* stats */
+    .stats {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 4px 0 10px;
+      font-size: 13px;
+      color: #475569;
+      font-weight: 500;
+      padding: 0 4px;
+    }
+
+    .stats .count {
+      background: #e2e8f0;
+      padding: 4px 12px;
+      border-radius: 30px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #12455f;
+    }
+
+    /* question card */
+    .question-card {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 18px 16px 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+      border: 1px solid #e9eef3;
+      transition: 0.2s;
+    }
+
+    .q-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .q-num {
+      background: #12455f;
+      color: white;
+      font-size: 13px;
+      font-weight: 700;
+      min-width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .q-text {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.4;
+      color: #0b1e2e;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin: 10px 0 0 0;
+    }
+
+    .option {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-size: 14.5px;
+      line-height: 1.35;
+      cursor: pointer;
+      transition: 0.1s ease;
+      color: #1e293b;
+      font-weight: 450;
+    }
+
+    .option:hover {
+      background: #f1f5f9;
+      border-color: #b9d0e3;
+    }
+
+    .option.selected {
+      background: #dbeafe;
+      border-color: #2d7fb9;
+      box-shadow: 0 0 0 1px #2d7fb9;
+    }
+
+    .option .letter {
+      font-weight: 700;
+      color: #12455f;
+      min-width: 20px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* explanation */
+    .explanation {
+      margin-top: 14px;
+      padding: 14px 16px;
+      background: #f0f7fc;
+      border-left: 5px solid #2d7fb9;
+      border-radius: 10px;
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: #1e3a5f;
+      display: none;
+    }
+
+    .explanation.show {
+      display: block;
+    }
+
+    .explanation strong {
+      color: #0b2a41;
+      font-weight: 700;
+    }
+
+    .explanation .ans-badge {
+      display: inline-block;
+      background: #12455f;
+      color: white;
+      padding: 2px 10px;
+      border-radius: 30px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-right: 8px;
+      letter-spacing: 0.2px;
+    }
+
+    /* submit button */
+    .submit-area {
+      margin-top: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 12px;
+    }
+
+    .btn-submit {
+      background: #12455f;
+      color: white;
+      border: none;
+      border-radius: 60px;
+      padding: 18px 24px;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.15s;
+      box-shadow: 0 6px 14px rgba(18, 69, 95, 0.2);
+      letter-spacing: 0.2px;
+    }
+
+    .btn-submit:hover {
+      background: #0e3650;
+    }
+
+    .btn-submit:active {
+      transform: scale(0.98);
+    }
+
+    .btn-reset {
+      background: transparent;
+      border: 2px solid #cbd5e1;
+      border-radius: 60px;
+      padding: 12px 24px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #475569;
+      cursor: pointer;
+      transition: 0.15s;
+    }
+
+    .btn-reset:hover {
+      background: #f1f5f9;
+      border-color: #94a3b8;
+    }
+
+    .score-display {
+      text-align: center;
+      font-size: 15px;
+      font-weight: 600;
+      color: #12455f;
+      background: #e6f0f8;
+      padding: 12px;
+      border-radius: 40px;
+      margin-top: 8px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* responsive */
+    @media (max-width: 400px) {
+      .q-text {
+        font-size: 15px;
+      }
+      .option {
+        font-size: 13.5px;
+        padding: 9px 12px;
+      }
+      .difficulty-btn {
+        padding: 7px 16px;
+        font-size: 13px;
+      }
+      .quiz-header {
+        padding: 14px 16px 12px;
+      }
+      .quiz-header .subject {
+        font-size: 16px;
+      }
+    }
+
+    /* make the page feel like the screenshot */
+    .section-label {
+      font-size: 20px;
+      font-weight: 700;
+      color: #12455f;
+      margin: 8px 0 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-label .round-badge {
+      background: #12455f;
+      color: white;
+      border-radius: 30px;
+      padding: 2px 12px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .instruction {
+      font-size: 14px;
+      color: #475569;
+      margin-bottom: 14px;
+      line-height: 1.4;
+    }
+
+    .instruction strong {
+      color: #12455f;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+
+    <!-- header -->
+    <div class="quiz-header">
+      <div class="subject">
+        Anatomy • Growth Hormone & Somatomedins
+      </div>
+      <div class="meta">
+        <span class="badge">60 MCQs</span>
+        <span class="badge">ToToZ Collection</span>
+      </div>
+      <div class="toggle-group">
+        <span class="pill active">MCQs</span>
+        <span class="pill">Answer before submitting</span>
+      </div>
+    </div>
+
+    <!-- difficulty buttons -->
+    <div class="difficulty-bar">
+      <button class="difficulty-btn active" data-level="easy">Easy</button>
+      <button class="difficulty-btn" data-level="medium">Medium</button>
+      <button class="difficulty-btn" data-level="hard">Hard</button>
+    </div>
+
+    <!-- stats -->
+    <div class="stats">
+      <span>Multiple Choice Questions</span>
+      <span class="count" id="questionCount">20 questions</span>
+    </div>
+
+    <!-- question container -->
+    <div id="questionContainer"></div>
+
+    <!-- submit / reset -->
+    <div class="submit-area">
+      <button class="btn-submit" id="submitBtn">Submit All MCQs</button>
+      <button class="btn-reset" id="resetBtn">Reset All Answers</button>
+      <div id="scoreDisplay" class="score-display hidden"></div>
+    </div>
+
+  </div>
+
+  <script>
+    // ─── DATA ──────────────────────────────────────────────────────────
+    // All 60 questions with options, answers, and detailed explanations.
+    // Difficulty tags: 1-20 easy, 21-40 medium, 41-60 hard.
+
+    const allQuestions = [
+      // ── EASY (1–20) ──
+      {
+        id: 1,
+        level: "easy",
+        question: "What type of cells in the anterior pituitary gland synthesize growth hormone (GH)?",
+        options: [
+          "A) Basophilic cells",
+          "B) Acidophilic cells (somatotrophs)",
+          "C) Chromophobe cells",
+          "D) Folliculostellate cells"
+        ],
+        answer: 1, // index
+        explanation: "Growth hormone is produced by <strong>somatotrophs</strong>, which are acidophilic cells of the anterior pituitary. They account for approximately 50% of the anterior pituitary cell population and are stimulated by GHRH and inhibited by somatostatin. Basophilic cells produce TSH, ACTH, FSH, and LH; chromophobes are thought to be degranulated or resting cells."
+      },
+      {
+        id: 2,
+        level: "easy",
+        question: "Which structural characteristic is true regarding the main form of growth hormone?",
+        options: [
+          "A) It consists of a branched chain of 191 amino acids",
+          "B) It consists of a single unbranched chain containing 191 amino acids",
+          "C) It consists of two separate peptide chains linked by disulfide bonds",
+          "D) It is a carbohydrate-rich glycoprotein with multiple subunits"
+        ],
+        answer: 1,
+        explanation: "Human growth hormone (hGH) is a <strong>single, unbranched polypeptide chain of 191 amino acids</strong> with two intramolecular disulfide bridges. It is not glycosylated and has a molecular weight of about 22 kDa. This simple structure is important because it is species-specific; only human and monkey GH are active in humans."
+      },
+      {
+        id: 3,
+        level: "easy",
+        question: "What is the basal plasma level of growth hormone in children?",
+        options: [
+          "A) 0.1–0.5 ng/mL",
+          "B) 2–4 ng/mL",
+          "C) 5–8 ng/mL",
+          "D) 10–20 ng/mL"
+        ],
+        answer: 2,
+        explanation: "In children, basal plasma GH levels are typically <strong>5–8 ng/mL</strong>. This is higher than in adults (0.1–0.5 ng/mL) because GH is essential for linear growth, and children have more frequent and larger secretory bursts, especially during deep sleep."
+      },
+      {
+        id: 4,
+        level: "easy",
+        question: "How often does a rise in plasma GH levels occur due to its normal fluctuations in adults?",
+        options: [
+          "A) Every 10–15 minutes",
+          "B) Every 1–2 hours",
+          "C) Every 6–8 hours",
+          "D) Once every 24 hours"
+        ],
+        answer: 1,
+        explanation: "GH is secreted in a <strong>pulsatile fashion, with surges every 1–2 hours</strong> in adults. The largest surge occurs during deep (slow-wave) sleep. Between pulses, GH levels are often undetectable, which is why random GH measurements are not reliable for diagnosis."
+      },
+      {
+        id: 5,
+        level: "easy",
+        question: "What is the basal plasma level of growth hormone in normal adults?",
+        options: [
+          "A) 0.1–0.5 ng/mL",
+          "B) 2–4 ng/mL",
+          "C) 10–20 ng/mL",
+          "D) 50–100 ng/mL"
+        ],
+        answer: 0,
+        explanation: "In normal adults, basal GH levels are very low, typically <strong>0.1–0.5 ng/mL</strong>. Because of pulsatile secretion, most random samples are low. This is important clinically: a high random GH is not necessarily abnormal, and a low random GH does not exclude GH deficiency."
+      },
+      {
+        id: 6,
+        level: "easy",
+        question: "Which pattern describes how growth hormone is released into the systemic circulation?",
+        options: [
+          "A) Continuous steady release",
+          "B) Pulsatile fashion",
+          "C) Exponential constant surge",
+          "D) Exclusive single peak at noon"
+        ],
+        answer: 1,
+        explanation: "GH is released in a <strong>pulsatile fashion</strong> — discrete bursts separated by troughs. This pattern is regulated by the interplay of GHRH (stimulatory) and somatostatin (inhibitory). The most consistent and largest pulse occurs during slow-wave sleep, and pulses also follow exercise, stress, and hypoglycemia."
+      },
+      {
+        id: 7,
+        level: "easy",
+        question: "Which animal’s growth hormone has biological activity similar to humans and can be safely given to humans?",
+        options: [
+          "A) Bovine (cow)",
+          "B) Porcine (pig)",
+          "C) Monkey",
+          "D) Ovine (sheep)"
+        ],
+        answer: 2,
+        explanation: "Only <strong>monkey GH</strong> (and human GH itself) has biological activity in humans. Bovine, porcine, and ovine GH are structurally different enough that they do not bind effectively to human GH receptors and have no significant growth-promoting effect. This species specificity is why human GH was historically extracted from cadaver pituitaries before recombinant DNA technology."
+      },
+      {
+        id: 8,
+        level: "easy",
+        question: "Growth hormone structurally resembles which of the following pituitary/placental hormones?",
+        options: [
+          "A) Thyroid-stimulating hormone (TSH)",
+          "B) Adrenocorticotropic hormone (ACTH)",
+          "C) Placental growth hormones",
+          "D) Luteinizing hormone (LH)"
+        ],
+        answer: 2,
+        explanation: "GH belongs to the same structural family as <strong>placental growth hormones (hPL, hCS)</strong> and prolactin. These hormones share a common ancestral gene and have similar amino acid sequences and receptor structures. This is why GH has intrinsic lactogenic (prolactin-like) activity."
+      },
+      {
+        id: 9,
+        level: "easy",
+        question: "What is the primary organ that secretes somatomedins (such as IGF-I)?",
+        options: [
+          "A) Kidneys",
+          "B) Liver",
+          "C) Spleen",
+          "D) Pancreas"
+        ],
+        answer: 1,
+        explanation: "The <strong>liver</strong> is the primary source of circulating somatomedins, especially IGF-I. GH stimulates hepatic IGF-I production, which then mediates many of GH's growth-promoting effects on bone and cartilage. Other tissues (muscle, kidney, cartilage) also produce IGF-I locally in a paracrine/autocrine manner."
+      },
+      {
+        id: 10,
+        level: "easy",
+        question: "Another name for Somatomedin C is:",
+        options: [
+          "A) IGF-I",
+          "B) IGF-II",
+          "C) GHRH",
+          "D) GRIH"
+        ],
+        answer: 0,
+        explanation: "Somatomedin C is now known as <strong>Insulin-like Growth Factor I (IGF-I)</strong>. It is a 70-amino-acid peptide produced mainly by the liver in response to GH. IGF-I mediates the anabolic and growth-promoting effects of GH on cartilage, bone, and other tissues."
+      },
+      {
+        id: 11,
+        level: "easy",
+        question: "Which hypothalamic hormone stimulates the release of GH from the anterior pituitary?",
+        options: [
+          "A) GRIH (Somatostatin)",
+          "B) GHRH",
+          "C) TRH",
+          "D) CRH"
+        ],
+        answer: 1,
+        explanation: "Growth hormone–releasing hormone (<strong>GHRH</strong>) is the primary stimulator of GH synthesis and release from anterior pituitary somatotrophs. It is a 44-amino-acid peptide produced in the arcuate nucleus of the hypothalamus. Somatostatin (GRIH) inhibits GH release."
+      },
+      {
+        id: 12,
+        level: "easy",
+        question: "What primary effect does growth hormone have on bone mineralization in growing children?",
+        options: [
+          "A) Inhibits calcium absorption",
+          "B) Promotes bone mineralization",
+          "C) Causes rapid bone resorption",
+          "D) Decreases bone mass"
+        ],
+        answer: 1,
+        explanation: "GH <strong>promotes bone mineralization</strong> and linear growth. It increases intestinal calcium absorption, renal phosphate reabsorption, and osteoblast activity. This leads to a positive calcium and phosphorus balance, essential for skeletal growth. GH does not cause bone resorption; rather, it supports bone formation."
+      },
+      {
+        id: 13,
+        level: "easy",
+        question: "What happens to plasma GH levels during senescence (aging)?",
+        options: [
+          "A) Marked increase in baseline levels",
+          "B) Reduction in GH secretion in response to GHRH and other stimuli",
+          "C) Complete absence of somatostatin production",
+          "D) Loss of species specificity"
+        ],
+        answer: 1,
+        explanation: "With aging, there is a <strong>reduction in GH secretion</strong> in response to GHRH, exercise, sleep, and other stimuli. Basal levels and pulse amplitude decline, contributing to loss of muscle mass (sarcopenia) and increased adiposity. This is sometimes called somatopause."
+      },
+      {
+        id: 14,
+        level: "easy",
+        question: "What effect does growth hormone have on fat metabolism?",
+        options: [
+          "A) Increases lipogenesis",
+          "B) Stimulates lipolysis and mobilizes fat from adipose tissue",
+          "C) Suppresses free fatty acid release",
+          "D) Converts ketone bodies into triglycerides"
+        ],
+        answer: 1,
+        explanation: "GH <strong>stimulates lipolysis</strong> in adipose tissue, releasing free fatty acids (FFAs) into the circulation. These FFAs are used for energy, sparing glucose and protein. This is a key component of GH's diabetogenic effect and its protein-sparing action."
+      },
+      {
+        id: 15,
+        level: "easy",
+        question: "How does growth hormone affect blood glucose levels?",
+        options: [
+          "A) It lowers blood glucose (hypoglycemia) as its ultimate long-term effect",
+          "B) It is diabetogenic / causes hyperglycemia",
+          "C) It has zero effect on blood glucose levels",
+          "D) It completely stops glucose production by the liver"
+        ],
+        answer: 1,
+        explanation: "GH is <strong>diabetogenic</strong> — it increases blood glucose by stimulating hepatic gluconeogenesis and glycogenolysis, and by reducing glucose uptake in muscle (anti-insulin effect). Chronically elevated GH can lead to insulin resistance and even pituitary diabetes."
+      },
+      {
+        id: 16,
+        level: "easy",
+        question: "Growth hormone promotes the uptake of which building blocks into tissue cells?",
+        options: [
+          "A) Fatty acids",
+          "B) Amino acids",
+          "C) Monosaccharides",
+          "D) Nucleotides"
+        ],
+        answer: 1,
+        explanation: "GH enhances the uptake of <strong>amino acids</strong> into muscle and other tissues, stimulating protein synthesis. This anabolic effect is central to growth and tissue repair. It also increases nitrogen retention and produces a positive nitrogen balance."
+      },
+      {
+        id: 17,
+        level: "easy",
+        question: "What is the term for cartilage formation induced by growth hormone?",
+        options: [
+          "A) Ossification",
+          "B) Chondrogenesis",
+          "C) Glycogenolysis",
+          "D) Lipogenesis"
+        ],
+        answer: 1,
+        explanation: "GH stimulates <strong>chondrogenesis</strong> — the formation of cartilage. It acts on epiphyseal cartilage to promote linear bone growth. The mechanism involves GH priming cartilage stem cells to respond to IGF-I, which then drives chondrocyte proliferation and matrix synthesis."
+      },
+      {
+        id: 18,
+        level: "easy",
+        question: "During which phase of sleep does the major nocturnal peak of GH secretion occur?",
+        options: [
+          "A) REM sleep",
+          "B) Stage 1 light sleep",
+          "C) Deep sleep (stage 3 or stage 4 slow-wave sleep)",
+          "D) Drowsiness right before falling asleep"
+        ],
+        answer: 2,
+        explanation: "The major nocturnal GH peak occurs during <strong>deep sleep (stage 3 or 4 slow-wave sleep)</strong>, typically 1–2 hours after sleep onset. This is the largest daily pulse of GH. Disruption of slow-wave sleep (e.g., sleep apnea) can reduce GH secretion and affect growth and metabolism."
+      },
+      {
+        id: 19,
+        level: "easy",
+        question: "What general effect does growth hormone have on body weight and protein deposition?",
+        options: [
+          "A) Decreases protein synthesis and lowers total weight",
+          "B) Produces an overall anabolic effect leading to protein deposition and increased weight",
+          "C) Converts structural proteins into adipose tissue",
+          "D) Accelerates protein breakdown for urinary excretion"
+        ],
+        answer: 1,
+        explanation: "GH has a powerful <strong>anabolic effect</strong>: it increases protein synthesis, reduces protein breakdown, and promotes positive nitrogen balance. This leads to increased lean body mass and overall weight gain. It also mobilizes fat, so the weight gain is primarily due to protein and water retention."
+      },
+      {
+        id: 20,
+        level: "easy",
+        question: "What is the effect of growth hormone on transcription within target cells?",
+        options: [
+          "A) Inhibits nuclear transcriptions completely",
+          "B) Stimulates transcription (RNA synthesis from DNA)",
+          "C) Breaks down ribose nucleic acids in cytoplasm",
+          "D) Blocks ribosomal protein synthesis"
+        ],
+        answer: 1,
+        explanation: "GH binds to its receptor and activates <strong>transcription</strong> of specific genes, including IGF-I, and increases RNA synthesis. This leads to increased protein synthesis. GH also stimulates transcription of genes involved in cell growth and metabolism. It does not inhibit transcription or break down RNA."
+      },
+
+      // ── MEDIUM (21–40) ──
+      {
+        id: 21,
+        level: "medium",
+        question: "What happens to the rate of growth hormone secretory bursts during nocturnal sleep as a person ages?",
+        options: [
+          "A) They increase significantly",
+          "B) They remain identical throughout life",
+          "C) They are greater in children and decrease with age",
+          "D) They stop entirely after age 5"
+        ],
+        answer: 2,
+        explanation: "GH secretory bursts during sleep are <strong>greatest in children and decline with age</strong>. This is why children require more sleep for growth, and why older adults have reduced GH secretion and muscle mass. The amplitude and frequency of nocturnal GH pulses decrease progressively after puberty."
+      },
+      {
+        id: 22,
+        level: "medium",
+        question: "Which tissue's growth is NOT affected by growth hormone?",
+        options: [
+          "A) Skeletal muscle",
+          "B) Skin",
+          "C) Viscera",
+          "D) Nervous tissues"
+        ],
+        answer: 3,
+        explanation: "GH promotes growth of skeletal muscle, skin, and viscera, but <strong>nervous tissue (brain and nerves)</strong> growth is largely independent of GH. Brain growth is primarily regulated by thyroid hormones, IGF-I during fetal life, and other factors. GH does not cross the blood–brain barrier significantly."
+      },
+      {
+        id: 23,
+        level: "medium",
+        question: "Which hormone is mainly responsible for tissue maturation (which GH does NOT produce)?",
+        options: [
+          "A) Insulin",
+          "B) Thyroid hormones",
+          "C) Cortisol",
+          "D) Parathyroid hormone"
+        ],
+        answer: 1,
+        explanation: "While GH drives growth, <strong>thyroid hormones</strong> are essential for tissue maturation, especially of the nervous system and skeletal muscle. GH cannot substitute for thyroid hormones in this role. Children with hypothyroidism have impaired mental and physical development despite normal GH."
+      },
+      {
+        id: 24,
+        level: "medium",
+        question: "What is the effect of GH on nitrogen balance and blood urea levels?",
+        options: [
+          "A) Negative nitrogen balance and increased blood urea",
+          "B) Positive nitrogen balance and decreased blood urea",
+          "C) Positive nitrogen balance and increased blood urea",
+          "D) Neutral nitrogen balance and unchanged blood urea"
+        ],
+        answer: 1,
+        explanation: "GH produces a <strong>positive nitrogen balance</strong> by increasing protein synthesis and reducing amino acid breakdown. This leads to <strong>decreased blood urea</strong> because less protein is being catabolized. This is a hallmark of GH's anabolic action."
+      },
+      {
+        id: 25,
+        level: "medium",
+        question: "How does GH affect electrolyte balance in the body?",
+        options: [
+          "A) Increases GI absorption of Ca²⁺ and produces positive phosphorus balance",
+          "B) Increases urinary excretion of Na⁺ and K⁺",
+          "C) Decreases renal absorption of phosphate",
+          "D) Promotes excretion of Ca²⁺ and Mg²⁺"
+        ],
+        answer: 0,
+        explanation: "GH <strong>increases gastrointestinal absorption of calcium</strong> and renal reabsorption of phosphate, producing a <strong>positive phosphorus balance</strong>. It also decreases urinary excretion of sodium and potassium, diverting them to growing tissues. These effects support bone mineralization and growth."
+      },
+      {
+        id: 26,
+        level: "medium",
+        question: "What is the 'protein sparing effect' of growth hormone?",
+        options: [
+          "A) It breaks down tissue proteins to supply energy during starvation",
+          "B) Mobilized free fatty acids provide ready energy for tissues, sparing proteins and promoting protein synthesis",
+          "C) It converts glucose directly into structural proteins",
+          "D) It inhibits amino acid absorption in the gut to spare plasma proteins"
+        ],
+        answer: 1,
+        explanation: "GH mobilizes free fatty acids from adipose tissue, which are used for energy. This <strong>spares proteins</strong> from being catabolized for fuel, allowing them to be used for protein synthesis and tissue growth. This is a key mechanism of GH's anabolic action."
+      },
+      {
+        id: 27,
+        level: "medium",
+        question: "What is the main function of growth hormone in adults?",
+        options: [
+          "A) Increasing total body stature and height",
+          "B) Maintenance of tissue mass by its protein-sparing effect",
+          "C) Maturation of the central nervous system",
+          "D) Stimulation of fetal development"
+        ],
+        answer: 1,
+        explanation: "In adults, GH primarily <strong>maintains tissue mass</strong> through its protein-sparing and anabolic effects. It helps preserve muscle and bone mass, and regulates fat metabolism. It does not increase height (epiphyseal plates are closed) and does not mature the CNS or drive fetal development."
+      },
+      {
+        id: 28,
+        level: "medium",
+        question: "Why does initial administration of GH sometimes cause temporary hypoglycemia?",
+        options: [
+          "A) It directly destroys liver glycogen stores",
+          "B) It increases the sensitivity of pancreatic B cells to insulinogenic stimuli",
+          "C) It blocks glucagon release from A cells",
+          "D) It causes rapid renal excretion of glucose"
+        ],
+        answer: 1,
+        explanation: "Early after GH administration, it can <strong>increase the sensitivity of pancreatic beta cells to insulinogenic stimuli</strong>, causing a transient increase in insulin secretion and mild hypoglycemia. This is paradoxical because chronic GH excess is diabetogenic. The initial insulin-like effect is short-lived."
+      },
+      {
+        id: 29,
+        level: "medium",
+        question: "What condition results from prolonged excessive secretion or administration of GH due to B-cell exhaustion?",
+        options: [
+          "A) Diabetes insipidus",
+          "B) Pituitary (hypophysial) diabetes",
+          "C) Type 1 autoimmune diabetes",
+          "D) Hypothyroidism"
+        ],
+        answer: 1,
+        explanation: "Prolonged GH excess causes <strong>pituitary (hypophysial) diabetes</strong> — a form of diabetes mellitus caused by insulin resistance and eventual beta-cell exhaustion. This is distinct from diabetes insipidus (ADH deficiency) and type 1 autoimmune diabetes. It is reversible if GH excess is treated early."
+      },
+      {
+        id: 30,
+        level: "medium",
+        question: "Which somatomedin is largely independent of GH and plays a primary role in fetal growth before birth?",
+        options: [
+          "A) IGF-I",
+          "B) IGF-II",
+          "C) Somatomedin C",
+          "D) GHRH"
+        ],
+        answer: 1,
+        explanation: "<strong>IGF-II</strong> is largely GH-independent and is the primary somatomedin for fetal growth. It is produced in many tissues during fetal life and its levels do not depend on GH. After birth, IGF-I becomes the dominant GH-dependent growth factor."
+      },
+      {
+        id: 31,
+        level: "medium",
+        question: "Where is IGF-II synthesized in adults?",
+        options: [
+          "A) Anterior pituitary gland",
+          "B) Liver and skeletal muscle",
+          "C) Choroid plexus and meninges",
+          "D) Adrenal cortex"
+        ],
+        answer: 2,
+        explanation: "In adults, IGF-II is synthesized in the <strong>choroid plexus and meninges</strong> of the brain, where it may have local neurotrophic functions. The liver and skeletal muscle are major sources of IGF-I, not IGF-II. IGF-II remains relatively constant throughout life and is not GH-dependent."
+      },
+      {
+        id: 32,
+        level: "medium",
+        question: "Which second messenger pathway mediates the action of GHRH on the anterior pituitary?",
+        options: [
+          "A) Phospholipase C and IP3",
+          "B) Guanylate cyclase, which releases cyclic GMP",
+          "C) Tyrosine kinase activation only",
+          "D) Direct nuclear receptor binding"
+        ],
+        answer: 1,
+        explanation: "GHRH binds to a G-protein coupled receptor on somatotrophs and activates <strong>guanylate cyclase</strong>, increasing <strong>cyclic GMP</strong>. This leads to GH release. It also increases intracellular calcium. The cAMP pathway is more associated with other hypothalamic hormones, but GHRH primarily uses cGMP."
+      },
+      {
+        id: 33,
+        level: "medium",
+        question: "What ion influx into pituitary cells is an essential event associated with GHRH-stimulated GH release?",
+        options: [
+          "A) Na⁺",
+          "B) K⁺",
+          "C) Ca²⁺",
+          "D) Cl⁻"
+        ],
+        answer: 2,
+        explanation: "GHRH stimulation leads to an influx of <strong>calcium (Ca²⁺)</strong> into somatotrophs, which is essential for exocytosis of GH-containing secretory granules. Without calcium influx, GH release does not occur. This is a common mechanism for many secretory cells."
+      },
+      {
+        id: 34,
+        level: "medium",
+        question: "Growth hormone-releasing peptide (GHRP), also known as ghrelin, is synthesized by which organ?",
+        options: [
+          "A) Oxyntic glands of the stomach",
+          "B) Beta cells of the pancreas",
+          "C) Hypothalamus",
+          "D) Vascular endothelial cells"
+        ],
+        answer: 0,
+        explanation: "Ghrelin (GHRP) is synthesized primarily by <strong>oxyntic glands of the stomach</strong>. It is a potent stimulator of GH release and also increases appetite. It acts on the hypothalamus and pituitary to release GH. It is the endogenous ligand for the growth hormone secretagogue receptor."
+      },
+      {
+        id: 35,
+        level: "medium",
+        question: "Which neurotransmitter is specifically involved in stimulating GHRH release during slow wave sleep?",
+        options: [
+          "A) Epinephrine",
+          "B) Serotonin",
+          "C) Dopamine",
+          "D) Acetylcholine"
+        ],
+        answer: 1,
+        explanation: "<strong>Serotonin</strong> is involved in stimulating GHRH release during slow-wave sleep. It is one of several neurotransmitters (along with dopamine, norepinephrine, acetylcholine, GABA, and histamine) that increase GH secretion by stimulating GHRH or inhibiting somatostatin. Serotonin is particularly linked to the sleep-associated GH peak."
+      },
+      {
+        id: 36,
+        level: "medium",
+        question: "How do bovine and porcine growth hormones affect humans and monkeys?",
+        options: [
+          "A) They cause immediate rapid growth in humans",
+          "B) They do not have even a significant transient effect on growth in humans and monkeys",
+          "C) They act as irreversible inhibitors of human GH receptors",
+          "D) They are 100% identical to human GH in amino acid sequence"
+        ],
+        answer: 1,
+        explanation: "Bovine and porcine GH are structurally different from human GH and <strong>do not have any significant growth-promoting effect in humans or monkeys</strong>. They may even stimulate antibody production. This species specificity is why only human or monkey GH is biologically active in humans, and why recombinant human GH is used clinically."
+      },
+      {
+        id: 37,
+        level: "medium",
+        question: "What effect does oestradiol have on GH secretion?",
+        options: [
+          "A) Inhibits GH secretion completely",
+          "B) Increases GH secretion, explaining greater GH secretion in pre-menopausal women than in men",
+          "C) Has no effect on GH secretion",
+          "D) Decreases GHRH sensitivity"
+        ],
+        answer: 1,
+        explanation: "Oestradiol <strong>increases GH secretion</strong>, which explains why pre-menopausal women have higher GH levels and greater GH responses to stimuli than men. This effect is thought to be mediated by increased GHRH sensitivity and reduced somatostatin tone. After menopause, GH secretion declines."
+      },
+      {
+        id: 38,
+        level: "medium",
+        question: "How does obesity affect growth hormone secretion/response?",
+        options: [
+          "A) Enhances GH response to all stimuli",
+          "B) Dampens GH responses to all stimuli including GHRH itself",
+          "C) Increases basal GH levels by 10-fold",
+          "D) Prevents somatostatin release"
+        ],
+        answer: 1,
+        explanation: "Obesity <strong>dampens GH responses</strong> to all stimuli, including GHRH, exercise, sleep, and hypoglycemia. Basal GH levels are also lower in obese individuals. This is due to increased somatostatin tone and other factors. Weight loss can restore GH secretion."
+      },
+      {
+        id: 39,
+        level: "medium",
+        question: "What is the structural difference between IGF-I / IGF-II and insulin regarding their C chain?",
+        options: [
+          "A) IGFs lack a C chain entirely",
+          "B) IGFs are closely related to insulin except their C chains are not separated and they have an extension of A chain called D domain",
+          "C) IGFs have four extra disulfide bonds connecting the C chain to a B domain",
+          "D) Insulin contains a D domain while IGFs do not"
+        ],
+        answer: 1,
+        explanation: "IGF-I and IGF-II are structurally related to insulin but differ in that their <strong>C chain is not separated</strong> from the A and B chains, and they have an additional <strong>D domain</strong> extension at the C-terminus of the A chain. Insulin is derived from proinsulin, where the C chain is cleaved out, leaving separate A and B chains linked by disulfide bonds."
+      },
+      {
+        id: 40,
+        level: "medium",
+        question: "To which family of cell membrane receptors does the growth hormone receptor belong?",
+        options: [
+          "A) G-protein coupled receptor family",
+          "B) Cytokine family of receptors",
+          "C) Ligand-gated ion channel family",
+          "D) Nuclear steroid receptor family"
+        ],
+        answer: 1,
+        explanation: "The GH receptor belongs to the <strong>cytokine family of receptors</strong>. It has a single transmembrane domain and no intrinsic tyrosine kinase activity; instead, it recruits and activates JAK2 tyrosine kinase, which then phosphorylates STAT proteins. This is a key signaling pathway for GH action."
+      },
+
+      // ── HARD (41–60) ──
+      {
+        id: 41,
+        level: "hard",
+        question: "Which neurotransmitter is specifically involved in glucoreceptor cells of the ventromedial nucleus of the hypothalamus to increase GHRH secretion during hypoglycemia?",
+        options: [
+          "A) Serotonin",
+          "B) Epinephrine",
+          "C) Dopamine",
+          "D) Acetylcholine"
+        ],
+        answer: 1,
+        explanation: "During hypoglycemia, <strong>epinephrine</strong> acts on glucoreceptor cells in the ventromedial nucleus of the hypothalamus to stimulate GHRH secretion. This is part of the counter-regulatory response to hypoglycemia. Epinephrine also directly stimulates GH secretion from the pituitary."
+      },
+      {
+        id: 42,
+        level: "hard",
+        question: "Through which specific receptor stimulation do increased plasma levels of amino acids (like arginine) increase GHRH secretion?",
+        options: [
+          "A) Beta-2 adrenergic stimulation",
+          "B) Alpha-adrenergic stimulation",
+          "C) Muscarinic cholinergic stimulation",
+          "D) Histaminergic H2 stimulation"
+        ],
+        answer: 1,
+        explanation: "Increased plasma amino acids (e.g., arginine) stimulate <strong>alpha-adrenergic receptors</strong> in the hypothalamus, leading to increased GHRH secretion and GH release. This is why arginine infusion is used clinically as a provocative test for GH reserve. Beta-adrenergic stimulation inhibits GH release."
+      },
+      {
+        id: 43,
+        level: "hard",
+        question: "What is the direct mechanism by which neurotransmitters like dopamine, norepinephrine, acetylcholine, serotonin, GABA, and histamine increase GH secretion?",
+        options: [
+          "A) Stimulating somatostatin release directly",
+          "B) Stimulating release of GHRH or blocking the release of somatostatin",
+          "C) Directly binding to somatotroph receptors in the pituitary",
+          "D) Degrading circulating IGF-1 in the plasma"
+        ],
+        answer: 1,
+        explanation: "These neurotransmitters increase GH secretion by <strong>stimulating GHRH release or inhibiting somatostatin release</strong> from the hypothalamus. They do not act directly on pituitary somatotrophs (with some exceptions). This central regulation is critical for the pulsatile and stress-responsive nature of GH secretion."
+      },
+      {
+        id: 44,
+        level: "hard",
+        question: "What is the 'ultra-short feedback loop' in the regulation of growth hormone secretion?",
+        options: [
+          "A) IGF-1 inhibiting GH secretion from the anterior pituitary",
+          "B) GH inhibiting its own secretion via somatostatin release",
+          "C) GHRH inhibiting its own secretion from the hypothalamus",
+          "D) Somatostatin inhibiting IGF-1 release from the liver"
+        ],
+        answer: 2,
+        explanation: "The <strong>ultra-short feedback loop</strong> refers to <strong>GHRH inhibiting its own secretion</strong> from the hypothalamus. This is a local negative feedback mechanism. The short loop involves GH inhibiting GHRH and stimulating somatostatin; the long loop involves IGF-I inhibiting GH release."
+      },
+      {
+        id: 45,
+        level: "hard",
+        question: "Which two hormones responsible for decreased GH secretion are noted during the later part of pregnancy?",
+        options: [
+          "A) Human chorionic gonadotropin (hCG) and progesterone",
+          "B) Placental GH and placental lactogen",
+          "C) Oxytocin and prolactin",
+          "D) Estrogen and luteinizing hormone"
+        ],
+        answer: 1,
+        explanation: "During late pregnancy, <strong>placental GH and placental lactogen</strong> (human placental lactogen, hPL) are secreted in large amounts and suppress maternal pituitary GH secretion via negative feedback. These placental hormones take over the role of GH in regulating maternal metabolism and fetal growth."
+      },
+      {
+        id: 46,
+        level: "hard",
+        question: "How do thyroxine and cortisol at their basal levels affect growth hormone?",
+        options: [
+          "A) Antagonize GH action at target tissues",
+          "B) Synergistically stimulate GH",
+          "C) Inhibit GHRH synthesis in the hypothalamus",
+          "D) Accelerate GH degradation in the liver"
+        ],
+        answer: 1,
+        explanation: "At basal levels, <strong>thyroxine and cortisol synergistically stimulate GH</strong> secretion and action. They are permissive for normal GH secretion and growth. However, excess cortisol or thyroid hormone can inhibit growth. This is why hypothyroidism and Cushing's syndrome impair growth."
+      },
+      {
+        id: 47,
+        level: "hard",
+        question: "What effect does insulin have on GH gene expression?",
+        options: [
+          "A) Stimulates GH gene expression",
+          "B) Represses GH gene expression",
+          "C) Increases transcription rate of GHRH receptors",
+          "D) Has no interaction with GH gene expression"
+        ],
+        answer: 1,
+        explanation: "Insulin <strong>represses GH gene expression</strong> in the pituitary. This is part of the negative feedback loop: insulin, like IGF-I, inhibits GH synthesis and secretion. In states of insulin deficiency (e.g., type 1 diabetes), GH levels are elevated."
+      },
+      {
+        id: 48,
+        level: "hard",
+        question: "Why does GH exert an 'anti-insulin effect' on skeletal muscle tissue?",
+        options: [
+          "A) It increases insulin binding capacity",
+          "B) It reduces the ability of tissues to bind insulin and makes FFAs readily available",
+          "C) It destroys intracellular GLUT4 transporters directly",
+          "D) It converts glucose into amino acids inside muscle cells"
+        ],
+        answer: 1,
+        explanation: "GH reduces the ability of muscle and other tissues to <strong>bind insulin</strong> and take up glucose, while simultaneously mobilizing free fatty acids (FFAs) as an alternative fuel. This is the 'anti-insulin effect' — it spares glucose for the brain and promotes fat utilization. It does not destroy GLUT4 transporters directly."
+      },
+      {
+        id: 49,
+        level: "hard",
+        question: "What is the proposed mechanism by which GH acts on cartilage during chondrogenesis?",
+        options: [
+          "A) GH directly synthesizes hydroxyapatite in cartilage matrix",
+          "B) GH acts on cartilage to convert its stem cells into cells that respond to IGF-I",
+          "C) GH induces apoptosis of chondrocytes to allow bone deposition",
+          "D) GH suppresses local production of IGF-I in cartilage tissue"
+        ],
+        answer: 1,
+        explanation: "GH acts on cartilage stem cells (chondroprogenitor cells) to <strong>convert them into cells that respond to IGF-I</strong>. GH also stimulates local IGF-I production in cartilage. IGF-I then drives chondrocyte proliferation and matrix synthesis. GH alone has little direct effect on differentiated chondrocytes; it requires IGF-I."
+      },
+      {
+        id: 50,
+        level: "hard",
+        question: "What is the effect of increased blood levels of Free Fatty Acids (FFAs) on GH secretion?",
+        options: [
+          "A) Increases GH secretion by positive feedback",
+          "B) Decreases GH secretion, possibly by inhibiting release from the anterior pituitary via negative feedback",
+          "C) Has no effect on GH secretion",
+          "D) Stimulates GHRH release from the hypothalamus"
+        ],
+        answer: 1,
+        explanation: "Increased blood FFAs <strong>decrease GH secretion</strong>, likely by inhibiting GH release from the anterior pituitary. This is a negative feedback loop: GH mobilizes FFAs, and elevated FFAs then suppress further GH secretion. This helps prevent excessive lipolysis."
+      },
+      {
+        id: 51,
+        level: "hard",
+        question: "During which sleep state is GH secretion decreased/inhibited?",
+        options: [
+          "A) Slow wave sleep",
+          "B) REM sleep",
+          "C) Stage 3 sleep",
+          "D) Stage 4 sleep"
+        ],
+        answer: 1,
+        explanation: "GH secretion is <strong>decreased or inhibited during REM sleep</strong>. The major GH peak occurs during slow-wave (deep) sleep, stages 3 and 4. REM sleep is associated with low GH levels. This is why sleep quality, especially deep sleep, is important for normal GH secretion."
+      },
+      {
+        id: 52,
+        level: "hard",
+        question: "What happens to the rate of urinary excretion of Na⁺ and K⁺ under the effect of GH?",
+        options: [
+          "A) Increased urinary excretion",
+          "B) Decreased rate of urinary excretion (diverted to growing tissues)",
+          "C) Unchanged excretion rate",
+          "D) Na⁺ is excreted while K⁺ is reabsorbed"
+        ],
+        answer: 1,
+        explanation: "GH <strong>decreases urinary excretion of Na⁺ and K⁺</strong>, diverting these electrolytes to growing tissues. This helps maintain electrolyte balance during growth. It also increases calcium and phosphate retention. These effects support bone and tissue growth."
+      },
+      {
+        id: 53,
+        level: "hard",
+        question: "How does GH affect hepatic glucose output?",
+        options: [
+          "A) Decreases hepatic glucose output",
+          "B) Increases hepatic glucose output",
+          "C) Has no effect on hepatic glucose output",
+          "D) Converts hepatic glucose into free fatty acids"
+        ],
+        answer: 1,
+        explanation: "GH <strong>increases hepatic glucose output</strong> by stimulating gluconeogenesis and glycogenolysis. This contributes to its diabetogenic effect. It also reduces glucose uptake by peripheral tissues, further increasing blood glucose."
+      },
+      {
+        id: 54,
+        level: "hard",
+        question: "Why does growth hormone possess intrinsic lactogenic activity / prolactin-like action?",
+        options: [
+          "A) Because it is secreted by lactotrophs",
+          "B) Due to its structural resemblance to prolactin",
+          "C) Because it stimulates oxytocin release",
+          "D) Because it binds to estrogen receptors"
+        ],
+        answer: 1,
+        explanation: "GH has intrinsic lactogenic activity <strong>due to its structural resemblance to prolactin</strong>. Both hormones belong to the same family, and GH can bind to prolactin receptors to some degree. This is why high GH levels can sometimes cause galactorrhea, though it is rare."
+      },
+      {
+        id: 55,
+        level: "hard",
+        question: "How does circulating GH travel in the bloodstream?",
+        options: [
+          "A) Completely free and unbound",
+          "B) Bound to a plasma protein (GH binding protein)",
+          "C) Encapsulated inside red blood cells",
+          "D) Bound exclusively to albumin"
+        ],
+        answer: 1,
+        explanation: "About 50% of circulating GH is <strong>bound to a plasma protein (GH binding protein)</strong>, which is a truncated form of the GH receptor. The bound form has a longer half-life. The free form is biologically active. GH is not encapsulated in red blood cells and does not bind exclusively to albumin."
+      },
+      {
+        id: 56,
+        level: "hard",
+        question: "What intracellular signaling pathway is activated when GH binds to its receptor to stimulate IGF production?",
+        options: [
+          "A) Adenylyl cyclase and protein kinase A",
+          "B) Tyrosine phosphorylation of signal transducer and activator of transcription (STAT)",
+          "C) Phospholipase C and protein kinase C",
+          "D) Cyclic GMP phosphodiesterase"
+        ],
+        answer: 1,
+        explanation: "GH binding activates the <strong>JAK-STAT pathway</strong>, specifically <strong>tyrosine phosphorylation of STAT proteins</strong> (mainly STAT5b). This leads to transcription of IGF-I and other genes. The GH receptor itself has no intrinsic kinase activity; it recruits JAK2. This is the primary signaling mechanism for GH's growth-promoting effects."
+      },
+      {
+        id: 57,
+        level: "hard",
+        question: "What are the receptor features for IGF-I versus IGF-II as outlined in Table 8.2-1?",
+        options: [
+          "A) IGF-I binds GHRH receptors; IGF-II binds insulin receptors",
+          "B) IGF-I receptors are similar to insulin receptors; IGF-II receptors are mannose-6 phosphate receptors",
+          "C) IGF-I binds nuclear receptors; IGF-II binds G-protein coupled receptors",
+          "D) IGF-I receptors are cytokine family; IGF-II receptors are tyrosine kinase inhibitors"
+        ],
+        answer: 1,
+        explanation: "IGF-I receptors are <strong>similar to insulin receptors</strong> (tyrosine kinase receptors). IGF-II receptors are <strong>mannose-6-phosphate receptors</strong>, which are unrelated to tyrosine kinases and do not signal through JAK-STAT. This difference is important for understanding the distinct actions of the two somatomedins."
+      },
+      {
+        id: 58,
+        level: "hard",
+        question: "What happens to glycogen stores as a consequence of GH-induced glycolysis inhibition and FFA mobilization?",
+        options: [
+          "A) Glycogen stores are rapidly depleted",
+          "B) Glycogen stores tend to increase",
+          "C) Glycogen is converted into ketone bodies",
+          "D) Glycogen synthesis is completely blocked"
+        ],
+        answer: 1,
+        explanation: "By inhibiting glycolysis and mobilizing FFAs, GH <strong>spares glucose and tends to increase glycogen stores</strong>. FFAs are used for energy, so glucose is conserved and stored as glycogen. This is part of GH's overall anabolic and glucose-sparing effects."
+      },
+      {
+        id: 59,
+        level: "hard",
+        question: "In the negative feedback control mechanism, IGF-1 inhibits GH release by two actions. What are they?",
+        options: [
+          "A) Direct action on anterior pituitary AND stimulating somatostatin release from hypothalamus",
+          "B) Direct action on hypothalamus AND inhibiting GHRH synthesis in stomach",
+          "C) Inhibiting liver enzymes AND stimulating renal clearance of GH",
+          "D) Blocking GHRH receptors in anterior pituitary AND stimulating ghrelin release"
+        ],
+        answer: 0,
+        explanation: "IGF-I inhibits GH release by <strong>direct action on the anterior pituitary</strong> (suppressing GH synthesis and release) and by <strong>stimulating somatostatin release from the hypothalamus</strong>. This is the long-loop negative feedback. It does not act on the stomach or kidney in this context."
+      },
+      {
+        id: 60,
+        level: "hard",
+        question: "What change in growth rate occurs during puberty according to the height gain curves (Figure 11)?",
+        options: [
+          "A) Growth rate drops to zero",
+          "B) There is a peak period of plasma GH levels / transient growth spurt before declining in adulthood",
+          "C) Height gain rate increases steadily without ever declining",
+          "D) Girls reach their peak height gain significantly later than boys"
+        ],
+        answer: 1,
+        explanation: "During puberty, there is a <strong>peak period of plasma GH levels and a transient growth spurt</strong>, followed by a decline in adulthood. Girls typically have their growth spurt earlier than boys. This pubertal peak is driven by increased sex steroids (estrogen and testosterone), which enhance GH secretion."
+      }
+    ];
+
+    // ─── STATE ──────────────────────────────────────────────────────
+    let currentLevel = 'easy';
+    let selectedAnswers = {}; // { questionId: optionIndex }
+
+    // ─── DOM REFS ──────────────────────────────────────────────────
+    const container = document.getElementById('questionContainer');
+    const submitBtn = document.getElementById('submitBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const scoreDisplay = document.getElementById('scoreDisplay');
+    const questionCount = document.getElementById('questionCount');
+    const difficultyBtns = document.querySelectorAll('.difficulty-btn');
+
+    // ─── RENDER ──────────────────────────────────────────────────────
+    function renderQuestions(level) {
+      currentLevel = level;
+      const filtered = allQuestions.filter(q => q.level === level);
+      questionCount.textContent = `${filtered.length} questions`;
+
+      // update difficulty button active state
+      difficultyBtns.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.level === level);
+      });
+
+      let html = '';
+      filtered.forEach((q, idx) => {
+        const qNumber = idx + 1; // display number within level
+        const selectedIdx = selectedAnswers[q.id] !== undefined ? selectedAnswers[q.id] : null;
+        const optionsHtml = q.options.map((opt, optIdx) => {
+          const isSelected = selectedIdx === optIdx;
+          const letter = String.fromCharCode(65 + optIdx); // A, B, C, D
+          return `
+            <div class="option ${isSelected ? 'selected' : ''}" data-qid="${q.id}" data-oidx="${optIdx}">
+              <span class="letter">${letter}</span>
+              <span>${opt.replace(/^[A-D]\)\s*/, '')}</span>
+            </div>
+          `;
+        }).join('');
+
+        html += `
+          <div class="question-card" data-qid="${q.id}">
+            <div class="q-top">
+              <div class="q-num">${qNumber}</div>
+              <div class="q-text">${q.question}</div>
+            </div>
+            <div class="options">
+              ${optionsHtml}
+            </div>
+            <div class="explanation" id="exp-${q.id}">
+              <span class="ans-badge">Answer: ${String.fromCharCode(65 + q.answer)}</span>
+              ${q.explanation}
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+      // reattach option click listeners
+      document.querySelectorAll('.option').forEach(opt => {
+        opt.addEventListener('click', handleOptionClick);
+      });
+
+      // hide score on re-render
+      scoreDisplay.classList.add('hidden');
+    }
+
+    // ─── HANDLE OPTION CLICK ─────────────────────────────────────────
+    function handleOptionClick(e) {
+      const optionDiv = e.currentTarget;
+      const qid = parseInt(optionDiv.dataset.qid);
+      const oidx = parseInt(optionDiv.dataset.oidx);
+
+      // remove selected from siblings
+      const parent = optionDiv.closest('.options');
+      parent.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+
+      // add selected to clicked
+      optionDiv.classList.add('selected');
+
+      // store answer
+      selectedAnswers[qid] = oidx;
+    }
+
+    // ─── SUBMIT ──────────────────────────────────────────────────────
+    function handleSubmit() {
+      const filtered = allQuestions.filter(q => q.level === currentLevel);
+      let correct = 0;
+      let answered = 0;
+
+      filtered.forEach(q => {
+        const selected = selectedAnswers[q.id];
+        if (selected !== undefined) {
+          answered++;
+          if (selected === q.answer) correct++;
+        }
+      });
+
+      // show explanations for all questions in current level
+      filtered.forEach(q => {
+        const exp = document.getElementById(`exp-${q.id}`);
+        if (exp) {
+          exp.classList.add('show');
+        }
+      });
+
+      // show score
+      scoreDisplay.textContent = `✅ Correct: ${correct} / ${filtered.length}   •   Answered: ${answered} / ${filtered.length}`;
+      scoreDisplay.classList.remove('hidden');
+
+      // scroll to first explanation or just keep
+    }
+
+    // ─── RESET ──────────────────────────────────────────────────────
+    function handleReset() {
+      // clear answers for current level only
+      const filtered = allQuestions.filter(q => q.level === currentLevel);
+      filtered.forEach(q => {
+        delete selectedAnswers[q.id];
+      });
+
+      // re-render
+      renderQuestions(currentLevel);
+
+      // hide score
+      scoreDisplay.classList.add('hidden');
+    }
+
+    // ─── EVENT LISTENERS ────────────────────────────────────────────
+    difficultyBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const level = btn.dataset.level;
+        // clear answers for the new level to avoid confusion? 
+        // keep answers per level, but re-render will show previous selections if any.
+        renderQuestions(level);
+      });
+    });
+
+    submitBtn.addEventListener('click', handleSubmit);
+    resetBtn.addEventListener('click', handleReset);
+
+    // ─── INIT ────────────────────────────────────────────────────────
+    renderQuestions('easy');
+
+  </script>
+</body>
+</html>

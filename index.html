@@ -2838,7 +2838,7 @@
                 desc: 'Study gametogenesis, fertilization, early embryonic development, and organogenesis.',
                 terms: [
                     { name: 'Term 1',
-                        topics: ['Pituitary Gland', 'Thyroid Gland', 'Parathyroid Gland', 'Adrenal Glands'] },
+                        topics: ['Pituitary Gland', 'Thyroid Gland', 'Parathyroid Gland', 'Adrenal Glands', 'Growth Hormone'] },
                     { name: 'Term 2',
                         topics: ['Introduction to the nervous system', 'Sensory Receptors', 'Somatic Sensations',
                             'Sensory Disturbances', 'Physiology of Pain', 'Ascending Tracts', 'Descending Tracts',
@@ -3952,6 +3952,16 @@
         // ---- NEW: MULTIPLE QUIZZES PER TOPIC ----
         // ✅ IMPORTANT: Make sure there are NO trailing commas after the last entry!
         const quizData = {
+            
+             'Growth Hormone': [
+                { title: 'Growth Hormone Quiz', url: 'GH.html' },
+            ],
+            'Thyroid Gland': [
+                { title: 'Thyroid Gland Quiz', url: 'thyroid.html' },
+            ],
+             'Thyroid Gland': [
+                { title: 'Thyroid Gland Quiz', url: 'thyroid.html' },
+            ],
             // Example topics with multiple quizzes
             'Anti-asthmatic Drugs': [
                 { title: 'Quiz 1 – Basics of Asthma Pharmacology', url: 'therap-2/quiz/asthma_quiz.html' },
@@ -4244,6 +4254,17 @@
 
         // ---- VIDEO DATA: maps topic names to an array of video objects with YouTube URLs ----
         const videoData = {
+            
+            'GIT Pathology': [
+                { title: 'Oral Cavity', url: 'https://drive.google.com/file/d/1vBYQ8HkiQbizZJ20tlhXM4XZG7cuWrYw/view?usp=drivesdk' },
+                { title: 'Salivary Gland', url: 'https://drive.google.com/file/d/1r60x4WFgALsEKNmGZjc3FJV3qeNuKQmz/view?usp=drivesdk' },
+                { title: 'Esophagus', url: 'https://drive.google.com/file/d/160DPqVQJIwA0hloesLhR-cEV963x4dcl/view?usp=drivesdk' },
+                { title: 'Stomach', url: 'https://drive.google.com/file/d/1LV8ks01hDDTIxtLFZ9f6kpEoBIJByDvd/view?usp=drivesdk' },
+                { title: 'Small Bowel', url: 'https://drive.google.com/file/d/1QLr9aVOuwQaHjeelQe8FED6eacRYCEj1/view?usp=drivesdk' },
+                { title: 'Appendix and IBD', url: 'https://drive.google.com/file/d/1-T5gT-cD4SZfSlVaPJEk6ROJimNpqioX/view?usp=drivesdk' },
+                { title: 'Colon', url: 'https://drive.google.com/file/d/1UYwoLaSl5Zw-P4gnLttWbhlbKIsauiJG/view?usp=drivesdk' },
+                { title: 'Colorectal Carcinoma', url: 'https://drive.google.com/file/d/1DQ8xS_zkR4Q_5qvhRcFHZRI2ZAZp7IFF/view?usp=drivesdk' },
+            ],
             
             'Accessory Organos of the GIT': [
                 { title: 'Gall Bladder & Billiary Tract', url: 'https://drive.google.com/file/d/1lLAlW5BakGk6UxGjvoZxWBjMhmfifGzA/view?usp=drivesdk' },
@@ -5356,6 +5377,16 @@
 
         // ---- DOCUMENT DATA: maps topic names to an array of document objects ----
         const docData = {
+            
+            
+            
+            'GIT Pathology': [
+                { title: 'Gastrointestinal Tract', url: 'https://drive.google.com/file/d/1xscvSnBn6GSx-blsdufmXaE31PNIrTo8/view?usp=drivesdk' },
+                { title: 'The small intestines', url: 'https://drive.google.com/file/d/1OeepHnSgjkZ84kRveSnMhi585N-qSHga/view?usp=drivesdk' },
+                { title: 'The large intestines', url: 'https://drive.google.com/file/d/1br444lzMhqiPdsF77ximGHznBI2xzmV-/view?usp=drivesdk' },
+                { title: 'Appendix', url: 'https://drive.google.com/file/d/1fM4bGMR8vsR_S62Ld2DH6by8cpc4MYTZ/view?usp=drivesdk' },
+                { title: 'GIT Pathoma - ToToZ Collection', url: 'https://drive.google.com/file/d/11rNGOuqBvC6d5BgKHDwo1RbGHLeBAC6H/view?usp=drivesdk' },
+            ],
             
             'Accessory Organos of the GIT': [
                 { title: 'Class Notes', url: 'https://drive.google.com/file/d/15ZMB3b00UasjE2uJTFvZJUNAXojWGirk/view?usp=drivesdk' },

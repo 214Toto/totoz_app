@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Physiology Quiz • Thyroid Hormones</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: #f1f5f9;
+      padding: 12px 12px 40px;
+      color: #0b1e2e;
+    }
+    .app-container { max-width: 560px; margin: 0 auto; }
+
+    .quiz-header {
+      background: #12455f;
+      border-radius: 20px 20px 0 0;
+      padding: 18px 20px 16px;
+      color: white;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    }
+    .quiz-header .subject {
+      font-size: 18px; font-weight: 700; letter-spacing: -0.2px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .quiz-header .meta {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px;
+      margin-top: 8px; font-size: 13px; font-weight: 500;
+    }
+    .badge {
+      background: rgba(255, 255, 255, 0.12);
+      padding: 4px 12px; border-radius: 40px; font-size: 12px;
+      letter-spacing: 0.2px; border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .toggle-group { display: flex; gap: 8px; margin-top: 12px; }
+    .toggle-group .pill {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #d0e2ed; padding: 6px 18px; border-radius: 40px;
+      font-size: 13px; font-weight: 500; cursor: default; transition: 0.2s;
+    }
+    .toggle-group .pill.active {
+      background: #5fa3c9; border-color: #5fa3c9; color: #0b1e2e; font-weight: 600;
+    }
+
+    .difficulty-bar {
+      display: flex; gap: 8px; margin: 14px 0 12px; flex-wrap: wrap;
+    }
+    .difficulty-btn {
+      background: #ffffff; border: 1px solid #cbd5e1;
+      border-radius: 40px; padding: 8px 24px;
+      font-size: 14px; font-weight: 600; color: #1e3a5f;
+      cursor: pointer; transition: all 0.15s ease;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+      flex: 1 0 auto;
+    }
+    .difficulty-btn:hover { background: #e9f0f7; border-color: #8faec9; }
+    .difficulty-btn.active {
+      background: #12455f; border-color: #12455f; color: white;
+      box-shadow: 0 4px 10px rgba(18, 69, 95, 0.2);
+    }
+
+    .stats {
+      display: flex; justify-content: space-between; align-items: center;
+      margin: 4px 0 10px; font-size: 13px; color: #475569;
+      font-weight: 500; padding: 0 4px;
+    }
+    .stats .count {
+      background: #e2e8f0; padding: 4px 12px; border-radius: 30px;
+      font-size: 12px; font-weight: 600; color: #12455f;
+    }
+
+    .question-card {
+      background: #ffffff; border-radius: 18px;
+      padding: 18px 16px 16px; margin-bottom: 16px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+      border: 1px solid #e9eef3; transition: 0.2s;
+    }
+    .q-top {
+      display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px;
+    }
+    .q-num {
+      background: #12455f; color: white; font-size: 13px; font-weight: 700;
+      min-width: 30px; height: 30px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 2px;
+    }
+    .q-text {
+      font-size: 16px; font-weight: 600; line-height: 1.4; color: #0b1e2e;
+    }
+    .options {
+      display: flex; flex-direction: column; gap: 8px; margin: 10px 0 0 0;
+    }
+    .option {
+      display: flex; align-items: flex-start; gap: 10px;
+      background: #f8fafc; border: 1px solid #e2e8f0;
+      border-radius: 12px; padding: 10px 14px;
+      font-size: 14.5px; line-height: 1.35; cursor: pointer;
+      transition: 0.1s ease; color: #1e293b; font-weight: 450;
+    }
+    .option:hover { background: #f1f5f9; border-color: #b9d0e3; }
+    .option.selected {
+      background: #dbeafe; border-color: #2d7fb9;
+      box-shadow: 0 0 0 1px #2d7fb9;
+    }
+    .option .letter {
+      font-weight: 700; color: #12455f; min-width: 20px;
+      flex-shrink: 0; margin-top: 1px;
+    }
+
+    .explanation {
+      margin-top: 14px; padding: 14px 16px;
+      background: #f0f7fc; border-left: 5px solid #2d7fb9;
+      border-radius: 10px; font-size: 13.5px; line-height: 1.6;
+      color: #1e3a5f; display: none;
+    }
+    .explanation.show { display: block; }
+    .explanation strong { color: #0b2a41; font-weight: 700; }
+    .explanation .ans-badge {
+      display: inline-block; background: #12455f; color: white;
+      padding: 2px 10px; border-radius: 30px; font-size: 12px;
+      font-weight: 700; margin-right: 8px; letter-spacing: 0.2px;
+    }
+
+    .submit-area {
+      margin-top: 24px; display: flex; flex-direction: column;
+      align-items: stretch; gap: 12px;
+    }
+    .btn-submit {
+      background: #12455f; color: white; border: none;
+      border-radius: 60px; padding: 18px 24px;
+      font-size: 17px; font-weight: 700; cursor: pointer;
+      transition: 0.15s; box-shadow: 0 6px 14px rgba(18, 69, 95, 0.2);
+      letter-spacing: 0.2px;
+    }
+    .btn-submit:hover { background: #0e3650; }
+    .btn-submit:active { transform: scale(0.98); }
+    .btn-reset {
+      background: transparent; border: 2px solid #cbd5e1;
+      border-radius: 60px; padding: 12px 24px;
+      font-size: 14px; font-weight: 600; color: #475569;
+      cursor: pointer; transition: 0.15s;
+    }
+    .btn-reset:hover { background: #f1f5f9; border-color: #94a3b8; }
+
+    .score-display {
+      text-align: center; font-size: 15px; font-weight: 600;
+      color: #12455f; background: #e6f0f8; padding: 12px;
+      border-radius: 40px; margin-top: 8px;
+    }
+    .hidden { display: none !important; }
+
+    @media (max-width: 400px) {
+      .q-text { font-size: 15px; }
+      .option { font-size: 13.5px; padding: 9px 12px; }
+      .difficulty-btn { padding: 7px 16px; font-size: 13px; }
+      .quiz-header { padding: 14px 16px 12px; }
+      .quiz-header .subject { font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+
+    <div class="quiz-header">
+      <div class="subject">Physiology • Thyroid Hormones</div>
+      <div class="meta">
+        <span class="badge">60 MCQs</span>
+        <span class="badge"> ToToZ Collection</span>
+      </div>
+      <div class="toggle-group">
+        <span class="pill active">MCQs</span>
+        <span class="pill">Answer before you press submit ka you !!</span>
+      </div>
+    </div>
+
+    <div class="difficulty-bar">
+      <button class="difficulty-btn active" data-level="easy">Easy</button>
+      <button class="difficulty-btn" data-level="medium">Medium</button>
+      <button class="difficulty-btn" data-level="hard">Hard</button>
+    </div>
+
+    <div class="stats">
+      <span>Multiple Choice Questions</span>
+      <span class="count" id="questionCount">20 questions</span>
+    </div>
+
+    <div id="questionContainer"></div>
+
+    <div class="submit-area">
+      <button class="btn-submit" id="submitBtn">Submit All MCQs</button>
+      <button class="btn-reset" id="resetBtn">Reset All Answers</button>
+      <div id="scoreDisplay" class="score-display hidden"></div>
+    </div>
+
+  </div>
+
+  <script>
+    // ─── DATA ──────────────────────────────────────────────────────────
+    // 60 thyroid hormone questions: 1-20 easy, 21-40 medium, 41-60 hard.
+    // All strings are carefully escaped to avoid syntax errors.
+
+    const allQuestions = [
+      // ── EASY (1–20) ──
+      {
+        id: 1, level: "easy",
+        question: "Which thyroid hormone constitutes approximately 90% of total thyroid output?",
+        options: [
+          "A) Triiodothyronine (T3)",
+          "B) Thyroxine (T4)",
+          "C) Reverse T3 (rT3)",
+          "D) Calcitonin"
+        ],
+        answer: 1,
+        explanation: "The thyroid gland secretes predominantly <strong>thyroxine (T4)</strong>, which accounts for about <strong>90% of total thyroid hormone output</strong>. T3 (triiodothyronine) accounts for roughly 10%, and reverse T3 (rT3) is less than 1%. Although T4 is the major secretory product, T3 is the biologically active form at target tissues, where T4 is converted to T3 by deiodinase enzymes. T4 has a longer half-life (~7 days) compared to T3 (~1 day), making it a stable circulating reservoir."
+      },
+      {
+        id: 2, level: "easy",
+        question: "Which cells in the thyroid gland secrete calcitonin?",
+        options: [
+          "A) Follicular epithelial cells",
+          "B) Parafollicular cells",
+          "C) Thyrotrope cells",
+          "D) Fibroblasts"
+        ],
+        answer: 1,
+        explanation: "Calcitonin is secreted by the <strong>parafollicular cells (C cells)</strong> of the thyroid gland. These cells are located between the follicles and are distinct from the follicular epithelial cells that produce T4 and T3. Calcitonin lowers blood calcium by inhibiting osteoclast activity and promoting renal calcium excretion. Its role in adult human calcium homeostasis is minor compared to parathyroid hormone (PTH)."
+      },
+      {
+        id: 3, level: "easy",
+        question: "What is the minimal daily requirement of iodine needed to maintain normal thyroid function?",
+        options: [
+          "A) 100-200 mcg (about 150 mcg)",
+          "B) 500 mcg",
+          "C) 80 mcg",
+          "D) 400 mcg"
+        ],
+        answer: 0,
+        explanation: "The minimal daily iodine requirement is <strong>100-200 mcg, with an average of about 150 mcg</strong>. Iodine is essential for thyroid hormone synthesis; deficiency leads to goiter and hypothyroidism. The World Health Organization recommends 150 mcg/day for adults, 250 mcg/day for pregnant and lactating women. In iodine-sufficient areas, the thyroid gland efficiently traps about 120 mcg of the ingested 500 mcg daily."
+      },
+      {
+        id: 4, level: "easy",
+        question: "Under normal function, how much iodine does the thyroid gland take up daily when 500 mcg are ingested?",
+        options: [
+          "A) 500 mcg",
+          "B) 380 mcg",
+          "C) 120 mcg",
+          "D) 80 mcg"
+        ],
+        answer: 2,
+        explanation: "When 500 mcg of iodine is ingested daily, the normal thyroid gland takes up approximately <strong>120 mcg</strong>. The remaining 380 mcg is excreted by the kidneys. This reflects the thyroid's ability to concentrate iodide against a gradient. The gland contains about 95% of the body's total iodine stores, mostly in the form of thyroglobulin-bound hormone."
+      },
+      {
+        id: 5, level: "easy",
+        question: "What is the primary chemical class/structure of Thyroid Stimulating Hormone (TSH)?",
+        options: [
+          "A) Steroid hormone",
+          "B) Glycoprotein",
+          "C) Polypeptide",
+          "D) Amino acid derivative"
+        ],
+        answer: 1,
+        explanation: "TSH is a <strong>glycoprotein</strong> hormone secreted by the anterior pituitary. It consists of alpha and beta subunits; the alpha subunit is shared with FSH, LH, and hCG, while the beta subunit confers specificity. TSH stimulates all steps of thyroid hormone synthesis and secretion, including iodide trapping, thyroglobulin synthesis, organification, and coupling. It also trophically stimulates thyroid cell growth."
+      },
+      {
+        id: 6, level: "easy",
+        question: "Which hormone is secreted by the hypothalamus to stimulate TSH release?",
+        options: [
+          "A) Growth hormone-releasing hormone (GHRH)",
+          "B) Thyrotropin-releasing hormone (TRH)",
+          "C) Somatostatin",
+          "D) Human chorionic gonadotropin (hCG)"
+        ],
+        answer: 1,
+        explanation: "<strong>Thyrotropin-releasing hormone (TRH)</strong> is a tripeptide secreted by the hypothalamus that stimulates TSH release from the anterior pituitary. TRH also stimulates prolactin secretion. It is the primary regulator of the hypothalamic-pituitary-thyroid axis. TRH secretion is inhibited by thyroid hormones via negative feedback and stimulated by cold exposure in neonates."
+      },
+      {
+        id: 7, level: "easy",
+        question: "In normal adults, what is the average Basal Metabolic Rate (B.M.R.) value?",
+        options: [
+          "A) 20 +/- 5% kcal/sq.m/hour",
+          "B) 40 +/- 15% kcal/sq.m/hour",
+          "C) 120 +/- 10% kcal/sq.m/hour",
+          "D) 200 +/- 15% kcal/sq.m/hour"
+        ],
+        answer: 1,
+        explanation: "The normal average BMR in adults is <strong>40 +/- 15% kcal/sq.m/hour</strong>. Thyroid hormones are major regulators of BMR; hyperthyroidism increases BMR by 50-100%, while hypothyroidism decreases it by 30-50%. BMR measurement was historically used to assess thyroid function but has been largely replaced by direct hormone assays."
+      },
+      {
+        id: 8, level: "easy",
+        question: "What is the normal baseline concentration of serum cholesterol specified in the text?",
+        options: [
+          "A) About 120 mg%",
+          "B) About 200 mg%",
+          "C) About 400 mg%",
+          "D) About 50 mg%"
+        ],
+        answer: 1,
+        explanation: "Normal serum cholesterol is approximately <strong>200 mg%</strong>. Thyroid hormones increase cholesterol excretion in bile and enhance LDL receptor expression. In hypothyroidism, cholesterol levels rise (often above 300 mg%), increasing cardiovascular risk. In hyperthyroidism, cholesterol falls below 120 mg% due to accelerated excretion and metabolism."
+      },
+      {
+        id: 9, level: "easy",
+        question: "What histology is characteristic of active follicular cells in the thyroid gland?",
+        options: [
+          "A) Flattened squamous cells",
+          "B) Cuboidal / Columnar cells with reabsorption lacunae",
+          "C) Multinucleated giant cells",
+          "D) Stratified epithelium"
+        ],
+        answer: 1,
+        explanation: "Active thyroid follicular cells are <strong>cuboidal to columnar</strong> with <strong>reabsorption lacunae</strong> (small pink vacuoles where colloid has been taken up). Inactive follicles are lined by flattened squamous cells and contain abundant dense colloid. The histological appearance reflects the functional state: TSH stimulation causes hypertrophy and hyperplasia with tall columnar cells and scalloped colloid margins."
+      },
+      {
+        id: 10, level: "easy",
+        question: "What percentage of the body's total iodine content is stored in the thyroid gland?",
+        options: [
+          "A) 50%",
+          "B) 75%",
+          "C) 95%",
+          "D) 100%"
+        ],
+        answer: 2,
+        explanation: "Approximately <strong>95%</strong> of the body's total iodine content is stored in the thyroid gland, primarily within the colloid as thyroglobulin-bound hormone. The total body iodine is about 20-30 mg in adults, of which 15-20 mg is in the thyroid. This large reservoir allows the gland to maintain hormone production during periods of iodine deficiency."
+      },
+      {
+        id: 11, level: "easy",
+        question: "Reverse T3 (rT3) makes up approximately what percentage of daily thyroid output?",
+        options: [
+          "A) Less than 1%",
+          "B) 10%",
+          "C) 50%",
+          "D) 90%"
+        ],
+        answer: 0,
+        explanation: "Reverse T3 (rT3) constitutes <strong>less than 1%</strong> of daily thyroid output. rT3 is an inactive metabolite of T4, produced by inner-ring deiodination. It is biologically inactive and may serve as a regulator of thyroid hormone action by competing with T3. Levels increase in stress, starvation, and illness (euthyroid sick syndrome)."
+      },
+      {
+        id: 12, level: "easy",
+        question: "Which enzyme complex synthesizes T4 and T3 from tyrosine and iodide?",
+        options: [
+          "A) Deiodinase",
+          "B) Peroxidase",
+          "C) Adenylyl cyclase",
+          "D) Protease"
+        ],
+        answer: 1,
+        explanation: "<strong>Thyroid peroxidase (TPO)</strong> is the enzyme complex that catalyzes both the organification of iodide (incorporation into tyrosine residues on thyroglobulin) and the coupling of iodotyrosines (MIT and DIT) to form T4 and T3. TPO is a membrane-bound enzyme located at the apical border of the follicular cell. It requires hydrogen peroxide as a cofactor. TPO is the target of antithyroid drugs like propylthiouracil and methimazole."
+      },
+      {
+        id: 13, level: "easy",
+        question: "What happens to the thyroid gland following a hypophysectomy?",
+        options: [
+          "A) Hypertrophies",
+          "B) Atrophies",
+          "C) Develops toxic nodular goiter",
+          "D) Forms exophthalmos"
+        ],
+        answer: 1,
+        explanation: "After hypophysectomy (removal of the pituitary), the thyroid gland <strong>atrophies</strong> due to loss of TSH stimulation. TSH is trophic for the thyroid; without it, follicles become inactive, colloid is depleted, and the gland shrinks. Thyroid hormone secretion falls, leading to secondary hypothyroidism. This demonstrates the dependence of the thyroid on pituitary TSH for both function and structural integrity."
+      },
+      {
+        id: 14, level: "easy",
+        question: "What normal average plasma level is given for TSH?",
+        options: [
+          "A) 2 microunits/ml",
+          "B) 10 microunits/ml",
+          "C) 80 microunits/ml",
+          "D) 0.15 microunits/ml"
+        ],
+        answer: 0,
+        explanation: "The normal average plasma TSH level is approximately <strong>2 microunits/ml</strong> (with a usual range of 0.5-5 microunits/ml). TSH is the most sensitive indicator of thyroid function: it rises in primary hypothyroidism and falls in hyperthyroidism. The log-linear relationship between TSH and free T4 means small changes in free T4 produce large changes in TSH."
+      },
+      {
+        id: 15, level: "easy",
+        question: "What physical condition is defined as a generalized enlargement of the thyroid gland?",
+        options: [
+          "A) Myxedema",
+          "B) Goiter",
+          "C) Cretinism",
+          "D) Exophthalmos"
+        ],
+        answer: 1,
+        explanation: "<strong>Goiter</strong> is a generalized enlargement of the thyroid gland. It can occur in euthyroid, hypothyroid, or hyperthyroid states. Common causes include iodine deficiency (endemic goiter), Hashimoto's thyroiditis, Graves' disease, and goitrogens. The enlargement may be diffuse or nodular, and may be associated with normal, decreased, or increased hormone production."
+      },
+      {
+        id: 16, level: "easy",
+        question: "How does thyroid hormone affect resting respiratory rate and minute ventilation?",
+        options: [
+          "A) Decreases them",
+          "B) Increases them",
+          "C) Has no effect",
+          "D) Causes complete respiratory arrest"
+        ],
+        answer: 1,
+        explanation: "Thyroid hormones <strong>increase resting respiratory rate and minute ventilation</strong>. This is due to increased oxygen consumption and CO2 production, which stimulate the respiratory center. In hyperthyroidism, dyspnea and increased respiratory rate are common. In severe hypothyroidism, respiratory depression and hypoventilation may occur."
+      },
+      {
+        id: 17, level: "easy",
+        question: "What effect do thyroid hormones have on fat stores in adipose tissue?",
+        options: [
+          "A) Inhibition of fat breakdown",
+          "B) Mobilization of fat and increased free fatty acid oxidation",
+          "C) Storage of triglycerides",
+          "D) Conversion of fatty acids into glucose"
+        ],
+        answer: 1,
+        explanation: "Thyroid hormones <strong>mobilize fat</strong> from adipose tissue and <strong>increase free fatty acid oxidation</strong>. They enhance lipolysis and increase the sensitivity of adipose tissue to catecholamines. This leads to decreased fat stores and increased plasma free fatty acids. In hyperthyroidism, weight loss occurs despite increased appetite due to accelerated fat and protein catabolism."
+      },
+      {
+        id: 18, level: "easy",
+        question: "TSH secretion displays a circadian rhythm that peaks at what time?",
+        options: [
+          "A) 9 PM",
+          "B) Midnight",
+          "C) 6 AM",
+          "D) Noon"
+        ],
+        answer: 1,
+        explanation: "TSH secretion peaks at approximately <strong>midnight</strong> (around 2-4 AM) and is lowest in the late afternoon. This circadian rhythm is driven by the suprachiasmatic nucleus and is influenced by sleep, light exposure, and thyroid hormone levels. The nocturnal TSH surge may contribute to the maintenance of thyroid hormone levels during sleep."
+      },
+      {
+        id: 19, level: "easy",
+        question: "Which condition is marked by mental retardation as a striking feature in children due to lack of thyroid hormone?",
+        options: [
+          "A) Graves' disease",
+          "B) Congenital hypothyroidism",
+          "C) Toxic nodular goiter",
+          "D) Hyperthyroidism"
+        ],
+        answer: 1,
+        explanation: "<strong>Congenital hypothyroidism</strong> (cretinism) is characterized by severe mental retardation if untreated. Thyroid hormone is critical for brain development, especially during the first year of life. Other features include dwarfism, coarse facies, macroglossia, umbilical hernia, and constipation. Early diagnosis by newborn screening and prompt thyroxine replacement can prevent irreversible brain damage."
+      },
+      {
+        id: 20, level: "easy",
+        question: "What is the normal value range for Protein-Bound Iodine (PBI)?",
+        options: [
+          "A) 1-2 mcg%",
+          "B) 4-8 mcg%",
+          "C) 10-15 mcg%",
+          "D) 20-30 mcg%"
+        ],
+        answer: 1,
+        explanation: "The normal range for Protein-Bound Iodine (PBI) is <strong>4-8 mcg%</strong>. PBI measures the iodine bound to plasma proteins, primarily thyroxine-binding globulin (TBG). It is elevated in hyperthyroidism and decreased in hypothyroidism. However, PBI is influenced by iodine intake, pregnancy, estrogen therapy, and other factors, making it non-specific; it has been largely replaced by direct hormone assays."
+      },
+
+      // ── MEDIUM (21–40) ──
+      {
+        id: 21, level: "medium",
+        question: "What is the secondary messenger used by TSH to exert its generalized stimulating effects on thyroid cells?",
+        options: [
+          "A) Inositol trisphosphate (IP3)",
+          "B) Diacylglycerol (DAG)",
+          "C) Cyclic AMP (cAMP)",
+          "D) Cyclic GMP (cGMP)"
+        ],
+        answer: 2,
+        explanation: "TSH binds to its G-protein coupled receptor on thyroid follicular cells and activates <strong>adenylyl cyclase</strong>, producing <strong>cyclic AMP (cAMP)</strong> as the primary second messenger. cAMP activates protein kinase A, which phosphorylates multiple target proteins to stimulate iodide trapping, thyroglobulin synthesis, organification, coupling, endocytosis, and hormone release. TSH also increases cAMP in all thyroid cell types, including parafollicular cells."
+      },
+      {
+        id: 22, level: "medium",
+        question: "Besides TSH receptors, which receptors on thyroid cells promote their growth?",
+        options: [
+          "A) Insulin-like Growth Factor 1 (IGF-1) receptors",
+          "B) Epidermal Growth Factor (EGF) receptors",
+          "C) Beta-1 adrenergic receptors",
+          "D) Cortisol receptors"
+        ],
+        answer: 0,
+        explanation: "In addition to TSH receptors, <strong>IGF-1 receptors</strong> on thyroid cells promote growth and proliferation. IGF-1 acts synergistically with TSH to stimulate thyroid cell hypertrophy and hyperplasia. Other growth factors like EGF, fibroblast growth factor (FGF), and platelet-derived growth factor (PDGF) also modulate thyroid growth. This is relevant in goitrogenesis and thyroid neoplasia."
+      },
+      {
+        id: 23, level: "medium",
+        question: "Which set of factors all act to inhibit TSH secretion?",
+        options: [
+          "A) Cold exposure, TRH, and pregnancy",
+          "B) Dopamine, somatostatin, and glucocorticoids",
+          "C) hCG, epinephrine, and insulin",
+          "D) IGF-1, T3, and acetylcholine"
+        ],
+        answer: 1,
+        explanation: "<strong>Dopamine, somatostatin, and glucocorticoids</strong> all inhibit TSH secretion. Dopamine and somatostatin directly suppress TRH and TSH release. Glucocorticoids inhibit TRH synthesis and TSH secretion, which is why they can cause transient hypothyroidism. In contrast, TRH and cold exposure stimulate TSH; hCG and pregnancy can stimulate the thyroid via TSH receptor cross-reactivity."
+      },
+      {
+        id: 24, level: "medium",
+        question: "In high concentrations, how do thyroid hormones affect protein metabolism?",
+        options: [
+          "A) Anabolic effect leading to positive nitrogen balance",
+          "B) Catabolic effect leading to negative nitrogen balance and muscle weakness",
+          "C) Complete inhibition of protein synthesis without breakdown",
+          "D) No change in protein turnover"
+        ],
+        answer: 1,
+        explanation: "At high concentrations (as in hyperthyroidism), thyroid hormones have a <strong>catabolic effect</strong> on protein metabolism, causing <strong>negative nitrogen balance</strong> and muscle weakness (thyrotoxic myopathy). They increase protein degradation and amino acid release from muscle. At physiological levels, thyroid hormones are permissive for normal protein synthesis and growth. This catabolic effect contributes to weight loss and muscle wasting in thyrotoxicosis."
+      },
+      {
+        id: 25, level: "medium",
+        question: "Why does hypercarotenemia cause a yellow skin color in hypothyroidism without affecting the sclera?",
+        options: [
+          "A) Carotene is selectively deposited only in cutaneous fat cells",
+          "B) T4 is required for converting carotene to Vitamin A; slow conversion leads to accumulation in blood/skin, while scleral vessels exclude it",
+          "C) Sclera contains high deiodinase levels that break down carotene",
+          "D) Hypothyroidism causes bilirubin retention only in the sclera"
+        ],
+        answer: 1,
+        explanation: "In hypothyroidism, <strong>T4 is required to convert carotene to vitamin A</strong>. When T4 is deficient, carotene accumulates in the blood and skin, causing a yellow discoloration (hypercarotenemia). The sclera is spared because carotene is deposited in the dermis and subcutaneous fat, and the sclera has no fat; the yellow color does not extend to the sclera. This differs from jaundice, where bilirubin stains the sclera."
+      },
+      {
+        id: 26, level: "medium",
+        question: "How do thyroid hormones affect blood pressure?",
+        options: [
+          "A) Increase diastolic BP, decrease systolic BP",
+          "B) Increase systolic BP, decrease diastolic BP, leaving mean arterial pressure usually unchanged",
+          "C) Increase both systolic and diastolic BP equally",
+          "D) Decrease both systolic and diastolic BP"
+        ],
+        answer: 1,
+        explanation: "Thyroid hormones <strong>increase systolic blood pressure</strong> (due to increased cardiac output and contractility) and <strong>decrease diastolic blood pressure</strong> (due to peripheral vasodilation from increased heat and metabolic demand). Mean arterial pressure is usually unchanged. The widened pulse pressure can produce a bounding or water-hammer pulse in hyperthyroidism. In hypothyroidism, diastolic BP may increase due to vasoconstriction."
+      },
+      {
+        id: 27, level: "medium",
+        question: "What is the critical period for the development of the nervous system dependent on thyroid hormone?",
+        options: [
+          "A) First trimester of intrauterine life only",
+          "B) Up to 1 year of life",
+          "C) Puberty",
+          "D) Up to 5 years of age"
+        ],
+        answer: 1,
+        explanation: "The critical period for thyroid hormone-dependent nervous system development extends <strong>up to 1 year of life</strong>. Thyroid hormone is essential for neuronal proliferation, migration, myelination, and synapse formation. Deficiency during this period causes irreversible mental retardation (cretinism). After 1 year, the brain is less dependent on thyroid hormone, though deficiency still causes metabolic and growth abnormalities."
+      },
+      {
+        id: 28, level: "medium",
+        question: "How does hyperthyroidism affect serum cholesterol levels?",
+        options: [
+          "A) Increases serum cholesterol above 200 mg%",
+          "B) Decreases serum cholesterol (below 120 mg%) due to increased excretion in bile",
+          "C) Has no effect on cholesterol levels",
+          "D) Converts cholesterol entirely into glucagon"
+        ],
+        answer: 1,
+        explanation: "In hyperthyroidism, serum cholesterol is <strong>decreased (often below 120 mg%)</strong> due to increased cholesterol excretion in bile and enhanced LDL receptor-mediated clearance. Thyroid hormones increase hepatic cholesterol synthesis but also increase its catabolism and biliary excretion, with the net effect being a reduction in serum cholesterol. In hypothyroidism, the opposite occurs: cholesterol rises, increasing the risk of atherosclerosis."
+      },
+      {
+        id: 29, level: "medium",
+        question: "Which diagnostic test is specifically used to differentiate between primary and secondary hypothyroidism?",
+        options: [
+          "A) TRH stimulation test",
+          "B) TSH stimulation test",
+          "C) PBI measurement",
+          "D) Basal Metabolic Rate (B.M.R.)"
+        ],
+        answer: 1,
+        explanation: "The <strong>TSH stimulation test</strong> is used to differentiate primary from secondary hypothyroidism. In primary hypothyroidism, the thyroid gland is unresponsive to TSH, so TSH administration does not increase thyroid hormone levels. In secondary (pituitary) hypothyroidism, the thyroid is normal but lacks endogenous TSH; exogenous TSH stimulates hormone production, causing a rise in T4 and T3. The TRH stimulation test is used to differentiate hypothalamic from pituitary causes."
+      },
+      {
+        id: 30, level: "medium",
+        question: "In the TRH stimulation test, what response indicates secondary hypothyroidism due to a hypothalamic lesion?",
+        options: [
+          "A) Plasma TSH level increases after TRH injection",
+          "B) Plasma TSH level remains unaffected after TRH injection",
+          "C) T4 levels fall rapidly",
+          "D) Serum cholesterol increases"
+        ],
+        answer: 0,
+        explanation: "In hypothalamic hypothyroidism, the pituitary is normal but lacks TRH stimulation. When exogenous TRH is administered, the pituitary responds by <strong>increasing TSH secretion</strong> (a delayed and exaggerated response). In pituitary hypothyroidism, the pituitary is damaged and cannot respond to TRH, so TSH remains unchanged. This test helps localize the lesion to the hypothalamus versus the pituitary."
+      },
+      {
+        id: 31, level: "medium",
+        question: "What is the fate of the remaining 80% (400 mcg/day) of ingested iodide absorbed from the GIT?",
+        options: [
+          "A) Excreted by lungs",
+          "B) Stored in liver",
+          "C) Excreted in urine / not taken up by thyroid",
+          "D) Converted directly into T3 in plasma"
+        ],
+        answer: 2,
+        explanation: "Of the 500 mcg of iodide ingested daily, about 120 mcg is taken up by the thyroid gland. The remaining <strong>380-400 mcg is excreted in the urine</strong> by the kidneys. This renal excretion is the primary route of iodine elimination. The kidneys do not significantly reabsorb iodide, so urinary iodine excretion reflects recent dietary intake. This is the basis for urinary iodine measurement as a marker of iodine status."
+      },
+      {
+        id: 32, level: "medium",
+        question: "What electrical and chemical concentration ratio gradient is maintained during iodide trapping?",
+        options: [
+          "A) 1:1",
+          "B) 10:1",
+          "C) 30:1",
+          "D) 100:1"
+        ],
+        answer: 2,
+        explanation: "The thyroid gland maintains an iodide concentration gradient of approximately <strong>30:1</strong> (thyroid to plasma) under normal conditions. This gradient can increase to 100:1 or more in hyperthyroidism or iodine deficiency. The sodium-iodide symporter (NIS) on the basolateral membrane actively transports iodide against this gradient using the sodium gradient generated by the Na+/K+-ATPase. This is the first and rate-limiting step in thyroid hormone synthesis."
+      },
+      {
+        id: 33, level: "medium",
+        question: "What percentage of total thyroid iodide stored in colloid is in the form of biologically active T4 and T3?",
+        options: [
+          "A) Two-thirds",
+          "B) One-third",
+          "C) 95%",
+          "D) 5%"
+        ],
+        answer: 1,
+        explanation: "About <strong>one-third</strong> of the total thyroid iodide stored in colloid is in the form of biologically active T4 and T3. The remaining two-thirds is in the form of inactive precursors: monoiodotyrosine (MIT) and diiodotyrosine (DIT). This large store of hormone in the colloid provides a buffer, allowing the thyroid to maintain hormone output for several weeks even if synthesis is blocked."
+      },
+      {
+        id: 34, level: "medium",
+        question: "Which hormone secreted during pregnancy activates TSH receptors?",
+        options: [
+          "A) Human Chorionic Gonadotropin (hCG)",
+          "B) Human Placental Lactogen (hPL)",
+          "C) Estrogen",
+          "D) Progesterone"
+        ],
+        answer: 0,
+        explanation: "<strong>Human chorionic gonadotropin (hCG)</strong> can activate TSH receptors due to structural homology between the alpha subunits of hCG and TSH. This is why pregnant women may have transient hyperthyroidism (gestational thyrotoxicosis) in the first trimester when hCG levels are highest. This cross-reactivity is usually mild and self-limited, but it can cause hyperemesis gravidarum and other symptoms."
+      },
+      {
+        id: 35, level: "medium",
+        question: "How does thyroid hormone increase myocardial contractile force?",
+        options: [
+          "A) Direct activation of parasympathetic nerve endings",
+          "B) Increasing myocardial calcium uptake and adenylyl cyclase activity via adrenergic stimulation",
+          "C) Decreasing heart rate to allow longer diastolic filling",
+          "D) Inhibiting reticular activating system"
+        ],
+        answer: 1,
+        explanation: "Thyroid hormones increase myocardial contractile force by <strong>increasing myocardial calcium uptake</strong> and <strong>enhancing adenylyl cyclase activity</strong> in response to catecholamines. They also upregulate beta-adrenergic receptors, making the heart more sensitive to sympathetic stimulation. This leads to increased heart rate, stroke volume, and cardiac output. In hyperthyroidism, this can cause palpitations, tachycardia, and high-output heart failure."
+      },
+      {
+        id: 36, level: "medium",
+        question: "What effect does hyperthyroidism have on gastrointestinal motility and stool frequency?",
+        options: [
+          "A) Decreases motility, causing constipation",
+          "B) Increases motility, often causing diarrhea",
+          "C) Blocks digestive juice secretion entirely",
+          "D) Has no effect on GIT motility"
+        ],
+        answer: 1,
+        explanation: "Hyperthyroidism <strong>increases gastrointestinal motility</strong>, often causing <strong>diarrhea</strong> and increased stool frequency. This is due to the general increase in metabolic rate and enhanced sympathetic and parasympathetic activity. Weight loss despite increased appetite is common. In hypothyroidism, the opposite occurs: decreased motility leads to constipation."
+      },
+      {
+        id: 37, level: "medium",
+        question: "What reproductive abnormalities occur in females due to lack of thyroid hormone?",
+        options: [
+          "A) Increased fertility",
+          "B) Menorrhagia, polymenorrhagia, irregular periods, or amenorrhea",
+          "C) Hypersexuality",
+          "D) Early onset of menopause without bleeding"
+        ],
+        answer: 1,
+        explanation: "Lack of thyroid hormone in females causes <strong>menorrhagia, polymenorrhagia, irregular periods, or amenorrhea</strong>. Thyroid hormone is permissive for normal ovarian function and regulates sex hormone-binding globulin (SHBG) and gonadotropin secretion. Hypothyroidism can also cause anovulation and infertility. Hyperthyroidism can also cause menstrual irregularities, typically oligomenorrhea or amenorrhea."
+      },
+      {
+        id: 38, level: "medium",
+        question: "What effect does thyroxine (T4) have on growth hormone and prolactin production by the pituitary?",
+        options: [
+          "A) Increases growth hormone, decreases prolactin",
+          "B) Decreases growth hormone, increases prolactin",
+          "C) Decreases both growth hormone and prolactin",
+          "D) Increases both growth hormone and prolactin"
+        ],
+        answer: 0,
+        explanation: "Thyroxine <strong>increases growth hormone (GH) production</strong> and <strong>decreases prolactin production</strong>. T4 is permissive for GH synthesis and secretion; hypothyroidism impairs GH secretion and growth. T4 also inhibits TRH, which in turn reduces prolactin secretion. In hypothyroidism, prolactin levels often rise, causing galactorrhea and amenorrhea."
+      },
+      {
+        id: 39, level: "medium",
+        question: "Why are Parathyroid Hormone (PTH) and 1,25-(OH)2-vitamin D levels decreased in hyperthyroidism?",
+        options: [
+          "A) Direct destruction of parathyroid glands",
+          "B) Compensatory response to increased bone resorption caused by thyroid hormone",
+          "C) Inability to absorb calcium in the small intestine",
+          "D) Inhibition of kidney transport mechanisms"
+        ],
+        answer: 1,
+        explanation: "In hyperthyroidism, thyroid hormone directly stimulates bone resorption, releasing calcium into the blood. This causes a <strong>compensatory decrease in PTH and 1,25-(OH)2-vitamin D</strong> to maintain calcium homeostasis. The increased bone resorption can lead to hypercalcemia, hypercalciuria, osteoporosis, and nephrolithiasis. This is a secondary response, not a primary defect in the parathyroid glands."
+      },
+      {
+        id: 40, level: "medium",
+        question: "Which antithyroid drug is explicitly cited in the text for treating Graves' disease?",
+        options: [
+          "A) Methimazole",
+          "B) Propylthiouracil",
+          "C) Carbimazole",
+          "D) Perchlorate"
+        ],
+        answer: 1,
+        explanation: "<strong>Propylthiouracil (PTU)</strong> is explicitly cited in the text for treating Graves' disease. It inhibits thyroid peroxidase (TPO), blocking organification and coupling. It also inhibits the peripheral conversion of T4 to T3. Methimazole and carbimazole are also used but were not cited in the source text. PTU is preferred in thyroid storm and pregnancy (first trimester) due to its additional peripheral effect."
+      },
+
+      // ── HARD (41–60) ──
+      {
+        id: 41, level: "hard",
+        question: "In the biosynthetic pathway, which transporter facilitates the exit of iodide from the follicular cell into the colloid lumen?",
+        options: [
+          "A) Sodium-Iodide Symporter (NIS)",
+          "B) Pendrin",
+          "C) Megalin",
+          "D) Pseudopodia"
+        ],
+        answer: 1,
+        explanation: "<strong>Pendrin</strong> is the transporter that facilitates the exit of iodide from the follicular cell into the colloid lumen across the apical membrane. NIS (sodium-iodide symporter) is on the basolateral membrane and mediates iodide uptake into the cell. Pendrin is a chloride-iodide exchanger. Mutations in pendrin cause Pendred syndrome, characterized by goiter and congenital deafness."
+      },
+      {
+        id: 42, level: "hard",
+        question: "What receptor on the follicular cell surface mediates the reuptake of colloid via endocytosis/pinocytosis?",
+        options: [
+          "A) TSH receptor",
+          "B) Pendrin",
+          "C) Megalin",
+          "D) NIS symporter"
+        ],
+        answer: 2,
+        explanation: "<strong>Megalin</strong> is a multiligand endocytic receptor on the apical surface of thyroid follicular cells that mediates the reuptake of thyroglobulin (colloid) via endocytosis/pinocytosis. Megalin binds thyroglobulin and facilitates its internalization into endosomes, where it is proteolyzed to release T4 and T3. This step is essential for hormone release. TSH stimulates this process."
+      },
+      {
+        id: 43, level: "hard",
+        question: "Trace the sequential numerical steps (1 to 10) of thyroid hormone synthesis and release shown in Figure 8.3-2:",
+        options: [
+          "A) Trapping -> Synthesis of TG -> Oxidation -> Organification -> Coupling -> Storage -> Colloid uptake -> Endocytosis -> Proteolysis -> Diffusion",
+          "B) Organification -> Trapping -> Coupling -> Oxidation -> Proteolysis -> Diffusion",
+          "C) Storage -> Proteolysis -> Trapping -> Oxidation -> Synthesis of TG",
+          "D) Oxidation -> Trapping -> Proteolysis -> Coupling -> Endocytosis"
+        ],
+        answer: 0,
+        explanation: "The correct sequential steps of thyroid hormone synthesis and release are: <strong>1) Trapping</strong> of iodide by NIS, <strong>2) Synthesis of thyroglobulin (TG)</strong> by the follicular cell, <strong>3) Oxidation</strong> of iodide by TPO, <strong>4) Organification</strong> (iodination of tyrosine residues on TG), <strong>5) Coupling</strong> of MIT and DIT to form T4 and T3, <strong>6) Storage</strong> of colloid in the follicle lumen, <strong>7) Colloid uptake</strong> by endocytosis, <strong>8) Endocytosis</strong> and vesicle formation, <strong>9) Proteolysis</strong> of TG to release T4 and T3, and <strong>10) Diffusion</strong> of T4 and T3 into the bloodstream. This orderly process ensures efficient hormone production."
+      },
+      {
+        id: 44, level: "hard",
+        question: "What mechanism accounts for 'water hammer (collapsing) pulse' in severe hyperthyroidism?",
+        options: [
+          "A) Decreased cardiac output with systemic vasoconstriction",
+          "B) Cutaneous vasodilation leading to increased pulse pressure",
+          "C) Severe bradycardia combined with hypertension",
+          "D) Narrowed pulse pressure from elevated diastolic BP"
+        ],
+        answer: 1,
+        explanation: "The 'water hammer' or collapsing pulse in severe hyperthyroidism is due to <strong>cutaneous vasodilation</strong> from increased metabolic heat production, which lowers diastolic blood pressure, combined with increased cardiac output and contractility, which raises systolic blood pressure. This creates a <strong>widened pulse pressure</strong>. The rapid fall of the pulse wave during diastole gives the characteristic collapsing sensation. It is a sign of hyperdynamic circulation."
+      },
+      {
+        id: 45, level: "hard",
+        question: "What leads to 'high output failure' in hyperthyroid patients despite elevated cardiac output?",
+        options: [
+          "A) Destruction of coronary arteries",
+          "B) Increased metabolic demand (B.M.R.) causing relative cardiac muscle ischemia where output remains inadequate for tissue demands",
+          "C) Direct toxic suppression of myocardial contractility by rT3",
+          "D) Accumulation of mucopolysaccharides in cardiac tissue"
+        ],
+        answer: 1,
+        explanation: "In hyperthyroidism, the <strong>increased metabolic demand (elevated BMR)</strong> creates a situation where even an elevated cardiac output is <strong>inadequate for tissue oxygen demands</strong>. This leads to 'high output failure' -- the heart is working harder but cannot meet the exaggerated requirements of peripheral tissues. Additionally, tachycardia and increased contractility increase myocardial oxygen consumption, potentially causing relative ischemia and eventually cardiac decompensation."
+      },
+      {
+        id: 46, level: "hard",
+        question: "What is the pathological mechanism underlying Exophthalmos in Graves' disease according to the text?",
+        options: [
+          "A) Accumulation of lipid deposits behind the globe",
+          "B) Orbital fibroblasts expressing TSH receptor protein are stimulated by TSH-R-stim-Ab, releasing cytokines that cause inflammation and edema",
+          "C) Paralysis of extraocular muscles allowing the globe to slip forward",
+          "D) Overgrowth of the bony orbit pushing the eyeball forward"
+        ],
+        answer: 1,
+        explanation: "Exophthalmos in Graves' disease is caused by <strong>orbital fibroblasts that express TSH receptor protein</strong>. These fibroblasts are stimulated by TSH receptor-stimulating antibodies (TSH-R-stim-Ab), leading to the release of cytokines (e.g., TNF-alpha, IL-1) that cause <strong>inflammation, edema, and glycosaminoglycan deposition</strong> in the retro-orbital tissues. This increases orbital volume and pushes the eyeball forward. It is an autoimmune phenomenon distinct from the thyroid hormone excess itself."
+      },
+      {
+        id: 47, level: "hard",
+        question: "Why is Protein-Bound Iodine (PBI) non-conclusive for diagnosing thyroid disease?",
+        options: [
+          "A) PBI only measures rT3 levels",
+          "B) Thyroid binding protein levels vary normally due to various factors, producing abnormal PBI in euthyroid individuals",
+          "C) Iodine is completely cleared from blood within minutes",
+          "D) It cannot distinguish between T3 and calcitonin"
+        ],
+        answer: 1,
+        explanation: "PBI is non-conclusive because <strong>thyroid binding protein levels vary</strong> due to factors such as pregnancy, estrogen therapy, liver disease, nephrotic syndrome, and genetic variations. These variations can produce abnormal PBI values in euthyroid individuals. For example, estrogen increases TBG and thus PBI, while nephrotic syndrome decreases it. Therefore, PBI alone cannot reliably diagnose thyroid dysfunction; free hormone levels and TSH are more accurate."
+      },
+      {
+        id: 48, level: "hard",
+        question: "Why are total thyroid hormonal blood levels non-conclusive for diagnosing thyrotoxicosis or myxedema?",
+        options: [
+          "A) Hormones are fully broken down during blood collection",
+          "B) High or low values of total bound hormones can be found in euthyroid individuals due to binding protein variations",
+          "C) Total hormonal blood tests only measure free iodide ions",
+          "D) Total levels do not reflect pituitary gland size"
+        ],
+        answer: 1,
+        explanation: "Total thyroid hormone levels (T4 and T3) are non-conclusive because <strong>binding protein variations</strong> can produce high or low total levels in euthyroid individuals. For instance, pregnancy or estrogen therapy increases TBG, raising total T4 but free T4 remains normal. Conversely, nephrotic syndrome or liver disease decreases TBG, lowering total T4 but free T4 is normal. Therefore, <strong>free hormone levels</strong> are more reliable for diagnosis."
+      },
+      {
+        id: 49, level: "hard",
+        question: "Which radioactive isotope is preferred for thyroid uptake testing because it lacks damaging effects on the gland?",
+        options: [
+          "A) Iodine-131 (I-131)",
+          "B) Iodine-123 (I-123)",
+          "C) Technetium-99m",
+          "D) Carbon-14"
+        ],
+        answer: 1,
+        explanation: "<strong>Iodine-123 (I-123)</strong> is preferred for thyroid uptake testing because it has a short half-life (13 hours) and emits gamma rays without beta particles, resulting in a <strong>lower radiation dose to the thyroid</strong> compared to I-131. I-131 emits beta particles that can damage thyroid tissue and is used therapeutically for ablation. Technetium-99m is also used for imaging but is not organified, so it cannot assess organification. I-123 provides accurate uptake measurements with minimal damage."
+      },
+      {
+        id: 50, level: "hard",
+        question: "Contrast the actions of catecholamines versus thyroxine (T4) on the Reticular Activating System (RAS) as detailed in Table 8.3-1:",
+        options: [
+          "A) Catecholamines depress RAS; thyroxine stimulates RAS",
+          "B) Catecholamines stimulate RAS; thyroxine performs the same function initially, but after sympathectomy activity of RAS gets depressed",
+          "C) Both catecholamines and thyroxine depress RAS long-term",
+          "D) Neither hormone affects the RAS"
+        ],
+        answer: 1,
+        explanation: "According to Table 8.3-1, <strong>catecholamines stimulate the RAS</strong>, and thyroxine (T4) performs the same function initially. However, after sympathectomy, the activity of the RAS becomes depressed, indicating that thyroxine's effect on the RAS is partly dependent on catecholamines. This highlights the permissive role of thyroid hormone in catecholamine action. The RAS is involved in arousal, alertness, and sleep-wake cycles."
+      },
+      {
+        id: 51, level: "hard",
+        question: "What is the primary difference in duration and onset of action between catecholamines and thyroxine on BMR and CNS?",
+        options: [
+          "A) Catecholamines are slow/long-lasting; T4 is rapid/short-lived",
+          "B) Catecholamines are rapid/short-lived; T4 actions are very slow and of long duration",
+          "C) Both have rapid onset and long duration",
+          "D) Both have slow onset and short duration"
+        ],
+        answer: 1,
+        explanation: "The key difference is that <strong>catecholamines act rapidly and are short-lived</strong> (seconds to minutes), while <strong>thyroxine actions are very slow to onset and of long duration</strong> (hours to days for onset, days to weeks for duration). This is because T4 acts via nuclear receptors to alter gene transcription, which takes time, whereas catecholamines act via membrane receptors and second messengers. This explains why thyroid hormone effects are slow to develop and slow to resolve."
+      },
+      {
+        id: 52, level: "hard",
+        question: "What causes thyrotoxic myopathy and creatinuria in hyperthyroid patients?",
+        options: [
+          "A) Decreased muscle glucose uptake",
+          "B) Increased protein catabolism causing loss of creatine from weak, fatigued muscles, excreted in urine",
+          "C) Accumulation of carotene in skeletal muscle",
+          "D) Deposition of glycogen in muscle tissue"
+        ],
+        answer: 1,
+        explanation: "Thyrotoxic myopathy and creatinuria are caused by <strong>increased protein catabolism</strong> in skeletal muscle. Thyroid hormone excess accelerates protein breakdown, leading to muscle weakness, fatigue, and wasting. Creatine is released from muscles and excreted in the urine (creatinuria). This is a direct catabolic effect of thyroid hormone on muscle tissue. It resolves with treatment of hyperthyroidism."
+      },
+      {
+        id: 53, level: "hard",
+        question: "How do thyroid hormones affect plasma-free cortisol levels despite stimulating adrenocortical secretion and cortisol metabolic clearance?",
+        options: [
+          "A) Plasma-free cortisol decreases to zero",
+          "B) Plasma-free cortisol levels remain normal",
+          "C) Plasma-free cortisol increases tenfold",
+          "D) Cortisol is converted into growth hormone"
+        ],
+        answer: 1,
+        explanation: "Thyroid hormones stimulate both adrenocortical secretion of cortisol and its metabolic clearance. However, the two effects balance each other, so <strong>plasma-free cortisol levels remain normal</strong>. This is an important homeostatic mechanism. In hyperthyroidism, cortisol production and clearance are both increased, but free levels are maintained. In hypothyroidism, both are decreased, but free levels are still normal."
+      },
+      {
+        id: 54, level: "hard",
+        question: "What are the two distinct mechanisms of vasodilation and increased tissue blood flow induced by thyroid hormones?",
+        options: [
+          "A) Activation of parasympathetic nerves and inhibition of nitric oxide",
+          "B) Indirect (rapid O2 utilization/heat/CO2 production) and direct (dilating arterioles in peripheral circulation)",
+          "C) Direct constriction of veins and indirect stimulation of histamine",
+          "D) Direct inhibition of adenylyl cyclase and indirect release of calcitonin"
+        ],
+        answer: 1,
+        explanation: "Thyroid hormones cause vasodilation and increased tissue blood flow by two mechanisms: <strong>indirect</strong> -- increased oxygen utilization, heat production, and CO2 production cause local vasodilation; and <strong>direct</strong> -- thyroid hormones directly dilate arterioles in the peripheral circulation. This leads to increased cardiac output and decreased peripheral resistance, contributing to the hyperdynamic circulation of hyperthyroidism."
+      },
+      {
+        id: 55, level: "hard",
+        question: "In skeletal muscle, what metabolic change leads to hypercalcemia and hypercalcuria in hyperthyroidism?",
+        options: [
+          "A) Reduced renal plasma flow",
+          "B) Demineralization of bones and osteoporosis caused by increased protein catabolism",
+          "C) Excessive uptake of calcium into the sarcoplasmic reticulum",
+          "D) Inability of parathyroid gland to synthesize calcitonin"
+        ],
+        answer: 1,
+        explanation: "In hyperthyroidism, thyroid hormone directly stimulates bone resorption, leading to <strong>demineralization of bones and osteoporosis</strong>. This releases calcium into the bloodstream, causing hypercalcemia and hypercalciuria. The increased bone turnover is mediated by osteoclast activation. This can lead to nephrolithiasis and increased risk of fractures. PTH levels are typically suppressed as a compensatory response."
+      },
+      {
+        id: 56, level: "hard",
+        question: "How does thyroid hormone affect the ratio of oestrogens to androgens in males, and what clinical manifestation can result?",
+        options: [
+          "A) Decreases ratio; causes testicular hypertrophy",
+          "B) Increases ratio; causes breast engorgement (gynecomastia) in males with hyperthyroidism",
+          "C) Leaves ratio unchanged; causes loss of voice",
+          "D) Converts androgens directly into TSH"
+        ],
+        answer: 1,
+        explanation: "Thyroid hormone <strong>increases the ratio of oestrogens to androgens</strong> in males by increasing the peripheral conversion of androgens to estrogens (aromatization) and increasing sex hormone-binding globulin (SHBG). This can cause <strong>gynecomastia (breast engorgement)</strong> in males with hyperthyroidism. It may also cause decreased libido, impotence, and reduced sperm count. These effects reverse with treatment."
+      },
+      {
+        id: 57, level: "hard",
+        question: "What is the effect of thyroid hormones on renal plasma flow, glomerular filtration rate (GFR), and tubular transport maximum?",
+        options: [
+          "A) All three are decreased",
+          "B) All three are increased",
+          "C) GFR increases, but renal plasma flow decreases",
+          "D) Tubular transport maximum decreases to zero"
+        ],
+        answer: 1,
+        explanation: "Thyroid hormones <strong>increase renal plasma flow, GFR, and tubular transport maximum</strong>. This is due to increased cardiac output and renal vasodilation, as well as direct effects on renal tubular function. The increased GFR can lead to increased excretion of water and electrolytes. In hyperthyroidism, polyuria and polydipsia may occur. In hypothyroidism, renal function is reduced, leading to water retention and edema."
+      },
+      {
+        id: 58, level: "hard",
+        question: "Which tissue is EXCLUDED from the general stimulation of metabolic activities and increased basal rate of oxygen consumption by thyroid hormone?",
+        options: [
+          "A) Heart muscle",
+          "B) Skeletal muscle",
+          "C) Brain, retina, gonads, lungs, and spleen",
+          "D) Liver and kidneys"
+        ],
+        answer: 2,
+        explanation: "The <strong>brain, retina, gonads, lungs, and spleen</strong> are excluded from the general stimulation of metabolic activities and increased basal oxygen consumption by thyroid hormone. These tissues do not increase their oxygen consumption in response to thyroid hormone. In contrast, tissues like heart, skeletal muscle, liver, and kidneys are highly responsive and show increased metabolic rate. This differential sensitivity is important for understanding the systemic effects of thyroid disease."
+      },
+      {
+        id: 59, level: "hard",
+        question: "What happens to catecholamine action on BMR in the complete absence of thyroxine (T4)?",
+        options: [
+          "A) Catecholamines double their effect on BMR",
+          "B) Catecholamines cannot increase BMR in the absence of thyroxine",
+          "C) Catecholamines lower the BMR significantly",
+          "D) Catecholamines are converted into TRH"
+        ],
+        answer: 1,
+        explanation: "In the complete absence of thyroxine (T4), <strong>catecholamines cannot increase BMR</strong>. Thyroid hormone is permissive for catecholamine action on metabolic rate. Without T4, the sympathetic nervous system's ability to stimulate thermogenesis and increase metabolic rate is severely impaired. This is why hypothyroid patients have low BMR and are sensitive to cold. T4 is required for the normal expression of beta-adrenergic receptors and post-receptor signaling."
+      },
+      {
+        id: 60, level: "hard",
+        question: "What is considered the most reliable method for assessing thyroid function in current clinical practice?",
+        options: [
+          "A) PBI measurement",
+          "B) B.M.R. determination",
+          "C) Estimation of plasma free T3, free T4, and TSH levels by radioimmunoassay",
+          "D) Total cholesterol level determination"
+        ],
+        answer: 2,
+        explanation: "The most reliable method for assessing thyroid function in current clinical practice is the <strong>estimation of plasma free T3, free T4, and TSH levels by radioimmunoassay (RIA)</strong> or immunometric assays. Free hormone levels are unaffected by binding protein variations, and TSH is the most sensitive indicator of primary thyroid dysfunction. This combination allows accurate diagnosis of primary and secondary thyroid disorders. PBI and BMR are outdated and non-specific."
+      }
+    ];
+
+    // ─── STATE ──────────────────────────────────────────────────────
+    let currentLevel = 'easy';
+    let selectedAnswers = {};
+
+    // ─── DOM REFS ──────────────────────────────────────────────────
+    const container = document.getElementById('questionContainer');
+    const submitBtn = document.getElementById('submitBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const scoreDisplay = document.getElementById('scoreDisplay');
+    const questionCount = document.getElementById('questionCount');
+    const difficultyBtns = document.querySelectorAll('.difficulty-btn');
+
+    // ─── RENDER ──────────────────────────────────────────────────────
+    function renderQuestions(level) {
+      currentLevel = level;
+      const filtered = allQuestions.filter(q => q.level === level);
+      questionCount.textContent = filtered.length + ' questions';
+
+      difficultyBtns.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.level === level);
+      });
+
+      let html = '';
+      filtered.forEach((q, idx) => {
+        const qNumber = idx + 1;
+        const selectedIdx = selectedAnswers[q.id] !== undefined ? selectedAnswers[q.id] : null;
+        const optionsHtml = q.options.map((opt, optIdx) => {
+          const isSelected = selectedIdx === optIdx;
+          const letter = String.fromCharCode(65 + optIdx);
+          return '<div class="option ' + (isSelected ? 'selected' : '') + '" data-qid="' + q.id + '" data-oidx="' + optIdx + '">' +
+            '<span class="letter">' + letter + '</span>' +
+            '<span>' + opt.replace(/^[A-D]\)\s*/, '') + '</span>' +
+          '</div>';
+        }).join('');
+
+        html += '<div class="question-card" data-qid="' + q.id + '">' +
+          '<div class="q-top">' +
+            '<div class="q-num">' + qNumber + '</div>' +
+            '<div class="q-text">' + q.question + '</div>' +
+          '</div>' +
+          '<div class="options">' + optionsHtml + '</div>' +
+          '<div class="explanation" id="exp-' + q.id + '">' +
+            '<span class="ans-badge">Answer: ' + String.fromCharCode(65 + q.answer) + '</span>' +
+            q.explanation +
+          '</div>' +
+        '</div>';
+      });
+
+      container.innerHTML = html;
+      document.querySelectorAll('.option').forEach(opt => {
+        opt.addEventListener('click', handleOptionClick);
+      });
+
+      scoreDisplay.classList.add('hidden');
+    }
+
+    // ─── HANDLE OPTION CLICK ─────────────────────────────────────────
+    function handleOptionClick(e) {
+      const optionDiv = e.currentTarget;
+      const qid = parseInt(optionDiv.dataset.qid);
+      const oidx = parseInt(optionDiv.dataset.oidx);
+
+      const parent = optionDiv.closest('.options');
+      parent.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+
+      optionDiv.classList.add('selected');
+      selectedAnswers[qid] = oidx;
+    }
+
+    // ─── SUBMIT ──────────────────────────────────────────────────────
+    function handleSubmit() {
+      const filtered = allQuestions.filter(q => q.level === currentLevel);
+      let correct = 0;
+      let answered = 0;
+
+      filtered.forEach(q => {
+        const selected = selectedAnswers[q.id];
+        if (selected !== undefined) {
+          answered++;
+          if (selected === q.answer) correct++;
+        }
+      });
+
+      filtered.forEach(q => {
+        const exp = document.getElementById('exp-' + q.id);
+        if (exp) exp.classList.add('show');
+      });
+
+      scoreDisplay.textContent = 'Correct: ' + correct + ' / ' + filtered.length + '   --   Answered: ' + answered + ' / ' + filtered.length;
+      scoreDisplay.classList.remove('hidden');
+    }
+
+    // ─── RESET ──────────────────────────────────────────────────────
+    function handleReset() {
+      const filtered = allQuestions.filter(q => q.level === currentLevel);
+      filtered.forEach(q => { delete selectedAnswers[q.id]; });
+      renderQuestions(currentLevel);
+      scoreDisplay.classList.add('hidden');
+    }
+
+    // ─── EVENT LISTENERS ────────────────────────────────────────────
+    difficultyBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        renderQuestions(btn.dataset.level);
+      });
+    });
+
+    submitBtn.addEventListener('click', handleSubmit);
+    resetBtn.addEventListener('click', handleReset);
+
+    // ─── INIT ────────────────────────────────────────────────────────
+    renderQuestions('easy');
+  </script>
+</body>
+</html>
