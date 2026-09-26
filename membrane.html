@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Membrane Physiology Quiz | Quiz</title>
+    <link rel="stylesheet" href="../nav.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        /* ─── ROOT & RESET ─── */
+        :root {
+            --primary: #1a5e8a;
+            --accent: #2e86ab;
+            --dark: #1b2a33;
+            --light: #f8f9fa;
+            --radius: 12px;
+            --shadow: 0 4px 14px rgba(18, 38, 63, 0.06);
+            --coral: #d95f5f;
+            --gold: #c49a3c;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Segoe UI", Roboto, system-ui, sans-serif;
+            background: linear-gradient(180deg, #f5f8fa, #eef4f6);
+            color: var(--dark);
+            min-height: 100vh;
+            padding-top: 80px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+        }
+
+        /* ─── HEADER ─── */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: #fff;
+            padding: 0.8rem 0;
+            box-shadow: 0 6px 18px rgba(11, 36, 50, 0.18);
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo i {
+            font-size: 1.6rem;
+            color: var(--accent);
+        }
+
+        .logo h1 {
+            font-size: 1.2rem;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+            margin: 0;
+            line-height: 1;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 0.25rem 1rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+            color: #d4eaf0;
+        }
+
+        .badge i {
+            margin-right: 4px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-tabs .tab-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: none;
+            color: #d4eaf0;
+            padding: 0.3rem 0.9rem;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .nav-tabs .tab-btn:hover {
+            background: rgba(255, 255, 255, 0.18);
+            color: #fff;
+        }
+
+        .nav-tabs .tab-btn.active {
+            background: var(--accent);
+            color: var(--dark);
+        }
+
+        /* ─── CONTAINER ─── */
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 1.25rem 2.5rem;
+        }
+
+        /* ─── SECTION TITLES ─── */
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 1.8rem 0 1rem 0;
+            padding-bottom: 0.4rem;
+            border-bottom: 3px solid rgba(26, 94, 138, 0.20);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .section-title i {
+            font-size: 1.1rem;
+            color: rgb(12, 82, 122);
+        }
+
+        .section-title .count {
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 40px;
+            padding: 0.05rem 0.7rem;
+        }
+
+        .section-subtitle {
+            color: #5f7a8a;
+            font-size: 0.92rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .section-panel {
+            display: block;
+        }
+
+        .section-panel.hidden {
+            display: none !important;
+        }
+
+        /* ─── MCQ CARDS ─── */
+        .question {
+            background: #ffffff;
+            border-radius: var(--radius);
+            padding: 1.2rem 1.2rem 0.2rem 1.2rem;
+            margin-bottom: 1.2rem;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(26, 94, 138, 0.06);
+            transition: box-shadow 0.2s;
+        }
+
+        .question:hover {
+            box-shadow: 0 6px 22px rgba(18, 38, 63, 0.07);
+        }
+
+        .question p {
+            font-weight: 600;
+            font-size: 0.98rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .question .q-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 40px;
+            padding: 0 0.7rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            line-height: 1.6;
+            margin-right: 0.4rem;
+        }
+
+        .options label {
+            display: block;
+            background: #fafcfd;
+            border: 1px solid #e0e8ef;
+            border-radius: 8px;
+            padding: 0.45rem 0.9rem;
+            margin-top: 0.45rem;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-weight: 450;
+            font-size: 0.94rem;
+        }
+
+        .options label:hover {
+            background: #e8f2f6;
+            border-color: var(--accent);
+        }
+
+        .options input[type="radio"] {
+            margin-right: 0.5rem;
+            accent-color: var(--primary);
+            transform: scale(1.05);
+        }
+
+        /* ─── MCQ FEEDBACK ─── */
+        .question-feedback {
+            margin-top: 0.9rem;
+            padding: 0.4rem 0 0.1rem 0;
+            border-top: 1px dashed #dce6ed;
+        }
+
+        .answer-block strong {
+            display: block;
+            margin-bottom: 4px;
+            color: var(--primary);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .answer-list {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .answer-item {
+            padding: 5px 10px;
+            border-radius: 6px;
+            border: 1px solid #e6eef3;
+            background: #ffffff;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .answer-correct {
+            background: #ecfdf5;
+            border-color: #bbf7d0;
+            color: #065f46;
+        }
+
+        .answer-wrong {
+            background: #fff1f2;
+            border-color: #fca5a5;
+            color: #9f1239;
+        }
+
+        .user-choice {
+            outline: 2px dashed rgba(0, 0, 0, 0.06);
+        }
+
+        .explanation {
+            margin-top: 6px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            background: #f1f8f6;
+            color: #065f46;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            border-left: 4px solid var(--accent);
+        }
+
+        .explanation.wrong {
+            background: #fff5f5;
+            color: #7f1d1d;
+            border-left-color: #f87171;
+        }
+
+        /* ─── BUTTONS ─── */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            color: #fff;
+            border: none;
+            padding: 0.6rem 1.6rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.2s;
+            box-shadow: 0 4px 12px rgba(26, 94, 138, 0.22);
+        }
+
+        .btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 20px rgba(26, 94, 138, 0.30);
+        }
+
+        .btn:active {
+            transform: scale(0.96);
+        }
+
+        .btn i {
+            font-size: 0.9rem;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            box-shadow: none;
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .btn-sm {
+            padding: 0.35rem 1rem;
+            font-size: 0.85rem;
+        }
+
+        .btn-reveal {
+            background: linear-gradient(90deg, #4a7c7a, var(--primary));
+        }
+
+        .btn-reveal:hover {
+            box-shadow: 0 6px 20px rgba(26, 94, 138, 0.35);
+        }
+
+        .submit-wrap {
+            text-align: center;
+            margin: 1.5rem 0 2rem;
+        }
+
+        /* ─── RESULT BOX ─── */
+        .result {
+            margin-top: 1.5rem;
+            padding: 1.5rem 1.5rem 1rem;
+            background: #f1f8fa;
+            border-radius: var(--radius);
+            text-align: center;
+            display: none;
+            border: 1px solid #c5dfe3;
+        }
+
+        .result h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.2rem;
+        }
+
+        .score {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 0.2rem 0 0.4rem;
+        }
+
+        /* ─── ESSAY / STRUCTURED SECTION ─── */
+        .essay-card {
+            background: #ffffff;
+            border-radius: var(--radius);
+            padding: 1.25rem 1.25rem 1rem;
+            margin-bottom: 1.8rem;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(26, 94, 138, 0.06);
+        }
+
+        .essay-card>h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin: 0 0 0.4rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .essay-card>h3 .qnum {
+            background: var(--primary);
+            color: #fff;
+            border-radius: 40px;
+            padding: 0 0.7rem;
+            font-size: 0.75rem;
+            line-height: 1.6;
+        }
+
+        .essay-card>p {
+            color: #2d4a4a;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 0.8rem;
+            padding: 0.6rem 0.9rem;
+            background: #f4f9fb;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+        }
+
+        .essay-card img {
+            margin: 0.2rem 0 0.8rem 0;
+            border-radius: 8px;
+            border: 1px solid #e9edf2;
+            max-height: 340px;
+            object-fit: contain;
+            background: #fafcfd;
+        }
+
+        /* ─── SUB-QUESTION ─── */
+        .sub-question {
+            margin-top: 1.2rem;
+            padding-top: 1.2rem;
+            border-top: 1px solid #eef3f6;
+        }
+
+        .sub-question:first-of-type {
+            border-top: none;
+            padding-top: 0;
+            margin-top: 0.5rem;
+        }
+
+        .sub-question .sub-q-label {
+            display: flex;
+            align-items: baseline;
+            gap: 0.3rem;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 0.95rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .sub-question .sub-q-label .letter {
+            display: inline-block;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            text-align: center;
+            line-height: 24px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .sub-question .sub-q-label .marks {
+            font-size: 0.7rem;
+            font-weight: 400;
+            color: #6f8f9f;
+            background: #eef4f8;
+            padding: 0 0.5rem;
+            border-radius: 20px;
+        }
+
+        .sub-question textarea {
+            width: 100%;
+            min-height: 72px;
+            border-radius: 8px;
+            border: 1px solid #d1dbe0;
+            padding: 0.6rem 0.9rem;
+            resize: vertical;
+            font-family: inherit;
+            font-size: 0.94rem;
+            background: #fafcfd;
+            transition: border 0.2s, box-shadow 0.2s;
+            margin-top: 0.3rem;
+        }
+
+        .sub-question textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(26, 94, 138, 0.12);
+        }
+
+        .sub-question .essay-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-top: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .sub-question .essay-actions .btn {
+            padding: 0.4rem 1.2rem;
+            font-size: 0.85rem;
+        }
+
+        .sub-question .essay-actions .hint-text {
+            font-size: 0.8rem;
+            color: #7a97a7;
+        }
+
+        /* ─── ESSAY REVEAL ANSWER ─── */
+        .essay-answers {
+            display: none;
+            margin-top: 0.8rem;
+            background: #f1f8f6;
+            border-radius: 8px;
+            padding: 1rem 1.2rem;
+            border: 1px solid #cfe6e0;
+            color: var(--dark);
+            animation: fadeSlide 0.3s ease;
+        }
+
+        .essay-answers.visible {
+            display: block;
+        }
+
+        .essay-answers h4 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            color: var(--primary);
+            margin: 0 0 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .essay-answers h4 i {
+            color: #1a5e8a;
+        }
+
+        .essay-answers p,
+        .essay-answers li {
+            font-size: 0.94rem;
+            line-height: 1.6;
+        }
+
+        .essay-answers ul {
+            padding-left: 1.2rem;
+            margin: 0.3rem 0 0.5rem;
+        }
+
+        .essay-answers ul li {
+            margin-bottom: 0.2rem;
+        }
+
+        .essay-answers b {
+            color: var(--dark);
+        }
+
+        .essay-answers .model-tag {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--dark);
+            font-weight: 700;
+            font-size: 0.65rem;
+            padding: 0.05rem 0.6rem;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        @keyframes fadeSlide {
+            0% {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ─── SCENARIO CARDS ─── */
+        .scenario-card {
+            background: #ffffff;
+            border-radius: var(--radius);
+            padding: 1.25rem 1.25rem 1rem;
+            margin-bottom: 1.8rem;
+            box-shadow: var(--shadow);
+            border-left: 6px solid var(--coral);
+            border: 1px solid rgba(26, 94, 138, 0.06);
+        }
+
+        .scenario-card>h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin: 0 0 0.4rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .scenario-card>h3 .qnum {
+            background: var(--coral);
+            color: #fff;
+            border-radius: 40px;
+            padding: 0 0.7rem;
+            font-size: 0.75rem;
+            line-height: 1.6;
+        }
+
+        .scenario-card>p {
+            color: #2d4a4a;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 0.8rem;
+            padding: 0.6rem 0.9rem;
+            background: #fdf6f6;
+            border-radius: 8px;
+            border-left: 4px solid var(--coral);
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 700px) {
+            body {
+                padding-top: 72px;
+            }
+            .logo h1 {
+                font-size: 1rem;
+            }
+            .header-inner {
+                padding: 0 1rem;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.3rem;
+            }
+            .badge {
+                align-self: flex-start;
+            }
+            .nav-tabs {
+                justify-content: center;
+            }
+            .nav-tabs .tab-btn {
+                font-size: 0.7rem;
+                padding: 0.2rem 0.7rem;
+            }
+            .question {
+                padding: 1rem 1rem 0.1rem 1rem;
+            }
+            .section-title {
+                font-size: 1.1rem;
+            }
+            .essay-card,
+            .scenario-card {
+                padding: 1rem;
+            }
+            .score {
+                font-size: 2.2rem;
+            }
+            .btn {
+                padding: 0.5rem 1.2rem;
+                font-size: 0.85rem;
+            }
+            .sub-question textarea {
+                min-height: 60px;
+                font-size: 0.88rem;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .logo h1 {
+                font-size: 0.85rem;
+            }
+            .logo i {
+                font-size: 1.2rem;
+            }
+            .options label {
+                font-size: 0.87rem;
+                padding: 0.4rem 0.7rem;
+            }
+            .essay-card>p,
+            .scenario-card>p {
+                font-size: 0.88rem;
+                padding: 0.5rem 0.7rem;
+            }
+        }
+
+        /* ─── UTILITIES ─── */
+        .text-muted {
+            color: #5f7a8a;
+            font-size: 0.9rem;
+        }
+        .mt-1 {
+            margin-top: 0.8rem;
+        }
+        .mb-1 {
+            margin-bottom: 0.8rem;
+        }
+        .flex-center {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .hidden {
+            display: none !important;
+        }
+        .scroll-target {
+            scroll-margin-top: 90px;
+        }
+        .gap-1 {
+            gap: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ═══ HEADER ═══ -->
+    <header>
+        <div class="header-inner">
+            <div class="logo">
+                <i class="fas fa-flask"></i>
+                <h1>Membrane Physiology Quiz</h1>
+            </div>
+            <span class="badge"><i class="fas fa-pencil-alt"></i> Quiz</span>
+            <div class="nav-tabs">
+                <button class="tab-btn active" data-section="mcq">MCQs</button>
+                <button class="tab-btn" data-section="structured">Structured</button>
+                <button class="tab-btn" data-section="scenario">Scenarios</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ═══ MAIN ═══ -->
+    <main>
+
+        <!-- ─── SECTION 1: MCQs ─── -->
+        <section class="container section-panel" id="section-mcq">
+            <div class="section-title scroll-target" id="mcq-top">
+                <i class="fas fa-list-ul"></i> Multiple Choice Questions
+                <span class="count">20</span>
+            </div>
+            <p class="section-subtitle">Select the best answer for each question, then click <strong>Submit All MCQs</strong> at the bottom.</p>
+
+            <form id="quizForm">
+
+                <!-- Q1 -->
+                <div class="question">
+                    <p><span class="q-badge">1</span> Which structural component of the phospholipid bilayer is hydrophobic in nature?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q1" value="a"> A. Polar head</label>
+                        <label><input type="radio" name="q1" value="b"> B. Glycoprotein extension</label>
+                        <label><input type="radio" name="q1" value="c"> C. Nonpolar fatty acid tail</label>
+                        <label><input type="radio" name="q1" value="d"> D. Extrinsic protein domain</label>
+                        <label><input type="radio" name="q1" value="e"> E. Ankyrin attachment domain</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q1"></div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="question">
+                    <p><span class="q-badge">2</span> According to the fluid mosaic model, membrane fluidity is maintained across a wide temperature range primarily by:</p>
+                    <div class="options">
+                        <label><input type="radio" name="q2" value="a"> A. Band 3 proteins</label>
+                        <label><input type="radio" name="q2" value="b"> B. Saturated fatty acids</label>
+                        <label><input type="radio" name="q2" value="c"> C. Cholesterol</label>
+                        <label><input type="radio" name="q2" value="d"> D. Spectrin filaments</label>
+                        <label><input type="radio" name="q2" value="e"> E. Glycolipids</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q2"></div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="question">
+                    <p><span class="q-badge">3</span> Which of the following membrane proteins acts as a peripheral/extrinsic protein associated with the cytoskeleton?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q3" value="a"> A. SGLT-1</label>
+                        <label><input type="radio" name="q3" value="b"> B. Ankyrin</label>
+                        <label><input type="radio" name="q3" value="c"> C. GLUT-1</label>
+                        <label><input type="radio" name="q3" value="d"> D. Na⁺-K⁺ ATPase</label>
+                        <label><input type="radio" name="q3" value="e"> E. PepT</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q3"></div>
+                </div>
+
+                <!-- Q4 -->
+                <div class="question">
+                    <p><span class="q-badge">4</span> Genetic mutations affecting ionic channels lead to a class of clinical disorders known as:</p>
+                    <div class="options">
+                        <label><input type="radio" name="q4" value="a"> A. Lysosomal storage diseases</label>
+                        <label><input type="radio" name="q4" value="b"> B. Channelopathies</label>
+                        <label><input type="radio" name="q4" value="c"> C. Hemolytic anemias</label>
+                        <label><input type="radio" name="q4" value="d"> D. Glycogenoses</label>
+                        <label><input type="radio" name="q4" value="e"> E. Tauopathies</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q4"></div>
+                </div>
+
+                <!-- Q5 -->
+                <div class="question">
+                    <p><span class="q-badge">5</span> According to Fick's Law of Diffusion, the net rate of diffusion (Q) is INVERSELY proportional to:</p>
+                    <div class="options">
+                        <label><input type="radio" name="q5" value="a"> A. Concentration gradient (ΔC)</label>
+                        <label><input type="radio" name="q5" value="b"> B. Membrane surface area (A)</label>
+                        <label><input type="radio" name="q5" value="c"> C. Membrane permeability (P)</label>
+                        <label><input type="radio" name="q5" value="d"> D. Membrane thickness (ΔX)</label>
+                        <label><input type="radio" name="q5" value="e"> E. Lipid solubility</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q5"></div>
+                </div>
+
+                <!-- Q6 -->
+                <div class="question">
+                    <p><span class="q-badge">6</span> In facilitated diffusion, transport velocity reaches a maximum (V<sub>max</sub>) due to:</p>
+                    <div class="options">
+                        <label><input type="radio" name="q6" value="a"> A. Exhaustion of cellular ATP reserves</label>
+                        <label><input type="radio" name="q6" value="b"> B. Saturation of available carrier proteins and rate of conformational change</label>
+                        <label><input type="radio" name="q6" value="c"> C. Influx of extracellular calcium</label>
+                        <label><input type="radio" name="q6" value="d"> D. Closure of voltage-gated potassium channels</label>
+                        <label><input type="radio" name="q6" value="e"> E. Depletion of the extracellular concentration gradient</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q6"></div>
+                </div>
+
+                <!-- Q7 -->
+                <div class="question">
+                    <p><span class="q-badge">7</span> Which substance acts as a competitive inhibitor of glucose transport via carrier proteins?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q7" value="a"> A. Ouabain</label>
+                        <label><input type="radio" name="q7" value="b"> B. Phloridzin</label>
+                        <label><input type="radio" name="q7" value="c"> C. Digitalis</label>
+                        <label><input type="radio" name="q7" value="d"> D. Dopamine</label>
+                        <label><input type="radio" name="q7" value="e"> E. Insulin</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q7"></div>
+                </div>
+
+                <!-- Q8 -->
+                <div class="question">
+                    <p><span class="q-badge">8</span> Red blood cells placed in a hypotonic solution will:</p>
+                    <div class="options">
+                        <label><input type="radio" name="q8" value="a"> A. Shrink due to water exit</label>
+                        <label><input type="radio" name="q8" value="b"> B. Remain unchanged in volume</label>
+                        <label><input type="radio" name="q8" value="c"> C. Swell and potentially undergo hemolysis</label>
+                        <label><input type="radio" name="q8" value="d"> D. Crenate rapidly</label>
+                        <label><input type="radio" name="q8" value="e"> E. Actively pump out sodium ions</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q8"></div>
+                </div>
+
+                <!-- Q9 -->
+                <div class="question">
+                    <p><span class="q-badge">9</span> What is the calculated equilibrium potential for Potassium (E<sub>K</sub>) according to the Nernst equation?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q9" value="a"> A. +61 mV</label>
+                        <label><input type="radio" name="q9" value="b"> B. −90 mV</label>
+                        <label><input type="radio" name="q9" value="c"> C. −94 mV</label>
+                        <label><input type="radio" name="q9" value="d"> D. −70 mV</label>
+                        <label><input type="radio" name="q9" value="e"> E. +30 mV</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q9"></div>
+                </div>
+
+                <!-- Q10 -->
+                <div class="question">
+                    <p><span class="q-badge">10</span> In the Goldman-Hodgkin-Katz equation, if the membrane permeability for a specific ion is zero (P<sub>ion</sub> = 0), its contribution to the membrane potential is:</p>
+                    <div class="options">
+                        <label><input type="radio" name="q10" value="a"> A. Doubled</label>
+                        <label><input type="radio" name="q10" value="b"> B. Set to zero</label>
+                        <label><input type="radio" name="q10" value="c"> C. Equal to E<sub>Na</sub></label>
+                        <label><input type="radio" name="q10" value="d"> D. Expressed in Volts instead of mV</label>
+                        <label><input type="radio" name="q10" value="e"> E. Inverted</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q10"></div>
+                </div>
+
+                <!-- Q11 -->
+                <div class="question">
+                    <p><span class="q-badge">11</span> Calculated with Starling forces, what is the Net Filtration Pressure at a capillary bed with Hydrostatic Pressure = 28 mmHg, Interstitial Hydrostatic Pressure = −2 mmHg, and Colloidal Osmotic Pressure = 25 mmHg?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q11" value="a"> A. 1 mmHg</label>
+                        <label><input type="radio" name="q11" value="b"> B. 5 mmHg</label>
+                        <label><input type="radio" name="q11" value="c"> C. 10 mmHg</label>
+                        <label><input type="radio" name="q11" value="d"> D. 15 mmHg</label>
+                        <label><input type="radio" name="q11" value="e"> E. 51 mmHg</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q11"></div>
+                </div>
+
+                <!-- Q12 -->
+                <div class="question">
+                    <p><span class="q-badge">12</span> The primary active transport mechanism of the Na⁺-K⁺ ATPase pump moves:</p>
+                    <div class="options">
+                        <label><input type="radio" name="q12" value="a"> A. 3 Na⁺ ions inward and 2 K⁺ ions outward</label>
+                        <label><input type="radio" name="q12" value="b"> B. 2 Na⁺ ions outward and 3 K⁺ ions inward</label>
+                        <label><input type="radio" name="q12" value="c"> C. 3 Na⁺ ions outward and 2 K⁺ ions inward</label>
+                        <label><input type="radio" name="q12" value="d"> D. 1 Na⁺ ion outward and 1 K⁺ ion inward</label>
+                        <label><input type="radio" name="q12" value="e"> E. 3 Ca²⁺ ions outward and 2 Na⁺ ions inward</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q12"></div>
+                </div>
+
+                <!-- Q13 -->
+                <div class="question">
+                    <p><span class="q-badge">13</span> Which hormone directly INHIBITS the activity of the Na⁺-K⁺ ATPase pump?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q13" value="a"> A. Thyroid hormone</label>
+                        <label><input type="radio" name="q13" value="b"> B. Aldosterone</label>
+                        <label><input type="radio" name="q13" value="c"> C. Insulin</label>
+                        <label><input type="radio" name="q13" value="d"> D. Dopamine</label>
+                        <label><input type="radio" name="q13" value="e"> E. Cortisol</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q13"></div>
+                </div>
+
+                <!-- Q14 -->
+                <div class="question">
+                    <p><span class="q-badge">14</span> Digitalis and Ouabain increase cardiac muscle contractility by:</p>
+                    <div class="options">
+                        <label><input type="radio" name="q14" value="a"> A. Stimulating H⁺-K⁺ ATPase</label>
+                        <label><input type="radio" name="q14" value="b"> B. Inhibiting Na⁺-K⁺ ATPase, indirectly increasing intracellular calcium</label>
+                        <label><input type="radio" name="q14" value="c"> C. Opening voltage-gated potassium leak channels</label>
+                        <label><input type="radio" name="q14" value="d"> D. Activating GLUT-2 transporters</label>
+                        <label><input type="radio" name="q14" value="e"> E. Enhancing pinocytosis in myocytes</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q14"></div>
+                </div>
+
+                <!-- Q15 -->
+                <div class="question">
+                    <p><span class="q-badge">15</span> The secondary active transport of glucose across the apical membrane of renal proximal convoluted tubule cells is mediated by:</p>
+                    <div class="options">
+                        <label><input type="radio" name="q15" value="a"> A. GLUT-1 uniporter</label>
+                        <label><input type="radio" name="q15" value="b"> B. GLUT-2 facilitated transporter</label>
+                        <label><input type="radio" name="q15" value="c"> C. SGLT-1 co-transporter (symporter)</label>
+                        <label><input type="radio" name="q15" value="d"> D. Na⁺/Ca²⁺ exchanger</label>
+                        <label><input type="radio" name="q15" value="e"> E. PepT transporter</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q15"></div>
+                </div>
+
+                <!-- Q16 -->
+                <div class="question">
+                    <p><span class="q-badge">16</span> The H⁺/oligopeptide transporter (PepT) located in the small intestine is a classic example of a:</p>
+                    <div class="options">
+                        <label><input type="radio" name="q16" value="a"> A. Uniporter</label>
+                        <label><input type="radio" name="q16" value="b"> B. Symporter (Co-transporter)</label>
+                        <label><input type="radio" name="q16" value="c"> C. Antiporter (Exchanger)</label>
+                        <label><input type="radio" name="q16" value="d"> D. Primary active ATPase pump</label>
+                        <label><input type="radio" name="q16" value="e"> E. Voltage-gated ion channel</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q16"></div>
+                </div>
+
+                <!-- Q17 -->
+                <div class="question">
+                    <p><span class="q-badge">17</span> Which coat protein and enzyme complex are specifically required to pinch off endocytic vesicles during pinocytosis?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q17" value="a"> A. Spectrin and Ankyrin</label>
+                        <label><input type="radio" name="q17" value="b"> B. Membrane-deforming coat protein and Dynamin</label>
+                        <label><input type="radio" name="q17" value="c"> C. Clathrin and Kinesin</label>
+                        <label><input type="radio" name="q17" value="d"> D. Myosin and ATPase</label>
+                        <label><input type="radio" name="q17" value="e"> E. Ubiquitin and Proteasome</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q17"></div>
+                </div>
+
+                <!-- Q18 -->
+                <div class="question">
+                    <p><span class="q-badge">18</span> Receptor-mediated endocytosis of Low-Density Lipoproteins (LDL) and viruses involves specialized membrane structures known as:</p>
+                    <div class="options">
+                        <label><input type="radio" name="q18" value="a"> A. Pseudopodia</label>
+                        <label><input type="radio" name="q18" value="b"> B. Coated pits lined with clathrin, actin, and myosin</label>
+                        <label><input type="radio" name="q18" value="c"> C. Aquaporins</label>
+                        <label><input type="radio" name="q18" value="d"> D. Phagolysosomes</label>
+                        <label><input type="radio" name="q18" value="e"> E. Leaky channels</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q18"></div>
+                </div>
+
+                <!-- Q19 -->
+                <div class="question">
+                    <p><span class="q-badge">19</span> Which cellular process is defined as the internalization of large multimolecular particles or bacteria by specialized white blood cells?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q19" value="a"> A. Pinocytosis</label>
+                        <label><input type="radio" name="q19" value="b"> B. Facilitated diffusion</label>
+                        <label><input type="radio" name="q19" value="c"> C. Phagocytosis</label>
+                        <label><input type="radio" name="q19" value="d"> D. Dialysis</label>
+                        <label><input type="radio" name="q19" value="e"> E. Exocytosis</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q19"></div>
+                </div>
+
+                <!-- Q20 -->
+                <div class="question">
+                    <p><span class="q-badge">20</span> Which feature differentiates Active Transport from Simple Diffusion?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q20" value="a"> A. Moves substances down their concentration gradient</label>
+                        <label><input type="radio" name="q20" value="b"> B. Requires no carrier protein</label>
+                        <label><input type="radio" name="q20" value="c"> C. Operates against an electrochemical gradient and consumes ATP</label>
+                        <label><input type="radio" name="q20" value="d"> D. Velocity is strictly proportional to lipid solubility</label>
+                        <label><input type="radio" name="q20" value="e"> E. Restricted to non-polar uncharged gas molecules</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q20"></div>
+                </div>
+
+                <div class="submit-wrap">
+                    <button type="button" class="btn" onclick="submitQuiz()">
+                        <i class="fas fa-check-circle"></i> Submit All MCQs
+                    </button>
+                </div>
+
+            </form>
+
+            <div class="result" id="resultBox">
+                <h3><i class="fas fa-chart-simple"></i> Your Score</h3>
+                <div class="score" id="score">0%</div>
+                <p class="text-muted" style="font-size:0.9rem;">Review the feedback below each question.</p>
+                <div id="answers"></div>
+            </div>
+        </section>
+
+        <!-- ─── SECTION 2: STRUCTURED QUESTIONS ─── -->
+        <section class="container section-panel hidden" id="section-structured">
+            <div class="section-title scroll-target" id="structured-top">
+                <i class="fas fa-pen-fancy"></i> Structured Questions
+                <span class="count">10</span>
+            </div>
+            <p class="section-subtitle">Write your answer in each box, then click <strong>Reveal Answer</strong> to check the model response.</p>
+
+            <!-- SQ1 -->
+            <div class="essay-card">
+                <h3><span class="qnum">1</span> Fluid Mosaic Model</h3>
+                <p>Describe the structural organization of the cell membrane according to the Fluid Mosaic Model, detailing the roles of phospholipids, integral/peripheral proteins, and cholesterol in maintaining membrane function and fluidity.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s1')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s1">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>Fluid Mosaic Model:</b> The membrane is a fluid phospholipid bilayer with embedded proteins.</p>
+                        <ul>
+                            <li><b>Phospholipids:</b> Amphipathic — polar heads face aqueous environments, nonpolar tails face inward. Form the basic barrier.</li>
+                            <li><b>Integral proteins:</b> Embedded in the bilayer; act as channels, carriers, pumps, receptors.</li>
+                            <li><b>Peripheral proteins:</b> Attached to membrane surface (e.g., ankyrin, spectrin); involved in cytoskeletal anchoring and signaling.</li>
+                            <li><b>Cholesterol:</b> Inserts between phospholipids; at high temperatures decreases fluidity, at low temperatures prevents tight packing — maintains fluidity across temperature ranges.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQ2 -->
+            <div class="essay-card">
+                <h3><span class="qnum">2</span> Fick's Law & Factors</h3>
+                <p>State Fick's Law of Diffusion. List and explain the six major factors that influence the net rate of diffusion across a biological membrane.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s2')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s2">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>Fick's Law:</b> Q = (P · A · ΔC) / ΔX, where Q = net rate of diffusion, P = permeability, A = surface area, ΔC = concentration gradient, ΔX = membrane thickness.</p>
+                        <p><b>Six factors:</b></p>
+                        <ul>
+                            <li><b>Concentration gradient (ΔC):</b> Directly proportional — steeper gradient → faster diffusion.</li>
+                            <li><b>Membrane surface area (A):</b> Directly proportional — larger area → faster diffusion.</li>
+                            <li><b>Membrane thickness (ΔX):</b> Inversely proportional — thicker membrane → slower diffusion.</li>
+                            <li><b>Permeability (P):</b> Depends on lipid solubility, size, and charge — directly proportional.</li>
+                            <li><b>Temperature:</b> Higher temperature → increased kinetic energy → faster diffusion.</li>
+                            <li><b>Molecular size:</b> Smaller molecules diffuse faster.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQ3 -->
+            <div class="essay-card">
+                <h3><span class="qnum">3</span> Simple vs Facilitated Diffusion</h3>
+                <p>Compare and contrast Simple Diffusion and Facilitated Diffusion in terms of carrier requirement, energy consumption, transport kinetics (V<sub>max</sub>), and typical transported substrates.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s3')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s3">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <ul>
+                            <li><b>Carrier requirement:</b> Simple — no carrier. Facilitated — requires carrier protein.</li>
+                            <li><b>Energy:</b> Both are passive (no ATP).</li>
+                            <li><b>Kinetics:</b> Simple — linear (rate ∝ ΔC). Facilitated — saturable, follows Michaelis-Menten kinetics, reaches V<sub>max</sub>.</li>
+                            <li><b>Substrates:</b> Simple — small nonpolar molecules (O₂, CO₂, steroids). Facilitated — polar molecules (glucose, amino acids, ions) that cannot cross the lipid bilayer directly.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQ4 -->
+            <div class="essay-card">
+                <h3><span class="qnum">4</span> Osmosis & Tonicity</h3>
+                <p>Define Osmosis and Osmotic Pressure. Differentiate between isotonic, hypotonic, and hypertonic solutions, explaining their physiological effects on human red blood cells.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s4')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s4">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>Osmosis:</b> Net movement of water across a semipermeable membrane from low solute concentration to high solute concentration.</p>
+                        <p><b>Osmotic pressure:</b> The pressure required to prevent osmotic water movement.</p>
+                        <ul>
+                            <li><b>Isotonic (e.g., 0.9% NaCl):</b> Same osmolarity as plasma — RBCs maintain normal shape.</li>
+                            <li><b>Hypotonic:</b> Lower osmolarity — water enters RBCs → swelling → hemolysis.</li>
+                            <li><b>Hypertonic:</b> Higher osmolarity — water leaves RBCs → shrinkage (crenation).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQ5 -->
+            <div class="essay-card">
+                <h3><span class="qnum">5</span> Nernst Equation</h3>
+                <p>Write down the Nernst Equation and explain its physiological relevance. State the equilibrium potentials calculated for Na⁺, K⁺, and Cl⁻ ions.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s5')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s5">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>Nernst Equation:</b> E<sub>ion</sub> = (RT/zF) · ln([ion]<sub>out</sub>/[ion]<sub>in</sub>) = (61/z) · log([ion]<sub>out</sub>/[ion]<sub>in</sub>) at 37°C.</p>
+                        <p><b>Physiological relevance:</b> Predicts the membrane potential at which there is no net ion flow. Helps understand resting membrane potential and action potentials.</p>
+                        <p><b>Equilibrium potentials:</b> E<sub>Na</sub> ≈ +61 mV; E<sub>K</sub> ≈ −94 mV; E<sub>Cl</sub> ≈ −70 mV.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQ6 -->
+            <div class="essay-card">
+                <h3><span class="qnum">6</span> Starling Forces</h3>
+                <p>Explain the capillary filtration process using Starling forces. Calculate the Net Filtration Pressure given: Capillary Hydrostatic Pressure = 28 mmHg, Interstitial Hydrostatic Pressure = −2 mmHg, and Colloidal Osmotic Pressure = 25 mmHg.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s6')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s6">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>Starling forces:</b> (1) Capillary hydrostatic pressure (P<sub>c</sub>) — pushes fluid out. (2) Interstitial hydrostatic pressure (P<sub>i</sub>) — opposes filtration. (3) Colloidal osmotic pressure (π<sub>c</sub>) — pulls fluid in. (4) Interstitial osmotic pressure (π<sub>i</sub>) — usually negligible.</p>
+                        <p><b>Calculation:</b> NFP = (P<sub>c</sub> − P<sub>i</sub>) − π<sub>c</sub> = (28 − (−2)) − 25 = 30 − 25 = <b>5 mmHg</b>. Net filtration occurs.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQ7 -->
+            <div class="essay-card">
+                <h3><span class="qnum">7</span> Na⁺-K⁺ ATPase Pump</h3>
+                <p>Elucidate the operational mechanism of the Na⁺-K⁺ ATPase pump. Describe its stoichiometry, electrogenic nature, physiological functions, and regulatory factors (hormones and drugs).</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s7')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s7">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>Mechanism:</b> For each ATP hydrolyzed, 3 Na⁺ are pumped out and 2 K⁺ are pumped in, against their concentration gradients (primary active transport).</p>
+                        <p><b>Electrogenic:</b> Because 3 Na⁺ out vs 2 K⁺ in, the pump is electrogenic — contributes to negative resting membrane potential.</p>
+                        <p><b>Functions:</b> Maintains Na⁺/K⁺ gradients, regulates cell volume, provides energy for secondary active transport (e.g., glucose, amino acids), maintains resting potential.</p>
+                        <p><b>Regulation:</b> Stimulated by thyroid hormone, aldosterone, insulin. Inhibited by dopamine, digitalis, ouabain.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQ8 -->
+            <div class="essay-card">
+                <h3><span class="qnum">8</span> Transepithelial Glucose Transport</h3>
+                <p>Describe the transepithelial transport of glucose across renal tubular epithelium (or intestinal mucosa), detailing the roles of SGLT-1 on the luminal side, the Na⁺-K⁺ pump on the basal side, and GLUT-2 on the basolateral membrane.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s8')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s8">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>Luminal side:</b> SGLT-1 (Na⁺-glucose co-transporter) uses the Na⁺ gradient to move glucose against its concentration gradient into the cell (secondary active transport).</p>
+                        <p><b>Basolateral side:</b> Na⁺-K⁺ ATPase pumps Na⁺ out, maintaining the low intracellular Na⁺ concentration needed for SGLT-1. GLUT-2 facilitates glucose exit into the blood (facilitated diffusion).</p>
+                        <p><b>Net result:</b> Glucose is absorbed from lumen → cell → blood.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQ9 -->
+            <div class="essay-card">
+                <h3><span class="qnum">9</span> Carrier Classification</h3>
+                <p>Classify carrier-mediated transporters into Uniporters, Symporters, and Antiporters, providing ONE distinct physiological example for each class.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s9')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s9">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <ul>
+                            <li><b>Uniporter:</b> Transports one solute. Example: GLUT-1 (glucose transporter).</li>
+                            <li><b>Symporter:</b> Transports two solutes in the same direction. Example: SGLT-1 (Na⁺-glucose co-transporter).</li>
+                            <li><b>Antiporter:</b> Transports two solutes in opposite directions. Example: Na⁺/Ca²⁺ exchanger (NCX).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQ10 -->
+            <div class="essay-card">
+                <h3><span class="qnum">10</span> Endocytosis Types</h3>
+                <p>Compare and contrast the three major types of endocytosis: Pinocytosis, Receptor-Mediated Endocytosis, and Phagocytosis.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s10')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s10">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <ul>
+                            <li><b>Pinocytosis:</b> "Cell drinking" — non-specific uptake of extracellular fluid and small solutes. Uses membrane-deforming coat proteins and dynamin.</li>
+                            <li><b>Receptor-Mediated Endocytosis:</b> Specific uptake of molecules (e.g., LDL, viruses) via receptors. Uses clathrin-coated pits, actin, and myosin.</li>
+                            <li><b>Phagocytosis:</b> "Cell eating" — engulfment of large particles (bacteria, debris) by specialized cells (macrophages, neutrophils). Requires actin polymerization and pseudopod formation.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ─── SECTION 3: APPLIED SCENARIO QUESTIONS ─── -->
+        <section class="container section-panel hidden" id="section-scenario">
+            <div class="section-title scroll-target" id="scenario-top">
+                <i class="fas fa-stethoscope"></i> Applied &amp; Clinical Scenarios
+                <span class="count">5</span>
+            </div>
+            <p class="section-subtitle">Read each scenario and write a comprehensive answer. Then click <strong>Reveal Answer</strong> to compare with the model response.</p>
+
+            <!-- Scenario 1 -->
+            <div class="scenario-card">
+                <h3><span class="qnum">1</span> Digoxin &amp; Cardiac Contractility</h3>
+                <p>A 58-year-old patient with chronic heart failure is prescribed Digoxin (a cardiac glycoside). Explain the cellular mechanism of action of Digoxin on the Na⁺-K⁺ ATPase pump and describe how this alters the secondary active Na⁺/Ca²⁺ exchanger to increase intracellular Ca²⁺ and enhance cardiac contractility.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('sc1')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-sc1">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>Mechanism:</b> Digoxin inhibits the Na⁺-K⁺ ATPase pump → intracellular Na⁺ increases. The Na⁺/Ca²⁺ exchanger (NCX) normally uses the Na⁺ gradient to extrude Ca²⁺. With elevated intracellular Na⁺, the exchanger works less efficiently (or reverses), leading to increased intracellular Ca²⁺. More Ca²⁺ available for cardiac muscle contraction → increased contractility (positive inotropy).</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scenario 2 -->
+            <div class="scenario-card">
+                <h3><span class="qnum">2</span> Oral Rehydration Therapy</h3>
+                <p>A 6-year-old child presents with severe dehydration and watery diarrhea due to a gastrointestinal infection. The attending physician prescribes Oral Rehydration Therapy (ORT) containing a precise mixture of sodium and glucose. Explain the physiological transport mechanism in the intestinal mucosa that makes the combination of sodium and glucose effective for water reabsorption.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('sc2')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-sc2">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>Mechanism:</b> SGLT-1 co-transports Na⁺ and glucose into intestinal cells. Na⁺ is then pumped out by Na⁺-K⁺ ATPase, creating an osmotic gradient that draws water into the cells and then into the blood. Glucose enhances Na⁺ absorption, which in turn drives water absorption. This is why ORT with both Na⁺ and glucose is more effective than either alone.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scenario 3 -->
+            <div class="scenario-card">
+                <h3><span class="qnum">3</span> Exercise-Associated Hyponatremia</h3>
+                <p>A 24-year-old athlete undergoes an endurance test in extreme heat and drinks massive amounts of pure distilled water, resulting in exercise-associated hyponatremia. ABG and plasma analysis show a significantly reduced plasma osmolarity (240 mOsm/L). Explain the osmotic shift of water across cell membranes and predict the structural fate of the patient's red blood cells.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('sc3')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-sc3">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>Osmotic shift:</b> Plasma osmolarity (240 mOsm/L) is lower than intracellular osmolarity (≈300 mOsm/L). Water moves by osmosis into cells, causing them to swell.</p>
+                        <p><b>RBC fate:</b> Red blood cells swell and may undergo hemolysis (rupture) if the hypotonic stress is severe. This can lead to anemia and release of hemoglobin into plasma.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scenario 4 -->
+            <div class="scenario-card">
+                <h3><span class="qnum">4</span> Dynamin &amp; Clathrin Inhibition</h3>
+                <p>A researcher tests a new investigational drug that selectively inhibits the enzyme Dynamin and destroys Clathrin coat proteins in human cell cultures. Describe the specific vesicular transport processes that will be disrupted in these cells, giving examples of specific molecules or particles that will fail to enter the cells.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('sc4')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-sc4">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>Disrupted processes:</b> Receptor-mediated endocytosis and pinocytosis (both require clathrin and dynamin for vesicle formation and scission).</p>
+                        <p><b>Examples of molecules that fail to enter:</b> LDL (low-density lipoprotein), transferrin, viruses (e.g., influenza, HIV), and other ligands taken up by coated pits. Fluid-phase pinocytosis is also affected.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scenario 5 -->
+            <div class="scenario-card">
+                <h3><span class="qnum">5</span> Channelopathy</h3>
+                <p>A geneticist identifies a point mutation in a patient presenting with episodic muscle weakness and cardiac arrhythmias. Further molecular testing confirms a channelopathy involving voltage-gated sodium channels. Differentiate between leaky channels, voltage-gated channels, and ligand-gated channels, and explain how a channelopathy disrupts normal cellular membrane potentials.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('sc5')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-sc5">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>Leaky channels:</b> Always open, contribute to resting membrane potential (e.g., K⁺ leak channels).</p>
+                        <p><b>Voltage-gated channels:</b> Open in response to changes in membrane potential (e.g., Na⁺, K⁺ channels in action potentials).</p>
+                        <p><b>Ligand-gated channels:</b> Open when a specific neurotransmitter binds (e.g., ACh receptor at neuromuscular junction).</p>
+                        <p><b>Channelopathy:</b> A mutation in a channel gene alters its function (e.g., prolonged Na⁺ channel opening). This disrupts normal action potential generation and propagation, leading to hyperexcitability or inexcitability — causing muscle weakness, arrhythmias, or periodic paralysis.</p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <button id="backBtn" onclick="goBack()">⬅ Back</button>
+        <h1>ToToZ Collection</h1>
+        <button id="forwardBtn" onclick="goForward()">Forward ➡</button>
+    </footer>
+
+    <!-- ═══ JAVASCRIPT ═══ -->
+    <script>
+        // ─── TAB NAVIGATION ───
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                const section = this.dataset.section;
+                document.querySelectorAll('.section-panel').forEach(p => p.classList.add('hidden'));
+                document.getElementById('section-' + section).classList.remove('hidden');
+                const topEl = document.getElementById(section + '-top');
+                if (topEl) topEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        // ─── MCQ CORRECT ANSWERS ───
+        const correctAnswers = {
+            q1: "c",
+            q2: "c",
+            q3: "b",
+            q4: "b",
+            q5: "d",
+            q6: "b",
+            q7: "b",
+            q8: "c",
+            q9: "c",
+            q10: "b",
+            q11: "b",
+            q12: "c",
+            q13: "d",
+            q14: "b",
+            q15: "c",
+            q16: "c",
+            q17: "b",
+            q18: "b",
+            q19: "c",
+            q20: "c"
+        };
+
+        // ─── MCQ EXPLANATIONS ───
+        const answerExplanations = {
+            q1: "The nonpolar fatty acid tails are hydrophobic and face the interior of the bilayer, away from water.",
+            q2: "Cholesterol acts as a fluidity buffer — it prevents tight packing at low temperatures and restrains movement at high temperatures.",
+            q3: "Ankyrin is a peripheral membrane protein that links integral proteins (e.g., Band 3) to the spectrin cytoskeleton.",
+            q4: "Channelopathies are diseases caused by mutations in ion channel genes, leading to altered excitability.",
+            q5: "Fick's Law: Q = (P·A·ΔC)/ΔX. Q is inversely proportional to membrane thickness (ΔX).",
+            q6: "Facilitated diffusion reaches Vmax because carrier proteins become saturated — all binding sites are occupied.",
+            q7: "Phloridzin is a competitive inhibitor of SGLT-1, blocking glucose reabsorption in the kidney.",
+            q8: "In hypotonic solution, water enters RBCs by osmosis, causing swelling and potentially hemolysis.",
+            q9: "The equilibrium potential for K⁺ (E_K) is approximately −94 mV, calculated using the Nernst equation.",
+            q10: "If P_ion = 0, the ion does not contribute to the membrane potential — its term in the GHK equation becomes zero.",
+            q11: "NFP = (Pc − Pi) − πc = (28 − (−2)) − 25 = 30 − 25 = 5 mmHg.",
+            q12: "The Na⁺-K⁺ ATPase pumps 3 Na⁺ out and 2 K⁺ in per ATP hydrolyzed.",
+            q13: "Dopamine inhibits the Na⁺-K⁺ ATPase pump, reducing its activity in various tissues.",
+            q14: "Digitalis inhibits Na⁺-K⁺ ATPase → increased intracellular Na⁺ → reduced Na⁺/Ca²⁺ exchange → increased intracellular Ca²⁺ → stronger contraction.",
+            q15: "SGLT-1 (sodium-glucose co-transporter) mediates secondary active transport of glucose across the apical membrane.",
+            q16: "PepT is an antiporter — it exchanges H⁺ for oligopeptides across the intestinal brush border.",
+            q17: "Pinocytosis requires membrane-deforming coat proteins and dynamin to pinch off vesicles.",
+            q18: "Receptor-mediated endocytosis uses clathrin-coated pits, along with actin and myosin, for internalization.",
+            q19: "Phagocytosis is the engulfment of large particles (e.g., bacteria) by specialized white blood cells.",
+            q20: "Active transport moves substances against their electrochemical gradient and consumes ATP, unlike simple diffusion."
+        };
+
+        // ─── MCQ SUBMIT ───
+        function submitQuiz() {
+            let score = 0;
+            const total = Object.keys(correctAnswers).length;
+
+            document.querySelectorAll('.question-feedback').forEach(el => el.innerHTML = '');
+
+            for (let key in correctAnswers) {
+                const radios = Array.from(document.querySelectorAll(`input[name="${key}"]`));
+                const selected = radios.find(r => r.checked);
+                const correct = correctAnswers[key];
+
+                if (selected && selected.value === correct) score++;
+
+                const feedbackEl = document.getElementById(`feedback-${key}`);
+                if (!feedbackEl) continue;
+
+                let html = `<div class="answer-block"><strong>Q${key.replace(/^q/, '')}</strong><div class="answer-list">`;
+
+                radios.forEach(r => {
+                    const label = r.parentElement;
+                    const text = label ? label.textContent.trim() : r.value;
+                    const classes = ['answer-item'];
+                    if (r.value === correct) classes.push('answer-correct');
+                    if (r.checked && r.value !== correct) classes.push('answer-wrong', 'user-choice');
+                    if (r.checked && r.value === correct) classes.push('user-choice');
+                    html += `<div class="${classes.join(' ')}">${text}${r.checked ? ' ◀' : ''}</div>`;
+                });
+
+                html += `</div>`;
+
+                const correctRadio = radios.find(rr => rr.value === correct);
+                const correctText = correctRadio && correctRadio.parentElement ? correctRadio.parentElement.textContent
+                    .trim() : correct;
+                const explanationText = answerExplanations[key] || '';
+
+                if (selected) {
+                    if (selected.value === correct) {
+                        html += `<div class="explanation">✅ Correct — ${explanationText}</div>`;
+                    } else {
+                        html +=
+                            `<div class="explanation wrong">❌ Incorrect. Correct answer: <strong>${correctText}</strong>. ${explanationText}</div>`;
+                    }
+                } else {
+                    html +=
+                        `<div class="explanation wrong">No answer selected. Correct answer: <strong>${correctText}</strong>. ${explanationText}</div>`;
+                }
+
+                html += `</div>`;
+                feedbackEl.innerHTML = html;
+            }
+
+            const percentage = Math.round((score / total) * 100);
+            const resultBox = document.getElementById('resultBox');
+            resultBox.style.display = 'block';
+            document.getElementById('answers').innerHTML = '';
+
+            let start = 0;
+            const timer = setInterval(() => {
+                if (start >= percentage) clearInterval(timer);
+                document.getElementById('score').innerText = start + '%';
+                start++;
+            }, 20);
+
+            document.querySelectorAll('#quizForm input[type="radio"]').forEach(i => i.disabled = true);
+        }
+
+        // ─── ESSAY TOGGLE ───
+        function toggleEssay(id) {
+            const el = document.getElementById('essay-' + id);
+            if (!el) return;
+            el.classList.toggle('visible');
+            if (el.classList.contains('visible')) {
+                setTimeout(() => {
+                    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+
+        // ─── KEYBOARD ACCESSIBILITY ───
+        document.querySelectorAll('.essay-actions .btn').forEach(btn => {
+            btn.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    btn.click();
+                }
+            });
+        });
+
+        // ─── SHIFT+ENTER ON TEXTAREA ───
+        document.querySelectorAll('.sub-question textarea').forEach(ta => {
+            ta.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && e.shiftKey) {
+                    e.preventDefault();
+                    const btn = ta.closest('.sub-question').querySelector('.essay-actions .btn');
+                    if (btn) btn.click();
+                }
+            });
+        });
+
+        // ─── NAV BACK/FORWARD ───
+        function goBack() {
+            window.history.back();
+        }
+        function goForward() {
+            window.history.forward();
+        }
+    </script>
+    <script src="../nav.js"></script>
+
+</body>
+</html>

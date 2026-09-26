@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Synaptic Physiology Quiz | Quiz</title>
+    <link rel="stylesheet" href="../nav.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        /* ─── ROOT & RESET ─── */
+        :root {
+            --primary: #1e6f5c;
+            --accent: #289672;
+            --dark: #1b2a27;
+            --light: #f8f9fa;
+            --radius: 12px;
+            --shadow: 0 4px 14px rgba(18, 38, 63, 0.06);
+            --coral: #d95f5f;
+            --gold: #c49a3c;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Segoe UI", Roboto, system-ui, sans-serif;
+            background: linear-gradient(180deg, #f5faf8, #eef6f2);
+            color: var(--dark);
+            min-height: 100vh;
+            padding-top: 80px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+        }
+
+        /* ─── HEADER ─── */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: #fff;
+            padding: 0.8rem 0;
+            box-shadow: 0 6px 18px rgba(11, 36, 36, 0.18);
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo i {
+            font-size: 1.6rem;
+            color: var(--accent);
+        }
+
+        .logo h1 {
+            font-size: 1.2rem;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+            margin: 0;
+            line-height: 1;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 0.25rem 1rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+            color: #d4f0ee;
+        }
+
+        .badge i {
+            margin-right: 4px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-tabs .tab-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: none;
+            color: #d4f0ee;
+            padding: 0.3rem 0.9rem;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .nav-tabs .tab-btn:hover {
+            background: rgba(255, 255, 255, 0.18);
+            color: #fff;
+        }
+
+        .nav-tabs .tab-btn.active {
+            background: var(--accent);
+            color: var(--dark);
+        }
+
+        /* ─── CONTAINER ─── */
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 1.25rem 2.5rem;
+        }
+
+        /* ─── SECTION TITLES ─── */
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 1.8rem 0 1rem 0;
+            padding-bottom: 0.4rem;
+            border-bottom: 3px solid rgba(30, 111, 92, 0.20);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .section-title i {
+            font-size: 1.1rem;
+            color: rgb(8, 104, 66);
+        }
+
+        .section-title .count {
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 40px;
+            padding: 0.05rem 0.7rem;
+        }
+
+        .section-subtitle {
+            color: #5f7a7a;
+            font-size: 0.92rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .section-panel {
+            display: block;
+        }
+
+        .section-panel.hidden {
+            display: none !important;
+        }
+
+        /* ─── MCQ CARDS ─── */
+        .question {
+            background: #ffffff;
+            border-radius: var(--radius);
+            padding: 1.2rem 1.2rem 0.2rem 1.2rem;
+            margin-bottom: 1.2rem;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(30, 111, 92, 0.06);
+            transition: box-shadow 0.2s;
+        }
+
+        .question:hover {
+            box-shadow: 0 6px 22px rgba(18, 38, 63, 0.07);
+        }
+
+        .question p {
+            font-weight: 600;
+            font-size: 0.98rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .question .q-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 40px;
+            padding: 0 0.7rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            line-height: 1.6;
+            margin-right: 0.4rem;
+        }
+
+        .options label {
+            display: block;
+            background: #fafcfd;
+            border: 1px solid #e0e8ef;
+            border-radius: 8px;
+            padding: 0.45rem 0.9rem;
+            margin-top: 0.45rem;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-weight: 450;
+            font-size: 0.94rem;
+        }
+
+        .options label:hover {
+            background: #e8f5f4;
+            border-color: var(--accent);
+        }
+
+        .options input[type="radio"] {
+            margin-right: 0.5rem;
+            accent-color: var(--primary);
+            transform: scale(1.05);
+        }
+
+        /* ─── MCQ FEEDBACK ─── */
+        .question-feedback {
+            margin-top: 0.9rem;
+            padding: 0.4rem 0 0.1rem 0;
+            border-top: 1px dashed #dce6ed;
+        }
+
+        .answer-block strong {
+            display: block;
+            margin-bottom: 4px;
+            color: var(--primary);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .answer-list {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .answer-item {
+            padding: 5px 10px;
+            border-radius: 6px;
+            border: 1px solid #e6eef3;
+            background: #ffffff;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .answer-correct {
+            background: #ecfdf5;
+            border-color: #bbf7d0;
+            color: #065f46;
+        }
+
+        .answer-wrong {
+            background: #fff1f2;
+            border-color: #fca5a5;
+            color: #9f1239;
+        }
+
+        .user-choice {
+            outline: 2px dashed rgba(0, 0, 0, 0.06);
+        }
+
+        .explanation {
+            margin-top: 6px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            background: #f1f8f6;
+            color: #065f46;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            border-left: 4px solid var(--accent);
+        }
+
+        .explanation.wrong {
+            background: #fff5f5;
+            color: #7f1d1d;
+            border-left-color: #f87171;
+        }
+
+        /* ─── BUTTONS ─── */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            color: #fff;
+            border: none;
+            padding: 0.6rem 1.6rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.2s;
+            box-shadow: 0 4px 12px rgba(30, 111, 92, 0.22);
+        }
+
+        .btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 20px rgba(30, 111, 92, 0.30);
+        }
+
+        .btn:active {
+            transform: scale(0.96);
+        }
+
+        .btn i {
+            font-size: 0.9rem;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            box-shadow: none;
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .btn-sm {
+            padding: 0.35rem 1rem;
+            font-size: 0.85rem;
+        }
+
+        .btn-reveal {
+            background: linear-gradient(90deg, #4a7c7a, var(--primary));
+        }
+
+        .btn-reveal:hover {
+            box-shadow: 0 6px 20px rgba(30, 111, 92, 0.35);
+        }
+
+        .submit-wrap {
+            text-align: center;
+            margin: 1.5rem 0 2rem;
+        }
+
+        /* ─── RESULT BOX ─── */
+        .result {
+            margin-top: 1.5rem;
+            padding: 1.5rem 1.5rem 1rem;
+            background: #f1faf9;
+            border-radius: var(--radius);
+            text-align: center;
+            display: none;
+            border: 1px solid #c5e3df;
+        }
+
+        .result h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.2rem;
+        }
+
+        .score {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 0.2rem 0 0.4rem;
+        }
+
+        /* ─── ESSAY / STRUCTURED SECTION ─── */
+        .essay-card {
+            background: #ffffff;
+            border-radius: var(--radius);
+            padding: 1.25rem 1.25rem 1rem;
+            margin-bottom: 1.8rem;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(30, 111, 92, 0.06);
+        }
+
+        .essay-card>h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin: 0 0 0.4rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .essay-card>h3 .qnum {
+            background: var(--primary);
+            color: #fff;
+            border-radius: 40px;
+            padding: 0 0.7rem;
+            font-size: 0.75rem;
+            line-height: 1.6;
+        }
+
+        .essay-card>p {
+            color: #2d4a4a;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 0.8rem;
+            padding: 0.6rem 0.9rem;
+            background: #f4f9f8;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+        }
+
+        .essay-card img {
+            margin: 0.2rem 0 0.8rem 0;
+            border-radius: 8px;
+            border: 1px solid #e9edf2;
+            max-height: 340px;
+            object-fit: contain;
+            background: #fafcfd;
+        }
+
+        /* ─── SUB-QUESTION ─── */
+        .sub-question {
+            margin-top: 1.2rem;
+            padding-top: 1.2rem;
+            border-top: 1px solid #eef3f6;
+        }
+
+        .sub-question:first-of-type {
+            border-top: none;
+            padding-top: 0;
+            margin-top: 0.5rem;
+        }
+
+        .sub-question .sub-q-label {
+            display: flex;
+            align-items: baseline;
+            gap: 0.3rem;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 0.95rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .sub-question .sub-q-label .letter {
+            display: inline-block;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            text-align: center;
+            line-height: 24px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .sub-question .sub-q-label .marks {
+            font-size: 0.7rem;
+            font-weight: 400;
+            color: #6f8f8f;
+            background: #eef4f4;
+            padding: 0 0.5rem;
+            border-radius: 20px;
+        }
+
+        .sub-question textarea {
+            width: 100%;
+            min-height: 72px;
+            border-radius: 8px;
+            border: 1px solid #d1dbe0;
+            padding: 0.6rem 0.9rem;
+            resize: vertical;
+            font-family: inherit;
+            font-size: 0.94rem;
+            background: #fafcfd;
+            transition: border 0.2s, box-shadow 0.2s;
+            margin-top: 0.3rem;
+        }
+
+        .sub-question textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(30, 111, 92, 0.12);
+        }
+
+        .sub-question .essay-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-top: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .sub-question .essay-actions .btn {
+            padding: 0.4rem 1.2rem;
+            font-size: 0.85rem;
+        }
+
+        .sub-question .essay-actions .hint-text {
+            font-size: 0.8rem;
+            color: #7a9797;
+        }
+
+        /* ─── ESSAY REVEAL ANSWER ─── */
+        .essay-answers {
+            display: none;
+            margin-top: 0.8rem;
+            background: #f1f8f6;
+            border-radius: 8px;
+            padding: 1rem 1.2rem;
+            border: 1px solid #cfe6e0;
+            color: var(--dark);
+            animation: fadeSlide 0.3s ease;
+        }
+
+        .essay-answers.visible {
+            display: block;
+        }
+
+        .essay-answers h4 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            color: var(--primary);
+            margin: 0 0 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .essay-answers h4 i {
+            color: #1e6f5c;
+        }
+
+        .essay-answers p,
+        .essay-answers li {
+            font-size: 0.94rem;
+            line-height: 1.6;
+        }
+
+        .essay-answers ul {
+            padding-left: 1.2rem;
+            margin: 0.3rem 0 0.5rem;
+        }
+
+        .essay-answers ul li {
+            margin-bottom: 0.2rem;
+        }
+
+        .essay-answers b {
+            color: var(--dark);
+        }
+
+        .essay-answers .model-tag {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--dark);
+            font-weight: 700;
+            font-size: 0.65rem;
+            padding: 0.05rem 0.6rem;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        @keyframes fadeSlide {
+            0% {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ─── SCENARIO CARDS ─── */
+        .scenario-card {
+            background: #ffffff;
+            border-radius: var(--radius);
+            padding: 1.25rem 1.25rem 1rem;
+            margin-bottom: 1.8rem;
+            box-shadow: var(--shadow);
+            border-left: 6px solid var(--coral);
+            border: 1px solid rgba(30, 111, 92, 0.06);
+        }
+
+        .scenario-card>h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin: 0 0 0.4rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .scenario-card>h3 .qnum {
+            background: var(--coral);
+            color: #fff;
+            border-radius: 40px;
+            padding: 0 0.7rem;
+            font-size: 0.75rem;
+            line-height: 1.6;
+        }
+
+        .scenario-card>p {
+            color: #2d4a4a;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 0.8rem;
+            padding: 0.6rem 0.9rem;
+            background: #fdf6f6;
+            border-radius: 8px;
+            border-left: 4px solid var(--coral);
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 700px) {
+            body {
+                padding-top: 72px;
+            }
+            .logo h1 {
+                font-size: 1rem;
+            }
+            .header-inner {
+                padding: 0 1rem;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.3rem;
+            }
+            .badge {
+                align-self: flex-start;
+            }
+            .nav-tabs {
+                justify-content: center;
+            }
+            .nav-tabs .tab-btn {
+                font-size: 0.7rem;
+                padding: 0.2rem 0.7rem;
+            }
+            .question {
+                padding: 1rem 1rem 0.1rem 1rem;
+            }
+            .section-title {
+                font-size: 1.1rem;
+            }
+            .essay-card,
+            .scenario-card {
+                padding: 1rem;
+            }
+            .score {
+                font-size: 2.2rem;
+            }
+            .btn {
+                padding: 0.5rem 1.2rem;
+                font-size: 0.85rem;
+            }
+            .sub-question textarea {
+                min-height: 60px;
+                font-size: 0.88rem;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .logo h1 {
+                font-size: 0.85rem;
+            }
+            .logo i {
+                font-size: 1.2rem;
+            }
+            .options label {
+                font-size: 0.87rem;
+                padding: 0.4rem 0.7rem;
+            }
+            .essay-card>p,
+            .scenario-card>p {
+                font-size: 0.88rem;
+                padding: 0.5rem 0.7rem;
+            }
+        }
+
+        /* ─── UTILITIES ─── */
+        .text-muted {
+            color: #5f7a7a;
+            font-size: 0.9rem;
+        }
+        .mt-1 {
+            margin-top: 0.8rem;
+        }
+        .mb-1 {
+            margin-bottom: 0.8rem;
+        }
+        .flex-center {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .hidden {
+            display: none !important;
+        }
+        .scroll-target {
+            scroll-margin-top: 90px;
+        }
+        .gap-1 {
+            gap: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ═══ HEADER ═══ -->
+    <header>
+        <div class="header-inner">
+            <div class="logo">
+                <i class="fas fa-brain"></i>
+                <h1>Synaptic Physiology Quiz</h1>
+            </div>
+            <span class="badge"><i class="fas fa-pencil-alt"></i> Quiz</span>
+            <div class="nav-tabs">
+                <button class="tab-btn active" data-section="mcq">MCQs</button>
+                <button class="tab-btn" data-section="structured">Structured</button>
+                <button class="tab-btn" data-section="scenario">Scenarios</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ═══ MAIN ═══ -->
+    <main>
+
+        <!-- ─── SECTION 1: MCQs ─── -->
+        <section class="container section-panel" id="section-mcq">
+            <div class="section-title scroll-target" id="mcq-top">
+                <i class="fas fa-list-ul"></i> Multiple Choice Questions
+                <span class="count">14</span>
+            </div>
+            <p class="section-subtitle">Select the best answer for each question, then click <strong>Submit All MCQs</strong> at the bottom.</p>
+
+            <form id="quizForm">
+
+                <!-- Q1 -->
+                <div class="question">
+                    <p><span class="q-badge">1</span> Which structural component of a chemical synapse contains the neurotransmitter degradation enzymes?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q1" value="a"> A. Presynaptic axon terminal</label>
+                        <label><input type="radio" name="q1" value="b"> B. Postsynaptic membrane density</label>
+                        <label><input type="radio" name="q1" value="c"> C. Synaptic cleft</label>
+                        <label><input type="radio" name="q1" value="d"> D. Axon hillock</label>
+                        <label><input type="radio" name="q1" value="e"> E. Synaptic vesicle membrane</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q1"></div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="question">
+                    <p><span class="q-badge">2</span> An axo-axonic synapse formed on an excitatory nerve terminal is structurally associated with which physiological mechanism?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q2" value="a"> A. Renshaw cell feedback inhibition</label>
+                        <label><input type="radio" name="q2" value="b"> B. Spatial summation of graded potentials</label>
+                        <label><input type="radio" name="q2" value="c"> C. Reciprocal inhibition of antagonist muscles</label>
+                        <label><input type="radio" name="q2" value="d"> D. Presynaptic inhibition</label>
+                        <label><input type="radio" name="q2" value="e"> E. Long-term potentiation (LTP)</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q2"></div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="question">
+                    <p><span class="q-badge">3</span> Which ionic mechanism directly leads to the generation of an Inhibitory Postsynaptic Potential (IPSP) upon GABA receptor activation?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q3" value="a"> A. Opening of voltage-gated Na⁺ channels</label>
+                        <label><input type="radio" name="q3" value="b"> B. Increased conductance of Cl⁻ or K⁺ ions</label>
+                        <label><input type="radio" name="q3" value="c"> C. Influx of Ca²⁺ ions into the postsynaptic soma</label>
+                        <label><input type="radio" name="q3" value="d"> D. Closure of leak K⁺ channels</label>
+                        <label><input type="radio" name="q3" value="e"> E. Opening of ligand-gated Ca²⁺ channels</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q3"></div>
+                </div>
+
+                <!-- Q4 -->
+                <div class="question">
+                    <p><span class="q-badge">4</span> The degradation of Acetylcholine (ACh) in the synaptic cleft produces choline, which is subsequently:</p>
+                    <div class="options">
+                        <label><input type="radio" name="q4" value="a"> A. Metabolized by intracellular Monoamine Oxidase (MAO)</label>
+                        <label><input type="radio" name="q4" value="b"> B. Cleaved by Catechol-O-Methyl Transferase (COMT)</label>
+                        <label><input type="radio" name="q4" value="c"> C. Reuptaken into the presynaptic terminal for ACh resynthesis</label>
+                        <label><input type="radio" name="q4" value="d"> D. Excreted directly into the systemic circulation</label>
+                        <label><input type="radio" name="q4" value="e"> E. Bound to postsynaptic GABA_A receptors</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q4"></div>
+                </div>
+
+                <!-- Q5 -->
+                <div class="question">
+                    <p><span class="q-badge">5</span> Which metabolic state increases neuronal excitability, making the nervous system prone to epileptiform discharges?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q5" value="a"> A. Acidosis</label>
+                        <label><input type="radio" name="q5" value="b"> B. Hypoxia</label>
+                        <label><input type="radio" name="q5" value="c"> C. Alkalosis</label>
+                        <label><input type="radio" name="q5" value="d"> D. Hypercapnia</label>
+                        <label><input type="radio" name="q5" value="e"> E. Hyperkalemia</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q5"></div>
+                </div>
+
+                <!-- Q6 -->
+                <div class="question">
+                    <p><span class="q-badge">6</span> Where is the anatomical location of the functional "trigger zone" responsible for initiating an action potential in a neuron?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q6" value="a"> A. Dendritic arborization</label>
+                        <label><input type="radio" name="q6" value="b"> B. Synaptic knob</label>
+                        <label><input type="radio" name="q6" value="c"> C. Axon hillock</label>
+                        <label><input type="radio" name="q6" value="d"> D. Synaptic cleft</label>
+                        <label><input type="radio" name="q6" value="e"> E. Postsynaptic membrane density</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q6"></div>
+                </div>
+
+                <!-- Q7 -->
+                <div class="question">
+                    <p><span class="q-badge">7</span> Which type of synaptic connection occurs directly between the axon terminal of one neuron and the cell body of another neuron?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q7" value="a"> A. Axo-dendritic</label>
+                        <label><input type="radio" name="q7" value="b"> B. Axo-somatic</label>
+                        <label><input type="radio" name="q7" value="c"> C. Axo-axonic</label>
+                        <label><input type="radio" name="q7" value="d"> D. Dendro-somatic</label>
+                        <label><input type="radio" name="q7" value="e"> E. Somato-somatic</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q7"></div>
+                </div>
+
+                <!-- Q8 -->
+                <div class="question">
+                    <p><span class="q-badge">8</span> Which primary neurotransmitter is released by presynaptic inhibitory interneurons to reduce calcium influx into excitatory presynaptic knobs?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q8" value="a"> A. Glutamate</label>
+                        <label><input type="radio" name="q8" value="b"> B. Acetylcholine</label>
+                        <label><input type="radio" name="q8" value="c"> C. GABA</label>
+                        <label><input type="radio" name="q8" value="d"> D. Norepinephrine</label>
+                        <label><input type="radio" name="q8" value="e"> E. Substance P</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q8"></div>
+                </div>
+
+                <!-- Q9 -->
+                <div class="question">
+                    <p><span class="q-badge">9</span> Long-Term Potentiation (LTP) is predominantly mediated by which excitatory neurotransmitter?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q9" value="a"> A. Glycine</label>
+                        <label><input type="radio" name="q9" value="b"> B. Enkephalin</label>
+                        <label><input type="radio" name="q9" value="c"> C. Dopamine</label>
+                        <label><input type="radio" name="q9" value="d"> D. Glutamate</label>
+                        <label><input type="radio" name="q9" value="e"> E. GABA</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q9"></div>
+                </div>
+
+                <!-- Q10 -->
+                <div class="question">
+                    <p><span class="q-badge">10</span> In a noradrenergic synapse, which enzyme is primarily responsible for the INTRACELLULAR degradation of reuptaken Norepinephrine?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q10" value="a"> A. Catechol-O-Methyl Transferase (COMT)</label>
+                        <label><input type="radio" name="q10" value="b"> B. Monoamine Oxidase (MAO)</label>
+                        <label><input type="radio" name="q10" value="c"> C. Acetylcholinesterase</label>
+                        <label><input type="radio" name="q10" value="d"> D. Choline Acetyltransferase</label>
+                        <label><input type="radio" name="q10" value="e"> E. Dopa Decarboxylase</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q10"></div>
+                </div>
+
+                <!-- Q11 -->
+                <div class="question">
+                    <p><span class="q-badge">11</span> An inhibitory opioid peptide neurotransmitter found in the gastrointestinal tract and spinal cord that exerts analgesic effects is:</p>
+                    <div class="options">
+                        <label><input type="radio" name="q11" value="a"> A. Glycine</label>
+                        <label><input type="radio" name="q11" value="b"> B. Enkephalin</label>
+                        <label><input type="radio" name="q11" value="c"> C. Acetylcholine</label>
+                        <label><input type="radio" name="q11" value="d"> D. Glutamate</label>
+                        <label><input type="radio" name="q11" value="e"> E. Tyrosine</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q11"></div>
+                </div>
+
+                <!-- Q12 -->
+                <div class="question">
+                    <p><span class="q-badge">12</span> Which factor impairs synaptic transmission by severely reducing ATP production necessary for neurotransmitter synthesis and vesicle transport?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q12" value="a"> A. Alkalosis</label>
+                        <label><input type="radio" name="q12" value="b"> B. Hypoxia</label>
+                        <label><input type="radio" name="q12" value="c"> C. Hyperpolarization</label>
+                        <label><input type="radio" name="q12" value="d"> D. Increased sodium conductance</label>
+                        <label><input type="radio" name="q12" value="e"> E. Administration of GABA agonists</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q12"></div>
+                </div>
+
+                <!-- Q13 -->
+                <div class="question">
+                    <p><span class="q-badge">13</span> During presynaptic inhibition mediated by GABA_B receptors, which downstream ion channel conductance is increased via G-protein signaling?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q13" value="a"> A. Sodium channel conductance</label>
+                        <label><input type="radio" name="q13" value="b"> B. Calcium channel conductance</label>
+                        <label><input type="radio" name="q13" value="c"> C. Potassium channel conductance</label>
+                        <label><input type="radio" name="q13" value="d"> D. Chloride channel conductance</label>
+                        <label><input type="radio" name="q13" value="e"> E. Hydrogen channel conductance</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q13"></div>
+                </div>
+
+                <!-- Q14 -->
+                <div class="question">
+                    <p><span class="q-badge">14</span> What is the typical duration of a synaptic delay across a single chemical synapse?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q14" value="a"> A. 0.1 msec</label>
+                        <label><input type="radio" name="q14" value="b"> B. 0.5 msec</label>
+                        <label><input type="radio" name="q14" value="c"> C. 5.0 msec</label>
+                        <label><input type="radio" name="q14" value="d"> D. 10.0 msec</label>
+                        <label><input type="radio" name="q14" value="e"> E. 1.0 sec</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q14"></div>
+                </div>
+
+                <div class="submit-wrap">
+                    <button type="button" class="btn" onclick="submitQuiz()">
+                        <i class="fas fa-check-circle"></i> Submit All MCQs
+                    </button>
+                </div>
+
+            </form>
+
+            <div class="result" id="resultBox">
+                <h3><i class="fas fa-chart-simple"></i> Your Score</h3>
+                <div class="score" id="score">0%</div>
+                <p class="text-muted" style="font-size:0.9rem;">Review the feedback below each question.</p>
+                <div id="answers"></div>
+            </div>
+        </section>
+
+        <!-- ─── SECTION 2: STRUCTURED QUESTIONS ─── -->
+        <section class="container section-panel hidden" id="section-structured">
+            <div class="section-title scroll-target" id="structured-top">
+                <i class="fas fa-pen-fancy"></i> Structured Questions
+                <span class="count">14</span>
+            </div>
+            <p class="section-subtitle">Write your answer in each box, then click <strong>Reveal Answer</strong> to check the model response.</p>
+
+            <!-- SQ1 -->
+            <div class="essay-card">
+                <h3><span class="qnum">1</span> Chemical Synapse Anatomy</h3>
+                <p>Elucidate the anatomical and functional components of a chemical synapse with a clearly labelled diagram.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s1')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s1">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>Components:</b> (1) Presynaptic axon terminal (bouton) containing synaptic vesicles with neurotransmitter, mitochondria, and voltage-gated Ca²⁺ channels. (2) Synaptic cleft (20–40 nm) containing extracellular matrix and degrading enzymes (e.g., AChE). (3) Postsynaptic membrane with receptor proteins (ligand-gated ion channels) and postsynaptic density. (4) Diagram should label: axon terminal, synaptic vesicles, Ca²⁺ channels, synaptic cleft, postsynaptic receptors, and mitochondria.</p>
+                        <p><b>Functional:</b> Action potential depolarizes terminal → opens Ca²⁺ channels → Ca²⁺ influx → vesicle fusion → neurotransmitter release → diffusion across cleft → binding to postsynaptic receptors → ion channel opening → postsynaptic potential.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQ2 -->
+            <div class="essay-card">
+                <h3><span class="qnum">2</span> Synapse Classification</h3>
+                <p>Classify synapses based on their anatomical locations, giving FIVE distinct structural types.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s2')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s2">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <ul>
+                            <li><b>Axo-dendritic:</b> Axon terminal → dendrite; most common in CNS.</li>
+                            <li><b>Axo-somatic:</b> Axon terminal → cell body (soma).</li>
+                            <li><b>Axo-axonic:</b> Axon terminal → another axon terminal; mediates presynaptic inhibition/facilitation.</li>
+                            <li><b>Dendro-dendritic:</b> Dendrite → dendrite; found in olfactory bulb and retina.</li>
+                            <li><b>Somato-somatic:</b> Soma → soma; rare, seen in some invertebrate systems.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQ3 -->
+            <div class="essay-card">
+                <h3><span class="qnum">3</span> EPSP vs IPSP</h3>
+                <p>Compare and contrast Excitatory Postsynaptic Potentials (EPSP) and Inhibitory Postsynaptic Potentials (IPSP) in terms of ionic mechanisms, effect on membrane potential, and compliance with the All-or-None law.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s3')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s3">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>EPSP:</b> Caused by opening of ligand-gated Na⁺ (and K⁺) channels → Na⁺ influx → partial depolarization (e.g., −70 mV → −60 mV). <b>IPSP:</b> Caused by opening of Cl⁻ channels (Cl⁻ influx) or K⁺ channels (K⁺ efflux) → hyperpolarization (e.g., −70 mV → −80 mV).</p>
+                        <p><b>Effect:</b> EPSP brings membrane closer to threshold → excitatory. IPSP moves membrane away from threshold → inhibitory.</p>
+                        <p><b>All-or-None:</b> Neither EPSP nor IPSP obey the All-or-None law. They are graded potentials — their amplitude varies with stimulus strength and they can summate (temporal/spatial). Action potentials, in contrast, are all-or-none.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQ4 -->
+            <div class="essay-card">
+                <h3><span class="qnum">4</span> Convergence & Divergence</h3>
+                <p>Explain the concepts of Convergence and Divergence in neuronal processing networks and write a note on their physiological significance.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s4')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s4">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>Convergence:</b> Multiple presynaptic neurons synapse onto a single postsynaptic neuron. Allows summation of signals from different sources → integration and decision-making. <b>Divergence:</b> A single presynaptic neuron synapses onto multiple postsynaptic neurons. Allows amplification and distribution of a signal to many targets.</p>
+                        <p><b>Significance:</b> Convergence enables complex integration (e.g., pain perception, memory). Divergence enables widespread coordinated responses (e.g., arousal, motor programs). Both are fundamental to neural network plasticity and information processing.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQ5 -->
+            <div class="essay-card">
+                <h3><span class="qnum">5</span> NE & ACh Pathways</h3>
+                <p>Describe the metabolic pathways involved in the synthesis, release, and termination of action for Norepinephrine (NE) and Acetylcholine (ACh).</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s5')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s5">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>ACh Synthesis:</b> Choline + Acetyl-CoA → (Choline Acetyltransferase, ChAT) → ACh. <b>Release:</b> Ca²⁺-dependent vesicle fusion. <b>Termination:</b> Acetylcholinesterase (AChE) in cleft hydrolyzes ACh → choline + acetate; choline reuptaken into presynaptic terminal.</p>
+                        <p><b>NE Synthesis:</b> Tyrosine → (Tyrosine hydroxylase) → DOPA → (Dopa decarboxylase) → Dopamine → (Dopamine β-hydroxylase) → NE. <b>Release:</b> Ca²⁺-dependent. <b>Termination:</b> (1) Reuptake into presynaptic terminal (NET) → intracellular degradation by MAO; (2) Extraneuronal uptake → COMT degradation; (3) Diffusion.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQ6 -->
+            <div class="essay-card">
+                <h3><span class="qnum">6</span> Presynaptic Inhibition</h3>
+                <p>Explain the mechanisms of Presynaptic Inhibition via GABA_A and GABA_B receptors.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s6')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s6">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>GABA_A:</b> Ligand-gated Cl⁻ channel. Activation → Cl⁻ influx into presynaptic terminal → slight hyperpolarization → reduces Ca²⁺ influx during action potential → less neurotransmitter release.</p>
+                        <p><b>GABA_B:</b> Metabotropic G-protein-coupled receptor. Activation → Gβγ subunits directly inhibit voltage-gated Ca²⁺ channels (decreased Ca²⁺ influx) and open K⁺ channels (hyperpolarization). Both effects reduce neurotransmitter release from the excitatory terminal.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQ7 -->
+            <div class="essay-card">
+                <h3><span class="qnum">7</span> Synaptic Delay</h3>
+                <p>Explain the physiological basis of Synaptic Delay and describe how total synaptic delay can be utilized to determine the number of interneurons in a reflex arc.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s7')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s7">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>Basis:</b> Synaptic delay (~0.5 ms) is the time taken for: Ca²⁺ influx → vesicle fusion → neurotransmitter release → diffusion → receptor binding → ion channel opening. It reflects the sequential steps of chemical transmission.</p>
+                        <p><b>Determining interneurons:</b> Total reflex latency = conduction time along afferent + efferent fibers + (number of synapses × 0.5 ms). By measuring total latency and subtracting known conduction times, the number of central synapses (and thus interneurons) can be estimated. A monosynaptic reflex (e.g., knee jerk) has ~1 synapse; polysynaptic reflexes have more.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQ8 - Additional Structured -->
+            <div class="essay-card">
+                <h3><span class="qnum">8</span> Long-Term Potentiation</h3>
+                <p>Define Long-Term Potentiation (LTP). State the main neurotransmitter involved and explain its physiological significance in brain function.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s8')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s8">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>LTP:</b> A persistent increase in synaptic strength following high-frequency stimulation of a synapse. <b>Main neurotransmitter:</b> Glutamate (acting on AMPA and NMDA receptors). <b>Significance:</b> Cellular basis for learning and memory; involves Ca²⁺ influx through NMDA receptors, activation of CaMKII, and increased AMPA receptor insertion. Found in hippocampus and cortex.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQ9 -->
+            <div class="essay-card">
+                <h3><span class="qnum">9</span> Local Synaptic Potentials</h3>
+                <p>Explain the bioelectric nature of local synaptic potentials (EPSP and IPSP) and highlight TWO ways in which they differ fundamentally from action potentials.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s9')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s9">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>Nature:</b> EPSPs/IPSPs are graded potentials — their amplitude depends on stimulus strength, they decrement with distance, and they can summate (temporal and spatial). They are generated by ligand-gated ion channels.</p>
+                        <p><b>Differences from action potentials:</b> (1) Graded vs All-or-None — EPSP/IPSP amplitude varies; AP is all-or-none. (2) Summation — EPSPs/IPSPs can summate; APs cannot. (3) Ionic basis — EPSP/IPSP use ligand-gated channels; AP uses voltage-gated Na⁺/K⁺ channels.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQ10 -->
+            <div class="essay-card">
+                <h3><span class="qnum">10</span> One-Way Conduction</h3>
+                <p>Explain why synaptic transmission is strictly ONE-WAY (unidirectional) across a chemical synapse.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s10')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s10">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p>Chemical synapses are unidirectional because: (1) Neurotransmitter vesicles are located exclusively in the presynaptic terminal; (2) Receptors for the neurotransmitter are located exclusively on the postsynaptic membrane; (3) The presynaptic membrane lacks receptors for its own neurotransmitter (except autoreceptors for modulation). Therefore, transmission can only proceed from presynaptic → postsynaptic.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQ11 -->
+            <div class="essay-card">
+                <h3><span class="qnum">11</span> Acidosis & Hypoxia</h3>
+                <p>Describe the effect of Acidosis and Hypoxia on synaptic transmission and neuronal function.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s11')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s11">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>Acidosis:</b> Decreases neuronal excitability by reducing Na⁺ channel conductance and increasing K⁺ conductance → hyperpolarization. Can depress synaptic transmission and cause confusion, coma.</p>
+                        <p><b>Hypoxia:</b> Reduces ATP production → impairs Na⁺/K⁺ ATPase → loss of resting potential, impaired neurotransmitter synthesis and vesicle transport → synaptic failure, neuronal death. Severe hypoxia leads to excitotoxicity (excessive glutamate release).</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQ12 -->
+            <div class="essay-card">
+                <h3><span class="qnum">12</span> GABA_A vs GABA_B</h3>
+                <p>Differentiate between the mechanism of action of GABA_A receptors and GABA_B receptors in producing presynaptic inhibition.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s12')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s12">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>GABA_A:</b> Ionotropic receptor — ligand-gated Cl⁻ channel. Activation → Cl⁻ influx → slight hyperpolarization of presynaptic terminal → reduces Ca²⁺ influx → decreased neurotransmitter release. Fast, short-lasting.</p>
+                        <p><b>GABA_B:</b> Metabotropic receptor — G-protein coupled. Activation → Gβγ subunits directly inhibit voltage-gated Ca²⁺ channels (reduced Ca²⁺ entry) and open K⁺ channels (hyperpolarization). Slower, longer-lasting, and more powerful inhibition of release.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQ13 -->
+            <div class="essay-card">
+                <h3><span class="qnum">13</span> ACh Synthesis & Recycling</h3>
+                <p>Write short notes on the synthesis and recycling process of Acetylcholine (ACh) at a cholinergic synapse with the help of a flow diagram.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s13')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s13">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>Synthesis:</b> Choline + Acetyl-CoA → (ChAT) → ACh + CoA. Occurs in presynaptic terminal.</p>
+                        <p><b>Storage:</b> ACh packaged into synaptic vesicles by VAChT.</p>
+                        <p><b>Release:</b> Ca²⁺-dependent exocytosis.</p>
+                        <p><b>Termination:</b> AChE in synaptic cleft hydrolyzes ACh → choline + acetate. Choline is reuptaken by high-affinity choline transporter (CHT1) into presynaptic terminal for resynthesis.</p>
+                        <p><b>Flow:</b> Choline → (CHT1) → Terminal → + Acetyl-CoA → (ChAT) → ACh → Vesicle → Release → Cleft → (AChE) → Choline + Acetate → Choline reuptake.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQ14 -->
+            <div class="essay-card">
+                <h3><span class="qnum">14</span> Subliminal Fringe</h3>
+                <p>Explain the term "Subliminal Fringe" in synaptic physiology and its role in central facilitation.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s14')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s14">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>Subliminal fringe:</b> A population of neurons that receive subthreshold excitatory input — they are partially depolarized but do not fire. They are "primed" and lie just below threshold.</p>
+                        <p><b>Role in central facilitation:</b> If additional excitatory input arrives (from another source or temporal summation), these neurons can fire more readily. This increases the responsiveness of the pool and contributes to phenomena like reinforcement, learning, and increased reflex gain.</p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ─── SECTION 3: APPLIED SCENARIO QUESTIONS ─── -->
+        <section class="container section-panel hidden" id="section-scenario">
+            <div class="section-title scroll-target" id="scenario-top">
+                <i class="fas fa-stethoscope"></i> Applied &amp; Clinical Scenarios
+                <span class="count">4</span>
+            </div>
+            <p class="section-subtitle">Read each scenario and write a comprehensive answer. Then click <strong>Reveal Answer</strong> to compare with the model response.</p>
+
+            <!-- Scenario 1 -->
+            <div class="scenario-card">
+                <h3><span class="qnum">1</span> Alkalosis &amp; Neuromuscular Hyperexcitability</h3>
+                <p>A 34-year-old patient is admitted with severe neuromuscular hyperexcitability and spontaneous muscle spasms (tetany). ABG analysis reveals hyperventilation-induced systemic alkalosis. Explain from a neurophysiological perspective how changes in extracellular pH affect synaptic transmission and neuronal excitability.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('sc1')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-sc1">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>Alkalosis → increased neuronal excitability:</b> Elevated pH increases the permeability of voltage-gated Na⁺ channels (reduces threshold) and decreases K⁺ conductance. This makes neurons more excitable. Additionally, alkalosis reduces ionized calcium (Ca²⁺ binds to albumin more avidly at higher pH), leading to hypocalcemia. Low extracellular Ca²⁺ further increases Na⁺ channel permeability (Ca²⁺ normally stabilizes Na⁺ channels). The combined effect: spontaneous action potentials → tetany, muscle spasms, and even seizures. Synaptic transmission is enhanced because more Ca²⁺ enters presynaptic terminals (due to altered channel gating), increasing neurotransmitter release.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scenario 2 -->
+            <div class="scenario-card">
+                <h3><span class="qnum">2</span> Temporal vs Spatial Summation</h3>
+                <p>A neuroscientist applies a series of high-frequency subthreshold electrical impulses to a single presynaptic axon entering a spinal motor neuron, resulting in a postsynaptic action potential. In a second setup, subthreshold stimuli are delivered concurrently through three distinct presynaptic inputs terminating on different dendrites of the same motor neuron. Explain how the postsynaptic cell reaches threshold in each scenario, detailing the concepts of Temporal Summation and Spatial Summation (with needed diagrams labelled).</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('sc2')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-sc2">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>Temporal Summation:</b> High-frequency impulses from ONE presynaptic terminal arrive in quick succession. Each EPSP is small and decays, but because they occur close in time, the depolarizations add together. If the summed depolarization reaches threshold, an action potential fires. Diagram: single input → multiple closely spaced EPSPs → summation → threshold.</p>
+                        <p><b>Spatial Summation:</b> Multiple presynaptic inputs (three different terminals) fire simultaneously. Each produces a small EPSP at different dendritic locations. These EPSPs spread electronically to the axon hillock and summate. If the combined depolarization reaches threshold, an action potential fires. Diagram: three separate inputs → simultaneous EPSPs → summation at trigger zone → threshold.</p>
+                        <p>Key distinction: temporal = same synapse, repeated over time; spatial = different synapses, simultaneous.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scenario 3 -->
+            <div class="scenario-card">
+                <h3><span class="qnum">3</span> Renshaw Cell Feedback Inhibition</h3>
+                <p>A patient presents with hypertonia and muscle spasms following a spinal cord injury. Examination demonstrates exaggerated stretch reflexes due to impaired negative feedback regulation on alpha motor neurons. Describe the feedback inhibition circuit involving Renshaw cells in the anterior horn of the spinal cord, detailing the neurotransmitters involved and how this mechanism prevents runaway excitation.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('sc3')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-sc3">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>Circuit:</b> Alpha motor neuron (anterior horn) → sends recurrent collateral axon → synapses on Renshaw cell (inhibitory interneuron). Renshaw cell → releases glycine → synapses back onto the alpha motor neuron (and also on Ia inhibitory interneurons). This is a negative feedback loop.</p>
+                        <p><b>Neurotransmitters:</b> Acetylcholine (from motor neuron collateral → Renshaw cell), Glycine (from Renshaw cell → motor neuron).</p>
+                        <p><b>Function:</b> When the motor neuron fires excessively, the collateral activates the Renshaw cell, which inhibits the motor neuron, preventing runaway excitation and stabilizing firing rates. Loss of this inhibition (e.g., spinal cord injury) causes hypertonia and exaggerated reflexes.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scenario 4 -->
+            <div class="scenario-card">
+                <h3><span class="qnum">4</span> Reciprocal Inhibition in Patellar Reflex</h3>
+                <p>During a patellar tendon reflex test, tapping the patellar ligament causes rapid contraction of the quadriceps (protagonist muscle) while the hamstrings (antagonist muscle) simultaneously relax. Elucidate the neural circuit responsible for Reciprocal Inhibition, highlighting the role of the dorsal root ganglion, motor neurons, and glycine-releasing interneurons.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('sc4')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-sc4">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>Circuit:</b> Tapping patellar ligament stretches quadriceps → muscle spindle afferents (Ia fibers) fire → cell bodies in dorsal root ganglion (DRG) → afferents enter spinal cord → (1) directly synapse on alpha motor neurons to quadriceps (monosynaptic) → contraction; (2) collateral branch synapses on Ia inhibitory interneuron → this interneuron releases glycine → synapses on alpha motor neurons to hamstrings (antagonist) → hyperpolarization/inhibition → relaxation.</p>
+                        <p><b>Roles:</b> DRG contains cell bodies of sensory afferents. Motor neurons (alpha) drive muscle contraction. Glycine-releasing interneuron mediates inhibition of the antagonist motor neuron. This reciprocal inhibition prevents co-contraction and allows smooth, coordinated movement.</p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <button id="backBtn" onclick="goBack()">⬅ Back</button>
+        <h1>ToToZ Collection</h1>
+        <button id="forwardBtn" onclick="goForward()">Forward ➡</button>
+    </footer>
+
+    <!-- ═══ JAVASCRIPT ═══ -->
+    <script>
+        // ─── TAB NAVIGATION ───
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                const section = this.dataset.section;
+                document.querySelectorAll('.section-panel').forEach(p => p.classList.add('hidden'));
+                document.getElementById('section-' + section).classList.remove('hidden');
+                const topEl = document.getElementById(section + '-top');
+                if (topEl) topEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        // ─── MCQ CORRECT ANSWERS ───
+        const correctAnswers = {
+            q1: "c",
+            q2: "d",
+            q3: "b",
+            q4: "c",
+            q5: "c",
+            q6: "c",
+            q7: "b",
+            q8: "c",
+            q9: "d",
+            q10: "b",
+            q11: "b",
+            q12: "b",
+            q13: "c",
+            q14: "b"
+        };
+
+        // ─── MCQ EXPLANATIONS ───
+        const answerExplanations = {
+            q1: "The synaptic cleft contains neurotransmitter-degrading enzymes (e.g., acetylcholinesterase) that terminate the action of the neurotransmitter.",
+            q2: "Axo-axonic synapses on excitatory terminals mediate presynaptic inhibition — reducing Ca²⁺ influx and neurotransmitter release.",
+            q3: "GABA receptor activation opens Cl⁻ channels (Cl⁻ influx) or K⁺ channels (K⁺ efflux), causing hyperpolarization (IPSP).",
+            q4: "After ACh is degraded by AChE, choline is reuptaken into the presynaptic terminal via the choline transporter (CHT1) for ACh resynthesis.",
+            q5: "Alkalosis increases neuronal excitability by enhancing Na⁺ channel permeability and reducing ionized Ca²⁺, predisposing to tetany and seizures.",
+            q6: "The axon hillock is the trigger zone where the summation of graded potentials occurs and where action potentials are initiated.",
+            q7: "An axo-somatic synapse is a connection between the axon terminal of one neuron and the cell body (soma) of another.",
+            q8: "GABA is released by presynaptic inhibitory interneurons; it acts on GABA_A and GABA_B receptors to reduce Ca²⁺ influx into excitatory terminals.",
+            q9: "Long-Term Potentiation (LTP) is mediated primarily by glutamate acting on AMPA and NMDA receptors, especially in the hippocampus.",
+            q10: "Monoamine Oxidase (MAO) is the intracellular enzyme that degrades reuptaken norepinephrine in the presynaptic terminal.",
+            q11: "Enkephalin is an endogenous opioid peptide neurotransmitter that produces analgesia and is found in the GI tract and spinal cord.",
+            q12: "Hypoxia reduces ATP production, impairing Na⁺/K⁺ ATPase, neurotransmitter synthesis, and vesicle transport, leading to synaptic failure.",
+            q13: "GABA_B receptors act via G-proteins to increase K⁺ channel conductance (K⁺ efflux) and decrease Ca²⁺ channel conductance, reducing transmitter release.",
+            q14: "Synaptic delay across a single chemical synapse is approximately 0.5 milliseconds (0.5 ms)."
+        };
+
+        // ─── MCQ SUBMIT ───
+        function submitQuiz() {
+            let score = 0;
+            const total = Object.keys(correctAnswers).length;
+
+            document.querySelectorAll('.question-feedback').forEach(el => el.innerHTML = '');
+
+            for (let key in correctAnswers) {
+                const radios = Array.from(document.querySelectorAll(`input[name="${key}"]`));
+                const selected = radios.find(r => r.checked);
+                const correct = correctAnswers[key];
+
+                if (selected && selected.value === correct) score++;
+
+                const feedbackEl = document.getElementById(`feedback-${key}`);
+                if (!feedbackEl) continue;
+
+                let html = `<div class="answer-block"><strong>Q${key.replace(/^q/, '')}</strong><div class="answer-list">`;
+
+                radios.forEach(r => {
+                    const label = r.parentElement;
+                    const text = label ? label.textContent.trim() : r.value;
+                    const classes = ['answer-item'];
+                    if (r.value === correct) classes.push('answer-correct');
+                    if (r.checked && r.value !== correct) classes.push('answer-wrong', 'user-choice');
+                    if (r.checked && r.value === correct) classes.push('user-choice');
+                    html += `<div class="${classes.join(' ')}">${text}${r.checked ? ' ◀' : ''}</div>`;
+                });
+
+                html += `</div>`;
+
+                const correctRadio = radios.find(rr => rr.value === correct);
+                const correctText = correctRadio && correctRadio.parentElement ? correctRadio.parentElement.textContent
+                    .trim() : correct;
+                const explanationText = answerExplanations[key] || '';
+
+                if (selected) {
+                    if (selected.value === correct) {
+                        html += `<div class="explanation">✅ Correct — ${explanationText}</div>`;
+                    } else {
+                        html +=
+                            `<div class="explanation wrong">❌ Incorrect. Correct answer: <strong>${correctText}</strong>. ${explanationText}</div>`;
+                    }
+                } else {
+                    html +=
+                        `<div class="explanation wrong">No answer selected. Correct answer: <strong>${correctText}</strong>. ${explanationText}</div>`;
+                }
+
+                html += `</div>`;
+                feedbackEl.innerHTML = html;
+            }
+
+            const percentage = Math.round((score / total) * 100);
+            const resultBox = document.getElementById('resultBox');
+            resultBox.style.display = 'block';
+            document.getElementById('answers').innerHTML = '';
+
+            let start = 0;
+            const timer = setInterval(() => {
+                if (start >= percentage) clearInterval(timer);
+                document.getElementById('score').innerText = start + '%';
+                start++;
+            }, 20);
+
+            document.querySelectorAll('#quizForm input[type="radio"]').forEach(i => i.disabled = true);
+        }
+
+        // ─── ESSAY TOGGLE ───
+        function toggleEssay(id) {
+            const el = document.getElementById('essay-' + id);
+            if (!el) return;
+            el.classList.toggle('visible');
+            if (el.classList.contains('visible')) {
+                setTimeout(() => {
+                    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+
+        // ─── KEYBOARD ACCESSIBILITY ───
+        document.querySelectorAll('.essay-actions .btn').forEach(btn => {
+            btn.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    btn.click();
+                }
+            });
+        });
+
+        // ─── SHIFT+ENTER ON TEXTAREA ───
+        document.querySelectorAll('.sub-question textarea').forEach(ta => {
+            ta.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && e.shiftKey) {
+                    e.preventDefault();
+                    const btn = ta.closest('.sub-question').querySelector('.essay-actions .btn');
+                    if (btn) btn.click();
+                }
+            });
+        });
+
+        // ─── NAV BACK/FORWARD (placeholder) ───
+        function goBack() {
+            window.history.back();
+        }
+        function goForward() {
+            window.history.forward();
+        }
+    </script>
+    <script src="../nav.js"></script>
+
+</body>
+</html>

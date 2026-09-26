@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Body Fluids Quiz | Quiz</title>
+    <link rel="stylesheet" href="../nav.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        /* ─── ROOT & RESET ─── */
+        :root {
+            --primary: #1e6f5c;
+            --accent: #289672;
+            --dark: #1b2a27;
+            --light: #f8f9fa;
+            --radius: 12px;
+            --shadow: 0 4px 14px rgba(18, 38, 63, 0.06);
+            --coral: #d95f5f;
+            --gold: #c49a3c;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Segoe UI", Roboto, system-ui, sans-serif;
+            background: linear-gradient(180deg, #f5faf8, #eef6f2);
+            color: var(--dark);
+            min-height: 100vh;
+            padding-top: 80px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+        }
+
+        /* ─── HEADER ─── */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: #fff;
+            padding: 0.8rem 0;
+            box-shadow: 0 6px 18px rgba(11, 36, 36, 0.18);
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo i {
+            font-size: 1.6rem;
+            color: var(--accent);
+        }
+
+        .logo h1 {
+            font-size: 1.2rem;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+            margin: 0;
+            line-height: 1;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 0.25rem 1rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+            color: #d4f0ee;
+        }
+
+        .badge i {
+            margin-right: 4px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-tabs .tab-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: none;
+            color: #d4f0ee;
+            padding: 0.3rem 0.9rem;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .nav-tabs .tab-btn:hover {
+            background: rgba(255, 255, 255, 0.18);
+            color: #fff;
+        }
+
+        .nav-tabs .tab-btn.active {
+            background: var(--accent);
+            color: var(--dark);
+        }
+
+        /* ─── CONTAINER ─── */
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 1.25rem 2.5rem;
+        }
+
+        /* ─── SECTION TITLES ─── */
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 1.8rem 0 1rem 0;
+            padding-bottom: 0.4rem;
+            border-bottom: 3px solid rgba(30, 111, 92, 0.20);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .section-title i {
+            font-size: 1.1rem;
+            color: rgb(8, 104, 66);
+        }
+
+        .section-title .count {
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 40px;
+            padding: 0.05rem 0.7rem;
+        }
+
+        .section-subtitle {
+            color: #5f7a7a;
+            font-size: 0.92rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .section-panel {
+            display: block;
+        }
+
+        .section-panel.hidden {
+            display: none !important;
+        }
+
+        /* ─── MCQ CARDS ─── */
+        .question {
+            background: #ffffff;
+            border-radius: var(--radius);
+            padding: 1.2rem 1.2rem 0.2rem 1.2rem;
+            margin-bottom: 1.2rem;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(30, 111, 92, 0.06);
+            transition: box-shadow 0.2s;
+        }
+
+        .question:hover {
+            box-shadow: 0 6px 22px rgba(18, 38, 63, 0.07);
+        }
+
+        .question p {
+            font-weight: 600;
+            font-size: 0.98rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .question .q-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 40px;
+            padding: 0 0.7rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            line-height: 1.6;
+            margin-right: 0.4rem;
+        }
+
+        .options label {
+            display: block;
+            background: #fafcfd;
+            border: 1px solid #e0e8ef;
+            border-radius: 8px;
+            padding: 0.45rem 0.9rem;
+            margin-top: 0.45rem;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-weight: 450;
+            font-size: 0.94rem;
+        }
+
+        .options label:hover {
+            background: #e8f5f4;
+            border-color: var(--accent);
+        }
+
+        .options input[type="radio"] {
+            margin-right: 0.5rem;
+            accent-color: var(--primary);
+            transform: scale(1.05);
+        }
+
+        /* ─── MCQ FEEDBACK ─── */
+        .question-feedback {
+            margin-top: 0.9rem;
+            padding: 0.4rem 0 0.1rem 0;
+            border-top: 1px dashed #dce6ed;
+        }
+
+        .answer-block strong {
+            display: block;
+            margin-bottom: 4px;
+            color: var(--primary);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .answer-list {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .answer-item {
+            padding: 5px 10px;
+            border-radius: 6px;
+            border: 1px solid #e6eef3;
+            background: #ffffff;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .answer-correct {
+            background: #ecfdf5;
+            border-color: #bbf7d0;
+            color: #065f46;
+        }
+
+        .answer-wrong {
+            background: #fff1f2;
+            border-color: #fca5a5;
+            color: #9f1239;
+        }
+
+        .user-choice {
+            outline: 2px dashed rgba(0, 0, 0, 0.06);
+        }
+
+        .explanation {
+            margin-top: 6px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            background: #f1f8f6;
+            color: #065f46;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            border-left: 4px solid var(--accent);
+        }
+
+        .explanation.wrong {
+            background: #fff5f5;
+            color: #7f1d1d;
+            border-left-color: #f87171;
+        }
+
+        /* ─── BUTTONS ─── */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            color: #fff;
+            border: none;
+            padding: 0.6rem 1.6rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.2s;
+            box-shadow: 0 4px 12px rgba(30, 111, 92, 0.22);
+        }
+
+        .btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 20px rgba(30, 111, 92, 0.30);
+        }
+
+        .btn:active {
+            transform: scale(0.96);
+        }
+
+        .btn i {
+            font-size: 0.9rem;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            box-shadow: none;
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .btn-sm {
+            padding: 0.35rem 1rem;
+            font-size: 0.85rem;
+        }
+
+        .btn-reveal {
+            background: linear-gradient(90deg, #4a7c7a, var(--primary));
+        }
+
+        .btn-reveal:hover {
+            box-shadow: 0 6px 20px rgba(30, 111, 92, 0.35);
+        }
+
+        .submit-wrap {
+            text-align: center;
+            margin: 1.5rem 0 2rem;
+        }
+
+        /* ─── RESULT BOX ─── */
+        .result {
+            margin-top: 1.5rem;
+            padding: 1.5rem 1.5rem 1rem;
+            background: #f1faf9;
+            border-radius: var(--radius);
+            text-align: center;
+            display: none;
+            border: 1px solid #c5e3df;
+        }
+
+        .result h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.2rem;
+        }
+
+        .score {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 0.2rem 0 0.4rem;
+        }
+
+        /* ─── ESSAY / STRUCTURED SECTION ─── */
+        .essay-card {
+            background: #ffffff;
+            border-radius: var(--radius);
+            padding: 1.25rem 1.25rem 1rem;
+            margin-bottom: 1.8rem;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(30, 111, 92, 0.06);
+        }
+
+        .essay-card>h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin: 0 0 0.4rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .essay-card>h3 .qnum {
+            background: var(--primary);
+            color: #fff;
+            border-radius: 40px;
+            padding: 0 0.7rem;
+            font-size: 0.75rem;
+            line-height: 1.6;
+        }
+
+        .essay-card>p {
+            color: #2d4a4a;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 0.8rem;
+            padding: 0.6rem 0.9rem;
+            background: #f4f9f8;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+        }
+
+        .essay-card img {
+            margin: 0.2rem 0 0.8rem 0;
+            border-radius: 8px;
+            border: 1px solid #e9edf2;
+            max-height: 340px;
+            object-fit: contain;
+            background: #fafcfd;
+        }
+
+        /* ─── SUB-QUESTION ─── */
+        .sub-question {
+            margin-top: 1.2rem;
+            padding-top: 1.2rem;
+            border-top: 1px solid #eef3f6;
+        }
+
+        .sub-question:first-of-type {
+            border-top: none;
+            padding-top: 0;
+            margin-top: 0.5rem;
+        }
+
+        .sub-question .sub-q-label {
+            display: flex;
+            align-items: baseline;
+            gap: 0.3rem;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 0.95rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .sub-question .sub-q-label .letter {
+            display: inline-block;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            text-align: center;
+            line-height: 24px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .sub-question .sub-q-label .marks {
+            font-size: 0.7rem;
+            font-weight: 400;
+            color: #6f8f8f;
+            background: #eef4f4;
+            padding: 0 0.5rem;
+            border-radius: 20px;
+        }
+
+        .sub-question textarea {
+            width: 100%;
+            min-height: 72px;
+            border-radius: 8px;
+            border: 1px solid #d1dbe0;
+            padding: 0.6rem 0.9rem;
+            resize: vertical;
+            font-family: inherit;
+            font-size: 0.94rem;
+            background: #fafcfd;
+            transition: border 0.2s, box-shadow 0.2s;
+            margin-top: 0.3rem;
+        }
+
+        .sub-question textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(30, 111, 92, 0.12);
+        }
+
+        .sub-question .essay-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-top: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .sub-question .essay-actions .btn {
+            padding: 0.4rem 1.2rem;
+            font-size: 0.85rem;
+        }
+
+        .sub-question .essay-actions .hint-text {
+            font-size: 0.8rem;
+            color: #7a9797;
+        }
+
+        /* ─── ESSAY REVEAL ANSWER ─── */
+        .essay-answers {
+            display: none;
+            margin-top: 0.8rem;
+            background: #f1f8f6;
+            border-radius: 8px;
+            padding: 1rem 1.2rem;
+            border: 1px solid #cfe6e0;
+            color: var(--dark);
+            animation: fadeSlide 0.3s ease;
+        }
+
+        .essay-answers.visible {
+            display: block;
+        }
+
+        .essay-answers h4 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            color: var(--primary);
+            margin: 0 0 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .essay-answers h4 i {
+            color: #1e6f5c;
+        }
+
+        .essay-answers p,
+        .essay-answers li {
+            font-size: 0.94rem;
+            line-height: 1.6;
+        }
+
+        .essay-answers ul {
+            padding-left: 1.2rem;
+            margin: 0.3rem 0 0.5rem;
+        }
+
+        .essay-answers ul li {
+            margin-bottom: 0.2rem;
+        }
+
+        .essay-answers b {
+            color: var(--dark);
+        }
+
+        .essay-answers .model-tag {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--dark);
+            font-weight: 700;
+            font-size: 0.65rem;
+            padding: 0.05rem 0.6rem;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        @keyframes fadeSlide {
+            0% {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ─── SCENARIO CARDS ─── */
+        .scenario-card {
+            background: #ffffff;
+            border-radius: var(--radius);
+            padding: 1.25rem 1.25rem 1rem;
+            margin-bottom: 1.8rem;
+            box-shadow: var(--shadow);
+            border-left: 6px solid var(--coral);
+            border: 1px solid rgba(30, 111, 92, 0.06);
+        }
+
+        .scenario-card>h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin: 0 0 0.4rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .scenario-card>h3 .qnum {
+            background: var(--coral);
+            color: #fff;
+            border-radius: 40px;
+            padding: 0 0.7rem;
+            font-size: 0.75rem;
+            line-height: 1.6;
+        }
+
+        .scenario-card>p {
+            color: #2d4a4a;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 0.8rem;
+            padding: 0.6rem 0.9rem;
+            background: #fdf6f6;
+            border-radius: 8px;
+            border-left: 4px solid var(--coral);
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 700px) {
+            body {
+                padding-top: 72px;
+            }
+            .logo h1 {
+                font-size: 1rem;
+            }
+            .header-inner {
+                padding: 0 1rem;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.3rem;
+            }
+            .badge {
+                align-self: flex-start;
+            }
+            .nav-tabs {
+                justify-content: center;
+            }
+            .nav-tabs .tab-btn {
+                font-size: 0.7rem;
+                padding: 0.2rem 0.7rem;
+            }
+            .question {
+                padding: 1rem 1rem 0.1rem 1rem;
+            }
+            .section-title {
+                font-size: 1.1rem;
+            }
+            .essay-card,
+            .scenario-card {
+                padding: 1rem;
+            }
+            .score {
+                font-size: 2.2rem;
+            }
+            .btn {
+                padding: 0.5rem 1.2rem;
+                font-size: 0.85rem;
+            }
+            .sub-question textarea {
+                min-height: 60px;
+                font-size: 0.88rem;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .logo h1 {
+                font-size: 0.85rem;
+            }
+            .logo i {
+                font-size: 1.2rem;
+            }
+            .options label {
+                font-size: 0.87rem;
+                padding: 0.4rem 0.7rem;
+            }
+            .essay-card>p,
+            .scenario-card>p {
+                font-size: 0.88rem;
+                padding: 0.5rem 0.7rem;
+            }
+        }
+
+        /* ─── UTILITIES ─── */
+        .text-muted {
+            color: #5f7a7a;
+            font-size: 0.9rem;
+        }
+        .mt-1 {
+            margin-top: 0.8rem;
+        }
+        .mb-1 {
+            margin-bottom: 0.8rem;
+        }
+        .flex-center {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .hidden {
+            display: none !important;
+        }
+        .scroll-target {
+            scroll-margin-top: 90px;
+        }
+        .gap-1 {
+            gap: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ═══ HEADER ═══ -->
+    <header>
+        <div class="header-inner">
+            <div class="logo">
+                <i class="fas fa-flask"></i>
+                <h1>Body Fluids Quiz</h1>
+            </div>
+            <span class="badge"><i class="fas fa-pencil-alt"></i> Quiz</span>
+            <div class="nav-tabs">
+                <button class="tab-btn active" data-section="mcq">MCQs</button>
+                <button class="tab-btn" data-section="structured">Structured</button>
+                <button class="tab-btn" data-section="scenario">Scenarios</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ═══ MAIN ═══ -->
+    <main>
+
+        <!-- ─── SECTION 1: MCQs ─── -->
+        <section class="container section-panel" id="section-mcq">
+            <div class="section-title scroll-target" id="mcq-top">
+                <i class="fas fa-list-ul"></i> Multiple Choice Questions
+                <span class="count">20</span>
+            </div>
+            <p class="section-subtitle">Select the best answer for each question, then click <strong>Submit All MCQs</strong> at the bottom.</p>
+
+            <form id="quizForm">
+
+                <!-- Q1 -->
+                <div class="question">
+                    <p><span class="q-badge">1</span> What percentage of Total Body Water (TBW) is typically found in a healthy adult male?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q1" value="a"> A. 40%</label>
+                        <label><input type="radio" name="q1" value="b"> B. 50%</label>
+                        <label><input type="radio" name="q1" value="c"> C. 60%</label>
+                        <label><input type="radio" name="q1" value="d"> D. 73%</label>
+                        <label><input type="radio" name="q1" value="e"> E. 85%</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q1"></div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="question">
+                    <p><span class="q-badge">2</span> Which of the following age groups or populations has the highest percentage of Total Body Water relative to body mass?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q2" value="a"> A. Adult male</label>
+                        <label><input type="radio" name="q2" value="b"> B. Obese female</label>
+                        <label><input type="radio" name="q2" value="c"> C. Elderly female</label>
+                        <label><input type="radio" name="q2" value="d"> D. Infant</label>
+                        <label><input type="radio" name="q2" value="e"> E. Adult female</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q2"></div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="question">
+                    <p><span class="q-badge">3</span> In a standard 70 kg adult male with 42 L of total body water, what is the approximate volume of the Extracellular Fluid (ECF) compartment?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q3" value="a"> A. 3 L</label>
+                        <label><input type="radio" name="q3" value="b"> B. 11 L</label>
+                        <label><input type="radio" name="q3" value="c"> C. 14 L</label>
+                        <label><input type="radio" name="q3" value="d"> D. 28 L</label>
+                        <label><input type="radio" name="q3" value="e"> E. 32 L</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q3"></div>
+                </div>
+
+                <!-- Q4 -->
+                <div class="question">
+                    <p><span class="q-badge">4</span> What proportion of the Extracellular Fluid (ECF) is accounted for by Interstitial Fluid?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q4" value="a"> A. 1/4</label>
+                        <label><input type="radio" name="q4" value="b"> B. 1/3</label>
+                        <label><input type="radio" name="q4" value="c"> C. 1/2</label>
+                        <label><input type="radio" name="q4" value="d"> D. 2/3</label>
+                        <label><input type="radio" name="q4" value="e"> E. 3/4</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q4"></div>
+                </div>
+
+                <!-- Q5 -->
+                <div class="question">
+                    <p><span class="q-badge">5</span> Which of the following body fluid sub-compartments is classified under Transcellular Fluid?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q5" value="a"> A. Blood plasma</label>
+                        <label><input type="radio" name="q5" value="b"> B. Cerebrospinal fluid (CSF)</label>
+                        <label><input type="radio" name="q5" value="c"> C. Interstitial fluid</label>
+                        <label><input type="radio" name="q5" value="d"> D. Intracellular cytosol</label>
+                        <label><input type="radio" name="q5" value="e"> E. Red blood cell fluid</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q5"></div>
+                </div>
+
+                <!-- Q6 -->
+                <div class="question">
+                    <p><span class="q-badge">6</span> Which ion serves as the primary, most abundant cation in the Extracellular Fluid (ECF)?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q6" value="a"> A. K⁺</label>
+                        <label><input type="radio" name="q6" value="b"> B. Na⁺</label>
+                        <label><input type="radio" name="q6" value="c"> C. Mg²⁺</label>
+                        <label><input type="radio" name="q6" value="d"> D. Ca²⁺</label>
+                        <label><input type="radio" name="q6" value="e"> E. H⁺</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q6"></div>
+                </div>
+
+                <!-- Q7 -->
+                <div class="question">
+                    <p><span class="q-badge">7</span> What is the major cation present within the Intracellular Fluid (ICF) compartment?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q7" value="a"> A. Na⁺</label>
+                        <label><input type="radio" name="q7" value="b"> B. Ca²⁺</label>
+                        <label><input type="radio" name="q7" value="c"> C. K⁺</label>
+                        <label><input type="radio" name="q7" value="d"> D. HCO₃⁻</label>
+                        <label><input type="radio" name="q7" value="e"> E. Cl⁻</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q7"></div>
+                </div>
+
+                <!-- Q8 -->
+                <div class="question">
+                    <p><span class="q-badge">8</span> In contrast to interstitial fluid, blood plasma contains a significantly higher concentration of:</p>
+                    <div class="options">
+                        <label><input type="radio" name="q8" value="a"> A. Sodium ions (Na⁺)</label>
+                        <label><input type="radio" name="q8" value="b"> B. Potassium ions (K⁺)</label>
+                        <label><input type="radio" name="q8" value="c"> C. Chloride ions (Cl⁻)</label>
+                        <label><input type="radio" name="q8" value="d"> D. Proteins</label>
+                        <label><input type="radio" name="q8" value="e"> E. Bicarbonate ions (HCO₃⁻)</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q8"></div>
+                </div>
+
+                <!-- Q9 -->
+                <div class="question">
+                    <p><span class="q-badge">9</span> To measure Total Body Water (TBW) using the indicator dilution principle, which tracer substance is appropriate?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q9" value="a"> A. Inulin</label>
+                        <label><input type="radio" name="q9" value="b"> B. Evans Blue</label>
+                        <label><input type="radio" name="q9" value="c"> C. Deuterium oxide (D₂O)</label>
+                        <label><input type="radio" name="q9" value="d"> D. Radioactive Iodine-125 labeled albumin</label>
+                        <label><input type="radio" name="q9" value="e"> E. Mannitol</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q9"></div>
+                </div>
+
+                <!-- Q10 -->
+                <div class="question">
+                    <p><span class="q-badge">10</span> Extracellular Fluid (ECF) volume can be experimentally measured using which group of tracer substances?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q10" value="a"> A. Evans Blue and I-125 Albumin</label>
+                        <label><input type="radio" name="q10" value="b"> B. Inulin, Sucrose, and Mannitol</label>
+                        <label><input type="radio" name="q10" value="c"> C. Antipyrine and Deuterium oxide</label>
+                        <label><input type="radio" name="q10" value="d"> D. Tritiated water and Aminopyrine</label>
+                        <label><input type="radio" name="q10" value="e"> E. Hemoglobin and Evan's green</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q10"></div>
+                </div>
+
+                <!-- Q11 -->
+                <div class="question">
+                    <p><span class="q-badge">11</span> Plasma volume is specifically measured using which indicator?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q11" value="a"> A. Deuterium oxide (D₂O)</label>
+                        <label><input type="radio" name="q11" value="b"> B. Sucrose</label>
+                        <label><input type="radio" name="q11" value="c"> C. Evans Blue</label>
+                        <label><input type="radio" name="q11" value="d"> D. Antipyrine</label>
+                        <label><input type="radio" name="q11" value="e"> E. Sodium bromide</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q11"></div>
+                </div>
+
+                <!-- Q12 -->
+                <div class="question">
+                    <p><span class="q-badge">12</span> How is Interstitial Fluid Volume calculated mathematically?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q12" value="a"> A. Total Body Water minus Intracellular Fluid Volume</label>
+                        <label><input type="radio" name="q12" value="b"> B. Extracellular Fluid Volume minus Plasma Volume</label>
+                        <label><input type="radio" name="q12" value="c"> C. Plasma Volume divided by (1 - Hematocrit)</label>
+                        <label><input type="radio" name="q12" value="d"> D. Total Body Water minus Plasma Volume</label>
+                        <label><input type="radio" name="q12" value="e"> E. Intracellular Fluid Volume minus Extracellular Fluid Volume</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q12"></div>
+                </div>
+
+                <!-- Q13 -->
+                <div class="question">
+                    <p><span class="q-badge">13</span> If 2 mL of a dye solution with an initial concentration of 20 mg/mL is injected intravenously, and after equilibrium the final plasma concentration is 0.02 mg/mL (assuming no excretion), what is the calculated volume?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q13" value="a"> A. 500 mL</label>
+                        <label><input type="radio" name="q13" value="b"> B. 1000 mL</label>
+                        <label><input type="radio" name="q13" value="c"> C. 2000 mL</label>
+                        <label><input type="radio" name="q13" value="d"> D. 4000 mL</label>
+                        <label><input type="radio" name="q13" value="e"> E. 20 L</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q13"></div>
+                </div>
+
+                <!-- Q14 -->
+                <div class="question">
+                    <p><span class="q-badge">14</span> Why is Osmolality preferred over Osmolarity in biological and clinical evaluations?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q14" value="a"> A. Osmolality measures solute per liter of total solution.</label>
+                        <label><input type="radio" name="q14" value="b"> B. Osmolality is expressed in units of M (mol/L).</label>
+                        <label><input type="radio" name="q14" value="c"> C. Weight of solvent remains constant regardless of temperature and pressure changes.</label>
+                        <label><input type="radio" name="q14" value="d"> D. Osmolality fluctuates significantly with room temperature.</label>
+                        <label><input type="radio" name="q14" value="e"> E. Volume remains unaffected by pressure variations.</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q14"></div>
+                </div>
+
+                <!-- Q15 -->
+                <div class="question">
+                    <p><span class="q-badge">15</span> What is the normal reference value for plasma osmolality in human physiology?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q15" value="a"> A. 100 mOsm/kg</label>
+                        <label><input type="radio" name="q15" value="b"> B. 140 mOsm/kg</label>
+                        <label><input type="radio" name="q15" value="c"> C. 200 mOsm/kg</label>
+                        <label><input type="radio" name="q15" value="d"> D. 290 mOsm/kg</label>
+                        <label><input type="radio" name="q15" value="e"> E. 350 mOsm/kg</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q15"></div>
+                </div>
+
+                <!-- Q16 -->
+                <div class="question">
+                    <p><span class="q-badge">16</span> Under normal resting conditions, what constitutes the largest route of daily body water loss?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q16" value="a"> A. Insensible loss through lungs</label>
+                        <label><input type="radio" name="q16" value="b"> B. Insensible loss through skin</label>
+                        <label><input type="radio" name="q16" value="c"> C. Sweat excretion</label>
+                        <label><input type="radio" name="q16" value="d"> D. Fecal loss</label>
+                        <label><input type="radio" name="q16" value="e"> E. Urinary excretion</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q16"></div>
+                </div>
+
+                <!-- Q17 -->
+                <div class="question">
+                    <p><span class="q-badge">17</span> During prolonged, heavy exercise, which route of water output increases most dramatically?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q17" value="a"> A. Urine excretion</label>
+                        <label><input type="radio" name="q17" value="b"> B. Insensible lung loss</label>
+                        <label><input type="radio" name="q17" value="c"> C. Sweat production</label>
+                        <label><input type="radio" name="q17" value="d"> D. Fecal loss</label>
+                        <label><input type="radio" name="q17" value="e"> E. Insensible skin loss</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q17"></div>
+                </div>
+
+                <!-- Q18 -->
+                <div class="question">
+                    <p><span class="q-badge">18</span> The Gibbs-Donnan Effect is primarily caused by:</p>
+                    <div class="options">
+                        <label><input type="radio" name="q18" value="a"> A. Free movement of all intracellular solutes across the membrane.</label>
+                        <label><input type="radio" name="q18" value="b"> B. The presence of non-diffusible charged proteins trapped on one side of a semipermeable membrane.</label>
+                        <label><input type="radio" name="q18" value="c"> C. Complete shutdown of the Na⁺-K⁺ ATPase pump.</label>
+                        <label><input type="radio" name="q18" value="d"> D. Isotonic equilibrium between plasma and interstitial fluid.</label>
+                        <label><input type="radio" name="q18" value="e"> E. Loss of extracellular sodium ions.</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q18"></div>
+                </div>
+
+                <!-- Q19 -->
+                <div class="question">
+                    <p><span class="q-badge">19</span> If uncompensated, the Gibbs-Donnan Effect would naturally cause human living cells to:</p>
+                    <div class="options">
+                        <label><input type="radio" name="q19" value="a"> A. Shrink and crenate due to water loss.</label>
+                        <label><input type="radio" name="q19" value="b"> B. Swell and burst due to osmotic entry of water following ion influx.</label>
+                        <label><input type="radio" name="q19" value="c"> C. Become completely hypertonic relative to plasma without changing volume.</label>
+                        <label><input type="radio" name="q19" value="d"> D. Lose intracellular potassium ions indefinitely.</label>
+                        <label><input type="radio" name="q19" value="e"> E. Dehydrate nearby capillary beds.</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q19"></div>
+                </div>
+
+                <!-- Q20 -->
+                <div class="question">
+                    <p><span class="q-badge">20</span> Which active transport mechanism counteracts the osmotic swelling tendency induced by the Gibbs-Donnan Effect in living cells?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q20" value="a"> A. H⁺-K⁺ ATPase pump</label>
+                        <label><input type="radio" name="q20" value="b"> B. Ca²⁺ ATPase pump</label>
+                        <label><input type="radio" name="q20" value="c"> C. Na⁺-K⁺ ATPase pump</label>
+                        <label><input type="radio" name="q20" value="d"> D. Glucose-Sodium Cotransporter (SGLT-1)</label>
+                        <label><input type="radio" name="q20" value="e"> E. Aquaporin channel proteins</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q20"></div>
+                </div>
+
+                <div class="submit-wrap">
+                    <button type="button" class="btn" onclick="submitQuiz()">
+                        <i class="fas fa-check-circle"></i> Submit All MCQs
+                    </button>
+                </div>
+
+            </form>
+
+            <div class="result" id="resultBox">
+                <h3><i class="fas fa-chart-simple"></i> Your Score</h3>
+                <div class="score" id="score">0%</div>
+                <p class="text-muted" style="font-size:0.9rem;">Review the feedback below each question.</p>
+                <div id="answers"></div>
+            </div>
+        </section>
+
+        <!-- ─── SECTION 2: STRUCTURED QUESTIONS ─── -->
+        <section class="container section-panel hidden" id="section-structured">
+            <div class="section-title scroll-target" id="structured-top">
+                <i class="fas fa-pen-fancy"></i> Structured Questions
+                <span class="count">10</span>
+            </div>
+            <p class="section-subtitle">Write your answer in each box, then click <strong>Reveal Answer</strong> to check the model response.</p>
+
+            <!-- SQ1 -->
+            <div class="essay-card">
+                <h3><span class="qnum">1</span> Homeostasis</h3>
+                <p>Define Homeostasis. Draw or describe the basic physiological feedback balance loop showing how external changes or internal malfunctions impact health.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s1')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s1">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>Homeostasis:</b> The maintenance of a relatively stable internal environment within the body despite changes in the external environment. It involves dynamic equilibrium of body fluids, electrolytes, temperature, pH, etc.</p>
+                        <p><b>Feedback loop:</b> A sensor detects a change (stimulus) → sends signal to a control center (e.g., hypothalamus) → control center activates an effector (e.g., kidney, sweat glands) → effector produces a response that counteracts the initial change (negative feedback). External changes or internal malfunctions (e.g., disease) can disrupt this loop, leading to homeostatic imbalance and pathology.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQ2 -->
+            <div class="essay-card">
+                <h3><span class="qnum">2</span> TBW Distribution</h3>
+                <p>Outline the distribution of Total Body Water (TBW) in a standard 70 kg male, specifying the absolute volumes and proportions of the Intracellular Fluid (ICF), Extracellular Fluid (ECF), Interstitial Fluid, and Plasma compartments.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s2')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s2">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p>In a 70 kg adult male, TBW is approximately 60% of body weight = 42 L.</p>
+                        <ul>
+                            <li><b>Intracellular Fluid (ICF):</b> 28 L (40% of body weight, 2/3 of TBW)</li>
+                            <li><b>Extracellular Fluid (ECF):</b> 14 L (20% of body weight, 1/3 of TBW)</li>
+                            <li><b>Interstitial Fluid:</b> ~11 L (3/4 of ECF)</li>
+                            <li><b>Plasma:</b> ~3 L (1/4 of ECF)</li>
+                        </ul>
+                        <p>Transcellular fluid (~1 L) is a small subset of ECF.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQ3 -->
+            <div class="essay-card">
+                <h3><span class="qnum">3</span> Factors Altering TBW</h3>
+                <p>List five physiological and pathological factors that alter Total Body Water percentage and body fluid distribution.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s3')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s3">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <ul>
+                            <li>Age (infants have higher TBW; elderly have lower)</li>
+                            <li>Sex (males have higher TBW than females)</li>
+                            <li>Body fat (obese individuals have lower TBW percentage)</li>
+                            <li>Dehydration or overhydration (pathological states)</li>
+                            <li>Disease states: heart failure, renal failure, liver cirrhosis, malnutrition (edema, ascites)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQ4 -->
+            <div class="essay-card">
+                <h3><span class="qnum">4</span> Electrolyte Composition</h3>
+                <p>Compare the electrolyte composition of Plasma, Interstitial Fluid, and Intracellular Fluid, highlighting the key cations and anions predominant in each.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s4')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s4">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <ul>
+                            <li><b>Plasma:</b> Major cation Na⁺ (142 mEq/L); major anions Cl⁻ (103) and HCO₃⁻ (24). Contains plasma proteins (e.g., albumin).</li>
+                            <li><b>Interstitial Fluid:</b> Similar to plasma but much lower protein content. Major cation Na⁺ (145); major anions Cl⁻ (114) and HCO₃⁻ (30).</li>
+                            <li><b>Intracellular Fluid:</b> Major cation K⁺ (150); major anions phosphate (PO₄³⁻) and negatively charged proteins. Low Na⁺ and Cl⁻.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQ5 -->
+            <div class="essay-card">
+                <h3><span class="qnum">5</span> Indicator Dilution Technique</h3>
+                <p>State the fundamental mathematical formula for the Indicator (Dye) Dilution Technique. List four essential criteria required for a substance to be considered a suitable indicator dye.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s5')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s5">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>Formula:</b> Volume = (Amount of indicator injected) / (Concentration of indicator after equilibrium)</p>
+                        <p><b>Criteria for a suitable indicator:</b></p>
+                        <ul>
+                            <li>Non-toxic and harmless to the body.</li>
+                            <li>Distributes evenly and rapidly throughout the compartment being measured.</li>
+                            <li>Does not leak out of the compartment or get metabolized/excreted during the test period.</li>
+                            <li>Can be accurately measured in low concentrations (high sensitivity).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQ6 -->
+            <div class="essay-card">
+                <h3><span class="qnum">6</span> Total Blood Volume</h3>
+                <p>Explain how Total Blood Volume is calculated using Plasma Volume and Hematocrit values.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s6')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s6">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p>Total Blood Volume = Plasma Volume / (1 − Hematocrit)</p>
+                        <p>Where Hematocrit is the fraction of blood volume occupied by red blood cells (e.g., 0.45). For example, if Plasma Volume = 3 L and Hematocrit = 0.45, then Total Blood Volume = 3 / (1 − 0.45) = 5.45 L.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQ7 -->
+            <div class="essay-card">
+                <h3><span class="qnum">7</span> Osmolarity vs Osmolality</h3>
+                <p>Differentiate clearly between Osmolarity and Osmolality. State why Osmolality is more accurate and clinically preferred.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s7')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s7">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>Osmolarity:</b> Concentration of osmotically active particles per liter of solution (mOsm/L). It depends on solution volume, which can change with temperature and pressure.</p>
+                        <p><b>Osmolality:</b> Concentration of osmotically active particles per kilogram of solvent (mOsm/kg). It depends on the mass of solvent, which is not affected by temperature or pressure.</p>
+                        <p><b>Clinical preference:</b> Osmolality is more accurate because the mass of solvent (water) remains constant regardless of temperature and pressure, whereas volume can change. Therefore, osmolality is preferred in clinical settings.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQ8 -->
+            <div class="essay-card">
+                <h3><span class="qnum">8</span> Tonicity</h3>
+                <p>Define Tonicity. Differentiate between Isotonic, Hypotonic, and Hypertonic solutions, giving ONE clinical example of a solution for each.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s8')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s8">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>Tonicity:</b> The ability of an extracellular solution to cause water to move into or out of a cell, thereby affecting cell volume.</p>
+                        <ul>
+                            <li><b>Isotonic:</b> Same solute concentration as intracellular fluid; no net water movement; cell volume unchanged. Example: 0.9% NaCl (normal saline).</li>
+                            <li><b>Hypotonic:</b> Lower solute concentration than intracellular fluid; water moves into the cell; cell swells. Example: 0.45% NaCl (half-normal saline).</li>
+                            <li><b>Hypertonic:</b> Higher solute concentration than intracellular fluid; water moves out of the cell; cell shrinks. Example: 3% NaCl (hypertonic saline).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQ9 -->
+            <div class="essay-card">
+                <h3><span class="qnum">9</span> Gibbs-Donnan Effect</h3>
+                <p>Describe the mechanism of the Gibbs-Donnan Effect across cell membranes and explain its effect on ion distribution and water movement.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s9')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s9">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>Mechanism:</b> The Gibbs-Donnan Effect arises because of the presence of non-diffusible charged proteins inside the cell. These negatively charged proteins attract cations (e.g., K⁺, Na⁺) and repel anions (e.g., Cl⁻), leading to an unequal distribution of diffusible ions across the membrane. This creates a Donnan equilibrium with a membrane potential and an osmotic gradient.</p>
+                        <p><b>Effect on ion distribution:</b> There is a higher concentration of diffusible cations (Na⁺) on the inside and higher diffusible anions (Cl⁻) on the outside than would be predicted by simple diffusion. <b>Effect on water:</b> The increased osmolarity inside the cell (due to more particles, including the proteins) causes water to move into the cell, tending to swell and potentially burst it.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQ10 -->
+            <div class="essay-card">
+                <h3><span class="qnum">10</span> Na⁺-K⁺ ATPase Pump</h3>
+                <p>Explain how the Na⁺-K⁺ ATPase pump restores physiological cell volume homeostasis against the osmotic threat posed by the Gibbs-Donnan Effect.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s10')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s10">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p>The Na⁺-K⁺ ATPase pump actively extrudes three Na⁺ ions out of the cell and pumps two K⁺ ions into the cell for each ATP consumed. This creates a net outward movement of ions, which is osmotically equivalent to removing one osmotically active particle per cycle.</p>
+                        <p>This active transport counteracts the osmotic gradient created by the Donnan effect: by pumping Na⁺ out, it reduces the intracellular osmolarity, thereby reducing the tendency for water to enter the cell. It maintains the low intracellular Na⁺ concentration, balancing the osmotic pressure and keeping the cell volume stable. If the pump fails (e.g., due to ATP depletion), the cell swells and may burst (lyse).</p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ─── SECTION 3: APPLIED SCENARIO QUESTIONS ─── -->
+        <section class="container section-panel hidden" id="section-scenario">
+            <div class="section-title scroll-target" id="scenario-top">
+                <i class="fas fa-stethoscope"></i> Applied &amp; Clinical Scenarios
+                <span class="count">5</span>
+            </div>
+            <p class="section-subtitle">Read each scenario and write a comprehensive answer. Then click <strong>Reveal Answer</strong> to compare with the model response.</p>
+
+            <!-- Scenario 1 -->
+            <div class="scenario-card">
+                <h3><span class="qnum">1</span> Dehydration &amp; ECF Loss</h3>
+                <p>A patient presents to the emergency room with severe dehydration following 3 days of intense vomiting and diarrhea. Explain how severe loss of Extracellular Fluid (ECF) alters long-term blood pressure control and serum ECF osmolarity.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('sc1')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-sc1">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>ECF loss → decreased blood volume → decreased venous return → decreased cardiac output → decreased blood pressure.</b> Long-term blood pressure control: The renin-angiotensin-aldosterone system (RAAS) is activated. Reduced renal perfusion leads to renin release → angiotensin II → aldosterone → Na⁺ and water retention by kidneys, and vasoconstriction. ADH (vasopressin) is also released due to increased plasma osmolarity, promoting water reabsorption. If fluid loss continues, these compensatory mechanisms may fail, leading to hypovolemic shock.</p>
+                        <p><b>Serum ECF osmolarity:</b> Loss of hypotonic fluid (vomiting/diarrhea) initially may cause hypernatremia and increased osmolarity if water loss exceeds sodium loss. The high osmolarity stimulates thirst and ADH release, but if water intake is insufficient, hyperosmolar dehydration ensues, causing cellular dehydration.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scenario 2 -->
+            <div class="scenario-card">
+                <h3><span class="qnum">2</span> Indicator Dilution Calculation</h3>
+                <p>A clinical laboratory researcher wants to measure the fluid compartment volumes of an experimental subject. They inject 1 mL of a 10 mg/mL indicator solution into a compartment. After equilibrium, the final indicator concentration is measured as 0.01 mg/mL. Calculate the volume of this fluid compartment showing all steps.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('sc2')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-sc2">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>Given:</b> Volume injected = 1 mL; Initial concentration = 10 mg/mL; Final concentration = 0.01 mg/mL.</p>
+                        <p><b>Amount of indicator injected</b> = Volume × Concentration = 1 mL × 10 mg/mL = 10 mg.</p>
+                        <p><b>Formula:</b> Volume of compartment = Amount / Final concentration = 10 mg / 0.01 mg/mL = <b>1000 mL (1 L)</b>.</p>
+                        <p><b>Therefore, the volume of the fluid compartment is 1000 mL.</b></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scenario 3 -->
+            <div class="scenario-card">
+                <h3><span class="qnum">3</span> Protein Malnutrition &amp; Fluid Balance</h3>
+                <p>In severe protein malnutrition (such as Kwashiorkor or severe starvation), plasma protein levels (e.g., albumin) drop drastically. Using your knowledge of body fluid distribution and plasma composition, explain how reduced plasma protein concentration disrupts fluid balance between plasma and interstitial spaces.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('sc3')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-sc3">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p>Plasma proteins (mainly albumin) are responsible for the colloid osmotic pressure (oncotic pressure) of plasma, which draws water from the interstitial space into the capillaries. When plasma protein levels drop, colloid osmotic pressure decreases. Consequently, the balance of Starling forces shifts: the reduced oncotic pressure cannot oppose the hydrostatic pressure effectively, so fluid moves out of the capillaries into the interstitial space. This leads to interstitial edema (swelling), which is characteristic of Kwashiorkor. Additionally, reduced plasma volume can trigger compensatory mechanisms (RAAS, ADH) that further worsen fluid retention and edema.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scenario 4 -->
+            <div class="scenario-card">
+                <h3><span class="qnum">4</span> Marathon Runner &amp; Water Balance</h3>
+                <p>An elite marathon runner completes a 42 km race in intense heat. According to daily water balance data, their sweat loss reaches 5000 mL/day and insensible lung loss increases to 650 mL/day. Compare their daily intake and output requirements to a normal resting individual, and predict what happens to urinary output.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('sc4')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-sc4">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>Normal resting individual:</b> Daily water intake ~2500 mL (food + drink); output: urine ~1500 mL, insensible loss (skin + lungs) ~900 mL, sweat ~100 mL, feces ~100 mL.</p>
+                        <p><b>Marathon runner:</b> Sweat loss = 5000 mL, insensible lung loss = 650 mL (plus skin ~350 mL) → total insensible + sweat loss ~6000 mL. To maintain water balance, intake must increase to about 6000 mL/day. Urinary output will be significantly reduced (to less than 500 mL/day) due to compensatory ADH release, as the body tries to conserve water. Without adequate fluid intake, the runner will become dehydrated, leading to hypernatremia, decreased blood volume, and potentially heat stroke.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scenario 5 -->
+            <div class="scenario-card">
+                <h3><span class="qnum">5</span> Ischemic Hypoxia &amp; Donnan Effect</h3>
+                <p>A patient is admitted with ischemic cellular hypoxia where cellular ATP production ceases completely. Explain what will happen to the Na⁺-K⁺ ATPase pump activity, the internal concentration of Na⁺ and Cl⁻, and the structural physical integrity of the cells as a result of the Donnan Effect.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('sc5')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-sc5">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>Na⁺-K⁺ ATPase pump activity:</b> Without ATP, the pump ceases to function. Normally it extrudes 3 Na⁺ and imports 2 K⁺. Its failure leads to intracellular Na⁺ accumulation and K⁺ loss.</p>
+                        <p><b>Internal Na⁺ and Cl⁻:</b> Na⁺ concentration rises inside the cell because it cannot be pumped out and continues to leak in. Cl⁻ also enters the cell, following the electrical gradient created by the retained Na⁺ and the Donnan effect (negatively charged proteins attract cations, which in turn attract Cl⁻).</p>
+                        <p><b>Structural integrity:</b> The increased intracellular osmolarity (due to Na⁺, Cl⁻, and proteins) causes water to move into the cell. The cell swells, and if the swelling is severe, the plasma membrane may rupture (lysis), leading to cell death. This is a key mechanism of ischemic cell injury.</p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <button id="backBtn" onclick="goBack()">⬅ Back</button>
+        <h1>ToToZ Collection</h1>
+        <button id="forwardBtn" onclick="goForward()">Forward ➡</button>
+    </footer>
+
+    <!-- ═══ JAVASCRIPT ═══ -->
+    <script>
+        // ─── TAB NAVIGATION ───
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                const section = this.dataset.section;
+                document.querySelectorAll('.section-panel').forEach(p => p.classList.add('hidden'));
+                document.getElementById('section-' + section).classList.remove('hidden');
+                const topEl = document.getElementById(section + '-top');
+                if (topEl) topEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        // ─── MCQ CORRECT ANSWERS ───
+        const correctAnswers = {
+            q1: "c",
+            q2: "d",
+            q3: "c",
+            q4: "d",
+            q5: "b",
+            q6: "b",
+            q7: "c",
+            q8: "d",
+            q9: "c",
+            q10: "b",
+            q11: "c",
+            q12: "b",
+            q13: "c",
+            q14: "c",
+            q15: "d",
+            q16: "e",
+            q17: "c",
+            q18: "b",
+            q19: "b",
+            q20: "c"
+        };
+
+        // ─── MCQ EXPLANATIONS ───
+        const answerExplanations = {
+            q1: "In a healthy adult male, total body water is approximately 60% of body weight.",
+            q2: "Infants have the highest percentage of total body water (about 73% or more) due to higher proportion of lean body mass and lower fat content.",
+            q3: "ECF is about 1/3 of TBW. TBW = 42 L, so ECF = 42/3 = 14 L.",
+            q4: "Interstitial fluid constitutes about 2/3 of the ECF volume, while plasma is about 1/3.",
+            q5: "Transcellular fluid includes cerebrospinal fluid (CSF), synovial fluid, aqueous humor, etc. Blood plasma is part of the intravascular ECF.",
+            q6: "Sodium (Na⁺) is the primary cation in the extracellular fluid.",
+            q7: "Potassium (K⁺) is the major cation inside cells (intracellular fluid).",
+            q8: "Plasma contains significantly higher concentration of proteins (e.g., albumin) compared to interstitial fluid.",
+            q9: "Deuterium oxide (D₂O, heavy water) is used to measure total body water because it distributes freely throughout all body fluid compartments.",
+            q10: "Inulin, sucrose, and mannitol are used to measure ECF volume because they distribute in the extracellular space but do not enter cells.",
+            q11: "Evans Blue dye binds to plasma proteins and is used to measure plasma volume.",
+            q12: "Interstitial fluid volume = ECF volume − Plasma volume.",
+            q13: "Volume = Amount / Concentration. Amount = 2 mL × 20 mg/mL = 40 mg. Final concentration = 0.02 mg/mL. Volume = 40 / 0.02 = 2000 mL.",
+            q14: "Osmolality is based on the weight of solvent (kg), which is unaffected by temperature and pressure, unlike osmolarity which is based on volume (L).",
+            q15: "Normal plasma osmolality is about 290 mOsm/kg (range 285–295).",
+            q16: "Urinary excretion is the largest route of daily water loss under normal resting conditions (~1500 mL/day).",
+            q17: "Sweat production increases dramatically during heavy exercise in the heat, potentially exceeding 5 L/day.",
+            q18: "The Gibbs-Donnan effect is due to the presence of non-diffusible charged proteins (e.g., negatively charged albumin) trapped inside the cell, which attract cations and repel anions.",
+            q19: "The Donnan effect causes an increased intracellular osmolarity, drawing water into the cell, which would cause the cell to swell and potentially burst if uncompensated.",
+            q20: "The Na⁺-K⁺ ATPase pump actively extrudes Na⁺ and maintains osmotic balance, counteracting the swelling tendency caused by the Donnan effect."
+        };
+
+        // ─── MCQ SUBMIT ───
+        function submitQuiz() {
+            let score = 0;
+            const total = Object.keys(correctAnswers).length;
+
+            document.querySelectorAll('.question-feedback').forEach(el => el.innerHTML = '');
+
+            for (let key in correctAnswers) {
+                const radios = Array.from(document.querySelectorAll(`input[name="${key}"]`));
+                const selected = radios.find(r => r.checked);
+                const correct = correctAnswers[key];
+
+                if (selected && selected.value === correct) score++;
+
+                const feedbackEl = document.getElementById(`feedback-${key}`);
+                if (!feedbackEl) continue;
+
+                let html = `<div class="answer-block"><strong>Q${key.replace(/^q/, '')}</strong><div class="answer-list">`;
+
+                radios.forEach(r => {
+                    const label = r.parentElement;
+                    const text = label ? label.textContent.trim() : r.value;
+                    const classes = ['answer-item'];
+                    if (r.value === correct) classes.push('answer-correct');
+                    if (r.checked && r.value !== correct) classes.push('answer-wrong', 'user-choice');
+                    if (r.checked && r.value === correct) classes.push('user-choice');
+                    html += `<div class="${classes.join(' ')}">${text}${r.checked ? ' ◀' : ''}</div>`;
+                });
+
+                html += `</div>`;
+
+                const correctRadio = radios.find(rr => rr.value === correct);
+                const correctText = correctRadio && correctRadio.parentElement ? correctRadio.parentElement.textContent
+                    .trim() : correct;
+                const explanationText = answerExplanations[key] || '';
+
+                if (selected) {
+                    if (selected.value === correct) {
+                        html += `<div class="explanation">✅ Correct — ${explanationText}</div>`;
+                    } else {
+                        html +=
+                            `<div class="explanation wrong">❌ Incorrect. Correct answer: <strong>${correctText}</strong>. ${explanationText}</div>`;
+                    }
+                } else {
+                    html +=
+                        `<div class="explanation wrong">No answer selected. Correct answer: <strong>${correctText}</strong>. ${explanationText}</div>`;
+                }
+
+                html += `</div>`;
+                feedbackEl.innerHTML = html;
+            }
+
+            const percentage = Math.round((score / total) * 100);
+            const resultBox = document.getElementById('resultBox');
+            resultBox.style.display = 'block';
+            document.getElementById('answers').innerHTML = '';
+
+            let start = 0;
+            const timer = setInterval(() => {
+                if (start >= percentage) clearInterval(timer);
+                document.getElementById('score').innerText = start + '%';
+                start++;
+            }, 20);
+
+            document.querySelectorAll('#quizForm input[type="radio"]').forEach(i => i.disabled = true);
+        }
+
+        // ─── ESSAY TOGGLE ───
+        function toggleEssay(id) {
+            const el = document.getElementById('essay-' + id);
+            if (!el) return;
+            el.classList.toggle('visible');
+            if (el.classList.contains('visible')) {
+                setTimeout(() => {
+                    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+
+        // ─── KEYBOARD ACCESSIBILITY ───
+        document.querySelectorAll('.essay-actions .btn').forEach(btn => {
+            btn.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    btn.click();
+                }
+            });
+        });
+
+        // ─── SHIFT+ENTER ON TEXTAREA ───
+        document.querySelectorAll('.sub-question textarea').forEach(ta => {
+            ta.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && e.shiftKey) {
+                    e.preventDefault();
+                    const btn = ta.closest('.sub-question').querySelector('.essay-actions .btn');
+                    if (btn) btn.click();
+                }
+            });
+        });
+
+        // ─── NAV BACK/FORWARD (placeholder) ───
+        function goBack() {
+            window.history.back();
+        }
+        function goForward() {
+            window.history.forward();
+        }
+    </script>
+    <script src="../nav.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smooth Muscle Physiology Quiz | Quiz</title>
+    <link rel="stylesheet" href="../nav.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        /* ─── ROOT & RESET ─── */
+        :root {
+            --primary: #1e6f5c;
+            --accent: #289672;
+            --dark: #1b2a27;
+            --light: #f8f9fa;
+            --radius: 12px;
+            --shadow: 0 4px 14px rgba(18, 38, 63, 0.06);
+            --coral: #d95f5f;
+            --gold: #c49a3c;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Segoe UI", Roboto, system-ui, sans-serif;
+            background: linear-gradient(180deg, #f5faf8, #eef6f2);
+            color: var(--dark);
+            min-height: 100vh;
+            padding-top: 80px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+        }
+
+        /* ─── HEADER ─── */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: #fff;
+            padding: 0.8rem 0;
+            box-shadow: 0 6px 18px rgba(11, 36, 36, 0.18);
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo i {
+            font-size: 1.6rem;
+            color: var(--accent);
+        }
+
+        .logo h1 {
+            font-size: 1.2rem;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+            margin: 0;
+            line-height: 1;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 0.25rem 1rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+            color: #d4f0ee;
+        }
+
+        .badge i {
+            margin-right: 4px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-tabs .tab-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: none;
+            color: #d4f0ee;
+            padding: 0.3rem 0.9rem;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .nav-tabs .tab-btn:hover {
+            background: rgba(255, 255, 255, 0.18);
+            color: #fff;
+        }
+
+        .nav-tabs .tab-btn.active {
+            background: var(--accent);
+            color: var(--dark);
+        }
+
+        /* ─── CONTAINER ─── */
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 1.25rem 2.5rem;
+        }
+
+        /* ─── SECTION TITLES ─── */
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 1.8rem 0 1rem 0;
+            padding-bottom: 0.4rem;
+            border-bottom: 3px solid rgba(30, 111, 92, 0.20);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .section-title i {
+            font-size: 1.1rem;
+            color: rgb(8, 104, 66);
+        }
+
+        .section-title .count {
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 40px;
+            padding: 0.05rem 0.7rem;
+        }
+
+        .section-subtitle {
+            color: #5f7a7a;
+            font-size: 0.92rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .section-panel {
+            display: block;
+        }
+
+        .section-panel.hidden {
+            display: none !important;
+        }
+
+        /* ─── MCQ CARDS ─── */
+        .question {
+            background: #ffffff;
+            border-radius: var(--radius);
+            padding: 1.2rem 1.2rem 0.2rem 1.2rem;
+            margin-bottom: 1.2rem;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(30, 111, 92, 0.06);
+            transition: box-shadow 0.2s;
+        }
+
+        .question:hover {
+            box-shadow: 0 6px 22px rgba(18, 38, 63, 0.07);
+        }
+
+        .question p {
+            font-weight: 600;
+            font-size: 0.98rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .question .q-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 40px;
+            padding: 0 0.7rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            line-height: 1.6;
+            margin-right: 0.4rem;
+        }
+
+        .options label {
+            display: block;
+            background: #fafcfd;
+            border: 1px solid #e0e8ef;
+            border-radius: 8px;
+            padding: 0.45rem 0.9rem;
+            margin-top: 0.45rem;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-weight: 450;
+            font-size: 0.94rem;
+        }
+
+        .options label:hover {
+            background: #e8f5f4;
+            border-color: var(--accent);
+        }
+
+        .options input[type="radio"] {
+            margin-right: 0.5rem;
+            accent-color: var(--primary);
+            transform: scale(1.05);
+        }
+
+        /* ─── MCQ FEEDBACK ─── */
+        .question-feedback {
+            margin-top: 0.9rem;
+            padding: 0.4rem 0 0.1rem 0;
+            border-top: 1px dashed #dce6ed;
+        }
+
+        .answer-block strong {
+            display: block;
+            margin-bottom: 4px;
+            color: var(--primary);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .answer-list {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .answer-item {
+            padding: 5px 10px;
+            border-radius: 6px;
+            border: 1px solid #e6eef3;
+            background: #ffffff;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .answer-correct {
+            background: #ecfdf5;
+            border-color: #bbf7d0;
+            color: #065f46;
+        }
+
+        .answer-wrong {
+            background: #fff1f2;
+            border-color: #fca5a5;
+            color: #9f1239;
+        }
+
+        .user-choice {
+            outline: 2px dashed rgba(0, 0, 0, 0.06);
+        }
+
+        .explanation {
+            margin-top: 6px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            background: #f1f8f6;
+            color: #065f46;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            border-left: 4px solid var(--accent);
+        }
+
+        .explanation.wrong {
+            background: #fff5f5;
+            color: #7f1d1d;
+            border-left-color: #f87171;
+        }
+
+        /* ─── BUTTONS ─── */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            color: #fff;
+            border: none;
+            padding: 0.6rem 1.6rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.2s;
+            box-shadow: 0 4px 12px rgba(30, 111, 92, 0.22);
+        }
+
+        .btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 20px rgba(30, 111, 92, 0.30);
+        }
+
+        .btn:active {
+            transform: scale(0.96);
+        }
+
+        .btn i {
+            font-size: 0.9rem;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            box-shadow: none;
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .btn-sm {
+            padding: 0.35rem 1rem;
+            font-size: 0.85rem;
+        }
+
+        .btn-reveal {
+            background: linear-gradient(90deg, #4a7c7a, var(--primary));
+        }
+
+        .btn-reveal:hover {
+            box-shadow: 0 6px 20px rgba(30, 111, 92, 0.35);
+        }
+
+        .submit-wrap {
+            text-align: center;
+            margin: 1.5rem 0 2rem;
+        }
+
+        /* ─── RESULT BOX ─── */
+        .result {
+            margin-top: 1.5rem;
+            padding: 1.5rem 1.5rem 1rem;
+            background: #f1faf9;
+            border-radius: var(--radius);
+            text-align: center;
+            display: none;
+            border: 1px solid #c5e3df;
+        }
+
+        .result h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.2rem;
+        }
+
+        .score {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 0.2rem 0 0.4rem;
+        }
+
+        /* ─── ESSAY / STRUCTURED SECTION ─── */
+        .essay-card {
+            background: #ffffff;
+            border-radius: var(--radius);
+            padding: 1.25rem 1.25rem 1rem;
+            margin-bottom: 1.8rem;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(30, 111, 92, 0.06);
+        }
+
+        .essay-card>h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin: 0 0 0.4rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .essay-card>h3 .qnum {
+            background: var(--primary);
+            color: #fff;
+            border-radius: 40px;
+            padding: 0 0.7rem;
+            font-size: 0.75rem;
+            line-height: 1.6;
+        }
+
+        .essay-card>p {
+            color: #2d4a4a;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 0.8rem;
+            padding: 0.6rem 0.9rem;
+            background: #f4f9f8;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+        }
+
+        .essay-card img {
+            margin: 0.2rem 0 0.8rem 0;
+            border-radius: 8px;
+            border: 1px solid #e9edf2;
+            max-height: 340px;
+            object-fit: contain;
+            background: #fafcfd;
+        }
+
+        /* ─── SUB-QUESTION ─── */
+        .sub-question {
+            margin-top: 1.2rem;
+            padding-top: 1.2rem;
+            border-top: 1px solid #eef3f6;
+        }
+
+        .sub-question:first-of-type {
+            border-top: none;
+            padding-top: 0;
+            margin-top: 0.5rem;
+        }
+
+        .sub-question .sub-q-label {
+            display: flex;
+            align-items: baseline;
+            gap: 0.3rem;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 0.95rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .sub-question .sub-q-label .letter {
+            display: inline-block;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            text-align: center;
+            line-height: 24px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .sub-question .sub-q-label .marks {
+            font-size: 0.7rem;
+            font-weight: 400;
+            color: #6f8f8f;
+            background: #eef4f4;
+            padding: 0 0.5rem;
+            border-radius: 20px;
+        }
+
+        .sub-question textarea {
+            width: 100%;
+            min-height: 72px;
+            border-radius: 8px;
+            border: 1px solid #d1dbe0;
+            padding: 0.6rem 0.9rem;
+            resize: vertical;
+            font-family: inherit;
+            font-size: 0.94rem;
+            background: #fafcfd;
+            transition: border 0.2s, box-shadow 0.2s;
+            margin-top: 0.3rem;
+        }
+
+        .sub-question textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(30, 111, 92, 0.12);
+        }
+
+        .sub-question .essay-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-top: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .sub-question .essay-actions .btn {
+            padding: 0.4rem 1.2rem;
+            font-size: 0.85rem;
+        }
+
+        .sub-question .essay-actions .hint-text {
+            font-size: 0.8rem;
+            color: #7a9797;
+        }
+
+        /* ─── ESSAY REVEAL ANSWER ─── */
+        .essay-answers {
+            display: none;
+            margin-top: 0.8rem;
+            background: #f1f8f6;
+            border-radius: 8px;
+            padding: 1rem 1.2rem;
+            border: 1px solid #cfe6e0;
+            color: var(--dark);
+            animation: fadeSlide 0.3s ease;
+        }
+
+        .essay-answers.visible {
+            display: block;
+        }
+
+        .essay-answers h4 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            color: var(--primary);
+            margin: 0 0 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .essay-answers h4 i {
+            color: #1e6f5c;
+        }
+
+        .essay-answers p,
+        .essay-answers li {
+            font-size: 0.94rem;
+            line-height: 1.6;
+        }
+
+        .essay-answers ul {
+            padding-left: 1.2rem;
+            margin: 0.3rem 0 0.5rem;
+        }
+
+        .essay-answers ul li {
+            margin-bottom: 0.2rem;
+        }
+
+        .essay-answers b {
+            color: var(--dark);
+        }
+
+        .essay-answers .model-tag {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--dark);
+            font-weight: 700;
+            font-size: 0.65rem;
+            padding: 0.05rem 0.6rem;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        @keyframes fadeSlide {
+            0% {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ─── SCENARIO CARDS ─── */
+        .scenario-card {
+            background: #ffffff;
+            border-radius: var(--radius);
+            padding: 1.25rem 1.25rem 1rem;
+            margin-bottom: 1.8rem;
+            box-shadow: var(--shadow);
+            border-left: 6px solid var(--coral);
+            border: 1px solid rgba(30, 111, 92, 0.06);
+        }
+
+        .scenario-card>h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin: 0 0 0.4rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .scenario-card>h3 .qnum {
+            background: var(--coral);
+            color: #fff;
+            border-radius: 40px;
+            padding: 0 0.7rem;
+            font-size: 0.75rem;
+            line-height: 1.6;
+        }
+
+        .scenario-card>p {
+            color: #2d4a4a;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 0.8rem;
+            padding: 0.6rem 0.9rem;
+            background: #fdf6f6;
+            border-radius: 8px;
+            border-left: 4px solid var(--coral);
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 700px) {
+            body {
+                padding-top: 72px;
+            }
+            .logo h1 {
+                font-size: 1rem;
+            }
+            .header-inner {
+                padding: 0 1rem;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.3rem;
+            }
+            .badge {
+                align-self: flex-start;
+            }
+            .nav-tabs {
+                justify-content: center;
+            }
+            .nav-tabs .tab-btn {
+                font-size: 0.7rem;
+                padding: 0.2rem 0.7rem;
+            }
+            .question {
+                padding: 1rem 1rem 0.1rem 1rem;
+            }
+            .section-title {
+                font-size: 1.1rem;
+            }
+            .essay-card,
+            .scenario-card {
+                padding: 1rem;
+            }
+            .score {
+                font-size: 2.2rem;
+            }
+            .btn {
+                padding: 0.5rem 1.2rem;
+                font-size: 0.85rem;
+            }
+            .sub-question textarea {
+                min-height: 60px;
+                font-size: 0.88rem;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .logo h1 {
+                font-size: 0.85rem;
+            }
+            .logo i {
+                font-size: 1.2rem;
+            }
+            .options label {
+                font-size: 0.87rem;
+                padding: 0.4rem 0.7rem;
+            }
+            .essay-card>p,
+            .scenario-card>p {
+                font-size: 0.88rem;
+                padding: 0.5rem 0.7rem;
+            }
+        }
+
+        /* ─── UTILITIES ─── */
+        .text-muted {
+            color: #5f7a7a;
+            font-size: 0.9rem;
+        }
+        .mt-1 {
+            margin-top: 0.8rem;
+        }
+        .mb-1 {
+            margin-bottom: 0.8rem;
+        }
+        .flex-center {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .hidden {
+            display: none !important;
+        }
+        .scroll-target {
+            scroll-margin-top: 90px;
+        }
+        .gap-1 {
+            gap: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ═══ HEADER ═══ -->
+    <header>
+        <div class="header-inner">
+            <div class="logo">
+                <i class="fas fa-dumbbell"></i>
+                <h1>Smooth Muscle Physiology Quiz</h1>
+            </div>
+            <span class="badge"><i class="fas fa-pencil-alt"></i> Quiz</span>
+            <div class="nav-tabs">
+                <button class="tab-btn active" data-section="mcq">MCQs</button>
+                <button class="tab-btn" data-section="structured">Structured</button>
+                <button class="tab-btn" data-section="scenario">Scenarios</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ═══ MAIN ═══ -->
+    <main>
+
+        <!-- ─── SECTION 1: MCQs ─── -->
+        <section class="container section-panel" id="section-mcq">
+            <div class="section-title scroll-target" id="mcq-top">
+                <i class="fas fa-list-ul"></i> Multiple Choice Questions
+                <span class="count">20</span>
+            </div>
+            <p class="section-subtitle">Select the best answer for each question, then click <strong>Submit All MCQs</strong> at the bottom.</p>
+
+            <form id="quizForm">
+
+                <!-- Q1 -->
+                <div class="question">
+                    <p><span class="q-badge">1</span> Which of the following structural characteristics distinguishes smooth muscle from skeletal muscle?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q1" value="a"> A. Presence of Z-lines</label>
+                        <label><input type="radio" name="q1" value="b"> B. Non-striated appearance and fusiform shape</label>
+                        <label><input type="radio" name="q1" value="c"> C. Presence of troponin C</label>
+                        <label><input type="radio" name="q1" value="d"> D. Highly developed sarcoplasmic reticulum</label>
+                        <label><input type="radio" name="q1" value="e"> E. Voluntary control</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q1"></div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="question">
+                    <p><span class="q-badge">2</span> Single-unit smooth muscle is also known as:</p>
+                    <div class="options">
+                        <label><input type="radio" name="q2" value="a"> A. Multi-unit smooth muscle</label>
+                        <label><input type="radio" name="q2" value="b"> B. Neurogenic smooth muscle</label>
+                        <label><input type="radio" name="q2" value="c"> C. Visceral smooth muscle</label>
+                        <label><input type="radio" name="q2" value="d"> D. Skeletal muscle</label>
+                        <label><input type="radio" name="q2" value="e"> E. Non-syncytial muscle</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q2"></div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="question">
+                    <p><span class="q-badge">3</span> In single-unit smooth muscle, low-resistance electrical communication between adjacent cells is provided by:</p>
+                    <div class="options">
+                        <label><input type="radio" name="q3" value="a"> A. Desmosomes</label>
+                        <label><input type="radio" name="q3" value="b"> B. Intercalated discs</label>
+                        <label><input type="radio" name="q3" value="c"> C. Gap junctions</label>
+                        <label><input type="radio" name="q3" value="d"> D. Caveolae</label>
+                        <label><input type="radio" name="q3" value="e"> E. Dense bodies</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q3"></div>
+                </div>
+
+                <!-- Q4 -->
+                <div class="question">
+                    <p><span class="q-badge">4</span> Which of the following locations contains multi-unit smooth muscle?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q4" value="a"> A. Gastrointestinal tract</label>
+                        <label><input type="radio" name="q4" value="b"> B. Uterus</label>
+                        <label><input type="radio" name="q4" value="c"> C. Urinary bladder</label>
+                        <label><input type="radio" name="q4" value="d"> D. Iris and piloerector muscles</label>
+                        <label><input type="radio" name="q4" value="e"> E. Ureter</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q4"></div>
+                </div>
+
+                <!-- Q5 -->
+                <div class="question">
+                    <p><span class="q-badge">5</span> Contraction in multi-unit smooth muscle is primarily:</p>
+                    <div class="options">
+                        <label><input type="radio" name="q5" value="a"> A. Myogenic</label>
+                        <label><input type="radio" name="q5" value="b"> B. Neurogenic</label>
+                        <label><input type="radio" name="q5" value="c"> C. Pacemaker-driven</label>
+                        <label><input type="radio" name="q5" value="d"> D. Stretch-induced</label>
+                        <label><input type="radio" name="q5" value="e"> E. Autodestructive</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q5"></div>
+                </div>
+
+                <!-- Q6 -->
+                <div class="question">
+                    <p><span class="q-badge">6</span> The autonomic nerve terminals in smooth muscle form a "beaded" network consisting of structures called:</p>
+                    <div class="options">
+                        <label><input type="radio" name="q6" value="a"> A. Motor end plates</label>
+                        <label><input type="radio" name="q6" value="b"> B. Synaptic knobs</label>
+                        <label><input type="radio" name="q6" value="c"> C. Varicosities</label>
+                        <label><input type="radio" name="q6" value="d"> D. Caveolae</label>
+                        <label><input type="radio" name="q6" value="e"> E. Dense bodies</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q6"></div>
+                </div>
+
+                <!-- Q7 -->
+                <div class="question">
+                    <p><span class="q-badge">7</span> In smooth muscle, actin thin filaments attach internally to which structural components (functionally equivalent to Z-lines)?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q7" value="a"> A. Caveolae</label>
+                        <label><input type="radio" name="q7" value="b"> B. Sarcoplasmic reticulum</label>
+                        <label><input type="radio" name="q7" value="c"> C. Dense bodies</label>
+                        <label><input type="radio" name="q7" value="d"> D. Myosin light chains</label>
+                        <label><input type="radio" name="q7" value="e"> E. Gap junctions</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q7"></div>
+                </div>
+
+                <!-- Q8 -->
+                <div class="question">
+                    <p><span class="q-badge">8</span> Which protein is absent in smooth muscle cells and replaced functionally by calmodulin?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q8" value="a"> A. Actin</label>
+                        <label><input type="radio" name="q8" value="b"> B. Myosin</label>
+                        <label><input type="radio" name="q8" value="c"> C. Troponin</label>
+                        <label><input type="radio" name="q8" value="d"> D. Tropomyosin</label>
+                        <label><input type="radio" name="q8" value="e"> E. Calsequestrin</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q8"></div>
+                </div>
+
+                <!-- Q9 -->
+                <div class="question">
+                    <p><span class="q-badge">9</span> The resting membrane potential of smooth muscle typically ranges between:</p>
+                    <div class="options">
+                        <label><input type="radio" name="q9" value="a"> A. -90 mV to -80 mV</label>
+                        <label><input type="radio" name="q9" value="b"> B. -75 mV to -35 mV</label>
+                        <label><input type="radio" name="q9" value="c"> C. -30 mV to +10 mV</label>
+                        <label><input type="radio" name="q9" value="d"> D. 0 mV to +35 mV</label>
+                        <label><input type="radio" name="q9" value="e"> E. -100 mV to -90 mV</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q9"></div>
+                </div>
+
+                <!-- Q10 -->
+                <div class="question">
+                    <p><span class="q-badge">10</span> The rapid depolarization phase of an action potential in smooth muscle is predominantly caused by the entry of:</p>
+                    <div class="options">
+                        <label><input type="radio" name="q10" value="a"> A. Na⁺ ions</label>
+                        <label><input type="radio" name="q10" value="b"> B. K⁺ ions</label>
+                        <label><input type="radio" name="q10" value="c"> C. Ca²⁺ ions</label>
+                        <label><input type="radio" name="q10" value="d"> D. Cl⁻ ions</label>
+                        <label><input type="radio" name="q10" value="e"> E. Mg²⁺ ions</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q10"></div>
+                </div>
+
+                <!-- Q11 -->
+                <div class="question">
+                    <p><span class="q-badge">11</span> The duration of a spike-type action potential in smooth muscle is approximately:</p>
+                    <div class="options">
+                        <label><input type="radio" name="q11" value="a"> A. 1 ms to 2 ms</label>
+                        <label><input type="radio" name="q11" value="b"> B. 10 ms to 50 ms</label>
+                        <label><input type="radio" name="q11" value="c"> C. 100 ms to 150 ms</label>
+                        <label><input type="radio" name="q11" value="d"> D. 250 ms to 350 ms</label>
+                        <label><input type="radio" name="q11" value="e"> E. 500 ms to 1000 ms</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q11"></div>
+                </div>
+
+                <!-- Q12 -->
+                <div class="question">
+                    <p><span class="q-badge">12</span> Which action potential type is characteristically found in the conducting system of the heart and certain smooth muscle pacemaker fibers?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q12" value="a"> A. Spike potential</label>
+                        <label><input type="radio" name="q12" value="b"> B. Plateau-type potential</label>
+                        <label><input type="radio" name="q12" value="c"> C. Pacemaker potential (100–150 ms)</label>
+                        <label><input type="radio" name="q12" value="d"> D. Local graded potential</label>
+                        <label><input type="radio" name="q12" value="e"> E. Hyperpolarization potential</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q12"></div>
+                </div>
+
+                <!-- Q13 -->
+                <div class="question">
+                    <p><span class="q-badge">13</span> In multi-unit smooth muscle, local non-propagated nerve stimulation produces a graded response called a(n):</p>
+                    <div class="options">
+                        <label><input type="radio" name="q13" value="a"> A. End-plate potential</label>
+                        <label><input type="radio" name="q13" value="b"> B. Action potential with plateau</label>
+                        <label><input type="radio" name="q13" value="c"> C. Excitatory Junctional Potential (EJP)</label>
+                        <label><input type="radio" name="q13" value="d"> D. Slow wave potential</label>
+                        <label><input type="radio" name="q13" value="e"> E. Pacemaker potential</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q13"></div>
+                </div>
+
+                <!-- Q14 -->
+                <div class="question">
+                    <p><span class="q-badge">14</span> During smooth muscle contraction, calcium ions bind directly to:</p>
+                    <div class="options">
+                        <label><input type="radio" name="q14" value="a"> A. Troponin C</label>
+                        <label><input type="radio" name="q14" value="b"> B. Myosin Light Chain Kinase (MLCK)</label>
+                        <label><input type="radio" name="q14" value="c"> C. Calmodulin</label>
+                        <label><input type="radio" name="q14" value="d"> D. Tropomyosin</label>
+                        <label><input type="radio" name="q14" value="e"> E. Dense bodies</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q14"></div>
+                </div>
+
+                <!-- Q15 -->
+                <div class="question">
+                    <p><span class="q-badge">15</span> What enzyme is directly activated by the Ca²⁺–Calmodulin complex to initiate cross-bridge cycling?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q15" value="a"> A. Myosin light chain phosphatase (MLP)</label>
+                        <label><input type="radio" name="q15" value="b"> B. Myosin light chain kinase (MLCK)</label>
+                        <label><input type="radio" name="q15" value="c"> C. Na⁺/K⁺ ATPase</label>
+                        <label><input type="radio" name="q15" value="d"> D. Phospholipase C (PLC)</label>
+                        <label><input type="radio" name="q15" value="e"> E. Protein Kinase A (PKA)</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q15"></div>
+                </div>
+
+                <!-- Q16 -->
+                <div class="question">
+                    <p><span class="q-badge">16</span> Myosin heads in smooth muscle acquire the capability to bind to actin only after:</p>
+                    <div class="options">
+                        <label><input type="radio" name="q16" value="a"> A. Binding to troponin</label>
+                        <label><input type="radio" name="q16" value="b"> B. Dephosphorylation by phosphatase</label>
+                        <label><input type="radio" name="q16" value="c"> C. Phosphorylation of the regulatory light chain</label>
+                        <label><input type="radio" name="q16" value="d"> D. Influx of sodium ions</label>
+                        <label><input type="radio" name="q16" value="e"> E. Removal of tropomyosin</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q16"></div>
+                </div>
+
+                <!-- Q17 -->
+                <div class="question">
+                    <p><span class="q-badge">17</span> The phenomenon allowing smooth muscle to maintain long-term tonic contraction with low energy consumption is called the:</p>
+                    <div class="options">
+                        <label><input type="radio" name="q17" value="a"> A. Power stroke</label>
+                        <label><input type="radio" name="q17" value="b"> B. Latch phenomenon</label>
+                        <label><input type="radio" name="q17" value="c"> C. Plasticity mechanism</label>
+                        <label><input type="radio" name="q17" value="d"> D. Donnan effect</label>
+                        <label><input type="radio" name="q17" value="e"> E. Syncytial effect</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q17"></div>
+                </div>
+
+                <!-- Q18 -->
+                <div class="question">
+                    <p><span class="q-badge">18</span> During the Latch state, dephosphorylated myosin heads:</p>
+                    <div class="options">
+                        <label><input type="radio" name="q18" value="a"> A. Dissociate rapidly from actin</label>
+                        <label><input type="radio" name="q18" value="b"> B. Dissociate very slowly from actin</label>
+                        <label><input type="radio" name="q18" value="c"> C. Consume excessive ATP</label>
+                        <label><input type="radio" name="q18" value="d"> D. Prevent cross-bridge formation entirely</label>
+                        <label><input type="radio" name="q18" value="e"> E. Cause cell lysis</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q18"></div>
+                </div>
+
+                <!-- Q19 -->
+                <div class="question">
+                    <p><span class="q-badge">19</span> Smooth muscle relaxation requires the removal of cytosolic Ca²⁺ and the action of which enzyme?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q19" value="a"> A. Adenylate cyclase</label>
+                        <label><input type="radio" name="q19" value="b"> B. Myosin light chain phosphatase (MLP)</label>
+                        <label><input type="radio" name="q19" value="c"> C. Phospholipase C</label>
+                        <label><input type="radio" name="q19" value="d"> D. Protein Kinase C</label>
+                        <label><input type="radio" name="q19" value="e"> E. Calmodulin kinase</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q19"></div>
+                </div>
+
+                <!-- Q20 -->
+                <div class="question">
+                    <p><span class="q-badge">20</span> Which hormone causes inhibition/relaxation of uterine smooth muscle activity?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q20" value="a"> A. Oxytocin</label>
+                        <label><input type="radio" name="q20" value="b"> B. Acetylcholine</label>
+                        <label><input type="radio" name="q20" value="c"> C. Progesterone</label>
+                        <label><input type="radio" name="q20" value="d"> D. Angiotensin II</label>
+                        <label><input type="radio" name="q20" value="e"> E. Endothelin-1</label>
+                    </div>
+                    <div class="question-feedback" id="feedback-q20"></div>
+                </div>
+
+                <div class="submit-wrap">
+                    <button type="button" class="btn" onclick="submitQuiz()">
+                        <i class="fas fa-check-circle"></i> Submit All MCQs
+                    </button>
+                </div>
+
+            </form>
+
+            <div class="result" id="resultBox">
+                <h3><i class="fas fa-chart-simple"></i> Your Score</h3>
+                <div class="score" id="score">0%</div>
+                <p class="text-muted" style="font-size:0.9rem;">Review the feedback below each question.</p>
+                <div id="answers"></div>
+            </div>
+        </section>
+
+        <!-- ─── SECTION 2: STRUCTURED QUESTIONS ─── -->
+        <section class="container section-panel hidden" id="section-structured">
+            <div class="section-title scroll-target" id="structured-top">
+                <i class="fas fa-pen-fancy"></i> Structured Questions
+                <span class="count">10</span>
+            </div>
+            <p class="section-subtitle">Write your answer in each box, then click <strong>Reveal Answer</strong> to check the model response.</p>
+
+            <!-- SQ1 -->
+            <div class="essay-card">
+                <h3><span class="qnum">1</span> Single-unit vs Multi-unit Smooth Muscle</h3>
+                <p>Compare single-unit and multi-unit smooth muscle regarding their structural arrangement, presence of gap junctions, mode of excitation, and tissue locations.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s1')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s1">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <ul>
+                            <li><b>Single-unit (visceral) smooth muscle:</b> Cells are arranged in sheets or bundles, connected by gap junctions. Exhibits myogenic activity (pacemaker potentials) and responds to stretch. Excitation spreads from cell to cell. Found in gastrointestinal tract, uterus, urinary bladder, ureters.</li>
+                            <li><b>Multi-unit smooth muscle:</b> Cells are discrete and separate, with few or no gap junctions. Excitation is neurogenic (requires nerve stimulation). Each cell responds independently. Found in iris, ciliary muscle, piloerector muscles, and large airways.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQ2 -->
+            <div class="essay-card">
+                <h3><span class="qnum">2</span> Neuromuscular Junction of Smooth Muscle</h3>
+                <p>Describe the neuromuscular junction of smooth muscle, contrasting it with the classic motor end plate of skeletal muscle.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s2')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s2">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>Smooth muscle NMJ:</b> Autonomic nerve terminals form a "beaded" network with varicosities that release neurotransmitter into a diffuse junctional cleft (20–100 nm wide). There are no specialized postjunctional folds. Neurotransmitter diffuses to receptors on the smooth muscle membrane, producing a graded junctional potential (EJP or IJP).</p>
+                        <p><b>Skeletal muscle NMJ:</b> A single motor axon terminal forms a highly specialized motor end plate with deep postjunctional folds. Acetylcholine is released into a narrow cleft (50 nm) and binds to nicotinic receptors, always producing a large end-plate potential that reliably triggers an action potential. Transmission is fast and 1:1.</p>
+                        <p><b>Contrast:</b> Smooth muscle junction is diffuse, varicose, and graded; skeletal is focal, specialized, and all-or-none.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQ3 -->
+            <div class="essay-card">
+                <h3><span class="qnum">3</span> Types of Action Potentials</h3>
+                <p>List three types of action potentials recorded in smooth muscle and state their typical durations.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s3')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s3">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <ul>
+                            <li><b>Spike potential:</b> Duration 10–50 ms; typical of most visceral smooth muscle.</li>
+                            <li><b>Plateau-type potential:</b> Duration 100–150 ms (or longer); found in ureter and some vascular smooth muscle.</li>
+                            <li><b>Pacemaker potential (slow wave):</b> Duration 100–150 ms; found in GI tract and cardiac conducting system; generates rhythmic activity.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQ4 -->
+            <div class="essay-card">
+                <h3><span class="qnum">4</span> Ionic Basis of Smooth Muscle AP</h3>
+                <p>Explain the ionic basis of depolarization and repolarization during an action potential in smooth muscle.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s4')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s4">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>Depolarization:</b> Caused primarily by the influx of Ca²⁺ ions through voltage-gated L-type Ca²⁺ channels (slow calcium channels). Na⁺ influx may contribute in some types.</p>
+                        <p><b>Repolarization:</b> Caused by the efflux of K⁺ ions through voltage-gated K⁺ channels and the closure/inactivation of Ca²⁺ channels. The relatively slow kinetics of Ca²⁺ channels account for the longer duration of the smooth muscle action potential compared to nerve or skeletal muscle.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQ5 -->
+            <div class="essay-card">
+                <h3><span class="qnum">5</span> Structural Organization of Contractile Proteins</h3>
+                <p>Describe the structural organization of actin, myosin, and dense bodies within a smooth muscle fiber.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s5')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s5">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p>Smooth muscle lacks sarcomeres and Z-lines. Instead:</p>
+                        <ul>
+                            <li><b>Actin thin filaments:</b> Attach to dense bodies in the cytoplasm and to dense plaques on the inner surface of the plasma membrane.</li>
+                            <li><b>Myosin thick filaments:</b> Longer than in skeletal muscle, with heads along their length. They are arranged in a staggered, diagonal manner between actin filaments.</li>
+                            <li><b>Dense bodies:</b> Electron-dense structures functionally equivalent to Z-lines. They anchor actin filaments and are linked by intermediate filaments (desmin, vimentin) to form a cytoskeletal network.</li>
+                            <li><b>Arrangement:</b> The diagonal arrangement of filaments allows the smooth muscle cell to shorten greatly (up to 80% of resting length) during contraction, unlike skeletal muscle.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQ6 -->
+            <div class="essay-card">
+                <h3><span class="qnum">6</span> Excitation-Contraction Coupling</h3>
+                <p>Outline the sequential step-by-step molecular mechanism of excitation-contraction coupling in smooth muscle from Ca²⁺ entry to cross-bridge sliding.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s6')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s6">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <ol>
+                            <li>Depolarization or receptor activation opens voltage-gated or ligand-gated Ca²⁺ channels.</li>
+                            <li>Ca²⁺ enters the cytosol from the extracellular fluid and/or is released from the sarcoplasmic reticulum (via IP₃ receptors).</li>
+                            <li>Ca²⁺ binds to calmodulin (CaM).</li>
+                            <li>The Ca²⁺–CaM complex activates myosin light chain kinase (MLCK).</li>
+                            <li>MLCK phosphorylates the regulatory light chain of myosin.</li>
+                            <li>Phosphorylated myosin heads can now bind to actin and cycle cross-bridges (using ATP), producing contraction.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQ7 -->
+            <div class="essay-card">
+                <h3><span class="qnum">7</span> Latch Phenomenon</h3>
+                <p>Define the Latch Phenomenon and explain its physiological advantage in maintaining smooth muscle tone.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s7')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s7">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>Latch phenomenon:</b> A state in which dephosphorylated myosin heads remain attached to actin for prolonged periods, maintaining force with very low ATP consumption. It occurs when MLCK activity decreases and myosin light chain phosphatase (MLP) removes phosphate from myosin heads, but the heads do not detach immediately.</p>
+                        <p><b>Physiological advantage:</b> Allows smooth muscle to maintain tonic contraction (e.g., in blood vessels, sphincters, airways) for long periods with minimal energy expenditure. This is crucial for organs that must sustain tone continuously, like vascular smooth muscle maintaining blood pressure.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQ8 -->
+            <div class="essay-card">
+                <h3><span class="qnum">8</span> Smooth Muscle Relaxation</h3>
+                <p>Explain how smooth muscle relaxation is achieved at the molecular and ion-transport levels.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s8')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s8">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>Relaxation requires:</b></p>
+                        <ul>
+                            <li>Removal of cytosolic Ca²⁺: Ca²⁺ is pumped back into the sarcoplasmic reticulum by Ca²⁺-ATPase (SERCA) and extruded from the cell by Ca²⁺-ATPase and Na⁺/Ca²⁺ exchanger.</li>
+                            <li>Decrease in Ca²⁺–CaM complex → MLCK becomes inactive.</li>
+                            <li>Myosin light chain phosphatase (MLP) dephosphorylates the myosin regulatory light chain.</li>
+                            <li>Dephosphorylated myosin heads detach from actin → relaxation.</li>
+                        </ul>
+                        <p>Additionally, β-adrenergic stimulation via cAMP/PKA can phosphorylate MLCK (reducing its activity) and activate MLP, promoting relaxation.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQ9 -->
+            <div class="essay-card">
+                <h3><span class="qnum">9</span> EJP vs IJP</h3>
+                <p>Differentiate between Excitatory Junctional Potential (EJP) and Inhibitory Junctional Potential (IJP) in multi-unit smooth muscle.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s9')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s9">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <ul>
+                            <li><b>Excitatory Junctional Potential (EJP):</b> A graded depolarization of the smooth muscle membrane caused by excitatory neurotransmitter (e.g., acetylcholine, norepinephrine). It increases the probability of action potential firing and contraction. It is non-propagated and its amplitude depends on the strength of nerve stimulation.</li>
+                            <li><b>Inhibitory Junctional Potential (IJP):</b> A graded hyperpolarization caused by inhibitory neurotransmitter (e.g., norepinephrine via β-receptors, nitric oxide). It decreases the probability of action potential firing and promotes relaxation.</li>
+                        </ul>
+                        <p>Both are local, graded potentials that summate and do not obey the all-or-none law.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQ10 -->
+            <div class="essay-card">
+                <h3><span class="qnum">10</span> Functions of Smooth Muscle</h3>
+                <p>State five physiological functions of smooth muscle in human organ systems.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('s10')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-s10">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <ul>
+                            <li><b>Gastrointestinal tract:</b> Peristalsis and mixing movements for digestion and absorption.</li>
+                            <li><b>Blood vessels:</b> Regulation of vascular tone and blood pressure (vasoconstriction/vasodilation).</li>
+                            <li><b>Respiratory system:</b> Control of airway diameter (bronchoconstriction/bronchodilation).</li>
+                            <li><b>Urinary system:</b> Propulsion of urine (ureters) and bladder emptying (detrusor muscle).</li>
+                            <li><b>Reproductive system:</b> Uterine contractions during labor, and erection/ejaculation in males.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ─── SECTION 3: APPLIED SCENARIO QUESTIONS ─── -->
+        <section class="container section-panel hidden" id="section-scenario">
+            <div class="section-title scroll-target" id="scenario-top">
+                <i class="fas fa-stethoscope"></i> Applied &amp; Clinical Scenarios
+                <span class="count">5</span>
+            </div>
+            <p class="section-subtitle">Read each scenario and write a comprehensive answer. Then click <strong>Reveal Answer</strong> to compare with the model response.</p>
+
+            <!-- Scenario 1 -->
+            <div class="scenario-card">
+                <h3><span class="qnum">1</span> Calcium Channel Blockers &amp; Vasodilation</h3>
+                <p>A patient is prescribed a calcium channel blocker (e.g., verapamil) for hypertension. Based on smooth muscle excitation-contraction mechanisms, explain how blocking voltage-gated L-type Ca²⁺ channels causes vasodilation in arterial smooth muscle.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('sc1')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-sc1">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p>Calcium channel blockers inhibit L-type voltage-gated Ca²⁺ channels in arterial smooth muscle. This reduces Ca²⁺ influx into the cytosol during depolarization. Lower cytosolic Ca²⁺ → less Ca²⁺–calmodulin complex → reduced activation of MLCK → less phosphorylation of myosin light chains → decreased cross-bridge cycling → relaxation of vascular smooth muscle → vasodilation → decreased peripheral resistance → lower blood pressure.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scenario 2 -->
+            <div class="scenario-card">
+                <h3><span class="qnum">2</span> Slow Waves &amp; Peristalsis</h3>
+                <p>During gastrointestinal endoscopy, slow electrical waves are recorded from the stomach muscularis externa. Explain how slow wave potentials give rise to spike action potentials and subsequent intestinal peristalsis.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('sc2')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-sc2">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>Slow waves</b> are spontaneous, rhythmic fluctuations in the resting membrane potential of GI smooth muscle (interstitial cells of Cajal act as pacemakers). They are not action potentials but graded depolarizations. When a slow wave reaches a threshold (about −40 mV), voltage-gated Ca²⁺ channels open, generating one or more spike action potentials. These spikes cause Ca²⁺ influx → contraction. The frequency and amplitude of spikes determine the strength and frequency of contractions. Peristalsis is a coordinated wave of contraction and relaxation driven by these electrical events, propelling contents along the GI tract.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scenario 3 -->
+            <div class="scenario-card">
+                <h3><span class="qnum">3</span> Uterine Gap Junctions &amp; Labor</h3>
+                <p>During pregnancy, high levels of progesterone maintain uterine quiescence, whereas near labor, hormonal changes induce high-density gap junction formation and syncytial contraction. Explain the physiological role of gap junctions in converting uterine smooth muscle behavior during labor.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('sc3')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-sc3">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p>During pregnancy, progesterone suppresses gap junction formation, keeping uterine smooth muscle cells relatively independent and quiescent (preventing premature labor). Near term, estrogen rises and progesterone falls, stimulating the formation of gap junctions (connexin-43) between uterine smooth muscle cells. Gap junctions provide low-resistance electrical coupling, allowing action potentials and ions to spread rapidly from cell to cell. This converts the uterus into a functional syncytium, enabling coordinated, powerful contractions during labor. The increased coupling also allows oxytocin to act more effectively, further enhancing contractions.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scenario 4 -->
+            <div class="scenario-card">
+                <h3><span class="qnum">4</span> Myosin Light Chain Phosphatase Inhibition</h3>
+                <p>A pharmacological drug inhibits the enzyme Myosin Light Chain Phosphatase (MLP) in vascular smooth muscle. Predict the effect of this drug on vascular tone and explain the underlying molecular mechanism.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('sc4')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-sc4">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>Effect:</b> Inhibition of MLP would prolong and enhance vascular smooth muscle contraction, leading to increased vascular tone (vasoconstriction) and elevated blood pressure.</p>
+                        <p><b>Mechanism:</b> Normally, MLP dephosphorylates myosin light chains, leading to relaxation. If MLP is inhibited, phosphorylated myosin light chains accumulate, MLCK activity (even at baseline) maintains phosphorylation, and cross-bridge cycling continues. The muscle cannot relax properly. This would increase peripheral resistance and potentially cause hypertension. Such drugs could be dangerous, but understanding this mechanism is important for developing therapies for conditions like vasospasm.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scenario 5 -->
+            <div class="scenario-card">
+                <h3><span class="qnum">5</span> Energy Expenditure: Smooth vs Skeletal Muscle</h3>
+                <p>Compare the energy expenditure (ATP consumption) of smooth muscle maintaining tonic vascular resistance versus skeletal muscle performing continuous isometric contraction, referencing the Latch mechanism.</p>
+                <div class="sub-question">
+                    <textarea placeholder="Write your answer here…"></textarea>
+                    <div class="essay-actions">
+                        <button class="btn btn-reveal btn-sm" onclick="toggleEssay('sc5')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                        <span class="hint-text">Click to see model answer</span>
+                    </div>
+                    <div class="essay-answers" id="essay-sc5">
+                        <h4><i class="fas fa-check-circle"></i> Model Answer</h4>
+                        <p><b>Smooth muscle (vascular tone):</b> Utilizes the latch mechanism, where dephosphorylated myosin heads remain attached to actin for long periods without cycling. This maintains force with very low ATP consumption (up to 300 times less than skeletal muscle). This allows blood vessels to maintain tonic contraction continuously without fatigue or excessive energy use.</p>
+                        <p><b>Skeletal muscle (isometric contraction):</b> Cross-bridge cycling continues, with each cycle consuming ATP (for myosin ATPase and Ca²⁺ pumping). Even during isometric contraction, ATP is consumed to maintain tension. Skeletal muscle cannot sustain contraction indefinitely; it fatigues due to ATP depletion, lactic acid accumulation, and other factors.</p>
+                        <p><b>Conclusion:</b> Smooth muscle is far more energy-efficient for maintaining prolonged tone, thanks to the latch phenomenon. Skeletal muscle is designed for rapid, powerful, but short-lived contractions.</p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <button id="backBtn" onclick="goBack()">⬅ Back</button>
+        <h1>ToToZ Collection</h1>
+        <button id="forwardBtn" onclick="goForward()">Forward ➡</button>
+    </footer>
+
+    <!-- ═══ JAVASCRIPT ═══ -->
+    <script>
+        // ─── TAB NAVIGATION ───
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                const section = this.dataset.section;
+                document.querySelectorAll('.section-panel').forEach(p => p.classList.add('hidden'));
+                document.getElementById('section-' + section).classList.remove('hidden');
+                const topEl = document.getElementById(section + '-top');
+                if (topEl) topEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        // ─── MCQ CORRECT ANSWERS ───
+        const correctAnswers = {
+            q1: "b",
+            q2: "c",
+            q3: "c",
+            q4: "d",
+            q5: "b",
+            q6: "c",
+            q7: "c",
+            q8: "c",
+            q9: "b",
+            q10: "c",
+            q11: "b",
+            q12: "b",
+            q13: "c",
+            q14: "c",
+            q15: "b",
+            q16: "c",
+            q17: "b",
+            q18: "b",
+            q19: "b",
+            q20: "c"
+        };
+
+        // ─── MCQ EXPLANATIONS ───
+        const answerExplanations = {
+            q1: "Smooth muscle is non-striated and has a fusiform (spindle) shape, unlike skeletal muscle which is striated and cylindrical.",
+            q2: "Single-unit smooth muscle is also called visceral smooth muscle because it is found in the viscera (internal organs).",
+            q3: "Gap junctions provide low-resistance electrical coupling between adjacent smooth muscle cells, allowing coordinated contraction.",
+            q4: "Multi-unit smooth muscle is found in the iris, ciliary muscle, and piloerector muscles, where independent fine control is needed.",
+            q5: "Multi-unit smooth muscle contraction is primarily neurogenic, requiring nerve stimulation for activation.",
+            q6: "Autonomic nerve terminals in smooth muscle have varicosities — beaded swellings that release neurotransmitter diffusely.",
+            q7: "Dense bodies are the functional equivalent of Z-lines in smooth muscle; actin filaments attach to them.",
+            q8: "Troponin is absent in smooth muscle; its role is replaced by calmodulin, which binds Ca²⁺ to regulate contraction.",
+            q9: "The resting membrane potential of smooth muscle is typically between −75 mV and −35 mV, less negative than skeletal muscle.",
+            q10: "The rapid depolarization phase of smooth muscle action potentials is predominantly due to Ca²⁺ influx through voltage-gated calcium channels.",
+            q11: "Spike-type action potentials in smooth muscle last approximately 10–50 ms, longer than nerve or skeletal muscle action potentials.",
+            q12: "Plateau-type action potentials are found in the conducting system of the heart and some smooth muscle pacemaker fibers; they have a prolonged depolarized phase.",
+            q13: "Excitatory Junctional Potential (EJP) is a graded depolarization produced by local nerve stimulation in multi-unit smooth muscle.",
+            q14: "Calcium binds directly to calmodulin in smooth muscle, forming the Ca²⁺–calmodulin complex.",
+            q15: "The Ca²⁺–calmodulin complex activates myosin light chain kinase (MLCK), which phosphorylates myosin.",
+            q16: "Myosin heads can only bind to actin after phosphorylation of the regulatory light chain by MLCK.",
+            q17: "The latch phenomenon allows smooth muscle to maintain long-term tonic contraction with low energy consumption.",
+            q18: "During the latch state, dephosphorylated myosin heads dissociate very slowly from actin, maintaining force with minimal ATP use.",
+            q19: "Myosin light chain phosphatase (MLP) dephosphorylates myosin light chains, leading to smooth muscle relaxation.",
+            q20: "Progesterone inhibits/relaxes uterine smooth muscle, maintaining quiescence during pregnancy."
+        };
+
+        // ─── MCQ SUBMIT ───
+        function submitQuiz() {
+            let score = 0;
+            const total = Object.keys(correctAnswers).length;
+
+            document.querySelectorAll('.question-feedback').forEach(el => el.innerHTML = '');
+
+            for (let key in correctAnswers) {
+                const radios = Array.from(document.querySelectorAll(`input[name="${key}"]`));
+                const selected = radios.find(r => r.checked);
+                const correct = correctAnswers[key];
+
+                if (selected && selected.value === correct) score++;
+
+                const feedbackEl = document.getElementById(`feedback-${key}`);
+                if (!feedbackEl) continue;
+
+                let html = `<div class="answer-block"><strong>Q${key.replace(/^q/, '')}</strong><div class="answer-list">`;
+
+                radios.forEach(r => {
+                    const label = r.parentElement;
+                    const text = label ? label.textContent.trim() : r.value;
+                    const classes = ['answer-item'];
+                    if (r.value === correct) classes.push('answer-correct');
+                    if (r.checked && r.value !== correct) classes.push('answer-wrong', 'user-choice');
+                    if (r.checked && r.value === correct) classes.push('user-choice');
+                    html += `<div class="${classes.join(' ')}">${text}${r.checked ? ' ◀' : ''}</div>`;
+                });
+
+                html += `</div>`;
+
+                const correctRadio = radios.find(rr => rr.value === correct);
+                const correctText = correctRadio && correctRadio.parentElement ? correctRadio.parentElement.textContent
+                    .trim() : correct;
+                const explanationText = answerExplanations[key] || '';
+
+                if (selected) {
+                    if (selected.value === correct) {
+                        html += `<div class="explanation">✅ Correct — ${explanationText}</div>`;
+                    } else {
+                        html +=
+                            `<div class="explanation wrong">❌ Incorrect. Correct answer: <strong>${correctText}</strong>. ${explanationText}</div>`;
+                    }
+                } else {
+                    html +=
+                        `<div class="explanation wrong">No answer selected. Correct answer: <strong>${correctText}</strong>. ${explanationText}</div>`;
+                }
+
+                html += `</div>`;
+                feedbackEl.innerHTML = html;
+            }
+
+            const percentage = Math.round((score / total) * 100);
+            const resultBox = document.getElementById('resultBox');
+            resultBox.style.display = 'block';
+            document.getElementById('answers').innerHTML = '';
+
+            let start = 0;
+            const timer = setInterval(() => {
+                if (start >= percentage) clearInterval(timer);
+                document.getElementById('score').innerText = start + '%';
+                start++;
+            }, 20);
+
+            document.querySelectorAll('#quizForm input[type="radio"]').forEach(i => i.disabled = true);
+        }
+
+        // ─── ESSAY TOGGLE ───
+        function toggleEssay(id) {
+            const el = document.getElementById('essay-' + id);
+            if (!el) return;
+            el.classList.toggle('visible');
+            if (el.classList.contains('visible')) {
+                setTimeout(() => {
+                    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+
+        // ─── KEYBOARD ACCESSIBILITY ───
+        document.querySelectorAll('.essay-actions .btn').forEach(btn => {
+            btn.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    btn.click();
+                }
+            });
+        });
+
+        // ─── SHIFT+ENTER ON TEXTAREA ───
+        document.querySelectorAll('.sub-question textarea').forEach(ta => {
+            ta.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && e.shiftKey) {
+                    e.preventDefault();
+                    const btn = ta.closest('.sub-question').querySelector('.essay-actions .btn');
+                    if (btn) btn.click();
+                }
+            });
+        });
+
+        // ─── NAV BACK/FORWARD (placeholder) ───
+        function goBack() {
+            window.history.back();
+        }
+        function goForward() {
+            window.history.forward();
+        }
+    </script>
+    <script src="../nav.js"></script>
+
+</body>
+</html>
