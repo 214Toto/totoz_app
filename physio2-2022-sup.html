@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2022 Physiology Sup – 3rd Year</title>
+    <style>
+        :root {
+            --primary: #1a6b6b;
+            --accent: #2ea8a0;
+            --dark: #0f2a2a;
+            --light: #f4f8f7;
+            --radius: 12px;
+            --shadow: 0 4px 14px rgba(0, 30, 30, 0.08);
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #edf3f2;
+            color: var(--dark);
+            min-height: 100vh;
+            padding-top: 72px;
+        }
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: linear-gradient(145deg, var(--primary), var(--dark));
+            color: #fff;
+            padding: 0.6rem 0;
+            box-shadow: 0 4px 18px rgba(0, 20, 20, 0.25);
+        }
+        .header-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .logo i {
+            font-size: 1.5rem;
+            color: #8dd9d4;
+        }
+        .logo h1 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+        }
+        .badge {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 0.2rem 1rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #b3e6e0;
+            letter-spacing: 0.5px;
+        }
+        .container {
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 0 1.2rem 2.5rem;
+        }
+        .tab-bar {
+            display: flex;
+            gap: 0.5rem;
+            margin: 0.5rem 0 1.5rem 0;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            background: #dce8e8;
+            border: none;
+            padding: 0.5rem 1.8rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--dark);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .tab-btn:hover {
+            background: #c0d6d6;
+        }
+        .tab-btn.active {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 2px 10px rgba(26, 107, 107, 0.25);
+        }
+        .tab-panel {
+            display: block;
+        }
+        .tab-panel.hidden {
+            display: none;
+        }
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 0 0 0.8rem 0;
+            padding-bottom: 0.4rem;
+            border-bottom: 3px solid rgba(26, 107, 107, 0.18);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+        .section-title .count {
+            font-size: 0.7rem;
+            font-weight: 600;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 40px;
+            padding: 0 0.7rem;
+            line-height: 1.7;
+        }
+        .section-subtitle {
+            color: #4f6e6e;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        .question {
+            background: #ffffff;
+            border-radius: var(--radius);
+            padding: 1.1rem 1.2rem 0.2rem 1.2rem;
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(26, 107, 107, 0.05);
+            transition: box-shadow 0.2s;
+        }
+        .question:hover {
+            box-shadow: 0 6px 20px rgba(0, 30, 30, 0.07);
+        }
+        .question .q-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 40px;
+            padding: 0 0.65rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            line-height: 1.6;
+            margin-right: 0.4rem;
+        }
+        .question p {
+            font-weight: 600;
+            font-size: 0.97rem;
+            margin-bottom: 0.4rem;
+            color: var(--dark);
+        }
+        .options label {
+            display: block;
+            background: #fafcfc;
+            border: 1px solid #dde8e8;
+            border-radius: 7px;
+            padding: 0.4rem 0.85rem;
+            margin-top: 0.4rem;
+            cursor: pointer;
+            transition: all 0.15s;
+            font-weight: 450;
+            font-size: 0.92rem;
+        }
+        .options label:hover {
+            background: #e8f5f4;
+            border-color: var(--accent);
+        }
+        .options input[type="radio"] {
+            margin-right: 0.5rem;
+            accent-color: var(--primary);
+            transform: scale(1.04);
+        }
+        .question-feedback {
+            margin-top: 0.8rem;
+            padding: 0.4rem 0 0.1rem 0;
+            border-top: 1px dashed #dce6e6;
+        }
+        .answer-block strong {
+            display: block;
+            margin-bottom: 3px;
+            color: var(--primary);
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .answer-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .answer-item {
+            padding: 4px 10px;
+            border-radius: 5px;
+            border: 1px solid #e4edec;
+            background: #ffffff;
+            font-weight: 500;
+            font-size: 0.88rem;
+        }
+        .answer-correct {
+            background: #e8f7ef;
+            border-color: #a8d8c0;
+            color: #0a4f3a;
+        }
+        .answer-wrong {
+            background: #fde9ea;
+            border-color: #f5b8b8;
+            color: #8a1f2b;
+        }
+        .user-choice {
+            outline: 2px dashed rgba(0, 0, 0, 0.06);
+        }
+        .explanation {
+            margin-top: 5px;
+            padding: 8px 13px;
+            border-radius: 7px;
+            background: #f0f8f6;
+            color: #065f4a;
+            font-size: 0.88rem;
+            line-height: 1.5;
+            border-left: 4px solid var(--accent);
+        }
+        .explanation.wrong {
+            background: #fdf1f1;
+            color: #7a1f1f;
+            border-left-color: #e68080;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            color: #fff;
+            border: none;
+            padding: 0.55rem 1.8rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.2s;
+            box-shadow: 0 4px 14px rgba(26, 107, 107, 0.25);
+        }
+        .btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 24px rgba(26, 107, 107, 0.32);
+        }
+        .btn:active {
+            transform: scale(0.96);
+        }
+        .submit-wrap {
+            text-align: center;
+            margin: 1.5rem 0 1.8rem;
+        }
+        .result {
+            margin-top: 1.5rem;
+            padding: 1.5rem 1.5rem 0.8rem;
+            background: #eaf6f4;
+            border-radius: var(--radius);
+            text-align: center;
+            display: none;
+            border: 1px solid #b8dbd6;
+        }
+        .result h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        .score {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 0.1rem 0 0.2rem;
+        }
+        .text-muted {
+            color: #4f6e6e;
+            font-size: 0.9rem;
+        }
+        .hidden {
+            display: none !important;
+        }
+        .section-b-question, .scenario-box {
+            background: #ffffff;
+            border-radius: var(--radius);
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(26, 107, 107, 0.05);
+        }
+        .section-b-question .q-label, .scenario-box .q-label {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        .section-b-question .q-text, .scenario-box .q-text {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            background: #f5f8f8;
+            padding: 0.6rem 1rem;
+            border-radius: 7px;
+            white-space: pre-wrap;
+        }
+        .subquestion {
+            margin-top: 0.8rem;
+            border-top: 1px solid #e0ecec;
+            padding-top: 0.8rem;
+        }
+        .subquestion .sub-label {
+            font-weight: 600;
+            color: var(--dark);
+        }
+        .subquestion textarea {
+            width: 100%;
+            min-height: 55px;
+            padding: 0.6rem;
+            border: 1px solid #cbdcdc;
+            border-radius: 7px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            resize: vertical;
+            margin-top: 0.3rem;
+            background: #fafcfc;
+        }
+        .subquestion textarea:focus {
+            outline: 2px solid var(--accent);
+            border-color: transparent;
+        }
+        .show-answer-btn {
+            margin-top: 0.4rem;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 0.2rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+        .show-answer-btn:hover {
+            background: var(--accent);
+        }
+        .model-answer {
+            margin-top: 0.5rem;
+            padding: 0.6rem 1rem;
+            background: #f0f8f6;
+            border-left: 4px solid var(--accent);
+            border-radius: 5px;
+            font-size: 0.9rem;
+            color: #065f4a;
+            display: none;
+            white-space: pre-wrap;
+        }
+        .model-answer.visible {
+            display: block;
+        }
+        .mono-box {
+            background: #f5f8f8;
+            padding: 0.6rem 1rem;
+            border-radius: 7px;
+            font-family: monospace;
+            font-size: 0.95rem;
+            margin: 0.5rem 0;
+        }
+        .scenario-box .q-text {
+            background: #f9fdfd;
+            border-left: 4px solid var(--accent);
+        }
+        @media (max-width: 700px) {
+            body { padding-top: 68px; }
+            .logo h1 { font-size: 0.95rem; }
+            .header-inner { padding: 0 1rem; flex-direction: column; align-items: stretch; gap: 0.2rem; }
+            .badge { align-self: flex-start; }
+            .question { padding: 0.9rem 0.9rem 0.1rem 0.9rem; }
+            .section-title { font-size: 1.05rem; }
+            .score { font-size: 2.2rem; }
+            .btn { padding: 0.5rem 1.2rem; font-size: 0.85rem; }
+            .section-b-question, .scenario-box { padding: 0.9rem; }
+            .tab-btn { padding: 0.4rem 1.2rem; font-size: 0.85rem; }
+        }
+        @media (max-width: 420px) {
+            .logo h1 { font-size: 0.8rem; }
+            .options label { font-size: 0.85rem; padding: 0.35rem 0.65rem; }
+        }
+        img {
+            width: "100%";
+            height: "100%";
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-inner">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+                <h1>2022 Physiology Sup – 3rd Year</h1>
+            </div>
+            <span class="badge"><i class="fas fa-pencil-alt"></i> &nbsp;80 MCQs + Section B + Scenarios</span>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+
+            <!-- TAB BAR -->
+            <div class="tab-bar">
+                <button class="tab-btn active" data-target="section-mcq">📝 MCQs</button>
+                <button class="tab-btn" data-target="section-sectionB">✍️ Section B</button>
+                <button class="tab-btn" data-target="section-scenarios">🩺 Scenarios</button>
+            </div>
+
+            <!-- ========== MCQ SECTION ========== -->
+            <div id="section-mcq" class="tab-panel">
+                <div class="section-title">
+                    <i class="fas fa-list-ul"></i> Multiple Choice Questions
+                    <span class="count">80</span>
+                </div>
+                <p class="section-subtitle">Select the best answer for each question, then click <strong>Submit All MCQs</strong> below.</p>
+
+                <form id="quizForm">
+                    <div id="mcq-container"></div>
+                    <div class="submit-wrap">
+                        <button type="button" class="btn" onclick="submitQuiz()">
+                            <i class="fas fa-check-circle"></i> Submit All MCQs
+                        </button>
+                    </div>
+                </form>
+
+                <div class="result" id="resultBox">
+                    <h3><i class="fas fa-chart-simple"></i> Your Score</h3>
+                    <div class="score" id="score">0%</div>
+                    <p class="text-muted">Review the feedback below each question.</p>
+                </div>
+            </div>
+
+            <!-- ========== SECTION B ========== -->
+            <div id="section-sectionB" class="tab-panel hidden">
+                <div class="section-title">
+                    <i class="fas fa-pencil-square"></i> Section B – Structured and Short Answer Questions
+                    <span class="count">30 marks</span>
+                </div>
+                <p class="section-subtitle">Write your answers in the boxes below. Click <strong>Show Answer</strong> to reveal a model answer.</p>
+
+                <!-- ─── B1: O2 Dissociation Curve ─── -->
+                <div class="section-b-question">
+                    <div class="q-label">Question B1 – Oxygen Dissociation Curve</div>
+                    <img src="association.jpg" alt="Oxygen dissociation curve" style="max-width:100%; border-radius:8px; margin:0.6rem 0;">
+                    <div class="subquestion">
+                        <div class="sub-label">a) State any four causes of shift of curve A to B [2 marks]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">1. Increased 2,3‑DPG (e.g., chronic hypoxia, anaemia).<br>2. Increased H⁺ (acidosis, decreased pH).<br>3. Increased CO₂ (Bohr effect).<br>4. Increased temperature.<br>These factors decrease haemoglobin's affinity for O₂, shifting the curve to the right (A → B).</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">b) What is the P50 in curve A and curve B? [2 marks]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">P50 is the partial pressure of O₂ at which haemoglobin is 50% saturated. In curve A (normal), P50 ≈ 26–27 mmHg. In curve B (right‑shifted), P50 is higher, ≈ 30–32 mmHg.</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">c) Applied significance of the flat portion of the curve? [2 marks]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">The flat upper portion (above 60 mmHg) ensures that even if alveolar PO₂ falls moderately (e.g., at high altitude or mild lung disease), haemoglobin remains highly saturated. This provides a safety margin for O₂ transport, so arterial O₂ content is well maintained despite fluctuations in PO₂.</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">d) Describe two factors that determine the amount of oxygen combined to hemoglobin [1 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">1. PO₂ (partial pressure of oxygen).<br>2. Haemoglobin concentration (and its affinity for O₂, affected by pH, CO₂, temperature, 2,3‑DPG).</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">e) Describe two factors that determine the amount of gas dissolved in physical solution [1 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">1. Partial pressure of the gas.<br>2. Solubility coefficient of the gas in the liquid (Henry's law).</div>
+                    </div>
+                </div>
+
+                <!-- ─── B2: Spirometry ─── -->
+                <div class="section-b-question">
+                    <div class="q-label">Question B2 – Spirometry</div>
+                    <img src="volumes.jpg" alt="Oxygen dissociation curve" style="max-width:100%; border-radius:8px; margin:0.6rem 0;">
+                    <div class="subquestion">
+                        <div class="sub-label">a) Define label [1] in the diagram above and state its value [1 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Label [1] = Tidal Volume (TV). It is the volume of air inhaled or exhaled during a normal quiet breath. Average value ≈ 500 mL (0.5 L).</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">b) i. What is labeled [4] in the diagram above? [0.5 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Label [4] = Vital Capacity (VC).</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">ii. State its components and average normal value [1.5 marks]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">VC = Tidal Volume (TV) + Inspiratory Reserve Volume (IRV) + Expiratory Reserve Volume (ERV). Average normal value ≈ 4.8 L (men), 3.5 L (women).</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">iii. Give 2 examples of lung diseases where [4] is decreased [1 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">1. Restrictive lung diseases (e.g., pulmonary fibrosis).<br>2. Neuromuscular disorders (e.g., myasthenia gravis, Guillain‑Barré).</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">iv. Which lung capacities in the diagram cannot be measured by spirometry? Mention their representing number on the curve [1 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Residual Volume (RV) – label [7]; Functional Residual Capacity (FRC) – label [6]; Total Lung Capacity (TLC) – label [8]. Spirometry cannot measure RV directly, so any capacity including RV cannot be measured.</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">v. Mention their values [1 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">RV ≈ 1.2 L; FRC ≈ 2.2–2.4 L; TLC ≈ 6.0 L (men), 4.8 L (women).</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">c) What is labeled [7] in the diagram? [1 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Label [7] = Residual Volume (RV).</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">d) Mention two significances of the labeled [7] [2 marks]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">1. Prevents alveolar collapse by maintaining positive intrapulmonary pressure at end‑expiration.<br>2. Allows continuous gas exchange between breaths, preventing extreme fluctuations in blood gases.</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">e) Define the label [6] in the diagram above [1 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Label [6] = Functional Residual Capacity (FRC). It is the volume of air remaining in the lungs after a normal tidal expiration. FRC = ERV + RV.</div>
+                    </div>
+                </div>
+
+                <!-- ─── B3: Conducting system ─── -->
+                <div class="section-b-question">
+                    <div class="q-label">Question B3 – Conducting System of the Heart</div>
+                    <div class="q-text">Draw a well‑labeled diagram of the conducting system of the heart [5 marks]</div>
+                    <div class="subquestion">
+                        <div class="sub-label">Model answer (diagram description):</div>
+                        <textarea placeholder="Draw here or describe..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Diagram should include: SA node (in right atrium near opening of superior vena cava), internodal pathways (anterior, middle, posterior), AV node (at lower interatrial septum), bundle of His (penetrating AV fibrous ring), right and left bundle branches, and Purkinje fibres ramifying in ventricular myocardium. Labels should indicate each component.</div>
+                    </div>
+                </div>
+
+                <!-- ─── B4: Cough reflex ─── -->
+                <div class="section-b-question">
+                    <div class="q-label">Question B4 – Cough Reflex</div>
+                    <div class="q-text">Covid infected patients show cough symptoms as a primary finding. Briefly explain the physiology of cough reflex in FOUR (4) steps [2 marks]</div>
+                    <div class="subquestion">
+                        <div class="sub-label">Model answer:</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">1. Irritation of cough receptors in the respiratory passages (larynx, trachea, bronchi) by irritants (e.g., mucus, inflammatory mediators).<br>2. Afferent impulses travel via vagus and glossopharyngeal nerves to the cough centre in the medulla.<br>3. Efferent impulses via vagus, phrenic, and spinal motor nerves cause: deep inspiration, closure of glottis, forceful contraction of expiratory muscles.<br>4. Glottis opens suddenly, resulting in explosive expulsion of air, carrying irritants out.</div>
+                    </div>
+                </div>
+
+                <!-- ─── B5: Total body water ─── -->
+                <div class="section-b-question">
+                    <div class="q-label">Question B5 – Total Body Water</div>
+                    <div class="q-text">Emphasize four factors that affect total body water [2 marks]</div>
+                    <div class="subquestion">
+                        <div class="sub-label">Model answer:</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">1. Age – TBW decreases with age (higher in infants, lower in elderly).<br>2. Sex – males have higher TBW than females (more muscle mass).<br>3. Body fat – adipose tissue has low water content; obese individuals have lower TBW percentage.<br>4. Hormonal factors – ADH, aldosterone, and ANP influence water balance.<br>5. Disease states – e.g., dehydration, oedema, renal failure.</div>
+                    </div>
+                </div>
+
+                <!-- ─── B6: Lung compliance ─── -->
+                <div class="section-b-question">
+                    <div class="q-label">Question B6 – Lung Compliance</div>
+                    <div class="q-text">State any TWO (02) factors that affect lung compliance [1 mark]</div>
+                    <div class="subquestion">
+                        <div class="sub-label">Model answer:</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">1. Surface tension – reduced by surfactant, increases compliance.<br>2. Elastic properties of lung tissue – elastin and collagen content; fibrosis decreases compliance.<br>3. Chest wall compliance – also contributes to overall compliance.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== SCENARIOS ========== -->
+            <div id="section-scenarios" class="tab-panel hidden">
+                <div class="section-title">
+                    <i class="fas fa-stethoscope"></i> Section C – Clinical Scenarios
+                    <span class="count">3 scenarios</span>
+                </div>
+                <p class="section-subtitle">Read each scenario carefully and answer the questions. Click <strong>Show Answer</strong> for model answers.</p>
+
+                <!-- ─── Scenario 1: Myasthenia Gravis ─── -->
+                <div class="scenario-box">
+                    <div class="q-label">Scenario 1 – Neuromuscular Junction</div>
+                    <div class="q-text">Jack, a 23-year-old medical student visits his physician after experiencing "strange symptoms" for the last 8 months. He had severe eyestrain when he read for longer than 15 minutes. He became tired when he chewed his food, brushed his teeth, or dried his hair. He was evaluated by his physician. While awaiting the results, the physician initiated a trial of pyridostigmine, an acetylcholinesterase inhibitor. Jack immediately felt better while taking the drug; his strength returned to almost normal.</div>
+                    <div class="subquestion">
+                        <div class="sub-label">a) What is the most likely neuromuscular condition that Jack is suffering from? [1 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Myasthenia gravis.</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">b) With respect to neuromuscular transmission, what is a quantum? [1 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">A quantum is the amount of acetylcholine released from a single synaptic vesicle. Each quantum produces a miniature end‑plate potential (MEPP) of about 0.5–1 mV.</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">c) Why is the neuromuscular junction said to have a high safety margin? [1 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Because the amount of ACh released normally far exceeds the minimum needed to depolarize the muscle fibre to threshold. Many more receptors are activated than necessary, so transmission succeeds even if some receptors are blocked or ACh release is reduced.</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">d) Mention two factors that account for delay in neuromuscular transmission [1 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">1. Time taken for Ca²⁺ influx and neurotransmitter release.<br>2. Diffusion time of ACh across the synaptic cleft.<br>3. Time for ACh binding and receptor activation.</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">e) Mention the cholinergic receptor type located on the postsynaptic membrane of the synaptic cleft [0.5 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Nicotinic acetylcholine receptor (nAChR).</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">f) What destroys the acetylcholine that diffuses away from the endplate into the blood stream and other tissues? [0.5 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Butyrylcholinesterase (pseudocholinesterase) in plasma and tissues.</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">g) What is the implication of the blockage by the trial drug? [1 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Pyridostigmine inhibits acetylcholinesterase, thereby increasing ACh concentration in the synaptic cleft. This improves neuromuscular transmission in myasthenia gravis, confirming the diagnosis.</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">h) What is most likely to be seen in a biopsy sample of intercostal muscles of the patient in this question? [1 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Type II fibre atrophy (or generalised muscle atrophy) due to decreased neuromuscular transmission and disuse.</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">i) Why would removal of the thymus gland be beneficial to this patient? [2 marks]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">The thymus is often hyperplastic or contains thymoma in myasthenia gravis. It is involved in the production of autoantibodies against nicotinic ACh receptors. Thymectomy reduces the source of autoantibody production and often improves symptoms.</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">j) Mention the site of action of botulinum toxin and the type of muscle paralysis it causes [1 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Botulinum toxin acts presynaptically at the neuromuscular junction, preventing release of ACh. It causes flaccid paralysis.</div>
+                    </div>
+                </div>
+
+                <!-- ─── Scenario 2: DVT ─── -->
+                <div class="scenario-box">
+                    <div class="q-label">Scenario 2 – Deep Venous Thrombosis</div>
+                    <div class="q-text">A male patient aged 70 years, suffered from fracture at the neck femur of the left side. He was operated for the fracture. After the operation, he was unable to move even in bed although he was encouraged to move. Three days after the operation, the doctor observed swelling in his left leg and was diagnosed as deep venous thrombosis.</div>
+                    <div class="subquestion">
+                        <div class="sub-label">a) Mention two causes of occurrence of deep venous thrombosis in this patient [1 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">1. Venous stasis (immobility after surgery).<br>2. Endothelial injury (surgical trauma).<br>3. Hypercoagulability (post‑operative state, increased clotting factors).</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">b) The patient received heparin three times daily and dicumarol once daily. What is the mode of action of dicumarol? [2 marks]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Dicumarol (warfarin) inhibits vitamin K epoxide reductase, preventing the regeneration of reduced vitamin K. This reduces the synthesis of vitamin K‑dependent clotting factors: II, VII, IX, X, and proteins C and S.</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">c) How is heparin administered? [1 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Heparin is administered intravenously (IV) or subcutaneously. It is not effective orally.</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">d) After two days, heparin treatment was stopped and dicumarol treatment continued. The efficacy of dicumarol treatment be adjusted by testing which hemostatic function? [1 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Prothrombin time (PT) / INR.</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">e) Ten days later, the patient suffers from severe bleeding from a slight cut in the face. The clotting of blood does not occur. This was diagnosed as a complication of dicumarol therapy. What substance can be given to the patient in this case? [1 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Vitamin K (phytomenadione) or fresh frozen plasma (FFP) if urgent.</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">f) Give one reason each for the prolonged bleeding time in the following conditions</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">
+                            1. Vitamin C deficiency – defective collagen synthesis → capillary fragility.<br>
+                            2. Deficiency of von Willebrand factor – impaired platelet adhesion to subendothelium.<br>
+                            3. Prolonged use of aspirin – inhibits cyclooxygenase → decreased thromboxane A2 → impaired platelet aggregation.<br>
+                            4. Purpura – decreased platelet number or function.
+                        </div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">g) Briefly state two properties of the normal intact endothelium that makes it to limit hemostatic reactions [2 marks]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">1. It provides a smooth, non‑thrombogenic surface.<br>2. It secretes prostacyclin (PGI₂) and nitric oxide (NO), which inhibit platelet aggregation and promote vasodilation.<br>3. It expresses heparan sulfate and thrombomodulin, which inactivate thrombin and activate protein C.</div>
+                    </div>
+                </div>
+
+                <!-- ─── Scenario 3: Circulatory Shock ─── -->
+                <div class="scenario-box">
+                    <div class="q-label">Scenario 3 – Circulatory Shock (Mrs. Mulenga)</div>
+                    <div class="q-text">Martha Mulenga is a 60-year-old widow who was rushed to the Kitwe Teaching Hospital emergency room last evening by her sister. Early in the day, Mrs. Mulenga had seen bright red blood in her stool, which she attributed to hemorrhoids. She continued with her daily activities: she cleaned her house in the morning, had lunch with friends. However, the bleeding continued all day, and by dinnertime, she could no longer ignore it. Mrs. Mulenga does not smoke or drink alcoholic beverages. She takes aspirin, as needed, for arthritis, sometimes up to 10 tablets daily. In the emergency room, Mrs. Mulenga was light-headed, pale, cold, and very anxious. Her hematocrit was 29% (normal for women, 36 to 46%).<br><br>
+                    The data below shows Mrs. Mulenga's blood pressure and heart rate in the lying (supine) and upright (standing) positions:
+                    <div class="mono-box">Parameter Lying Down (Supine) Upright (Standing)<br>Blood pressure 90/60 75/45<br>Heart rate 105 beats/min 135 beats/min</div></div>
+                    <div class="subquestion">
+                        <div class="sub-label">a) i. Define circulatory shock [1 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Circulatory shock is a state of inadequate tissue perfusion resulting in cellular hypoxia and organ dysfunction. It is characterised by a critical reduction in effective circulating blood volume or cardiac output relative to tissue demands.</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">ii. List the various forms of shock [2 marks]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">1. Hypovolaemic shock (haemorrhagic, burns, dehydration).<br>2. Cardiogenic shock (myocardial infarction, arrhythmias).<br>3. Distributive shock (septic, anaphylactic, neurogenic).<br>4. Obstructive shock (pulmonary embolism, cardiac tamponade).</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">b) After the gastrointestinal blood loss, what sequence of events led to Mrs. Mulenga's decreased arterial pressure [2 marks]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Blood loss → decreased venous return → decreased ventricular filling (preload) → decreased stroke volume (Frank‑Starling mechanism) → decreased cardiac output → decreased arterial pressure. Baroreceptor reflex attempts to compensate by increasing heart rate and vasoconstriction, but the loss is too great.</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">c) Why was Mrs. Mulenga's arterial pressure lower in the upright position than in the lying (supine) position? [1 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">In the upright position, gravity causes blood pooling in the lower extremities, reducing venous return and cardiac output. The compensatory baroreceptor reflexes are impaired due to hypovolaemia, so blood pressure falls further.</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">d) i. What is hematocrit? [1 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Hematocrit is the percentage of blood volume occupied by red blood cells (packed cell volume, PCV).</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">ii) Why was Mrs. Mulenga's hematocrit decreased? [1 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">She suffered acute blood loss, which initially reduces the red cell mass. Later, compensatory fluid shifts from interstitial to intravascular space dilute the remaining red cells, further lowering the haematocrit.</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">iii) Why was this decrease potentially dangerous? [1 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Decreased haematocrit reduces oxygen‑carrying capacity, worsening tissue hypoxia. It also indicates significant blood loss, which can lead to hypovolaemic shock and organ failure.</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">e) Why was her skin pale and cold? [1 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Sympathetic vasoconstriction diverts blood from the skin to vital organs. Reduced skin perfusion causes pallor and coldness.</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // ─── 80 MCQ DATA ──────────────────────────────────────────
+        const questions = [
+            { q: "1. If an axon of a motor neuron is stimulated with a super-maximal stimulus one can record", options: ["An action potential in all parts of the axon and the cell body", "An action potential throughout the course of motor neuron", "Action potential only in muscle fibers that this neuron innervates", "Action potential in all parts of the axon"], correct: "a", explanation: "A super‑maximal stimulus excites all axons. The action potential is generated at the initial segment and propagates along the entire axon and also invades the cell body (soma) because the soma membrane contains voltage‑gated Na⁺ channels. However, it does not normally propagate back into the dendrites. The action potential does not directly cause action potentials in muscle fibres; it causes muscle contraction via the neuromuscular junction. Thus, the best answer is A." },
+            { q: "2. A nerve impulse:", options: ["Is a propagated action potential", "Travels in one direction on the axon", "Can travel both in both direction at a synapse", "Is conducted at approximately same speed as electric current in a cable"], correct: "a", explanation: "A nerve impulse is a propagated action potential. It travels in one direction along an axon (orthodromic) because the refractory period prevents backward propagation. At a synapse, transmission is unidirectional (from pre‑ to postsynaptic). Conduction velocity is much slower than electric current in a cable due to the need for ion channel gating and membrane capacitance. Hence A is correct." },
+            { q: "3. Which of the following would justify excluding sodium conductance from the equation for estimating resting membrane potential in skeletal muscle fibers?", options: ["Extracellular [Na] is higher than ICF [Na]", "Na-K pump extrudes 3 Na for 2 K pumped in", "Negligible Na permeability of the resting membrane", "Unexcited cells are equally permeable to Na+ and K+"], correct: "c", explanation: "The resting membrane potential is primarily determined by K⁺ permeability because the resting membrane is much more permeable to K⁺ than to Na⁺. The Na⁺ permeability is negligible (about 100 times lower than K⁺). Therefore, the contribution of Na⁺ to the resting Vm is small and can be excluded from the simplified equation (Goldman‑Hodgkin‑Katz)." },
+            { q: "4. The number of Na channels per square micrometer of membrane in myelinated mammalian neurons is maximum in the", options: ["cell body", "dendritic zone", "initial segment", "node of Ranvier"], correct: "d", explanation: "In myelinated axons, voltage‑gated Na⁺ channels are highly concentrated at the nodes of Ranvier (up to 12,000/μm²), which is essential for saltatory conduction. The internodal regions have very few channels." },
+            { q: "5. A stronger than normal stimulus can cause excitation of nerve or muscle during the:", options: ["absolute refractory period", "relative refractory period", "spike potential", "overshoot"], correct: "b", explanation: "During the relative refractory period, some Na⁺ channels have recovered from inactivation, but the threshold is elevated because K⁺ conductance is still high. A stronger‑than‑normal stimulus can therefore initiate an action potential. During the absolute refractory period, no stimulus can excite the membrane." },
+            { q: "6. According to action potentials:", options: ["A net efflux of K⁺ from the cell results in depolarization", "Increasing the K⁺ concentration in the ECF results in hyperpolarization", "Increasing the Na⁺ concentration in the ECF does not alter the resting membrane potential of a nerve", "The larger the cell diameter of a neuron, the slower its conduction velocity"], correct: "c", explanation: "The resting membrane potential is mainly determined by the K⁺ gradient. Changing extracellular Na⁺ concentration has little effect on resting Vm because the resting membrane is poorly permeable to Na⁺. Option A is wrong because K⁺ efflux causes repolarization/hyperpolarization, not depolarization. Option B is wrong because increasing extracellular K⁺ depolarizes the cell. Option D is wrong because larger diameter increases conduction velocity." },
+            { q: "7. Staircase phenomenon (Treppe) is due to:", options: ["increased availability of intracellular calcium"], correct: "a", explanation: "Treppe (staircase) is the progressive increase in contraction strength with successive stimuli. It is due to increased intracellular Ca²⁺ availability, as Ca²⁺ from each action potential accumulates in the sarcoplasm because the sarcoplasmic reticulum cannot fully sequester it between rapid stimuli. This enhances cross‑bridge cycling." },
+            { q: "8. Which one of the following statements is incorrect about graded potentials?", options: ["They can be depolarizing or hyperpolarizing", "They are local(non-propagated) responses", "They are produced by a threshold stimulus", "They can undergo the process of summation"], correct: "c", explanation: "Graded potentials are local, non‑propagated changes in membrane potential that can be depolarizing or hyperpolarizing. They are produced by subthreshold stimuli, not threshold stimuli. Threshold stimuli trigger action potentials. Therefore, C is incorrect." },
+            { q: "9. The cells responsible for the blood brain barrier in the central nervous system is the", options: ["Schwann cells", "Astrocytes", "Oligodendrocytes", "Endothelial cells"], correct: "b", explanation: "The blood‑brain barrier is formed by tight junctions between endothelial cells, but astrocytes play a crucial role in inducing and maintaining the barrier properties. Astrocytic end‑feet wrap around capillaries and regulate the microenvironment. The question asks for 'cells responsible', and astrocytes are the key supporting cells." },
+            { q: "10. In smooth muscle", options: ["There is actin, myosin, tropomyosin, and troponin", "Actin and myosin are arranged in rosette fashion", "T-tubules are well developed", "All types are characterized by presence of gap junctions"], correct: "b", explanation: "Smooth muscle lacks troponin; regulation is via calmodulin. Actin and myosin are arranged in a loose rosette or lattice pattern, not regular sarcomeres. T‑tubules are poorly developed or absent. Gap junctions are present in unitary (single‑unit) smooth muscle but not in multi‑unit smooth muscle. Thus B is correct." },
+            { q: "11. Which structure is present in smooth muscle cells and lacking in skeletal muscle cells?", options: ["Junctions between muscle cells", "Overlapping thick and thin filaments", "Sarcoplasmic reticulum", "Neuromuscular junctions"], correct: "a", explanation: "Smooth muscle cells (unitary type) have gap junctions that allow electrical coupling between cells. Skeletal muscle fibres are independent and have no gap junctions; they have neuromuscular junctions. Overlapping filaments, sarcoplasmic reticulum, and neuromuscular junctions are present in both." },
+            { q: "12. The intracellular calcium concentration in smooth muscle is NOT modulated by", options: ["Calcium channels in the sarcoplasmic reticulum", "Receptor mediated calcium mobilization", "Activity of the Na-K pumps in the sarcoplasmic reticulum", "Na⁺-Ca²⁺ exchanger in the sarcolemma"], correct: "c", explanation: "Intracellular Ca²⁺ in smooth muscle is regulated by release from SR (IP₃ receptors), influx through voltage‑ and receptor‑operated channels, and extrusion via Na⁺/Ca²⁺ exchanger and Ca²⁺‑ATPase. Na⁺/K⁺‑ATPase in the SR membrane does not directly modulate Ca²⁺; it is involved in Na⁺ and K⁺ gradients. Therefore C is the exception." },
+            { q: "13. The term 'size principle' refers to the fact that", options: ["Chronically denervated skeletal muscle decreases in size due to reduced release of growth factors from motor neurons", "Neurons in small motor units conduct slowly", "Small motor units are recruited for more slowly forceful contractions", "Large, fast motor units are recruited after small, slow motor units"], correct: "d", explanation: "The size principle states that motor units are recruited in order of increasing size: small, slow‑twitch (Type I) units are recruited first for low‑force contractions, and larger, fast‑twitch (Type II) units are recruited later as force demand increases. Option D is the correct description." },
+            { q: "14. The total tension generated during skeletal muscle contraction is highest when the muscle", options: ["Is appreciably shorter than the resting length", "Contracts isometrically at resting length", "Is stretched beyond its resting length"], correct: "b", explanation: "Maximum tension is generated when the muscle is at its resting length (optimal sarcomere length), because there is optimal overlap between actin and myosin filaments, allowing the greatest number of cross‑bridges to form. At shorter or longer lengths, overlap is reduced, decreasing tension." },
+            { q: "15. Which one of the following statements is incorrect?", options: ["Contraction can occur without an appreciable decrease in the length of a muscle.", "Contraction against a constant load while the muscle is shortening is called concentric muscle contraction", "Muscles can lengthen while doing work", "Isometric contractions do work while isotonic contractions do not"], correct: "d", explanation: "Isometric contractions generate force without shortening, so no mechanical work is done (work = force × distance). Isotonic contractions shorten and do work. Therefore, D is incorrect." },
+            { q: "16. Which of the following is not true regarding the comparison of type I (slow oxidative) and type IIb(fast-glycolytic) skeletal muscle fibers?", options: ["Type I fibres have more abundant mitochondria", "Type I fibres fatigue more readily", "Type I fibres have more abundant myoglobin", "Type I motor units contain fewer fibres than type IIb motor units"], correct: "b", explanation: "Type I fibres are highly resistant to fatigue due to abundant mitochondria, myoglobin, and oxidative enzymes. Type IIb fibres fatigue rapidly. Therefore, the statement that Type I fibres fatigue more readily is false." },
+            { q: "17. Cardiac inotropy is enhanced by", options: ["Agonists coupled to Gi-protein", "Decreased calcium binding to troponin-C", "Decreased release of calcium by terminal cisternae", "Protein kinase A phosphorylation of L-type calcium channels"], correct: "d", explanation: "Sympathetic stimulation increases cardiac contractility (inotropy) via β₁‑adrenergic receptors, which activate protein kinase A. PKA phosphorylates L‑type Ca²⁺ channels, increasing Ca²⁺ influx during the plateau phase, which enhances Ca²⁺‑induced Ca²⁺ release from the SR and increases contractility." },
+            { q: "18. Oxidative capacity is highest in", options: ["Type I muscle fibers", "Type IIA muscle fibers", "Type IIB muscle fibers", "B and C are correct"], correct: "a", explanation: "Type I (slow oxidative) fibres have the highest oxidative capacity, with abundant mitochondria, myoglobin, and oxidative enzymes. Type IIA (fast oxidative‑glycolytic) have moderate oxidative capacity, and Type IIB (fast glycolytic) have low oxidative capacity." },
+            { q: "19. Which one of the following characteristics is unique to skeletal muscle and is not observed in cardiac muscle?", options: ["Gradation of force production", "Refractoriness", "Tetanizability", "Conduction of impulse through gap junctions"], correct: "c", explanation: "Skeletal muscle can be tetanized (sustained contraction) because its action potential is short and the refractory period does not extend into the mechanical response. Cardiac muscle cannot be tetanized because the long plateau phase of the action potential prevents summation. Gradation of force, refractoriness, and gap junctions (in intercalated discs) are present in cardiac muscle." },
+            { q: "20. The resting transmembrane potential (Vm) of a nerve axon is essential for signal generation. Instantaneous elimination of which of the following would most rapidly bring Vm close to 0 mV?", options: ["Active transport of K⁺ out of the cell", "Active transport of Na⁺ out of the cell", "High membrane permeability to K⁺", "High membrane permeability to Na⁺"], correct: "c", explanation: "The resting membrane potential is close to the K⁺ equilibrium potential because the resting membrane is highly permeable to K⁺. If K⁺ permeability were instantly eliminated, the membrane would depolarize towards 0 mV (since the contribution of K⁺ would be lost). The Na⁺/K⁺ pump and Na⁺ permeability play lesser roles in setting the resting Vm." },
+            { q: "21. Hyperkalemia reduces the excitability of neurons and muscle cells. Which of the following best describes the effect of increased extracellular potassium [K+]?", options: ["Depolarizes the cell, thus reducing action potential amplitude", "Depolarizes the cell, thus inactivating voltage-gated Na⁺ channels", "Hyperpolarizes the cell, which increases the action potential threshold", "Increases the activity of the Na-K-ATPase, which hyperpolarizes the cell"], correct: "b", explanation: "Increased extracellular K⁺ reduces the K⁺ gradient, causing depolarization of the resting membrane potential. Persistent depolarization inactivates voltage‑gated Na⁺ channels, making the cell less excitable (or inexcitable). This is why hyperkalaemia can be dangerous." },
+            { q: "22. While you are standing, holding a tray piled with dishes, an additional 10kg of dishes is placed on your tray. Your muscles that are holding the dishes increase their force of contraction through an increase in which of the following?", options: ["Length of the muscle", "Number of motor units activated and the frequency of their activation", "Peak intracellular calcium concentration in the muscle", "Strength of each individual cross-bridge interaction with actin"], correct: "b", explanation: "To increase force, the nervous system recruits more motor units (spatial summation) and increases the firing frequency of active motor units (temporal summation). The strength of each cross‑bridge is fixed; intracellular Ca²⁺ may increase but not to a significant extent for this type of voluntary contraction." },
+            { q: "23. A bundle of muscle cells is found to contract rhythmically and in unison even when its nerve supply is disrupted. Although muscle contractions are dependent on the presence of extracellular calcium, the cells have poorly developed T tubules. Which of the following most likely describes the muscle type?", options: ["Fast-twitch skeletal muscle", "Multiunit smooth muscle", "Slow-twitch skeletal muscle", "Unitary smooth muscle"], correct: "d", explanation: "Unitary (single‑unit) smooth muscle contracts rhythmically and as a coordinated unit due to gap junctions, even without nerve supply. It depends on extracellular Ca²⁺ and has poorly developed T‑tubules. Multiunit smooth muscle requires nerve stimulation and lacks gap junctions." },
+            { q: "24. An EPSP:", options: ["May summate temporarily or spatially to reach threshold", "Hyperpolarizes the postsynaptic membrane", "Represents a propagated change in membrane potential", "Always produces an action potential"], correct: "a", explanation: "An excitatory postsynaptic potential (EPSP) is a graded depolarization that can summate temporally and spatially to reach threshold and trigger an action potential. It is not propagated and does not always produce an action potential." },
+            { q: "25. Drug A when applied to a nerve fiber results in both gradual decrease in amplitude of individual action potentials and slow depolarization of the resting potential. The drug is most likely;", options: ["Blocking the process of Na⁺ inactivation", "Blocking the voltage dependent Na⁺ permeability", "Blocking the voltage dependent K⁺ permeability", "Blocking the Na-K pump"], correct: "b", explanation: "Blocking voltage‑gated Na⁺ channels reduces the amplitude of action potentials and, because Na⁺ leak contributes slightly to resting potential, can cause depolarization. Blocking K⁺ channels would prolong the action potential. Blocking Na⁺/K⁺ pump would gradually depolarize but not decrease AP amplitude as directly." },
+            { q: "26. Skeletal muscle fibers", options: ["Contract when actin and myosin filaments shorten", "Contract when calcium is taken up by transverse tubular system", "Have a single motor end plate each", "Do not show any of the characteristics above"], correct: "c", explanation: "Each skeletal muscle fibre typically has a single motor end plate (neuromuscular junction). The filaments do not shorten; they slide past each other. Calcium is released from the sarcoplasmic reticulum, not taken up by T‑tubules." },
+            { q: "27. Which of the following structures has the slowest rate of conduction of action potentials?", options: ["Internodal atrial pathways", "Sino atrial node", "Purkinje fibers", "Ventricular muscle"], correct: "b", explanation: "The sinoatrial (SA) node has the slowest conduction velocity (about 0.05 m/s) due to few gap junctions and small cell size. This allows the atria to contract before the ventricles. Purkinje fibres have the fastest conduction velocity (4 m/s)." },
+            { q: "28. Which of the following conditions at the sino-atrial node causes the heart rate to decrease?", options: ["Increased sodium permeability", "Increased calcium permeability", "Increased potassium permeability", "Decreased acetylcholine levels"], correct: "c", explanation: "Increased K⁺ permeability causes hyperpolarization of the SA node, slowing the rate of spontaneous depolarization and thus decreasing heart rate. Acetylcholine increases K⁺ permeability. Increased Na⁺ or Ca²⁺ permeability would increase heart rate." },
+            { q: "29. What is the membrane potential (threshold) at which the sino-atrial node discharges?", options: ["-40mV", "-55mV", "-65mV", "-85mV"], correct: "a", explanation: "The SA node has an unstable resting potential (pacemaker potential) that starts around -60 mV and drifts upward until it reaches threshold at about -40 mV, at which point an action potential is fired." },
+            { q: "30. If the atrioventricular node becomes the pacemaker of the heart, what is the expected heart rate?", options: ["30 beats/minute", "50 beats/minute", "65 beats/minute", "75 beats/minute"], correct: "b", explanation: "The AV node has an intrinsic firing rate of about 40–60 beats per minute. If the SA node fails, the AV node can take over as a secondary pacemaker." },
+            { q: "31. Which of the following conditions causes dilated, flaccid heart?", options: ["Hypercalcemia", "Hyperkalemia", "Hypernatremia", "Increased body temperature"], correct: "b", explanation: "Hyperkalaemia causes depolarization and inactivation of Na⁺ channels, leading to decreased excitability and conduction. The heart becomes dilated and flaccid, and can stop in diastole. Hypercalcaemia causes increased contractility and spastic contraction." },
+            { q: "32. To gather information about impulse conduction from the atria to the ventricles, study the", options: ["P wave", "PR interval", "ST segment", "T wave"], correct: "b", explanation: "The PR interval represents the time from the onset of atrial depolarization to the onset of ventricular depolarization. It includes atrial depolarization, AV nodal delay, and conduction through the bundle of His and Purkinje fibres. Prolongation indicates AV block." },
+            { q: "33. About intravascular clotting, all the following are true except:", options: ["It occurs by the intrinsic system of coagulation", "It is induced by a decrease in the blood flow rate", "It occurs with accumulation of lipids in the arterial walls"], correct: "a", explanation: "Intravascular clotting (thrombosis) can be initiated by both intrinsic and extrinsic pathways. It is often triggered by endothelial injury (extrinsic) or stasis (intrinsic). The statement that it occurs exclusively by the intrinsic system is false. Decreased blood flow and lipid accumulation (atherosclerosis) are risk factors." },
+            { q: "34. A reduction of the blood level of coagulation factor VIII:", options: ["Increases the bleeding time beyond the normal range", "Is a hereditary disease due to an abnormal gene on the Y Chromosome", "Causes prolongation of the clotting time", "May occur secondary to excessive formation of von Willebrand factor"], correct: "c", explanation: "Factor VIII deficiency (haemophilia A) causes prolongation of the clotting time (aPTT) but does not typically affect bleeding time, because primary haemostasis (platelet plug) is intact. It is an X‑linked recessive disorder. Von Willebrand factor deficiency can secondarily reduce factor VIII, but excessive vWF is not a cause." },
+            { q: "35. The treatment of patients suffering from increased tendency of blood clotting is:", options: ["I.V heparin followed by vitamin K antagonists (e.g. dicumarol)", "I.V administration of sodium citrate", "Increasing the rate of erythropoiesis", "Decreasing the lymphocytic count"], correct: "a", explanation: "For acute thrombosis, intravenous heparin is used for rapid anticoagulation, followed by oral vitamin K antagonists (e.g., warfarin) for long‑term management. Sodium citrate is an in vitro anticoagulant. Increasing erythropoiesis or decreasing lymphocytes does not treat clotting tendency." },
+            { q: "36. About bleeding from a small skin cut, all the following are true except:", options: ["It ceases within about 4 minutes in normal people", "It is prolonged if factor VIII is deficient", "It is normally diminished by local vascular spasm", "Its stoppage depends on the platelet count in the blood"], correct: "b", explanation: "Bleeding time is normal in factor VIII deficiency (haemophilia A) because primary haemostasis (platelet plug) is intact. Bleeding time is prolonged in platelet disorders or von Willebrand disease. The other statements are true." },
+            { q: "37. If you want to prolong the coagulation time in a patient having intravascular thrombosis you choose:", options: ["I.V. injection of heparin", "I.V injection of calcium", "I.V injection of vitamin K", "Oral administration of dicumarol"], correct: "a", explanation: "Heparin is administered intravenously for immediate anticoagulation in acute thrombosis. Dicumarol is oral and takes days to act. Calcium and vitamin K promote clotting, not prolong it." },
+            { q: "38. Choose the correct statement concerning granulocytes:", options: ["The most abundant type is eosinophil", "The eosinophil count increases in ascaris infection", "The neutrophils phagocytize bacteria by a passive process", "The basophils play no role in hypersensitivity reactions"], correct: "b", explanation: "Eosinophils increase in parasitic infections (e.g., Ascaris) and allergic reactions. Neutrophils are the most abundant granulocytes. Phagocytosis is an active process. Basophils release histamine and heparin and are involved in hypersensitivity reactions." },
+            { q: "39. All the following about erythroblastosis fetalis is true except:", options: ["Jaundice of the newborn is a major manifestation", "It is treated by blood transfusion having a Rh characteristic as that of the mother.", "It can be avoided by giving the mother anti-Rh antibodies immediately after labour.", "It cannot affect the first baby of Rh -ve mothers"], correct: "b", explanation: "Erythroblastosis fetalis is treated by exchange transfusion with Rh‑negative blood, not Rh‑positive (mother's Rh). Giving anti‑Rh antibodies (RhoGAM) to the mother prevents sensitization. The first baby is usually unaffected because sensitization occurs during delivery. Jaundice is a major manifestation." },
+            { q: "40. If a man's plasma agglutinate both A and B red cells, he is group:", options: ["B", "A", "AB", "O"], correct: "d", explanation: "If plasma agglutinates both A and B red cells, it contains both anti‑A and anti‑B antibodies. This corresponds to blood group O, which has no A or B antigens on red cells but both antibodies in plasma." },
+            { q: "41. A 52-year-old man is brought to the Emergency Department with severe chest pain. An imaging of the coronary artery demonstrates a severe coronary occlusion. A thrombolytic agent is administered to re-establish perfusion. Which of the following does the thrombolytic agent activate?", options: ["Heparin", "Plasminogen", "Thrombin", "Prothrombin"], correct: "b", explanation: "Thrombolytic agents (e.g., streptokinase, alteplase) activate plasminogen to plasmin. Plasmin then degrades fibrin clots, restoring perfusion." },
+            { q: "42. Bleeding time is determined by nicking the skin superficially with a scalpel blade and measuring the time required for hemostasis. It will be markedly abnormal (prolonged) in a person who has which of the following?", options: ["Anemia", "Vitamin K deficiency", "Thrombocytopenia", "Hemophilia"], correct: "c", explanation: "Bleeding time is prolonged in thrombocytopenia (low platelet count) because primary haemostasis is impaired. In haemophilia and vitamin K deficiency, clotting time (aPTT/PT) is prolonged but bleeding time is usually normal. Anaemia does not affect bleeding time." },
+            { q: "43. Calcium citrate prevents coagulation by which of the following actions?", options: ["Blocking thrombin", "Binding factor XII", "Binding vitamin K", "Chelating calcium"], correct: "d", explanation: "Calcium citrate (or sodium citrate) chelates calcium ions, which are required as a cofactor in multiple steps of the coagulation cascade. This prevents clotting in vitro (e.g., in blood collection tubes)." },
+            { q: "44. A 67-year-old woman with a history of venous thromboembolism is placed on warfarin (Coumadin) prophylactically. The blood concentration of Coumadin becomes too high, and bleeding occurs. The bleeding can best be treated by the administration of which of the following?", options: ["Heparin", "Protamine", "Protein C", "Vitamin K"], correct: "d", explanation: "Warfarin overdose is treated with vitamin K (phytomenadione), which restores the synthesis of vitamin K‑dependent clotting factors. Fresh frozen plasma may also be given in severe bleeding." },
+            { q: "45. The function of lymphocytes is:", options: ["Heparin formation", "Antibody formation", "Release of serotonin", "All the above"], correct: "b", explanation: "Lymphocytes (B cells) produce antibodies. Heparin is produced by basophils and mast cells. Serotonin is released by platelets and enterochromaffin cells. Therefore, only antibody formation is a function of lymphocytes." },
+            { q: "46. Neutrophils are attracted to infection sites by the process of:", options: ["Phagocytosis", "Endocytosis", "Opsonization", "Chemotaxis"], correct: "d", explanation: "Chemotaxis is the directed movement of cells along a chemical gradient. Neutrophils are attracted to sites of infection by chemotactic factors (e.g., bacterial peptides, complement C5a, leukotriene B4)." },
+            { q: "47. Concerning lymphocytes, all the following are true except:", options: ["The T-lymphocytes develop in the thymus gland", "The B-lymphocytes produce cellular immunity", "Transplanted tissue grafts are rejected by sensitized T-lymphocytes", "They are formed mainly in the lymphoid tissues"], correct: "b", explanation: "B‑lymphocytes produce humoral immunity (antibodies). Cellular immunity is mediated by T‑lymphocytes. The other statements are true." },
+            { q: "48. The platelets assist haemostasis by releasing all the following substances except:", options: ["Serotonin", "Platelet factor 3", "Thromboxane A2", "Thrombooietin"], correct: "d", explanation: "Platelets release serotonin (vasoconstrictor), platelet factor 3 (phospholipid for clotting), and thromboxane A2 (promotes aggregation and vasoconstriction). Thrombopoietin is a hormone produced mainly by the liver and kidneys that stimulates platelet production, not released by platelets." },
+            { q: "49. Which of the following describes the red cell morphology in In iron deficiency anemia?", options: ["Microcytic normochromic", "Macrocytic hypochromic", "Microcytic hypochromic", "Microcytic hyperchromic"], correct: "c", explanation: "Iron deficiency anaemia is characterised by microcytic (small) and hypochromic (pale) red blood cells due to reduced haemoglobin synthesis." },
+            { q: "50. In pernicious anemia:", options: ["The life span of RBCs is longer than normal", "There is microcytic hyperchromic anemia", "Decreased absorption of Vitamin B12 is suspected", "The rate of RBCs maturation is enhanced."], correct: "c", explanation: "Pernicious anaemia is caused by deficiency of intrinsic factor, leading to decreased absorption of vitamin B12. This causes megaloblastic (macrocytic) anaemia, not microcytic. RBC lifespan is normal or slightly decreased, and maturation is impaired." },
+            { q: "51. The defensive function of neutrophils is achieved by:", options: ["Becoming macrophages which destroy large particles", "Playing a major role in cellular immunity", "Phagocytizing bacteria and killing them using H₂O₂ and superoxide", "Migrating into blood clots and producing a fibrinolysin"], correct: "c", explanation: "Neutrophils are phagocytes that engulf and kill bacteria using reactive oxygen species (superoxide, H₂O₂) and lysosomal enzymes. They are not macrophages, do not mediate cellular immunity (that's T cells), and do not produce fibrinolysin." },
+            { q: "52. All the following conditions cause anemia except:", options: ["Erythroblastosis fetalis", "Aplasia of the bone marrow", "Hypothyroidism", "Living at high altitudes"], correct: "d", explanation: "Living at high altitudes causes polycythaemia (increased RBC production) due to chronic hypoxia, not anaemia. Erythroblastosis fetalis, aplastic anaemia, and hypothyroidism can all cause anaemia." },
+            { q: "53. The hemostatic disorder in obstructive jaundice is:", options: ["Due to deficiency of factor IV", "Caused by insufficient pancreatic secretion", "Secondary to lack of platelets", "Characterized by a longer coagulation time than normal"], correct: "d", explanation: "Obstructive jaundice reduces bile flow, impairing absorption of fat‑soluble vitamins including vitamin K. This leads to deficiency of vitamin K‑dependent clotting factors (II, VII, IX, X), prolonging coagulation time. Platelet count is normal." },
+            { q: "54. Leukopenia tends to occur in all the following conditions except:", options: ["Starvation", "Trauma", "Pernicious anemia", "When using drugs that depress the bone marrow"], correct: "b", explanation: "Trauma typically causes leukocytosis (increased WBC), not leukopenia. Starvation, pernicious anaemia (megaloblastic), and bone marrow depressants can all cause leukopenia." },
+            { q: "55. Site of erythropoietin production is:", options: ["Liver", "Kidney", "Bone marrow", "Spleen"], correct: "b", explanation: "Erythropoietin is produced mainly by the kidneys (peritubular interstitial cells) in response to hypoxia. The liver produces a small amount in adults." },
+            { q: "56. Concerning platelets, all the following are true except:", options: ["Their membrane contains phospholipids that are involved in blood clotting", "Their cytoplasm contains contractile proteins that cause clot retraction", "Their aggregation is inhibited by both thrombin and the Von Willebrand factor", "They are concerned with formation of the primary haemostatic plug"], correct: "c", explanation: "Thrombin and von Willebrand factor promote platelet aggregation, not inhibit it. Platelet aggregation is inhibited by prostacyclin (PGI₂) and nitric oxide. The other statements are true." },
+            { q: "57. What will happen to RBC if the heme group is removed from haemoglobin?", options: ["They will be able to transport oxygen normally", "They will be able to carry Carbondioxide", "They will be able to carry proteins", "They cells will be megaloblastic"], correct: "b", explanation: "Removal of heme leaves globin chains, which can still carry CO₂ (as carbamino compounds) but cannot transport O₂. The cells would not become megaloblastic; that is a nuclear maturation defect." },
+            { q: "58. Glycosylated haemoglobin is:", options: ["Haemoglobin combines glycerol", "Haemoglobin combined with fructose", "Haemoglobin combined with glucose", "Haemoglobin present in iron deficiency anemia"], correct: "c", explanation: "Glycosylated haemoglobin (HbA1c) is haemoglobin with glucose attached to the N‑terminal valine of the β‑chain. It reflects average blood glucose over the previous 2–3 months." },
+            { q: "59. About protein C, all the following are true except:", options: ["It is no involved in blood viscosity", "Its activator is formed from thrombin by the action of thromboembulin", "It is a natural anticoagulant protein", "It activates the inhibitor of TPA"], correct: "d", explanation: "Protein C is a natural anticoagulant that inactivates factors Va and VIIIa. It does not activate the inhibitor of TPA (tissue plasminogen activator). Actually, it promotes fibrinolysis by inhibiting PAI‑1. The statement that it activates the inhibitor of TPA is false." },
+            { q: "60. The maintenance of blood fluidity depends on all the following factors except:", options: ["The smooth intact vascular endothelium", "The presence of heparin and antithrombin III", "Absence of plasminogen", "An intact fibrinolytic system"], correct: "c", explanation: "Plasminogen is the precursor of plasmin, which degrades fibrin clots. Its presence is essential for fibrinolysis and maintaining blood fluidity. Absence of plasminogen would promote thrombosis, not fluidity." },
+            { q: "61. All the following can be use in blood volume determination except:", options: ["Radioactive iodine (¹³¹I) labelled albumin", "Labelled red cell blood cells", "A harmless dye like Evans's blue", "Deuterium oxide"], correct: "d", explanation: "Deuterium oxide (D₂O) is used to measure total body water, not blood volume. Blood volume is measured using labelled albumin (plasma volume) or labelled red cells (red cell volume). Evans blue binds to albumin and is used for plasma volume." },
+            { q: "62. The total body water:", options: ["Is equally distributed inside and outside the body cells", "Is not important for the body temperature", "Forms a smaller percentage of the weight in fat parsons", "Its percentage tends to increase with age"], correct: "c", explanation: "Adipose tissue has low water content, so obese individuals have a lower percentage of total body water. TBW is distributed about 2/3 intracellular and 1/3 extracellular. It is important for temperature regulation and tends to decrease with age." },
+            { q: "63. About the total body water, all the following is true except:", options: ["It constitutes 1/2-2/3 of the body weight (about 60%)", "It is measured by the indicator dilution technique using deuterium oxide", "Together with solutes it forms the body fluids", "It is found mainly of the interstitial fluid"], correct: "d", explanation: "Total body water is found mainly in the intracellular fluid (about 2/3), not the interstitial fluid. The other statements are true." },
+            { q: "64. In a man, aged 32 years whose body weight is 60kg the:", options: ["Total body water is 0.6 litres /kg body weight", "ECF volume is 8 litres", "ICF volume is 28 litres", "Plasma volume is 5 litres"], correct: "a", explanation: "Total body water is about 60% of body weight. For a 60 kg man, TBW = 0.6 × 60 = 36 L, which is 0.6 L/kg. ECF is about 1/3 of TBW = 12 L; ICF = 24 L; plasma volume ≈ 3 L. Therefore A is correct." },
+            { q: "65. The deuterium oxide space (D₂O) measures the volume of the:", options: ["Interstitial fluids", "Total body water", "Extracellular fluid", "Intracellular fluid"], correct: "b", explanation: "Deuterium oxide (heavy water) distributes throughout all body fluid compartments, so it measures total body water." },
+            { q: "66. The intraocular fluid volume", options: ["Is measured as the tritium oxide space", "Is measured as the K⁺ space", "Equals the D2O space minus the source space", "Equals 5 times he extracellular fluids volume"], correct: "b", explanation: "The intraocular fluid is part of the intracellular fluid? Actually, intraocular fluid is a specialized fluid. The K⁺ space is used to measure intracellular fluid volume. The question seems to refer to intracellular fluid volume, which is measured as the K⁺ space." },
+            { q: "67. The nephron reabsorbs glucose through a sodium / glucose transporter. What sort of transporter is it?", options: ["Antiporter", "Symporter", "Counter-transporter", "Primary active transport"], correct: "b", explanation: "The sodium‑glucose cotransporter (SGLT) moves Na⁺ and glucose in the same direction across the membrane, so it is a symporter (cotransporter). It is secondary active transport." },
+            { q: "68. According to the fluid mosaic model of membrane structure, proteins of the membrane are mostly", options: ["Confined to the hydrophobic core of the membrane.", "Embedded in a lipid bilayer.", "Randomly oriented in the membrane, with no fixed inside-outside polarity.", "Free to depart from the fluid membrane and dissolve in the surrounding solution."], correct: "b", explanation: "The fluid mosaic model describes proteins embedded in or associated with a fluid lipid bilayer. Integral proteins are embedded, peripheral proteins are loosely attached. Proteins have a fixed orientation (inside‑outside polarity)." },
+            { q: "69. The presence of cholesterol in the plasma membranes of some animals", options: ["Enables the membrane to stay fluid more easily when cell temperature drops.", "Enables the animal to remove hydrogen atoms from saturated phospholipids.", "Enables the animal to add hydrogen atoms to unsaturated phospholipids.", "Makes the membrane less flexible, allowing it to sustain greater pressure from within the cell."], correct: "a", explanation: "Cholesterol acts as a fluidity buffer: at low temperatures, it prevents tight packing of phospholipids, maintaining fluidity; at high temperatures, it restricts movement, reducing fluidity. It does not affect hydrogenation of phospholipids." },
+            { q: "70. For a protein to be an integral membrane protein it would have to be which of the following?", options: ["hydrophobic", "amphipathic", "completely covered with phospholipids", "exposed on only one surface of the membrane"], correct: "b", explanation: "Integral membrane proteins have both hydrophobic regions (interacting with the lipid core) and hydrophilic regions (exposed to aqueous environments). Therefore, they are amphipathic." },
+            { q: "71. Of the following functions, which is most important for the glycoproteins and glycolipids of animal cell membranes?", options: ["Active transport of molecules against their concentration gradients", "Maintaining the integrity of a fluid mosaic membrane", "Maintaining membrane fluidity at low temperatures", "A cell is only to distinguish one type of neighboring cell from another"], correct: "d", explanation: "Glycoproteins and glycolipids on the extracellular surface serve as cell identity markers, important for cell‑cell recognition, adhesion, and immune responses." },
+            { q: "72. An animal cell lacking oligosaccharides on the external surface of its plasma membrane would likely be impaired in which function?", options: ["Transporting ions against an electrochemical gradient", "Cell-cell recognition", "Maintaining fluidity of the phospholipid bilayer", "Attaching to the cytoskeleton"], correct: "b", explanation: "Oligosaccharides on the external surface are part of glycoproteins and glycolipids that function in cell‑cell recognition. Their absence would impair this function." },
+            { q: "73. What kinds of molecules pass through a cell membrane most easily?", options: ["Large and hydrophobic", "Small and hydrophobic", "Large polar", "Monosaccharides such as glucose"], correct: "b", explanation: "Small, hydrophobic (nonpolar) molecules such as O₂, CO₂, and steroids can dissolve in the lipid bilayer and pass through most easily. Large polar molecules and ions require channels or transporters." },
+            { q: "74. Which of the following would likely move through the lipid bilayer of a plasma membrane most rapidly?", options: ["Nitrogen", "An amino acid", "Glucose", "Starch"], correct: "a", explanation: "Nitrogen (N₂) is a small, nonpolar gas that can diffuse rapidly through the lipid bilayer. Amino acids, glucose, and starch require transporters or are too large." },
+            { q: "75. Water passes quickly through cell membranes because", options: ["It moves through hydrophobic channels.", "Water movement is tied to ATP hydrolysis.", "It is a small, polar, charged molecule.", "It moves through aquaporins in the membrane."], correct: "d", explanation: "Water passes rapidly through aquaporins, which are channel proteins that facilitate osmosis. Although water can slowly diffuse through the lipid bilayer, aquaporins greatly increase permeability." },
+            { q: "76. You are working on a team that is designing a new drug. For this drug to work, it must enter the cytoplasm of specific target cells. Which of the following would be a factor that determines whether the molecule enters the cell?", options: ["Non-polarity of the drug molecule", "Lack of charge on the drug molecule", "Similarity of the drug molecule to other molecules transported by the target cells", "Lipid composition of the target cells' plasma membrane"], correct: "c", explanation: "If the drug resembles a molecule that the cell normally transports, it may be taken up by specific transporters. Non‑polarity and lack of charge would allow diffusion through the lipid bilayer, but specific transport is often more important for targeted drug delivery." },
+            { q: "77. Which of the following membrane activities require energy from ATP hydrolysis?", options: ["Movement of water into a cell", "Na⁺ ions moving out of the cell", "Movement of glucose molecules", "Movement of water into a paramecium"], correct: "b", explanation: "The Na⁺/K⁺‑ATPase pump actively transports Na⁺ out of the cell against its concentration gradient, using ATP. Water movement is passive (osmosis). Glucose movement can be passive or secondary active, but the direct ATP‑requiring step is the Na⁺ pump." },
+            { q: "78. If a membrane protein in an animal cell is involved in the cotransport of glucose and sodium ions into the cell, which of the following is most likely true?", options: ["The sodium ions are moving down their electrochemical gradient while glucose is moving up.", "Glucose is entering the cell along its concentration gradient."], correct: "a", explanation: "In secondary active transport (symport), Na⁺ moves down its electrochemical gradient, and this energy is used to drive glucose against its concentration gradient into the cell. Therefore A is correct." },
+            { q: "79. The movement of potassium into an animal cell requires", options: ["Low cellular concentrations of sodium.", "High cellular concentrations of potassium.", "An energy source such as ATP or a proton gradient.", "A cotransport protein."], correct: "c", explanation: "K⁺ is actively transported into cells against its concentration gradient by the Na⁺/K⁺‑ATPase, which requires ATP. It is not a cotransport protein." },
+            { q: "80. White blood cells engulf bacteria through what process?", options: ["Exocytosis", "Phagocytosis", "Pinocytosis", "Osmosis"], correct: "b", explanation: "Phagocytosis is the process by which cells engulf large particles such as bacteria. White blood cells (neutrophils, macrophages) are professional phagocytes." }
+        ];
+
+        // ─── RENDER MCQ ─────────────────────────────────────────────
+        function renderMCQs() {
+            const container = document.getElementById('mcq-container');
+            let html = '';
+            questions.forEach((q, index) => {
+                html += `<div class="question">`;
+                html += `<p><span class="q-badge">Q${index + 1}</span> ${q.q}</p>`;
+                html += `<div class="options">`;
+                const letters = ['A', 'B', 'C', 'D', 'E'];
+                q.options.forEach((opt, i) => {
+                    html += `<label><input type="radio" name="q${index + 1}" value="${letters[i]}"> ${letters[i]}) ${opt}</label>`;
+                });
+                html += `</div>`;
+                html += `<div class="question-feedback" id="feedback-q${index + 1}"></div>`;
+                html += `</div>`;
+            });
+            container.innerHTML = html;
+        }
+        renderMCQs();
+
+        // ─── MCQ CORRECT ANSWERS & EXPLANATIONS ──────────────────
+        const correctMap = {};
+        const explMap = {};
+        questions.forEach((q, i) => {
+            const key = 'q' + (i + 1);
+            correctMap[key] = q.correct;
+            explMap[key] = q.explanation;
+        });
+
+        // ─── SUBMIT MCQ (FIXED: case-insensitive comparison) ──────
+        function submitQuiz() {
+            let score = 0;
+            const total = questions.length;
+            for (let i = 0; i < total; i++) {
+                const key = 'q' + (i + 1);
+                const radios = document.querySelectorAll(`input[name="${key}"]`);
+                const selected = Array.from(radios).find(r => r.checked);
+                const correct = (correctMap[key] || '').toUpperCase();
+                const feedbackEl = document.getElementById(`feedback-${key}`);
+                if (!feedbackEl) continue;
+
+                if (selected && selected.value.toUpperCase() === correct) score++;
+
+                let html = `<div class="answer-block"><strong>Q${i+1}</strong><div class="answer-list">`;
+                const letters = ['A', 'B', 'C', 'D', 'E'];
+                const opts = questions[i].options;
+                opts.forEach((opt, idx) => {
+                    const val = letters[idx];
+                    const valUpper = val.toUpperCase();
+                    let cls = 'answer-item';
+                    if (valUpper === correct) cls += ' answer-correct';
+                    if (selected && selected.value.toUpperCase() === valUpper && selected.value.toUpperCase() !== correct) cls += ' answer-wrong user-choice';
+                    if (selected && selected.value.toUpperCase() === valUpper && selected.value.toUpperCase() === correct) cls += ' user-choice';
+                    html += `<div class="${cls}">${letters[idx]}) ${opt}${selected && selected.value.toUpperCase() === valUpper ? ' ◀' : ''}</div>`;
+                });
+                html += `</div>`;
+
+                const correctIndex = letters.findIndex(l => l.toUpperCase() === correct);
+                const correctText = correctIndex >= 0 ? opts[correctIndex] : 'N/A';
+                const explanation = explMap[key] || '';
+                if (selected) {
+                    if (selected.value.toUpperCase() === correct) {
+                        html += `<div class="explanation">✅ Correct — ${explanation}</div>`;
+                    } else {
+                        html += `<div class="explanation wrong">❌ Incorrect. Correct answer: <strong>${correctText}</strong>. ${explanation}</div>`;
+                    }
+                } else {
+                    html += `<div class="explanation wrong">No answer selected. Correct: <strong>${correctText}</strong>. ${explanation}</div>`;
+                }
+                html += `</div>`;
+                feedbackEl.innerHTML = html;
+            }
+
+            const pct = Math.round((score / total) * 100);
+            const resultBox = document.getElementById('resultBox');
+            resultBox.style.display = 'block';
+            document.getElementById('score').innerText = pct + '%';
+
+            document.querySelectorAll('#quizForm input[type="radio"]').forEach(i => i.disabled = true);
+        }
+
+        // ─── SECTION B / SCENARIO: TOGGLE MODEL ANSWER ──────────
+        function toggleAnswer(btn) {
+            const answerDiv = btn.nextElementSibling;
+            if (answerDiv && answerDiv.classList.contains('model-answer')) {
+                answerDiv.classList.toggle('visible');
+                btn.textContent = answerDiv.classList.contains('visible') ? 'Hide Answer' : 'Show Answer';
+            }
+        }
+
+        // ─── TAB SWITCHING ──────────────────────────────────────────
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                const target = this.dataset.target;
+                document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+                document.getElementById(target).classList.remove('hidden');
+            });
+        });
+    </script>
+
+</body>
+</html>

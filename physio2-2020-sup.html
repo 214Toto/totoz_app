@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2020 Physiology Sup – 3rd Year</title>
+    <style>
+        :root {
+            --primary: #1a6b6b;
+            --accent: #2ea8a0;
+            --dark: #0f2a2a;
+            --light: #f4f8f7;
+            --radius: 12px;
+            --shadow: 0 4px 14px rgba(0, 30, 30, 0.08);
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #edf3f2;
+            color: var(--dark);
+            min-height: 100vh;
+            padding-top: 72px;
+        }
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: linear-gradient(145deg, var(--primary), var(--dark));
+            color: #fff;
+            padding: 0.6rem 0;
+            box-shadow: 0 4px 18px rgba(0, 20, 20, 0.25);
+        }
+        .header-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .logo i {
+            font-size: 1.5rem;
+            color: #8dd9d4;
+        }
+        .logo h1 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+        }
+        .badge {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 0.2rem 1rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #b3e6e0;
+            letter-spacing: 0.5px;
+        }
+        .container {
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 0 1.2rem 2.5rem;
+        }
+        .tab-bar {
+            display: flex;
+            gap: 0.5rem;
+            margin: 0.5rem 0 1.5rem 0;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            background: #dce8e8;
+            border: none;
+            padding: 0.5rem 1.8rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--dark);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .tab-btn:hover {
+            background: #c0d6d6;
+        }
+        .tab-btn.active {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 2px 10px rgba(26, 107, 107, 0.25);
+        }
+        .tab-panel {
+            display: block;
+        }
+        .tab-panel.hidden {
+            display: none;
+        }
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 0 0 0.8rem 0;
+            padding-bottom: 0.4rem;
+            border-bottom: 3px solid rgba(26, 107, 107, 0.18);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+        .section-title .count {
+            font-size: 0.7rem;
+            font-weight: 600;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 40px;
+            padding: 0 0.7rem;
+            line-height: 1.7;
+        }
+        .section-subtitle {
+            color: #4f6e6e;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        .question {
+            background: #ffffff;
+            border-radius: var(--radius);
+            padding: 1.1rem 1.2rem 0.2rem 1.2rem;
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(26, 107, 107, 0.05);
+            transition: box-shadow 0.2s;
+        }
+        .question:hover {
+            box-shadow: 0 6px 20px rgba(0, 30, 30, 0.07);
+        }
+        .question .q-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 40px;
+            padding: 0 0.65rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            line-height: 1.6;
+            margin-right: 0.4rem;
+        }
+        .question p {
+            font-weight: 600;
+            font-size: 0.97rem;
+            margin-bottom: 0.4rem;
+            color: var(--dark);
+        }
+        .options label {
+            display: block;
+            background: #fafcfc;
+            border: 1px solid #dde8e8;
+            border-radius: 7px;
+            padding: 0.4rem 0.85rem;
+            margin-top: 0.4rem;
+            cursor: pointer;
+            transition: all 0.15s;
+            font-weight: 450;
+            font-size: 0.92rem;
+        }
+        .options label:hover {
+            background: #e8f5f4;
+            border-color: var(--accent);
+        }
+        .options input[type="radio"] {
+            margin-right: 0.5rem;
+            accent-color: var(--primary);
+            transform: scale(1.04);
+        }
+        .question-feedback {
+            margin-top: 0.8rem;
+            padding: 0.4rem 0 0.1rem 0;
+            border-top: 1px dashed #dce6e6;
+        }
+        .answer-block strong {
+            display: block;
+            margin-bottom: 3px;
+            color: var(--primary);
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .answer-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .answer-item {
+            padding: 4px 10px;
+            border-radius: 5px;
+            border: 1px solid #e4edec;
+            background: #ffffff;
+            font-weight: 500;
+            font-size: 0.88rem;
+        }
+        .answer-correct {
+            background: #e8f7ef;
+            border-color: #a8d8c0;
+            color: #0a4f3a;
+        }
+        .answer-wrong {
+            background: #fde9ea;
+            border-color: #f5b8b8;
+            color: #8a1f2b;
+        }
+        .user-choice {
+            outline: 2px dashed rgba(0, 0, 0, 0.06);
+        }
+        .explanation {
+            margin-top: 5px;
+            padding: 8px 13px;
+            border-radius: 7px;
+            background: #f0f8f6;
+            color: #065f4a;
+            font-size: 0.88rem;
+            line-height: 1.5;
+            border-left: 4px solid var(--accent);
+        }
+        .explanation.wrong {
+            background: #fdf1f1;
+            color: #7a1f1f;
+            border-left-color: #e68080;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            color: #fff;
+            border: none;
+            padding: 0.55rem 1.8rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.2s;
+            box-shadow: 0 4px 14px rgba(26, 107, 107, 0.25);
+        }
+        .btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 24px rgba(26, 107, 107, 0.32);
+        }
+        .btn:active {
+            transform: scale(0.96);
+        }
+        .submit-wrap {
+            text-align: center;
+            margin: 1.5rem 0 1.8rem;
+        }
+        .result {
+            margin-top: 1.5rem;
+            padding: 1.5rem 1.5rem 0.8rem;
+            background: #eaf6f4;
+            border-radius: var(--radius);
+            text-align: center;
+            display: none;
+            border: 1px solid #b8dbd6;
+        }
+        .result h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        .score {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 0.1rem 0 0.2rem;
+        }
+        .text-muted {
+            color: #4f6e6e;
+            font-size: 0.9rem;
+        }
+        .hidden {
+            display: none !important;
+        }
+        .section-b-question, .scenario-box {
+            background: #ffffff;
+            border-radius: var(--radius);
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(26, 107, 107, 0.05);
+        }
+        .section-b-question .q-label, .scenario-box .q-label {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        .section-b-question .q-text, .scenario-box .q-text {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            background: #f5f8f8;
+            padding: 0.6rem 1rem;
+            border-radius: 7px;
+            white-space: pre-wrap;
+        }
+        .subquestion {
+            margin-top: 0.8rem;
+            border-top: 1px solid #e0ecec;
+            padding-top: 0.8rem;
+        }
+        .subquestion .sub-label {
+            font-weight: 600;
+            color: var(--dark);
+        }
+        .subquestion textarea {
+            width: 100%;
+            min-height: 55px;
+            padding: 0.6rem;
+            border: 1px solid #cbdcdc;
+            border-radius: 7px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            resize: vertical;
+            margin-top: 0.3rem;
+            background: #fafcfc;
+        }
+        .subquestion textarea:focus {
+            outline: 2px solid var(--accent);
+            border-color: transparent;
+        }
+        .show-answer-btn {
+            margin-top: 0.4rem;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 0.2rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+        .show-answer-btn:hover {
+            background: var(--accent);
+        }
+        .model-answer {
+            margin-top: 0.5rem;
+            padding: 0.6rem 1rem;
+            background: #f0f8f6;
+            border-left: 4px solid var(--accent);
+            border-radius: 5px;
+            font-size: 0.9rem;
+            color: #065f4a;
+            display: none;
+            white-space: pre-wrap;
+        }
+        .model-answer.visible {
+            display: block;
+        }
+        .mono-box {
+            background: #f5f8f8;
+            padding: 0.6rem 1rem;
+            border-radius: 7px;
+            font-family: monospace;
+            font-size: 0.95rem;
+            margin: 0.5rem 0;
+        }
+        .scenario-box .q-text {
+            background: #f9fdfd;
+            border-left: 4px solid var(--accent);
+        }
+        .match-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0.8rem 0;
+            font-size: 0.88rem;
+        }
+        .match-table th, .match-table td {
+            border: 1px solid #cbdcdc;
+            padding: 0.5rem 0.7rem;
+            text-align: left;
+            vertical-align: top;
+        }
+        .match-table th {
+            background: #e0ecec;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .match-table td {
+            background: #fafcfc;
+        }
+        @media (max-width: 700px) {
+            body { padding-top: 68px; }
+            .logo h1 { font-size: 0.95rem; }
+            .header-inner { padding: 0 1rem; flex-direction: column; align-items: stretch; gap: 0.2rem; }
+            .badge { align-self: flex-start; }
+            .question { padding: 0.9rem 0.9rem 0.1rem 0.9rem; }
+            .section-title { font-size: 1.05rem; }
+            .score { font-size: 2.2rem; }
+            .btn { padding: 0.5rem 1.2rem; font-size: 0.85rem; }
+            .section-b-question, .scenario-box { padding: 0.9rem; }
+            .tab-btn { padding: 0.4rem 1.2rem; font-size: 0.85rem; }
+        }
+        @media (max-width: 420px) {
+            .logo h1 { font-size: 0.8rem; }
+            .options label { font-size: 0.85rem; padding: 0.35rem 0.65rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-inner">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+                <h1>2020 Physiology Sup – 3rd Year</h1>
+            </div>
+            <span class="badge"><i class="fas fa-pencil-alt"></i> &nbsp;50 MCQs + Section B + Scenarios</span>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+
+            <!-- TAB BAR -->
+            <div class="tab-bar">
+                <button class="tab-btn active" data-target="section-mcq">📝 MCQs</button>
+                <button class="tab-btn" data-target="section-sectionB">✍️ Section B</button>
+                <button class="tab-btn" data-target="section-scenarios">🩺 Scenarios</button>
+            </div>
+
+            <!-- ========== MCQ SECTION ========== -->
+            <div id="section-mcq" class="tab-panel">
+                <div class="section-title">
+                    <i class="fas fa-list-ul"></i> Multiple Choice Questions
+                    <span class="count">50</span>
+                </div>
+                <p class="section-subtitle">Select the best answer for each question, then click <strong>Submit All MCQs</strong> below.</p>
+
+                <form id="quizForm">
+                    <div id="mcq-container"></div>
+                    <div class="submit-wrap">
+                        <button type="button" class="btn" onclick="submitQuiz()">
+                            <i class="fas fa-check-circle"></i> Submit All MCQs
+                        </button>
+                    </div>
+                </form>
+
+                <div class="result" id="resultBox">
+                    <h3><i class="fas fa-chart-simple"></i> Your Score</h3>
+                    <div class="score" id="score">0%</div>
+                    <p class="text-muted">Review the feedback below each question.</p>
+                </div>
+            </div>
+
+            <!-- ========== SECTION B ========== -->
+            <div id="section-sectionB" class="tab-panel hidden">
+                <div class="section-title">
+                    <i class="fas fa-pencil-square"></i> Section B – Structured and Short Answer Questions
+                    <span class="count">30 marks</span>
+                </div>
+                <p class="section-subtitle">Write your answers in the boxes below. Click <strong>Show Answer</strong> to reveal a model answer.</p>
+
+                <!-- ─── B1: Coagulation matching ─── -->
+                <div class="section-b-question">
+                    <div class="q-label">Question B1 – Coagulation Disorders Matching</div>
+                    <div class="q-text">For each blood coagulation related disorder below, select the most suitable description of a case (Use each item once) [5 marks]</div>
+                    <table class="match-table">
+                        <tr><th>Disorder</th><th>Description</th></tr>
+                        <tr><td>A. Consumption of many clotting factors</td><td>I. A 15-year-old child with diffuse purpura. Laboratory tests showed prolonged bleeding time.</td></tr>
+                        <tr><td>B. Deficiency of factor VIII</td><td>II. A 50-year-old man who is receiving anticoagulant therapy (warfarin). He is admitted to hospital complaining of haematuria (blood in urine).</td></tr>
+                        <tr><td>C. Increased fibrinogen level</td><td>III. A 10-year-old child with haemophilia A complains of persistent bleeding after tooth extraction and has prolonged coagulation time.</td></tr>
+                        <tr><td>D. Deficiency of prothrombin</td><td>IV. A 30-year-old pregnant female who stopped feeling the movements of her baby for several weeks. She was admitted to hospital with bleeding tendency and examination revealed widespread clotting.</td></tr>
+                        <tr><td>E. Excessive heparin administration</td><td>V. A newly born infant with bleeding tendency. Laboratory tests showed deficiency of factors II, VII, IX, X and prolonged coagulation time.</td></tr>
+                        <tr><td>F. Vitamin K deficiency</td><td></td></tr>
+                        <tr><td>G. Low platelets count below 50,000/mm³</td><td></td></tr>
+                        <tr><td>H. Deficiency of factor XI</td><td></td></tr>
+                    </table>
+                    <div class="subquestion">
+                        <div class="sub-label">Model answer:</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">A → IV (Consumption of many clotting factors → disseminated intravascular coagulation / widespread clotting).<br>B → III (Factor VIII deficiency → haemophilia A with prolonged coagulation time).<br>C → (Increased fibrinogen level — no matching case; this is a distractor).<br>D → II (Prothrombin deficiency → warfarin therapy, which inhibits vitamin K‑dependent factors including prothrombin).<br>E → (Excessive heparin — no matching case; distractor).<br>F → V (Vitamin K deficiency → newborn with deficiency of factors II, VII, IX, X).<br>G → I (Low platelets → diffuse purpura with prolonged bleeding time).<br>H → (Factor XI deficiency — no matching case; distractor).</div>
+                    </div>
+                </div>
+
+                <!-- ─── B2: ECG interpretation ─── -->
+                <div class="section-b-question">
+                    <div class="q-label">Question B2 – ECG Interpretation</div>
+                    <img src="ecg.jpg" alt="Oxygen dissociation curve" style="max-width:100%; border-radius:8px; margin:0.6rem 0;">
+                    <div class="subquestion">
+                        <div class="sub-label">a) Which label identifies the part of the ECG that corresponds to ventricular repolarization? [1 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Label E (T wave).</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">b) Which of the labels identifies the Q wave? [1 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Label B (the initial negative deflection of the QRS complex).</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">c) Which label identifies the part of the ECG that corresponds to maximum opening of ventricular Na channels? [1 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Label C (R wave — phase 0 rapid depolarization, when voltage‑gated Na⁺ channels open maximally).</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">d) Which label identifies the part of the ECG that corresponds to maximum opening of ventricular Ca channels? [1 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Label D (ST segment — plateau phase, when L‑type Ca²⁺ channels are open).</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">e) Which label identifies the part of the ECG that corresponds to the plateau phase of ventricular muscle action potential [1 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Label D (ST segment).</div>
+                    </div>
+                </div>
+
+                <!-- ─── B3: Neuromuscular junction (Wendy) ─── -->
+    
+            </div>
+
+            <!-- ========== SCENARIOS ========== -->
+            <div id="section-scenarios" class="tab-panel hidden">
+                <div class="section-title">
+                    <i class="fas fa-stethoscope"></i> Section C – Clinical Scenarios
+                    <span class="count">3 scenarios</span>
+                </div>
+                <p class="section-subtitle">Read each scenario carefully and answer the questions. Click <strong>Show Answer</strong> for model answers.</p>
+
+                <!-- ─── Scenario 1: Myasthenia Gravis (Wendy) ─── -->
+                <div class="scenario-box">
+                    <div class="q-label">Scenario 1 – Neuromuscular Junction (Wendy)</div>
+                    <div class="q-text">Wendy, a 23-year-old photographer, visits her physician after experiencing strange symptoms for the last 8 months. She had severe eyestrain when she read for longer than 15 minutes. She became tired when she chewed her food, brushed her teeth, or dried her hair. She was evaluated by her physician. While awaiting the results, the physician initiated a trial of pyridostigmine, an acetylcholinesterase inhibitor. Wendy immediately felt better while taking the drug; her strength returned to almost normal.</div>
+                    <div class="subquestion">
+                        <div class="sub-label">a) What is the most likely neuromuscular condition that Wendy is suffering from? [2 marks]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Myasthenia gravis.</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">b) With respect to neuromuscular transmission, what is a quantum? [2 marks]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">A quantum is the amount of acetylcholine released from a single synaptic vesicle. Each quantum produces a miniature end‑plate potential (MEPP) of about 0.5–1 mV.</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">c) Why is the neuromuscular junction said to have a high safety margin? [2 marks]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Because the amount of ACh released normally far exceeds the minimum needed to depolarize the muscle fibre to threshold. Many more receptors are activated than necessary, so transmission succeeds even if some receptors are blocked or ACh release is reduced.</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">d) State the range of the synaptic delay [1 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">0.5–0.7 milliseconds (approximately 0.5 ms).</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">e) Mention two factors that account for the delay in (d) [2 marks]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">1. Time taken for Ca²⁺ influx and neurotransmitter release.<br>2. Diffusion time of ACh across the synaptic cleft.<br>3. Time for ACh binding and receptor activation.</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">f) What is responsible for the non-quantal release of acetylcholine at the nerve terminal? [1 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Leakage of ACh from the cytoplasm through the presynaptic membrane, independent of vesicular release.</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">g) Mention the cholinergic receptor type located on the postsynaptic membrane of the synaptic cleft [1 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Nicotinic acetylcholine receptor (nAChR).</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">h) The interaction of acetylcholine with its receptor is blocked reversibly by ________ and almost irreversibly by ________. [1 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Reversibly by curare (or vecuronium); almost irreversibly by α‑bungarotoxin (or snake venom).</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">i) What destroys the acetylcholine that diffuses away from the endplate into the blood stream and other tissues? [1 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Butyrylcholinesterase (pseudocholinesterase) in plasma and tissues.</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">j) Apart from the inhibitor stated in the question state another class of chemicals that block the hydrolysis of acetylcholine [1 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Organophosphates (e.g., insecticides, nerve agents) — irreversible acetylcholinesterase inhibitors.</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">k) What is the implication of the blockage in (i) above? [1 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Blocking acetylcholinesterase increases ACh concentration in the synaptic cleft, improving neuromuscular transmission in myasthenia gravis.</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">l) What is most likely to be seen in a biopsy sample of intercostal muscles of the patient in this question? [2 marks]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Type II fibre atrophy (or generalised muscle atrophy) due to decreased neuromuscular transmission and disuse.</div>
+                    </div>
+                </div>
+
+                <!-- ─── Scenario 2: DVT ─── -->
+                <div class="scenario-box">
+                    <div class="q-label">Scenario 2 – Deep Venous Thrombosis</div>
+                    <div class="q-text">A male patient aged 70 years, suffered from fracture neck femur of the left side. He was operated for the fracture. After the operation, he was unable to move even in bed although he was encouraged to move. Three days after the operation, the doctor observed swelling in his left leg and was diagnosed as deep venous thrombosis.</div>
+                    <div class="subquestion">
+                        <div class="sub-label">a) Mention two causes of occurrence of deep venous thrombosis in this patient [2 marks]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">1. Venous stasis (immobility after surgery).<br>2. Endothelial injury (surgical trauma).<br>3. Hypercoagulability (post‑operative state, increased clotting factors).</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">b) The patient received heparin three times daily and dicumarol once daily. What is the mode of action of dicumarol? [2 marks]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Dicumarol (warfarin) inhibits vitamin K epoxide reductase, preventing the regeneration of reduced vitamin K. This reduces the synthesis of vitamin K‑dependent clotting factors: II, VII, IX, X, and proteins C and S.</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">c) How is heparin administered? [1 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Heparin is administered intravenously (IV) or subcutaneously. It is not effective orally.</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">d) After two days, heparin treatment was stopped and dicumarol treatment continues. The efficacy of dicumarol treatment can be adjusted by testing which haemostatic function? [1 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Prothrombin time (PT) / INR.</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">e) Ten days later, the patient suffers from severe bleeding from a slight cut in the face. The clotting of blood does not occur. This was diagnosed as a complication of dicumarol therapy. What substance can be given to the patient in this case? [1 mark]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Vitamin K (phytomenadione) or fresh frozen plasma (FFP) if urgent.</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">f) Give one reason each for the prolonged bleeding time in the following conditions (1) Vitamin C deficiency (2) Deficiency of von Willebrand factor (3) Prolonged use of aspirin (4) Purpura </div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">
+                            1. Vitamin C deficiency – defective collagen synthesis → capillary fragility.<br>
+                            2. Deficiency of von Willebrand factor – impaired platelet adhesion to subendothelium.<br>
+                            3. Prolonged use of aspirin – inhibits cyclooxygenase → decreased thromboxane A2 → impaired platelet aggregation.<br>
+                            4. Purpura – decreased platelet number or function.
+                        </div>
+                    </div>
+                </div>
+
+            
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // ─── 50 MCQ DATA ──────────────────────────────────────────
+        const questions = [
+            { q: "1. Plasmin", options: ["Is formed from plasminogen", "Digests fibrin", "Digests fibrinogen into thrombin"], correct: "a", explanation: "Plasmin is formed from plasminogen by the action of tissue plasminogen activator (tPA) or urokinase. Plasmin digests fibrin and fibrinogen, but it does not convert fibrinogen into thrombin. Thrombin is formed from prothrombin. Therefore, A is correct." },
+            { q: "2. With respect to iron metabolism", options: ["The body contains about 40g of iron", "Most of the iron in the body is contained in ferritin", "Iron is transported in plasma as ferritin", "Haemosiderin is the main form in which iron is stored in tissues"], correct: "d", explanation: "The body contains about 4–5 g of iron, not 40 g. Most iron is in haemoglobin, not ferritin. Iron is transported in plasma bound to transferrin, not ferritin. Haemosiderin is an insoluble storage form of iron, derived from ferritin, and is the main form in which iron is stored in tissues. Therefore, D is correct." },
+            { q: "3. Blood coagulation", options: ["Through the intrinsic and extrinsic pathways results in activation of factor X", "Results from the conversion of thrombin to prothrombin", "Results from the conversion of fibrinogen to fibrin", "Can occur in the absence of calcium"], correct: "a", explanation: "Both intrinsic and extrinsic pathways converge on the activation of factor X (to Xa). Thrombin is formed from prothrombin, not the reverse. Fibrinogen is converted to fibrin by thrombin. Calcium is required at multiple steps. Therefore, A is correct." },
+            { q: "4. With respect to iron metabolism", options: ["Antacids reduce iron absorption", "Heme iron is better absorbed than non-heme iron", "Ferrous iron is better absorbed than ferric iron", "The majority of iron absorption occurs in the terminal ileum"], correct: "c", explanation: "Ferrous iron (Fe²⁺) is better absorbed than ferric iron (Fe³⁺) because it is more soluble. Antacids do reduce absorption, heme iron is better absorbed, and most absorption occurs in the duodenum and proximal jejunum, not terminal ileum. However, the question asks for the correct statement, and C is the most universally correct." },
+            { q: "5. With respect to Rhesus blood group", options: ["Transfusion of Rhesus incompatible blood into a non-sensitized individual causes an immediate transfusion reaction", "The first pregnancy is never affected by Rhesus disease", "The child of a Rhesus positive father and a Rhesus negative mother must be Rhesus positive", "The child of a Rhesus negative father and a Rhesus negative mother must be Rhesus positive"], correct: "b", explanation: "The first pregnancy is usually unaffected because sensitization of the mother occurs during delivery, when fetal red cells enter the maternal circulation. Subsequent pregnancies are at risk. A non-sensitized individual does not have anti-Rh antibodies, so no immediate reaction occurs. The child of Rh+ father and Rh− mother may be Rh+ or Rh−. The child of Rh− father and Rh− mother must be Rh−. Therefore, B is correct." },
+            { q: "6. The functional residual capacity:", options: ["Is increased in the obese", "Is the residual volume plus the inspiratory reserve volume", "Falls with general anaesthesia", "Is not affected by posture", "Falls with increasing age"], correct: "c", explanation: "Functional residual capacity (FRC) is the volume remaining after normal expiration (ERV + RV). It is decreased in obesity, falls with general anaesthesia (due to diaphragm relaxation and changes in chest wall mechanics), is affected by posture (lower when supine), and increases with age. Therefore, C is correct." },
+            { q: "7. The resting membrane potential in nerve fibres is:", options: ["Normally about -10 mV", "Due to K diffusion from outside to inside the nerve fibres", "Due to diffusion of intracellular protein to outside the nerve fibres", "A passive process", "None of the above"], correct: "d", explanation: "The resting membrane potential is about −70 mV, not −10 mV. It is due to K⁺ diffusion from inside to outside the cell, and proteins remain inside. It is largely a passive process (diffusion potential) but maintained by the Na⁺/K⁺ pump. The best answer is D (a passive process), as the potential arises from ionic gradients without direct ATP use at the moment of measurement." },
+            { q: "8. The all or none law states that a threshold stimulus produces an impulse which:", options: ["Is weaker than that produced by a stronger stimulus", "Is propagated only partially along the cell membrane", "Does not need any energy", "Is not different from that produced by a stronger stimulus"], correct: "d", explanation: "The all‑or‑none law states that once threshold is reached, the action potential is complete and identical in size and shape, regardless of stimulus strength. A stronger stimulus does not produce a larger action potential. Therefore, D is correct." },
+            { q: "9. During muscle contraction, all the following is true except:", options: ["The binding sites at the actin filaments are activated by Ca²⁺", "The walk along theory of the contraction assumes that sliding of actin continues as long as Ca²⁺ is attached to troponin C", "The detachment of myosin heads from actin needs binding of an ATP molecule", "The transverse tubules become filled with intracellular fluid"], correct: "d", explanation: "The transverse tubules are invaginations of the sarcolemma and contain extracellular fluid, not intracellular fluid. The other statements are true." },
+            { q: "10. In skeletal muscles:", options: ["The initiation of contraction occurs by binding of Ca²⁺ to tropomyosin", "The action potential follows the work done", "The one way conduction at the M.E.P is due to location of the chemical mediator (acetylcholine) in the nerve terminals", "Fatigue has no relation to the adequacy of the blood supply", "Fatigue sets in after fatigue occurs in the nerves"], correct: "c", explanation: "The one‑way conduction at the neuromuscular junction is due to the presynaptic location of ACh in the nerve terminal. Ca²⁺ binds to troponin C, not tropomyosin. The action potential precedes the work done. Fatigue is related to blood supply and occurs in muscle, not nerve. Therefore, C is correct." },
+            { q: "11. During muscle contraction", options: ["The A bands remain constant", "The I bands are elongated", "The Z lines move further apart", "The H zones become wider", "The tropomyosin molecules remain in place"], correct: "a", explanation: "During contraction, the A band (thick filament length) remains constant. The I band and H zone narrow, and the Z lines move closer together. Tropomyosin moves to expose binding sites. Therefore, A is correct." },
+            { q: "12. Which of the following occurs in plain muscles but not in skeletal muscles:", options: ["The sliding mechanism of contraction", "Cholinergic innervation", "Action potential", "Breakdown of ATP", "Myogenic rhythmicity"], correct: "e", explanation: "Myogenic rhythmicity (spontaneous contraction independent of nerve input) is a characteristic of unitary smooth muscle (e.g., gut, uterus) but not skeletal muscle. The sliding mechanism, cholinergic innervation, action potentials, and ATP breakdown occur in both. Therefore, E is correct." },
+            { q: "13. The absolute refractory period:", options: ["Is due to hyperpolarization", "Refers to a normal or increased excitability state", "Follows the negative afterpotential", "Is prolonged when K efflux is delayed", "Is equal in skeletal and cardiac muscles"], correct: "d", explanation: "The absolute refractory period (ARP) is the period during which no stimulus can excite the membrane, regardless of strength. It corresponds to the period when Na⁺ channels are inactivated. If K⁺ efflux is delayed, repolarization is prolonged, extending the ARP. It is not due to hyperpolarization, does not follow the negative afterpotential (it precedes it), and is much longer in cardiac muscle. Therefore, D is correct." },
+            { q: "14. In the action potential, all the following is true except:", options: ["The firing level is the level at which the spike potential begins", "The rapid repolarization is due to increased K⁺ permeability", "The duration of the isoelectric interval (latent period) is inversely proportional to the speed of conduction", "Decreasing the external Na⁺ concentration reduces the size of the action potential", "The absolute refractory period is the period from the firing level until repolarization is completed"], correct: "e", explanation: "The ARP is not the period from firing level until repolarization is completed. It is the period during which Na⁺ channels are inactivated, which ends when repolarization has proceeded enough to reset the channels. The other statements are true." },
+            { q: "15. About the types of nerve fibres, all the following is true except:", options: ["The type A fibres have the largest diameter and most rapid conduction velocity", "The preganglionic autonomic nerves belong to type B", "The type C fibres have the smallest diameter and lowest conduction velocity", "The postganglionic autonomic nerves belong to type C", "The type A fibres have a spike duration longer than that of type B fibres"], correct: "e", explanation: "Type A fibres have the shortest spike duration (about 0.4–0.5 ms), while type B and C fibres have longer spike durations. Therefore, the statement that type A fibres have a longer spike duration than type B is false." },
+            { q: "16. Concerning the oxygen debt mechanism", options: ["It is used for supply of the basal oxygen consumption", "It involves the oxygen consumed during muscular exercise", "Athletes develop a greater O₂ debt during a given exercise than sedentary people", "It is used to remove excess lactic acid and to replenish the ATP and CP stores"], correct: "d", explanation: "Oxygen debt is the extra oxygen consumed after exercise to restore the body to its pre‑exercise state. It is used to remove excess lactic acid, replenish ATP and creatine phosphate stores, and restore oxygen to myoglobin. It is not for basal consumption and athletes develop a smaller O₂ debt for a given exercise. Therefore, D is correct." },
+            { q: "17. In skeletal muscles, the transverse tubules and adjacent cisterns constitute:", options: ["A triad", "The sarcolemma", "A myofibril", "A muscle fibre", "The sarcomere"], correct: "a", explanation: "A triad consists of a T‑tubule and two terminal cisternae of the sarcoplasmic reticulum. Therefore, A is correct." },
+            { q: "18. All of the following are effects of denervation of skeletal muscles except:", options: ["Atrophy of muscles", "Hypersensitivity to circulating acetylcholine", "Muscle fibrillations", "Muscle fasciculations"], correct: "d", explanation: "Denervation causes muscle atrophy, hypersensitivity to ACh (denervation supersensitivity), and fibrillations (spontaneous contraction of individual muscle fibres). Fasciculations are spontaneous contractions of motor units and are not typically a result of denervation. Therefore, D is the exception." },
+            { q: "19. The fast type of muscles is characterized by all of the following except:", options: ["High ATPase activity in the mitochondria", "Specialization for posture maintenance", "Innervation by large motor neurons", "Rapid fatigue", "Absence of myoglobin"], correct: "b", explanation: "Fast‑twitch (Type II) fibres are specialised for rapid, powerful contractions, not posture maintenance. Posture is maintained by slow‑twitch (Type I) fibres. Fast fibres have high ATPase activity, are innervated by large motor neurons, fatigue rapidly, and have low myoglobin. Therefore, B is the exception." },
+            { q: "20. In plain muscles (e.g. in the intestine)", options: ["The contraction is dependent on the nerve supply", "The resting potential is high", "Ca²⁺ is involved in the initiation of contraction", "Epinephrine decreases the membrane potential and increases the frequency of spikes", "Catecholamines cause muscle contraction"], correct: "c", explanation: "In smooth muscle, Ca²⁺ is essential for initiating contraction via calmodulin. Contraction is not solely dependent on nerve supply (myogenic). The resting potential is not high (about −50 to −60 mV). Epinephrine typically hyperpolarizes and decreases spike frequency. Catecholamines can cause relaxation in some smooth muscles. Therefore, C is correct." },
+            { q: "21. Decreasing the Na⁺ concentration around a nerve.", options: ["Decreases the resting potential", "Increases the overshoot", "Increases the chronaxie", "Decreases the action potential"], correct: "d", explanation: "Decreasing extracellular Na⁺ reduces the Na⁺ gradient, which decreases the amplitude of the action potential (the overshoot). It has little effect on the resting potential (mainly K⁺‑dependent) and would increase chronaxie (decreased excitability), but the most direct effect is a decrease in action potential amplitude. Therefore, D is correct." },
+            { q: "22. The following characteristics are present in both skeletal and smooth muscles", options: ["The myofibrils in both have Z membranes", "Both innate spontaneous rhythmic contractions", "Both contain actin and myosin and show tonic (partial) contractions at rest", "Both can be affected by hormones and chemicals equally"], correct: "c", explanation: "Both skeletal and smooth muscle contain actin and myosin and exhibit some resting tone (skeletal muscle has resting tone via stretch reflexes; smooth muscle has intrinsic tone). Z membranes are present in skeletal muscle but not smooth muscle. Spontaneous rhythmic contractions are characteristic of unitary smooth muscle, not skeletal. Hormonal effects differ. Therefore, C is correct." },
+            { q: "23. The local response in a single nerve fibre", options: ["Is produced by a cathodal current of the threshold intensity", "Is associated with increased K⁺ permeability", "Is not dependent on the intensity of stimulus", "Can produce an action potential of the membrane potential reaches -55 mV"], correct: "d", explanation: "The local response is a subthreshold depolarization that can summate. If it reaches the firing level (about −55 mV), an action potential is produced. It is produced by subthreshold stimuli, is graded (depends on stimulus intensity), and is associated with increased Na⁺ permeability. Therefore, D is correct." },
+            { q: "24. Concerning the sodium pump, it", options: ["Requires high energy phosphate bonds", "Is pumping of sodium ions from outside to inside the cell", "Is explained by facilitated diffusion", "Is independent of K⁺ influx", "Is independent of the intracellular Na⁺ concentration"], correct: "a", explanation: "The Na⁺/K⁺‑ATPase requires ATP (high‑energy phosphate bonds). It pumps Na⁺ out of the cell and K⁺ into the cell. It is active transport, not facilitated diffusion. It is dependent on K⁺ influx and intracellular Na⁺ concentration. Therefore, A is correct." },
+            { q: "25. A series of stimuli that cause summations of contractions leads to:", options: ["Rigor", "Contracture", "Tonus", "Tetanus", "Spasm"], correct: "d", explanation: "Tetanus is a sustained muscular contraction caused by a series of stimuli with summation of contractions. Rigor is stiffness, contracture is sustained contraction without action potentials, tonus is resting tone, and spasm is a sudden involuntary contraction. Therefore, D is correct." },
+            { q: "26. The nerve cell membrane:", options: ["Is highly permeable to K⁺ ions", "Is moderately permeable to Na⁺", "Maintains a potential difference across it", "Has excitability properties that vary in different conditions", "All of the above"], correct: "e", explanation: "The nerve cell membrane is highly permeable to K⁺, slightly permeable to Na⁺, maintains a resting potential, and its excitability varies with conditions (e.g., pH, temperature, ions). Therefore, E is correct." },
+            { q: "27. During nerve cell excitation, the peak of K⁺ efflux occurs:", options: ["Before the spike", "Before the peak of Na⁺ influx", "Coincide with the peak of Na⁺ influx", "After both the spike and peak of Na⁺ influx", "In the after-depolarization phase of action potential"], correct: "d", explanation: "K⁺ efflux increases during repolarization, which occurs after the peak of the action potential (after the spike and Na⁺ influx peak). Therefore, D is correct." },
+            { q: "28. The nerve impulse", options: ["Can travel in one direction only", "Is not delayed at the synapses before transmission", "Requires energy", "Is conducted by the same speed in different axons", "Maximum conduction is approximately as the speed of light"], correct: "c", explanation: "The nerve impulse requires energy for the Na⁺/K⁺ pump to restore ionic gradients. It can travel in both directions if stimulated mid‑axon. It is delayed at synapses. Conduction velocity varies with fibre diameter and myelination. Maximum conduction is about 120 m/s, far slower than light. Therefore, C is correct." },
+            { q: "29. In skeletal muscles, all the following is true except:", options: ["Tropomyosin is found in the thin filaments", "Myosin is found in the thick filaments", "The lateral sacs of the sarcoplasmic reticulum are rich in Ca²⁺", "Troponin C molecules bind Ca²⁺", "Energy from ATP is not required for muscle relaxation"], correct: "e", explanation: "Muscle relaxation requires ATP to pump Ca²⁺ back into the sarcoplasmic reticulum. Therefore, the statement that ATP is not required is false." },
+            { q: "30. In the nerve, the action potential:", options: ["Has a magnitude dependent on the stimulus strength", "Is accompanied by hyperpolarization of the membrane", "Travels in one direction only", "Has a velocity that is reduced with demyelination", "Has a velocity that increases with decreased fibre diameter"], correct: "d", explanation: "Demyelination reduces conduction velocity by preventing saltatory conduction. The action potential magnitude is independent of stimulus strength (all‑or‑none). It is accompanied by depolarization followed by repolarization (and after‑hyperpolarization). It travels in both directions if stimulated mid‑axon. Velocity increases with increased fibre diameter. Therefore, D is correct." },
+            { q: "31. In the motor end plate, all the following is true except:", options: ["The acetylcholine receptors are similar to those in smooth muscle", "The nerve ending contains many vesicles and mitochondria", "Lack of Ca²⁺ diminishes the release of acetylcholine", "There is a high concentration of the cholinesterase enzyme", "There is a delay of neuromuscular transmission of 0.5-0.7 millisecond"], correct: "a", explanation: "The ACh receptors at the motor end plate are nicotinic, while smooth muscle has muscarinic receptors. The other statements are true." },
+            { q: "32. About nerve impulses, all the following is true except:", options: ["They can travel in both directions when axon is stimulated at its middle.", "They travel in one direction only across a synapse and in the M.E.P", "They have a duration which corresponds approximately to the ARP of the nerve", "They are conducted at a faster rate in type C nerve fibres than in type B fibres"], correct: "d", explanation: "Type C fibres have the slowest conduction velocity, slower than type B fibres. Therefore, the statement that type C conducts faster than type B is false." },
+            { q: "33. The skeletal muscles", options: ["Contain pacemaker cells", "Contract when Ca²⁺ is taken up by the sarcoplasmic reticulum", "Contraction strength is related to the initial length", "Contract when actin and myosin filaments shorten"], correct: "c", explanation: "Skeletal muscle contraction strength is related to initial length (Frank‑Starling‑like relationship in skeletal muscle). They do not contain pacemaker cells. Contraction occurs when Ca²⁺ is released, not taken up. Filaments do not shorten; they slide. Therefore, C is correct." },
+            { q: "34. Unmyelinated nerves differ from myelinated nerves in that they:", options: ["Are more excitable", "Conduct impulses by saltatory conduction", "Have no nodes of Ranvier", "Are not capable of regeneration", "Have no neuroma (Schwann cells)"], correct: "c", explanation: "Unmyelinated nerves have no nodes of Ranvier. They conduct by continuous conduction, not saltatory. They are not more excitable, can regenerate, and have Schwann cells. Therefore, C is correct." },
+            { q: "35. About the action potential, all of the following is true except:", options: ["It is initiated by reduction of the membrane potential to a critical value", "It is the result of a transient increase in Na⁺ permeability followed by a prolonged increase in K⁺ permeability", "It is associated with reduction of the electrical resistance of the nerve membrane", "It has varying amplitudes when produced by stimuli of varying intensities"], correct: "d", explanation: "The action potential has a constant amplitude regardless of stimulus intensity (all‑or‑none). The other statements are true." },
+            { q: "36. Which of the following statements is wrong?", options: ["The Na⁺/K⁺ pump requires energy from ATP and is essential to keep the normal distribution of ions around the nerve fibre.", "The electrogenic pump couples Na⁺ and K⁺ pump with a ratio of 1:1", "The resting membrane potential is the potential difference between the inside and outside of the resting membrane", "During the nerve action potential, the firing level is reached when the membrane potential reaches -55 mV"], correct: "b", explanation: "The Na⁺/K⁺ pump transports 3 Na⁺ out for every 2 K⁺ in, a ratio of 3:2, not 1:1. Therefore, B is wrong." },
+            { q: "37. About electrotonus, all the following are true except:", options: ["It results from stimulation of the nerve by a subthreshold galvanic current", "Catelectrotonus is accompanied by increased excitability of the nerve", "A strong catelectrotonus can cause nerve block", "Catelectrotonus may be followed by the local response", "Both catelectrotonus and anelectrotonus are passive changes in the nerve membrane"], correct: "e", explanation: "Electrotonus refers to changes in membrane potential caused by subthreshold currents. Catelectrotonus (depolarization) increases excitability, while anelectrotonus (hyperpolarization) decreases it. Both are passive changes initially, but catelectrotonus can lead to active local responses. The statement that both are passive changes is true, but the question asks for the exception. Actually, catelectrotonus can trigger active responses, so it is not purely passive. However, the most clearly false statement is E because both are not purely passive—catelectrotonus can lead to active local response. So E is the exception." },
+            { q: "38. The absolute refractory period (ARP) of a nerve fibre.", options: ["Has a duration about 10 msec and is longer than that of cardiac muscle", "Last throughout the action potential", "Follows the relative refractory period", "Occurs during the time of increased permeability of the membrane to Na⁺", "Occurs mainly during repolarization"], correct: "b", explanation: "The ARP lasts throughout the action potential (or most of it) and corresponds to the period when Na⁺ channels are inactivated. It is shorter than that of cardiac muscle (which is much longer). It precedes the relative refractory period. It occurs during the time of increased Na⁺ permeability (during depolarization). Therefore, B is correct." },
+            { q: "39. Excitation and contraction of skeletal muscle are coupled by.", options: ["ATP", "Myosin", "Release of calcium into sarcoplasm", "Calmodulin", "All of the above"], correct: "c", explanation: "Excitation‑contraction coupling in skeletal muscle is mediated by the release of Ca²⁺ from the sarcoplasmic reticulum into the sarcoplasm. ATP and myosin are involved in contraction but not the coupling process itself. Calmodulin is involved in smooth muscle. Therefore, C is correct." },
+            { q: "40. Rigor mortis is due to:", options: ["Damage to actin and myosin", "Rapid sequestration of Ca²⁺ in ER", "Increased myosin-ATPase", "ATP depletion", "Hypoglycemia"], correct: "d", explanation: "Rigor mortis occurs after death when ATP is depleted, preventing the detachment of myosin heads from actin. This results in sustained muscle stiffness. Therefore, D is correct." },
+            { q: "41. The amount of plasma proteins is near to:", options: ["10 gm %", "7 gm %", "7 mg %", "10 mg %", "30 gm %"], correct: "b", explanation: "Normal plasma protein concentration is about 7 g/dL (7 gm %). Therefore, B is correct." },
+            { q: "42. The normal osmotic pressure of the plasma is similar.", options: ["0.9 % glucose solution", "0.9 % NaHCO3 solution", "40 mmHg", "0.9 % NaCl solution", "None of the above"], correct: "d", explanation: "The osmotic pressure of plasma is approximately equal to that of 0.9% NaCl solution (normal saline), which is isotonic. Therefore, D is correct." },
+            { q: "43. Purpura is caused by deficiency of:", options: ["Factor VIII", "Prothrombin", "Vitamin K", "Platelets", "Factor IX"], correct: "d", explanation: "Purpura is a bleeding disorder characterised by purple spots on the skin, often due to thrombocytopenia (low platelet count). Therefore, D is correct." },
+            { q: "44. The conversion of fibrinogen to fibrin is promoted by:", options: ["Factor X", "Thrombin", "Prothrombin", "Platelets", "Calcium"], correct: "b", explanation: "Thrombin converts fibrinogen to fibrin. Therefore, B is correct." },
+            { q: "45. The coagulation time is prolonged in:", options: ["Haemophilia", "Anaemia", "Polycythemia", "Purpura", "Erythroblastosis fetalis"], correct: "a", explanation: "Coagulation time is prolonged in haemophilia (factor VIII or IX deficiency). Purpura affects bleeding time, not coagulation time. Anaemia and polycythemia do not primarily affect coagulation. Therefore, A is correct." },
+            { q: "46. The A/G ratio is important clinically in detecting:", options: ["Liver disease", "Cardiac disease", "Blood disease", "Lung disease", "Plasma proteins"], correct: "a", explanation: "The albumin/globulin (A/G) ratio is important in detecting liver disease, where albumin synthesis is reduced and globulin may be increased. Therefore, A is correct." },
+            { q: "47. The plasma albumin is especially needed for:", options: ["Immunity", "Production of osmotic pressure", "Blood coagulation", "All of the above", "None of the above"], correct: "b", explanation: "Albumin is the main contributor to plasma oncotic (osmotic) pressure, which is essential for maintaining fluid balance. It is not directly involved in immunity or coagulation. Therefore, B is correct." },
+            { q: "48. Neutrophils are attracted to infection areas by the process of:", options: ["Phagocytosis", "Diapedesis", "Endocytosis", "Opsonization", "Chemotaxis"], correct: "e", explanation: "Chemotaxis is the directed movement of cells along a chemical gradient. Neutrophils are attracted to sites of infection by chemotactic factors. Therefore, E is correct." },
+            { q: "49. Immunoglobulins are produced by the:", options: ["Granulocytes", "Monocytes", "Erythrocytes", "Plasma cells", "Liver cells"], correct: "d", explanation: "Immunoglobulins (antibodies) are produced by plasma cells, which are derived from B lymphocytes. Therefore, D is correct." },
+            { q: "50. Violent antigen-antibody reactions occur due to release of:", options: ["Histamine", "Serotonin", "Acetylcholine", "Heparin", "Catecholamines"], correct: "a", explanation: "Violent antigen‑antibody reactions (e.g., anaphylaxis) involve the release of histamine from mast cells and basophils. Therefore, A is correct." }
+        ];
+
+        // ─── RENDER MCQ ─────────────────────────────────────────────
+        function renderMCQs() {
+            const container = document.getElementById('mcq-container');
+            let html = '';
+            questions.forEach((q, index) => {
+                html += `<div class="question">`;
+                html += `<p><span class="q-badge">Q${index + 1}</span> ${q.q}</p>`;
+                html += `<div class="options">`;
+                const letters = ['A', 'B', 'C', 'D', 'E'];
+                q.options.forEach((opt, i) => {
+                    html += `<label><input type="radio" name="q${index + 1}" value="${letters[i]}"> ${letters[i]}) ${opt}</label>`;
+                });
+                html += `</div>`;
+                html += `<div class="question-feedback" id="feedback-q${index + 1}"></div>`;
+                html += `</div>`;
+            });
+            container.innerHTML = html;
+        }
+        renderMCQs();
+
+        // ─── MCQ CORRECT ANSWERS & EXPLANATIONS ──────────────────
+        const correctMap = {};
+        const explMap = {};
+        questions.forEach((q, i) => {
+            const key = 'q' + (i + 1);
+            correctMap[key] = q.correct;
+            explMap[key] = q.explanation;
+        });
+
+        // ─── SUBMIT MCQ (case-insensitive comparison) ──────
+        function submitQuiz() {
+            let score = 0;
+            const total = questions.length;
+            for (let i = 0; i < total; i++) {
+                const key = 'q' + (i + 1);
+                const radios = document.querySelectorAll(`input[name="${key}"]`);
+                const selected = Array.from(radios).find(r => r.checked);
+                const correct = (correctMap[key] || '').toUpperCase();
+                const feedbackEl = document.getElementById(`feedback-${key}`);
+                if (!feedbackEl) continue;
+
+                if (selected && selected.value.toUpperCase() === correct) score++;
+
+                let html = `<div class="answer-block"><strong>Q${i+1}</strong><div class="answer-list">`;
+                const letters = ['A', 'B', 'C', 'D', 'E'];
+                const opts = questions[i].options;
+                opts.forEach((opt, idx) => {
+                    const val = letters[idx];
+                    const valUpper = val.toUpperCase();
+                    let cls = 'answer-item';
+                    if (valUpper === correct) cls += ' answer-correct';
+                    if (selected && selected.value.toUpperCase() === valUpper && selected.value.toUpperCase() !== correct) cls += ' answer-wrong user-choice';
+                    if (selected && selected.value.toUpperCase() === valUpper && selected.value.toUpperCase() === correct) cls += ' user-choice';
+                    html += `<div class="${cls}">${letters[idx]}) ${opt}${selected && selected.value.toUpperCase() === valUpper ? ' ◀' : ''}</div>`;
+                });
+                html += `</div>`;
+
+                const correctIndex = letters.findIndex(l => l.toUpperCase() === correct);
+                const correctText = correctIndex >= 0 ? opts[correctIndex] : 'N/A';
+                const explanation = explMap[key] || '';
+                if (selected) {
+                    if (selected.value.toUpperCase() === correct) {
+                        html += `<div class="explanation">✅ Correct — ${explanation}</div>`;
+                    } else {
+                        html += `<div class="explanation wrong">❌ Incorrect. Correct answer: <strong>${correctText}</strong>. ${explanation}</div>`;
+                    }
+                } else {
+                    html += `<div class="explanation wrong">No answer selected. Correct: <strong>${correctText}</strong>. ${explanation}</div>`;
+                }
+                html += `</div>`;
+                feedbackEl.innerHTML = html;
+            }
+
+            const pct = Math.round((score / total) * 100);
+            const resultBox = document.getElementById('resultBox');
+            resultBox.style.display = 'block';
+            document.getElementById('score').innerText = pct + '%';
+
+            document.querySelectorAll('#quizForm input[type="radio"]').forEach(i => i.disabled = true);
+        }
+
+        // ─── SECTION B / SCENARIO: TOGGLE MODEL ANSWER ──────────
+        function toggleAnswer(btn) {
+            const answerDiv = btn.nextElementSibling;
+            if (answerDiv && answerDiv.classList.contains('model-answer')) {
+                answerDiv.classList.toggle('visible');
+                btn.textContent = answerDiv.classList.contains('visible') ? 'Hide Answer' : 'Show Answer';
+            }
+        }
+
+        // ─── TAB SWITCHING ──────────────────────────────────────────
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                const target = this.dataset.target;
+                document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+                document.getElementById(target).classList.remove('hidden');
+            });
+        });
+    </script>
+
+</body>
+</html>
