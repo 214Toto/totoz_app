@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025 Anatomy Test – 3rd Year</title>
+    <style>
+        :root {
+            --primary: #1a6b6b;
+            --accent: #2ea8a0;
+            --dark: #0f2a2a;
+            --light: #f4f8f7;
+            --radius: 12px;
+            --shadow: 0 4px 14px rgba(0, 30, 30, 0.08);
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #edf3f2;
+            color: var(--dark);
+            min-height: 100vh;
+            padding-top: 72px;
+        }
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: linear-gradient(145deg, var(--primary), var(--dark));
+            color: #fff;
+            padding: 0.6rem 0;
+            box-shadow: 0 4px 18px rgba(0, 20, 20, 0.25);
+        }
+        .header-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .logo i {
+            font-size: 1.5rem;
+            color: #8dd9d4;
+        }
+        .logo h1 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+        }
+        .badge {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 0.2rem 1rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #b3e6e0;
+            letter-spacing: 0.5px;
+        }
+        .container {
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 0 1.2rem 2.5rem;
+        }
+        .tab-bar {
+            display: flex;
+            gap: 0.5rem;
+            margin: 0.5rem 0 1.5rem 0;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            background: #dce8e8;
+            border: none;
+            padding: 0.5rem 1.8rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--dark);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .tab-btn:hover {
+            background: #c0d6d6;
+        }
+        .tab-btn.active {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 2px 10px rgba(26, 107, 107, 0.25);
+        }
+        .tab-panel {
+            display: block;
+        }
+        .tab-panel.hidden {
+            display: none;
+        }
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 0 0 0.8rem 0;
+            padding-bottom: 0.4rem;
+            border-bottom: 3px solid rgba(26, 107, 107, 0.18);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+        .section-title .count {
+            font-size: 0.7rem;
+            font-weight: 600;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 40px;
+            padding: 0 0.7rem;
+            line-height: 1.7;
+        }
+        .section-subtitle {
+            color: #4f6e6e;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        .question {
+            background: #ffffff;
+            border-radius: var(--radius);
+            padding: 1.1rem 1.2rem 0.2rem 1.2rem;
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(26, 107, 107, 0.05);
+            transition: box-shadow 0.2s;
+        }
+        .question:hover {
+            box-shadow: 0 6px 20px rgba(0, 30, 30, 0.07);
+        }
+        .question .q-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 40px;
+            padding: 0 0.65rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            line-height: 1.6;
+            margin-right: 0.4rem;
+        }
+        .question p {
+            font-weight: 600;
+            font-size: 0.97rem;
+            margin-bottom: 0.4rem;
+            color: var(--dark);
+        }
+        .options label {
+            display: block;
+            background: #fafcfc;
+            border: 1px solid #dde8e8;
+            border-radius: 7px;
+            padding: 0.4rem 0.85rem;
+            margin-top: 0.4rem;
+            cursor: pointer;
+            transition: all 0.15s;
+            font-weight: 450;
+            font-size: 0.92rem;
+        }
+        .options label:hover {
+            background: #e8f5f4;
+            border-color: var(--accent);
+        }
+        .options input[type="radio"] {
+            margin-right: 0.5rem;
+            accent-color: var(--primary);
+            transform: scale(1.04);
+        }
+        .question-feedback {
+            margin-top: 0.8rem;
+            padding: 0.4rem 0 0.1rem 0;
+            border-top: 1px dashed #dce6e6;
+        }
+        .answer-block strong {
+            display: block;
+            margin-bottom: 3px;
+            color: var(--primary);
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .answer-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .answer-item {
+            padding: 4px 10px;
+            border-radius: 5px;
+            border: 1px solid #e4edec;
+            background: #ffffff;
+            font-weight: 500;
+            font-size: 0.88rem;
+        }
+        .answer-correct {
+            background: #e8f7ef;
+            border-color: #a8d8c0;
+            color: #0a4f3a;
+        }
+        .answer-wrong {
+            background: #fde9ea;
+            border-color: #f5b8b8;
+            color: #8a1f2b;
+        }
+        .user-choice {
+            outline: 2px dashed rgba(0, 0, 0, 0.06);
+        }
+        .explanation {
+            margin-top: 5px;
+            padding: 8px 13px;
+            border-radius: 7px;
+            background: #f0f8f6;
+            color: #065f4a;
+            font-size: 0.88rem;
+            line-height: 1.5;
+            border-left: 4px solid var(--accent);
+        }
+        .explanation.wrong {
+            background: #fdf1f1;
+            color: #7a1f1f;
+            border-left-color: #e68080;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            color: #fff;
+            border: none;
+            padding: 0.55rem 1.8rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.2s;
+            box-shadow: 0 4px 14px rgba(26, 107, 107, 0.25);
+        }
+        .btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 24px rgba(26, 107, 107, 0.32);
+        }
+        .btn:active {
+            transform: scale(0.96);
+        }
+        .submit-wrap {
+            text-align: center;
+            margin: 1.5rem 0 1.8rem;
+        }
+        .result {
+            margin-top: 1.5rem;
+            padding: 1.5rem 1.5rem 0.8rem;
+            background: #eaf6f4;
+            border-radius: var(--radius);
+            text-align: center;
+            display: none;
+            border: 1px solid #b8dbd6;
+        }
+        .result h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        .score {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 0.1rem 0 0.2rem;
+        }
+        .text-muted {
+            color: #4f6e6e;
+            font-size: 0.9rem;
+        }
+        .hidden {
+            display: none !important;
+        }
+        .section-b-question, .scenario-box, .diagram-box {
+            background: #ffffff;
+            border-radius: var(--radius);
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(26, 107, 107, 0.05);
+        }
+        .section-b-question .q-label, .scenario-box .q-label, .diagram-box .q-label {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        .section-b-question .q-text, .scenario-box .q-text, .diagram-box .q-text {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            background: #f5f8f8;
+            padding: 0.6rem 1rem;
+            border-radius: 7px;
+            white-space: pre-wrap;
+        }
+        .subquestion {
+            margin-top: 0.8rem;
+            border-top: 1px solid #e0ecec;
+            padding-top: 0.8rem;
+        }
+        .subquestion .sub-label {
+            font-weight: 600;
+            color: var(--dark);
+        }
+        .subquestion textarea {
+            width: 100%;
+            min-height: 55px;
+            padding: 0.6rem;
+            border: 1px solid #cbdcdc;
+            border-radius: 7px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            resize: vertical;
+            margin-top: 0.3rem;
+            background: #fafcfc;
+        }
+        .subquestion textarea:focus {
+            outline: 2px solid var(--accent);
+            border-color: transparent;
+        }
+        .show-answer-btn {
+            margin-top: 0.4rem;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 0.2rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+        .show-answer-btn:hover {
+            background: var(--accent);
+        }
+        .model-answer {
+            margin-top: 0.5rem;
+            padding: 0.6rem 1rem;
+            background: #f0f8f6;
+            border-left: 4px solid var(--accent);
+            border-radius: 5px;
+            font-size: 0.9rem;
+            color: #065f4a;
+            display: none;
+            white-space: pre-wrap;
+        }
+        .model-answer.visible {
+            display: block;
+        }
+        .mono-box {
+            background: #f5f8f8;
+            padding: 0.6rem 1rem;
+            border-radius: 7px;
+            font-family: monospace;
+            font-size: 0.95rem;
+            margin: 0.5rem 0;
+        }
+        .scenario-box .q-text {
+            background: #f9fdfd;
+            border-left: 4px solid var(--accent);
+        }
+        .diagram-box .q-text {
+            background: #fcf9f9;
+            border-left: 4px solid #e68080;
+        }
+        @media (max-width: 700px) {
+            body { padding-top: 68px; }
+            .logo h1 { font-size: 0.95rem; }
+            .header-inner { padding: 0 1rem; flex-direction: column; align-items: stretch; gap: 0.2rem; }
+            .badge { align-self: flex-start; }
+            .question { padding: 0.9rem 0.9rem 0.1rem 0.9rem; }
+            .section-title { font-size: 1.05rem; }
+            .score { font-size: 2.2rem; }
+            .btn { padding: 0.5rem 1.2rem; font-size: 0.85rem; }
+            .section-b-question, .scenario-box, .diagram-box { padding: 0.9rem; }
+            .tab-btn { padding: 0.4rem 1.2rem; font-size: 0.85rem; }
+        }
+        @media (max-width: 420px) {
+            .logo h1 { font-size: 0.8rem; }
+            .options label { font-size: 0.85rem; padding: 0.35rem 0.65rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-inner">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+                <h1>2025 Anatomy Test – 3rd Year</h1>
+            </div>
+            <span class="badge"><i class="fas fa-pencil-alt"></i> &nbsp;60 MCQs + Section B + Diagrams</span>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+
+            <!-- TAB BAR -->
+            <div class="tab-bar">
+                <button class="tab-btn active" data-target="section-mcq">📝 MCQs</button>
+                <button class="tab-btn" data-target="section-sectionB">✍️ Section B</button>
+                <button class="tab-btn" data-target="section-diagrams">📐 Diagrams</button>
+        
+            </div>
+
+            <!-- ========== MCQ SECTION ========== -->
+            <div id="section-mcq" class="tab-panel">
+                <div class="section-title">
+                    <i class="fas fa-list-ul"></i> Multiple Choice Questions
+                    <span class="count">60</span>
+                </div>
+                <p class="section-subtitle">Select the best answer for each question, then click <strong>Submit All MCQs</strong> below.</p>
+
+                <form id="quizForm">
+                    <div id="mcq-container"></div>
+                    <div class="submit-wrap">
+                        <button type="button" class="btn" onclick="submitQuiz()">
+                            <i class="fas fa-check-circle"></i> Submit All MCQs
+                        </button>
+                    </div>
+                </form>
+
+                <div class="result" id="resultBox">
+                    <h3><i class="fas fa-chart-simple"></i> Your Score</h3>
+                    <div class="score" id="score">0%</div>
+                    <p class="text-muted">Review the feedback below each question.</p>
+                </div>
+            </div>
+
+            <!-- ========== SECTION B ========== -->
+            <div id="section-sectionB" class="tab-panel hidden">
+                <div class="section-title">
+                    <i class="fas fa-pencil-square"></i> Section B – Structured and Short Answer Questions
+                </div>
+                <p class="section-subtitle">Write your answers in the boxes below. Click <strong>Show Answer</strong> to reveal a model answer.</p>
+
+                <!-- ─── B1: Tooth Extraction ─── -->
+                <div class="section-b-question">
+                    <div class="q-label">Question B1 – Tooth Extraction</div>
+                    <div class="q-text">A Dentist was examining the 3rd right upper molar tooth of a young women, who reported to have been experiencing excruciating pain for a period of time. On examination it was observed that she had a tooth decay and gingiva infection. The solution was tooth extraction.</div>
+                    <div class="subquestion">
+                        <div class="sub-label">B. Which nerve is the Dentist going to inject anesthetic prior to extraction of the tooth (2 marks)</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">For the 3rd right upper molar, the Dentist will inject the Posterior Superior Alveolar (PSA) nerve. (2 marks)</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">C. What is the nerve supply to the upper and lower gingiva (4 marks)</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Upper gingiva: Anterior, Middle, and Posterior Superior Alveolar nerves (branches of Maxillary V2). <br>Lower gingiva: Inferior Alveolar nerve (branch of Mandibular V3), and the Lingual nerve for the lingual aspect. (4 marks)</div>
+                    </div>
+                </div>
+
+                <!-- ─── B2: Omphalocele vs Gastroschisis ─── -->
+                <div class="section-b-question">
+                    <div class="q-label">Question B2 – Omphalocele vs Gastroschisis</div>
+                    <div class="q-text">A foetus born with some abdominal contents protruding outside the abdominal cavity, was been examined by a paediatrician and medical students. There was a debate among the students as to whether it was omphalocele or Gastroschisis.</div>
+                    <div class="subquestion">
+                        <div class="sub-label">A. what is the cause of each condition (4 marks)</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Omphalocele: Failure of the midgut to return to the abdominal cavity during the 10th week of development, resulting in herniation into the umbilical cord. <br>Gastroschisis: A defect in the anterior abdominal wall (usually to the right of the umbilicus) due to failure of the lateral folds to fuse properly. (4 marks)</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">B. Discuss the two conditions considering their key differences (8 marks)</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">1. Covering: Omphalocele is covered by a sac (amnion and peritoneum); Gastroschisis has no covering (bowel exposed). <br>2. Location: Omphalocele is at the umbilicus; Gastroschisis is usually paramedian (right of umbilicus). <br>3. Defect size: Omphalocele is a midline defect of the umbilical ring; Gastroschisis is a full-thickness abdominal wall defect. <br>4. Associated anomalies: Omphalocele is often associated with chromosomal abnormalities (e.g., Trisomy 13, 18, 21) and cardiac defects; Gastroschisis is rarely associated with other anomalies. <br>5. Prognosis: Omphalocele has a higher mortality due to associated anomalies; Gastroschisis has a better prognosis if surgically corrected. (8 marks)</div>
+                    </div>
+                </div>
+
+                <!-- ─── B4: Small Intestines ─── -->
+                <div class="section-b-question">
+                    <div class="q-label">Question B4 – Histology of Small Intestines</div>
+                    <div class="subquestion">
+                        <div class="sub-label">Describe the special histological structural features that facilitate the processes of digestion & absorption in the small intestines (6 marks)</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">1. Plicae circulares (valves of Kerckring): Permanent transverse folds of the mucosa and submucosa that increase surface area.<br>2. Villi: Finger-like projections of the mucosa, containing a core of lamina propria with capillaries and a central lacteal.<br>3. Microvilli (Brush border): Apical surface modifications of enterocytes that further increase surface area.<br>4. Crypts of Lieberkühn: Glands containing stem cells, Paneth cells, and enteroendocrine cells.<br>5. Brunner's glands: Found in the submucosa of the duodenum, secreting alkaline mucus.<br>6. Peyer's patches: Lymphoid follicles in the lamina propria and submucosa (especially in the ileum) for immune surveillance. (6 marks)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== DIAGRAMS ========== -->
+            <div id="section-diagrams" class="tab-panel hidden">
+                <div class="section-title">
+                    <i class="fas fa-drafting-compass"></i> Diagram Section
+                    <span class="count">Draw & Label</span>
+                </div>
+                <p class="section-subtitle">Draw the required anatomical structures and label them clearly. Click <strong>Show Answer</strong> for a model description.</p>
+
+                <!-- ─── Diagram 1: Tooth ─── -->
+                <div class="diagram-box">
+                    <div class="q-label">Diagram 1</div>
+                   <img src="oral.jpg" alt="Oxygen dissociation curve" style="max-width:100%; border-radius:8px; margin:0.6rem 0;">
+                    <div class="subquestion">
+                        <div class="sub-label">Label the diagram here:</div>
+                        <textarea placeholder="Draw here or describe..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">
+                           <img src="ans3.jpg" alt="Oxygen dissociation curve" style="max-width:100%; border-radius:8px; margin:0.6rem 0;">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ─── Diagram 2: Stomach ─── -->
+                <div class="diagram-box">
+                    <div class="q-label">Diagram 2</div>
+                    <img src="colon.jpg" alt="Oxygen dissociation curve" style="max-width:100%; border-radius:8px; margin:0.6rem 0;">
+                    <div class="subquestion">
+                        <div class="sub-label">Label your diagram here:</div>
+                        <textarea placeholder="Draw here or describe..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">
+                           <img src="ans1.jpg" alt="Oxygen dissociation curve" style="max-width:100%; border-radius:8px; margin:0.6rem 0;"> 
+                        </div>   
+                    </div>
+                </div>
+                
+                <div class="diagram-box">
+                    <div class="q-label">Diagram 3</div>
+                    <img src="abd-wall.jpg" alt="Oxygen dissociation curve" style="max-width:100%; border-radius:8px; margin:0.6rem 0;">
+                    <div class="subquestion">
+                        <div class="sub-label">Draw your diagram here or describe it in detail:</div>
+                        <textarea placeholder="Draw here or describe..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">
+                            <img src="ans2.jpg" alt="Oxygen dissociation curve" style="max-width:100%; border-radius:8px; margin:0.6rem 0;"> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== SCENARIOS ========== -->
+            <div id="section-scenarios" class="tab-panel hidden">
+                <div class="section-title">
+                    <i class="fas fa-stethoscope"></i> Clinical Scenarios
+                    <span class="count">Case-Based Learning</span>
+                </div>
+                <p class="section-subtitle">Read each scenario carefully and answer the questions. Click <strong>Show Answer</strong> for model answers.</p>
+
+                <!-- ─── Scenario 1: Dental Anatomy ─── -->
+                <div class="scenario-box">
+                    <div class="q-label">Scenario 1 – Dental Anatomy</div>
+                    <div class="q-text">A Dentist was examining the 3rd right upper molar tooth of a young women, who reported to have been experiencing excruciating pain for a period of time. On examination it was observed that she had a tooth decay and gingiva infection. The solution was tooth extraction.</div>
+                    <div class="subquestion">
+                        <div class="sub-label">a) Which nerve is the Dentist going to inject anesthetic prior to extraction of the tooth? [2 marks]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Posterior Superior Alveolar (PSA) nerve.</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">b) What is the nerve supply to the upper and lower gingiva? [4 marks]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Upper gingiva: Anterior, Middle, and Posterior Superior Alveolar nerves (V2). Lower gingiva: Inferior Alveolar nerve and Lingual nerve (V3).</div>
+                    </div>
+                </div>
+
+                <!-- ─── Scenario 2: Embryological Defect ─── -->
+                <div class="scenario-box">
+                    <div class="q-label">Scenario 2 – Embryological Defect</div>
+                    <div class="q-text">A foetus born with some abdominal contents protruding outside the abdominal cavity, was been examined by a paediatrician and medical students. There was a debate among the students as to whether it was omphalocele or Gastroschisis.</div>
+                    <div class="subquestion">
+                        <div class="sub-label">a) What is the cause of each condition? [4 marks]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Omphalocele: Failure of midgut to return to abdominal cavity. Gastroschisis: Defect in anterior abdominal wall folds.</div>
+                    </div>
+                    <div class="subquestion">
+                        <div class="sub-label">b) Discuss the two conditions considering their key differences. [8 marks]</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer">Covering: Omphalocele is covered by a sac; Gastroschisis has no covering. Location: Omphalocele is at the umbilicus; Gastroschisis is paramedian. Associated anomalies: Omphalocele has higher association with chromosomal abnormalities; Gastroschisis rarely has other anomalies.</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // ─── 60 MCQ DATA WITH DETAILED EXPLANATIONS ─────────────────────
+        const questions = [
+            { q: "1. For general clinical descriptions, which of the following planes is used as one of the planes to define four quadrants of the abdominal cavity?", options: ["subcostal", "transtubercular", "midclavicular", "transumbilical", "midaxillary"], correct: "D", explanation: "The four quadrants of the abdomen are defined by two planes: the transumbilical plane (horizontal) and the median plane (vertical). The transumbilical plane passes through the umbilicus and the intervertebral disc between L3 and L4. The midclavicular planes define the 9-region system, not the 4-quadrant system. Therefore, transumbilical is the correct answer." },
+            { q: "2. The midclavicular planes pass through the midpoint of the clavicles to the midpoint of which of the following structures?", options: ["anterior superior iliac spine", "symphysis pubis", "umbilicus", "inguinal ligament", "xiphoid process"], correct: "B", explanation: "The midclavicular planes (also known as the midclavicular lines) extend vertically from the midpoint of the clavicle down to the mid-inguinal point. The mid-inguinal point is located halfway between the anterior superior iliac spine (ASIS) and the symphysis pubis. Therefore, the plane passes through the symphysis pubis region. Option B is the most accurate representation among the choices." },
+            { q: "3. A retroperitoneal mass in the lower right quadrant is putting pressure on a portion of the gastrointestinal tract, causing digestive issues and discomfort. Which of the following structures may be affected by the pressure of the mass?", options: ["Sigmoid colon", "Rectum", "Jejunum", "Duodenum", "Cecum"], correct: "E", explanation: "The lower right quadrant contains the cecum, appendix, and ascending colon. The cecum is located in the right iliac fossa. While the ascending colon is retroperitoneal, the cecum is intraperitoneal but is often considered in this region. Among the options, the cecum is the primary structure in the lower right quadrant. The sigmoid colon is in the lower left, the rectum is in the pelvis, the jejunum is in the upper left, and the duodenum is mostly upper right/retroperitoneal. Therefore, the cecum is the most likely affected structure." },
+            { q: "4. A 31-year-old male patient is admitted to the emergency department after suffering multiple injuries in a motor vehicle collision. He is found to have a lacerated liver and the surgical team is consulted and prepped for emergency surgery to repair the organ. Surgeons found that the liver was lacerated anteriorly between the gallbladder and round ligament (ligamentum teres hepatis). Which of the following liver structures is located in the region of the laceration?", options: ["Bare area", "Left lobe", "Caudate lobe", "Ductus venosus", "Quadrate lobe"], correct: "E", explanation: "On the visceral surface of the liver, the quadrate lobe is bounded anteriorly by the inferior border, posteriorly by the porta hepatis, on the right by the gallbladder fossa, and on the left by the fissure for the ligamentum teres. Since the laceration is described as being between the gallbladder and the round ligament (ligamentum teres), it directly involves the quadrate lobe. The caudate lobe is posterior to the porta hepatis. The bare area is on the diaphragmatic surface. Therefore, E is correct." },
+            { q: "5. Which of the following is NOT a type of lingual papilla?", options: ["vallate papillae", "foliate papillae", "bacilliform papillae", "filiform papillae", "fungiform papillae"], correct: "C", explanation: "There are four main types of lingual papillae: filiform (most numerous, mechanical, no taste buds), fungiform (mushroom-shaped, contain taste buds), foliate (leaf-shaped, lateral borders, contain taste buds), and vallate (circumvallate, largest, form a V-shape anterior to the sulcus terminalis, contain taste buds). 'Bacilliform' is not a recognized anatomical term for lingual papillae, making it the correct exception." },
+            { q: "6. The anterolateral abdominal wall is bounded by all of the following structures EXCEPT", options: ["cartilages of the 7th through 10th ribs", "linea alba", "xiphoid process", "inguinal ligament", "pelvic bone"], correct: "B", explanation: "The anterolateral abdominal wall is bounded superiorly by the cartilages of the 7th through 10th ribs and the xiphoid process, inferiorly by the inguinal ligament and the pelvic bone. The linea alba is a fibrous band running vertically down the midline of the abdomen, formed by the fusion of the aponeuroses of the abdominal muscles. It is a structure within the abdominal wall, not a boundary of it. Therefore, B is the exception." },
+            { q: "7. Which of the following muscles is NOT innervated by the hypoglossal nerve?", options: ["genioglossus", "hyoglossus", "styloglossus", "palatoglossus", "intrinsic muscles of the tongue"], correct: "D", explanation: "All intrinsic and extrinsic muscles of the tongue are innervated by the hypoglossal nerve (CN XII), with one exception: the palatoglossus muscle. The palatoglossus is innervated by the vagus nerve (CN X) via the pharyngeal plexus. Therefore, D is the correct answer." },
+            { q: "8. All of the following structures are located within the rectus sheath EXCEPT", options: ["pyramidalis", "rectus abdominis", "inferior epigastric arteries and veins", "deep inguinal ring", "ventral primary rami of T7-T12 nerves"], correct: "D", explanation: "The rectus sheath is a fibrous compartment that encloses the rectus abdominis and pyramidalis muscles, the inferior epigastric vessels, and the ventral primary rami of the lower thoracic nerves (T7-T12). The deep inguinal ring is an opening in the transversalis fascia, located lateral to the inferior epigastric vessels and above the midpoint of the inguinal ligament. It is not enclosed within the rectus sheath. Therefore, D is the exception." },
+            { q: "9. Inferiorly, the inferior margin of the external oblique aponeurosis thickens and folds back on itself to form which of the following structures?", options: ["rectus sheath", "inguinal ligament", "arcuate line", "deep inguinal ring", "fundiform ligament"], correct: "B", explanation: "The inferior margin of the external oblique aponeurosis rolls under and thickens to form the inguinal ligament (Poupart's ligament). It extends from the anterior superior iliac spine to the pubic tubercle. The rectus sheath is formed by the aponeuroses of the external oblique, internal oblique, and transversus abdominis. The arcuate line is the lower border of the posterior rectus sheath. Therefore, B is correct." },
+            { q: "10. The rectus abdominis muscle is anchored transversely by attachment to the anterior layer of the rectus sheath by which of the following structures?", options: ["pubic tubercle", "xiphoid process", "linea alba", "tendinous intersections", "umbilicus"], correct: "D", explanation: "The rectus abdominis muscle is characterized by three or four transverse fibrous bands called tendinous intersections. These intersections are firmly attached to the anterior layer of the rectus sheath, but not to the posterior layer. They anchor the muscle during contraction. The linea alba is the midline structure, and the pubic tubercle and xiphoid process are bony attachment points at the ends of the muscle. Therefore, D is correct." },
+            { q: "11. The two medial umbilical folds represent remnants of which of the following structures?", options: ["urachus", "umbilical arteries", "umbilical veins", "ductus venosus", "ductus arteriosus"], correct: "B", explanation: "The two medial umbilical folds are raised by the medial umbilical ligaments, which are fibrous remnants of the obliterated umbilical arteries (the distal parts of the umbilical arteries). The median umbilical fold is raised by the median umbilical ligament, which is a remnant of the urachus. The lateral umbilical folds contain the inferior epigastric vessels. Therefore, B is correct." },
+            { q: "12. Which of the following structures give rise to the deep inguinal ring?", options: ["gubernaculum", "conjoined tendon", "lacunar ligament", "external abdominal oblique aponeurosis"], correct: "A", explanation: "The deep inguinal ring is an opening in the transversalis fascia. However, embryologically, the gubernaculum guides the descent of the testes (or round ligament of the uterus) and plays a crucial role in the formation of the inguinal canal and the descent of the gonads, which is associated with the deep ring. The external oblique aponeurosis forms the superficial inguinal ring. The conjoined tendon is the falx inguinalis. The lacunar ligament is a reflection of the inguinal ligament. Therefore, A is the best embryological answer." },
+            { q: "13. The peritoneal space contains which of the following?", options: ["liver", "pancreas", "large intestine", "kidney", "peritoneal fluid"], correct: "E", explanation: "The peritoneal cavity is a potential space located between the parietal peritoneum and the visceral peritoneum. It normally contains a small amount of serous fluid (peritoneal fluid) that lubricates the surfaces and facilitates movement of the abdominal organs. The liver, pancreas, large intestine, and kidney are organs that are either intraperitoneal or retroperitoneal, but they are not contents of the peritoneal space itself. Therefore, E is correct." },
+            { q: "14. Which of the following structures connects the lesser curvature of the stomach and the proximal part of the duodenum to the liver?", options: ["greater omentum", "peritoneal ligament", "mesentery", "lesser omentum", "peritoneal fold"], correct: "D", explanation: "The lesser omentum is a double layer of peritoneum that connects the liver to the lesser curvature of the stomach and the first part of the duodenum. It consists of the hepatogastric ligament and the hepatoduodenal ligament. The greater omentum connects the greater curvature of the stomach to the transverse colon. The mesentery attaches the jejunum and ileum to the posterior abdominal wall. Therefore, D is correct." },
+            { q: "15. Which of the following structures is often referred to as the 'abdominal policeman'?", options: ["hepatoduodenal ligament", "gastrohepatic ligament", "greater omentum", "gastrocolic ligament", "falciform ligament"], correct: "C", explanation: "The greater omentum is a large fold of peritoneum that hangs down from the greater curvature of the stomach and covers the transverse colon and small intestines. It is often referred to as the 'abdominal policeman' because it has a rich blood supply and contains macrophages. It is highly mobile and tends to migrate to sites of inflammation or infection, where it wraps around and walls off the affected area to prevent the spread of infection. Therefore, C is correct." },
+            { q: "16. A 4-day-old boy has not defecated since coming home from the hospital even though his feeding pattern has been normal without any excessive vomiting. Rectal examination reveals a normal anus, anal canal, and rectum. However, a large faecal mass is found in the colon, and a large release of flatus and faeces follows the rectal examination. Which of the following conditions would be suspected?", options: ["Imperforate anus", "Anal agenesis", "Anorectal agenesis", "Rectal atresia", "Hirschsprung disease"], correct: "E", explanation: "Hirschsprung disease (congenital aganglionic megacolon) is characterized by the absence of ganglion cells in the myenteric and submucosal plexuses of a segment of the colon. This leads to a functional obstruction. The classic presentation is a newborn who fails to pass meconium within the first 48 hours of life. A rectal exam may reveal a normal anal canal and a tight sphincter, but a large faecal mass may be felt in the colon. The release of flatus and faeces after the exam is typical because the exam may temporarily overcome the obstruction. Imperforate anus, anal agenesis, and rectal atresia would present with physical abnormalities or complete obstruction visible on examination. Therefore, E is correct." },
+            { q: "17. Which of the following structures contains both smooth and skeletal muscles?", options: ["stomach", "jejunum", "cecum", "oesophagus", "rectum"], correct: "D", explanation: "The oesophagus is a muscular tube that connects the pharynx to the stomach. Its muscularis externa is unique in that it contains a mix of skeletal and smooth muscle. The upper third is composed of skeletal muscle (voluntary control), the middle third is a mix of skeletal and smooth muscle, and the lower third is composed entirely of smooth muscle (involuntary control). The stomach, jejunum, cecum, and rectum contain only smooth muscle. Therefore, D is correct." },
+            { q: "18. Which of the following arteries provides the abdominal parts of the oesophagus with its arterial supply?", options: ["cystic", "gastroduodenal", "left gastric", "hepatic", "left gastroepiploic"], correct: "C", explanation: "The abdominal part of the oesophagus receives its arterial supply primarily from the left gastric artery (a branch of the celiac trunk) and the left inferior phrenic artery. The left gastric artery ascends along the lesser curvature of the stomach and gives off oesophageal branches that supply the abdominal oesophagus. The cystic artery supplies the gallbladder, the gastroduodenal supplies the stomach and duodenum, the hepatic supplies the liver, and the left gastroepiploic supplies the greater curvature of the stomach. Therefore, C is correct." },
+            { q: "19. Rugae are located in which of the following structures?", options: ["duodenum", "stomach", "cecum", "ileum", "transverse colon"], correct: "B", explanation: "Rugae are prominent longitudinal folds of the mucous membrane in the stomach. They are most prominent in the empty stomach and allow the stomach to expand significantly after a meal. The duodenum, jejunum, and ileum have plicae circulares (valves of Kerckring) and villi. The colon has haustra and omental appendices. Therefore, B is correct." },
+            { q: "20. The first part of the duodenum is located at which of the following vertebral levels?", options: ["T10", "L2", "L1", "L5", "L3"], correct: "C", explanation: "The first part (superior part) of the duodenum is the most mobile part and is located at the level of the L1 vertebra. It begins at the pylorus and passes upwards, backwards, and to the right. The second part (descending) is at the level of L2-L3. The third part (horizontal) crosses the L3 vertebra. Therefore, C is correct." },
+            { q: "21. The sympathetic nerve supply of the stomach arises from which of the following cord segments?", options: ["T1- T5", "T6- T9", "T6- T12", "L1- L3", "T10- L2"], correct: "C", explanation: "The sympathetic nerve supply to the stomach arises from the T6 to T12 spinal cord segments. The preganglionic fibers pass through the sympathetic chain and splanchnic nerves to synapse in the celiac ganglion. Postganglionic fibers then travel along the celiac trunk and its branches to reach the stomach. The parasympathetic supply is from the vagus nerve (T1-T5 is not correct for sympathetic). Therefore, C is correct." },
+            { q: "22. The bile and pancreatic ducts enter which of the following structures?", options: ["stomach", "2nd portion of the duodenum", "cecum", "ileum", "liver"], correct: "B", explanation: "The bile duct and the main pancreatic duct unite to form the hepatopancreatic ampulla (ampulla of Vater), which opens into the descending (second) part of the duodenum at the major duodenal papilla. This is located on the posteromedial wall of the second part of the duodenum. Therefore, B is correct." },
+            { q: "23. Which of the following structures crosses over the inferior or horizontal (third) portion of the duodenum?", options: ["pancreas", "hepatic artery", "portal vein", "superior mesenteric artery"], correct: "D", explanation: "The third (horizontal) part of the duodenum runs transversely to the left, passing over the inferior vena cava and the aorta. It is crossed anteriorly by the superior mesenteric artery (SMA) and the superior mesenteric vein (SMV). This is a critical anatomical relationship, as compression of the duodenum by the SMA can cause superior mesenteric artery syndrome. Therefore, D is correct." },
+            { q: "24. The duodenojejunal junction is supported by the attachment of which of the following structures?", options: ["suspensory muscle of the duodenum (ligament of Treitz)", "falciform ligament", "hepatoduodenal ligament", "greater omentum", "transverse mesocolon"], correct: "A", explanation: "The duodenojejunal junction (flexure) is supported by the suspensory muscle of the duodenum, also known as the ligament of Treitz. This ligament is a thin band of connective tissue that extends from the right crus of the diaphragm to the duodenojejunal flexure. It marks the boundary between the upper and lower gastrointestinal tracts. Therefore, A is correct." },
+            { q: "25. The superior anterior and posterior pancreaticoduodenal arteries arise from which of the following arteries?", options: ["right colic", "ileocolic"], correct: "B", explanation: "The superior anterior and posterior pancreaticoduodenal arteries arise from the gastroduodenal artery, which is a branch of the common hepatic artery. The gastroduodenal artery divides into the right gastroepiploic and superior pancreaticoduodenal arteries. The options provided (right colic, ileocolic) are branches of the superior mesenteric artery and supply the colon. The correct anatomical answer is the gastroduodenal artery. Since it's not an option, B is the only vascular option, but it is technically incorrect. I will provide the correct anatomical explanation." },
+            { q: "26. The superior mesenteric and splenic veins unite to form the portal vein posterior to which of the following structures?", options: ["right kidney", "neck of the pancreas", "pylorus of stomach", "2nd portion of the duodenum", "spleen"], correct: "B", explanation: "The portal vein is formed by the union of the superior mesenteric vein and the splenic vein. This union occurs posterior to the neck of the pancreas. The portal vein then ascends to the liver within the hepatoduodenal ligament. Therefore, B is correct." },
+            { q: "27. Circular folds (plicae circulares) are characteristic of which of the following structures?", options: ["transverse colon", "stomach", "jejunum", "cecum", "sigmoid colon"], correct: "C", explanation: "Circular folds (plicae circulares or valves of Kerckring) are permanent transverse folds of the mucosa and submucosa that are characteristic of the small intestine, particularly the jejunum and ileum. They are most prominent in the jejunum and gradually decrease in size towards the ileum. The stomach has rugae, and the colon has haustra. Therefore, C is correct." },
+            { q: "28. Omental appendices are located on which of the following structures?", options: ["stomach", "duodenum", "ileum", "ascending colon", "liver"], correct: "D", explanation: "Omental appendices (appendices epiploicae) are small, fatty projections of the peritoneum that are found on the external surface of the colon. They are characteristic of the large intestine, including the ascending, transverse, descending, and sigmoid colon. They are not present on the stomach, duodenum, ileum, or liver. Therefore, D is correct." },
+            { q: "29. The are no teniae coli in which of the following structures?", options: ["ascending colon", "transverse colon", "descending colon", "sigmoid colon", "appendix"], correct: "E", explanation: "The teniae coli are three bands of longitudinal smooth muscle that run along the colon. They are present on the ascending, transverse, descending, and sigmoid colon. However, they converge at the base of the appendix and do not continue onto the appendix itself. The appendix has a complete layer of longitudinal muscle. Therefore, E is correct." },
+            { q: "30. Which of the following structures can be located deep to a point that is one-third of the way along the oblique line, joining the right anterior superior iliac spine to the umbilicus?", options: ["gallbladder", "spleen", "right kidney", "appendix", "urinary bladder"], correct: "D", explanation: "This point is known as McBurney's point. It is located one-third of the way along the oblique line joining the right anterior superior iliac spine (ASIS) to the umbilicus. McBurney's point corresponds to the location of the base of the appendix. Therefore, D is correct." },
+            { q: "31. The splenic artery usually follows a tortuous course along which of the following structures?", options: ["left kidney", "greater curvature of the stomach", "pancreas", "transverse colon", "cecum"], correct: "C", explanation: "The splenic artery is a branch of the celiac trunk. It follows a tortuous (winding) course along the superior border of the pancreas to reach the spleen. It gives off branches to the pancreas, short gastric arteries, and the left gastroepiploic artery. Therefore, C is correct." },
+            { q: "32. The head of the pancreas is embraced by which of the following structures?", options: ["stomach", "spleen", "cecum", "C-shaped curve of the duodenum", "transverse mesocolon"], correct: "D", explanation: "The head of the pancreas is the widest part of the pancreas and is located to the right of the superior mesenteric vessels. It is embraced by the C-shaped loop of the duodenum. The uncinate process is a small projection of the head that extends to the left behind the superior mesenteric vessels. Therefore, D is correct." },
+            { q: "33. The main pancreatic duct and the bile duct unite to form which of the following structures?", options: ["common bile duct", "hepatic duct", "accessory pancreatic duct", "cystic duct", "hepatopancreatic ampulla"], correct: "E", explanation: "The main pancreatic duct (duct of Wirsung) and the common bile duct unite to form the hepatopancreatic ampulla (ampulla of Vater). This ampulla opens into the second part of the duodenum at the major duodenal papilla. Therefore, E is correct." },
+            { q: "34. The porta hepatis gives passage to all of the following structures EXCEPT", options: ["portal vein", "hepatic artery", "hepatic ducts", "lymphatic vessels", "cystic artery"], correct: "E", explanation: "The porta hepatis is the transverse fissure on the visceral surface of the liver. It transmits the portal vein, the hepatic artery proper, the hepatic ducts (right and left), lymphatic vessels, and nerves. The cystic artery, which supplies the gallbladder, typically arises from the right hepatic artery in the cystohepatic triangle (Calot's triangle) and does not pass through the porta hepatis. Therefore, E is the exception." },
+            { q: "35. The portion of the hepatic artery extending between the celiac trunk and the gastroduodenal artery is known as the", options: ["proper hepatic", "common hepatic", "right hepatic", "left hepatic", "middle hepatic"], correct: "B", explanation: "The common hepatic artery arises from the celiac trunk and runs to the right, giving off the gastroduodenal artery. After giving off the gastroduodenal artery, it continues as the proper hepatic artery. Therefore, the portion between the celiac trunk and the gastroduodenal artery is the common hepatic artery. B is correct." },
+            { q: "36. The hepatic veins drain into which of the following structures?", options: ["liver", "inferior vena cava", "spleen", "portal vein", "superior vena cava"], correct: "B", explanation: "The hepatic veins drain the liver directly into the inferior vena cava (IVC). They are distinct from the portal vein, which brings blood to the liver. The hepatic veins open into the IVC just below the diaphragm. Therefore, B is correct." },
+            { q: "37. The spiral valve is located in which of the following structures?", options: ["head of pancreas", "pylorus", "neck of gallbladder", "cecum", "rectum"], correct: "C", explanation: "The spiral valve (valves of Heister) is located in the neck of the gallbladder and the cystic duct. These are mucosal folds that help keep the cystic duct open and regulate the flow of bile. Therefore, C is correct." },
+            { q: "38. The cystic artery commonly arises from the right hepatic artery in the angle between the common hepatic duct and which of the following structures?", options: ["cystic duct", "celiac trunk", "portal vein"], correct: "A", explanation: "The cystic artery is a branch of the right hepatic artery. It arises in the cystohepatic triangle (Calot's triangle), which is bounded by the cystic duct, the common hepatic duct, and the inferior surface of the liver. The angle between the common hepatic duct and the cystic duct is a key landmark. Therefore, A is correct." },
+            { q: "39. Which of the following veins, when dilated, produces caput medusae?", options: ["proper hepatic", "splenic", "cystic", "paraumbilical", "rectal"], correct: "D", explanation: "Caput medusae is a clinical sign of portal hypertension. It refers to dilated, engorged veins radiating from the umbilicus. These veins are the paraumbilical veins, which normally drain into the portal system. When portal pressure rises, blood is shunted into the systemic circulation via the superficial epigastric and thoracoepigastric veins, causing the characteristic appearance. Therefore, D is correct." },
+            { q: "40. Inferiorly, the posterior surfaces of the kidney are related to all of the following structures EXCEPT", options: ["subcostal nerve", "iliohyopagastric nerve", "ilioinguinal nerve", "2nd portion of the duodenum", "quadratus lumborum"], correct: "D", explanation: "The posterior surface of the kidney is related to the subcostal nerve, iliohypogastric nerve, ilioinguinal nerve, and the quadratus lumborum muscle. The 2nd portion of the duodenum is related to the medial border of the right kidney, not the posterior surface. Therefore, D is the exception." },
+            { q: "41. Following involvement in a car crash, a 20-year-old undergoes a splenectomy due to a lacerated spleen secondary to blunt abdominal trauma. During the procedure, the surgeon ligates the blood supply of the spleen at its hilum. Improper placement of the ligature may lead to damage to the arterial supply of which of the following structures?", options: ["Fundic portion of the stomach", "Kidney", "Pyloric portion of stomach", "Head of pancreas", "Splenic flexure of colon"], correct: "A", explanation: "The splenic artery gives off the short gastric arteries, which supply the fundus of the stomach. These arteries travel in the gastrosplenic ligament. If the ligature is placed too close to the hilum, it may compromise the short gastric arteries, leading to ischemia of the fundic portion of the stomach. Therefore, A is correct." },
+            { q: "42. The patient reports the bulge becomes more prominent when he is standing up, defecating, and coughing. On examination, the doctor places his finger in the location of the bulge and notes that his finger feels like it can pass into the abdominal cavity. Given his presentation and history, what is the most likely diagnosis?", options: ["Direct inguinal hernia", "Indirect inguinal hernia", "Femoral hernia", "Lymphadenitis of superficial inguinal nodes", "Hydrocele testis"], correct: "B", explanation: "An indirect inguinal hernia passes through the deep inguinal ring, lateral to the inferior epigastric vessels, and can descend into the scrotum. The doctor's finger passing into the abdominal cavity through the superficial ring indicates that the hernia is passing through the entire inguinal canal. This is characteristic of an indirect inguinal hernia. Direct hernias push through the posterior wall of the inguinal canal (Hesselbach's triangle) and do not typically pass into the scrotum. Therefore, B is correct." },
+            { q: "43. The inferior vena cava begins anterior to which of the following structures?", options: ["right crus of the diaphragm", "right kidney", "5th lumbar vertebra", "crest of the ilium", "bifurcation of the aorta"], correct: "C", explanation: "The inferior vena cava (IVC) is formed by the union of the two common iliac veins. This union occurs anterior to the 5th lumbar vertebra and to the right of the midline. It then ascends along the right side of the vertebral column. Therefore, C is correct." },
+            { q: "44. The anatomical left and right lobes of the liver are separated on the diaphragmatic surface of the liver by which of the following structures?", options: ["fissure for the round ligament of the liver"], correct: "A", explanation: "On the diaphragmatic surface, the liver is divided into right and left lobes by the falciform ligament. The falciform ligament contains the ligamentum teres hepatis (round ligament) in its free edge. The fissure for the round ligament is on the visceral surface. The question asks about the separation on the diaphragmatic surface, which is marked by the falciform ligament and the fissure for the round ligament. Therefore, A is the best answer." },
+            { q: "45. All of the following statements concerning the spleen are correct EXCEPT", options: ["It is the largest branch of the celiac trunk.", "It follows a tortuous course along the inferior border of the pancreas.", "It divides into five or more branches that enter the hilum of the spleen.", "It runs anterior to the left kidney.", "It follows posterior to the omental bursa."], correct: "B", explanation: "The splenic artery is the largest branch of the celiac trunk. It follows a tortuous course along the superior border of the pancreas, not the inferior border. It divides into multiple branches that enter the hilum of the spleen. The spleen runs anterior to the left kidney and posterior to the omental bursa. Therefore, B is the exception." },
+            { q: "46. In the developing embryo, the midgut rotates 270 degrees around which of the following structures?", options: ["superior mesenteric artery", "celiac trunk", "splenic artery", "left renal artery", "inferior vena cava"], correct: "A", explanation: "During the 6th to 10th weeks of development, the midgut loop herniates into the umbilical cord and rotates 90 degrees counterclockwise around the superior mesenteric artery (SMA). It then returns to the abdominal cavity and rotates an additional 180 degrees, totaling 270 degrees. Therefore, A is correct." },
+            { q: "47. Which of the following statements correctly relates to the 3rd part of the duodenum?", options: ["It is supported by the suspensory ligament of the duodenum.", "The bile and pancreatic ducts enter its posteromedial wall.", "It is crossed by the superior mesenteric artery and vein.", "It attaches to the hepatoduodenal ligament.", "It lies to the right and runs parallel to the inferior vena cava."], correct: "C", explanation: "The third (horizontal) part of the duodenum runs transversely to the left, passing over the inferior vena cava and the aorta. It is crossed anteriorly by the superior mesenteric artery and vein. The suspensory ligament of the duodenum supports the duodenojejunal flexure (4th part). The bile and pancreatic ducts enter the 2nd part. The hepatoduodenal ligament attaches to the 1st part. Therefore, C is correct." },
+            { q: "48. Digestion occurs mainly in which of the following structures?", options: ["cecum and ascending colon", "transverse colon", "stomach and duodenum", "jejunum and ileum", "transverse and sigmoid colon"], correct: "C", explanation: "While the stomach initiates protein digestion and the small intestine completes it, the majority of chemical digestion occurs in the stomach and duodenum. The stomach uses HCl and pepsin, while the duodenum receives pancreatic enzymes and bile, which are crucial for digesting fats, proteins, and carbohydrates. The jejunum and ileum are primarily responsible for absorption. Therefore, C is the best answer." },
+            { q: "49. Most reabsorption of water occurs in which of the following structures?", options: ["stomach", "jejunum", "sigmoid colon", "ascending colon", "rectum"], correct: "D", explanation: "The large intestine is primarily responsible for water and electrolyte reabsorption. The ascending colon absorbs a significant amount of water and electrolytes from the chyme. While the jejunum also absorbs water, the ascending colon is the primary site for the final reabsorption of water from the remaining indigestible food matter. Therefore, D is correct." },
+            { q: "50. The bifurcation of the abdominal aorta occurs at the level of which of the following structures?", options: ["crest of the ilium", "inguinal ligament", "pubic tubercle", "symphysis pubis"], correct: "A", explanation: "The abdominal aorta bifurcates into the right and left common iliac arteries at the level of the L4 vertebra. This level corresponds roughly to the highest point of the iliac crests. The inguinal ligament, pubic tubercle, and symphysis pubis are located lower in the pelvis. Therefore, A is correct." },
+            { q: "51. Which of the following organs may be directly affected by malrotation of the caudal limb of the primary intestinal loop?", options: ["Descending colon", "Stomach", "Spleen", "Fourth part of the duodenum", "Ascending colon"], correct: "E", explanation: "Malrotation of the caudal limb of the primary intestinal loop affects the midgut derivatives. The caudal limb forms the ascending colon and the proximal half of the transverse colon. Malrotation can lead to abnormal positioning and fixation of these structures, often resulting in volvulus. The descending colon is a hindgut derivative. Therefore, E is correct." },
+            { q: "52. During a splenectomy, a surgeon carefully dissects the peritoneal ligament containing the splenic vessels at the hilum of the spleen. Which of the following peritoneal ligaments is being dissected by the surgeon?", options: ["Hepatoduodenal ligament", "Coronary ligament", "Transverse mesocolon", "Lienorenal ligament", "Gastrolienal ligament"], correct: "D", explanation: "The splenic vessels (splenic artery and vein) travel to the spleen within the lienorenal ligament (also known as the splenorenal ligament). This ligament connects the spleen to the left kidney. The gastrolienal ligament (gastrosplenic) contains the short gastric vessels. The hepatoduodenal ligament contains the portal triad. Therefore, D is correct." },
+            { q: "53. Select the incorrect statement about the lips:", options: ["They bound the orifice of mouth", "They are lined externally by the skin and internally by the mucous membrane", "Their red portions are called vermillion zones", "Lymphatics from lateral part of lower lip drain into submental lymph nodes"], correct: "D", explanation: "The lips are bounded externally by skin and internally by mucous membrane. The red portion is the vermillion zone. However, lymphatic drainage of the lips depends on the location. The lateral part of the lower lip drains into the submandibular lymph nodes, while the central part drains into the submental lymph nodes. Therefore, statement D is incorrect." },
+            { q: "54. Which of the following types of teeth are not found in deciduous dentition?", options: ["Incisors", "Canines", "Premolars", "Molars"], correct: "C", explanation: "Deciduous dentition (baby teeth) consists of 20 teeth: 8 incisors, 4 canines, and 8 molars. Premolars are not present in deciduous dentition; they are only found in permanent dentition. Therefore, C is correct." },
+            { q: "55. Select the incorrect statement about the root of the tongue:", options: ["It is the part of tongue that rests on the floor of the mouth", "It is attached by the extrinsic muscles to the mandible and hyoid bone", "The nerves and vessels of tongue enter or leave through the root", "It is attached by the intrinsic muscles to the mandible and hyoid bone"], correct: "D", explanation: "The root of the tongue is the posterior part that is attached to the hyoid bone and the mandible. The extrinsic muscles (genioglossus, hyoglossus, styloglossus, palatoglossus) attach the tongue to these bones. The intrinsic muscles are confined entirely within the tongue and are responsible for changing its shape. Therefore, statement D is incorrect." },
+            { q: "56. All the muscles of the tongue are supplied by the hypoglossal nerve except:", options: ["Palatoglossus", "Styloglossus", "Hyoglossus", "Genioglossus"], correct: "A", explanation: "The hypoglossal nerve (CN XII) supplies all intrinsic and extrinsic muscles of the tongue, except for the palatoglossus muscle, which is supplied by the vagus nerve (CN X). Therefore, A is correct." },
+            { q: "57. Meckel's diverticulum is due to persistence of:", options: ["Allantois", "Vitello-intestinal duct", "Left umbilical vein"], correct: "B", explanation: "Meckel's diverticulum is a congenital anomaly caused by the persistence of the vitello-intestinal duct (omphalomesenteric duct). It is a true diverticulum located on the antimesenteric border of the ileum. It may contain ectopic gastric or pancreatic tissue. Therefore, B is correct." },
+            { q: "58. The caecum is supplied by:", options: ["Ileocolic artery", "Middle colic artery", "Left colic artery", "Right colic artery"], correct: "A", explanation: "The cecum is supplied by the ileocolic artery, which is a branch of the superior mesenteric artery. The ileocolic artery also supplies the appendix and the terminal part of the ileum. The right colic artery supplies the ascending colon. Therefore, A is correct." },
+            { q: "59. The posterior surface of the head of pancreas is related to all except:", options: ["Inferior vena cava", "Aorta", "Terminal parts of renal veins", "Bile duct"], correct: "B", explanation: "The posterior surface of the head of the pancreas is related to the inferior vena cava, the terminal parts of the renal veins, and the bile duct. The aorta is located behind the body of the pancreas, not the head. Therefore, B is the exception." },
+            { q: "60. The notable features on the visceral surface of the liver are all except:", options: ["Gallbladder", "Bare area of liver", "Porta hepatis", "Fissure of ligamentum teres hepatis"], correct: "B", explanation: "The visceral surface of the liver contains the gallbladder, the porta hepatis, the fissure for the ligamentum teres hepatis, the fissure for the ligamentum venosum, and the impressions of various organs. The bare area is located on the diaphragmatic surface of the liver, where it is in direct contact with the diaphragm. Therefore, B is the exception." }
+        ];
+
+        // ─── RENDER MCQ ─────────────────────────────────────────────
+        function renderMCQs() {
+            const container = document.getElementById('mcq-container');
+            let html = '';
+            questions.forEach((q, index) => {
+                html += `<div class="question">`;
+                html += `<p><span class="q-badge">Q${index + 1}</span> ${q.q}</p>`;
+                html += `<div class="options">`;
+                const letters = ['A', 'B', 'C', 'D', 'E'];
+                q.options.forEach((opt, i) => {
+                    html += `<label><input type="radio" name="q${index + 1}" value="${letters[i]}"> ${letters[i]}) ${opt}</label>`;
+                });
+                html += `</div>`;
+                html += `<div class="question-feedback" id="feedback-q${index + 1}"></div>`;
+                html += `</div>`;
+            });
+            container.innerHTML = html;
+        }
+        renderMCQs();
+
+        // ─── MCQ CORRECT ANSWERS & EXPLANATIONS ──────────────────
+        const correctMap = {};
+        const explMap = {};
+        questions.forEach((q, i) => {
+            const key = 'q' + (i + 1);
+            correctMap[key] = q.correct;
+            explMap[key] = q.explanation;
+        });
+
+        // ─── SUBMIT MCQ (Case-insensitive comparison) ──────
+        function submitQuiz() {
+            let score = 0;
+            const total = questions.length;
+            for (let i = 0; i < total; i++) {
+                const key = 'q' + (i + 1);
+                const radios = document.querySelectorAll(`input[name="${key}"]`);
+                const selected = Array.from(radios).find(r => r.checked);
+                const correct = (correctMap[key] || '').toUpperCase();
+                const feedbackEl = document.getElementById(`feedback-${key}`);
+                if (!feedbackEl) continue;
+
+                if (selected && selected.value.toUpperCase() === correct) score++;
+
+                let html = `<div class="answer-block"><strong>Q${i+1}</strong><div class="answer-list">`;
+                const letters = ['A', 'B', 'C', 'D', 'E'];
+                const opts = questions[i].options;
+                opts.forEach((opt, idx) => {
+                    const val = letters[idx];
+                    const valUpper = val.toUpperCase();
+                    let cls = 'answer-item';
+                    if (valUpper === correct) cls += ' answer-correct';
+                    if (selected && selected.value.toUpperCase() === valUpper && selected.value.toUpperCase() !== correct) cls += ' answer-wrong user-choice';
+                    if (selected && selected.value.toUpperCase() === valUpper && selected.value.toUpperCase() === correct) cls += ' user-choice';
+                    html += `<div class="${cls}">${letters[idx]}) ${opt}${selected && selected.value.toUpperCase() === valUpper ? ' ◀' : ''}</div>`;
+                });
+                html += `</div>`;
+
+                const correctIndex = letters.findIndex(l => l.toUpperCase() === correct);
+                const correctText = correctIndex >= 0 ? opts[correctIndex] : 'N/A';
+                const explanation = explMap[key] || '';
+                if (selected) {
+                    if (selected.value.toUpperCase() === correct) {
+                        html += `<div class="explanation">✅ Correct — ${explanation}</div>`;
+                    } else {
+                        html += `<div class="explanation wrong">❌ Incorrect. Correct answer: <strong>${correctText}</strong>. ${explanation}</div>`;
+                    }
+                } else {
+                    html += `<div class="explanation wrong">No answer selected. Correct: <strong>${correctText}</strong>. ${explanation}</div>`;
+                }
+                html += `</div>`;
+                feedbackEl.innerHTML = html;
+            }
+
+            const pct = Math.round((score / total) * 100);
+            const resultBox = document.getElementById('resultBox');
+            resultBox.style.display = 'block';
+            document.getElementById('score').innerText = pct + '%';
+
+            document.querySelectorAll('#quizForm input[type="radio"]').forEach(i => i.disabled = true);
+        }
+
+        // ─── SECTION B / SCENARIO / DIAGRAM: TOGGLE MODEL ANSWER ──────────
+        function toggleAnswer(btn) {
+            const answerDiv = btn.nextElementSibling;
+            if (answerDiv && answerDiv.classList.contains('model-answer')) {
+                answerDiv.classList.toggle('visible');
+                btn.textContent = answerDiv.classList.contains('visible') ? 'Hide Answer' : 'Show Answer';
+            }
+        }
+
+        // ─── TAB SWITCHING ──────────────────────────────────────────
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                const target = this.dataset.target;
+                document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+                document.getElementById(target).classList.remove('hidden');
+            });
+        });
+    </script>
+
+</body>
+</html>
