@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2024 Physiology Test 3 – 3rd Year</title>
+    <style>
+        :root {
+            --primary: #1a6b6b;
+            --accent: #2ea8a0;
+            --dark: #0f2a2a;
+            --light: #f4f8f7;
+            --radius: 12px;
+            --shadow: 0 4px 14px rgba(0, 30, 30, 0.08);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #edf3f2;
+            color: var(--dark);
+            min-height: 100vh;
+            padding-top: 72px;
+        }
+        header {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            background: linear-gradient(145deg, var(--primary), var(--dark));
+            color: #fff; padding: 0.6rem 0;
+            box-shadow: 0 4px 18px rgba(0, 20, 20, 0.25);
+        }
+        .header-inner {
+            max-width: 1000px; margin: 0 auto; padding: 0 1.5rem;
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 0.3rem;
+        }
+        .logo { display: flex; align-items: center; gap: 0.6rem; }
+        .logo i { font-size: 1.5rem; color: #8dd9d4; }
+        .logo h1 { font-size: 1.15rem; font-weight: 700; letter-spacing: 0.2px; }
+        .badge {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 0.2rem 1rem; border-radius: 40px;
+            font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+            color: #b3e6e0; letter-spacing: 0.5px;
+        }
+        .container { max-width: 920px; margin: 0 auto; padding: 0 1.2rem 2.5rem; }
+        .tab-bar { display: flex; gap: 0.5rem; margin: 0.5rem 0 1.5rem 0; flex-wrap: wrap; }
+        .tab-btn {
+            background: #dce8e8; border: none; padding: 0.5rem 1.8rem;
+            border-radius: 40px; font-weight: 600; font-size: 0.95rem;
+            color: var(--dark); cursor: pointer; transition: 0.2s;
+        }
+        .tab-btn:hover { background: #c0d6d6; }
+        .tab-btn.active {
+            background: var(--primary); color: #fff;
+            box-shadow: 0 2px 10px rgba(26, 107, 107, 0.25);
+        }
+        .tab-panel { display: block; }
+        .tab-panel.hidden { display: none; }
+        .section-title {
+            font-size: 1.25rem; font-weight: 700; color: var(--primary);
+            margin: 0 0 0.8rem 0; padding-bottom: 0.4rem;
+            border-bottom: 3px solid rgba(26, 107, 107, 0.18);
+            display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;
+        }
+        .section-title .count {
+            font-size: 0.7rem; font-weight: 600; background: var(--primary);
+            color: #fff; border-radius: 40px; padding: 0 0.7rem; line-height: 1.7;
+        }
+        .section-subtitle { color: #4f6e6e; font-size: 0.9rem; margin-bottom: 1rem; }
+        .question {
+            background: #ffffff; border-radius: var(--radius);
+            padding: 1.1rem 1.2rem 0.2rem 1.2rem; margin-bottom: 1rem;
+            box-shadow: var(--shadow); border: 1px solid rgba(26, 107, 107, 0.05);
+            transition: box-shadow 0.2s;
+        }
+        .question:hover { box-shadow: 0 6px 20px rgba(0, 30, 30, 0.07); }
+        .question .q-badge {
+            display: inline-block; background: var(--primary); color: #fff;
+            border-radius: 40px; padding: 0 0.65rem; font-size: 0.7rem;
+            font-weight: 700; line-height: 1.6; margin-right: 0.4rem;
+        }
+        .question p { font-weight: 600; font-size: 0.97rem; margin-bottom: 0.4rem; color: var(--dark); }
+        .options label {
+            display: block; background: #fafcfc; border: 1px solid #dde8e8;
+            border-radius: 7px; padding: 0.4rem 0.85rem; margin-top: 0.4rem;
+            cursor: pointer; transition: all 0.15s; font-weight: 450; font-size: 0.92rem;
+        }
+        .options label:hover { background: #e8f5f4; border-color: var(--accent); }
+        .options input[type="radio"] { margin-right: 0.5rem; accent-color: var(--primary); transform: scale(1.04); }
+        .question-feedback { margin-top: 0.8rem; padding: 0.4rem 0 0.1rem 0; border-top: 1px dashed #dce6e6; }
+        .answer-block strong { display: block; margin-bottom: 3px; color: var(--primary); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.3px; }
+        .answer-list { display: flex; flex-direction: column; gap: 2px; }
+        .answer-item {
+            padding: 4px 10px; border-radius: 5px; border: 1px solid #e4edec;
+            background: #ffffff; font-weight: 500; font-size: 0.88rem;
+        }
+        .answer-correct { background: #e8f7ef; border-color: #a8d8c0; color: #0a4f3a; }
+        .answer-wrong { background: #fde9ea; border-color: #f5b8b8; color: #8a1f2b; }
+        .user-choice { outline: 2px dashed rgba(0, 0, 0, 0.06); }
+        .explanation {
+            margin-top: 5px; padding: 8px 13px; border-radius: 7px;
+            background: #f0f8f6; color: #065f4a; font-size: 0.88rem;
+            line-height: 1.55; border-left: 4px solid var(--accent);
+        }
+        .explanation.wrong { background: #fdf1f1; color: #7a1f1f; border-left-color: #e68080; }
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            color: #fff; border: none; padding: 0.55rem 1.8rem;
+            border-radius: var(--radius); font-weight: 600; font-size: 0.95rem;
+            cursor: pointer; transition: transform 0.15s, box-shadow 0.2s;
+            box-shadow: 0 4px 14px rgba(26, 107, 107, 0.25);
+        }
+        .btn:hover { transform: scale(1.02); box-shadow: 0 6px 24px rgba(26, 107, 107, 0.32); }
+        .btn:active { transform: scale(0.96); }
+        .btn-sm { padding: 0.35rem 1rem; font-size: 0.82rem; border-radius: 8px; }
+        .btn-outline {
+            background: #ffffff; color: var(--primary);
+            border: 2px solid var(--primary); box-shadow: none;
+        }
+        .btn-outline:hover { background: #e8f5f4; box-shadow: 0 2px 8px rgba(26, 107, 107, 0.15); }
+        .submit-wrap { text-align: center; margin: 1.5rem 0 1.8rem; }
+        .result {
+            margin-top: 1.5rem; padding: 1.5rem 1.5rem 0.8rem;
+            background: #eaf6f4; border-radius: var(--radius);
+            text-align: center; display: none; border: 1px solid #b8dbd6;
+        }
+        .result h3 { font-size: 1.1rem; font-weight: 600; color: var(--dark); }
+        .score { font-size: 2.4rem; font-weight: 800; color: var(--primary); margin: 0.1rem 0 0.2rem; }
+        .text-muted { color: #4f6e6e; font-size: 0.9rem; }
+        .hidden { display: none !important; }
+        .model-answer {
+            margin-top: 0.8rem; padding: 0.9rem 1.1rem; border-radius: 8px;
+            background: #f7fbfa; border: 1px solid #c8e2de;
+            border-left: 5px solid var(--accent);
+            font-size: 0.9rem; line-height: 1.6; color: #0a3d38;
+        }
+        .model-answer h4 {
+            font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.4px;
+            color: var(--primary); margin-bottom: 0.4rem;
+        }
+        .model-answer ul, .model-answer ol { margin-left: 1.2rem; margin-top: 0.3rem; }
+        .model-answer li { margin-bottom: 0.2rem; }
+        .text-answer-wrap { margin-top: 0.6rem; }
+        .text-answer-wrap textarea {
+            width: 100%; min-height: 90px; border: 1px solid #d5e3e2;
+            border-radius: 8px; padding: 0.6rem 0.8rem; font-family: inherit;
+            font-size: 0.9rem; line-height: 1.5; resize: vertical;
+            background: #fdfefe; color: var(--dark);
+        }
+        .text-answer-wrap textarea:focus {
+            outline: none; border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(46, 168, 160, 0.12);
+        }
+        .reveal-wrap { margin-top: 0.6rem; }
+        .scenario-intro {
+            background: #f7fbfa; border: 1px solid #c8e2de; border-radius: 10px;
+            padding: 1rem 1.2rem; margin-bottom: 1.2rem;
+            font-size: 0.92rem; line-height: 1.6; color: #0a3d38;
+        }
+        .scenario-intro strong { color: var(--primary); }
+        @media (max-width: 700px) {
+            body { padding-top: 68px; }
+            .logo h1 { font-size: 0.95rem; }
+            .header-inner { padding: 0 1rem; flex-direction: column; align-items: stretch; gap: 0.2rem; }
+            .badge { align-self: flex-start; }
+            .question { padding: 0.9rem 0.9rem 0.1rem 0.9rem; }
+            .section-title { font-size: 1.05rem; }
+            .score { font-size: 2rem; }
+            .btn { padding: 0.5rem 1.2rem; font-size: 0.85rem; }
+            .tab-btn { padding: 0.4rem 1.2rem; font-size: 0.85rem; }
+        }
+        @media (max-width: 420px) {
+            .logo h1 { font-size: 0.8rem; }
+            .options label { font-size: 0.85rem; padding: 0.35rem 0.65rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-inner">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+                <h1>2024 Physiology Test 3 – 3rd Year</h1>
+            </div>
+            <span class="badge"><i class="fas fa-pencil-alt"></i> &nbsp;Sections A, B &amp; C</span>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+
+            <div class="tab-bar">
+                <button class="tab-btn active" data-target="A">📝 Section A – MCQs</button>
+                <button class="tab-btn" data-target="B">🩺 Section B – Scenario</button>
+                <button class="tab-btn" data-target="C">🧠 Section C – Tabes Dorsalis</button>
+            </div>
+
+            <!-- ============ SECTION A ============ -->
+            <div id="panel-A" class="tab-panel">
+                <div class="section-title">
+                    <i class="fas fa-list-ul"></i> Section A – Multiple Choice Questions
+                    <span class="count">25</span>
+                </div>
+                <p class="section-subtitle">Select the best answer for each question, then click <strong>Submit Section A</strong> below.</p>
+                <form id="form-A">
+                    <div id="container-A"></div>
+                    <div class="submit-wrap">
+                        <button type="button" class="btn" onclick="submitSectionA()">
+                            <i class="fas fa-check-circle"></i> Submit Section A
+                        </button>
+                    </div>
+                </form>
+                <div class="result" id="result-A">
+                    <h3><i class="fas fa-chart-simple"></i> Your Score – Section A</h3>
+                    <div class="score" id="score-A">0</div>
+                    <p class="text-muted">Review the feedback below each question.</p>
+                </div>
+            </div>
+
+            <!-- ============ SECTION B ============ -->
+            <div id="panel-B" class="tab-panel hidden">
+                <div class="section-title">
+                    <i class="fas fa-stethoscope"></i> Section B – Clinical Scenario
+                    <span class="count">15</span>
+                </div>
+                <p class="section-subtitle">Read the case, then select the best answer for each question. Click <strong>Submit Section B</strong> when done.</p>
+                <div id="container-B-intro"></div>
+                <form id="form-B">
+                    <div id="container-B"></div>
+                    <div class="submit-wrap">
+                        <button type="button" class="btn" onclick="submitSectionB()">
+                            <i class="fas fa-check-circle"></i> Submit Section B
+                        </button>
+                    </div>
+                </form>
+                <div class="result" id="result-B">
+                    <h3><i class="fas fa-chart-simple"></i> Your Score – Section B</h3>
+                    <div class="score" id="score-B">0</div>
+                    <p class="text-muted">Review the feedback below each question.</p>
+                </div>
+            </div>
+
+            <!-- ============ SECTION C ============ -->
+            <div id="panel-C" class="tab-panel hidden">
+                <div class="section-title">
+                    <i class="fas fa-brain"></i> Section C – Tabes Dorsalis
+                    <span class="count">9</span>
+                </div>
+                <p class="section-subtitle">
+                    Answer each question in the space provided. Write your answer, then click
+                    <strong>Show Model Answer</strong> to reveal a mark-appropriate model answer.
+                </p>
+                <div id="container-C"></div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+    /* =====================================================================
+       SECTION A — 25 MCQs (exact text from 2024 paper)
+       ===================================================================== */
+    const sectionA = [
+    {
+        q: `The release of neurotransmitter at a chemical synapse in the central nervous system is dependent upon which of the following?`,
+        options: [
+            `Synthesis of acetylcholine esterase`,
+            `Hyperpolarization of the synaptic terminal`,
+            `Opening of ligand-gated ion calcium channels`,
+            `Influx of calcium into the presynaptic terminal`
+        ],
+        correct: `D`,
+        explanation: `Chemical synaptic transmission depends critically on the INFLUX OF CALCIUM into the presynaptic terminal. When an action potential depolarises the presynaptic membrane, voltage-gated Ca²⁺ channels open, allowing Ca²⁺ to enter the terminal. The rise in intracellular Ca²⁺ triggers the fusion of synaptic vesicles with the presynaptic membrane and the release of neurotransmitter by exocytosis. Acetylcholinesterase synthesis is not required for release (it terminates the action of ACh at cholinergic synapses). Hyperpolarisation of the terminal would inhibit, not facilitate, release. Ligand-gated Ca²⁺ channels are not the primary mechanism — it is voltage-gated Ca²⁺ channels that mediate the influx.`
+    },
+    {
+        q: `Hypoventilation has which of the following effects on neuronal activity?`,
+        options: [
+            `Depresses neuronal activity`,
+            `Increases neuronal activity`,
+            `Increases synaptic delay`,
+            `Increases neurotransmitter release`
+        ],
+        correct: `A`,
+        explanation: `Hypoventilation leads to retention of CO₂ (hypercapnia) and a decrease in arterial pH (respiratory acidosis). Elevated CO₂ and H⁺ concentrations DEPRESS neuronal activity by interfering with synaptic transmission and reducing the excitability of neurons. This is why severe hypoventilation can lead to confusion, lethargy, and eventually coma. The other options are incorrect: neuronal activity is depressed (not increased), synaptic delay is prolonged (not a primary effect), and neurotransmitter release is not increased (it may be impaired).`
+    },
+    {
+        q: `Which of the following substances enhances the sensitivity of pain receptors but does not directly excite them?`,
+        options: [
+            `Bradykinin`,
+            `Serotonin`,
+            `Potassium ions`,
+            `Prostaglandins`
+        ],
+        correct: `D`,
+        explanation: `PROSTAGLANDINS (especially PGE₂ and PGI₂) enhance the sensitivity of pain receptors (nociceptors) to other stimuli — a process called sensitisation — but they do not directly excite the nociceptor. They lower the threshold of the nociceptor, making it more responsive to bradykinin, K⁺, and other mediators. This is why NSAIDs (which inhibit prostaglandin synthesis) are effective analgesics. Bradykinin, serotonin, and potassium ions all directly excite nociceptors (in addition to sensitising them).`
+    },
+    {
+        q: `Which of the following substances enhances the sensitivity of pain receptors but does directly exciting them?`,
+        options: [
+            `Bradykinin`,
+            `Serotonin`,
+            `Potassium ions`,
+            `Prostaglandins`
+        ],
+        correct: `A`,
+        explanation: `BRADYKININ is a potent pain-producing peptide that BOTH directly excites nociceptors AND sensitises them to other stimuli. It is one of the most potent endogenous algogenic (pain-producing) substances. Serotonin and potassium ions also directly excite nociceptors, but bradykinin is the classic example that both sensitises and directly excites. Prostaglandins only sensitise (they do not directly excite).`
+    },
+    {
+        q: `Which of the following is an important functional parameter of pain receptors?`,
+        options: [
+            `Exhibit little or no adaptation.`,
+            `Not affected by muscle tension`,
+            `Signal only flexion at joint capsules`,
+            `Can voluntarily be inhibited`
+        ],
+        correct: `A`,
+        explanation: `Pain receptors (nociceptors) exhibit LITTLE OR NO ADAPTATION. Unlike many other sensory receptors (e.g., Pacinian corpuscles for vibration, which adapt rapidly), nociceptors continue to fire as long as the painful stimulus is present. This is physiologically important because it ensures that the organism remains aware of tissue-damaging stimuli and can take protective action. Pain receptors are affected by muscle tension (muscle pain), can signal more than just flexion, and cannot be voluntarily inhibited (though they can be modulated by descending pathways and gate control mechanisms).`
+    },
+    {
+        q: `Which of the following represents the basis for transduction of a sensory stimulus into nerve impulses?`,
+        options: [
+            `Change in the ion permeability of the receptor membrane`,
+            `Generation of an action potential`,
+            `Inactivation of a G-protein-mediated response`,
+            `Protein synthesis`
+        ],
+        correct: `A`,
+        explanation: `Sensory transduction is the process by which a stimulus is converted into an electrical signal in the receptor. The basis for this is a CHANGE IN THE ION PERMEABILITY of the receptor membrane. The stimulus opens or closes ion channels in the receptor membrane, leading to a graded depolarisation called the receptor (generator) potential. When the receptor potential reaches threshold, it triggers an action potential in the afferent axon. The generation of an action potential is a consequence, not the basis, of transduction. G-protein inactivation and protein synthesis are not the primary mechanisms.`
+    },
+    {
+        q: `Which of the following is characteristic of the events occurring at an excitatory synapse?`,
+        options: [
+            `There is a massive efflux of calcium from the presynaptic terminal`,
+            `Synaptic vesicles bind to the postsynaptic membrane`,
+            `Voltage-gated potassium channels are closed`,
+            `Ligand-gated channels are opened to allow sodium entry into the postsynaptic neuron`
+        ],
+        correct: `D`,
+        explanation: `At an excitatory synapse, the neurotransmitter released from the presynaptic terminal binds to LIGAND-GATED channels on the postsynaptic membrane, causing them to open and allow Na⁺ (and often K⁺) to flow. The influx of Na⁺ depolarises the postsynaptic membrane, producing an excitatory postsynaptic potential (EPSP). If the EPSP reaches threshold, an action potential is generated. Synaptic vesicles fuse with the PRESYNAPTIC membrane (not the postsynaptic membrane). Ca²⁺ influx (not efflux) occurs in the presynaptic terminal. Voltage-gated K⁺ channels are not the primary channels involved in the EPSP.`
+    },
+    {
+        q: `As the receptor potential rises higher above threshold, which of the following best characterizes the new frequency of action potentials?`,
+        options: [
+            `Decrease`,
+            `Increase`,
+            `Remain unchanged`,
+            `Increase only when the receptor potential increases to twice the level of threshold`
+        ],
+        correct: `B`,
+        explanation: `The amplitude of the receptor potential is proportional to the strength of the stimulus. As the receptor potential rises higher above threshold, the frequency of action potentials generated in the afferent axon INCREASES. This is the basis of frequency coding for stimulus intensity: a stronger stimulus produces a larger receptor potential, which triggers action potentials at a higher frequency. The frequency does not decrease, remain unchanged, or require a doubling of threshold.`
+    },
+    {
+        q: `Which of the following is a type of interneuron in this region that utilizes enkephalin to inhibit pain transmission?`,
+        options: [
+            `Nucleus raphe magnus`,
+            `Postcentral gyrus`,
+            `Dorsal horn of spinal cord`,
+            `Type C sensory fiber`
+        ],
+        correct: `C`,
+        explanation: `Enkephalin-containing interneurons are located in the DORSAL HORN OF THE SPINAL CORD (especially in the substantia gelatinosa, lamina II). These interneurons release enkephalin, which acts on opioid receptors on primary nociceptive afferents (presynaptic inhibition) and on second-order spinothalamic neurons (postsynaptic inhibition) to inhibit pain transmission. The nucleus raphe magnus is a source of descending serotonergic fibres that modulate pain. The postcentral gyrus is the primary somatosensory cortex. Type C fibres are primary afferents, not interneurons.`
+    },
+    {
+        q: `Inhibition of pain signals by tactile stimulation of a skin surface involves which of the following selections?`,
+        options: [
+            `Type A alpha fibers in peripheral nerves`,
+            `Type A beta fibers in peripheral nerves`,
+            `Type A delta fibers in peripheral nerves`,
+            `Type C fibers in peripheral nerves`
+        ],
+        correct: `B`,
+        explanation: `Tactile stimulation of the skin activates large-diameter, myelinated TYPE Aβ (A beta) fibres, which carry fine touch and vibration. These fibres inhibit pain transmission via the gate control mechanism: they excite inhibitory interneurons in the dorsal horn (lamina II), which then inhibit the transmission of nociceptive signals from Aδ and C fibres to second-order neurons. This is why rubbing a painful area (which activates Aβ fibres) reduces pain. Type Aα fibres carry proprioception and motor commands; Aδ and C fibres carry pain and temperature.`
+    },
+    {
+        q: `"No matter where a particular pathway is stimulated along its course to the cortex, the conscious sensation produced is referred to the location of its receptor". This is`,
+        options: [
+            `The law of projection`,
+            `Weber-Fechner law`,
+            `Muller's law of specific nerve energies`,
+            `Bell-Magendie Law`
+        ],
+        correct: `A`,
+        explanation: `The LAW OF PROJECTION states that no matter where a sensory pathway is stimulated along its course, the conscious sensation is referred to the location of the receptor. For example, stimulating the visual cortex or optic nerve produces the sensation of light, not a sensation corresponding to the site of stimulation. This is because the brain interprets the signal based on the pathway it travels in, not the location of the stimulation. The Weber-Fechner law relates stimulus intensity to perceived intensity; Müller's law of specific nerve energies states that each sensory nerve gives rise to its own specific sensation; the Bell-Magendie law describes the separate functions of dorsal and ventral spinal roots.`
+    },
+    {
+        q: `Opening of ligand-gated Cl- channels causes:`,
+        options: [
+            `Inhibition of the postsynaptic neuron`,
+            `Depolarization of the postsynaptic neuron`,
+            `Initiation of an action potential`,
+            `Block of ligand-gated cation channels`
+        ],
+        correct: `A`,
+        explanation: `Opening of ligand-gated Cl⁻ channels (e.g., GABA-A or glycine receptors) causes INHIBITION of the postsynaptic neuron. The influx of negatively charged Cl⁻ ions hyperpolarises the postsynaptic membrane (or stabilises it at the resting potential), making it harder to reach threshold and generate an action potential. This is the basis of inhibitory postsynaptic potentials (IPSPs). Depolarisation would be caused by opening cation channels (Na⁺ influx); action potential initiation requires depolarisation to threshold; and Cl⁻ channels do not block cation channels.`
+    },
+    {
+        q: `Ablation of somatosensory area (SI) does not significantly impair:`,
+        options: [
+            `Joint position sense`,
+            `Touch localization`,
+            `Two-point discrimination`,
+            `Pain perception`
+        ],
+        correct: `D`,
+        explanation: `Ablation of the primary somatosensory cortex (SI) significantly impairs fine discriminative sensations such as joint position sense, touch localisation, and two-point discrimination. However, PAIN PERCEPTION is NOT significantly impaired by SI ablation because pain is processed by a more diffuse and distributed system involving the thalamus, insular cortex, anterior cingulate cortex, and other limbic structures. The affective and motivational aspects of pain (suffering) may be altered, but the basic perception of pain persists. This is why patients with SI lesions can still feel pain, even though their ability to localise it precisely is reduced.`
+    },
+    {
+        q: `Which of the following is/are termed 'synthetic senses'?`,
+        options: [
+            `Fine touch`,
+            `Joint position sense`,
+            `Stereognosis`,
+            `Two-point discrimination`
+        ],
+        correct: `C`,
+        explanation: `STEREognosis is the ability to recognise the size, shape, texture, and weight of an object purely by feeling it, without visual or auditory cues. It is considered a "synthetic" sense because it requires the synthesis and integration of multiple sensory modalities (fine touch, pressure, proprioception) in the somatosensory cortex. Fine touch, joint position sense, and two-point discrimination are more elementary sensory modalities.`
+    },
+    {
+        q: `The neurotransmitter secreted by primary afferent fibres for severe pain is:`,
+        options: [
+            `Glutamate`,
+            `Enkephalin`,
+            `Substance P`,
+            `Opioid peptides`
+        ],
+        correct: `C`,
+        explanation: `SUBSTANCE P is the primary neurotransmitter released by primary afferent fibres (especially C fibres) that transmit severe, chronic, burning pain. It is released from the central terminals of nociceptive afferents in the dorsal horn of the spinal cord and facilitates the transmission of pain signals to second-order neurons. Glutamate is also released by nociceptive afferents (especially Aδ fibres for fast pain) and acts on AMPA/kainate receptors. Enkephalin and opioid peptides are inhibitory neurotransmitters involved in pain modulation, not in the primary transmission of pain.`
+    },
+    {
+        q: `Regarding pain transmission, which is NOT true?`,
+        options: [
+            `Fast pain fibres are Aδ fibres`,
+            `Substance P is the central transmitter`,
+            `All impulses pass through the central horn`,
+            `Pain sensation results from over-stimulation of other sensory modalities`
+        ],
+        correct: `D`,
+        explanation: `The statement that PAIN SENSATION RESULTS FROM OVER-STIMULATION OF OTHER SENSORY MODALITIES is NOT true. This is the "intensity theory" of pain, which has been largely discredited. Pain is a distinct sensory modality with its own specific receptors (nociceptors), afferent fibres (Aδ and C), and central pathways (spinothalamic tract). The other statements are true: fast pain is carried by Aδ fibres; substance P is the central transmitter for slow pain; and all sensory impulses (including pain) pass through the dorsal horn of the spinal cord (the "central horn" of the grey matter) before ascending.`
+    },
+    {
+        q: `With regard to pain pathways, all the following are true EXCEPT:`,
+        options: [
+            `Peripheral afferents are transmitted along A (delta) and C fibres`,
+            `An intact cerebral cortex is necessary for pain sensation`,
+            `The synaptic transmitter released by primary afferent fibres subserving pain is substance P`,
+            `Afferent fibres subserving pain sensation from viscera reach the CNS by both sympathetic and parasympathetic pathways`
+        ],
+        correct: `D`,
+        explanation: `The statement that VISCERAL PAIN AFFERENTS REACH THE CNS BY BOTH SYMPATHETIC AND PARASYMPATHETIC PATHWAYS is NOT true. Visceral pain afferents travel predominantly with SYMPATHETIC nerves to the spinal cord (via the sympathetic chain and splanchnic nerves). Some pelvic visceral afferents travel with PARASYMPATHETIC nerves (pelvic splanchnic nerves, S2–S4), but this is not a general rule for all viscera. The other statements are true: peripheral pain afferents are Aδ and C fibres; the cerebral cortex is necessary for the conscious perception of pain (though the affective component involves limbic structures); and substance P is the central transmitter for slow pain.`
+    },
+    {
+        q: `In a normal synapse, which of the following events occurs first during synaptic transmission?`,
+        options: [
+            `Release of neurotransmitters from synaptic vesicles`,
+            `Influx of sodium ions into the presynaptic neuron`,
+            `Influx of calcium ions into the presynaptic terminal`,
+            `Depolarization of the presynaptic membrane`
+        ],
+        correct: `D`,
+        explanation: `The sequence of events at a chemical synapse is: (1) an action potential arrives at the presynaptic terminal and DEPOLARISES the presynaptic membrane; (2) voltage-gated Ca²⁺ channels open, allowing Ca²⁺ influx into the presynaptic terminal; (3) Ca²⁺ triggers the fusion of synaptic vesicles with the presynaptic membrane; (4) neurotransmitter is released into the synaptic cleft by exocytosis; (5) neurotransmitter binds to receptors on the postsynaptic membrane. Therefore, the FIRST event is the depolarisation of the presynaptic membrane.`
+    },
+    {
+        q: `How is sensory information about the location of a stimulus encoded in the nervous system?`,
+        options: [
+            `By the type of receptor activated`,
+            `By the region of the brain that receives input from the corresponding receptive field`,
+            `By the speed of action potential transmission`,
+            `By the amplitude of the receptor potential generated`
+        ],
+        correct: `B`,
+        explanation: `The location of a stimulus is encoded by the REGION OF THE BRAIN that receives input from the corresponding receptive field. This is the principle of topographical organisation (somatotopy): each part of the body is represented in a specific region of the somatosensory cortex. The brain interprets the location of the stimulus based on which neurons are activated, not on the type of receptor, the speed of transmission, or the amplitude of the receptor potential.`
+    },
+    {
+        q: `Which of the following best describes the concept of receptor specificity in sensory systems?`,
+        options: [
+            `A receptor can only detect stimuli in its immediate environment.`,
+            `A receptor is only activated by a specific type of stimulus`,
+            `A receptor generates the same response to all types of stimuli.`,
+            `A receptor's sensitivity can be modified by combining signals in the cortex`
+        ],
+        correct: `B`,
+        explanation: `RECEPTOR SPECIFICITY (also called the law of specific nerve energies) states that each type of sensory receptor is optimally sensitive to (i.e., is only activated by) a SPECIFIC TYPE OF STIMULUS. For example, photoreceptors respond to light, mechanoreceptors to mechanical deformation, thermoreceptors to temperature, and nociceptors to noxious stimuli. This specificity is the basis for the distinct sensory modalities we perceive.`
+    },
+    {
+        q: `How is the intensity of a sensory stimulus encoded by sensory receptors?`,
+        options: [
+            `By the absolute voltage of the receptor potential`,
+            `By the rate of action potentials and the number of activated receptors`,
+            `By the number of synapses the action potentials traverse before reaching the cortex`,
+            `By the strength of the membrane potential's repolarization phase`
+        ],
+        correct: `B`,
+        explanation: `The intensity of a sensory stimulus is encoded by: (1) the RATE (FREQUENCY) of action potentials — a stronger stimulus produces a larger receptor potential, which triggers action potentials at a higher frequency; and (2) the NUMBER of activated receptors — a stronger stimulus recruits more receptors (population coding). The absolute voltage of the receptor potential is a local signal, not the encoded output; the number of synapses and the repolarisation phase are not the primary mechanisms.`
+    },
+    {
+        q: `In the sensory system, which component is critical for determining the type of stimulus being sensed?`,
+        options: [
+            `The frequency of action potentials generated by the sensory receptor`,
+            `The location of the stimulus within the receptive field`,
+            `The specific receptor and neural pathway activated by the stimulus`,
+            `The duration of the action potentials along the afferent axon`
+        ],
+        correct: `C`,
+        explanation: `The TYPE of stimulus being sensed is determined by the SPECIFIC RECEPTOR AND NEURAL PATHWAY activated. This is the principle of labeled lines: each sensory modality (touch, pain, temperature, vision, hearing) has its own specific receptors and dedicated neural pathways to the brain. The brain interprets the signal based on which pathway is activated. Frequency, location, and duration encode other features (intensity, location, duration) but not the type of stimulus.`
+    },
+    {
+        q: `Which of the following is true regarding receptor potentials in sensory transduction?`,
+        options: [
+            `They are action potentials generated in sensory neurons.`,
+            `They are graded potentials that vary in magnitude based on the strength of the stimulus.`,
+            `They directly reach the cortex without being processed by intermediate structures.`,
+            `They do not require ion channel activation to cause membrane potential changes`
+        ],
+        correct: `B`,
+        explanation: `Receptor potentials are GRADED POTENTIALS that vary in magnitude based on the strength of the stimulus. They are local, non-propagated depolarisations (or hyperpolarisations) that occur in the receptor membrane in response to a stimulus. They are NOT action potentials (which are all-or-none and propagated); they do not reach the cortex directly (they trigger action potentials in afferent axons, which then relay to the CNS); and they DO require ion channel activation (the stimulus opens or closes ion channels, changing membrane permeability).`
+    },
+    {
+        q: `What role does the thalamus play in sensory processing?`,
+        options: [
+            `It directly generates action potentials based on incoming stimuli`,
+            `It functions as a sensory gateway, integrating and filtering inputs before relaying them to higher brain regions.`,
+            `It bypasses cortical processing to produce immediate motor responses`,
+            `It differentiates between frequency and population coding mechanisms for pain and touch stimuli`
+        ],
+        correct: `B`,
+        explanation: `The thalamus functions as a SENSORY GATEWAY, integrating and filtering sensory inputs before relaying them to the cerebral cortex. All sensory pathways (except olfaction) synapse in the thalamus before reaching the cortex. The thalamus modulates and gates sensory information, allowing relevant signals to pass through while suppressing irrelevant ones. It does not directly generate action potentials based on incoming stimuli (it relays them), does not bypass cortical processing, and does not differentiate between frequency and population coding.`
+    },
+    {
+        q: `Which of the following best describes the concept of "labeled lines" in sensory coding?`,
+        options: [
+            `The specific pathways by which different types of sensory modalities are transmitted to the brain`,
+            `The organization of neurons in a linear arrangement within the somatosensory cortex`,
+            `The use of frequency coding to represent stimulus intensity`,
+            `The recruitment of multiple receptors to encode the strength of a stimulus`
+        ],
+        correct: `A`,
+        explanation: `The concept of "LABELED LINES" refers to the SPECIFIC PATHWAYS by which different types of sensory modalities are transmitted to the brain. Each modality (touch, pain, temperature, vision, hearing) has its own dedicated receptors, afferent fibres, and central pathways. Because each pathway is "labeled" for a specific modality, stimulation of that pathway anywhere along its course produces the sensation of that modality. This is the basis for the law of specific nerve energies.`
+    },
+    
+    ];
+
+    /* =====================================================================
+       SECTION B — 15 scenario questions (MCQ format)
+       ===================================================================== */
+    const sectionBIntro = `<div class="scenario-intro">
+        <strong>Case:</strong> A 54-year-old male patient presents to the neurology clinic with complaints of difficulty walking and maintaining balance. He reports frequent stumbling and muscle weakness, particularly in his lower limbs. He has experienced occasional episodes of sudden, jerky movements in his legs when he attempts to stand from a seated position. On examination, you note decreased muscle tone in his lower limbs, diminished knee jerk reflexes, and an absent Achilles reflex. His upper limb reflexes appear normal. He also demonstrates a lack of response to passive stretch resistance in his lower limb muscles and struggles to control posture and maintain an upright stance without external support. Based on these findings, you suspect a disorder affecting both the stretch and inverse stretch reflexes, possibly involving peripheral neuropathy or a lower motor neuron lesion.
+    </div>`;
+
+    const sectionB = [
+    {
+        q: `Which reflex is primarily responsible for muscle contraction in response to a rapid muscle stretch, such as tapping a tendon?`,
+        options: [`Inverse stretch reflex`, `Withdrawal reflex`, `Stretch reflex`, `Crossed-extensor reflex`, `Flexor reflex`],
+        correct: `C`,
+        explanation: `The stretch reflex (myotatic reflex) is a monosynaptic reflex that causes muscle contraction in response to a rapid stretch, such as tapping a tendon. The muscle spindle detects the stretch, and its Group Ia afferent synapses directly onto the alpha motor neuron, causing the muscle to contract. The inverse stretch reflex causes relaxation; the withdrawal and flexor reflexes respond to noxious stimuli; and the crossed-extensor reflex is a postural response.`
+    },
+    {
+        q: `The diminished knee jerk and absent Achilles reflex observed in this patient are most likely associated with which type of lesion?`,
+        options: [`Upper motor neuron lesion`, `Lower motor neuron lesion`, `Cerebellar dysfunction`, `Basal ganglia disorder`, `Cerebral cortex lesion`],
+        correct: `B`,
+        explanation: `Diminished or absent deep tendon reflexes are characteristic of a lower motor neuron (LMN) lesion, which interrupts the reflex arc. Upper motor neuron lesions cause hyperreflexia; cerebellar dysfunction causes ataxia; basal ganglia disorders cause movement disorders; and cortical lesions cause UMN signs.`
+    },
+    {
+        q: `The patellar reflex involves which type of sensory receptor?`,
+        options: [`Golgi tendon organ`, `Muscle spindle`, `Pacinian corpuscle`, `Ruffini endings`, `Merkel cells`],
+        correct: `B`,
+        explanation: `The patellar reflex is a stretch reflex mediated by the muscle spindle. Tapping the patellar tendon stretches the quadriceps, activating the muscle spindle, which triggers a reflex contraction. The Golgi tendon organ mediates the inverse stretch reflex; Pacinian corpuscles detect vibration; Ruffini endings detect skin stretch; and Merkel cells detect sustained touch.`
+    },
+    {
+        q: `What is the primary function of the Golgi tendon organ in muscle control?`,
+        options: [`Detects changes in muscle length`, `Controls muscle tone during voluntary movements`, `Initiates the inverse stretch reflex`, `Inhibits alpha motor neurons during rapid stretching`, `Enhances muscle contraction in response to stretch`],
+        correct: `C`,
+        explanation: `The Golgi tendon organ detects muscle tension and initiates the inverse stretch reflex (clasp-knife reflex). When tension becomes excessive, it causes the muscle to relax via an inhibitory interneuron, protecting the muscle and tendon from injury.`
+    },
+    {
+        q: `Which of the following best explains the patient's decreased muscle tone and reflexes in the lower limbs?`,
+        options: [`Hyperactivity in the gamma efferent system`, `Increased input from Golgi tendon organs`, `Disruption of the afferent or efferent limbs of the reflex arc`, `Loss of inhibitory signals from the cortex`, `Increased resistance to passive movement`],
+        correct: `C`,
+        explanation: `Decreased tone (hypotonia) and decreased reflexes (hyporeflexia) result from disruption of the afferent or efferent limbs of the reflex arc — the hallmark of a lower motor neuron lesion.`
+    },
+    {
+        q: `In this patient, what role does the inverse stretch reflex play in muscle function, and how might its dysfunction contribute to his symptoms?`,
+        options: [`It helps maintain posture; dysfunction may cause postural instability.`, `It prevents excessive muscle tension; dysfunction could lead to muscle tearing.`, `It reduces muscle tone; dysfunction could lead to spasticity.`, `It increases muscle tension; dysfunction could lead to hypertonia.`, `It mediates voluntary movement; dysfunction could impair coordination.`],
+        correct: `B`,
+        explanation: `The inverse stretch reflex prevents excessive muscle tension by causing relaxation when tension is too high. Its dysfunction could lead to muscle tearing or tendon rupture.`
+    },
+    {
+        q: `What neurotransmitter is involved in the synaptic transmission of the reflex arc within the spinal cord, particularly between the sensory and motor neurons in the stretch reflex?`,
+        options: [`Dopamine`, `Acetylcholine`, `GABA`, `Glutamate`, `Serotonin`],
+        correct: `D`,
+        explanation: `The central synapse of the monosynaptic stretch reflex uses glutamate, the primary excitatory neurotransmitter in the CNS. Acetylcholine is used at the neuromuscular junction (efferent limb), not at the central synapse.`
+    },
+    {
+        q: `Which of the following accurately describes the role of the gamma motor neurons in regulating muscle tone?`,
+        options: [`They inhibit muscle spindles, decreasing tone.`, `They modulate the sensitivity of muscle spindles, maintaining tone during movement.`, `They activate Golgi tendon organs, preventing excessive muscle contraction.`, `They increase synaptic activity at the motor cortex.`, `They enhance alpha motor neuron activity directly.`],
+        correct: `B`,
+        explanation: `Gamma motor neurons modulate the sensitivity of muscle spindles by contracting intrafusal fibres, maintaining spindle sensitivity and muscle tone during movement (alpha-gamma coactivation).`
+    },
+    {
+        q: `During the Jendrassik maneuver, a patient clenches their hands while the knee reflex is tested. What is the purpose of this maneuver?`,
+        options: [`To inhibit the reflex arc`, `To enhance the reflex by reducing descending inhibition`, `To decrease muscle tone in the upper limbs`, `To stimulate the corticospinal tract`, `To reduce proprioceptive input to the reflex arc`],
+        correct: `B`,
+        explanation: `The Jendrassik maneuver enhances the knee reflex by reducing descending inhibition on the spinal reflex arc, making the reflex easier to elicit.`
+    },
+    {
+        q: `What type of sensory fiber is responsible for transmitting stretch information from the muscle spindle to the spinal cord?`,
+        options: [`Ib afferent fiber`, `Type II afferent fiber`, `C fiber`, `Ia afferent fiber`, `A-delta fiber`],
+        correct: `D`,
+        explanation: `Group Ia (primary) afferents transmit dynamic stretch information from the muscle spindle. Group II afferents transmit static length information; Group Ib is from Golgi tendon organs; C fibres carry slow pain; and Aδ fibres carry fast pain.`
+    },
+    {
+        q: `Which of the following best describes the role of the gamma motor neurons in the stretch reflex?`,
+        options: [`They stimulate extrafusal muscle fibers directly.`, `They adjust the sensitivity of the muscle spindle by contracting intrafusal fibers.`, `They inhibit muscle spindle activity to prevent overstretching.`, `They increase the release of acetylcholine at the neuromuscular junction.`, `They excite the antagonist muscle to facilitate movement.`],
+        correct: `B`,
+        explanation: `Gamma motor neurons adjust spindle sensitivity by contracting intrafusal fibres, keeping the spindle taut and responsive during voluntary contraction.`
+    },
+    {
+        q: `In the stretch reflex arc, what is the role of alpha motor neurons?`,
+        options: [`They provide feedback to the brain about muscle length.`, `They innervate intrafusal muscle fibers within the muscle spindle.`, `They carry sensory information about stretch to the spinal cord.`, `They stimulate extrafusal muscle fibers to contract.`, `They inhibit muscle contraction in the antagonist muscle.`],
+        correct: `D`,
+        explanation: `Alpha motor neurons are the efferent limb of the stretch reflex. They stimulate extrafusal muscle fibres to contract by releasing acetylcholine at the neuromuscular junction.`
+    },
+    {
+        q: `What happens to the firing rate of the Ia afferent fibers when a muscle is stretched?`,
+        options: [`It decreases to prevent over-activation of the muscle spindle.`, `It remains constant as the muscle spindle adapts.`, `It increases, signaling the degree of stretch to the spinal cord.`, `It fluctuates randomly with each muscle stretch.`, `It ceases completely to protect the muscle.`],
+        correct: `C`,
+        explanation: `When a muscle is stretched, the firing rate of Group Ia afferents increases, signalling the degree and rate of stretch to the spinal cord, which triggers the stretch reflex.`
+    },
+    {
+        q: `In the context of muscle spindles, what is the role of the nuclear bag fibers?`,
+        options: [`They detect changes in muscle tension.`, `They convey information about dynamic (rapid) changes in muscle length.`, `They initiate contraction in extrafusal fibers.`, `They regulate the gamma motor neuron activity.`, `They inhibit antagonist muscle contractions.`],
+        correct: `B`,
+        explanation: `Nuclear bag fibres convey information about dynamic (rapid) changes in muscle length via Group Ia afferents. Nuclear chain fibres convey static length information.`
+    },
+    {
+        q: `Which of the following statements is true about the stretch reflex?`,
+        options: [`It is a polysynaptic reflex involving multiple interneurons.`, `It directly involves the gamma motor neurons to contract extrafusal fibers.`, `It occurs in response to passive stretch and helps maintain muscle tone.`, `It is activated by the Golgi tendon organ in response to increased muscle tension.`, `It only involves sensory feedback from Type II afferent fibers.`],
+        correct: `C`,
+        explanation: `The stretch reflex occurs in response to passive stretch and helps maintain muscle tone. It is monosynaptic (not polysynaptic), mediated by the muscle spindle (not Golgi tendon organ), and involves Group Ia afferents (not only Type II).`
+    }
+    ];
+
+    /* =====================================================================
+       SECTION C — Tabes Dorsalis (structured, mark-appropriate answers)
+       ===================================================================== */
+    const sectionC = [
+    {
+        q: `Draw a well labeled diagram of the cross section of the spinal cord and the two major ascending pathways till termination. Shade the area and structure most affected in Tabes dorsalis. [8 marks]`,
+        model: `<h4>Model Answer (8 marks) — description of what to draw</h4>
+        <p><strong>Cross-section of the spinal cord (H-shaped grey matter surrounded by white matter):</strong></p>
+        <ul>
+            <li>Label: <strong>Dorsal (posterior) horn, ventral (anterior) horn, lateral horn (T1–L2), grey commissure, central canal, dorsal columns, lateral columns, anterior columns, dorsal root, dorsal root ganglion, ventral root.</strong></li>
+        </ul>
+        <p><strong>Two major ascending pathways:</strong></p>
+        <ol>
+            <li><strong>Dorsal column–medial lemniscus (DCML) pathway:</strong> First-order neurons in DRG → ascend in <strong>fasciculus gracilis and cuneatus</strong> (dorsal columns) → synapse in <strong>nucleus gracilis/cuneatus</strong> (medulla) → cross as internal arcuate fibres → <strong>medial lemniscus</strong> → <strong>VPL thalamus</strong> → <strong>primary somatosensory cortex (SI)</strong>. Carries fine touch, vibration, proprioception.</li>
+            <li><strong>Spinothalamic (anterolateral) pathway:</strong> First-order neurons in DRG → synapse in <strong>dorsal horn</strong> → cross in anterior white commissure → ascend in <strong>lateral and anterior spinothalamic tracts</strong> → <strong>VPL thalamus</strong> → <strong>SI cortex</strong>. Carries pain, temperature, crude touch.</li>
+        </ol>
+        <p><strong>Shade in Tabes dorsalis:</strong> The <strong>DORSAL COLUMNS (fasciculus gracilis and cuneatus)</strong> and the <strong>DORSAL ROOTS</strong> are most affected — bilateral degeneration of the dorsal columns and dorsal root ganglia.</p>`
+    },
+    {
+        q: `What neuronal changes occur in Tabes dorsalis? [1 mark]`,
+        model: `<h4>Model Answer (1 mark)</h4>
+        <p>Demyelination and degeneration of the <strong>dorsal columns</strong> and <strong>dorsal root ganglia</strong>, with loss of large myelinated axons and reactive gliosis.</p>`
+    },
+    {
+        q: `What underlying mechanism is regarded as the main cause of Tabes dorsalis? [1 mark]`,
+        model: `<h4>Model Answer (1 mark)</h4>
+        <p><strong>Neurosyphilis</strong> — infection by <em>Treponema pallidum</em> affecting the dorsal columns and dorsal roots.</p>`
+    },
+    {
+        q: `Name the tracts affected in Tabes dorsalis. [1 mark]`,
+        model: `<h4>Model Answer (1 mark)</h4>
+        <p><strong>Dorsal columns</strong> (fasciculus gracilis and cuneatus) and <strong>dorsal roots</strong>.</p>`
+    },
+    {
+        q: `What sensations are lost? [3 marks]`,
+        model: `<h4>Model Answer (3 marks)</h4>
+        <ul>
+            <li><strong>Proprioception</strong> (joint position sense).</li>
+            <li><strong>Vibration sense.</strong></li>
+            <li><strong>Fine (discriminative) touch</strong> and <strong>two-point discrimination</strong>.</li>
+        </ul>`
+    },
+    {
+        q: `What is sensory ataxia? [1 mark]`,
+        model: `<h4>Model Answer (1 mark)</h4>
+        <p>Unsteady, wide-based gait and impaired balance caused by <strong>loss of proprioceptive input</strong> (not cerebellar or motor weakness).</p>`
+    },
+    {
+        q: `What is the basis for sensory ataxia in Tabes dorsalis? [2 marks]`,
+        model: `<h4>Model Answer (2 marks)</h4>
+        <ul>
+            <li>Degeneration of the <strong>dorsal columns</strong> → loss of proprioceptive input from muscles and joints.</li>
+            <li>The brain cannot accurately sense limb position → unsteady, ataxic gait and positive Romberg sign.</li>
+        </ul>`
+    },
+    {
+        q: `What is Romberg's sign? [1 mark]`,
+        model: `<h4>Model Answer (1 mark)</h4>
+        <p>Worsening of balance and increased swaying when the eyes are closed (in the absence of significant motor weakness).</p>`
+    },
+    {
+        q: `What is the basis for this in Tabes dorsalis? [2 marks]`,
+        model: `<h4>Model Answer (2 marks)</h4>
+        <ul>
+            <li>With eyes open, vision compensates for loss of proprioception → balance appears relatively preserved.</li>
+            <li>With eyes closed, visual compensation is removed → unopposed proprioceptive loss → marked imbalance (positive Romberg).</li>
+        </ul>`
+    }
+    ];
+
+    /* =====================================================================
+       RENDERING — SECTION A (MCQ)
+       ===================================================================== */
+    function renderSectionA() {
+        const container = document.getElementById('container-A');
+        let html = '';
+        sectionA.forEach((q, i) => {
+            const qid = 'A-q' + (i + 1);
+            html += '<div class="question" id="q-' + qid + '">';
+            html += '<p><span class="q-badge">Q' + (i + 1) + '</span> ' + q.q + '</p>';
+            html += '<div class="options">';
+            q.options.forEach((opt, j) => {
+                const L = String.fromCharCode(65 + j);
+                html += '<label><input type="radio" name="' + qid + '" value="' + L + '"> <strong>' + L + ')</strong> ' + opt + '</label>';
+            });
+            html += '</div>';
+            html += '<div class="question-feedback" id="fb-' + qid + '"></div>';
+            html += '</div>';
+        });
+        container.innerHTML = html;
+    }
+
+    function submitSectionA() {
+        let score = 0;
+        sectionA.forEach((q, i) => {
+            const qid = 'A-q' + (i + 1);
+            const radios = document.getElementsByName(qid);
+            let selected = null;
+            for (let r = 0; r < radios.length; r++) {
+                if (radios[r].checked) { selected = radios[r]; break; }
+            }
+            const correct = q.correct.toUpperCase();
+            if (selected && selected.value === correct) score++;
+            let html = '<div class="answer-block"><div class="answer-list">';
+            q.options.forEach((opt, j) => {
+                const L = String.fromCharCode(65 + j);
+                let cls = 'answer-item';
+                if (L === correct) cls += ' answer-correct';
+                if (selected && selected.value === L) {
+                    cls += ' user-choice';
+                    if (L !== correct) cls += ' answer-wrong';
+                }
+                const mark = (selected && selected.value === L) ? ' ◀ your answer' : '';
+                html += '<div class="' + cls + '">' + L + ') ' + opt + mark + '</div>';
+            });
+            html += '</div>';
+            const correctIdx = correct.charCodeAt(0) - 65;
+            const correctText = (correctIdx >= 0 && correctIdx < q.options.length) ? q.options[correctIdx] : '';
+            if (!selected) {
+                html += '<div class="explanation wrong">No answer selected. Correct answer: <strong>' +
+                        correct + ') ' + correctText + '</strong>.<br>' + q.explanation + '</div>';
+            } else if (selected.value === correct) {
+                html += '<div class="explanation">✅ <strong>Correct.</strong><br>' + q.explanation + '</div>';
+            } else {
+                html += '<div class="explanation wrong">❌ <strong>Incorrect.</strong> Correct answer: <strong>' +
+                        correct + ') ' + correctText + '</strong>.<br>' + q.explanation + '</div>';
+            }
+            const fb = document.getElementById('fb-' + qid);
+            if (fb) fb.innerHTML = html;
+        });
+        const total = sectionA.length;
+        const pct = Math.round((score / total) * 100);
+        const box = document.getElementById('result-A');
+        box.style.display = 'block';
+        document.getElementById('score-A').innerText = score + ' / ' + total + '  (' + pct + '%)';
+        document.querySelectorAll('#panel-A input[type="radio"]').forEach(r => r.disabled = true);
+    }
+
+    /* =====================================================================
+       RENDERING — SECTION B (Scenario MCQs)
+       ===================================================================== */
+    function renderSectionB() {
+        document.getElementById('container-B-intro').innerHTML = sectionBIntro;
+        const container = document.getElementById('container-B');
+        let html = '';
+        sectionB.forEach((q, i) => {
+            const qid = 'B-q' + (i + 1);
+            html += '<div class="question" id="q-' + qid + '">';
+            html += '<p><span class="q-badge">Q' + (i + 1) + '</span> ' + q.q + '</p>';
+            html += '<div class="options">';
+            q.options.forEach((opt, j) => {
+                const L = String.fromCharCode(65 + j);
+                html += '<label><input type="radio" name="' + qid + '" value="' + L + '"> <strong>' + L + ')</strong> ' + opt + '</label>';
+            });
+            html += '</div>';
+            html += '<div class="question-feedback" id="fb-' + qid + '"></div>';
+            html += '</div>';
+        });
+        container.innerHTML = html;
+    }
+
+    function submitSectionB() {
+        let score = 0;
+        sectionB.forEach((q, i) => {
+            const qid = 'B-q' + (i + 1);
+            const radios = document.getElementsByName(qid);
+            let selected = null;
+            for (let r = 0; r < radios.length; r++) {
+                if (radios[r].checked) { selected = radios[r]; break; }
+            }
+            const correct = q.correct.toUpperCase();
+            if (selected && selected.value === correct) score++;
+            let html = '<div class="answer-block"><div class="answer-list">';
+            q.options.forEach((opt, j) => {
+                const L = String.fromCharCode(65 + j);
+                let cls = 'answer-item';
+                if (L === correct) cls += ' answer-correct';
+                if (selected && selected.value === L) {
+                    cls += ' user-choice';
+                    if (L !== correct) cls += ' answer-wrong';
+                }
+                const mark = (selected && selected.value === L) ? ' ◀ your answer' : '';
+                html += '<div class="' + cls + '">' + L + ') ' + opt + mark + '</div>';
+            });
+            html += '</div>';
+            const correctIdx = correct.charCodeAt(0) - 65;
+            const correctText = (correctIdx >= 0 && correctIdx < q.options.length) ? q.options[correctIdx] : '';
+            if (!selected) {
+                html += '<div class="explanation wrong">No answer selected. Correct answer: <strong>' +
+                        correct + ') ' + correctText + '</strong>.<br>' + q.explanation + '</div>';
+            } else if (selected.value === correct) {
+                html += '<div class="explanation">✅ <strong>Correct.</strong><br>' + q.explanation + '</div>';
+            } else {
+                html += '<div class="explanation wrong">❌ <strong>Incorrect.</strong> Correct answer: <strong>' +
+                        correct + ') ' + correctText + '</strong>.<br>' + q.explanation + '</div>';
+            }
+            const fb = document.getElementById('fb-' + qid);
+            if (fb) fb.innerHTML = html;
+        });
+        const total = sectionB.length;
+        const pct = Math.round((score / total) * 100);
+        const box = document.getElementById('result-B');
+        box.style.display = 'block';
+        document.getElementById('score-B').innerText = score + ' / ' + total + '  (' + pct + '%)';
+        document.querySelectorAll('#panel-B input[type="radio"]').forEach(r => r.disabled = true);
+    }
+
+    /* =====================================================================
+       RENDERING — SECTION C (Structured with model answers)
+       ===================================================================== */
+    function renderSectionC() {
+        const container = document.getElementById('container-C');
+        let html = '';
+        sectionC.forEach((item, i) => {
+            const qid = 'C-q' + (i + 1);
+            html += '<div class="question">';
+            html += '<p><span class="q-badge">Q' + (i + 1) + '</span> ' + item.q + '</p>';
+            html += '<div class="text-answer-wrap">';
+            html += '<textarea id="ta-' + qid + '" placeholder="Write your answer here..."></textarea>';
+            html += '</div>';
+            html += '<div class="reveal-wrap">';
+            html += '<button type="button" class="btn btn-sm btn-outline" onclick="toggleModel(\'' + qid + '\')">';
+            html += '<i class="fas fa-eye"></i> Show Model Answer</button>';
+            html += '</div>';
+            html += '<div id="model-' + qid + '" class="model-answer hidden">' + item.model + '</div>';
+            html += '</div>';
+        });
+        container.innerHTML = html;
+    }
+
+    function toggleModel(qid) {
+        const el = document.getElementById('model-' + qid);
+        el.classList.toggle('hidden');
+    }
+
+    /* ─── INIT ─── */
+    renderSectionA();
+    renderSectionB();
+    renderSectionC();
+
+    /* ─── TAB SWITCHING ─── */
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            const target = this.dataset.target;
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+            document.getElementById('panel-' + target).classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+    </script>
+
+</body>
+</html>

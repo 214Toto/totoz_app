@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2023 Physiology Test 1 – 3rd Year</title>
+    <style>
+        :root {
+            --primary: #1a6b6b;
+            --accent: #2ea8a0;
+            --dark: #0f2a2a;
+            --light: #f4f8f7;
+            --radius: 12px;
+            --shadow: 0 4px 14px rgba(0, 30, 30, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #edf3f2;
+            color: var(--dark);
+            min-height: 100vh;
+            padding-top: 72px;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: linear-gradient(145deg, var(--primary), var(--dark));
+            color: #fff;
+            padding: 0.6rem 0;
+            box-shadow: 0 4px 18px rgba(0, 20, 20, 0.25);
+        }
+
+        .header-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .logo i {
+            font-size: 1.5rem;
+            color: #8dd9d4;
+        }
+
+        .logo h1 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 0.2rem 1rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #b3e6e0;
+            letter-spacing: 0.5px;
+        }
+
+        .container {
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 0 1.2rem 2.5rem;
+        }
+
+        .tab-bar {
+            display: flex;
+            gap: 0.5rem;
+            margin: 0.5rem 0 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: #dce8e8;
+            border: none;
+            padding: 0.5rem 1.8rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--dark);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .tab-btn:hover {
+            background: #c0d6d6;
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 2px 10px rgba(26, 107, 107, 0.25);
+        }
+
+        .tab-panel {
+            display: block;
+        }
+
+        .tab-panel.hidden {
+            display: none;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 0 0 0.8rem 0;
+            padding-bottom: 0.4rem;
+            border-bottom: 3px solid rgba(26, 107, 107, 0.18);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .section-title .count {
+            font-size: 0.7rem;
+            font-weight: 600;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 40px;
+            padding: 0 0.7rem;
+            line-height: 1.7;
+        }
+
+        .section-subtitle {
+            color: #4f6e6e;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .question {
+            background: #ffffff;
+            border-radius: var(--radius);
+            padding: 1.1rem 1.2rem 0.2rem 1.2rem;
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(26, 107, 107, 0.05);
+            transition: box-shadow 0.2s;
+        }
+
+        .question:hover {
+            box-shadow: 0 6px 20px rgba(0, 30, 30, 0.07);
+        }
+
+        .question .q-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 40px;
+            padding: 0 0.65rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            line-height: 1.6;
+            margin-right: 0.4rem;
+        }
+
+        .question p {
+            font-weight: 600;
+            font-size: 0.97rem;
+            margin-bottom: 0.4rem;
+            color: var(--dark);
+        }
+
+        .options label {
+            display: block;
+            background: #fafcfc;
+            border: 1px solid #dde8e8;
+            border-radius: 7px;
+            padding: 0.4rem 0.85rem;
+            margin-top: 0.4rem;
+            cursor: pointer;
+            transition: all 0.15s;
+            font-weight: 450;
+            font-size: 0.92rem;
+        }
+
+        .options label:hover {
+            background: #e8f5f4;
+            border-color: var(--accent);
+        }
+
+        .options input[type="radio"] {
+            margin-right: 0.5rem;
+            accent-color: var(--primary);
+            transform: scale(1.04);
+        }
+
+        .question-feedback {
+            margin-top: 0.8rem;
+            padding: 0.4rem 0 0.1rem 0;
+            border-top: 1px dashed #dce6e6;
+        }
+
+        .answer-block strong {
+            display: block;
+            margin-bottom: 3px;
+            color: var(--primary);
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .answer-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .answer-item {
+            padding: 4px 10px;
+            border-radius: 5px;
+            border: 1px solid #e4edec;
+            background: #ffffff;
+            font-weight: 500;
+            font-size: 0.88rem;
+        }
+
+        .answer-correct {
+            background: #e8f7ef;
+            border-color: #a8d8c0;
+            color: #0a4f3a;
+        }
+
+        .answer-wrong {
+            background: #fde9ea;
+            border-color: #f5b8b8;
+            color: #8a1f2b;
+        }
+
+        .user-choice {
+            outline: 2px dashed rgba(0, 0, 0, 0.06);
+        }
+
+        .explanation {
+            margin-top: 5px;
+            padding: 8px 13px;
+            border-radius: 7px;
+            background: #f0f8f6;
+            color: #065f4a;
+            font-size: 0.88rem;
+            line-height: 1.5;
+            border-left: 4px solid var(--accent);
+        }
+
+        .explanation.wrong {
+            background: #fdf1f1;
+            color: #7a1f1f;
+            border-left-color: #e68080;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            color: #fff;
+            border: none;
+            padding: 0.55rem 1.8rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.2s;
+            box-shadow: 0 4px 14px rgba(26, 107, 107, 0.25);
+        }
+
+        .btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 24px rgba(26, 107, 107, 0.32);
+        }
+
+        .btn:active {
+            transform: scale(0.96);
+        }
+
+        .btn-sm {
+            padding: 0.3rem 1rem;
+            font-size: 0.8rem;
+        }
+
+        .submit-wrap {
+            text-align: center;
+            margin: 1.5rem 0 1.8rem;
+        }
+
+        .result {
+            margin-top: 1.5rem;
+            padding: 1.5rem 1.5rem 0.8rem;
+            background: #eaf6f4;
+            border-radius: var(--radius);
+            text-align: center;
+            display: none;
+            border: 1px solid #b8dbd6;
+        }
+
+        .result h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .score {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 0.1rem 0 0.2rem;
+        }
+
+        .text-muted {
+            color: #4f6e6e;
+            font-size: 0.9rem;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Section B / C styles */
+        .section-b-question {
+            background: #ffffff;
+            border-radius: var(--radius);
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(26, 107, 107, 0.05);
+        }
+
+        .section-b-question .q-label {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-b-question .q-text {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            background: #f5f8f8;
+            padding: 0.6rem 1rem;
+            border-radius: 7px;
+            line-height: 1.6;
+        }
+
+        .subquestion {
+            margin-top: 0.8rem;
+            border-top: 1px solid #e0ecec;
+            padding-top: 0.8rem;
+        }
+
+        .subquestion .sub-label {
+            font-weight: 600;
+            color: var(--dark);
+            line-height: 1.5;
+        }
+
+        .subquestion textarea {
+            width: 100%;
+            min-height: 55px;
+            padding: 0.6rem;
+            border: 1px solid #cbdcdc;
+            border-radius: 7px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            resize: vertical;
+            margin-top: 0.3rem;
+            background: #fafcfc;
+        }
+
+        .subquestion textarea:focus {
+            outline: 2px solid var(--accent);
+            border-color: transparent;
+        }
+
+        .show-answer-btn {
+            margin-top: 0.4rem;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 0.2rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+
+        .show-answer-btn:hover {
+            background: var(--accent);
+        }
+
+        .model-answer {
+            margin-top: 0.5rem;
+            padding: 0.6rem 1rem;
+            background: #f0f8f6;
+            border-left: 4px solid var(--accent);
+            border-radius: 5px;
+            font-size: 0.9rem;
+            color: #065f4a;
+            display: none;
+            white-space: pre-wrap;
+            line-height: 1.6;
+        }
+
+        .model-answer.visible {
+            display: block;
+        }
+
+        .mono-box {
+            background: #f5f8f8;
+            padding: 0.6rem 1rem;
+            border-radius: 7px;
+            font-family: monospace;
+            font-size: 0.95rem;
+            margin: 0.5rem 0;
+        }
+
+        @media (max-width: 700px) {
+            body {
+                padding-top: 68px;
+            }
+            .logo h1 {
+                font-size: 0.95rem;
+            }
+            .header-inner {
+                padding: 0 1rem;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.2rem;
+            }
+            .badge {
+                align-self: flex-start;
+            }
+            .question {
+                padding: 0.9rem 0.9rem 0.1rem 0.9rem;
+            }
+            .section-title {
+                font-size: 1.05rem;
+            }
+            .score {
+                font-size: 2.2rem;
+            }
+            .btn {
+                padding: 0.5rem 1.2rem;
+                font-size: 0.85rem;
+            }
+            .section-b-question {
+                padding: 0.9rem;
+            }
+            .tab-btn {
+                padding: 0.4rem 1.2rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .logo h1 {
+                font-size: 0.8rem;
+            }
+            .options label {
+                font-size: 0.85rem;
+                padding: 0.35rem 0.65rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-inner">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+                <h1>2023 Physiology Test 1 – 3rd Year</h1>
+            </div>
+            <span class="badge"><i class="fas fa-pencil-alt"></i> &nbsp;29 MCQs + Section B + Section C</span>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+
+            <!-- TAB BAR -->
+            <div class="tab-bar">
+                <button class="tab-btn active" data-target="section-mcq">📝 Section A – MCQs</button>
+                <button class="tab-btn" data-target="section-sectionB">✍️ Section B</button>
+                <button class="tab-btn" data-target="section-sectionC">🩺 Section C – Scenario</button>
+            </div>
+
+            <!-- ========== MCQ SECTION ========== -->
+            <div id="section-mcq" class="tab-panel">
+                <div class="section-title">
+                    <i class="fas fa-list-ul"></i> Section A – Multiple Choice Questions
+                    <span class="count">29</span>
+                </div>
+                <p class="section-subtitle">Select the best answer for each question, then click <strong>Submit All MCQs</strong> below. <em>Note: The original paper's numbering skips question 24; questions have been renumbered sequentially.</em></p>
+
+                <form id="quizForm">
+                    <div id="mcq-container"></div>
+                    <div class="submit-wrap">
+                        <button type="button" class="btn" onclick="submitQuiz()">
+                            <i class="fas fa-check-circle"></i> Submit All MCQs
+                        </button>
+                    </div>
+                </form>
+
+                <div class="result" id="resultBox">
+                    <h3><i class="fas fa-chart-simple"></i> Your Score</h3>
+                    <div class="score" id="score">0%</div>
+                    <p class="text-muted">Review the feedback below each question.</p>
+                </div>
+            </div>
+
+            <!-- ========== SECTION B ========== -->
+            <div id="section-sectionB" class="tab-panel hidden">
+                <div class="section-title">
+                    <i class="fas fa-pencil-square"></i> Section B – Structured and Short Answer Questions
+                    <span class="count">20 marks</span>
+                </div>
+                <p class="section-subtitle">Write your answers in the boxes below. Click <strong>Show Answer</strong> to reveal a detailed model answer.</p>
+
+                <!-- ─── B1 ─── -->
+                <div class="section-b-question">
+                    <div class="q-label">Question 1 – Decreased urine output in hot season</div>
+                    <div class="q-text">Briefly explain the physiological basis for decreased urine output in hot season. <strong>[4 marks]</strong></div>
+                    <div class="subquestion">
+                        <div class="sub-label">Answer:</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer"><strong>Physiological basis for decreased urine output in hot season (4 marks):</strong><br><br>
+During hot weather, the body loses significant amounts of water and electrolytes through sweating. This leads to a series of compensatory physiological responses that reduce urine output (oliguria) and conserve water:<br><br>
+<strong>1. Decreased extracellular fluid (ECF) and plasma volume:</strong> Sweating reduces plasma volume → decreased venous return and atrial stretch → decreased release of atrial natriuretic peptide (ANP), which normally promotes natriuresis and diuresis.<br><br>
+<strong>2. Increased plasma osmolality:</strong> Water loss raises plasma osmolality → stimulation of hypothalamic osmoreceptors → increased ADH (vasopressin) release from the posterior pituitary → insertion of aquaporin-2 channels in the collecting duct → increased water reabsorption → small volume of concentrated urine.<br><br>
+<strong>3. Activation of the renin–angiotensin–aldosterone system (RAAS):</strong> Decreased renal perfusion pressure and increased sympathetic tone stimulate renin release from the juxtaglomerular apparatus → increased angiotensin II and aldosterone → increased Na⁺ and water reabsorption in the proximal tubule, loop of Henle, and collecting duct.<br><br>
+<strong>4. Increased sympathetic tone:</strong> Heat stress activates the sympathetic nervous system → renal vasoconstriction → decreased renal blood flow and GFR → reduced filtered load of water and solutes → decreased urine output.<br><br>
+<strong>5. Redistribution of blood flow:</strong> Blood is shunted away from the kidneys to the skin for thermoregulation → reduced renal perfusion → decreased GFR.<br><br>
+<strong>6. Increased thirst:</strong> Osmoreceptor stimulation also triggers thirst → increased water intake, which helps restore plasma volume. However, if water is not available, oliguria persists.<br><br>
+The net result is a small volume of highly concentrated (hyperosmotic) urine that conserves water and maintains plasma osmolality and blood pressure.</div>
+                    </div>
+                </div>
+
+                <!-- ─── B2 ─── -->
+                <div class="section-b-question">
+                    <div class="q-label">Question 2 – Autoregulation of GFR</div>
+                    <div class="q-text">Briefly discuss the autoregulation of glomerular filtration rate. <strong>[3 marks]</strong></div>
+                    <div class="subquestion">
+                        <div class="sub-label">Answer:</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer"><strong>Autoregulation of glomerular filtration rate (3 marks):</strong><br><br>
+Autoregulation is the intrinsic ability of the kidney to maintain a relatively constant renal blood flow (RBF) and glomerular filtration rate (GFR) despite fluctuations in arterial blood pressure (between approximately 80 and 180 mmHg). This protects the glomeruli from barotrauma and prevents extreme fluctuations in fluid and electrolyte excretion.<br><br>
+<strong>Two main mechanisms are involved:</strong><br><br>
+<strong>1. Myogenic mechanism (Bayliss response):</strong><br>
+An increase in arterial pressure stretches the smooth muscle of the afferent arteriole. The stretched muscle responds by contracting (myogenic reflex), which increases vascular resistance and prevents excessive transmission of pressure to the glomerulus. Conversely, a decrease in pressure causes relaxation of the afferent arteriole, reducing resistance and maintaining glomerular capillary pressure.<br><br>
+<strong>2. Tubuloglomerular feedback (TGF):</strong><br>
+The macula densa cells of the juxtaglomerular apparatus sense the NaCl concentration in the distal tubular fluid via the NKCC2 transporter. If GFR increases, more NaCl is delivered to the macula densa → ATP release and adenosine generation → adenosine acts on A1 receptors on the afferent arteriole → vasoconstriction → decreased GFR. Conversely, if GFR decreases, less NaCl is delivered → less adenosine → afferent arteriolar dilation → increased GFR.<br><br>
+<strong>Physiological significance:</strong> Autoregulation ensures a stable GFR and RBF, which is essential for maintaining a constant filtered load for the tubular reabsorptive processes and for protecting the glomerular capillaries from damage due to high pressure.</div>
+                    </div>
+                </div>
+
+                <!-- ─── B3 ─── -->
+                <div class="section-b-question">
+                    <div class="q-label">Question 3 – Hyperosmolarity of renal medullary interstitium</div>
+                    <div class="q-text">Briefly explain the physiological basis for hyperosmolarity of renal medullary interstitium. <strong>[4 marks]</strong></div>
+                    <div class="subquestion">
+                        <div class="sub-label">Answer:</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer"><strong>Physiological basis for hyperosmolarity of renal medullary interstitium (4 marks):</strong><br><br>
+The renal medullary interstitium has a high osmolarity (up to 1200 mOsm/kg H₂O at the papilla), which is essential for concentrating urine. The main mechanisms are:<br><br>
+<strong>1. Countercurrent multiplier system of the loop of Henle:</strong><br>
+• The <strong>thick ascending limb (TAL)</strong> is impermeable to water but actively transports NaCl out of the lumen into the interstitium via the Na⁺/K⁺/2Cl⁻ cotransporter (NKCC2). This is the "single effect" that creates a small osmotic gradient (~200 mOsm) between the ascending limb and the interstitium.<br>
+• The <strong>descending limb</strong> is permeable to water (via aquaporin-1) but not to solutes. As filtrate descends, water is reabsorbed osmotically into the hypertonic interstitium, concentrating the tubular fluid.<br>
+• Because the descending and ascending limbs are arranged in a hairpin loop and fluid flows in opposite directions (countercurrent flow), the small single effect is multiplied along the length of the loop, creating a steep osmotic gradient from the cortex (300 mOsm) to the papilla (1200 mOsm).<br><br>
+<strong>2. Urea recycling:</strong><br>
+The medullary collecting duct, under the influence of ADH, becomes permeable to urea (via UT-A1/UT-A3 transporters). Urea diffuses into the medullary interstitium, where it contributes significantly (about 40–50%) to the medullary osmolarity. Urea is then recycled back into the loop of Henle, further contributing to the gradient.<br><br>
+<strong>3. Countercurrent exchange by vasa recta:</strong><br>
+The vasa recta (blood vessels of the medulla) are arranged as hairpin loops that run parallel to the loops of Henle. This arrangement allows them to deliver oxygen and nutrients to the medulla while minimizing washout of the osmotic gradient. Blood enters the descending vasa recta (which is relatively impermeable to solutes but permeable to water), becomes more concentrated as it descends, and then loses solutes and gains water as it ascends, so the gradient is preserved.</div>
+                    </div>
+                </div>
+
+                <!-- ─── B4 ─── -->
+                <div class="section-b-question">
+                    <div class="q-label">Question 4 – Water reabsorption from different parts of the renal tubules</div>
+                    <div class="q-text">Describe the mechanisms of water re-absorption from the different parts of the renal tubules. <strong>[3 marks]</strong></div>
+                    <div class="subquestion">
+                        <div class="sub-label">Answer:</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer"><strong>Mechanisms of water reabsorption from different parts of the renal tubules (3 marks):</strong><br><br>
+Water reabsorption occurs throughout the nephron but varies by segment:<br><br>
+<strong>1. Proximal tubule:</strong><br>
+• ~65–70% of filtered water is reabsorbed here.<br>
+• Water reabsorption is <strong>isosmotic</strong> (proportional to solute reabsorption) and occurs via <strong>aquaporin-1 (AQP1)</strong> channels, which are constitutively present in both the apical and basolateral membranes.<br>
+• The driving force is the osmotic gradient created by active Na⁺ reabsorption (and accompanying solutes such as glucose, amino acids, and bicarbonate).<br>
+• This is <strong>not regulated by ADH</strong>.<br><br>
+<strong>2. Descending limb of the loop of Henle:</strong><br>
+• Water is reabsorbed here because the descending limb is permeable to water (via AQP1) but impermeable to solutes.<br>
+• The filtrate becomes progressively hypertonic as water leaves osmotically into the hypertonic medullary interstitium.<br>
+• This is <strong>not regulated by ADH</strong>.<br><br>
+<strong>3. Ascending limb of the loop of Henle:</strong><br>
+• The ascending limb is <strong>impermeable to water</strong> (no aquaporins).<br>
+• Instead, NaCl is actively reabsorbed (NKCC2 in the thick ascending limb), which dilutes the tubular fluid (making it hypotonic). This is the "diluting segment."<br><br>
+<strong>4. Distal convoluted tubule:</strong><br>
+• Water permeability is very low; this segment is relatively impermeable to water.<br>
+• NaCl reabsorption continues via the Na⁺/Cl⁻ cotransporter (NCC).<br><br>
+<strong>5. Collecting duct (cortical and medullary):</strong><br>
+• Water permeability is <strong>regulated by ADH (vasopressin)</strong>.<br>
+• ADH binds to V2 receptors on the basolateral membrane → activation of adenylyl cyclase → cAMP → insertion of <strong>aquaporin-2 (AQP2)</strong> channels into the apical membrane.<br>
+• Water then flows osmotically from the tubular lumen (hypotonic) into the hypertonic medullary interstitium.<br>
+• In the absence of ADH, the collecting duct is nearly impermeable to water, resulting in dilute urine.<br>
+• The amount of water reabsorbed here depends on both the ADH level and the medullary osmotic gradient.</div>
+                    </div>
+                </div>
+
+                <!-- ─── B5 ─── -->
+                <div class="section-b-question">
+                    <div class="q-label">Question 5 – Intra-renal distribution of blood flow</div>
+                    <div class="q-text">Briefly describe the intra-renal distribution of blood flow and its physiological significance. <strong>[3 marks]</strong></div>
+                    <div class="subquestion">
+                        <div class="sub-label">Answer:</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer"><strong>Intra-renal distribution of blood flow and its physiological significance (3 marks):</strong><br><br>
+The kidneys receive about <strong>20–25% of cardiac output</strong> (approximately 1.1–1.2 L/min), which is very high relative to their mass (~0.5% of body weight). The distribution of this blood flow within the kidney is highly non-uniform:<br><br>
+<strong>1. Renal cortex:</strong> Receives about <strong>85–90%</strong> of total renal blood flow. The high flow rate is necessary for efficient glomerular filtration (the cortex contains all the glomeruli) and for the high metabolic demands of the proximal tubules.<br><br>
+<strong>2. Outer medulla:</strong> Receives about <strong>6–10%</strong> of renal blood flow.<br><br>
+<strong>3. Inner medulla/papilla:</strong> Receives only about <strong>1–2%</strong> of renal blood flow. This low flow rate is critical for maintaining the hypertonic medullary interstitium.<br><br>
+<strong>Physiological significance:</strong><br>
+• <strong>Cortical flow</strong> ensures adequate delivery of blood to the glomeruli for filtration, allowing the kidney to maintain a high GFR. It also supports the high metabolic activity of the proximal tubules (which perform extensive active transport).<br>
+• <strong>Medullary flow</strong> is deliberately low to preserve the <strong>countercurrent exchange</strong> mechanism and the osmotic gradient in the medulla. If medullary blood flow were high, it would "wash out" the solutes (NaCl and urea) that create the hyperosmotic interstitium, impairing the ability to concentrate urine. The vasa recta's hairpin structure and low flow rate minimize this washout.<br>
+• The distribution of blood flow can shift under certain conditions: e.g., during hemorrhage or severe sympathetic stimulation, cortical blood flow decreases more than medullary flow (a protective mechanism to preserve medullary function). Conversely, dopamine and some vasodilators increase cortical flow preferentially.<br>
+• The intra-renal distribution of blood flow is also important for oxygen delivery: the medulla operates at a low PO₂ (10–20 mmHg) because of the countercurrent arrangement and high metabolic activity of the thick ascending limb, making it vulnerable to ischemic injury.</div>
+                    </div>
+                </div>
+
+                <!-- ─── B6 ─── -->
+                <div class="section-b-question">
+                    <div class="q-label">Question 6 – Non-renal functions of the kidneys</div>
+                    <div class="q-text">Mention six (06) non-renal functions of the kidneys. <strong>[3 marks]</strong></div>
+                    <div class="subquestion">
+                        <div class="sub-label">Answer:</div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer"><strong>Six non-renal functions of the kidneys (3 marks):</strong><br><br>
+Although the kidneys are primarily known for their excretory and regulatory functions, they also perform several important non-renal (non-excretory) functions:<br><br>
+<strong>1. Erythropoietin (EPO) production:</strong> The kidneys (specifically peritubular interstitial fibroblasts) produce erythropoietin in response to hypoxia. EPO stimulates the bone marrow to produce red blood cells. In chronic kidney disease, decreased EPO production leads to normocytic normochromic anemia.<br><br>
+<strong>2. Activation of vitamin D:</strong> The kidneys convert 25-hydroxycholecalciferol (calcidiol) to 1,25-dihydroxycholecalciferol (calcitriol), the active form of vitamin D. Calcitriol is essential for intestinal calcium absorption, bone mineralization, and calcium homeostasis. Renal failure leads to vitamin D deficiency and renal osteodystrophy.<br><br>
+<strong>3. Gluconeogenesis:</strong> During prolonged fasting, the kidneys (along with the liver) synthesize glucose from precursors such as amino acids, lactate, and glycerol. The renal cortex is the main site of this process, which contributes significantly to blood glucose maintenance during prolonged fasting.<br><br>
+<strong>4. Regulation of arterial blood pressure (via renin):</strong> The juxtaglomerular cells secrete renin in response to decreased renal perfusion pressure, decreased NaCl delivery to the macula densa, or increased sympathetic activity. Renin initiates the RAAS cascade, leading to angiotensin II-mediated vasoconstriction and aldosterone-mediated Na⁺ and water retention, which raise blood pressure.<br><br>
+<strong>5. Metabolism and degradation of hormones and peptides:</strong> The kidneys metabolize and clear several hormones and peptides, including insulin, glucagon, parathyroid hormone (PTH), and growth hormone. In renal failure, the half-lives of these hormones are prolonged, which can contribute to clinical abnormalities (e.g., hypoglycemia due to decreased insulin clearance).<br><br>
+<strong>6. Production of prostaglandins and kinins:</strong> The kidneys produce vasoactive substances such as prostaglandins (PGE₂, PGI₂) and kinins, which help regulate renal blood flow, glomerular filtration, and sodium/water excretion. These substances also have systemic effects on blood pressure and inflammation.<br><br>
+Other non-renal functions include: regulation of acid–base balance (long-term), production of carnitine, and synthesis of certain amino acids.</div>
+                    </div>
+                </div>
+
+            </div><!-- /section-sectionB -->
+
+            <!-- ========== SECTION C ========== -->
+            <div id="section-sectionC" class="tab-panel hidden">
+                <div class="section-title">
+                    <i class="fas fa-user-md"></i> Section C – Scenario Question
+                    <span class="count">20 marks</span>
+                </div>
+                <p class="section-subtitle"><strong>PLEASE NOTE:</strong> One mark is not equivalent to a summarized answer. Write your answers in the boxes below and click <strong>Show Answer</strong> to reveal a detailed model answer.</p>
+
+                <div class="section-b-question">
+                    <div class="q-label">Scenario – Margaret</div>
+                    <div class="q-text">
+                        Margaret, a third-year medical student, presented to her primary care physician with the complaint of increased difficulty swallowing both solid and liquid foods. She noticed that she sometimes has more difficulty when she is under stress. She often has chest pain and regurgitation and reports difficulty with belching. After a thorough examination, she was diagnosed with <strong>achalasia</strong>.<br><br>
+                        She also presented with an acute onset of abdominal pain. Her pain is located to the right upper quadrant (RUQ) and radiates to the right shoulder. She reports nausea and vomiting but no fever or chills. The RUQ pain is worse after she eats fatty meals. On examination, she has severe RUQ tenderness. Her white blood cell count is elevated, as are her liver function tests and alkaline phosphatase level. The amylase and lipase levels are normal. An abdominal ultrasound reveals an enlarged gallbladder with multiple stones and gallbladder wall thickening. She subsequently is admitted to the hospital and undergoes a <strong>cholecystectomy</strong>.
+                    </div>
+
+                    <div class="subquestion">
+                        <div class="sub-label">a) What factors are responsible for the tonic contractions of the lower esophageal sphincter between swallows? <strong>[2 marks]</strong></div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer"><strong>Factors responsible for tonic contraction of the LES between swallows (2 marks):</strong><br><br>
+The lower esophageal sphincter (LES) maintains a tonic contraction (resting tone) between swallows to prevent gastroesophageal reflux. The factors responsible include:<br><br>
+<strong>1. Myogenic properties:</strong> The smooth muscle of the LES has intrinsic myogenic tone, meaning it contracts even in the absence of neural input. This is due to the inherent properties of the smooth muscle cells and their resting membrane potential.<br><br>
+<strong>2. Cholinergic (vagal) excitatory tone:</strong> The vagus nerve provides excitatory cholinergic input to the LES via muscarinic (M3) receptors. Acetylcholine released from vagal postganglionic fibers maintains and enhances LES tone.<br><br>
+<strong>3. α-Adrenergic tone:</strong> Sympathetic stimulation via α-adrenergic receptors also contributes to LES contraction.<br><br>
+<strong>4. Hormonal and peptidergic factors:</strong> Gastrin, motilin, substance P, and pancreatic polypeptide increase LES tone. These hormones and neurotransmitters act directly on the smooth muscle or modulate neural input.<br><br>
+<strong>5. Absence of inhibitory influences:</strong> During swallowing, the LES relaxes due to the release of inhibitory neurotransmitters (VIP and nitric oxide) from non-adrenergic, non-cholinergic (NANC) neurons. Between swallows, this inhibitory influence is absent, so the LES remains contracted.<br><br>
+<strong>6. Intra-abdominal pressure:</strong> The LES is also compressed by the surrounding structures and intra-abdominal pressure, which contributes to its barrier function.</div>
+                    </div>
+
+                    <div class="subquestion">
+                        <div class="sub-label">b) What are the neurotransmitters responsible for regulating contraction and relaxation of the LES? <strong>[2 marks]</strong></div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer"><strong>Neurotransmitters regulating contraction and relaxation of the LES (2 marks):</strong><br><br>
+The LES tone is regulated by a balance between excitatory and inhibitory neurotransmitters:<br><br>
+<strong>Excitatory (contraction):</strong><br>
+• <strong>Acetylcholine (ACh):</strong> Released from vagal postganglionic fibers, acts on M3 muscarinic receptors on LES smooth muscle → contraction.<br>
+• <strong>Substance P:</strong> A tachykinin that acts on NK1 receptors → contraction.<br>
+• <strong>Gastrin:</strong> Directly stimulates LES smooth muscle contraction.<br>
+• <strong>Motilin:</strong> Increases LES tone.<br>
+• <strong>α-Adrenergic agonists (norepinephrine):</strong> Act on α1 receptors → contraction.<br><br>
+<strong>Inhibitory (relaxation):</strong><br>
+• <strong>Nitric oxide (NO):</strong> The most important inhibitory neurotransmitter for LES relaxation. Released from NANC inhibitory neurons, it diffuses into smooth muscle cells and activates guanylyl cyclase → cGMP → smooth muscle relaxation. NO is responsible for the swallow-induced relaxation of the LES.<br>
+• <strong>Vasoactive intestinal polypeptide (VIP):</strong> Co-released with NO from NANC neurons; acts on VPAC receptors → increases cAMP → relaxation.<br>
+• <strong>Adenosine triphosphate (ATP):</strong> Acts on purinergic receptors → relaxation.<br>
+• <strong>β-Adrenergic agonists:</strong> Act on β2 receptors → relaxation.<br>
+• <strong>Cholecystokinin (CCK):</strong> Inhibits LES contraction via a neural mechanism (it acts on inhibitory neurons or presynaptically to reduce ACh release).<br>
+• <strong>Secretin, glucagon, and progesterone:</strong> Also reduce LES tone.<br><br>
+The swallow-induced relaxation of the LES is primarily mediated by NO and VIP from NANC neurons in the myenteric plexus.</div>
+                    </div>
+
+                    <div class="subquestion">
+                        <div class="sub-label">c) Food bolus occasionally sticks in her esophagus, briefly explain the physiological effect of a large sticky bolus in the esophagus. <strong>[2 marks]</strong></div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer"><strong>Physiological effect of a large sticky bolus in the esophagus (2 marks):</strong><br><br>
+When a large, sticky bolus is present in the esophagus:<br><br>
+<strong>1. Distension and mechanoreceptor activation:</strong> The bolus distends the esophageal wall, activating stretch-sensitive mechanoreceptors in the mucosa and muscularis.<br><br>
+<strong>2. Secondary peristalsis:</strong> This triggers <strong>secondary peristalsis</strong> via intrinsic (myenteric) reflexes and vagovagal reflexes. Secondary peristalsis is a wave of contraction that begins at the site of distension and propagates downward, helping to clear the bolus. Unlike primary peristalsis (initiated by swallowing), secondary peristalsis is a local reflex.<br><br>
+<strong>3. Reflex relaxation of the LES:</strong> The distension and the peristaltic wave cause reflex relaxation of the LES (mediated by NO and VIP), allowing the bolus to enter the stomach — but in achalasia, this relaxation fails, so the bolus may stick.<br><br>
+<strong>4. Increased salivary secretion:</strong> The presence of the bolus also stimulates salivary secretion (via reflexes), which lubricates the bolus and aids its passage.<br><br>
+<strong>5. Chest pain:</strong> If the bolus fails to clear, it can cause esophageal spasm, distension, and chest pain (as in the patient's case). Complete obstruction can occur, leading to regurgitation and risk of aspiration.<br><br>
+<strong>6. Compression and mucosal irritation:</strong> A large sticky bolus may compress the esophageal wall, causing local ischemia and discomfort.<br><br>
+In achalasia, the failure of LES relaxation and the loss of peristalsis mean that even a normal bolus can stick, and a large sticky bolus is even more problematic.</div>
+                    </div>
+
+                    <div class="subquestion">
+                        <div class="sub-label">d) Why does Margaret feel dry mouth often and during swallowing? <strong>[2 marks]</strong></div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer"><strong>Why Margaret feels dry mouth often and during swallowing (2 marks):</strong><br><br>
+Margaret has achalasia, which is characterized by degeneration of the myenteric plexus (especially the inhibitory neurons) and often degeneration of the vagus nerve. The dry mouth can be explained by:<br><br>
+<strong>1. Impaired vagal (parasympathetic) stimulation of salivary secretion:</strong> Salivary secretion is primarily under parasympathetic control. The vagus nerve provides parasympathetic innervation to the minor salivary glands of the pharynx, larynx, and esophagus, and also modulates the major salivary glands. In achalasia, there is degeneration of vagal fibers, which can reduce reflex salivation, particularly during swallowing when salivary secretion is normally stimulated.<br><br>
+<strong>2. Esophageal distension and pooling:</strong> In achalasia, food and saliva accumulate in the dilated esophagus rather than passing into the stomach. The retained material can cause irritation and inflammation of the esophageal mucosa, which may reflexly reduce salivary secretion.<br><br>
+<strong>3. Mouth breathing and regurgitation:</strong> Patients with achalasia often regurgitate retained food and saliva, especially at night, and may breathe through the mouth due to nasal obstruction or discomfort. Mouth breathing evaporates saliva, causing dryness.<br><br>
+<strong>4. Reduced swallowing frequency and dry swallowing:</strong> The patient may unconsciously swallow less frequently because swallowing is difficult and painful, leading to reduced salivary flow (since salivation is partly stimulated by the act of chewing and swallowing).<br><br>
+<strong>5. Anxiety and stress:</strong> The patient reports more difficulty under stress. Stress activates the sympathetic nervous system, which reduces salivary secretion (via vasoconstriction and direct inhibition of secretory cells), leading to dry mouth.<br><br>
+During swallowing, the dry mouth may be particularly noticeable because the normal reflex increase in salivation (which helps lubricate the bolus) is impaired, and the patient may need to drink water to help the bolus pass.</div>
+                    </div>
+
+                    <div class="subquestion">
+                        <div class="sub-label">e) The situation became so bad that a bilateral vagotomy was performed on Margaret. Describe the test used to assess the success of the operation. <strong>[2 marks]</strong></div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer"><strong>Test used to assess the success of bilateral vagotomy (2 marks):</strong><br><br>
+After bilateral vagotomy, it is important to confirm that the vagal innervation has been completely interrupted. The <strong>sham feeding test</strong> (or <strong>Hollander test</strong>) is used:<br><br>
+<strong>Sham feeding test:</strong> The patient chews and spits out food (sham feeding) without swallowing it. This normally stimulates gastric acid secretion via the vagus nerve (cephalic phase). Gastric acid output is measured via a nasogastric tube. If acid secretion increases significantly after sham feeding, it indicates that vagal innervation is intact (incomplete vagotomy). If there is no increase in acid secretion, it suggests complete vagotomy.<br><br>
+<strong>Insulin-induced hypoglycemia test (Hollander test):</strong> Insulin is administered to induce hypoglycemia (blood glucose &lt; 50 mg/dL), which stimulates the vagal nuclei in the brainstem → vagal efferent fibers → gastric acid secretion. Gastric acid output is measured. A rise in acid secretion indicates intact vagal innervation. Absence of a response indicates complete vagotomy. (This test is less commonly used now due to the risk of severe hypoglycemia.)<br><br>
+<strong>Serum pancreatic polypeptide (PP) response to sham feeding:</strong> Pancreatic polypeptide is released from the pancreas in response to vagal stimulation. After sham feeding, serum PP levels normally rise. A lack of PP response indicates complete vagotomy. This is a safer and more specific test.<br><br>
+Gastric acid secretion in response to sham feeding is the classic test; the absence of a rise confirms successful vagotomy.</div>
+                    </div>
+
+                    <div class="subquestion">
+                        <div class="sub-label">f) What is the physiological basis for achieving feeding through a tube in the lower esophagus after vagotomy? <strong>[2 marks]</strong></div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer"><strong>Physiological basis for feeding through a tube in the lower esophagus after vagotomy (2 marks):</strong><br><br>
+After bilateral vagotomy, the esophagus becomes aperistaltic (loss of primary and secondary peristalsis) and the LES fails to relax properly. This means that swallowed food cannot be propelled effectively into the stomach, and the non-relaxing LES acts as an obstruction. Therefore, oral feeding becomes difficult or impossible.<br><br>
+Feeding through a tube placed in the lower esophagus (bypassing the mouth, pharynx, and the aperistaltic esophageal body) works on the following physiological principles:<br><br>
+<strong>1. Bypass of the aperistaltic esophagus:</strong> The tube delivers nutrients directly to the lower esophagus, bypassing the need for peristalsis to propel food down the esophagus.<br><br>
+<strong>2. Gravity drainage:</strong> The feed flows by gravity through the tube into the stomach, overcoming the non-relaxing LES (the tube mechanically holds the sphincter open or passes through it).<br><br>
+<strong>3. Preservation of gastric function:</strong> The stomach retains its intrinsic and hormonal control of motility and emptying (gastrin, CCK, etc.), although receptive relaxation is impaired after vagotomy. The stomach can still store and slowly empty the feed into the duodenum.<br><br>
+<strong>4. Enteric nervous system function:</strong> The enteric nervous system (myenteric and submucosal plexuses) remains intact and can mediate local reflexes, peristalsis, and secretion in the stomach and intestines, even without vagal input.<br><br>
+<strong>5. Hormonal regulation:</strong> Hormones such as gastrin, secretin, CCK, and GIP continue to regulate digestion and absorption in the stomach and small intestine.<br><br>
+Thus, enteral feeding via a tube in the lower esophagus provides nutrition while bypassing the impaired esophageal propulsion and LES relaxation.</div>
+                    </div>
+
+                    <div class="subquestion">
+                        <div class="sub-label">g) What are the protective reflexes during swallowing? <strong>[3 marks]</strong></div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer"><strong>Protective reflexes during swallowing (3 marks):</strong><br><br>
+Swallowing is a complex reflex that involves both voluntary and involuntary phases, and several protective reflexes prevent aspiration and ensure the safe passage of food:<br><br>
+<strong>1. Nasopharyngeal protection:</strong><br>
+• <strong>Elevation of the soft palate and uvula:</strong> This seals off the nasopharynx, preventing food from entering the nasal cavity (nasal regurgitation).<br>
+• <strong>Approximation of the palatopharyngeal folds:</strong> These folds move medially to guide the bolus into the pharynx and prevent it from entering the nasopharynx.<br><br>
+<strong>2. Laryngeal protection (prevention of aspiration):</strong><br>
+• <strong>Elevation of the larynx:</strong> The larynx moves upward and forward, which helps open the upper esophageal sphincter (UES) and positions the epiglottis over the laryngeal opening.<br>
+• <strong>Closure of the epiglottis:</strong> The epiglottis folds over the laryngeal inlet, directing the bolus into the esophagus and away from the airway.<br>
+• <strong>Closure of the vocal cords (glottic closure):</strong> The true and false vocal cords adduct, sealing the airway. This is a critical protective reflex.<br>
+• <strong>Inhibition of respiration (swallowing apnea):</strong> Respiration is briefly inhibited during the pharyngeal phase of swallowing, preventing the inhalation of food.<br><br>
+<strong>3. Upper esophageal sphincter (UES) relaxation:</strong> The UES (cricopharyngeus muscle) relaxes to allow the bolus to enter the esophagus. This is mediated by the vagus nerve (NO and VIP).<br><br>
+<strong>4. Primary and secondary peristalsis:</strong> Primary peristalsis (initiated by swallowing) and secondary peristalsis (triggered by distension) propel the bolus down the esophagus.<br><br>
+<strong>5. Lower esophageal sphincter (LES) relaxation:</strong> The LES relaxes to allow the bolus to enter the stomach and then contracts to prevent gastroesophageal reflux.<br><br>
+<strong>6. Cough and gag reflexes:</strong> If any material enters the larynx or trachea, the cough reflex is triggered to expel it. The gag reflex protects the posterior pharynx.<br><br>
+<strong>7. Reflex closure of the glottis and apnea:</strong> These are the most important protective mechanisms against aspiration.</div>
+                    </div>
+
+                    <div class="subquestion">
+                        <div class="sub-label">h) Why would fatty foods aggravate Margaret's RUQ pain? <strong>[2 marks]</strong></div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer"><strong>Why fatty foods aggravate Margaret's RUQ pain (2 marks):</strong><br><br>
+Margaret has acute cholecystitis with gallstones (cholelithiasis). The pain is caused by the following physiological mechanisms:<br><br>
+<strong>1. Fat stimulates CCK release:</strong> Fatty foods in the duodenum stimulate I cells in the duodenal mucosa to release <strong>cholecystokinin (CCK)</strong> into the bloodstream.<br><br>
+<strong>2. CCK causes gallbladder contraction:</strong> CCK acts on the gallbladder smooth muscle (via CCK-A receptors) to cause powerful contraction. It also relaxes the sphincter of Oddi, allowing bile to flow.<br><br>
+<strong>3. Gallbladder contraction against obstruction:</strong> In Margaret's case, the gallbladder contains multiple stones, and the cystic duct may be obstructed or the gallbladder wall is inflamed. When CCK stimulates the gallbladder to contract, the bile cannot exit freely (due to stones or inflammation), leading to increased intraluminal pressure within the gallbladder.<br><br>
+<strong>4. Pain from distension and inflammation:</strong> The increased pressure distends the gallbladder wall, stimulating stretch receptors and pain fibers (visceral afferents). This causes the characteristic RUQ pain, which can radiate to the right shoulder (due to irritation of the diaphragm and phrenic nerve, which shares cervical spinal segments C3–C5 with the shoulder).<br><br>
+<strong>5. Inflammation:</strong> The inflamed gallbladder wall is more sensitive to distension and contraction, so even normal contractions cause severe pain.<br><br>
+Thus, fatty meals aggravate the pain by stimulating CCK-mediated gallbladder contraction in the presence of gallstones and inflammation.</div>
+                    </div>
+
+                    <div class="subquestion">
+                        <div class="sub-label">i) Explain the mechanism of fat absorption and how cholecystectomy might affect this. <strong>[3 marks]</strong></div>
+                        <textarea placeholder="Write your answer here..."></textarea>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="model-answer"><strong>Mechanism of fat absorption and how cholecystectomy might affect this (3 marks):</strong><br><br>
+<strong>Mechanism of fat absorption:</strong><br>
+<strong>1. Emulsification:</strong> In the duodenum, bile salts (from the gallbladder via the bile duct) emulsify large fat globules into smaller droplets, increasing the surface area for lipase action.<br>
+<strong>2. Hydrolysis:</strong> Pancreatic lipase (with colipase) hydrolyzes triglycerides into <strong>2-monoglycerides and free fatty acids (FFAs)</strong>. Cholesterol esterase hydrolyzes cholesterol esters.<br>
+<strong>3. Micelle formation:</strong> Bile salts combine with monoglycerides, FFAs, cholesterol, and fat-soluble vitamins to form <strong>micelles</strong> (small, water-soluble aggregates). Micelles ferry these lipids to the brush border of the enterocytes.<br>
+<strong>4. Absorption:</strong> At the brush border, lipids are released from micelles and absorbed by enterocytes via passive diffusion and specific transporters (e.g., CD36, FATP4, NPC1L1 for cholesterol).<br>
+<strong>5. Intracellular processing:</strong> Inside the enterocytes, FFAs and monoglycerides are re-esterified into triglycerides in the smooth endoplasmic reticulum. Triglycerides are then packaged with cholesterol, phospholipids, and apolipoproteins (ApoB-48) into <strong>chylomicrons</strong>.<br>
+<strong>6. Exocytosis:</strong> Chylomicrons are secreted by exocytosis into the <strong>lacteals</strong> (lymphatic vessels in the villi) and travel via the thoracic duct to the systemic circulation.<br>
+<strong>7. Short- and medium-chain fatty acids:</strong> These are absorbed directly into the portal blood without forming chylomicrons, because they are water-soluble and can pass through the enterocyte without re-esterification.<br><br>
+<strong>Effect of cholecystectomy:</strong><br>
+• The gallbladder stores and concentrates bile. After cholecystectomy, bile is continuously secreted by the liver directly into the duodenum rather than being stored and released in a bolus in response to a meal.<br>
+• Consequently, the concentration of bile salts in the duodenum after a fatty meal is lower, and the timing of bile delivery is less well matched to the arrival of fat.<br>
+• This can lead to <strong>reduced emulsification of fat</strong> and <strong>impaired fat digestion and absorption</strong>, potentially causing <strong>steatorrhea</strong> (fatty stools) and <strong>deficiency of fat-soluble vitamins (A, D, E, K)</strong>.<br>
+• However, in most patients, the liver increases bile secretion and the intestine adapts, so fat absorption is largely preserved, especially if meals are smaller and less fatty. Some patients may experience mild fat malabsorption, especially with large fatty meals.<br>
+• Additionally, the loss of the gallbladder's concentrating function means that the bile is more dilute, which may further reduce the efficiency of fat digestion.</div>
+                    </div>
+
+                </div><!-- /scenario -->
+
+            </div><!-- /section-sectionC -->
+
+        </div>
+    </main>
+
+    <script>
+        // ─── MCQ DATA (29 questions) ──────────────────────────────
+        const questions = [
+            {
+                q: "1. The secretion of H⁺ in the proximal tubule is primarily associated with which of the following?",
+                options: [
+                    "Excretion of potassium ion",
+                    "Excretion of hydrogen ion",
+                    "Reabsorption of calcium ion",
+                    "Reabsorption of bicarbonate ion",
+                    "Reabsorption of phosphate ion"
+                ],
+                correct: "d",
+                explanation: "In the proximal tubule, H⁺ is secreted into the lumen by the Na⁺/H⁺ exchanger (NHE3) on the luminal membrane. This secreted H⁺ combines with filtered HCO₃⁻ to form carbonic acid (H₂CO₃), which is rapidly catalyzed by carbonic anhydrase IV on the brush border into CO₂ and H₂O. CO₂ diffuses into the proximal tubule cell, where carbonic anhydrase II converts it back to H₂CO₃, which dissociates into H⁺ and HCO₃⁻. The HCO₃⁻ is then transported into the peritubular capillary blood via the Na⁺/HCO₃⁻ cotransporter (NBCe1). Thus, for every H⁺ secreted into the lumen, one HCO₃⁻ is reabsorbed into the blood. Approximately 80–90% of filtered HCO₃⁻ is reabsorbed in the proximal tubule, and this process is the primary event associated with H⁺ secretion. H⁺ secretion is not directly linked to K⁺ excretion (which occurs mainly in the distal nephron under aldosterone control), Ca²⁺ reabsorption (regulated by PTH), or phosphate reabsorption (inhibited by PTH)."
+            },
+            {
+                q: "2. A decrease in glomerular filtration rate would result from which of the following?",
+                options: [
+                    "Constriction of the efferent arteriole",
+                    "An increase in afferent arteriolar pressure",
+                    "Compression of the renal capsule",
+                    "A decrease in the concentration of plasma protein",
+                    "An increase in renal blood flow"
+                ],
+                correct: "c",
+                explanation: "GFR = Kf × net filtration pressure (NFP), where NFP = glomerular capillary hydrostatic pressure − (Bowman's capsule hydrostatic pressure + glomerular capillary oncotic pressure). Compression of the renal capsule (e.g., by a tumor, perinephric hematoma, or edema) increases Bowman's capsule hydrostatic pressure, which opposes filtration and reduces NFP → decreased GFR. In contrast: constriction of the efferent arteriole increases glomerular hydrostatic pressure → increases GFR (though it decreases renal blood flow); an increase in afferent arteriolar pressure increases GFR; a decrease in plasma protein concentration lowers plasma oncotic pressure → increases GFR; and an increase in renal blood flow (if autoregulation is intact) generally increases GFR."
+            },
+            {
+                q: "3. In the presence of antidiuretic hormone (ADH), the filtrate will be isotonic to plasma in which of the following parts of the kidney?",
+                options: [
+                    "Descending limb of the loop of Henle",
+                    "Ascending limb of the loop of Henle",
+                    "Cortical collecting tubule",
+                    "Medullary collecting tubule",
+                    "Renal pelvis"
+                ],
+                correct: "c",
+                explanation: "The filtrate is isotonic to plasma (~300 mOsm/kg H₂O) in the proximal tubule (where isosmotic reabsorption occurs) and at the beginning of the descending limb of the loop of Henle. In the presence of ADH, aquaporin-2 (AQP2) channels are inserted into the apical membrane of the collecting duct, making it highly permeable to water. In the cortical collecting tubule, the surrounding interstitial fluid is isotonic (~300 mOsm), so as water is reabsorbed, the filtrate remains isotonic to plasma. However, as the filtrate descends into the medullary collecting tubule, it is exposed to the hypertonic medullary interstitium (up to 1200 mOsm), so water continues to be reabsorbed and the urine becomes progressively hypertonic (concentrated). Thus, in the medullary collecting tubule, the urine is hypertonic, not isotonic, to plasma."
+            },
+            {
+                q: "4. A decrease in the concentration of NaCl in the intraluminal fluid causes the juxtaglomerular apparatus to release which of the following hormones?",
+                options: [
+                    "Angiotensin II",
+                    "Aldosterone",
+                    "Adenosine",
+                    "Renin",
+                    "Angiotensinogen"
+                ],
+                correct: "d",
+                explanation: "The macula densa cells of the juxtaglomerular apparatus (JGA) sense the NaCl concentration in the distal tubular fluid via the NKCC2 transporter. A decrease in NaCl concentration (and delivery) signals a reduction in effective circulating volume or renal perfusion pressure. This stimulates the juxtaglomerular (JG) cells — modified smooth muscle cells of the afferent arteriole — to release renin into the circulation. Renin then cleaves angiotensinogen (from the liver) to angiotensin I, which is converted by angiotensin-converting enzyme (ACE) in the lungs to angiotensin II, a potent vasoconstrictor that also stimulates aldosterone and ADH release. The JGA does not directly release angiotensin II, aldosterone, or angiotensinogen. Adenosine is released by macula densa cells when NaCl delivery is INCREASED (mediating tubuloglomerular feedback-induced afferent arteriolar constriction), which is the opposite of the situation described."
+            },
+            {
+                q: "5. Which of the following endogenous substances causes renal blood flow to decrease?",
+                options: [
+                    "Nitric oxide",
+                    "Atrial natriuretic peptide",
+                    "Acetylcholine",
+                    "Angiotensin II",
+                    "Dopamine"
+                ],
+                correct: "d",
+                explanation: "Angiotensin II is a potent endogenous vasoconstrictor that reduces renal blood flow. At low concentrations, it preferentially constricts the efferent arteriole (helping to maintain GFR); at higher concentrations, it constricts both afferent and efferent arterioles, reducing renal blood flow and GFR. It also stimulates aldosterone secretion (increasing Na⁺ and water reabsorption), ADH release, and thirst. Nitric oxide (NO), atrial natriuretic peptide (ANP), acetylcholine, and dopamine (via D1 receptors) are all renal vasodilators that increase renal blood flow."
+            },
+            {
+                q: "6. A patient has suffered from persistent diarrhea lasting for the past seven days. Which of the following would be increased in this patient?",
+                options: [
+                    "The filtered load of HCO₃⁻",
+                    "The production of ammonia by the proximal tubule",
+                    "H⁺ secretion by the distal nephron",
+                    "The anion gap",
+                    "The production of new bicarbonate by the distal nephron"
+                ],
+                correct: "b",
+                explanation: "Persistent diarrhea for seven days results in the loss of large volumes of bicarbonate-rich intestinal fluid, leading to a hyperchloremic (normal anion gap) metabolic acidosis. The kidneys respond to the acidosis by increasing H⁺ secretion and, critically, by increasing the production of ammonia (NH₃/NH₄⁺) in the proximal tubule. The proximal tubule cells metabolize glutamine to produce NH₄⁺ and α-ketoglutarate; the NH₄⁺ is secreted into the lumen (via the Na⁺/NH₄⁺ exchanger on the luminal membrane) and excreted in the urine, where it buffers H⁺. This process also generates new HCO₃⁻ that is returned to the blood, helping to correct the acidosis. The production of ammonia by the proximal tubule increases several-fold in chronic acidosis and is the major renal adaptation. Note that the filtered load of HCO₃⁻ is DECREASED (because plasma HCO₃⁻ is low), and the anion gap is normal (not increased). Distal H⁺ secretion also increases, but the proximal ammonia production is the hallmark response."
+            },
+            {
+                q: "7. The ability of the kidney to excrete concentrated urine will increase if which of the following occurs?",
+                options: [
+                    "The reabsorption of Na⁺ by the proximal tubule decreases",
+                    "The glomerular capillary pressure increases",
+                    "The flow of filtrate through the loop of Henle increases",
+                    "The activity of the Na⁺–K⁺ pump in the loop of Henle increases",
+                    "The permeability of the collecting duct to water decreases"
+                ],
+                correct: "d",
+                explanation: "The ability to excrete concentrated urine depends on the medullary osmotic gradient, which is generated by the countercurrent multiplier system of the loop of Henle. The Na⁺/K⁺-ATPase pump in the basolateral membrane of the thick ascending limb (TAL) provides the energy for the Na⁺/K⁺/2Cl⁻ cotransporter (NKCC2) to move NaCl from the tubular lumen into the medullary interstitium. Increased activity of this pump increases NaCl reabsorption in the TAL, enhancing the single effect of the countercurrent multiplier. This creates a steeper medullary osmotic gradient, allowing more water to be reabsorbed osmotically from the collecting duct (under the influence of ADH) and resulting in more concentrated urine. Decreased proximal Na⁺ reabsorption, increased glomerular capillary pressure, increased flow through the loop of Henle, or decreased collecting duct water permeability would all impair the ability to concentrate urine (the latter by reducing water reabsorption)."
+            },
+            {
+                q: "8. When GFR increases, proximal tubular reabsorption of salt and water increases by a process called glomerulotubular balance. Contributions to this process include which of the following?",
+                options: [
+                    "An increase in peritubular capillary hydrostatic pressure",
+                    "A decrease in peritubular sodium concentration",
+                    "An increase in peritubular osmotic pressure",
+                    "An increase in proximal tubular flow",
+                    "An increase in peritubular capillary flow"
+                ],
+                correct: "c",
+                explanation: "Glomerulotubular balance is the intrinsic ability of the proximal tubule to increase its reabsorption of salt and water when GFR (and thus the filtered load) increases, thereby maintaining a relatively constant fraction of filtered fluid reabsorbed (~65–70%). The main mechanisms contributing to this include: (1) Peritubular capillary forces: an increase in GFR increases the filtration fraction, which raises the oncotic pressure (osmotic pressure) of the blood in the peritubular capillaries (because more protein-free fluid has been filtered). This increased peritubular oncotic pressure draws fluid from the interstitium into the capillaries, enhancing the passive reabsorption of water and solutes from the tubular lumen. At the same time, peritubular hydrostatic pressure tends to fall, further favoring reabsorption. (2) Tubular flow and luminal factors: increased flow in the proximal tubule alters the concentration gradients of solutes (e.g., Na⁺, glucose, amino acids) and may directly stimulate reabsorptive mechanisms, including stretch-activated channels and changes in the Na⁺/H⁺ exchanger activity. An increase in peritubular osmotic (oncotic) pressure is the best answer among the options. An increase in peritubular hydrostatic pressure would DECREASE reabsorption, as would an increase in peritubular capillary flow (by washing out the osmotic gradient)."
+            },
+            {
+                q: "9. Which of the following substances will be more concentrated at the end of the proximal tubule than at the beginning of the proximal tubule?",
+                options: [
+                    "Glucose",
+                    "Creatinine",
+                    "Sodium",
+                    "Bicarbonate",
+                    "Phosphate"
+                ],
+                correct: "b",
+                explanation: "The proximal tubule reabsorbs approximately 65–70% of filtered water and solutes in an isosmotic fashion, so the concentration of substances that are reabsorbed (glucose, sodium, bicarbonate, phosphate) remains relatively constant along the tubule. However, substances that are NOT reabsorbed (and may be secreted) become progressively more concentrated as water is reabsorbed. Creatinine is freely filtered at the glomerulus, is not reabsorbed by the tubules, and is actually secreted to a small extent by the proximal tubule. Therefore, its concentration rises significantly (about 1.5–2 times) from the beginning to the end of the proximal tubule. In contrast, glucose and amino acids are almost completely reabsorbed in the proximal tubule, so their concentrations fall; sodium and bicarbonate are also reabsorbed, so their concentrations remain relatively stable; and phosphate is partially reabsorbed (regulated by PTH), so its concentration does not increase significantly."
+            },
+            {
+                q: "10. The following is true about glucose reabsorption in the renal tubules:",
+                options: [
+                    "Transport maximum is 80 mg/min",
+                    "The transport maximum is dependent on the amount of glucose filtered",
+                    "It is mainly a symptom with K⁺",
+                    "It is reduced with metabolic inhibitors that reduce the activity of Na⁺/K⁺-ATPase",
+                    "About 50% of filtered glucose is reabsorbed"
+                ],
+                correct: "d",
+                explanation: "Glucose reabsorption in the proximal tubule is an example of secondary active transport. The Na⁺/K⁺-ATPase pump on the basolateral membrane maintains a low intracellular Na⁺ concentration, creating a steep electrochemical gradient for Na⁺ to enter the cell from the lumen. This gradient drives the Na⁺-glucose cotransporters — SGLT2 (low-affinity, high-capacity) in the early proximal tubule (S1 segment) and SGLT1 (high-affinity, low-capacity) in the late proximal tubule (S3 segment) — on the luminal membrane. Therefore, metabolic inhibitors that reduce the activity of the Na⁺/K⁺-ATPase (e.g., ouabain, hypoxia, cyanide) will reduce the Na⁺ gradient and impair glucose reabsorption. The transport maximum (Tm) for glucose is approximately 375 mg/min in adult men and 300 mg/min in women (not 80 mg/min). Tm is a property of the transporters and is not dependent on the filtered load (though the amount reabsorbed does depend on the filtered load until Tm is reached). Glucose is cotransported with Na⁺, not K⁺. About 100% of filtered glucose is normally reabsorbed (not 50%); glucosuria occurs only when the filtered load exceeds Tm (i.e., when plasma glucose exceeds the renal threshold of ~180–200 mg/dL)."
+            },
+            {
+                q: "11. Potassium secretion in the distal tubule will be increased if there is an increase in:",
+                options: [
+                    "Plasma (H⁺)",
+                    "Plasma volume",
+                    "Plasma sodium concentration",
+                    "Plasma potassium concentration",
+                    "Plasma calcium concentration"
+                ],
+                correct: "d",
+                explanation: "Potassium secretion in the distal tubule and collecting duct is driven by the electrochemical gradient (high intracellular K⁺ concentration and negative luminal potential) and is regulated by several factors. The most important direct regulator is the plasma K⁺ concentration: hyperkalemia increases K⁺ secretion by (1) directly stimulating aldosterone release from the adrenal cortex, (2) increasing the activity of the Na⁺/K⁺-ATPase in the basolateral membrane of principal cells (increasing intracellular K⁺), and (3) increasing the permeability of the luminal membrane to K⁺ (via ROMK channels). An increase in plasma H⁺ (acidosis) DECREASES K⁺ secretion, because H⁺ and K⁺ compete for secretion in the distal nephron. An increase in plasma volume or plasma Na⁺ concentration can increase distal flow and Na⁺ delivery, which can indirectly increase K⁺ secretion, but the most direct and potent stimulus is an increase in plasma K⁺ concentration."
+            },
+            {
+                q: "12. Glomerular filtration rate would be increased by:",
+                options: [
+                    "A decrease in afferent arteriolar pressure",
+                    "A decrease in renal blood flow",
+                    "A decrease in efferent arteriolar resistance",
+                    "Decrease in the concentration of plasma proteins",
+                    "Obstruction of ureters"
+                ],
+                correct: "d",
+                explanation: "GFR is determined by the net filtration pressure (NFP), which equals glomerular capillary hydrostatic pressure minus the sum of Bowman's capsule hydrostatic pressure and glomerular capillary oncotic pressure. A decrease in the concentration of plasma proteins (e.g., in nephrotic syndrome, liver disease, or malnutrition) lowers the plasma colloid osmotic (oncotic) pressure. Since oncotic pressure is the main force opposing filtration, a decrease in oncotic pressure increases NFP and thus increases GFR. A decrease in afferent arteriolar pressure, a decrease in renal blood flow, and a decrease in efferent arteriolar resistance all decrease glomerular hydrostatic pressure and thus decrease GFR. Obstruction of the ureters increases Bowman's capsule pressure and decreases GFR."
+            },
+            {
+                q: "13. Sodium reabsorption in the proximal tubules from the luminal surface is marked by all the following except:",
+                options: [
+                    "Sodium glucose co-transporters",
+                    "Sodium-hydrogen exchanger",
+                    "Na-K pump",
+                    "Solvent drag",
+                    "Sodium amino acid transporters"
+                ],
+                correct: "c",
+                explanation: "Sodium reabsorption in the proximal tubule occurs primarily via secondary active transport and solvent drag. On the luminal (apical) brush border membrane, Na⁺ enters the cell down its electrochemical gradient through several transporters: the Na⁺/glucose cotransporters (SGLT2 and SGLT1), the Na⁺/H⁺ exchanger (NHE3), Na⁺/amino acid cotransporters, and Na⁺/phosphate cotransporters. Sodium is also carried passively with water by solvent drag. The Na⁺/K⁺-ATPase pump, however, is located on the BASOLATERAL membrane (not the luminal membrane). It pumps Na⁺ out of the cell into the interstitial fluid in exchange for K⁺, maintaining the low intracellular Na⁺ concentration that drives the luminal transporters. Therefore, the Na⁺/K⁺-ATPase is not a luminal membrane mechanism of Na⁺ reabsorption."
+            },
+            {
+                q: "14. The restriction of protein to pass through the filtration membrane is due to:",
+                options: [
+                    "The size of the pores in the capillary wall",
+                    "The size of the spaces between the cells of the epithelial layer",
+                    "The basement membrane",
+                    "The positive charge on the membrane",
+                    "The presence of the phagocytic mesangial cells"
+                ],
+                correct: "c",
+                explanation: "The glomerular filtration barrier consists of three layers: (1) the fenestrated endothelium of the glomerular capillaries, (2) the glomerular basement membrane (GBM), and (3) the podocyte foot processes with filtration slits (slit diaphragms). The GBM is the primary barrier to the passage of proteins. It is composed of type IV collagen, laminin, nidogen, and heparan sulfate proteoglycans. The heparan sulfate gives the GBM a strong negative charge, which repels negatively charged plasma proteins such as albumin (which is also negatively charged). This is known as the charge barrier. The GBM also provides a size barrier: it prevents the passage of molecules larger than about 5–6 nm in radius. The fenestrae of the endothelium are relatively large (70–100 nm) and do not significantly restrict proteins. The filtration slits (slit diaphragms) between podocyte foot processes also contribute to the barrier, particularly for larger molecules. The filtration barrier is negatively charged, not positively charged, and mesangial cells are phagocytic but do not form the primary filtration barrier."
+            },
+            {
+                q: "15. A patient with renal failure develops symptoms caused by the loss of a hormone produced by the kidney. Which of the following is the most likely diagnosis?",
+                options: [
+                    "Edema",
+                    "Hypertension",
+                    "Anemia",
+                    "Uremia",
+                    "Acidosis"
+                ],
+                correct: "c",
+                explanation: "The kidneys produce erythropoietin (EPO) from peritubular interstitial fibroblasts in response to tissue hypoxia. EPO stimulates the proliferation and differentiation of erythroid progenitor cells in the bone marrow, leading to increased red blood cell production. In chronic kidney disease (renal failure), the damaged kidneys cannot produce adequate EPO, resulting in normocytic normochromic anemia (anemia of chronic kidney disease). The other options are not caused by the loss of a kidney-produced hormone: edema results from Na⁺ and water retention (due to reduced GFR and RAAS activation); hypertension results from fluid retention and RAAS activation; uremia results from the accumulation of nitrogenous waste products (urea, creatinine) due to reduced excretion; and acidosis results from impaired renal H⁺ excretion and HCO₃⁻ reabsorption. None of these are due to hormone deficiency."
+            },
+            {
+                q: "16. A partial gastrectomy of the proximal third of the stomach will primarily affect which of the following processes?",
+                options: [
+                    "Receptive relaxation",
+                    "Peristalsis",
+                    "Retropulsion",
+                    "Segmentation",
+                    "Churning"
+                ],
+                correct: "a",
+                explanation: "The proximal third of the stomach (fundus and upper body) is responsible for receptive relaxation — a vagovagal reflex that allows the stomach to accommodate a large meal with only a small increase in intragastric pressure. This reflex is mediated by the vagus nerve: afferent fibers sense stretch, and efferent fibers release VIP and nitric oxide (NO) onto the smooth muscle of the fundus, causing relaxation. Resection of this region (partial gastrectomy) primarily impairs receptive relaxation and gastric storage. Peristalsis, retropulsion, and churning are functions of the distal stomach (antrum and pylorus), where the gastric contents are mixed and ground before being emptied into the duodenum. Segmentation is a function of the small intestine, not the stomach."
+            },
+            {
+                q: "17. Which of the following is a likely consequence of ileal resection?",
+                options: [
+                    "Achalasia",
+                    "Atrophic gastritis",
+                    "Constipation",
+                    "Peptic ulcer",
+                    "Vitamin B12 deficiency"
+                ],
+                correct: "e",
+                explanation: "Vitamin B12 (cobalamin) is absorbed in the terminal ileum. It requires binding to intrinsic factor (IF), which is secreted by gastric parietal cells. The B12–IF complex travels to the ileum, where it binds to cubilin receptors on enterocytes and is absorbed via endocytosis. Resection of the ileum (especially the terminal ileum) removes the site of B12 absorption, leading to vitamin B12 deficiency. This can cause megaloblastic anemia (macrocytic anemia) and neurological symptoms (peripheral neuropathy, subacute combined degeneration of the spinal cord). Ileal resection can also cause malabsorption of bile salts (leading to fat malabsorption and diarrhea), fat-soluble vitamin deficiencies (A, D, E, K), and gallstones (due to altered bile composition). Achalasia, atrophic gastritis, constipation, and peptic ulcer are not direct consequences of ileal resection."
+            },
+            {
+                q: "18. Migrating motility complexes (MMC) occur about every 90 min between meals and are thought to be stimulated by the gastrointestinal hormone, motilin. An absence of MMCs causes an increase in which of the following?",
+                options: [
+                    "Duodenal motility",
+                    "Gastric emptying",
+                    "Intestinal bacteria",
+                    "Mass movements",
+                    "Swallowing"
+                ],
+                correct: "c",
+                explanation: "The migrating motility complex (MMC) is a cyclic pattern of gastrointestinal motility that occurs during fasting (between meals), approximately every 90–120 minutes. It consists of four phases and its primary function is to clear the stomach and small intestine of residual food, secretions, and bacteria — the so-called 'housekeeper' function. The MMC is stimulated by the hormone motilin, which is released from endocrine cells in the duodenum. When the MMC is absent (e.g., in patients receiving prolonged enteral nutrition, those with autonomic neuropathy, or after certain surgeries), intestinal contents stagnate, leading to bacterial overgrowth in the small intestine (small intestinal bacterial overgrowth, SIBO). This can cause bloating, diarrhea, and malabsorption. The MMC does not increase duodenal motility, gastric emptying, mass movements, or swallowing; in fact, its absence is associated with stagnation, not increased motility."
+            },
+            {
+                q: "19. Which of the following statements is wrong?",
+                options: [
+                    "Repeated vomiting leads to dehydration, alkalosis, and K⁺ depletion",
+                    "The rate of gastric emptying is affected by the fat content of food",
+                    "The enterogastric reflex is a gastro-inhibitory reflex",
+                    "The enterogastric reflex depends on vagal impulses as well as local enteric and prevertebral ganglionic reflexes",
+                    "The enterogastric reflex is of value in facilitating carbohydrates digestion"
+                ],
+                correct: "e",
+                explanation: "The enterogastric reflex is a gastro-inhibitory reflex triggered by the presence of chyme in the duodenum — especially chyme that is acidic, hypertonic, fatty, or protein-rich. It inhibits gastric emptying and gastric acid secretion, allowing the duodenum time to neutralize acid, digest nutrients, and absorb them. It is mediated by vagal afferents and efferents, local enteric reflexes, and prevertebral sympathetic ganglia. It does NOT facilitate carbohydrate digestion; in fact, by slowing gastric emptying, it helps regulate the rate at which chyme enters the small intestine, allowing optimal digestion and absorption of ALL nutrients (including carbohydrates, fats, and proteins). The other statements are true: repeated vomiting causes loss of H⁺ and Cl⁻ (and K⁺), leading to dehydration, metabolic alkalosis, and hypokalemia; the fat content of food slows gastric emptying (via CCK and the enterogastric reflex); and the enterogastric reflex is a gastro-inhibitory reflex that depends on vagal, local enteric, and prevertebral ganglionic reflexes."
+            },
+            {
+                q: "20. The following are choleretics except:",
+                options: [
+                    "Bile salts",
+                    "Secretin",
+                    "Acetylcholine",
+                    "Bile pigments",
+                    "Vasodilators"
+                ],
+                correct: "d",
+                explanation: "Choleretics are substances that increase bile secretion (bile flow) by the liver. They include: (1) Bile salts — the most potent choleretics; they stimulate bile secretion via the enterohepatic circulation and direct stimulation of hepatocytes. (2) Secretin — stimulates the ductal cells of the biliary tree to secrete bicarbonate-rich fluid, increasing bile volume. (3) Acetylcholine (vagal stimulation) — increases bile secretion. (4) Vasodilators — increase hepatic blood flow and bile secretion. Bile pigments (bilirubin, biliverdin) are products of heme catabolism. They are excreted in bile but do not stimulate bile secretion; therefore, they are not choleretics."
+            },
+            {
+                q: "21. The following are true statements about fat absorption from the small intestine except:",
+                options: [
+                    "It is helped by bile salts",
+                    "Glycerol and short chain FAs are absorbed passively",
+                    "Deficiency of fat absorption leads to poor absorption of Vitamin B",
+                    "Chylomicrons are extruded into lacteal laterals by exocytosis",
+                    "Triglycerides enter the circulation via the thoracic duct"
+                ],
+                correct: "c",
+                explanation: "Fat absorption in the small intestine involves emulsification by bile salts, hydrolysis by pancreatic lipase, micelle formation, absorption by enterocytes, re-esterification into triglycerides, and packaging into chylomicrons for exocytosis into lacteals. Fat-soluble vitamins (A, D, E, and K) are absorbed along with fats in micelles. Therefore, deficiency of fat absorption leads to poor absorption of fat-soluble vitamins (A, D, E, K), NOT vitamin B (which is water-soluble and absorbed by different mechanisms). The other statements are true: bile salts help emulsify fat and form micelles; glycerol and short-chain fatty acids are absorbed passively (and enter the portal blood directly); chylomicrons are extruded into lacteals by exocytosis; and triglycerides (as part of chylomicrons) enter the circulation via the thoracic duct."
+            },
+            {
+                q: "22. Emptying at the ileocecal region is promoted by:",
+                options: [
+                    "Distention of cecum",
+                    "Distention of colon",
+                    "Distention of stomach",
+                    "Sympathetic reflex",
+                    "Secretin"
+                ],
+                correct: "c",
+                explanation: "Emptying at the ileocecal region (the movement of chyme from the ileum into the cecum) is promoted by the gastroileal reflex. This reflex is initiated by distension of the stomach (and the presence of food in the stomach) and involves vagal and enteric pathways. It increases ileal motility and relaxes the ileocecal sphincter, allowing chyme to pass into the cecum. Distension of the cecum and colon, as well as sympathetic reflexes, INHIBIT ileocecal emptying (the ileocecal sphincter contracts to prevent reflux of colonic contents into the ileum). Secretin does not promote ileocecal emptying; it primarily stimulates pancreatic and biliary bicarbonate secretion and inhibits gastric emptying."
+            },
+            {
+                q: "23. Mass movement in the colon after meal is due to the following except:",
+                options: [
+                    "Gastrocolic reflex",
+                    "Duodenocolic reflex",
+                    "Gastrin hormone",
+                    "Secretin hormone",
+                    "Intense stimulation of parasympathetic nerves"
+                ],
+                correct: "d",
+                explanation: "Mass movements are strong, propulsive contractions of the colon that occur 1–3 times per day and move feces over long distances (e.g., from the transverse colon to the sigmoid colon and rectum). They are often triggered by the gastrocolic and duodenocolic reflexes after a meal. They are also stimulated by gastrin and by intense parasympathetic (vagal) stimulation. Secretin, however, is not involved in stimulating mass movements. In fact, secretin inhibits gastrointestinal motility (including gastric emptying) and stimulates pancreatic and biliary bicarbonate secretion. Therefore, secretin is the exception."
+            },
+            {
+                q: "24. A 54-year-old woman eats a healthy meal. Approximately 20 min later the woman feels the urge to defecate. Which of the following reflexes results in the urge to defecate when the stomach is stretched?",
+                options: [
+                    "Duodenocolic reflex",
+                    "Enterogastric reflex",
+                    "Gastrocolic reflex",
+                    "Intestinal-intestinal reflex",
+                    "Rectosphincteric reflex"
+                ],
+                correct: "c",
+                explanation: "The gastrocolic reflex is initiated by distension of the stomach (and the presence of food in the stomach). It leads to increased motility in the colon, particularly mass movements, and often produces the urge to defecate after a meal. This reflex is mediated by the enteric nervous system and vagal pathways, and it is why many people need to defecate shortly after eating. The duodenocolic reflex is triggered by distension of the duodenum; the enterogastric reflex inhibits gastric emptying; the intestinal-intestinal reflex inhibits motility after intestinal injury; and the rectosphincteric reflex involves rectal distension and relaxation of the internal anal sphincter."
+            },
+            {
+                q: "25. Mass movements constitute an important intestinal event that lead to bowel movements. Mass movements cause which of the following?",
+                options: [
+                    "Contraction of internal anal sphincter",
+                    "Duodenal peristalsis",
+                    "Gastric retropulsion",
+                    "Hunger sensations",
+                    "Rectal distension"
+                ],
+                correct: "e",
+                explanation: "Mass movements propel feces from the transverse and descending colon into the rectum, causing rectal distension. This distension stimulates stretch receptors in the rectal wall, which activate the defecation reflex (rectosphincteric reflex). The reflex involves relaxation of the internal anal sphincter and contraction of the rectal muscles, creating the urge to defecate. Mass movements do not directly cause contraction of the internal anal sphincter (they cause relaxation via the reflex), duodenal peristalsis, gastric retropulsion, or hunger sensations."
+            },
+            {
+                q: "26. Which of the following factors strengthen the gastric mucosal barrier?",
+                options: [
+                    "Bile salts",
+                    "Aspirin",
+                    "Secretin",
+                    "Gastrin",
+                    "Ethanol"
+                ],
+                correct: "c",
+                explanation: "The gastric mucosal barrier protects the stomach wall from autodigestion by acid and pepsin. It consists of: a mucus-bicarbonate layer, tight junctions between epithelial cells, good mucosal blood flow, prostaglandins, and rapid cell turnover. Secretin helps strengthen the barrier by stimulating the secretion of bicarbonate-rich fluid from the pancreas, biliary ducts, and Brunner's glands in the duodenum, which helps neutralize acid. Secretin also inhibits gastric acid secretion. Bile salts, aspirin, and ethanol all DISRUPT the gastric mucosal barrier (they are known barrier breakers). Gastrin stimulates acid secretion and does not strengthen the barrier."
+            },
+            {
+                q: "27. Which of the following is likely to fail to reduce secretion of hydrochloric acid in the stomach?",
+                options: [
+                    "A H2 receptor blocker",
+                    "A nicotinic cholinergic receptor blocker",
+                    "A muscarinic cholinergic receptor blocker",
+                    "An inhibitor of the hydrogen-potassium pump",
+                    "A gastrin receptor blocker"
+                ],
+                correct: "b",
+                explanation: "The parietal cell is stimulated by three main agonists: (1) acetylcholine (ACh) via M3 muscarinic receptors, (2) gastrin via CCK-B receptors, and (3) histamine via H2 receptors. Blocking any of these pathways reduces acid secretion: H2 receptor blockers (e.g., cimetidine) block histamine; muscarinic receptor blockers (e.g., atropine) block ACh; H⁺/K⁺-ATPase inhibitors (e.g., omeprazole) block the final common pathway; and gastrin receptor blockers block gastrin. Nicotinic cholinergic receptors are located on the postganglionic cell bodies in autonomic ganglia and the enteric nervous system. While ganglionic blockade (e.g., with hexamethonium) would reduce vagal drive to the stomach, the direct stimulatory effect of ACh on parietal cells is mediated by MUSCARINIC (M3) receptors, not nicotinic receptors. Nicotinic receptors are not present on the parietal cell, and nicotinic blockade is not a direct or clinically used method for reducing gastric acid secretion. Therefore, among the options, nicotinic cholinergic receptor blockade is the least direct and clinically relevant approach, and is considered the answer that 'fails' to directly reduce acid secretion at the parietal cell level."
+            },
+            {
+                q: "28. The component parts of the myenteric plexus of the enteric nervous system includes the following except:",
+                options: [
+                    "Sensory neurons",
+                    "Interneurons",
+                    "Motor neurons",
+                    "Synapses",
+                    "Control centers in the medulla oblongata"
+                ],
+                correct: "e",
+                explanation: "The myenteric plexus (Auerbach's plexus) is part of the enteric nervous system and lies between the longitudinal and circular muscle layers of the gastrointestinal tract. It contains: sensory neurons (which detect mechanical and chemical stimuli), interneurons (which integrate and relay information), motor neurons (which control smooth muscle contraction and secretion), and synapses (where neurotransmission occurs). The enteric nervous system can function autonomously, although it is modulated by the autonomic nervous system. Control centers in the medulla oblongata (e.g., the dorsal motor nucleus of the vagus and the nucleus tractus solitarius) are part of the CENTRAL nervous system, not the enteric nervous system. They modulate ENS activity via the vagus nerve but are not components of the myenteric plexus itself."
+            },
+            {
+                q: "29. The functions of gastrin include the following except:",
+                options: [
+                    "Increased production of histamine in the gastric mucosa",
+                    "Stimulation of the growth of intestinal mucosa",
+                    "Increased secretion of pepsinogen",
+                    "Contraction of the gastro-oesophageal junction",
+                    "Increased secretion of HCO₃⁻ by biliary duct cells"
+                ],
+                correct: "e",
+                explanation: "Gastrin is a gastrointestinal hormone secreted by G cells in the gastric antrum and duodenum. Its functions include: (1) stimulation of histamine release from enterochromaffin-like (ECL) cells, which in turn stimulates acid secretion from parietal cells; (2) trophic effects on the gastrointestinal mucosa (stimulation of growth of the intestinal and gastric mucosa); (3) stimulation of pepsinogen secretion from chief cells; (4) contraction of the gastroesophageal junction (LES) and stimulation of gastric motility; and (5) stimulation of gastric acid secretion (directly and indirectly). Gastrin does NOT stimulate the secretion of bicarbonate (HCO₃⁻) by biliary duct cells; this is a function of SECRETIN, which stimulates ductal cells in the pancreas and biliary tree to secrete bicarbonate-rich fluid."
+            }
+        ];
+
+        // ─── RENDER MCQ ─────────────────────────────────────────────
+        function renderMCQs() {
+            const container = document.getElementById('mcq-container');
+            let html = '';
+            questions.forEach((q, index) => {
+                html += `<div class="question">`;
+                html += `<p><span class="q-badge">Q${index + 1}</span> ${q.q}</p>`;
+                html += `<div class="options">`;
+                const letters = ['A', 'B', 'C', 'D', 'E'];
+                q.options.forEach((opt, i) => {
+                    html += `<label><input type="radio" name="q${index + 1}" value="${letters[i]}"> ${letters[i]}) ${opt}</label>`;
+                });
+                html += `</div>`;
+                html += `<div class="question-feedback" id="feedback-q${index + 1}"></div>`;
+                html += `</div>`;
+            });
+            container.innerHTML = html;
+        }
+        renderMCQs();
+
+        // ─── MCQ CORRECT ANSWERS & EXPLANATIONS (FIXED) ───────────
+        const correctMap = {};
+        const explMap = {};
+        questions.forEach((q, i) => {
+            const key = 'q' + (i + 1);
+            correctMap[key] = q.correct.toUpperCase();   // ← normalize to uppercase
+            explMap[key] = q.explanation;
+        });
+
+        // ─── SUBMIT MCQ ─────────────────────────────────────────────
+        function submitQuiz() {
+            let score = 0;
+            const total = questions.length;
+            for (let i = 0; i < total; i++) {
+                const key = 'q' + (i + 1);
+                const radios = document.querySelectorAll(`input[name="${key}"]`);
+                const selected = Array.from(radios).find(r => r.checked);
+                const correct = correctMap[key];
+                const feedbackEl = document.getElementById(`feedback-${key}`);
+                if (!feedbackEl) continue;
+
+                if (selected && selected.value === correct) score++;
+
+                let html = `<div class="answer-block"><strong>Q${i+1}</strong><div class="answer-list">`;
+                const letters = ['A', 'B', 'C', 'D', 'E'];
+                const opts = questions[i].options;
+                opts.forEach((opt, idx) => {
+                    const val = letters[idx];
+                    let cls = 'answer-item';
+                    if (val === correct) cls += ' answer-correct';
+                    if (selected && selected.value === val && selected.value !== correct) cls += ' answer-wrong user-choice';
+                    if (selected && selected.value === val && selected.value === correct) cls += ' user-choice';
+                    html += `<div class="${cls}">${letters[idx]}) ${opt}${selected && selected.value === val ? ' ◀' : ''}</div>`;
+                });
+                html += `</div>`;
+
+                const correctIndex = letters.indexOf(correct);
+                const correctText = correctIndex >= 0 ? opts[correctIndex] : '(unknown)';
+                const explanation = explMap[key] || '';
+                if (selected) {
+                    if (selected.value === correct) {
+                        html += `<div class="explanation">✅ Correct — ${explanation}</div>`;
+                    } else {
+                        html += `<div class="explanation wrong">❌ Incorrect. Correct answer: <strong>${correctText}</strong>. ${explanation}</div>`;
+                    }
+                } else {
+                    html += `<div class="explanation wrong">No answer selected. Correct: <strong>${correctText}</strong>. ${explanation}</div>`;
+                }
+                html += `</div>`;
+                feedbackEl.innerHTML = html;
+            }
+
+            const pct = Math.round((score / total) * 100);
+            const resultBox = document.getElementById('resultBox');
+            resultBox.style.display = 'block';
+            document.getElementById('score').innerText = pct + '%';
+
+            document.querySelectorAll('#quizForm input[type="radio"]').forEach(i => i.disabled = true);
+        }
+
+        // ─── SECTION B / C: TOGGLE MODEL ANSWER ──────────────────
+        function toggleAnswer(btn) {
+            const answerDiv = btn.nextElementSibling;
+            if (answerDiv && answerDiv.classList.contains('model-answer')) {
+                answerDiv.classList.toggle('visible');
+                btn.textContent = answerDiv.classList.contains('visible') ? 'Hide Answer' : 'Show Answer';
+            }
+        }
+
+        // ─── TAB SWITCHING ──────────────────────────────────────────
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                const target = this.dataset.target;
+                document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+                document.getElementById(target).classList.remove('hidden');
+            });
+        });
+    </script>
+
+</body>
+</html>

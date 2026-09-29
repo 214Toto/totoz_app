@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025 Physiology Test 3 – 3rd Year</title>
+    <style>
+        :root {
+            --primary: #1a6b6b;
+            --accent: #2ea8a0;
+            --dark: #0f2a2a;
+            --light: #f4f8f7;
+            --radius: 12px;
+            --shadow: 0 4px 14px rgba(0, 30, 30, 0.08);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #edf3f2;
+            color: var(--dark);
+            min-height: 100vh;
+            padding-top: 72px;
+        }
+        header {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            background: linear-gradient(145deg, var(--primary), var(--dark));
+            color: #fff; padding: 0.6rem 0;
+            box-shadow: 0 4px 18px rgba(0, 20, 20, 0.25);
+        }
+        .header-inner {
+            max-width: 1000px; margin: 0 auto; padding: 0 1.5rem;
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 0.3rem;
+        }
+        .logo { display: flex; align-items: center; gap: 0.6rem; }
+        .logo i { font-size: 1.5rem; color: #8dd9d4; }
+        .logo h1 { font-size: 1.15rem; font-weight: 700; letter-spacing: 0.2px; }
+        .badge {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 0.2rem 1rem; border-radius: 40px;
+            font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+            color: #b3e6e0; letter-spacing: 0.5px;
+        }
+        .container { max-width: 920px; margin: 0 auto; padding: 0 1.2rem 2.5rem; }
+        .tab-bar { display: flex; gap: 0.5rem; margin: 0.5rem 0 1.5rem 0; flex-wrap: wrap; }
+        .tab-btn {
+            background: #dce8e8; border: none; padding: 0.5rem 1.8rem;
+            border-radius: 40px; font-weight: 600; font-size: 0.95rem;
+            color: var(--dark); cursor: pointer; transition: 0.2s;
+        }
+        .tab-btn:hover { background: #c0d6d6; }
+        .tab-btn.active {
+            background: var(--primary); color: #fff;
+            box-shadow: 0 2px 10px rgba(26, 107, 107, 0.25);
+        }
+        .tab-panel { display: block; }
+        .tab-panel.hidden { display: none; }
+        .section-title {
+            font-size: 1.25rem; font-weight: 700; color: var(--primary);
+            margin: 0 0 0.8rem 0; padding-bottom: 0.4rem;
+            border-bottom: 3px solid rgba(26, 107, 107, 0.18);
+            display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;
+        }
+        .section-title .count {
+            font-size: 0.7rem; font-weight: 600; background: var(--primary);
+            color: #fff; border-radius: 40px; padding: 0 0.7rem; line-height: 1.7;
+        }
+        .section-subtitle { color: #4f6e6e; font-size: 0.9rem; margin-bottom: 1rem; }
+        .question {
+            background: #ffffff; border-radius: var(--radius);
+            padding: 1.1rem 1.2rem 0.2rem 1.2rem; margin-bottom: 1rem;
+            box-shadow: var(--shadow); border: 1px solid rgba(26, 107, 107, 0.05);
+            transition: box-shadow 0.2s;
+        }
+        .question:hover { box-shadow: 0 6px 20px rgba(0, 30, 30, 0.07); }
+        .question .q-badge {
+            display: inline-block; background: var(--primary); color: #fff;
+            border-radius: 40px; padding: 0 0.65rem; font-size: 0.7rem;
+            font-weight: 700; line-height: 1.6; margin-right: 0.4rem;
+        }
+        .question p { font-weight: 600; font-size: 0.97rem; margin-bottom: 0.4rem; color: var(--dark); }
+        .options label {
+            display: block; background: #fafcfc; border: 1px solid #dde8e8;
+            border-radius: 7px; padding: 0.4rem 0.85rem; margin-top: 0.4rem;
+            cursor: pointer; transition: all 0.15s; font-weight: 450; font-size: 0.92rem;
+        }
+        .options label:hover { background: #e8f5f4; border-color: var(--accent); }
+        .options input[type="radio"] { margin-right: 0.5rem; accent-color: var(--primary); transform: scale(1.04); }
+        .question-feedback { margin-top: 0.8rem; padding: 0.4rem 0 0.1rem 0; border-top: 1px dashed #dce6e6; }
+        .answer-block strong { display: block; margin-bottom: 3px; color: var(--primary); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.3px; }
+        .answer-list { display: flex; flex-direction: column; gap: 2px; }
+        .answer-item {
+            padding: 4px 10px; border-radius: 5px; border: 1px solid #e4edec;
+            background: #ffffff; font-weight: 500; font-size: 0.88rem;
+        }
+        .answer-correct { background: #e8f7ef; border-color: #a8d8c0; color: #0a4f3a; }
+        .answer-wrong { background: #fde9ea; border-color: #f5b8b8; color: #8a1f2b; }
+        .user-choice { outline: 2px dashed rgba(0, 0, 0, 0.06); }
+        .explanation {
+            margin-top: 5px; padding: 8px 13px; border-radius: 7px;
+            background: #f0f8f6; color: #065f4a; font-size: 0.88rem;
+            line-height: 1.55; border-left: 4px solid var(--accent);
+        }
+        .explanation.wrong { background: #fdf1f1; color: #7a1f1f; border-left-color: #e68080; }
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            color: #fff; border: none; padding: 0.55rem 1.8rem;
+            border-radius: var(--radius); font-weight: 600; font-size: 0.95rem;
+            cursor: pointer; transition: transform 0.15s, box-shadow 0.2s;
+            box-shadow: 0 4px 14px rgba(26, 107, 107, 0.25);
+        }
+        .btn:hover { transform: scale(1.02); box-shadow: 0 6px 24px rgba(26, 107, 107, 0.32); }
+        .btn:active { transform: scale(0.96); }
+        .submit-wrap { text-align: center; margin: 1.5rem 0 1.8rem; }
+        .result {
+            margin-top: 1.5rem; padding: 1.5rem 1.5rem 0.8rem;
+            background: #eaf6f4; border-radius: var(--radius);
+            text-align: center; display: none; border: 1px solid #b8dbd6;
+        }
+        .result h3 { font-size: 1.1rem; font-weight: 600; color: var(--dark); }
+        .score { font-size: 2.4rem; font-weight: 800; color: var(--primary); margin: 0.1rem 0 0.2rem; }
+        .text-muted { color: #4f6e6e; font-size: 0.9rem; }
+        .hidden { display: none !important; }
+        @media (max-width: 700px) {
+            body { padding-top: 68px; }
+            .logo h1 { font-size: 0.95rem; }
+            .header-inner { padding: 0 1rem; flex-direction: column; align-items: stretch; gap: 0.2rem; }
+            .badge { align-self: flex-start; }
+            .question { padding: 0.9rem 0.9rem 0.1rem 0.9rem; }
+            .section-title { font-size: 1.05rem; }
+            .score { font-size: 2rem; }
+            .btn { padding: 0.5rem 1.2rem; font-size: 0.85rem; }
+            .tab-btn { padding: 0.4rem 1.2rem; font-size: 0.85rem; }
+        }
+        @media (max-width: 420px) {
+            .logo h1 { font-size: 0.8rem; }
+            .options label { font-size: 0.85rem; padding: 0.35rem 0.65rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-inner">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+                <h1>2025 Physiology Test 3 – 3rd Year</h1>
+            </div>
+            <span class="badge"><i class="fas fa-pencil-alt"></i> &nbsp;100 MCQs</span>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+
+            <div class="tab-bar">
+                <button class="tab-btn active" data-target="A">📝 Section A – MCQs</button>
+            </div>
+
+            <div id="panel-A" class="tab-panel">
+                <div class="section-title">
+                    <i class="fas fa-list-ul"></i> Section A – Multiple Choice Questions
+                    <span class="count">100</span>
+                </div>
+                <p class="section-subtitle">Select the best answer for each question, then click <strong>Submit All MCQs</strong> below.</p>
+                <form id="form-A">
+                    <div id="container-A"></div>
+                    <div class="submit-wrap">
+                        <button type="button" class="btn" onclick="submitSectionA()">
+                            <i class="fas fa-check-circle"></i> Submit All MCQs
+                        </button>
+                    </div>
+                </form>
+                <div class="result" id="result-A">
+                    <h3><i class="fas fa-chart-simple"></i> Your Score</h3>
+                    <div class="score" id="score-A">0</div>
+                    <p class="text-muted">Review the feedback below each question.</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+    /* =====================================================================
+       SECTION A — 100 MCQs (exact text from the 2025 paper)
+       ===================================================================== */
+    const sectionA = [
+    {
+        q: `A 45-year-old male presents with loss of fine motor control in his right hand. An MRI reveals a lesion affecting the left internal capsule. Which tract is most likely responsible for his symptoms?`,
+        options: [
+            `Rubrospinal tract`,
+            `Anterior corticospinal tract`,
+            `Lateral corticospinal tract`,
+            `Tectospinal tract`,
+            `Vestibulospinal tract`
+        ],
+        correct: `C`,
+        explanation: `The corticospinal tract descends from the motor cortex through the posterior limb of the internal capsule, the cerebral peduncles, the pons, and the medullary pyramids, where 85–90% of fibres decussate to form the lateral corticospinal tract. A lesion in the left internal capsule therefore interrupts the corticospinal fibres destined for the right side of the body, producing contralateral fine motor deficits — in this case, loss of fine motor control in the right hand. The lateral corticospinal tract controls distal limb muscles (especially the hands and fingers), which explains the predominant hand involvement. The rubrospinal tract originates from the red nucleus and controls flexor tone; the anterior corticospinal tract controls axial/proximal muscles; the tectospinal tract controls head/neck reflexes to visual stimuli; and the vestibulospinal tract controls balance and postural tone.`
+    },
+    {
+        q: `A patient with a lesion affecting the anterior white column of the spinal cord is most likely to show which deficit?`,
+        options: [
+            `Loss of voluntary facial movements`,
+            `Poor limb coordination`,
+            `Spastic paralysis of the lower limbs`,
+            `Ipsilateral facial anesthesia`,
+            `Impaired postural adjustments`
+        ],
+        correct: `E`,
+        explanation: `The anterior white column of the spinal cord contains the anterior corticospinal tract, which is the uncrossed component of the corticospinal tract (about 10–15% of fibres). The anterior corticospinal tract descends ipsilaterally in the anterior funiculus and crosses at the level of termination to innervate axial and proximal muscles of the trunk and neck, as well as the proximal limbs. Its primary role is in postural adjustments and gross movements of the axial musculature. A lesion of the anterior white column therefore produces impaired postural adjustments rather than paralysis of the distal limbs. Loss of voluntary facial movements would involve the corticobulbar tract; poor limb coordination would involve the cerebellum or spinocerebellar tracts; spastic paralysis of the lower limbs would involve the lateral corticospinal tract; and ipsilateral facial anesthesia would involve the trigeminal pathway.`
+    },
+    {
+        q: `A 30-year-old woman develops a lesion to the right red nucleus. What motor finding is most expected?`,
+        options: [
+            `Increased tone in left arm flexors`,
+            `Flaccid paralysis of the left arm`,
+            `Weakness in right leg extensors`,
+            `Bilateral loss of proprioception`,
+            `Atrophy of neck flexors`
+        ],
+        correct: `A`,
+        explanation: `The red nucleus gives rise to the rubrospinal tract, which decussates immediately in the ventral tegmental decussation and descends in the lateral funiculus of the spinal cord. The rubrospinal tract excites flexor motor neurons and inhibits extensor motor neurons, primarily in the upper limbs (its influence is greater on the arms than the legs). A lesion of the right red nucleus would therefore reduce rubrospinal input to the LEFT side of the spinal cord, leading to a relative excess of extensor tone and increased tone in the flexors of the left arm — the classic finding of a rubrospinal lesion. Flaccid paralysis would be a lower motor neuron finding; weakness in the right leg extensors would be ipsilateral and involves the leg, not the arm; bilateral loss of proprioception involves the dorsal columns; and atrophy of neck flexors is not a recognized rubrospinal syndrome.`
+    },
+    {
+        q: `Damage to the lateral corticospinal tract at the cervical level would cause which clinical feature?`,
+        options: [
+            `Contralateral hemiparesis of the arm`,
+            `Ipsilateral spastic paralysis of the upper limb`,
+            `Ipsilateral flaccid paralysis of the leg`,
+            `Contralateral sensory loss of fine touch`,
+            `Bilateral Babinski signs`
+        ],
+        correct: `B`,
+        explanation: `The lateral corticospinal tract is formed by the crossed fibres of the corticospinal tract after decussation in the medullary pyramids. Once it has crossed, it descends in the lateral funiculus of the spinal cord IPSILATERAL to the side of the body it innervates. Therefore, a lesion of the lateral corticospinal tract at the cervical level produces IPSILATERAL spastic paralysis of the upper limb (and eventually the lower limb, depending on the level). The classic signs of an upper motor neuron lesion are spasticity, hyperreflexia, clonus, and a positive Babinski sign. Contralateral hemiparesis would occur with a lesion ABOVE the decussation (e.g., internal capsule or cerebral peduncle); ipsilateral flaccid paralysis would be a lower motor neuron finding; contralateral sensory loss would involve the spinothalamic or dorsal column pathways; and bilateral Babinski signs would suggest a spinal cord lesion affecting both sides or a more diffuse process.`
+    },
+    {
+        q: `A 56-year-old man is unable to maintain balance when standing still. He sways and falls with his eyes closed (positive Romberg). There is no limb weakness. A lesion to which descending tract could explain the imbalance?`,
+        options: [
+            `Corticospinal tract`,
+            `Rubrospinal tract`,
+            `Reticulospinal tract`,
+            `Vestibulospinal tract`,
+            `Tectospinal tract`
+        ],
+        correct: `D`,
+        explanation: `A positive Romberg sign — worsening of balance with the eyes closed in the absence of limb weakness — indicates a defect in proprioceptive or vestibular input to the balance system. The vestibulospinal tract, which originates from the vestibular nuclei (especially Deiters' nucleus/lateral vestibular nucleus) and descends in the anterior funiculus, is critical for maintaining balance and postural tone by facilitating extensor motor neurons and adjusting posture in response to vestibular input. A lesion of the vestibulospinal tract would impair the ability to maintain balance, particularly when visual cues are removed (eyes closed). The corticospinal tract controls voluntary movement; the rubrospinal tract controls flexor tone; the reticulospinal tract modulates posture and tone but is less specifically involved in balance; and the tectospinal tract controls head/neck reflexes to visual stimuli.`
+    },
+    {
+        q: `Following a spinal cord injury at T10, a patient shows spasticity of lower limb muscles. Which tract damage most likely accounts for this?`,
+        options: [
+            `Anterior corticospinal tract`,
+            `Reticulospinal tract`,
+            `Rubrospinal tract`,
+            `Lateral corticospinal tract`,
+            `Tectospinal tract`
+        ],
+        correct: `D`,
+        explanation: `Spasticity after spinal cord injury is a classic upper motor neuron sign and results from interruption of the lateral corticospinal tract, which provides the major descending inhibitory control over spinal reflex arcs. When the lateral corticospinal tract is damaged, the spinal motor neurons below the lesion lose their normal descending inhibition and become hyperexcitable, leading to spasticity, hyperreflexia, clonus, and a positive Babinski sign. At T10, the lateral corticospinal tract has already crossed in the medulla, so the lesion affects the ipsilateral lower limb. The anterior corticospinal tract primarily controls axial muscles; the reticulospinal tract modulates tone but is not the primary tract whose loss causes spasticity; the rubrospinal tract primarily influences upper limb flexor tone; and the tectospinal tract controls head/neck reflexes.`
+    },
+    {
+        q: `Which descending tract originates from the superior colliculus and is involved in reflex postural head movements in response to visual stimuli?`,
+        options: [
+            `Rubrospinal tract`,
+            `Tectospinal tract`,
+            `Vestibulospinal tract`,
+            `Corticospinal tract`,
+            `Reticulospinal tract`
+        ],
+        correct: `B`,
+        explanation: `The tectospinal tract originates from the superior colliculus (the "tectum" of the midbrain), which receives visual and auditory input. It decussates in the dorsal tegmental decussation and descends to the cervical spinal cord, where it controls reflex postural movements of the head and neck in response to visual and auditory stimuli — for example, turning the head toward a sudden noise or a moving object. The rubrospinal tract originates from the red nucleus and controls flexor tone; the vestibulospinal tract originates from the vestibular nuclei and controls balance; the corticospinal tract originates from the motor cortex and controls voluntary movement; and the reticulospinal tract originates from the reticular formation and modulates posture and tone.`
+    },
+    {
+        q: `The corticospinal tract is said to deactivate in which specific part of the CNS?`,
+        options: [
+            `Midbrain`,
+            `Pons`,
+            `Anterior horn of the spinal cord`,
+            `Bulbomedullary junction`,
+            `Internal capsule`
+        ],
+        correct: `D`,
+        explanation: `The question asks where the corticospinal tract "deactivates" — this is a typo for "decussates." The corticospinal tract descends from the motor cortex through the internal capsule, midbrain (cerebral peduncles), pons, and medulla. At the junction between the medulla and the spinal cord (the bulbomedullary junction, also called the cervicomedullary junction), about 85–90% of the fibres cross to the opposite side in the decussation of the pyramids. These crossed fibres form the lateral corticospinal tract. The remaining 10–15% continue uncrossed as the anterior corticospinal tract and cross at the spinal level of termination. Therefore, the correct answer is the bulbomedullary junction.`
+    },
+    {
+        q: `Following a unilateral cortical stroke, a patient exhibits lower facial paralysis on the contralateral side, but forehead movement is spared. What is the best explanation?`,
+        options: [
+            `Bilateral innervation to lower face`,
+            `Unilateral control of lower face via corticospinal tract`,
+            `Bilateral corticobulbar input to upper face`,
+            `Ipsilateral cranial nerve VII damage`,
+            `Decussation failure of corticospinal tract`
+        ],
+        correct: `C`,
+        explanation: `The upper face (forehead, eyebrow) receives bilateral corticobulbar innervation from both cerebral hemispheres, whereas the lower face receives predominantly unilateral (contralateral) corticobulbar innervation. A unilateral cortical stroke (e.g., in the internal capsule or motor cortex) therefore interrupts the corticobulbar fibres to the contralateral lower face, causing weakness of the lower face on the opposite side, while the upper face is spared because it continues to receive input from the unaffected hemisphere. This is the classic "forehead sparing" pattern of an upper motor neuron facial palsy. In contrast, a lower motor neuron lesion (e.g., Bell's palsy) affects the entire ipsilateral face, including the forehead.`
+    },
+    {
+        q: `The medial reticulospinal tract primarily exerts what action on spinal motor neurons?`,
+        options: [
+            `Facilitates extensor tone`,
+            `Inhibits flexor tone`,
+            `Inhibits all LMNs`,
+            `Excites facial motor nuclei`,
+            `Facilitates deactivation`
+        ],
+        correct: `A`,
+        explanation: `The medial reticulospinal tract originates from the pontine reticular formation and descends in the anterior funiculus of the spinal cord. It primarily facilitates extensor motor neurons and inhibits flexor motor neurons, thereby helping to maintain posture and support the body against gravity. It also plays a role in the maintenance of muscle tone and in the integration of postural adjustments. The lateral reticulospinal tract, by contrast, originates from the medullary reticular formation and has the opposite effect — it inhibits extensor tone and facilitates flexor tone. The other options are incorrect: the tract does not inhibit all lower motor neurons, does not primarily excite facial motor nuclei (that is the corticobulbar tract), and "facilitates deactivation" is not a physiological description.`
+    },
+    {
+        q: `In a patient with hemisection of the spinal cord (Brown-Sequard syndrome) at the T6 level on the right, which motor deficit would be expected?`,
+        options: [
+            `Left-sided facial weakness`,
+            `Bilateral leg weakness`,
+            `Left-sided flaccid paralysis at T6`,
+            `Right-sided intention tremor`,
+            `Right-sided spastic paralysis below T6`
+        ],
+        correct: `E`,
+        explanation: `Brown-Sequard syndrome results from hemisection of the spinal cord. At the level of the lesion, there is ipsilateral lower motor neuron paralysis (due to damage to the anterior horn cells and emerging nerve roots), and below the lesion, there is ipsilateral spastic paralysis (due to interruption of the corticospinal tract, which has already crossed in the medulla and descends ipsilaterally). Therefore, a right-sided hemisection at T6 produces right-sided spastic paralysis below T6. There is also ipsilateral loss of proprioception and vibration (dorsal column), and contralateral loss of pain and temperature (spinothalamic tract, which crosses at the level of entry and ascends contralaterally). Left-sided facial weakness would be a brainstem lesion; bilateral leg weakness would suggest a complete cord lesion; left-sided flaccid paralysis would be a lower motor neuron lesion; and right-sided intention tremor would be a cerebellar finding.`
+    },
+    {
+        q: `A neuroanatomical dissection reveals damage to fibers descending from layer V of the motor cortex. Which of the following motor signs would you most expect?`,
+        options: [
+            `Loss of visual tracking`,
+            `Paralysis of ipsilateral limbs`,
+            `Spastic paralysis of contralateral limbs`,
+            `Loss of facial sensation`,
+            `Flaccid paralysis of tongue`
+        ],
+        correct: `C`,
+        explanation: `Layer V of the motor cortex contains the large pyramidal cells of Betz, which give rise to the corticospinal tract. These fibres descend through the internal capsule, cerebral peduncles, pons, and medullary pyramids, where most decussate to form the lateral corticospinal tract. Therefore, damage to these fibres produces spastic paralysis of the CONTRALATERAL limbs. Spasticity, hyperreflexia, and a positive Babinski sign are the hallmarks of an upper motor neuron lesion. Ipsilateral paralysis would occur with a lesion below the decussation (e.g., spinal cord); loss of visual tracking involves the tectospinal or cortical visual pathways; loss of facial sensation involves the trigeminal pathway; and flaccid paralysis of the tongue would be a lower motor neuron lesion of the hypoglossal nerve.`
+    },
+    {
+        q: `A lesion in the posterior limb of the internal capsule would most likely disrupt:`,
+        options: [
+            `Voluntary motor control of the limbs`,
+            `Visual reflexes`,
+            `Neck muscle coordination`,
+            `Sensory pain pathways`,
+            `Sympathetic output to the eye`
+        ],
+        correct: `A`,
+        explanation: `The posterior limb of the internal capsule contains the corticospinal tract (which controls voluntary motor function of the limbs), the corticobulbar fibres (which control voluntary motor function of the face and head), and the sensory fibres of the thalamocortical radiations (which carry somatosensory information to the cortex). Because the corticospinal tract is the most prominent and clinically significant component, a lesion in the posterior limb most typically produces contralateral hemiparesis (voluntary motor deficits). The classic "lacunar" stroke of the internal capsule is a pure motor stroke. Visual reflexes involve the superior colliculus and tectospinal tract; neck muscle coordination involves the tectospinal and vestibulospinal tracts; sensory pain pathways involve the spinothalamic tract; and sympathetic output to the eye involves the hypothalamospinal pathway.`
+    },
+    {
+        q: `The anterior corticospinal tract differs from the lateral corticospinal tract in that:`,
+        options: [
+            `It crosses at the medulla`,
+            `It innervates contralateral limb muscles`,
+            `It controls axial musculature and decussates at the spinal level`,
+            `It controls facial expression`,
+            `It is an extrapyramidal tract`
+        ],
+        correct: `C`,
+        explanation: `The anterior corticospinal tract consists of the ~10–15% of corticospinal fibres that do NOT cross in the medullary pyramids. Instead, they descend ipsilaterally in the anterior funiculus of the spinal cord and cross at the level of their termination in the spinal cord. They primarily innervate axial and proximal muscles of the trunk and neck (as well as proximal limb muscles) and are involved in postural adjustments and gross movements. The lateral corticospinal tract, by contrast, crosses at the medulla, descends in the lateral funiculus, and innervates distal limb muscles (especially the hands and fingers). The anterior corticospinal tract is not an extrapyramidal tract; it is part of the pyramidal (corticospinal) system.`
+    },
+    {
+        q: `A patient has difficulty coordinating movement in the trunk and proximal limbs. Which descending system is most likely involved?`,
+        options: [
+            `Lateral motor system`,
+            `Medial motor system`,
+            `Spinothalamic tract`,
+            `Spinocerebellar tract`,
+            `Corticobulbar tract`
+        ],
+        correct: `B`,
+        explanation: `The medial motor system comprises the descending tracts that control axial and proximal muscles — the anterior corticospinal tract, the vestibulospinal tract, the medial reticulospinal tract, and the tectospinal tract. These tracts are responsible for posture, balance, and gross movements of the trunk and proximal limbs. The lateral motor system comprises the lateral corticospinal tract and the rubrospinal tract, which control distal limb muscles (especially the hands and fingers). Difficulty coordinating trunk and proximal limb movements therefore points to the medial motor system. The spinothalamic tract carries pain and temperature; the spinocerebellar tract carries unconscious proprioception; and the corticobulbar tract controls facial and head muscles.`
+    },
+    {
+        q: `Which of the following best describes the type of synapse involved in the stretch reflex?`,
+        options: [
+            `Polysynaptic with inhibitory interneurons`,
+            `Disynaptic with gamma loop`,
+            `Intersegmental polysynaptic`,
+            `Multisynaptic and reciprocal`,
+            `Monosynaptic between Ia afferent and alpha motor neuron`
+        ],
+        correct: `E`,
+        explanation: `The stretch reflex (myotatic reflex) is the simplest reflex in the nervous system and is MONOSYNAPTIC. The afferent limb is the Group Ia (primary) afferent from the muscle spindle, which synapses directly onto the alpha motor neuron in the anterior horn of the spinal cord. The efferent limb is the alpha motor neuron, which innervates the extrafusal fibres of the same muscle. This monosynaptic connection produces the rapid muscle contraction seen in the knee-jerk (patellar) reflex. Although the stretch reflex is monosynaptic, it is accompanied by reciprocal inhibition of the antagonist muscle, which IS polysynaptic (mediated by an inhibitory interneuron). However, the primary reflex arc itself is monosynaptic.`
+    },
+    {
+        q: `A lesion to which of the following would abolish the afferent limb of the patellar reflex?`,
+        options: [
+            `Type II fibers`,
+            `Muscle spindle`,
+            `Gamma motor neuron`,
+            `Golgi tendon organ`,
+            `Alpha motor neuron`
+        ],
+        correct: `B`,
+        explanation: `The afferent limb of the patellar reflex is the Group Ia (primary) afferent from the muscle spindle. The muscle spindle is the receptor that detects stretch of the quadriceps muscle when the patellar tendon is tapped. A lesion of the muscle spindle would abolish the afferent limb and therefore the reflex. The gamma motor neuron innervates the intrafusal fibres of the spindle and adjusts its sensitivity but is not the afferent limb. The Golgi tendon organ is the receptor for the inverse stretch reflex (clasp-knife reflex) and mediates the Group Ib afferent. The alpha motor neuron is the efferent limb. Type II fibres are spindle afferents that signal static muscle length but are not the primary afferent for the stretch reflex.`
+    },
+    {
+        q: `Gamma motor neurons primarily regulate which aspect of the muscle spindle?`,
+        options: [
+            `Inhibition of the antagonist`,
+            `Muscle contraction force`,
+            `Spindle sensitivity to stretch`,
+            `Acetylcholine degradation`,
+            `Activation of Golgi tendon organ`
+        ],
+        correct: `C`,
+        explanation: `Gamma motor neurons innervate the intrafusal (contractile) fibres at the two ends of the muscle spindle. By contracting the intrafusal fibres, they stretch the central sensory region of the spindle, which increases the sensitivity of the spindle to stretch. This is essential during voluntary muscle contraction: when the extrafusal fibres contract and the muscle shortens, the spindle would become slack and less sensitive without gamma motor neuron activation. Through alpha-gamma coactivation, the spindle remains taut and responsive throughout the movement. Gamma motor neurons do not directly control muscle contraction force (that is the role of alpha motor neurons), do not inhibit the antagonist (that is the role of inhibitory interneurons), and do not activate the Golgi tendon organ (which is innervated by Group Ib afferents).`
+    },
+    {
+        q: `What happens when only the alpha motor neurons are stimulated during muscle contraction?`,
+        options: [
+            `Muscle spindle shortens and becomes less sensitive`,
+            `Spindle firing increases`,
+            `Reflex arc strengthens`,
+            `Co-contraction of antagonists`,
+            `Increased tendon reflexes`
+        ],
+        correct: `A`,
+        explanation: `When only alpha motor neurons are stimulated, the extrafusal muscle fibres contract and the muscle shortens. However, the intrafusal fibres of the muscle spindle do not contract (because gamma motor neurons are not activated), so the spindle becomes slack and its afferent firing decreases. This reduces the sensitivity of the stretch reflex during the contraction. This is why alpha-gamma coactivation is essential during voluntary movement — it prevents the spindle from becoming slack and maintains its sensitivity. The other options are incorrect: spindle firing decreases (not increases), the reflex arc does not strengthen, co-contraction of antagonists does not occur (in fact, reciprocal inhibition occurs), and tendon reflexes are not increased.`
+    },
+    {
+        q: `Which neurotransmitter is released at the alpha motor neuron synapse in the stretch reflex?`,
+        options: [
+            `Dopamine`,
+            `GABA`,
+            `Acetylcholine`,
+            `Glutamate`,
+            `Glycine`
+        ],
+        correct: `C`,
+        explanation: `The alpha motor neuron is a lower motor neuron that innervates skeletal muscle fibres at the neuromuscular junction. The neurotransmitter released at the neuromuscular junction is ACETYLCHOLINE (ACh), which binds to nicotinic ACh receptors on the motor end plate, causing depolarisation and muscle contraction. Dopamine is a CNS neurotransmitter; GABA and glycine are inhibitory neurotransmitters in the CNS; and glutamate is an excitatory neurotransmitter in the CNS. The neuromuscular junction is cholinergic, and this is a fundamental principle of neuromuscular physiology.`
+    },
+    {
+        q: `Reciprocal inhibition in a stretch reflex involves:`,
+        options: [
+            `Gamma motor neuron stimulation`,
+            `Crossed extension of contralateral limb`,
+            `Renshaw cell activation`,
+            `Inhibitory interneurons suppressing antagonistic muscles`,
+            `Excitation of synergistic muscles only`
+        ],
+        correct: `D`,
+        explanation: `Reciprocal inhibition is the process by which activation of the agonist muscle (e.g., quadriceps in the knee-jerk reflex) is accompanied by inhibition of the antagonist muscle (e.g., hamstrings). This is mediated by inhibitory interneurons in the spinal cord: the Group Ia afferent from the agonist muscle sends collateral branches to inhibitory interneurons, which then synapse on and inhibit the alpha motor neurons of the antagonist muscle. This allows smooth, coordinated movement. Gamma motor neuron stimulation is part of alpha-gamma coactivation; crossed extension involves the contralateral limb; Renshaw cells mediate recurrent inhibition of motor neurons; and excitation of synergistic muscles occurs alongside reciprocal inhibition but is not the definition of reciprocal inhibition itself.`
+    },
+    {
+        q: `Which of the following is a key feature of alpha-gamma coactivation?`,
+        options: [
+            `Suppresses stretch reflex`,
+            `Activates antagonist muscles`,
+            `Keeps spindle taut during voluntary contraction`,
+            `Facilitates inverse myotatic reflex`,
+            `Occurs only during sleep`
+        ],
+        correct: `C`,
+        explanation: `Alpha-gamma coactivation refers to the simultaneous activation of alpha motor neurons (which innervate extrafusal fibres) and gamma motor neurons (which innervate intrafusal fibres) during voluntary muscle contraction. This coactivation keeps the muscle spindle taut and sensitive to stretch even as the muscle shortens, ensuring that proprioceptive feedback continues throughout the movement. Without gamma coactivation, the spindle would become slack and would not be able to signal further stretch. This mechanism does not suppress the stretch reflex, activate antagonist muscles, facilitate the inverse myotatic reflex, or occur only during sleep.`
+    },
+    {
+        q: `A lesion in the anterior horn cells would most likely result in:`,
+        options: [
+            `Hyperreflexia`,
+            `Hyporeflexia`,
+            `Babinski response`,
+            `Clonus`,
+            `Pendular reflex`
+        ],
+        correct: `B`,
+        explanation: `The anterior horn cells are the lower motor neurons (alpha motor neurons) whose axons leave the spinal cord to innervate skeletal muscles. A lesion of the anterior horn cells therefore produces a LOWER MOTOR NEURON (LMN) lesion, which is characterized by hyporeflexia (or areflexia), flaccid paralysis, muscle atrophy, and fasciculations. Hyperreflexia, Babinski response, and clonus are all signs of UPPER MOTOR NEURON (UMN) lesions. Pendular reflexes are seen in cerebellar disease. The distinction between UMN and LMN lesions is fundamental in clinical neurology.`
+    },
+    {
+        q: `The stretch reflex is absent in:`,
+        options: [
+            `Parkinson disease`,
+            `Brainstem lesion`,
+            `Lower motor neuron lesions`,
+            `Cortical stroke`,
+            `Huntington disease`
+        ],
+        correct: `C`,
+        explanation: `The stretch reflex requires an intact reflex arc: an intact muscle spindle (afferent limb), an intact Group Ia afferent, an intact alpha motor neuron (efferent limb), and a functional neuromuscular junction. A lower motor neuron lesion interrupts the efferent limb of the reflex arc, abolishing the stretch reflex (areflexia or hyporeflexia). Parkinson disease and Huntington disease are basal ganglia disorders that do not abolish the stretch reflex; a brainstem lesion may affect cranial nerve reflexes but does not typically abolish spinal stretch reflexes; and a cortical stroke produces an upper motor neuron lesion with HYPERreflexia, not areflexia.`
+    },
+    {
+        q: `A reflex that resists further lengthening of a muscle is best defined as:`,
+        options: [
+            `Inverse stretch reflex`,
+            `Golgi reflex`,
+            `Flexor reflex`,
+            `Myotatic reflex`,
+            `Postural reflex`
+        ],
+        correct: `A`,
+        explanation: `The inverse stretch reflex (also called the Golgi tendon reflex or clasp-knife reflex) is mediated by the Golgi tendon organ and Group Ib afferents. When muscle tension becomes excessive, the Golgi tendon organ is activated, and the Group Ib afferent sends signals via an inhibitory interneuron to the alpha motor neuron of the same muscle, causing it to relax. This reflex resists further lengthening (and prevents excessive tension), hence "inverse stretch reflex." The myotatic (stretch) reflex causes muscle contraction in response to stretch; the flexor (withdrawal) reflex causes withdrawal from a noxious stimulus; and the postural reflex maintains posture.`
+    },
+    {
+        q: `The purpose of the gamma loop in the stretch reflex is to:`,
+        options: [
+            `Maintain spindle sensitivity during contraction`,
+            `Inhibit over-contraction`,
+            `Regulate GTOs`,
+            `Induce reciprocal excitation`,
+            `Activate pain fibers`
+        ],
+        correct: `A`,
+        explanation: `The gamma loop refers to the circuit involving gamma motor neurons, the intrafusal fibres of the muscle spindle, and the Group Ia afferent. By contracting the intrafusal fibres, gamma motor neurons keep the central sensory region of the spindle taut and sensitive to stretch, even when the extrafusal fibres contract and the muscle shortens. This maintains spindle sensitivity during voluntary contraction (via alpha-gamma coactivation). The gamma loop does not inhibit over-contraction (that is the role of the Golgi tendon organ and inverse stretch reflex), regulate Golgi tendon organs, induce reciprocal excitation, or activate pain fibres.`
+    },
+    {
+        q: `A positive Babinski sign in an adult suggests:`,
+        options: [
+            `Cerebellar lesion`,
+            `Corticospinal tract damage`,
+            `Lower motor neuron lesion`,
+            `Normal finding in elderly`,
+            `Sensory neuropathy`
+        ],
+        correct: `B`,
+        explanation: `The Babinski sign is tested by stroking the sole of the foot. In a normal adult, this causes plantar flexion of the toes (the toes curl downward). A positive Babinski sign is characterized by dorsiflexion (extension) of the great toe and fanning of the other toes. In adults, a positive Babinski sign indicates damage to the CORTICOSPINAL (pyramidal) tract — an upper motor neuron lesion. It is a normal finding in infants up to about 1–2 years of age (before the corticospinal tract is fully myelinated). Cerebellar lesions cause ataxia; lower motor neuron lesions cause flaccid paralysis and areflexia; and sensory neuropathy causes sensory loss.`
+    },
+    {
+        q: `Stroking the inner thigh causes ipsilateral testicular elevation. This is called:`,
+        options: [
+            `Babinski sign`,
+            `Plantar reflex`,
+            `Cremasteric reflex`,
+            `Anal wink reflex`,
+            `Abdominal reflex`
+        ],
+        correct: `C`,
+        explanation: `The cremasteric reflex is elicited by stroking the skin of the upper medial thigh (inner thigh). The afferent limb is the ilioinguinal nerve (L1–L2), and the efferent limb is the genital branch of the genitofemoral nerve (L1–L2), which innervates the cremaster muscle. The response is ipsilateral elevation of the testis (contraction of the cremaster muscle). This reflex is absent in testicular torsion (a key clinical sign) and may be diminished in upper or lower motor neuron lesions. The Babinski sign is tested on the sole of the foot; the plantar reflex is the response to stroking the sole; the anal wink reflex is elicited by stroking the perianal skin; and the abdominal reflex is elicited by stroking the abdominal skin.`
+    },
+    {
+        q: `The abdominal reflex is most likely absent in:`,
+        options: [
+            `Lower motor neuron lesion of cervical cord`,
+            `Obese individuals`,
+            `Infants over 2 years`,
+            `L4-L5 injury`,
+            `Normal athletes`
+        ],
+        correct: `B`,
+        explanation: `The abdominal reflexes are superficial reflexes elicited by stroking the abdominal skin in four quadrants. The afferent and efferent limbs are mediated by the intercostal nerves (T7–T12). The reflex may be absent or diminished in obese individuals because the thick layer of subcutaneous fat makes it difficult to elicit the reflex and the response may be harder to observe. It is also absent in upper motor neuron lesions, in patients who have had abdominal surgery, and in some normal individuals. It is present in infants over 2 years and in normal athletes. A lower motor neuron lesion of the cervical cord would not affect the abdominal reflexes (which are thoracic); an L4–L5 injury would not affect them either (they are thoracic).`
+    },
+    {
+        q: `What characterizes the withdrawal reflex?`,
+        options: [
+            `Monosynaptic and rapid`,
+            `Initiated by muscle stretch`,
+            `Cutaneous noxious stimulus activates multiple interneurons`,
+            `Mediated by corticospinal tract`,
+            `Slower than Babinski`
+        ],
+        correct: `C`,
+        explanation: `The withdrawal (flexor) reflex is a polysynaptic reflex initiated by a noxious cutaneous stimulus (e.g., stepping on a sharp object). The afferent signal (from pain fibres) activates MULTIPLE interneurons in the spinal cord, which in turn activate flexor motor neurons and inhibit extensor motor neurons, causing withdrawal of the limb. Because it involves multiple interneurons, it is polysynaptic (not monosynaptic), and it is relatively slower than the monosynaptic stretch reflex. It is not initiated by muscle stretch (that is the stretch reflex), not mediated by the corticospinal tract, and not necessarily slower than the Babinski sign (which is a cutaneous reflex).`
+    },
+    {
+        q: `A 28-year-old male is involved in a high-speed motorbike accident and is found to have no voluntary movement or reflexes below the level of T6. His blood pressure is also significantly low. Which of the following best explains the cause of absent reflexes immediately after spinal cord transection?`,
+        options: [
+            `Irreversible damage to anterior horn cells`,
+            `Hypovolemia due to internal bleeding`,
+            `Loss of supraspinal facilitation of reflex arcs`,
+            `Hemorrhagic infarction of the spinal tracts`,
+            `Downregulation of neurotransmitter synthesis`
+        ],
+        correct: `C`,
+        explanation: `Immediately after spinal cord transection, the patient experiences spinal shock, characterized by flaccid paralysis, areflexia, and loss of sensation below the level of the lesion. The mechanism of spinal shock is the sudden LOSS OF SUPRASPINAL FACILITATION of the spinal reflex arcs. The descending tracts (especially the reticulospinal and vestibulospinal tracts) normally provide tonic excitatory input to the spinal interneurons and motor neurons, maintaining their excitability. When this input is suddenly removed, the spinal neurons become hyperpolarized and unresponsive, leading to areflexia. This is not due to irreversible damage to the anterior horn cells (they are intact), hypovolemia, hemorrhagic infarction, or downregulation of neurotransmitter synthesis. The hypotension is due to loss of sympathetic tone (neurogenic shock).`
+    },
+    {
+        q: `In spinal shock following a complete transection at T4, which of the following would most likely be observed during the first 24 hours?`,
+        options: [
+            `Hyperreflexia of the lower limbs`,
+            `Spastic paralysis below the lesion`,
+            `Clonus in both lower extremities`,
+            `Babinski sign present bilaterally`,
+            `Flaccid paralysis and areflexia below T4`
+        ],
+        correct: `E`,
+        explanation: `During the first 24 hours after a complete spinal cord transection, the patient is in spinal shock. The characteristic findings are FLACCID PARALYSIS and AREFLEXIA below the level of the lesion, along with loss of all sensation and autonomic dysfunction. Hyperreflexia, spastic paralysis, clonus, and a Babinski sign are features of the CHRONIC phase of spinal cord injury (after days to weeks), when spinal shock resolves and the spinal reflexes become hyperactive due to denervation hypersensitivity and reorganization of spinal circuits. Therefore, during the first 24 hours, flaccid paralysis and areflexia are expected.`
+    },
+    {
+        q: `A patient in spinal shock demonstrates urinary retention. Which of the following best explains this finding?`,
+        options: [
+            `Denervation of detrusor muscle`,
+            `Bladder wall fibrosis`,
+            `Loss of cortical control over bladder reflexes`,
+            `Parasympathetic hyperactivity`,
+            `Decreased sympathetic outflow from T1-L2`
+        ],
+        correct: `C`,
+        explanation: `Urinary retention in spinal shock is due to the sudden loss of supraspinal (cortical and pontine) control over the bladder reflexes. Normally, the pontine micturition centre coordinates bladder contraction (parasympathetic, S2–S4) and sphincter relaxation. When the spinal cord is transected above the sacral level, the bladder becomes atonic (flaccid) during the period of spinal shock, and the detrusor muscle cannot contract reflexively, leading to urinary retention. The detrusor muscle is not denervated (the sacral parasympathetic neurons are intact); there is no bladder wall fibrosis; parasympathetic hyperactivity would cause bladder contraction, not retention; and decreased sympathetic outflow (T1–L2) would not directly cause urinary retention (sympathetic tone normally relaxes the detrusor and contracts the internal sphincter).`
+    },
+    {
+        q: `A complete spinal cord lesion at the level of C6 is diagnosed. The patient is in spinal shock. Which of the following best predicts return of spinal reflex activity?`,
+        options: [
+            `Re-establishment of supraspinal connections`,
+            `Spinal interneuron hyperexcitability`,
+            `Recovery of anterior horn cell function`,
+            `Restoration of white matter tracts`,
+            `Return of blood flow to the spinal cord`
+        ],
+        correct: `B`,
+        explanation: `The return of spinal reflex activity after spinal shock is due to SPINAL INTERNEURON HYPEREXCITABILITY. After the initial period of areflexia, the spinal neurons below the lesion become hyperexcitable due to denervation hypersensitivity (upregulation of receptors), collateral sprouting of surviving axons, and reorganization of spinal circuits. This leads to the return of reflexes, which are often exaggerated (hyperreflexia, spasticity, clonus). It is not due to re-establishment of supraspinal connections (which do not regenerate in complete transection), recovery of anterior horn cell function (they were not damaged), restoration of white matter tracts, or return of blood flow.`
+    },
+    {
+        q: `During a physiology tutorial, a medical student asks why a patient with complete spinal transection at T8 initially has no plantar response but develops a Babinski sign later. What is the most accurate explanation?`,
+        options: [
+            `Reinvention of corticospinal tracts`,
+            `Lower motor neuron recovery`,
+            `Recovery of ascending spinothalamic tracts`,
+            `Reorganization of spinal circuits below the lesion`,
+            `Restoration of inhibitory descending input`
+        ],
+        correct: `D`,
+        explanation: `The initial absence of the plantar response (and all reflexes) is due to spinal shock. As spinal shock resolves over days to weeks, the spinal circuits below the lesion undergo REORGANIZATION — including denervation hypersensitivity, collateral sprouting, and changes in synaptic efficacy — leading to hyperexcitable reflex arcs. The Babinski sign (dorsiflexion of the great toe) reappears because the corticospinal tract is permanently damaged, and the spinal circuits that mediate the withdrawal response become hyperactive. This is not due to regeneration of corticospinal tracts (which do not regenerate in complete transection), lower motor neuron recovery (the anterior horn cells are intact), recovery of spinothalamic tracts (sensory, not motor), or restoration of descending inhibition (which is lost).`
+    },
+    {
+        q: `Which of the following descending tracts is primarily responsible for facilitating spinal reflexes and is lost during spinal shock?`,
+        options: [
+            `Rubrospinal tract`,
+            `Vestibulospinal tract`,
+            `Corticospinal tract`,
+            `Reticulospinal tract`,
+            `Spinocerebellar tract`
+        ],
+        correct: `D`,
+        explanation: `The reticulospinal tract, especially the medial reticulospinal tract from the pontine reticular formation, provides tonic excitatory (facilitatory) input to spinal reflex arcs, maintaining the excitability of spinal interneurons and motor neurons. When the spinal cord is transected, this facilitatory input is lost, contributing to the areflexia of spinal shock. The rubrospinal tract controls flexor tone; the vestibulospinal tract controls balance and extensor tone; the corticospinal tract controls voluntary movement; and the spinocerebellar tract is an ascending sensory tract, not descending.`
+    },
+    {
+        q: `Which of the following best describes the time course of spinal shock?`,
+        options: [
+            `Immediate onset with return of reflexes in hours`,
+            `Gradual onset with return of function in days`,
+            `Delayed onset of flaccid paralysis`,
+            `No return of any function or reflexes`,
+            `Immediate onset followed by gradual return of reflexes over days to weeks`
+        ],
+        correct: `E`,
+        explanation: `Spinal shock begins IMMEDIATELY after spinal cord transection, with flaccid paralysis and areflexia below the lesion. Over the following DAYS TO WEEKS, the reflexes gradually return — often becoming hyperactive (hyperreflexia, spasticity, clonus) due to denervation hypersensitivity and reorganization of spinal circuits. The return of reflexes marks the end of spinal shock and the beginning of the chronic phase of spinal cord injury. It does not have a gradual onset, does not have a delayed onset of flaccid paralysis, and does not result in no return of function (reflexes do return, though voluntary function does not in complete transection).`
+    },
+    {
+        q: `Which of the following signs indicates the end of spinal shock?`,
+        options: [
+            `Return of voluntary movement`,
+            `Appearance of hyperreflexia`,
+            `Spastic bladder`,
+            `Clonus`,
+            `Return of deep tendon reflexes`
+        ],
+        correct: `E`,
+        explanation: `The end of spinal shock is marked by the RETURN OF DEEP TENDON REFLEXES (and other reflexes). Initially absent, the reflexes gradually return over days to weeks, and they often become hyperactive (hyperreflexia, clonus, spasticity). The return of deep tendon reflexes is the earliest and most reliable indicator that spinal shock is resolving. Voluntary movement does not return in complete transection; hyperreflexia, spastic bladder, and clonus are features of the chronic phase but occur after the initial return of reflexes.`
+    },
+    {
+        q: `A patient presents with spinal shock. Which of the following autonomic findings is most likely?`,
+        options: [
+            `Excessive sweating below the lesion`,
+            `Bradycardia due to unopposed vagal tone`,
+            `Miosis due to loss of sympathetic tone`,
+            `Unregulated vasoconstriction below the lesion`,
+            `Fever due to hypothalamic overdrive`
+        ],
+        correct: `B`,
+        explanation: `In spinal shock, there is loss of sympathetic outflow below the level of the lesion, leading to vasodilation, hypotension, and loss of thermoregulation. However, the vagus nerve (parasympathetic) remains intact, and without the opposing sympathetic tone, bradycardia can occur due to unopposed vagal tone. Excessive sweating below the lesion would occur in autonomic dysreflexia (chronic phase), not spinal shock. Miosis is not a typical finding of spinal shock (Horner syndrome would occur with a lesion at T1–T2). Unregulated vasoconstriction is the opposite of what occurs (vasodilation predominates). Fever due to hypothalamic overdrive is not a feature of spinal shock.`
+    },
+    {
+        q: `Which clinical feature best differentiates spinal shock from neurogenic shock?`,
+        options: [
+            `Flaccid paralysis`,
+            `Hypotension`,
+            `Areflexia`,
+            `Bradycardia`,
+            `Loss of sensation`
+        ],
+        correct: `D`,
+        explanation: `Spinal shock refers to the transient loss of reflexes and flaccid paralysis below a spinal cord lesion. Neurogenic shock refers to the hemodynamic instability (hypotension, bradycardia) that results from loss of sympathetic tone. The key differentiating feature is BRADYCARDIA. In spinal shock (without neurogenic shock), the heart rate may be normal or reflexively increased. In neurogenic shock, the loss of sympathetic outflow (T1–L2) leaves vagal tone unopposed, causing bradycardia. Flaccid paralysis, areflexia, and loss of sensation are features of spinal shock; hypotension occurs in both (but for different reasons).`
+    },
+    {
+        q: `A 32-year-old patient with a T10 spinal cord injury shows absent reflexes on day 1. By week 3, exaggerated patellar reflexes are noted. What mechanism best explains this progression?`,
+        options: [
+            `Collateral sprouting of interneurons`,
+            `Recovery of corticospinal tracts`,
+            `Increased sympathetic outflow`,
+            `Regeneration of dorsal columns`,
+            `Normalization of neurotransmitter synthesis`
+        ],
+        correct: `A`,
+        explanation: `The progression from areflexia (spinal shock) to hyperreflexia (chronic phase) after spinal cord injury is explained by COLLATERAL SPROUTING OF INTERNEURONS and denervation hypersensitivity. After the loss of descending input, the surviving spinal interneurons sprout new collateral branches, forming new synaptic connections and increasing the excitability of the reflex arcs. Additionally, the denervated motor neurons upregulate their receptors, becoming hypersensitive to remaining inputs. This leads to exaggerated reflexes. It is not due to recovery of corticospinal tracts (they do not regenerate), increased sympathetic outflow, regeneration of dorsal columns, or normalization of neurotransmitter synthesis.`
+    },
+    {
+        q: `A patient develops a "mass reflex" months after a complete transection. Which of the following best describes this response?`,
+        options: [
+            `Localized spasm of flexors only`,
+            `Generalized motor, autonomic, and visceral reflex activity`,
+            `Return of voluntary bladder control`,
+            `Sympathetic vasoconstriction only`,
+            `Cortical recovery of reflex arcs`
+        ],
+        correct: `B`,
+        explanation: `The mass reflex is a phenomenon that occurs in the chronic phase after complete spinal cord transection. It is characterized by a GENERALIZED MOTOR, AUTONOMIC, AND VISCERAL REFLEX RESPONSE to a minor stimulus (e.g., a full bladder, skin irritation). The response includes flexor spasms of the limbs, sweating, piloerection, bladder and bowel evacuation, and autonomic changes. It occurs because the spinal circuits below the lesion become hyperexcitable and the stimulus spreads to involve multiple segments. It is not a localized spasm, not a return of voluntary bladder control, not sympathetic vasoconstriction only, and not cortical recovery.`
+    },
+    {
+        q: `A patient with C5 transection is in spinal shock. Which of the following complications is most likely?`,
+        options: [
+            `Severe hypertension`,
+            `Respiratory compromise due to diaphragm paralysis`,
+            `Preservation of hand grip`,
+            `Hyperactive reflexes in lower limbs`,
+            `Intact bladder function`
+        ],
+        correct: `B`,
+        explanation: `A C5 spinal cord transection interrupts the descending pathways to the phrenic motor neurons (C3–C5) and intercostal motor neurons (T1–T12). The phrenic nerve (C3–C5) innervates the diaphragm, and a lesion at C5 may compromise the diaphragm's function, leading to respiratory compromise. This is a life-threatening complication in high cervical lesions. Severe hypertension is not typical (hypotension is more likely due to neurogenic shock). Hand grip is preserved in C5 lesions (the C8–T1 segments are intact)? Actually, a C5 transection would impair hand grip because the descending tracts are interrupted. Hyperactive reflexes are a feature of the chronic phase, not spinal shock. Bladder function is impaired, not intact.`
+    },
+    {
+        q: `During recovery from spinal shock, which sequence of reflex recovery is most accurate?`,
+        options: [
+            `Stretch reflex → withdrawal reflex → clonus`,
+            `Withdrawal reflex → tendon reflex → spasticity`,
+            `Babinski → tendon reflex → flaccid paralysis`,
+            `Tendon reflex → mass reflex → withdrawal reflex`,
+            `Autonomic reflex → tendon reflex → clonus`
+        ],
+        correct: `B`,
+        explanation: `During recovery from spinal shock, the reflexes return in a characteristic sequence. The earliest reflexes to return are the POLYSYNAPTIC reflexes, such as the withdrawal (flexor) reflex. This is followed by the return of the MONOSYNAPTIC tendon (stretch) reflexes. Finally, spasticity and hyperreflexia develop as the spinal circuits become hyperexcitable. This sequence reflects the progressive reorganization of spinal circuits and the development of denervation hypersensitivity. The other sequences are incorrect.`
+    },
+    {
+        q: `A patient with a complete spinal cord injury at T6 is found to be hypotensive. Which mechanism best explains this finding in spinal shock?`,
+        options: [
+            `Loss of adrenal medullary secretion`,
+            `Increased vagal tone due to unopposed parasympathetic activity`,
+            `Fluid loss into tissues`,
+            `Renal vasodilation`,
+            `Increased baroreceptor sensitivity`
+        ],
+        correct: `B`,
+        explanation: `Hypotension in spinal shock is due to the loss of sympathetic vasoconstrictor tone below the level of the lesion. With the sympathetic outflow (T1–L2) interrupted, there is unopposed parasympathetic (vagal) activity, leading to vasodilation, decreased peripheral resistance, and bradycardia. This results in hypotension. Loss of adrenal medullary secretion contributes but is not the primary mechanism (the adrenal medulla is innervated by preganglionic sympathetic fibres from T5–T12, so a T6 lesion would partially affect it). Fluid loss into tissues, renal vasodilation, and increased baroreceptor sensitivity are not the primary mechanisms of hypotension in spinal shock.`
+    },
+    {
+        q: `A patient with spinal shock has absent tendon reflexes. Which of the following best describes the underlying mechanism?`,
+        options: [
+            `Loss of afferent sensory fibers`,
+            `Hyperpolarization of motor neurons due to loss of descending excitatory input`,
+            `Irreversible destruction of anterior horn cells`,
+            `Muscle spindle damage`,
+            `Excessive inhibitory GABAergic input`
+        ],
+        correct: `B`,
+        explanation: `The areflexia of spinal shock is due to HYPERPOLARIZATION OF MOTOR NEURONS and interneurons following the sudden loss of descending excitatory input (from the reticulospinal and other facilitatory tracts). Without this tonic facilitation, the resting membrane potential of the motor neurons becomes more negative (hyperpolarized), making them less responsive to afferent input. This is a functional, reversible phenomenon — the neurons are not damaged (unlike irreversible destruction of anterior horn cells), the afferent fibres are intact, the muscle spindles are intact, and excessive GABAergic input is not the mechanism.`
+    },
+    {
+        q: `A patient is in spinal shock following cervical injury. Which clinical feature indicates transition from spinal shock to chronic SCI?`,
+        options: [
+            `Persistent flaccid paralysis`,
+            `Absent plantar reflex`,
+            `Development of hyperreflexia and spasticity`,
+            `Persistent hypotension`,
+            `Absent corneal reflex`
+        ],
+        correct: `C`,
+        explanation: `The transition from spinal shock to chronic spinal cord injury is marked by the DEVELOPMENT OF HYPERREFLEXIA AND SPASTICITY. As spinal shock resolves, the spinal circuits below the lesion become hyperexcitable due to denervation hypersensitivity and reorganization, leading to exaggerated reflexes, spasticity, and clonus. Persistent flaccid paralysis, absent plantar reflex, and persistent hypotension are features of the acute (spinal shock) phase, not the chronic phase. An absent corneal reflex would indicate a brainstem lesion, not a spinal cord injury.`
+    },
+    {
+        q: `A 30-year-old man with complete transection at T10 develops sudden sweating, pallor, urination, and withdrawal movements after a minor skin stimulus. Which best explains this response?`,
+        options: [
+            `Corticospinal regeneration`,
+            `Sympathetic overactivity from hypothalamus`,
+            `Mass reflex due to spinal reorganization`,
+            `Recovery of voluntary reflex control`,
+            `Local anesthetic effect on nerves`
+        ],
+        correct: `C`,
+        explanation: `The patient is experiencing a MASS REFLEX, which occurs in the chronic phase after complete spinal cord transection. It is due to the reorganization and hyperexcitability of spinal circuits below the lesion. A minor stimulus (e.g., skin irritation, full bladder) can trigger a generalized response involving motor (flexor spasms, withdrawal), autonomic (sweating, pallor, piloerection), and visceral (bladder and bowel evacuation) components. This is not due to corticospinal regeneration (which does not occur), sympathetic overactivity from the hypothalamus (the connection is lost), recovery of voluntary control, or a local anesthetic effect.`
+    },
+    {
+        q: `A patient with spinal shock undergoes monitoring. Which of the following would you expect during the first 24 hours?`,
+        options: [
+            `Complete areflexia`,
+            `Spasticity and clonus`,
+            `Hyperreflexia`,
+            `Babinski sign`,
+            `Mass reflex`
+        ],
+        correct: `A`,
+        explanation: `During the first 24 hours after spinal cord transection, the patient is in spinal shock, which is characterized by COMPLETE AREFLEXIA below the level of the lesion. All reflexes, including the deep tendon reflexes, are absent. Spasticity, clonus, hyperreflexia, Babinski sign, and mass reflex are features of the chronic phase, which occurs after days to weeks when spinal shock resolves.`
+    },
+    {
+        q: `In chronic complete spinal cord transection, why do reflexes become exaggerated compared to pre-injury levels?`,
+        options: [
+            `Regeneration of corticospinal tract`,
+            `Overproduction of acetylcholine`,
+            `Denervation hypersensitivity and local sprouting`,
+            `Reversal of neuronal hyperpolarization`,
+            `Return of supraspinal control`
+        ],
+        correct: `C`,
+        explanation: `In chronic spinal cord transection, reflexes become exaggerated due to DENERVATION HYPERSENSITIVITY and LOCAL SPROUTING. Denervation hypersensitivity refers to the upregulation of neurotransmitter receptors on the denervated neurons, making them more responsive to the remaining inputs. Local sprouting refers to the collateral sprouting of surviving axons, which forms new synaptic connections and increases the excitability of the reflex arcs. These changes lead to hyperreflexia, spasticity, and clonus. It is not due to regeneration of the corticospinal tract (which does not occur in the CNS), overproduction of acetylcholine, reversal of hyperpolarization, or return of supraspinal control.`
+    },
+    {
+        q: `The basal ganglia output nuclei that project to thalamus and brainstem are:`,
+        options: [
+            `GPe and STN`,
+            `GPi and SNr`,
+            `Caudate and putamen`,
+            `VA and VL thalamus`,
+            `Red nucleus and cerebellar nuclei`
+        ],
+        correct: `B`,
+        explanation: `The basal ganglia output nuclei are the internal segment of the globus pallidus (GPi) and the substantia nigra pars reticulata (SNr). These nuclei receive input from the striatum (via the direct and indirect pathways) and project to the thalamus (VA/VL) and brainstem (e.g., superior colliculus). They provide tonic inhibitory (GABAergic) output to the thalamus, which modulates motor activity. The external segment of the globus pallidus (GPe) and the subthalamic nucleus (STN) are intrinsic nuclei of the basal ganglia circuitry, not output nuclei. The caudate and putamen are input nuclei. The VA and VL thalamus are targets of basal ganglia output. The red nucleus and cerebellar nuclei are part of the cerebellar system, not the basal ganglia.`
+    },
+    {
+        q: `The only excitatory intrinsic projection of basal ganglia circuitry arises from:`,
+        options: [
+            `GPi`,
+            `GPe`,
+            `STN`,
+            `SNr`,
+            `Striatum`
+        ],
+        correct: `C`,
+        explanation: `The subthalamic nucleus (STN) is the only intrinsic nucleus of the basal ganglia that provides an EXCITATORY (glutamatergic) projection. It projects to the GPi and SNr, exciting these output nuclei and increasing their inhibitory output to the thalamus. This is a key component of the indirect pathway. The other nuclei (GPi, GPe, SNr) are GABAergic and inhibitory. The striatum is the main input nucleus and uses GABA as its output neurotransmitter (though it receives excitatory glutamatergic input from the cortex and thalamus).`
+    },
+    {
+        q: `Medium spiny neurons that project via the direct pathway preferentially express:`,
+        options: [
+            `Enkephalin`,
+            `Neuropeptide Y`,
+            `Substance P and dynorphin`,
+            `Somatostatin`,
+            `Nitric oxide synthase`
+        ],
+        correct: `C`,
+        explanation: `Medium spiny neurons (MSNs) are the principal projection neurons of the striatum. Those that project via the DIRECT pathway express D1 dopamine receptors and co-express SUBSTANCE P and DYNORPHIN. They project directly to the GPi and SNr. In contrast, MSNs of the INDIRECT pathway express D2 dopamine receptors and co-express ENKEPHALIN, projecting to the GPe. This differential expression of neuropeptides and dopamine receptors is a key feature of the direct and indirect pathways.`
+    },
+    {
+        q: `The indirect pathway sequence is:`,
+        options: [
+            `Striatum → GPe → STN → GPi/SNr`,
+            `Striatum → GPi/SNr`,
+            `Striatum → STN → GPe → GPi`,
+            `Striatum → VA/VL → Cortex`,
+            `Cortex → SNr → Superior colliculus`
+        ],
+        correct: `A`,
+        explanation: `The indirect pathway of the basal ganglia is: Striatum (GABAergic, inhibitory) → GPe (GABAergic, inhibitory) → STN (glutamatergic, excitatory) → GPi/SNr (GABAergic, inhibitory) → Thalamus. The net effect of the indirect pathway is to INHIBIT movement (by increasing the inhibitory output of GPi/SNr to the thalamus). The direct pathway is: Striatum → GPi/SNr (inhibitory) → Thalamus, which facilitates movement.`
+    },
+    {
+        q: `Activation of the direct pathway causes net:`,
+        options: [
+            `Disinhibition of thalamocortical neurons`,
+            `Inhibition of thalamocortical neurons`,
+            `Inhibition of STN by glutamate`,
+            `Excitation of GPe`,
+            `Inhibition of cortex`
+        ],
+        correct: `A`,
+        explanation: `Activation of the direct pathway causes NET DISINHIBITION of thalamocortical neurons. The sequence is: Striatum (inhibitory GABA) → GPi/SNr (inhibitory GABA) → Thalamus. When the striatum is activated, it inhibits the GPi/SNr, which reduces the inhibitory output of GPi/SNr to the thalamus. This disinhibits (excites) the thalamocortical neurons, facilitating movement. This is the "direct" pathway because it directly inhibits the output nuclei, leading to disinhibition of the thalamus.`
+    },
+    {
+        q: `Hemiballismus is classically associated with a lesion of:`,
+        options: [
+            `STN`,
+            `SNc`,
+            `GPi`,
+            `GPe`,
+            `SNr`
+        ],
+        correct: `A`,
+        explanation: `Hemiballismus is a hyperkinetic movement disorder characterized by violent, involuntary, ballistic movements of the limbs on one side of the body. It is classically associated with a lesion of the SUBTHALAMIC NUCLEUS (STN), usually due to a stroke (infarction) in the contralateral STN. The STN is part of the indirect pathway; its loss reduces the excitatory drive to the GPi/SNr, leading to decreased inhibitory output to the thalamus and excessive (disinhibited) movement. Lesions of the SNc are associated with Parkinson's disease; lesions of the GPi or GPe are associated with other movement disorders (e.g., dystonia, parkinsonism).`
+    },
+    {
+        q: `Somatotopy in the putamen typically maps:`,
+        options: [
+            `Arm dorsolateral, leg ventromedial`,
+            `Leg ventromedial, face dorsal`,
+            `Leg dorsolateral, arm central, face ventromedial`,
+            `Face dorsolateral, leg ventromedial`,
+            `No somatotopy is present`
+        ],
+        correct: `C`,
+        explanation: `The putamen exhibits somatotopy, with a topographic representation of the body. The general organization is: the LEG is represented most DORSOLATERALLY, the ARM is represented CENTRALLY, and the FACE is represented most VENTROMEDIALLY. This somatotopic organization is important for the functional mapping of the basal ganglia and is relevant to understanding the effects of focal lesions (e.g., in stroke) on specific body parts.`
+    },
+    {
+        q: `Neuromelanin accumulates with age in neurons of:`,
+        options: [
+            `SNr`,
+            `GPe`,
+            `GPi`,
+            `STN`,
+            `SNc`
+        ],
+        correct: `E`,
+        explanation: `Neuromelanin is a dark pigment that accumulates with age in the dopaminergic neurons of the SUBSTANTIA NIGRA PARS COMPACTA (SNc). These neurons project to the striatum and degenerate in Parkinson's disease, leading to the characteristic loss of pigmentation in the SNc. Neuromelanin is not found in significant amounts in the SNr (which is GABAergic), GPe, GPi, or STN.`
+    },
+    {
+        q: `Parkinsonian bradykinesia is best explained by:`,
+        options: [
+            `Thalamic disinhibition`,
+            `Increased inhibitory output from GPi/SNr`,
+            `Decreased STN activity`,
+            `Increased GPe activity`,
+            `Increased cortical drive`
+        ],
+        correct: `B`,
+        explanation: `Parkinsonian bradykinesia (slowness of movement) is due to INCREASED INHIBITORY OUTPUT FROM THE GPi/SNr. In Parkinson's disease, the loss of dopaminergic neurons in the SNc leads to decreased D1 receptor activation in the direct pathway and increased D2 receptor activation in the indirect pathway. This results in increased activity of the indirect pathway (STN → GPi/SNr), leading to excessive inhibitory output from the GPi/SNr to the thalamus. The increased inhibition of the thalamus reduces cortical activation and causes bradykinesia, rigidity, and tremor.`
+    },
+    {
+        q: `Lesioning the STN in parkinsonian primates:`,
+        options: [
+            `Worsens akinesia`,
+            `Has no effect`,
+            `Produces chorea`,
+            `Ameliorates motor signs`,
+            `Causes hemiplegia`
+        ],
+        correct: `D`,
+        explanation: `Lesioning the STN (subthalamic nucleus) in parkinsonian primates AMELIORATES MOTOR SIGNS. In Parkinson's disease, the STN is overactive, contributing to the excessive inhibitory output from the GPi/SNr. Lesioning the STN reduces this excessive inhibition, thereby disinhibiting the thalamus and improving motor function. This is the rationale for deep brain stimulation (DBS) of the STN in patients with Parkinson's disease. Lesioning the STN does not worsen akinesia, have no effect, produce chorea (that is hemiballismus from STN lesion in non-parkinsonian individuals), or cause hemiplegia.`
+    },
+    {
+        q: `Undercativity of which pathway helps explain chorea/ballism?`,
+        options: [
+            `Indirect`,
+            `Direct`,
+            `Pyramidal`,
+            `Vestibulospinal`,
+            `Rubrospinal`
+        ],
+        correct: `A`,
+        explanation: `Chorea and ballism are hyperkinetic movement disorders that result from UNDERCATIVITY of the INDIRECT pathway. The indirect pathway normally inhibits movement; when it is underactive (e.g., due to a lesion of the STN or GPe), the inhibitory output of the GPi/SNr is reduced, leading to disinhibition of the thalamus and excessive movement. In contrast, overactivity of the indirect pathway (as in Parkinson's disease) leads to hypokinetic movement disorders.`
+    },
+    {
+        q: `The superior colliculus receives strong inhibitory input from:`,
+        options: [
+            `SNc`,
+            `GPi`,
+            `STN`,
+            `GPe`,
+            `SNr`
+        ],
+        correct: `E`,
+        explanation: `The superior colliculus, which is involved in the control of saccadic eye movements and orienting responses, receives strong inhibitory (GABAergic) input from the SUBSTANTIA NIGRA PARS RETICULATA (SNr). The SNr provides tonic inhibition to the superior colliculus; when the SNr is inhibited (e.g., by the direct pathway during a saccade), the superior colliculus is disinhibited and can initiate the eye movement. This is an important part of the basal ganglia's role in eye movement control.`
+    },
+    {
+        q: `In PD, tonic firing changes include:`,
+        options: [
+            `Increased GPe, decreased STN, decreased GPi`,
+            `Increased GPe, increased STN, decreased GPi`,
+            `Decreased GPe, decreased STN, decreased GPi`,
+            `Decreased GPe, increased STN, increased GPi`,
+            `No consistent pattern`
+        ],
+        correct: `D`,
+        explanation: `In Parkinson's disease (PD), the degeneration of dopaminergic neurons in the SNc leads to a characteristic pattern of tonic firing changes in the basal ganglia: DECREASED GPe activity, INCREASED STN activity, and INCREASED GPi activity. The decreased GPe activity is due to increased inhibition from the overactive indirect pathway (striatum → GPe); the increased STN activity is due to loss of inhibition from the GPe; and the increased GPi activity is due to increased excitation from the STN. This results in excessive inhibitory output to the thalamus, causing bradykinesia and rigidity.`
+    },
+    {
+        q: `The SNr is functionally most similar to:`,
+        options: [
+            `GPe`,
+            `STN`,
+            `Caudate`,
+            `Ventral striatum`,
+            `GPi`
+        ],
+        correct: `E`,
+        explanation: `The substantia nigra pars reticulata (SNr) is functionally most similar to the internal segment of the globus pallidus (GPi). Both are output nuclei of the basal ganglia, both are GABAergic, and both project to the thalamus and brainstem, providing tonic inhibitory output. They receive input from the striatum (direct and indirect pathways) and from the STN. The GPe is an intrinsic nucleus; the STN is an excitatory intrinsic nucleus; the caudate and ventral striatum are input nuclei.`
+    },
+    {
+        q: `The putamen integrates:`,
+        options: [
+            `Visual and auditory signals only`,
+            `Movement-related and somatosensory feedback`,
+            `Vestibular and olfactory cues`,
+            `Declarative memory encoding`,
+            `Autonomic signals exclusively`
+        ],
+        correct: `B`,
+        explanation: `The putamen is a key input nucleus of the basal ganglia and integrates MOVEMENT-RELATED and SOMATOSENSORY FEEDBACK. It receives excitatory glutamatergic input from the motor and somatosensory cortices, as well as from the thalamus. This input provides information about the planning and execution of movements, as well as sensory feedback from the body. The putamen does not exclusively process visual/auditory signals, vestibular/olfactory cues, declarative memory, or autonomic signals.`
+    },
+    {
+        q: `The best description of "disinhibition" in BG circuits is:`,
+        options: [
+            `Inhibiting an inhibitor to increase downstream activity`,
+            `Exciting an inhibitor to reduce activity`,
+            `Inhibiting an excitatory neuron`,
+            `Exciting an excitatory neuron`,
+            `Removing excitation from an inhibitory neuron`
+        ],
+        correct: `A`,
+        explanation: `Disinhibition in basal ganglia circuits refers to INHIBITING AN INHIBITOR to increase downstream activity. For example, in the direct pathway, the striatum inhibits the GPi/SNr (the inhibitor), which reduces the inhibitory output to the thalamus, thereby increasing (disinhibiting) thalamocortical activity. This is a fundamental mechanism by which the basal ganglia facilitate movement. The other options describe different types of synaptic interactions.`
+    },
+    {
+        q: `Which discovery was central to the 2025 Medicine Nobel?`,
+        options: [
+            `Central tolerance via thymic deletion only`,
+            `Discovery of regulatory T cells that enforce peripheral tolerance`,
+            `Somatic hypermutation in B cells`,
+            `PD-1 blockade in cancer`,
+            `MHC restriction`
+        ],
+        correct: `B`,
+        explanation: `The 2025 Nobel Prize in Physiology or Medicine was awarded to Mary Brunkow, Fred Ramsdell, and Shimon Sakaguchi for their discovery of REGULATORY T CELLS (Tregs) that enforce PERIPHERAL TOLERANCE. Their work identified FOXP3 as the master regulator of Treg development and function, and demonstrated that Tregs are essential for preventing autoimmunity by suppressing self-reactive T cells that escape central tolerance in the thymus. This discovery has major implications for autoimmunity, cancer, and transplantation.`
+    },
+    {
+        q: `Sakaguchi's finding identified Tregs by which surface phenotype?`,
+        options: [
+            `CD8+CD28+`,
+            `CD19+CD27+`,
+            `CD56brightCD16-`,
+            `CD14+CD16+`,
+            `CD4+CD25+`
+        ],
+        correct: `E`,
+        explanation: `Shimon Sakaguchi identified regulatory T cells (Tregs) by their surface phenotype CD4+CD25+. In his original 1995 paper, he showed that a subset of CD4+ T cells expressing CD25 (the IL-2 receptor α-chain) was responsible for suppressing autoimmune responses. Later work showed that FOXP3 is the master transcription factor for Tregs. CD8+CD28+ are cytotoxic T cells; CD19+CD27+ are B cells; CD56brightCD16- are NK cells; and CD14+CD16+ are monocytes/macrophages.`
+    },
+    {
+        q: `Brunkow and Ramsdell's 2001 discovery linked severe autoimmunity in "scurfy" mice to mutations in which gene?`,
+        options: [
+            `FOXP3`,
+            `CTLA4`,
+            `PTPN22`,
+            `AIRE`,
+            `IL2RA`
+        ],
+        correct: `A`,
+        explanation: `In 2001, Mary Brunkow and Fred Ramsdell identified mutations in the FOXP3 gene as the cause of the severe autoimmune disease in "scurfy" mice. They showed that FOXP3 is the master regulator of regulatory T cell development and function. Mutations in FOXP3 in humans cause IPEX syndrome (Immune dysregulation, Polyendocrinopathy, Enteropathy, X-linked), a severe autoimmune disorder. CTLA4, PTPN22, AIRE, and IL2RA are also involved in immune regulation but are not the gene linked to scurfy mice.`
+    },
+    {
+        q: `According the 2025 Nobel laureates, peripheral tolerance complements central tolerance by:`,
+        options: [
+            `Deleting all self-reactive T cells in the thymus`,
+            `Increasing AIRE expression`,
+            `Providing extrathymic control of escaped self-reactive T cells`,
+            `Enhancing TCR recombination`,
+            `Eliminating dendritic cells`
+        ],
+        correct: `C`,
+        explanation: `Central tolerance in the thymus deletes many self-reactive T cells, but some escape into the periphery. Peripheral tolerance, mediated by regulatory T cells (Tregs), provides EXTRATHYMIC CONTROL of these escaped self-reactive T cells, preventing them from causing autoimmunity. This is the complementary role of peripheral tolerance. It does not delete all self-reactive T cells in the thymus (that is central tolerance), increase AIRE expression (which is involved in central tolerance), enhance TCR recombination, or eliminate dendritic cells.`
+    },
+    {
+        q: `One therapeutic implication highlighted by the 2025 Nobel prize in Physiology is:`,
+        options: [
+            `Only anti-microbial drug discovery`,
+            `Exclusive vaccine enhancement`,
+            `Neuronal growth factor replacement`,
+            `Treg-targeted strategies for autoimmunity, cancer, and transplantation`,
+            `Antiviral CRISPR editing`
+        ],
+        correct: `D`,
+        explanation: `The discovery of regulatory T cells (Tregs) and FOXP3 has major therapeutic implications, including TREG-TARGETED STRATEGIES for autoimmune diseases (enhancing Treg function), cancer (inhibiting Tregs to enhance anti-tumour immunity), and transplantation (expanding Tregs to promote graft tolerance). This is the key therapeutic implication highlighted by the 2025 Nobel Prize. The other options are not directly related to this discovery.`
+    },
+    {
+        q: `Which statement about regulatory T cells is MOST accurate per the 2025 Nobel background?`,
+        options: [
+            `They are primarily CD8+ cytotoxic cells`,
+            `They are CD4+ cells defined by FOXP3 and suppress immune responses`,
+            `They lack IL-2 receptors`,
+            `They promote autoimmunity`,
+            `They recognize antigen via innate receptors only`
+        ],
+        correct: `B`,
+        explanation: `Regulatory T cells (Tregs) are CD4+ cells defined by the expression of the transcription factor FOXP3. They suppress immune responses and are essential for maintaining peripheral tolerance and preventing autoimmunity. They express high levels of CD25 (the IL-2 receptor α-chain), depend on IL-2 for their survival and function, and recognize antigen via their T cell receptor (TCR), which is somatically rearranged (adaptive, not innate). They do not promote autoimmunity — they prevent it.`
+    },
+    {
+        q: `Which year corresponds to the original description of suppressive T cells by Sakaguchi?`,
+        options: [
+            `1983`,
+            `2001`,
+            `2003`,
+            `2007`,
+            `1995`
+        ],
+        correct: `E`,
+        explanation: `Shimon Sakaguchi originally described suppressive T cells (later called regulatory T cells, Tregs) in 1995. In that paper, he showed that a subset of CD4+ T cells expressing CD25 was responsible for suppressing autoimmune responses in mice. The 2001 paper by Brunkow and Ramsdell identified FOXP3 as the master regulator of Tregs. The 2025 Nobel Prize recognized these discoveries.`
+    },
+    {
+        q: `Which historical misconception did the 2025 Nobel laureates' work overturn?`,
+        options: [
+            `That only B cells mediate autoimmunity`,
+            `That central tolerance in the thymus alone explains self-tolerance`,
+            `That dendritic cells do not present self antigens`,
+            `That MHC class II is absent on T cells`,
+            `That IL-2 signaling is inhibitory`
+        ],
+        correct: `B`,
+        explanation: `Before the discovery of regulatory T cells, it was thought that CENTRAL TOLERANCE IN THE THYMUS ALONE was sufficient to explain self-tolerance. The work of Sakaguchi, Brunkow, and Ramsdell showed that peripheral tolerance, mediated by Tregs, is essential for preventing autoimmunity. This overturned the misconception that central tolerance alone explains self-tolerance.`
+    },
+    {
+        q: `The Nobel announcement date for Physiology or Medicine prize was:`,
+        options: [
+            `5 October 2025`,
+            `6 October 2025`,
+            `7 October 2025`,
+            `8 October 2025`,
+            `7 October 2024`
+        ],
+        correct: `B`,
+        explanation: `The 2025 Nobel Prize in Physiology or Medicine was announced on 6 October 2025. It was awarded to Mary Brunkow, Fred Ramsdell, and Shimon Sakaguchi for their discovery of regulatory T cells and peripheral tolerance.`
+    },
+    {
+        q: `A lesion of VA/VL most impairs:`,
+        options: [
+            `Primary visual acuity`,
+            `Working memory`,
+            `Olfaction`,
+            `Taste discrimination`,
+            `Motor planning/execution`
+        ],
+        correct: `E`,
+        explanation: `The VA (ventral anterior) and VL (ventral lateral) nuclei of the thalamus are MOTOR THALAMUS nuclei. They receive input from the basal ganglia (VA/VL) and cerebellum (VL) and project to the motor and premotor cortices. They are critical for MOTOR PLANNING AND EXECUTION. A lesion of VA/VL would impair motor function, causing movement disorders. Primary visual acuity involves the LGN; working memory involves the prefrontal cortex and MD thalamus; olfaction involves the olfactory pathway; and taste discrimination involves the VPM thalamus.`
+    },
+    {
+        q: `A stroke interrupts corticothalamic fibers to VPL/VPM. Immediate effect?`,
+        options: [
+            `Relay neurons stop firing`,
+            `Increased relay noise suppression`,
+            `Reduced gain/precision of thalamic relay`,
+            `Complete sensory anesthesia`,
+            `Visual loss`
+        ],
+        correct: `C`,
+        explanation: `Corticothalamic fibers from the somatosensory cortex provide feedback to the VPL (ventral posterolateral) and VPM (ventral posteromedial) thalamic nuclei. This feedback modulates the gain and precision of sensory relay. A stroke interrupting these fibers would REDUCE THE GAIN/PRECISION of thalamic relay, leading to impaired sensory discrimination. It would not cause complete sensory anesthesia (the sensory pathways from the periphery are intact), would not stop relay neurons from firing, would not increase relay noise suppression, and would not cause visual loss (VPL/VPM are somatosensory, not visual).`
+    },
+    {
+        q: `Which pairing is correct?`,
+        options: [
+            `VPL—face somatosensation`,
+            `VPM—body proprioception`,
+            `LGN—audition`,
+            `MGN—vision`,
+            `VA/VL—motor thalamus`
+        ],
+        correct: `E`,
+        explanation: `The correct pairing is VA/VL—motor thalamus. The VA (ventral anterior) and VL (ventral lateral) nuclei are motor thalamic nuclei that relay basal ganglia and cerebellar input to the motor cortex. The other pairings are incorrect: VPL (ventral posterolateral) carries BODY somatosensation (not face); VPM (ventral posteromedial) carries FACE somatosensation (not body proprioception); LGN (lateral geniculate nucleus) is for VISION (not audition); MGN (medial geniculate nucleus) is for AUDITION (not vision).`
+    },
+    {
+        q: `Patient with central diabetes insipidus after head trauma most likely damaged:`,
+        options: [
+            `DMH`,
+            `PVN/SON`,
+            `SCN`,
+            `VMH`,
+            `MPN`
+        ],
+        correct: `B`,
+        explanation: `Central diabetes insipidus is caused by deficiency of antidiuretic hormone (ADH, vasopressin), which is synthesized in the paraventricular nucleus (PVN) and supraoptic nucleus (SON) of the hypothalamus and released from the posterior pituitary. Head trauma can damage these nuclei or the hypothalamo-hypophyseal tract, leading to central diabetes insipidus. The DMH (dorsomedial hypothalamus), SCN (suprachiasmatic nucleus), VMH (ventromedial hypothalamus), and MPN (medial preoptic nucleus) are not the primary sources of ADH.`
+    },
+    {
+        q: `A lactating mother's milk let-down is impaired by a stalk lesion. Which hormone can still reach systemic circulation normally?`,
+        options: [
+            `TRH`,
+            `Dopamine (to pituitary)`,
+            `Oxytocin`,
+            `GnRH`,
+            `CRH`
+        ],
+        correct: `A`,
+        explanation: `A pituitary stalk lesion disrupts the hypothalamo-hypophyseal tract (which carries ADH and oxytocin) and the hypophyseal portal system (which carries hypothalamic releasing hormones to the anterior pituitary). Milk let-down (oxytocin) is impaired. Among the options, TRH is a hypothalamic releasing hormone that can still reach the systemic circulation because it is released from the hypothalamus and can diffuse into the systemic circulation via the median eminence, even when the portal system is disrupted. However, TRH's target (the anterior pituitary) is affected. The other options (dopamine, oxytocin, GnRH, CRH) either don't normally reach the systemic circulation or are impaired by the stalk lesion. Note: This question is somewhat ambiguous; TRH is the best answer among the choices.`
+    },
+    {
+        q: `A man has refractory hyponatremia from SIADH. Which receptor mediates the renal water reabsorption?`,
+        options: [
+            `V2`,
+            `V1`,
+            `AT1`,
+            `M3`,
+            `β2`
+        ],
+        correct: `A`,
+        explanation: `In SIADH (syndrome of inappropriate antidiuretic hormone secretion), excess ADH acts on the V2 receptors in the collecting duct principal cells. V2 receptors are Gs-coupled and activate adenylyl cyclase, increasing cAMP and activating PKA, which triggers the insertion of aquaporin-2 water channels into the apical membrane. This leads to increased water reabsorption, causing hyponatremia and hypo-osmolality. V1 receptors mediate vasoconstriction; AT1 receptors mediate angiotensin II effects; M3 receptors mediate parasympathetic effects; and β2 receptors mediate sympathetic effects.`
+    },
+    {
+        q: `GnRH neurons fire in pulses. Continuous GnRH infusion causes:`,
+        options: [
+            `LH/FSH surge`,
+            `↑ Prolactin`,
+            `↑ TSH`,
+            `Downregulation of GnRH receptors → LH/FSH`,
+            `↑ GH`
+        ],
+        correct: `D`,
+        explanation: `GnRH neurons fire in pulses, and this pulsatile secretion is essential for normal gonadotropin (LH and FSH) secretion. Continuous infusion of GnRH causes DOWNREGULATION OF GnRH RECEPTORS on the anterior pituitary gonadotrophs, leading to decreased LH and FSH secretion. This is the basis for the use of GnRH agonists (e.g., leuprolide) in the treatment of hormone-sensitive conditions such as prostate cancer, endometriosis, and precocious puberty. Continuous GnRH does not cause an LH/FSH surge, increase prolactin, increase TSH, or increase GH.`
+    },
+    {
+        q: `Kallmann syndrome features hypogonadism and anosmia due to failed migration of:`,
+        options: [
+            `POMC neurons`,
+            `Dopamine neurons`,
+            `CRH neurons`,
+            `GnRH neurons`,
+            `AVP neurons`
+        ],
+        correct: `D`,
+        explanation: `Kallmann syndrome is a genetic disorder characterized by hypogonadotropic hypogonadism and anosmia (loss of smell). It is caused by the FAILED MIGRATION OF GnRH NEURONS from the olfactory placode to the hypothalamus during embryonic development. Because the GnRH neurons fail to reach the hypothalamus, GnRH secretion is deficient, leading to low LH and FSH and hypogonadism. The anosmia is due to associated defects in the olfactory bulb. POMC, dopamine, CRH, and AVP neurons are not involved in the pathogenesis of Kallmann syndrome.`
+    },
+    {
+        q: `Which nucleus integrates visceral afferents to autonomic and neuroendocrine outputs?`,
+        options: [
+            `LGN`,
+            `VPL`,
+            `PVN`,
+            `MD`,
+            `VA`
+        ],
+        correct: `C`,
+        explanation: `The paraventricular nucleus (PVN) of the hypothalamus is a key integration center that receives visceral afferents and coordinates autonomic and neuroendocrine outputs. It contains magnocellular neurons that synthesize ADH and oxytocin (projecting to the posterior pituitary) and parvocellular neurons that synthesize CRH, TRH, and other releasing hormones (projecting to the median eminence) and project to autonomic centers in the brainstem and spinal cord. The LGN is visual; the VPL is somatosensory; the MD is limbic; and the VA is motor.`
+    },
+    {
+        q: `A patient with lack of diurnal cortisol rhythm but normal ACTH reserve most likely has a lesion of:`,
+        options: [
+            `PVN`,
+            `SCN`,
+            `Arcuate`,
+            `VMH`,
+            `OVLT`
+        ],
+        correct: `B`,
+        explanation: `The suprachiasmatic nucleus (SCN) is the master circadian pacemaker that drives the diurnal rhythm of cortisol secretion (and many other hormones). A lesion of the SCN would abolish the diurnal cortisol rhythm while leaving the ACTH reserve intact (because the PVN and pituitary are functional). The PVN is involved in CRH secretion; the arcuate nucleus is involved in GnRH and appetite regulation; the VMH is involved in satiety; and the OVLT is involved in osmoregulation.`
+    },
+    {
+        q: `A 6-year-old boy with a midline posterior fossa tumor develops a broad-based, lurching gait and truncal swaying. Which cerebellar region is most affected?`,
+        options: [
+            `Lateral hemisphere (dentate)`,
+            `Vermis (spinocerebellum)`,
+            `Flocculonodular lobe (vestibulocerebellum)`,
+            `Interposed nuclei`,
+            `Fastigial nucleus`
+        ],
+        correct: `B`,
+        explanation: `The vermis (part of the spinocerebellum) is located in the midline of the cerebellum and is responsible for the control of axial and proximal muscles, posture, and gait. A midline posterior fossa tumor (e.g., medulloblastoma) affecting the vermis produces truncal ataxia — a broad-based, lurching gait with truncal swaying. The lateral hemispheres (cerebrocerebellum) control distal limb movements; the flocculonodular lobe (vestibulocerebellum) controls balance and eye movements; the interposed nuclei are involved in limb coordination; and the fastigial nucleus is an output nucleus of the vermis.`
+    },
+    {
+        q: `A 54-year-old with alcohol use disorder has progressive gait instability and difficulty tandem walking. MRI shows anterior vermian atrophy. What is the cardinal deficit?`,
+        options: [
+            `Limb dysmetria with intention tremor`,
+            `Truncal ataxia and wide-based gait`,
+            `Hyperreflexia with spasticity`,
+            `Rest tremor`,
+            `Hemiballismus`
+        ],
+        correct: `B`,
+        explanation: `Alcoholic cerebellar degeneration typically affects the anterior vermis. The vermis is responsible for truncal and gait control, so its atrophy produces TRUNCAL ATAXIA and a WIDE-BASED GAIT. Tandem walking is particularly affected. Limb dysmetria and intention tremor would be caused by lesions of the lateral hemispheres (cerebrocerebellum); hyperreflexia and spasticity are upper motor neuron signs; rest tremor is a basal ganglia sign (Parkinson's disease); and hemiballismus is due to a lesion of the subthalamic nucleus.`
+    },
+    {
+        q: `A 42-year-old's finger-to-nose shows intention tremor only near the target. Mechanism?`,
+        options: [
+            `Loss of basal ganglia inhibition`,
+            `Damage to corticospinal tract`,
+            `Vestibular hypofunction`,
+            `Impaired dorsal column input only`,
+            `Cerebellar comparator failure causing overshoot-correction oscillations`
+        ],
+        correct: `E`,
+        explanation: `Intention tremor (also called kinetic tremor) is a hallmark of cerebellar disease. It occurs during voluntary movement and worsens as the limb approaches the target. The mechanism is CEREBELLAR COMPARATOR FAILURE: the cerebellum normally compares the intended movement (from the motor cortex) with the actual movement (from proprioceptive feedback) and makes corrective adjustments. When the cerebellum is damaged, this comparator function fails, leading to overshoot and corrective oscillations — the intention tremor. The other options do not explain intention tremor: loss of basal ganglia inhibition causes rest tremor or chorea; corticospinal tract damage causes weakness; vestibular hypofunction causes balance problems; and impaired dorsal column input causes sensory ataxia (which worsens with eyes closed).`
+    },
+    {
+        q: `Which deep nucleus primarily communicates with premotor/motor cortex for movement planning?`,
+        options: [
+            `Fastigial`,
+            `Interposed`,
+            `Dentate`,
+            `Vestibular nucleus`,
+            `Inferior olive`
+        ],
+        correct: `C`,
+        explanation: `The dentate nucleus is the largest deep cerebellar nucleus and is part of the cerebrocerebellum (lateral hemispheres). It communicates with the premotor and motor cortices (via the thalamus, VL) and is involved in MOVEMENT PLANNING and the coordination of fine, skilled movements. The fastigial nucleus is part of the spinocerebellum and is involved in posture and gait; the interposed nuclei (emboliform and globose) are involved in limb coordination; the vestibular nuclei are involved in balance; and the inferior olive provides climbing fibre input to the cerebellum.`
+    },
+    {
+        q: `A blow to the occiput causes immediate inability to stand unaided, with a wide-based gait and trunk sway. Which nucleus is most likely affected?`,
+        options: [
+            `Dentate`,
+            `Interposed`,
+            `Fastigial`,
+            `Red nucleus`,
+            `VL thalamus`
+        ],
+        correct: `C`,
+        explanation: `The fastigial nucleus is the output nucleus of the vermis (spinocerebellum), which controls posture, gait, and axial muscles. A blow to the occiput can damage the cerebellar vermis and the fastigial nucleus, leading to truncal ataxia — an inability to stand unaided, with a wide-based gait and trunk sway. The dentate nucleus is involved in fine motor planning; the interposed nuclei are involved in limb coordination; the red nucleus is part of the rubrospinal system; and the VL thalamus is a relay nucleus.`
+    },
+    {
+        q: `A 56-year-old presents with "pendular" knee jerks and hypotonia. What explains pendular reflexes?`,
+        options: [
+            `Loss of spinal inhibitory interneurons`,
+            `Increased gamma drive`,
+            `Damage to basal ganglia`,
+            `UMN lesion`,
+            `Reduced cerebellar facilitation of stretch reflex braking`
+        ],
+        correct: `E`,
+        explanation: `Pendular reflexes (pendular knee jerks) are a classic sign of cerebellar disease. Normally, the cerebellum facilitates the braking of the stretch reflex, so the leg swings a few times and then stops. In cerebellar disease, the REFLEX BRAKING IS REDUCED, so the leg swings back and forth multiple times like a pendulum (pendular reflex). This is due to reduced cerebellar facilitation of the stretch reflex braking. Hypotonia is also a feature of cerebellar disease. The other options do not explain pendular reflexes: loss of spinal inhibitory interneurons would cause hyperreflexia; increased gamma drive would cause spasticity; basal ganglia damage causes movement disorders; and UMN lesions cause hyperreflexia and spasticity.`
+    },
+    {
+        q: `A violinist's ability to execute rapid, precisely timed finger sequences relies most on which cerebellar territory?`,
+        options: [
+            `Flocculonodular lobe`,
+            `Vermis`,
+            `Intermediate hemisphere`,
+            `Cerebrocerebellum → dentate`,
+            `Fastigial nucleus`
+        ],
+        correct: `D`,
+        explanation: `The cerebrocerebellum (lateral hemispheres) and its output nucleus, the DENTATE NUCLEUS, are responsible for the planning, timing, and coordination of fine, skilled, distal limb movements — such as the rapid, precisely timed finger sequences required by a violinist. The flocculonodular lobe controls balance and eye movements; the vermis controls posture and gait; the intermediate hemisphere (with the interposed nuclei) is involved in limb coordination; and the fastigial nucleus is an output of the vermis.`
+    },
+    {
+        q: `A patient cannot rapidly alternate pronation/supination. This is called:`,
+        options: [
+            `Dysmetria`,
+            `Asterixis`,
+            `Dysdiadochokinesia`,
+            `Akathisia`,
+            `Clonus`
+        ],
+        correct: `C`,
+        explanation: `Dysdiadochokinesia is the inability to perform rapid, alternating movements (such as pronation and supination of the forearm). It is a classic sign of cerebellar disease. Dysmetria is the inability to gauge distance (overshoot or undershoot of a target); asterixis is a flapping tremor; akathisia is a feeling of restlessness; and clonus is rhythmic muscle contraction (an upper motor neuron sign).`
+    },
+    {
+        q: `A 33-year-old has normal strength but cannot smoothly coordinate multi-joint reaches; movements are broken into components. This phenomenon is:`,
+        options: [
+            `Apraxia`,
+            `Decomposition of movement`,
+            `Rigidity`,
+            `Dystonia`,
+            `Spasticity`
+        ],
+        correct: `B`,
+        explanation: `DECOMPOSITION OF MOVEMENT is a classic cerebellar sign in which complex, multi-joint movements are broken down into individual, sequential components rather than being performed smoothly as a single coordinated action. It occurs because the cerebellum is unable to coordinate the timing and synergy of the multiple muscle groups involved. Apraxia is the inability to perform learned movements despite normal strength and coordination (a cortical disorder); rigidity is increased tone (basal ganglia); dystonia is sustained muscle contraction; and spasticity is increased tone (UMN lesion).`
+    },
+    {
+        q: `Which best distinguishes cerebellar ataxic gait from sensory ataxic gait?`,
+        options: [
+            `Worsening with eyes closed`,
+            `Wide-based staggering gait present with eyes open or closed`,
+            `Positive Babinski`,
+            `Spastic scissoring`,
+            `Foot drop`
+        ],
+        correct: `B`,
+        explanation: `The key distinguishing feature is that CEREBELLAR ATAXIC GAIT is a WIDE-BASED, STAGGERING GAIT that is PRESENT WITH EYES OPEN OR CLOSED. In contrast, SENSORY ATAXIC GAIT (due to dorsal column/proprioceptive loss) is worsened by closing the eyes (positive Romberg sign) because the patient relies on visual cues to compensate for the loss of proprioception. A positive Babinski sign indicates a corticospinal lesion; spastic scissoring is an upper motor neuron gait; and foot drop is a peroneal nerve lesion.`
+    },
+    {
+        q: `A 28-year-old runner gets a sharp tap to the patellar tendon; the knee extends briskly. Which afferent fiber mediates the central excitatory synapse to quadriceps α-motor neurons?`,
+        options: [
+            `Group II spindle afferent`,
+            `Group Ib Golgi tendon afferent`,
+            `Group Ia spindle primary ending`,
+            `Aβ cutaneous mechanoreceptor`,
+            `C fiber nociceptor`
+        ],
+        correct: `C`,
+        explanation: `The patellar (knee-jerk) reflex is a monosynaptic stretch reflex. The afferent limb is the GROUP Ia (PRIMARY) AFFERENT from the muscle spindle, which synapses directly onto the alpha motor neurons of the quadriceps muscle in the anterior horn of the spinal cord. The efferent limb is the alpha motor neuron, which causes the quadriceps to contract and the knee to extend. Group II afferents signal static muscle length but are not the primary afferent for the stretch reflex; Group Ib afferents are from Golgi tendon organs; Aβ cutaneous mechanoreceptors mediate touch; and C fibres are nociceptors.`
+    },
+    {
+        q: `A 62-year-old with acute lateral medullary infarct shows ipsilateral facial pain loss and contralateral body pain loss but hyperreflexic limbs weeks later. What explains delayed hyperreflexia?`,
+        options: [
+            `Loss of Ia afferents`,
+            `Loss of descending inhibition on spinal circuits`,
+            `Failure of Renshaw recurrent inhibition`,
+            `Decreased γ-bias`,
+            `Loss of GTOs`
+        ],
+        correct: `B`,
+        explanation: `The lateral medullary (Wallenberg) infarct damages the spinal trigeminal nucleus and tract (causing ipsilateral facial pain/temperature loss) and the spinothalamic tract (causing contralateral body pain/temperature loss). The delayed hyperreflexia in the limbs is due to LOSS OF DESCENDING INHIBITION on spinal circuits. The corticospinal and other descending inhibitory tracts may be affected by the infarct or by secondary changes, leading to hyperreflexia weeks later. Loss of Ia afferents would cause areflexia; failure of Renshaw recurrent inhibition would cause hyperreflexia but is not the primary mechanism; decreased gamma-bias would cause hypotonia; and loss of Golgi tendon organs would impair the inverse stretch reflex.`
+    },
+    {
+        q: `During isometric contraction, tension rises and the homonymous muscle suddenly relaxes. Receptor?`,
+        options: [
+            `Muscle spindle primary ending`,
+            `Pacinian corpuscle`,
+            `Golgi tendon organ`,
+            `Ruffini ending`,
+            `Free nerve ending`
+        ],
+        correct: `C`,
+        explanation: `The Golgi tendon organ is the receptor that mediates the INVERSE STRETCH REFLEX (also called the clasp-knife reflex). When muscle tension rises during an isometric contraction, the Golgi tendon organ is activated, and its Group Ib afferent sends signals via an inhibitory interneuron to the alpha motor neuron of the same muscle, causing it to relax. This protects the muscle and tendon from excessive tension. The muscle spindle primary ending mediates the stretch reflex; Pacinian corpuscles detect vibration; Ruffini endings detect skin stretch; and free nerve endings detect pain and temperature.`
+    },
+    {
+        q: `A 24-year-old shows sustained ankle clonus when the foot is dorsiflexed. Primary mechanism?`,
+        options: [
+            `Cyclic activation of Ia and Ib afferents due to high γ-bias`,
+            `Constant Ib inhibition`,
+            `Pure cortical oscillation`,
+            `Renshaw rebound`,
+            `PAD (primary afferent depolarization)`
+        ],
+        correct: `A`,
+        explanation: `Ankle clonus is a sign of upper motor neuron lesion and is due to CYCLIC ACTIVATION OF Ia AND Ib AFFERENTS DUE TO HIGH GAMMA-BIAS. When the foot is dorsiflexed, the muscle spindle is stretched, activating Ia afferents and causing reflex contraction of the gastrocnemius. The contraction stretches the spindle again, causing another reflex contraction, and so on — producing rhythmic clonus. The high gamma-bias (increased gamma motor neuron activity) makes the spindle hypersensitive to stretch. Constant Ib inhibition would reduce clonus; pure cortical oscillation is not the mechanism; Renshaw rebound is not the primary mechanism; and PAD (presynaptic inhibition) would reduce clonus.`
+    },
+    {
+        q: `A patient after acute spinal cord transection (T6) shows areflexia below the lesion. Two weeks later, tendon jerks are brisk. Why?`,
+        options: [
+            `Recovery of corticospinal fibers`,
+            `Reinvention by dorsal root collaterals`,
+            `Increased conduction velocity`,
+            `Upregulation of interneuronal excitability and receptor density`,
+            `New GTO formation`
+        ],
+        correct: `D`,
+        explanation: `The transition from areflexia (spinal shock) to brisk tendon jerks (hyperreflexia) after spinal cord transection is due to UPREGULATION OF INTERNEURONAL EXCITABILITY AND RECEPTOR DENSITY. After the loss of descending input, the spinal neurons below the lesion become hyperexcitable through denervation hypersensitivity (upregulation of neurotransmitter receptors), collateral sprouting of surviving axons, and reorganization of spinal circuits. This leads to exaggerated reflexes. It is not due to recovery of corticospinal fibres (which do not regenerate), reinvention by dorsal root collaterals, increased conduction velocity, or new Golgi tendon organ formation.`
+    }
+    ];
+
+    /* =====================================================================
+       RENDERING — SECTION A (MCQ)
+       ===================================================================== */
+    function renderSectionA() {
+        const container = document.getElementById('container-A');
+        let html = '';
+        sectionA.forEach((q, i) => {
+            const qid = 'A-q' + (i + 1);
+            html += '<div class="question" id="q-' + qid + '">';
+            html += '<p><span class="q-badge">Q' + (i + 1) + '</span> ' + q.q + '</p>';
+            html += '<div class="options">';
+            q.options.forEach((opt, j) => {
+                const L = String.fromCharCode(65 + j);
+                html += '<label><input type="radio" name="' + qid + '" value="' + L + '"> <strong>' + L + ')</strong> ' + opt + '</label>';
+            });
+            html += '</div>';
+            html += '<div class="question-feedback" id="fb-' + qid + '"></div>';
+            html += '</div>';
+        });
+        container.innerHTML = html;
+    }
+
+    function submitSectionA() {
+        let score = 0;
+        sectionA.forEach((q, i) => {
+            const qid = 'A-q' + (i + 1);
+            const radios = document.getElementsByName(qid);
+            let selected = null;
+            for (let r = 0; r < radios.length; r++) {
+                if (radios[r].checked) { selected = radios[r]; break; }
+            }
+            const correct = q.correct.toUpperCase();
+            if (selected && selected.value === correct) score++;
+
+            let html = '<div class="answer-block"><div class="answer-list">';
+            q.options.forEach((opt, j) => {
+                const L = String.fromCharCode(65 + j);
+                let cls = 'answer-item';
+                if (L === correct) cls += ' answer-correct';
+                if (selected && selected.value === L) {
+                    cls += ' user-choice';
+                    if (L !== correct) cls += ' answer-wrong';
+                }
+                const mark = (selected && selected.value === L) ? ' ◀ your answer' : '';
+                html += '<div class="' + cls + '">' + L + ') ' + opt + mark + '</div>';
+            });
+            html += '</div>';
+
+            const correctIdx = correct.charCodeAt(0) - 65;
+            const correctText = (correctIdx >= 0 && correctIdx < q.options.length) ? q.options[correctIdx] : '';
+
+            if (!selected) {
+                html += '<div class="explanation wrong">No answer selected. Correct answer: <strong>' +
+                        correct + ') ' + correctText + '</strong>.<br>' + q.explanation + '</div>';
+            } else if (selected.value === correct) {
+                html += '<div class="explanation">✅ <strong>Correct.</strong><br>' + q.explanation + '</div>';
+            } else {
+                html += '<div class="explanation wrong">❌ <strong>Incorrect.</strong> Correct answer: <strong>' +
+                        correct + ') ' + correctText + '</strong>.<br>' + q.explanation + '</div>';
+            }
+
+            const fb = document.getElementById('fb-' + qid);
+            if (fb) fb.innerHTML = html;
+        });
+
+        const total = sectionA.length;
+        const pct = Math.round((score / total) * 100);
+        const box = document.getElementById('result-A');
+        box.style.display = 'block';
+        document.getElementById('score-A').innerText = score + ' / ' + total + '  (' + pct + '%)';
+
+        document.querySelectorAll('#panel-A input[type="radio"]').forEach(r => r.disabled = true);
+    }
+
+    /* ─── INIT ─── */
+    renderSectionA();
+
+    /* ─── TAB SWITCHING ─── */
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            const target = this.dataset.target;
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+            document.getElementById('panel-' + target).classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+    </script>
+
+</body>
+</html>

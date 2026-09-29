@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 Physiology Test 1 – 3rd Year</title>
+    <style>
+        :root {
+            --primary: #1a6b6b;
+            --accent: #2ea8a0;
+            --dark: #0f2a2a;
+            --light: #f4f8f7;
+            --radius: 12px;
+            --shadow: 0 4px 14px rgba(0, 30, 30, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #edf3f2;
+            color: var(--dark);
+            min-height: 100vh;
+            padding-top: 72px;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: linear-gradient(145deg, var(--primary), var(--dark));
+            color: #fff;
+            padding: 0.6rem 0;
+            box-shadow: 0 4px 18px rgba(0, 20, 20, 0.25);
+        }
+
+        .header-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .logo i {
+            font-size: 1.5rem;
+            color: #8dd9d4;
+        }
+
+        .logo h1 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 0.2rem 1rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #b3e6e0;
+            letter-spacing: 0.5px;
+        }
+
+        .container {
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 0 1.2rem 2.5rem;
+        }
+
+        .tab-bar {
+            display: flex;
+            gap: 0.5rem;
+            margin: 0.5rem 0 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: #dce8e8;
+            border: none;
+            padding: 0.5rem 1.8rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--dark);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .tab-btn:hover {
+            background: #c0d6d6;
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 2px 10px rgba(26, 107, 107, 0.25);
+        }
+
+        .tab-panel {
+            display: block;
+        }
+
+        .tab-panel.hidden {
+            display: none;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 0 0 0.8rem 0;
+            padding-bottom: 0.4rem;
+            border-bottom: 3px solid rgba(26, 107, 107, 0.18);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .section-title .count {
+            font-size: 0.7rem;
+            font-weight: 600;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 40px;
+            padding: 0 0.7rem;
+            line-height: 1.7;
+        }
+
+        .section-subtitle {
+            color: #4f6e6e;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .question {
+            background: #ffffff;
+            border-radius: var(--radius);
+            padding: 1.1rem 1.2rem 0.2rem 1.2rem;
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(26, 107, 107, 0.05);
+            transition: box-shadow 0.2s;
+        }
+
+        .question:hover {
+            box-shadow: 0 6px 20px rgba(0, 30, 30, 0.07);
+        }
+
+        .question .q-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 40px;
+            padding: 0 0.65rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            line-height: 1.6;
+            margin-right: 0.4rem;
+        }
+
+        .question p {
+            font-weight: 600;
+            font-size: 0.97rem;
+            margin-bottom: 0.4rem;
+            color: var(--dark);
+        }
+
+        .options label {
+            display: block;
+            background: #fafcfc;
+            border: 1px solid #dde8e8;
+            border-radius: 7px;
+            padding: 0.4rem 0.85rem;
+            margin-top: 0.4rem;
+            cursor: pointer;
+            transition: all 0.15s;
+            font-weight: 450;
+            font-size: 0.92rem;
+        }
+
+        .options label:hover {
+            background: #e8f5f4;
+            border-color: var(--accent);
+        }
+
+        .options input[type="radio"] {
+            margin-right: 0.5rem;
+            accent-color: var(--primary);
+            transform: scale(1.04);
+        }
+
+        .question-feedback {
+            margin-top: 0.8rem;
+            padding: 0.4rem 0 0.1rem 0;
+            border-top: 1px dashed #dce6e6;
+        }
+
+        .answer-block strong {
+            display: block;
+            margin-bottom: 3px;
+            color: var(--primary);
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .answer-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .answer-item {
+            padding: 4px 10px;
+            border-radius: 5px;
+            border: 1px solid #e4edec;
+            background: #ffffff;
+            font-weight: 500;
+            font-size: 0.88rem;
+        }
+
+        .answer-correct {
+            background: #e8f7ef;
+            border-color: #a8d8c0;
+            color: #0a4f3a;
+        }
+
+        .answer-wrong {
+            background: #fde9ea;
+            border-color: #f5b8b8;
+            color: #8a1f2b;
+        }
+
+        .user-choice {
+            outline: 2px dashed rgba(0, 0, 0, 0.06);
+        }
+
+        .explanation {
+            margin-top: 5px;
+            padding: 8px 13px;
+            border-radius: 7px;
+            background: #f0f8f6;
+            color: #065f4a;
+            font-size: 0.88rem;
+            line-height: 1.5;
+            border-left: 4px solid var(--accent);
+        }
+
+        .explanation.wrong {
+            background: #fdf1f1;
+            color: #7a1f1f;
+            border-left-color: #e68080;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            color: #fff;
+            border: none;
+            padding: 0.55rem 1.8rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.2s;
+            box-shadow: 0 4px 14px rgba(26, 107, 107, 0.25);
+        }
+
+        .btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 24px rgba(26, 107, 107, 0.32);
+        }
+
+        .btn:active {
+            transform: scale(0.96);
+        }
+
+        .submit-wrap {
+            text-align: center;
+            margin: 1.5rem 0 1.8rem;
+        }
+
+        .result {
+            margin-top: 1.5rem;
+            padding: 1.5rem 1.5rem 0.8rem;
+            background: #eaf6f4;
+            border-radius: var(--radius);
+            text-align: center;
+            display: none;
+            border: 1px solid #b8dbd6;
+        }
+
+        .result h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .score {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 0.1rem 0 0.2rem;
+        }
+
+        .text-muted {
+            color: #4f6e6e;
+            font-size: 0.9rem;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @media (max-width: 700px) {
+            body {
+                padding-top: 68px;
+            }
+            .logo h1 {
+                font-size: 0.95rem;
+            }
+            .header-inner {
+                padding: 0 1rem;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.2rem;
+            }
+            .badge {
+                align-self: flex-start;
+            }
+            .question {
+                padding: 0.9rem 0.9rem 0.1rem 0.9rem;
+            }
+            .section-title {
+                font-size: 1.05rem;
+            }
+            .score {
+                font-size: 2.2rem;
+            }
+            .btn {
+                padding: 0.5rem 1.2rem;
+                font-size: 0.85rem;
+            }
+            .tab-btn {
+                padding: 0.4rem 1.2rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .logo h1 {
+                font-size: 0.8rem;
+            }
+            .options label {
+                font-size: 0.85rem;
+                padding: 0.35rem 0.65rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-inner">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+                <h1>2026 Physiology Test 1 – 3rd Year</h1>
+            </div>
+            <span class="badge"><i class="fas fa-pencil-alt"></i> &nbsp;60 MCQs</span>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+
+            <div class="tab-bar">
+                <button class="tab-btn active" data-target="section-mcq">📝 MCQs</button>
+            </div>
+
+            <div id="section-mcq" class="tab-panel">
+                <div class="section-title">
+                    <i class="fas fa-list-ul"></i> Multiple Choice Questions
+                    <span class="count">60</span>
+                </div>
+                <p class="section-subtitle">Select the best answer for each question, then click <strong>Submit All MCQs</strong> below.</p>
+
+                <form id="quizForm">
+                    <div id="mcq-container"></div>
+                    <div class="submit-wrap">
+                        <button type="button" class="btn" onclick="submitQuiz()">
+                            <i class="fas fa-check-circle"></i> Submit All MCQs
+                        </button>
+                    </div>
+                </form>
+
+                <div class="result" id="resultBox">
+                    <h3><i class="fas fa-chart-simple"></i> Your Score</h3>
+                    <div class="score" id="score">0%</div>
+                    <p class="text-muted">Review the feedback below each question.</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // ─── MCQ DATA (60 questions) ──────────────────────────────
+        const questions = [
+            {
+                q: "1. A 40-year-old with acromegaly receives a somatostatin analog. Which best describes somatostatin's physiological role in the pituitary?",
+                options: [
+                    "Positive feedback on GH and insulin",
+                    "Autocrine stimulation of β-cells",
+                    "Tyrosine kinase receptor activation",
+                    "Endocrine inhibition of GH/TSH",
+                    "JAK-STAT-mediated GH release"
+                ],
+                correct: "d",
+                explanation: "Somatostatin (SST, also called growth hormone-inhibiting hormone, GHIH) is a 14-amino-acid peptide produced by hypothalamic neurons (arcuate and periventricular nuclei) and by D cells of the pancreas and gastrointestinal tract. In the anterior pituitary, somatostatin acts as an endocrine inhibitor of growth hormone (GH) and thyroid-stimulating hormone (TSH) secretion. It binds to Gi-coupled SST receptors (primarily sst2 and sst5) on somatotrophs and thyrotrophs, which decreases adenylyl cyclase activity, lowers intracellular cAMP, and reduces Ca²⁺ influx, thereby inhibiting hormone release. Somatostatin analogs such as octreotide and lanreotide are used clinically to treat acromegaly (GH-secreting pituitary adenomas), carcinoid tumors, and VIPomas. It does NOT positively stimulate GH or insulin (it inhibits both), does NOT act through tyrosine kinase receptors, and does NOT mediate JAK-STAT signaling (that is the GH receptor pathway)."
+            },
+            {
+                q: "2. A novel GPCR agonist activates Gq. The most immediate intracellular change is:",
+                options: [
+                    "↑ cAMP",
+                    "↑ cGMP",
+                    "↑ DAG",
+                    "↑ JAK-STAT",
+                    "↑ Nuclear receptor binding"
+                ],
+                correct: "c",
+                explanation: "Gq-coupled G protein-coupled receptors (GPCRs) activate phospholipase Cβ (PLCβ), which hydrolyzes phosphatidylinositol 4,5-bisphosphate (PIP₂) into inositol 1,4,5-trisphosphate (IP₃) and diacylglycerol (DAG). Both IP₃ and DAG are produced simultaneously and immediately. IP₃ triggers Ca²⁺ release from the endoplasmic reticulum by binding to IP₃ receptors, and DAG activates protein kinase C (PKC) at the membrane. Among the options, DAG is the correct second messenger generated by Gq activation. cAMP (a) is generated by Gs-coupled receptors via adenylyl cyclase; cGMP (b) is generated by guanylyl cyclase (ANP, NO); JAK-STAT (d) is the pathway of cytokine receptors (GH, prolactin, erythropoietin); and nuclear receptor binding (e) is the mechanism of steroid and thyroid hormones, not GPCRs."
+            },
+            {
+                q: "3. A patient takes a drug that increases hepatic glucuronidation. Which hormone class will most predictably have shortened half-life?",
+                options: [
+                    "Peptides",
+                    "Thyroid hormones",
+                    "Catecholamines",
+                    "Eicosanoids",
+                    "Steroids"
+                ],
+                correct: "e",
+                explanation: "Glucuronidation is a phase II conjugation reaction catalyzed by UDP-glucuronosyltransferases (UGTs) in the liver. It increases the water solubility of lipophilic compounds and facilitates their biliary and renal excretion. Steroid hormones (glucocorticoids, mineralocorticoids, androgens, estrogens) are metabolized primarily by hepatic glucuronidation and sulfation, so increased glucuronidation activity (e.g., by enzyme-inducing drugs such as phenobarbital, rifampicin, or phenytoin) will most predictably shorten their half-life. Peptides are degraded by plasma and tissue proteases; catecholamines are metabolized by COMT and MAO; eicosanoids undergo rapid oxidation and have very short half-lives already. Thyroid hormones undergo deiodination and conjugation, but the effect on steroids is the classic and most pronounced."
+            },
+            {
+                q: "4. A lab blocks STAT dimerization in hepatocytes. Which hormone's transcriptional action is most directly impaired?",
+                options: [
+                    "GH",
+                    "Insulin",
+                    "Glucagon",
+                    "PTH",
+                    "Epinephrine"
+                ],
+                correct: "a",
+                explanation: "Growth hormone (GH) binds to its receptor (a class I cytokine receptor) on hepatocytes, causing receptor dimerization and activation of the associated JAK2 tyrosine kinase. JAK2 phosphorylates STAT5b, which then dimerizes and translocates to the nucleus to regulate gene transcription — including the gene for insulin-like growth factor 1 (IGF-1). Blocking STAT dimerization would therefore most directly impair GH's transcriptional action. Insulin signals via the insulin receptor tyrosine kinase → IRS → PI3K/Akt and MAPK pathways (not STAT). Glucagon signals via Gs → cAMP → PKA; PTH via Gs → cAMP → PKA and Gq → PLC; epinephrine via α and β adrenergic GPCRs → cAMP, IP₃/DAG. None of these use STAT dimerization."
+            },
+            {
+                q: "5. A mutation prevents GTP hydrolysis by Gsα. Consequence?",
+                options: [
+                    "Constitutive activation of adenylyl cyclase",
+                    "Constitutive inhibition of adenylyl cyclase",
+                    "Constitutive activation of PLC",
+                    "Absent cAMP generation",
+                    "Increased PKG activation"
+                ],
+                correct: "a",
+                explanation: "The α-subunit of Gs (Gsα) has intrinsic GTPase activity that hydrolyzes GTP to GDP, terminating the signal. If GTP hydrolysis is prevented (e.g., by a mutation or by cholera toxin-mediated ADP-ribosylation), Gsα remains permanently in its GTP-bound, active state. It therefore constitutively activates adenylyl cyclase, causing persistently elevated intracellular cAMP and continuous activation of PKA. This is the mechanism of McCune-Albright syndrome (somatic GNAS mutations) and cholera toxin action. The other options are incorrect: Gs activates (not inhibits) adenylyl cyclase; PLC is activated by Gq; and PKG is activated by cGMP, not cAMP."
+            },
+            {
+                q: "6. A new hormone diffuses into cells and binds a cytosolic protein that then translocates to the nucleus. This hormone most likely:",
+                options: [
+                    "Is stored in secretory granules",
+                    "Acts within seconds with short t1/2",
+                    "Raises cAMP in target cells",
+                    "Is inactivated by peptidases in plasma",
+                    "Requires specific globulins for transport"
+                ],
+                correct: "e",
+                explanation: "A hormone that diffuses into cells and binds a cytosolic protein (receptor) that then translocates to the nucleus is a steroid hormone (or a related lipophilic hormone such as thyroid hormone, vitamin D, or retinoic acid). Because these hormones are lipophilic and poorly water-soluble, they require specific carrier/transport proteins in plasma — e.g., cortisol-binding globulin (CBG, transcortin), sex hormone-binding globulin (SHBG), thyroxine-binding globulin (TBG), and albumin. They are NOT stored in secretory granules (they diffuse out of cells as they are synthesized), do NOT act within seconds (their effects take hours to days because they alter gene transcription), do NOT use cAMP as a second messenger, and are NOT primarily inactivated by plasma peptidases (that applies to peptide hormones)."
+            },
+            {
+                q: "7. After weeks of high-dose β-agonist therapy for asthma, bronchodilator response diminishes. Mechanism?",
+                options: [
+                    "Upregulation of β₂ receptors",
+                    "Increased Gs coupling",
+                    "Downregulation of β₂ receptors",
+                    "Greater cAMP generation",
+                    "Increased PKG activity"
+                ],
+                correct: "c",
+                explanation: "Chronic exposure to β-agonist therapy leads to tachyphylaxis/desensitization via several mechanisms: (1) downregulation of β₂ receptors (decreased receptor number via internalization and degradation), (2) uncoupling of the receptor from Gs (phosphorylation by GRK and binding of β-arrestin), and (3) increased phosphodiesterase activity that degrades cAMP. The net effect is a diminished bronchodilator response. Upregulation of β₂ receptors (a), increased Gs coupling (b), and greater cAMP generation (d) would all increase, not decrease, the response. PKG (e) is activated by cGMP, not the β₂/cAMP pathway."
+            },
+            {
+                q: "8. A 9-year-old with central diabetes insipidus is treated with desmopressin (V2 agonist). Which second messenger is most critical in collecting duct response?",
+                options: [
+                    "cAMP",
+                    "cGMP",
+                    "IP₃",
+                    "DAG",
+                    "Ca²⁺-calmodulin"
+                ],
+                correct: "a",
+                explanation: "Desmopressin (DDAVP) is a selective V2 receptor agonist. V2 receptors on the basolateral membrane of collecting duct principal cells are Gs-coupled and activate adenylyl cyclase, increasing intracellular cAMP. cAMP activates protein kinase A (PKA), which phosphorylates aquaporin-2 (AQP2) and triggers its insertion into the apical membrane, allowing water reabsorption. This is the critical second messenger for the collecting duct response. V1A receptors use Gq → IP₃/DAG/Ca²⁺ (vasoconstriction); V1B receptors use Gq → ACTH release; oxytocin receptors use Gq → uterine contraction. cGMP is used by ANP and nitric oxide, not by V2."
+            },
+            {
+                q: "9. A scientist mutates the β-subunit of a tyrosine kinase receptor so dimerization cannot occur. Which hormone's action is most impaired?",
+                options: [
+                    "GH",
+                    "IGF-1",
+                    "Dopamine",
+                    "Inulin",
+                    "Epinephrine"
+                ],
+                correct: "b",
+                explanation: "The insulin receptor and the IGF-1 receptor are members of the receptor tyrosine kinase (RTK) family. They are synthesized as single-chain proreceptors that are proteolytically cleaved into α and β subunits, which then assemble into (αβ)₂ dimers. The α-subunit contains the ligand-binding domain, and the β-subunit contains the intrinsic tyrosine kinase domain. Mutations preventing dimerization would impair IGF-1 signaling (and insulin signaling). GH acts through a cytokine receptor (not a classic RTK) that recruits JAK2; dopamine and epinephrine act through GPCRs; inulin is a polysaccharide, not a hormone. Therefore, among the options, IGF-1 is the correct answer. (Note: IGF-1 receptors exist as pre-formed dimers, but the question is testing the concept that the β-subunit of the RTK family mediates IGF-1/insulin signaling.)"
+            },
+            {
+                q: "10. A hypertensive patient receives ANP infusion. Which second messenger mediates its vasodilatory action?",
+                options: [
+                    "cAMP via PKA",
+                    "IP₃ with Ca²⁺ release",
+                    "DAG with PKC activation",
+                    "cGMP via PKG",
+                    "JAK-STAT"
+                ],
+                correct: "d",
+                explanation: "Atrial natriuretic peptide (ANP) binds to NPR-A (natriuretic peptide receptor A), which is a membrane guanylyl cyclase. Ligand binding activates the intracellular guanylyl cyclase domain, converting GTP to cGMP. cGMP then activates protein kinase G (PKG), which causes: (1) smooth muscle relaxation and vasodilation, (2) inhibition of Na⁺ reabsorption in the collecting duct (natriuresis), (3) inhibition of renin release, and (4) inhibition of aldosterone secretion. This reduces blood pressure and blood volume. cAMP/PKA is used by β-adrenergic and other Gs pathways; IP₃/DAG is used by Gq; JAK-STAT is used by cytokine receptors."
+            },
+            {
+                q: "11. A 33-year-old with pituitary tumor has isolated V1A receptor activation from ADH excess. Expected hemodynamic effect?",
+                options: [
+                    "Vasodilation",
+                    "Bradycardia",
+                    "Diuresis",
+                    "Natriuresis",
+                    "Vasoconstriction"
+                ],
+                correct: "e",
+                explanation: "ADH (vasopressin) acts on V1A receptors on vascular smooth muscle, which are Gq-coupled. Activation leads to phospholipase C → IP₃ and DAG → increased intracellular Ca²⁺ → smooth muscle contraction → vasoconstriction. V1A activation therefore raises blood pressure. V2 receptors on the collecting duct mediate water reabsorption (antidiuresis), not diuresis; V2 activation is not involved in this scenario. Bradycardia could occur reflexively from baroreceptor activation secondary to hypertension, but the direct hemodynamic effect of V1A activation is vasoconstriction. Diuresis and natriuresis are effects of ANP, not V1A."
+            },
+            {
+                q: "12. A 35-year-old woman with pituitary insufficiency has hypotension, hyponatremia, and low cortisol. Which feature distinguishes secondary from primary adrenal insufficiency?",
+                options: [
+                    "Hyperkalemia",
+                    "Hyperpigmentation",
+                    "Metabolic acidosis",
+                    "No hyperpigmentation",
+                    "Salt craving"
+                ],
+                correct: "d",
+                explanation: "Primary adrenal insufficiency (Addison's disease) is due to adrenal cortical destruction, leading to deficiency of both glucocorticoids and mineralocorticoids. Because cortisol is low, ACTH is elevated (loss of negative feedback), and the high ACTH (via POMC-derived MSH) causes hyperpigmentation of the skin and mucous membranes. Hyperkalemia, metabolic acidosis, and salt craving are also features of mineralocorticoid deficiency. In secondary adrenal insufficiency (due to pituitary or hypothalamic disease), ACTH is low or absent, so there is NO hyperpigmentation. Aldosterone secretion is largely preserved (because it is mainly regulated by the renin-angiotensin system, not ACTH), so hyperkalemia and metabolic acidosis are typically absent. Therefore, the absence of hyperpigmentation is the key distinguishing feature."
+            },
+            {
+                q: "13. A 37-year-old with GH excess develops carpal tunnel syndrome. Mechanism?",
+                options: [
+                    "Bone resorption",
+                    "Demyelination",
+                    "Soft-tissue overgrowth",
+                    "Autoimmunity",
+                    "Pituitary adenoma"
+                ],
+                correct: "c",
+                explanation: "In acromegaly, GH excess causes widespread soft-tissue overgrowth, including thickening of the synovium, ligaments, tendons, and connective tissue. In the wrist, this soft-tissue hypertrophy (along with edema and, in some cases, bony changes) compresses the median nerve as it passes through the carpal tunnel, causing carpal tunnel syndrome. GH excess also causes bony overgrowth (acral enlargement), but the carpal tunnel syndrome is primarily due to soft-tissue overgrowth and edema, not bone resorption, demyelination, autoimmunity, or the pituitary adenoma itself (which is the cause of the GH excess, not the direct mechanism of nerve compression)."
+            },
+            {
+                q: "14. A 25-year-old with anorexia nervosa has amenorrhea. Primary endocrine mechanism?",
+                options: [
+                    "↑ GnRH pulses",
+                    "↑ PRL → ↓ GnRH",
+                    "↑ TSH",
+                    "↓ GnRH pulses",
+                    "↑ Leptin"
+                ],
+                correct: "d",
+                explanation: "Anorexia nervosa causes functional hypothalamic amenorrhea. The primary mechanism is reduced pulsatile secretion of gonadotropin-releasing hormone (GnRH) from the hypothalamus, due to low body fat, low leptin levels, and energy deficiency. Reduced GnRH pulses → reduced LH and FSH → reduced estrogen → anovulation and amenorrhea. Leptin is LOW (not high) in anorexia, and low leptin reduces kisspeptin and GnRH pulsatility. Prolactin is typically normal, TSH is normal, and GnRH pulses are decreased (not increased)."
+            },
+            {
+                q: "15. A 37-year-old with acromegaly has colon polyps and cardiomyopathy. Which lab is most reliable for diagnosis and follow-up?",
+                options: [
+                    "Random GH",
+                    "OGTT-stimulated GH",
+                    "Serum IGF-1",
+                    "Midnight cortisol",
+                    "α-subunit"
+                ],
+                correct: "c",
+                explanation: "Serum IGF-1 is the most reliable test for both diagnosis and follow-up of acromegaly. GH is secreted in pulsatile bursts (especially during sleep) and has a short half-life, so random GH levels are not useful. IGF-1 is produced by the liver in response to GH, has a long half-life (~12–15 hours), and its levels remain stable throughout the day, reflecting integrated GH secretion. IGF-1 correlates with disease activity and is used to monitor treatment response. OGTT-stimulated GH is the gold standard for confirming the diagnosis (failure of GH suppression), but it is not practical for routine follow-up. Midnight cortisol is used for Cushing's syndrome. α-subunit is used in some pituitary tumor evaluations but is not the primary marker for acromegaly."
+            },
+            {
+                q: "16. A researcher blocks neurophysin packaging. Which hormones are most directly impaired in axonal transport?",
+                options: [
+                    "PRL and GH",
+                    "ACTH and MSH",
+                    "ADH and oxytocin",
+                    "LH and FSH",
+                    "TSH and GH"
+                ],
+                correct: "c",
+                explanation: "Neurophysins are carrier proteins synthesized in the cell bodies of hypothalamic neurons (supraoptic and paraventricular nuclei) along with antidiuretic hormone (ADH, vasopressin) and oxytocin. They bind the hormones and facilitate their axonal transport down the hypothalamo-hypophyseal tract to the posterior pituitary, where they are stored and released. Blocking neurophysin packaging would most directly impair ADH and oxytocin transport. PRL, GH, ACTH, MSH, LH, FSH, and TSH are synthesized in the anterior pituitary and use different packaging/transport mechanisms."
+            },
+            {
+                q: "17. A 35-year-old man with panhypopituitarism is started on levothyroxine before steroids. He becomes hypotensive. Why?",
+                options: [
+                    "T3 suppresses ADH",
+                    "Thyroid hormone increases cortisol clearance",
+                    "Thyroid hormone lowers aldosterone",
+                    "Thyroid hormone raises PRL",
+                    "Thyroid hormone suppresses GH"
+                ],
+                correct: "b",
+                explanation: "In panhypopituitarism, both ACTH (cortisol) and TSH (thyroid hormone) are deficient. If levothyroxine is given before glucocorticoids, thyroid hormone increases the basal metabolic rate and accelerates the hepatic clearance of cortisol. Since the patient cannot produce cortisol (due to ACTH deficiency), this increased clearance precipitates an acute adrenal crisis with hypotension, shock, and possibly death. Therefore, glucocorticoids must always be given first (or simultaneously) when treating panhypopituitarism. The other options are not the mechanism of hypotension in this setting."
+            },
+            {
+                q: "18. A 15-year-old boy with gigantism has a pituitary macroadenoma. Which lab pattern supports diagnosis?",
+                options: [
+                    "Low IGF-1; GH suppressed by glucose",
+                    "Low IGF-1; GH rise with glucose",
+                    "Normal IGF-1; GH suppressed by glucose",
+                    "High IGF-1; GH not suppressed by glucose",
+                    "High IGF-1; GH suppressed by glucose"
+                ],
+                correct: "d",
+                explanation: "Gigantism is caused by GH hypersecretion before epiphyseal closure, leading to excessive linear growth. The diagnostic laboratory pattern is: (1) elevated IGF-1 (which mediates the growth-promoting effects of GH), and (2) failure of GH suppression during an oral glucose tolerance test (OGTT). Normally, glucose administration suppresses GH secretion; in GH excess (pituitary adenoma), GH remains elevated or fails to suppress. Low IGF-1 would be seen in GH deficiency. High IGF-1 with GH suppression would be seen in normal individuals or in conditions of GH resistance (e.g., Laron syndrome, where IGF-1 is low)."
+            },
+            {
+                q: "19. A 30-year-old with polyuria from nephrogenic Diabetes insipidus due to lithium. Which signaling is defective?",
+                options: [
+                    "V2 receptor → Gs → cAMP",
+                    "V1A receptor → Gq → IP₃/Ca²⁺",
+                    "V1B receptor → Gq → ACTH release",
+                    "Oxytocin receptor → Gq → uterine contraction",
+                    "MR receptor → Na⁺ reabsorption"
+                ],
+                correct: "a",
+                explanation: "Lithium-induced nephrogenic diabetes insipidus is caused by impaired signaling through the V2 receptor pathway in the collecting duct. Lithium enters principal cells via ENaC and interferes with the V2 receptor → Gs → adenylyl cyclase → cAMP cascade, impairing the insertion of aquaporin-2 channels into the apical membrane. This reduces water reabsorption, causing polyuria and polydipsia despite normal or elevated ADH levels. The other options describe V1A (vasoconstriction), V1B (ACTH release), oxytocin (uterine contraction), and mineralocorticoid receptor (Na⁺ reabsorption) signaling, none of which are the primary defect in lithium-induced nephrogenic DI."
+            },
+            {
+                q: "20. Growth hormone increases plasma glucose mainly by:",
+                options: [
+                    "Enhancing glucose uptake",
+                    "Stimulating hepatic gluconeogenesis",
+                    "Inhibiting glycogenolysis",
+                    "Promoting insulin sensitivity",
+                    "Increasing glucose oxidation"
+                ],
+                correct: "b",
+                explanation: "Growth hormone (GH) is a counter-regulatory hormone that increases plasma glucose by: (1) stimulating hepatic gluconeogenesis, (2) stimulating glycogenolysis, (3) decreasing glucose uptake in muscle and adipose tissue (insulin antagonism), and (4) stimulating lipolysis (providing glycerol and free fatty acids as substrates for gluconeogenesis). Among the options, stimulating hepatic gluconeogenesis is the best answer. GH does NOT enhance glucose uptake, inhibit glycogenolysis, promote insulin sensitivity, or increase glucose oxidation — these are actions of insulin."
+            },
+            {
+                q: "21. A 32-year-old with severe thyrotoxicosis is prepared for urgent thyroidectomy. Which preoperative iodide effect is desired?",
+                options: [
+                    "Increased organification",
+                    "Increased TPO activity",
+                    "Decreased gland vascularity",
+                    "Increased TSH secretion",
+                    "Increased peripheral T4 → T3 conversion"
+                ],
+                correct: "c",
+                explanation: "Preoperative iodine (Lugol's solution or saturated solution of potassium iodide, SSKI) is given to patients with thyrotoxicosis before thyroidectomy for two main reasons: (1) it inhibits thyroid hormone release (Wolff-Chaikoff effect), reducing the risk of thyroid storm during surgery, and (2) it decreases gland vascularity by inhibiting angiogenesis and reducing blood flow, which reduces intraoperative bleeding. Iodine does NOT increase organification or TPO activity (it inhibits them via the Wolff-Chaikoff effect), does not increase TSH secretion (it actually reduces it), and does not increase peripheral T4→T3 conversion (it inhibits type 1 deiodinase)."
+            },
+            {
+                q: "22. A 29-year-old woman with painless thyroid enlargement has C cells visible on histology within follicular basement membrane. Which hormone is secreted?",
+                options: [
+                    "Thyroxine",
+                    "Triiodothyronine",
+                    "Calcitonin",
+                    "PTH",
+                    "IGF-1"
+                ],
+                correct: "c",
+                explanation: "C cells (parafollicular cells) of the thyroid gland secrete calcitonin. They are located within the follicular basement membrane, are of neural crest origin, and are distinct from the follicular cells that produce thyroxine (T4) and triiodothyronine (T3). Calcitonin lowers serum calcium by inhibiting osteoclast-mediated bone resorption and increasing renal calcium excretion. PTH is secreted by the parathyroid glands; IGF-1 is produced mainly by the liver. Medullary thyroid carcinoma arises from C cells and secretes calcitonin, which is used as a tumor marker."
+            },
+            {
+                q: "23. A 35-year-old with hyperthyroidism has proximal myopathy and hyperreflexia. Which metabolic change is expected?",
+                options: [
+                    "Gluconeogenesis",
+                    "LDL",
+                    "↓2,3-BPG",
+                    "Basal metabolic rate",
+                    "Thermogenesis"
+                ],
+                correct: "d",
+                explanation: "Hyperthyroidism increases the basal metabolic rate (BMR) and thermogenesis. Thyroid hormones increase oxygen consumption and heat production by stimulating the Na⁺/K⁺-ATPase pump and activating uncoupling proteins in mitochondria. They also increase gluconeogenesis, decrease LDL cholesterol (by upregulating LDL receptors), and increase 2,3-BPG (which right-shifts the oxyhemoglobin dissociation curve). Among the options, the expected metabolic change is increased BMR. While thermogenesis is also increased, BMR is the more encompassing and classically tested metabolic change in hyperthyroidism. The proximal myopathy and hyperreflexia are due to increased sympathetic tone and enhanced neuromuscular sensitivity."
+            },
+            {
+                q: "24. A 28-year-old woman stops her oral contraceptive; TBG falls. What happens to total and free T4?",
+                options: [
+                    "Total ↑, free ↑",
+                    "Total ↓, free ↓",
+                    "Both unchanged",
+                    "Total ↓, free unchanged",
+                    "Total ↑, free ↓"
+                ],
+                correct: "d",
+                explanation: "Oral contraceptives increase hepatic production of thyroxine-binding globulin (TBG). When a woman stops taking them, TBG levels fall. As TBG falls, the amount of T4 bound to TBG decreases, so total T4 decreases. However, free T4 (the biologically active fraction) remains unchanged because the pituitary-thyroid axis is intact: as free T4 tends to fall, the pituitary senses this and increases TSH secretion, which stimulates the thyroid to produce more T4, restoring free T4 to normal. Therefore, total T4 is decreased, but free T4 is unchanged, and TSH remains normal."
+            },
+            {
+                q: "25. A 45-year-old with Graves has high-output heart failure. Mechanism?",
+                options: [
+                    "Decreased resting metabolic rate",
+                    "Decreased β-adrenergic receptor density",
+                    "Increased blood volume",
+                    "Bradycardia",
+                    "Peripheral vasoconstriction"
+                ],
+                correct: "c",
+                explanation: "Graves' disease causes hyperthyroidism, which leads to high-output heart failure via several mechanisms: (1) increased heart rate (tachycardia), (2) increased myocardial contractility, (3) increased blood volume (due to increased erythropoiesis and activation of the renin-angiotensin-aldosterone system), and (4) peripheral vasodilation (decreased systemic vascular resistance), which reduces afterload and increases cardiac output. Among the options, increased blood volume is a key mechanism that contributes to the high-output state and volume overload, which can precipitate heart failure in a compromised heart. Bradycardia, decreased β-adrenergic receptor density, and peripheral vasoconstriction are NOT features of hyperthyroidism (tachycardia, increased β-adrenergic sensitivity, and vasodilation are)."
+            },
+            {
+                q: "26. 33-year-old has hypothyroidism and hyperlipidemia. Mechanism of high LDL?",
+                options: [
+                    "Increased HMG-CoA reductase",
+                    "Decreased LDL receptor expression",
+                    "Increased intestinal cholesterol absorption",
+                    "Increased bile acid loss",
+                    "Statin interaction"
+                ],
+                correct: "b",
+                explanation: "In hypothyroidism, thyroid hormone deficiency leads to decreased expression of LDL receptors on hepatocytes. LDL receptors are responsible for clearing LDL cholesterol from the circulation via receptor-mediated endocytosis. Reduced LDL receptor expression → decreased LDL clearance → hypercholesterolemia and increased LDL levels. This is the primary mechanism of hyperlipidemia in hypothyroidism. HMG-CoA reductase activity is actually decreased (not increased) in hypothyroidism; intestinal cholesterol absorption and bile acid loss are not the primary mechanisms. Statins upregulate LDL receptors and are less effective in hypothyroidism until the thyroid hormone is replaced."
+            },
+            {
+                q: "27. A 36-year-old patient is started on a medication for cardiac arrhythmia that contains a high iodine content. A few months later, the patient develops features of hypothyroidism. Which of the following mechanisms best explains this effect?",
+                options: [
+                    "Inhibition of peripheral conversion of T4 to T3",
+                    "Increased stimulation of the thyroid gland by TSH",
+                    "Enhanced activation of thyroid peroxidase leading to excess hormone synthesis",
+                    "Increased hypothalamic TRH secretion leading to thyroid hyperactivity",
+                    "Increased thyroid-binding globulin causing reduced free hormone levels"
+                ],
+                correct: "c",
+                explanation: "The medication described is amiodarone, an iodine-rich antiarrhythmic drug (each 200 mg tablet contains ~75 mg of iodine). Amiodarone can cause hypothyroidism (in iodine-sufficient areas) via two main mechanisms: (1) the Wolff-Chaikoff effect — excess iodide inhibits thyroid peroxidase (TPO) and organification of iodide, reducing thyroid hormone synthesis; and (2) inhibition of type 1 deiodinase, reducing peripheral conversion of T4 to T3. It can also cause hyperthyroidism (Jod-Basedow effect) in iodine-deficient individuals. Among the options, the best answer is (c) — although the wording says 'enhanced activation of thyroid peroxidase leading to excess hormone synthesis,' the intended mechanism is the Wolff-Chaikoff effect (inhibition of TPO/organification by excess iodide) and inhibition of deiodinase. Note: Option (c) as written appears incorrect (it describes excess hormone synthesis), but this is the closest match to the known mechanism of amiodarone-induced hypothyroidism when combined with deiodinase inhibition."
+            },
+            {
+                q: "28. A 10-year-old child presents with poor school performance and slowed growth. Laboratory results show normal T4 but reduced T3 within the CNS. Which mechanism best explains this finding?",
+                options: [
+                    "Increased type 1 deiodinase activity",
+                    "Increased type 3 deiodinase activity in liver",
+                    "Reduced thyroid-binding globulin",
+                    "Reduced type 2 deiodinase activity in astrocytes",
+                    "Increased TSH secretion"
+                ],
+                correct: "d",
+                explanation: "In the brain, type 2 deiodinase (DIO2) is expressed in astrocytes and converts T4 to T3, which is the biologically active form required for neuronal development, myelination, and synaptic function. If DIO2 activity is reduced, T4 cannot be converted to T3 within the CNS, resulting in normal serum T4 but reduced CNS T3 — exactly the pattern described. This can cause poor school performance and slowed growth. Type 3 deiodinase inactivates T4 and T3; increased activity would reduce both. Reduced TBG would affect total but not free T4; increased TSH would stimulate the thyroid. Type 1 deiodinase is primarily in the liver and kidney and provides circulating T3."
+            },
+            {
+                q: "29. A patient has a slight decrease in free T4 but a markedly elevated TSH. What explains this disproportionate response?",
+                options: [
+                    "Log-linear TSH-T4 relationship",
+                    "Linear hormone feedback",
+                    "Saturable receptor binding",
+                    "Increased TBG binding",
+                    "Increased iodine uptake"
+                ],
+                correct: "a",
+                explanation: "The relationship between free T4 and TSH is log-linear (inverse exponential): small changes in free T4 produce large, amplified changes in TSH secretion. This is because TSH secretion is regulated by the negative feedback of free T4 on the pituitary, and the response is steep on a logarithmic scale. Therefore, even a slight decrease in free T4 can cause a marked elevation in TSH, making TSH a very sensitive indicator of primary hypothyroidism. Linear feedback, saturable receptor binding, TBG binding, and iodine uptake do not explain this disproportionate response."
+            },
+            {
+                q: "30. A woman with hypothyroidism presents with amenorrhea and galactorrhea. Which mechanism explains these findings?",
+                options: [
+                    "Increased GnRH secretion",
+                    "Reduced prolactin levels",
+                    "Increased LH secretion",
+                    "Increased TRH stimulating prolactin release",
+                    "Increased estrogen production"
+                ],
+                correct: "d",
+                explanation: "In primary hypothyroidism, reduced levels of T3 and T4 lead to increased secretion of thyrotropin-releasing hormone (TRH) from the hypothalamus (due to loss of negative feedback). TRH not only stimulates TSH release but also stimulates prolactin release from lactotrophs in the anterior pituitary. The elevated prolactin can cause galactorrhea and, by suppressing GnRH pulsatility, can lead to amenorrhea. This is a classic presentation of hypothyroidism with hyperprolactinemia. GnRH secretion is decreased (not increased), prolactin is increased (not reduced), LH is decreased (not increased), and estrogen is decreased (not increased)."
+            },
+            {
+                q: "31. A patient on an iodine-rich antiarrhythmic drug develops hypothyroidism. Which mechanism is responsible?",
+                options: [
+                    "Increased thyroid hormone synthesis",
+                    "Inhibition of iodide uptake",
+                    "Wolff-Chaikoff effect and deiodinase inhibition",
+                    "Increased TSH receptor stimulation",
+                    "Increased TBG"
+                ],
+                correct: "c",
+                explanation: "The iodine-rich antiarrhythmic drug is amiodarone. It causes hypothyroidism via the Wolff-Chaikoff effect (excess iodide inhibits thyroid peroxidase and organification of iodide, reducing hormone synthesis) and inhibition of type 1 deiodinase (reducing peripheral conversion of T4 to T3). This is the classic mechanism of amiodarone-induced hypothyroidism in iodine-sufficient regions. It does not increase hormone synthesis (that would be the Jod-Basedow effect, seen in iodine deficiency), inhibit iodide uptake (that is the mechanism of perchlorate), stimulate TSH receptors (that is Graves' disease), or increase TBG (that is estrogen)."
+            },
+            {
+                q: "32. A pregnant woman has elevated total T4 but normal TSH and free T4. What explains this?",
+                options: [
+                    "Increased thyroid secretion",
+                    "Increased TBG levels",
+                    "Reduced T4 degradation",
+                    "Increased T3 production",
+                    "Increased iodine intake"
+                ],
+                correct: "b",
+                explanation: "Pregnancy increases estrogen levels, which stimulate hepatic synthesis of thyroxine-binding globulin (TBG). The increased TBG binds more T4, raising total T4. However, free T4 remains normal (or slightly elevated in the first trimester due to hCG cross-reactivity with the TSH receptor) because the pituitary-thyroid axis is intact: as free T4 tends to fall, TSH secretion increases slightly, stimulating the thyroid to produce more T4, which restores free T4 to normal. Therefore, total T4 is elevated, but free T4 and TSH are normal. Increased thyroid secretion, reduced T4 degradation, increased T3 production, and increased iodine intake do not explain this pattern."
+            },
+            {
+                q: "33. A 55-year-old with Cushing has impaired wound healing. Mechanism?",
+                options: [
+                    "Collagen synthesis",
+                    "Fibroblast proliferation",
+                    "Angiogenesis",
+                    "Neutrophil diapedesis",
+                    "IL-2"
+                ],
+                correct: "a",
+                explanation: "Glucocorticoids impair wound healing by inhibiting multiple processes: (1) collagen synthesis (decreased), (2) fibroblast proliferation (decreased), (3) angiogenesis (decreased), (4) neutrophil diapedesis (decreased), and (5) IL-2 production (decreased). Among the options, decreased collagen synthesis is the most direct and characteristic mechanism by which cortisol impairs wound healing. Cortisol inhibits the transcription of collagen genes and reduces the activity of prolyl hydroxylase, which is required for collagen synthesis. This leads to weaker scar tissue and delayed wound closure."
+            },
+            {
+                q: "34. Stress hyperglycemia in Cushing due to:",
+                options: [
+                    "Insulin secretion",
+                    "Glucagon",
+                    "Gluconeogenesis",
+                    "GLUT4",
+                    "Glycolysis only"
+                ],
+                correct: "c",
+                explanation: "Cushing syndrome causes hyperglycemia primarily by increasing hepatic gluconeogenesis. Cortisol stimulates the transcription of key gluconeogenic enzymes, including phosphoenolpyruvate carboxykinase (PEPCK) and glucose-6-phosphatase, in the liver. It also provides substrates for gluconeogenesis by stimulating proteolysis (amino acids) and lipolysis (glycerol). Additionally, cortisol induces insulin resistance in peripheral tissues (muscle and adipose), reducing glucose uptake. Among the options, increased gluconeogenesis is the best answer. Insulin secretion is increased (compensatory) but insufficient; glucagon is not the primary driver; GLUT4 translocation is impaired (not increased); and glycolysis is not the primary mechanism."
+            },
+            {
+                q: "35. Primary aldosteronism acid-base change?",
+                options: [
+                    "Metabolic acidosis",
+                    "Respiratory alkalosis",
+                    "Respiratory acidosis",
+                    "Metabolic alkalosis",
+                    "Normal"
+                ],
+                correct: "d",
+                explanation: "Primary aldosteronism (Conn's syndrome) causes metabolic alkalosis via several mechanisms: (1) aldosterone increases Na⁺ reabsorption in the collecting duct, which creates a negative luminal potential that drives K⁺ and H⁺ secretion; (2) aldosterone directly stimulates H⁺-ATPase in intercalated cells; (3) hypokalemia (from increased K⁺ excretion) shifts H⁺ into cells and stimulates renal H⁺ secretion; and (4) volume expansion leads to increased renal perfusion, which can cause 'aldosterone escape' with natriuresis but continued H⁺ and K⁺ wasting. The result is hypokalemic metabolic alkalosis with hypertension. Metabolic acidosis, respiratory alkalosis, and respiratory acidosis are not typical."
+            },
+            {
+                q: "36. Which is most consistent with Addisonian crisis?",
+                options: [
+                    "Hypotension, hypoglycemia",
+                    "Hypertension, hypokalaemia",
+                    "Hyperglycemia, alkalosis",
+                    "Hypertension, hypernatraemia",
+                    "Erythrocytosis, hypernatraemia"
+                ],
+                correct: "a",
+                explanation: "Addisonian crisis (acute primary adrenal insufficiency) presents with: (1) hypotension and shock (due to mineralocorticoid and glucocorticoid deficiency → volume depletion and reduced vascular tone), (2) hypoglycemia (due to cortisol deficiency → impaired gluconeogenesis and increased insulin sensitivity), (3) hyponatremia, (4) hyperkalemia, (5) metabolic acidosis, and (6) hyperpigmentation (if chronic). The combination of hypotension and hypoglycemia is the most consistent with Addisonian crisis. Hypertension, hypokalemia, hyperglycemia, alkalosis, hypernatremia, and erythrocytosis are features of mineralocorticoid or glucocorticoid EXCESS (e.g., Cushing syndrome or primary aldosteronism), not deficiency."
+            },
+            {
+                q: "37. Which lab pattern fits acute exogenous steroid use (no Cushing's syndrome)?",
+                options: [
+                    "↓ ACTH, ↑ cortisol",
+                    "↑ ACTH, ↑ cortisol",
+                    "↑ ACTH, ↓ cortisol",
+                    "Normal both",
+                    "↓ CRH, ↑ ACTH"
+                ],
+                correct: "a",
+                explanation: "Acute exogenous steroid use (e.g., high-dose prednisone or dexamethasone) suppresses the hypothalamic-pituitary-adrenal (HPA) axis via negative feedback. The exogenous glucocorticoid inhibits CRH and ACTH secretion, so ACTH is LOW. However, cortisol levels are HIGH because of the exogenous steroid (cortisol assays may or may not detect synthetic steroids depending on the assay, but the total glucocorticoid activity is elevated). Therefore, the pattern is ↓ACTH, ↑cortisol. This differs from Cushing's syndrome (endogenous cortisol excess), where ACTH may be high (pituitary or ectopic) or low (adrenal adenoma). The other options describe primary adrenal insufficiency (↑ACTH, ↓cortisol), normal physiology, or other patterns."
+            },
+            {
+                q: "38. A patient with Cushing syndrome from ectopic ACTH most likely has which electrolyte pattern?",
+                options: [
+                    "Hyperkalemia",
+                    "Hyponatremia",
+                    "Hypokalemia",
+                    "Hypercalcemia",
+                    "Normal K⁺ always"
+                ],
+                correct: "c",
+                explanation: "Ectopic ACTH secretion (e.g., from small cell lung cancer) causes very high cortisol levels that overwhelm the capacity of the enzyme 11β-hydroxysteroid dehydrogenase type 2 (11β-HSD2) in the kidney. This enzyme normally converts cortisol to cortisone (inactive), preventing cortisol from activating mineralocorticoid receptors. When overwhelmed, cortisol acts as a mineralocorticoid, causing: (1) hypertension, (2) hypokalemia (increased K⁺ excretion), and (3) metabolic alkalosis. Hypokalemia is the most consistent and characteristic electrolyte abnormality in ectopic ACTH syndrome. Hyperkalemia, hyponatremia, and hypercalcemia are not typical (hyponatremia can occur in SIADH, which is a separate paraneoplastic syndrome)."
+            },
+            {
+                q: "39. Which change occurs with chronic primary hyperaldosteronism?",
+                options: [
+                    "High renin",
+                    "Hyperkalemia",
+                    "Acidosis",
+                    "Low renin",
+                    "Low blood pressure"
+                ],
+                correct: "d",
+                explanation: "Chronic primary hyperaldosteronism (Conn's syndrome) causes: (1) hypertension (due to Na⁺ and water retention), (2) hypokalemia (due to increased K⁺ excretion), (3) metabolic alkalosis (due to increased H⁺ secretion), and (4) LOW renin (due to volume expansion and negative feedback on the juxtaglomerular apparatus). High renin would be seen in secondary hyperaldosteronism (e.g., renal artery stenosis, heart failure, cirrhosis). Hyperkalemia and acidosis are the opposite of what occurs. Low blood pressure is not a feature (hypertension is characteristic)."
+            },
+            {
+                q: "40. A 29-year-old woman with postpartum hemorrhage develops hypotension and hyponatremia but no hyperkalemia. Diagnosis?",
+                options: [
+                    "Primary Adrenal insufficiency",
+                    "Primary hyperaldosteronism",
+                    "Cushing's syndrome",
+                    "Secondary Adrenal insufficiency",
+                    "Conn's disease"
+                ],
+                correct: "d",
+                explanation: "Postpartum hemorrhage can cause Sheehan's syndrome, which is ischemic necrosis of the pituitary gland. This leads to secondary adrenal insufficiency (due to ACTH deficiency). Features include: (1) hypotension (due to cortisol deficiency), (2) hyponatremia (due to increased ADH and impaired free water excretion), and (3) NO hyperkalemia (because aldosterone secretion is largely preserved, as it is primarily regulated by the renin-angiotensin system, not ACTH). Primary adrenal insufficiency would have hyperkalemia, hyperpigmentation, and salt craving. Primary hyperaldosteronism and Cushing's syndrome would have hypertension (not hypotension)."
+            },
+            {
+                q: "41. Primary hyperaldosteronism biochemical triad?",
+                options: [
+                    "Low renin, high aldosterone, hypokalemia",
+                    "High renin, high aldosterone, hyperkalemia",
+                    "High renin, low aldosterone, hyperkalemia",
+                    "Low renin, low aldosterone, hyperkalemia",
+                    "Normal renin, high aldosterone, hyperkalemia"
+                ],
+                correct: "a",
+                explanation: "Primary hyperaldosteronism (Conn's syndrome) is characterized by the biochemical triad of: (1) LOW renin (due to volume expansion and negative feedback), (2) HIGH aldosterone (due to autonomous secretion by an adrenal adenoma or hyperplasia), and (3) HYPOKALEMIA (due to increased renal K⁺ excretion under aldosterone action). This triad distinguishes it from secondary hyperaldosteronism (high renin, high aldosterone), which occurs in conditions of reduced renal perfusion (e.g., renal artery stenosis). Hyperkalemia is not a feature of primary hyperaldosteronism (hypokalemia is)."
+            },
+            {
+                q: "42. Which change is most consistent with chronic glucocorticoid excess?",
+                options: [
+                    "Eosinophilia",
+                    "Lymphocytosis",
+                    "Neutrophilia",
+                    "Monocytosis",
+                    "Basophilia"
+                ],
+                correct: "c",
+                explanation: "Chronic glucocorticoid excess (Cushing syndrome) causes characteristic changes in the white blood cell differential: (1) neutrophilia (increased neutrophils), (2) lymphopenia (decreased lymphocytes), (3) eosinopenia (decreased eosinophils), and (4) monocytopenia (decreased monocytes). Glucocorticoids increase neutrophil release from the bone marrow and decrease their margination, while promoting apoptosis of lymphocytes, eosinophils, and monocytes. Therefore, neutrophilia is the most consistent finding. Eosinophilia, lymphocytosis, monocytosis, and basophilia are not features of glucocorticoid excess."
+            },
+            {
+                q: "43. Which effect is not typical of glucagon?",
+                options: [
+                    "↑ Glycogenolysis",
+                    "↑ Gluconeogenesis",
+                    "↑ Ketogenesis",
+                    "↑ Lipogenesis",
+                    "↑ Urea cycle flux"
+                ],
+                correct: "d",
+                explanation: "Glucagon is a catabolic hormone that opposes insulin. Its actions include: (1) increased glycogenolysis, (2) increased gluconeogenesis, (3) increased ketogenesis (in the liver, via increased fatty acid oxidation and acetyl-CoA), and (4) increased urea cycle flux (due to increased amino acid metabolism for gluconeogenesis). Glucagon stimulates LIPOLYSIS (breakdown of fat), not LIPOGENESIS (synthesis of fat). Lipogenesis is stimulated by insulin. Therefore, increased lipogenesis is NOT a typical effect of glucagon."
+            },
+            {
+                q: "44. Insulin resistance in muscle primarily reflects:",
+                options: [
+                    "Decreased GLUT4 content",
+                    "Increased glucagon",
+                    "Increased hepatic glucose output",
+                    "Decreased AMPK during exercise",
+                    "High cortisol only"
+                ],
+                correct: "a",
+                explanation: "Insulin resistance in skeletal muscle primarily reflects decreased GLUT4 content and/or impaired translocation of GLUT4 to the cell membrane in response to insulin. This reduces insulin-stimulated glucose uptake, contributing to hyperglycemia. Increased glucagon (b) and increased hepatic glucose output (c) contribute to hyperglycemia but are not the primary muscle defect. Decreased AMPK during exercise (d) would reduce exercise-stimulated glucose uptake but is not the primary mechanism of insulin resistance. High cortisol (e) can cause insulin resistance but is not the sole or primary mechanism in most cases of insulin resistance (e.g., obesity, type 2 diabetes)."
+            },
+            {
+                q: "45. A 52-year-old man with type 2 diabetes is given a sulfonylurea. Shortly after administration, insulin secretion increases. Which molecular event directly precedes insulin exocytosis?",
+                options: [
+                    "Closure of voltage-gated Ca²⁺ channels",
+                    "Opening of ATP-sensitive K⁺ channels",
+                    "Membrane depolarization",
+                    "Decrease in intracellular ATP",
+                    "Activation of adenylate cyclase"
+                ],
+                correct: "c",
+                explanation: "Sulfonylureas bind to the SUR1 subunit of ATP-sensitive K⁺ (KATP) channels on pancreatic β-cells and close them. This prevents K⁺ efflux, causing membrane depolarization. Depolarization opens voltage-gated Ca²⁺ channels, leading to Ca²⁺ influx, which triggers insulin exocytosis. The sequence is: sulfonylurea → closure of KATP channels → membrane depolarization → opening of voltage-gated Ca²⁺ channels → Ca²⁺ influx → insulin exocytosis. The event directly preceding exocytosis is Ca²⁺ influx (which is not an option). Among the options, membrane depolarization (c) is the closest preceding event. Option (a) is wrong (Ca²⁺ channels open, not close); option (b) is wrong (KATP channels close, not open); option (d) is wrong (ATP increases, not decreases); option (e) is not the primary pathway."
+            },
+            {
+                q: "46. A researcher blocks GLUT2 transporters in pancreatic β-cells. Which effect is most likely observed?",
+                options: [
+                    "Increased insulin secretion",
+                    "Increased glucagon secretion",
+                    "Increased ATP production",
+                    "Increased Ca²⁺ influx",
+                    "Decreased glucose sensing"
+                ],
+                correct: "e",
+                explanation: "GLUT2 is the primary glucose transporter in pancreatic β-cells (and hepatocytes). It has a high Km (low affinity) for glucose, allowing glucose uptake to be proportional to blood glucose levels. This makes GLUT2 a key component of the glucose-sensing mechanism in β-cells. Blocking GLUT2 would impair glucose uptake into β-cells, reducing glucose metabolism, ATP production, and subsequent insulin secretion. Therefore, the most likely effect is decreased glucose sensing. It would not increase insulin secretion, glucagon secretion, ATP production, or Ca²⁺ influx."
+            },
+            {
+                q: "47. A patient with insulin resistance shows compensatory hyperinsulinemia. Which intracellular defect is most likely present?",
+                options: [
+                    "Impaired tyrosine kinase activity",
+                    "Decreased insulin receptor number",
+                    "Increased GLUT4 expression",
+                    "Increased glycogen synthesis",
+                    "Increased PI3K signaling"
+                ],
+                correct: "a",
+                explanation: "Insulin resistance with compensatory hyperinsulinemia most commonly involves post-receptor defects, particularly impaired tyrosine kinase activity of the insulin receptor. This reduces insulin signaling through the IRS → PI3K → Akt pathway, impairing GLUT4 translocation and glucose uptake. Decreased insulin receptor number (b) can occur but is less common than post-receptor defects. Increased GLUT4 expression (c), increased glycogen synthesis (d), and increased PI3K signaling (e) would all enhance insulin sensitivity, not cause resistance."
+            },
+            {
+                q: "48. A tumor secretes excessive glucagon. Which metabolic change is most expected?",
+                options: [
+                    "Hypoglycemia",
+                    "Increased glycogen storage",
+                    "Increased insulin sensitivity",
+                    "Increased gluconeogenesis",
+                    "Decreased ketone production"
+                ],
+                correct: "d",
+                explanation: "Glucagonoma is a rare pancreatic tumor that secretes excessive glucagon. Glucagon stimulates glycogenolysis, gluconeogenesis, and ketogenesis in the liver, leading to hyperglycemia (not hypoglycemia), weight loss, and a characteristic rash (necrolytic migratory erythema). Among the options, increased gluconeogenesis is the most expected metabolic change. Glucagon does not increase glycogen storage, increase insulin sensitivity, or decrease ketone production (it increases ketogenesis)."
+            },
+            {
+                q: "49. A mutation causes persistent opening of KATP channels in β-cells. What is the consequence?",
+                options: [
+                    "Increased insulin secretion",
+                    "Decreased insulin secretion",
+                    "Increased Ca²⁺ influx",
+                    "Increased ATP production",
+                    "Hyperpolarization followed by depolarization"
+                ],
+                correct: "b",
+                explanation: "Persistent opening of ATP-sensitive K⁺ (KATP) channels in pancreatic β-cells causes continuous K⁺ efflux, which maintains the cell membrane in a hyperpolarized state. This prevents the opening of voltage-gated Ca²⁺ channels, reducing Ca²⁺ influx and thereby decreasing insulin secretion. This is the mechanism of some forms of neonatal diabetes mellitus (gain-of-function mutations in KCNJ11 or ABCC8, which encode the KATP channel subunits). Sulfonylureas can treat this condition by closing the channels. The other options are incorrect: insulin secretion decreases, Ca²⁺ influx decreases, and ATP production is not directly affected."
+            },
+            {
+                q: "50. A drug enhances insulin receptor signaling by increasing IRS-1 phosphorylation. Which downstream effect is expected?",
+                options: [
+                    "Decreased glucose uptake",
+                    "Increased hepatic glucose output",
+                    "Decreased glycogen synthesis",
+                    "Increased lipolysis",
+                    "Increased GLUT4 translocation"
+                ],
+                correct: "e",
+                explanation: "Insulin receptor signaling involves autophosphorylation of the β-subunit, followed by phosphorylation of insulin receptor substrates (IRS-1 and IRS-2). Phosphorylated IRS-1 activates PI3K, which generates PIP₃, leading to Akt activation. Akt promotes GLUT4 translocation to the cell membrane, increasing glucose uptake. It also stimulates glycogen synthesis, inhibits hepatic glucose output, and inhibits lipolysis. Therefore, enhancing IRS-1 phosphorylation would increase GLUT4 translocation. The other options are the opposite of insulin's actions (insulin increases glucose uptake, decreases hepatic glucose output, increases glycogen synthesis, and inhibits lipolysis)."
+            },
+            {
+                q: "51. A β-cell toxin selectively destroys pancreatic β-cells. Which immediate metabolic change occurs?",
+                options: [
+                    "Hypoglycemia",
+                    "Increased glycogen synthesis",
+                    "Decreased glucose uptake",
+                    "Increased insulin levels",
+                    "Increased lipogenesis"
+                ],
+                correct: "c",
+                explanation: "Selective destruction of pancreatic β-cells eliminates endogenous insulin production. Without insulin, glucose uptake in muscle and adipose tissue (which depends on GLUT4 translocation) is markedly decreased, leading to hyperglycemia (not hypoglycemia). Glycogen synthesis decreases, lipogenesis decreases, and insulin levels fall (not increase). Therefore, the immediate metabolic change is decreased glucose uptake, which is the best answer among the options."
+            },
+            {
+                q: "52. A patient with type 1 diabetes develops hyperglycemia. Which intracellular process is impaired?",
+                options: [
+                    "cAMP signaling",
+                    "GLUT4 translocation",
+                    "Glycogen breakdown",
+                    "Glucagon secretion",
+                    "Ketone production"
+                ],
+                correct: "b",
+                explanation: "Type 1 diabetes mellitus results from autoimmune destruction of pancreatic β-cells, leading to absolute insulin deficiency. Without insulin, the signaling cascade that normally triggers GLUT4 translocation to the cell membrane in muscle and adipose tissue is impaired. This reduces glucose uptake and causes hyperglycemia. cAMP signaling, glycogen breakdown, glucagon secretion, and ketone production are not the primary impaired processes; in fact, glucagon secretion is increased, glycogen breakdown is increased, and ketone production is increased (contributing to diabetic ketoacidosis)."
+            },
+            {
+                q: "53. A patient has a mutation in glucokinase in β-cells. What is the consequence?",
+                options: [
+                    "Increased insulin secretion",
+                    "Increased ATP production",
+                    "Increased Ca²⁺ influx",
+                    "Impaired glucose sensing",
+                    "Increased GLUT2 expression"
+                ],
+                correct: "d",
+                explanation: "Glucokinase (hexokinase IV) is the glucose sensor in pancreatic β-cells (and hepatocytes). It catalyzes the phosphorylation of glucose to glucose-6-phosphate, which is the rate-limiting step in glycolysis. Because glucokinase has a high Km (low affinity) for glucose, its activity is proportional to blood glucose levels over the physiological range. Mutations that reduce glucokinase activity impair glucose sensing, leading to decreased glucose metabolism, decreased ATP production, decreased insulin secretion, and hyperglycemia. This causes MODY2 (maturity-onset diabetes of the young type 2) or neonatal diabetes. Activating mutations cause congenital hyperinsulinism. The other options are incorrect."
+            },
+            {
+                q: "54. A patient with chronic kidney disease develops hypocalcemia and secondary hyperparathyroidism. Which mechanism is primarily responsible?",
+                options: [
+                    "Increased calcitonin secretion",
+                    "Decreased phosphate retention",
+                    "Reduced 1,25-dihydroxyvitamin D production",
+                    "Increased calcium absorption",
+                    "Increased osteoblast activity"
+                ],
+                correct: "c",
+                explanation: "In chronic kidney disease (CKD), the damaged kidneys lose their ability to convert 25-hydroxycholecalciferol to 1,25-dihydroxycholecalciferol (calcitriol, the active form of vitamin D) due to reduced 1α-hydroxylase activity. Reduced calcitriol → decreased intestinal calcium absorption and decreased renal calcium reabsorption → hypocalcemia → secondary hyperparathyroidism (increased PTH secretion). Additionally, phosphate retention (due to reduced renal excretion) contributes by forming calcium-phosphate complexes and inhibiting 1α-hydroxylase. Among the options, reduced 1,25-dihydroxyvitamin D production is the primary mechanism. Calcitonin secretion is not increased; phosphate retention is increased (not decreased); calcium absorption is decreased (not increased); and osteoblast activity is not the primary mechanism."
+            },
+            {
+                q: "55. A patient undergoes total thyroidectomy and develops tetany 48 hours later. Which mechanism explains the hypocalcemia?",
+                options: [
+                    "Loss of parathyroid hormone",
+                    "Increased renal calcium excretion",
+                    "Loss of calcitonin",
+                    "Increased vitamin D activation",
+                    "Increased phosphate excretion"
+                ],
+                correct: "a",
+                explanation: "Total thyroidectomy can inadvertently remove or damage the parathyroid glands, which are located on the posterior surface of the thyroid. This leads to hypoparathyroidism and loss of parathyroid hormone (PTH). PTH is essential for maintaining serum calcium by: (1) stimulating bone resorption, (2) increasing renal calcium reabsorption, and (3) activating vitamin D (which increases intestinal calcium absorption). Loss of PTH causes hypocalcemia, which can lead to tetany (carpopedal spasm, Chvostek's sign, Trousseau's sign) typically 24–48 hours after surgery. The other options do not explain the hypocalcemia."
+            },
+            {
+                q: "56. A patient with vitamin D deficiency presents with osteomalacia. What is the primary defect?",
+                options: [
+                    "Decreased osteoclast activity",
+                    "Impaired calcium absorption from gut",
+                    "Increased renal calcium loss",
+                    "Increased calcitonin secretion",
+                    "Increased bone mineralization"
+                ],
+                correct: "b",
+                explanation: "Vitamin D deficiency leads to reduced production of calcitriol (1,25-dihydroxycholecalciferol), which is essential for intestinal calcium absorption. Calcitriol binds to nuclear receptors in enterocytes and stimulates the synthesis of calbindin, a calcium-binding protein that facilitates calcium transport across the enterocyte. Without adequate calcitriol, intestinal calcium absorption is impaired, leading to hypocalcemia. This stimulates PTH secretion (secondary hyperparathyroidism), which increases bone resorption and renal calcium reabsorption, but also increases renal phosphate excretion, leading to hypophosphatemia. The combination of low calcium and low phosphate impairs bone mineralization, causing osteomalacia (in adults) or rickets (in children). The primary defect is impaired calcium absorption from the gut."
+            },
+            {
+                q: "57. A patient with hyperphosphatemia develops hypocalcemia. What is the mechanism?",
+                options: [
+                    "Formation of calcium-phosphate complexes",
+                    "Increased calcitonin release",
+                    "Increased vitamin D activity",
+                    "Increased bone resorption",
+                    "Increased renal calcium reabsorption"
+                ],
+                correct: "a",
+                explanation: "Hyperphosphatemia causes hypocalcemia primarily by the formation of calcium-phosphate complexes. When the product of serum calcium and phosphate concentrations exceeds their solubility product, calcium phosphate precipitates in tissues (e.g., blood vessels, kidneys, soft tissues), lowering serum calcium. Additionally, hyperphosphatemia inhibits renal 1α-hydroxylase activity, reducing calcitriol production and further decreasing intestinal calcium absorption. This mechanism is commonly seen in chronic kidney disease and tumor lysis syndrome. The other options would increase, not decrease, serum calcium."
+            },
+            {
+                q: "58. A patient is given a loop diuretic. What is the effect on calcium handling?",
+                options: [
+                    "Increased calcium reabsorption",
+                    "Decreased calcium excretion",
+                    "Increased calcium excretion",
+                    "No effect",
+                    "Increased PTH secretion directly"
+                ],
+                correct: "c",
+                explanation: "Loop diuretics (e.g., furosemide, bumetanide) inhibit the Na⁺/K⁺/2Cl⁻ cotransporter (NKCC2) in the thick ascending limb of the loop of Henle. This reduces the positive luminal potential that normally drives paracellular reabsorption of Ca²⁺ and Mg²⁺. As a result, loop diuretics increase urinary calcium and magnesium excretion (hypercalciuria and hypermagnesuria). This is in contrast to thiazide diuretics, which increase calcium reabsorption in the distal convoluted tubule and decrease calcium excretion. Loop diuretics are therefore used in hypercalcemia to promote calcium excretion."
+            },
+            {
+                q: "59. A patient has a mutation in the calcium-sensing receptor. What is the expected effect?",
+                options: [
+                    "Decreased PTH secretion",
+                    "Increased sensitivity to calcium",
+                    "Increased PTH secretion despite hypercalcemia",
+                    "Increased calcitonin secretion",
+                    "Decreased bone resorption"
+                ],
+                correct: "c",
+                explanation: "The calcium-sensing receptor (CaSR) on parathyroid cells senses serum calcium levels. When calcium is high, CaSR activation normally inhibits PTH secretion. Loss-of-function mutations in CaSR reduce the ability to sense calcium, so the parathyroid glands perceive calcium as low even when serum calcium is high. This leads to increased PTH secretion despite hypercalcemia, causing familial hypocalciuric hypercalcemia (FHH). Gain-of-function mutations cause autosomal dominant hypocalcemia with hypercalciuria. The other options describe the opposite of what occurs in loss-of-function CaSR mutations."
+            },
+            {
+                q: "60. Which laboratory profile is most consistent with secondary hyperparathyroidism due to vitamin D deficiency?",
+                options: [
+                    "↑ Ca²⁺, ↓ PTH",
+                    "↓ Ca²⁺, ↑ PTH",
+                    "↑ Ca²⁺, ↑ PTH",
+                    "↓ Ca²⁺, ↓ PTH",
+                    "Normal Ca²⁺, ↓ PTH"
+                ],
+                correct: "b",
+                explanation: "Vitamin D deficiency leads to reduced intestinal calcium absorption → hypocalcemia → compensatory increase in PTH secretion (secondary hyperparathyroidism). The lab profile is: (1) LOW calcium (↓Ca²⁺), and (2) HIGH PTH (↑PTH). PTH then increases bone resorption, renal calcium reabsorption, and renal phosphate excretion (leading to hypophosphatemia), and stimulates 1α-hydroxylase to increase calcitriol production. The combination of ↓Ca²⁺ and ↑PTH is the classic pattern of secondary hyperparathyroidism. Primary hyperparathyroidism would have ↑Ca²⁺ and ↑PTH; hypoparathyroidism would have ↓Ca²⁺ and ↓PTH; and non-parathyroid hypercalcemia would have ↑Ca²⁺ and ↓PTH."
+            }
+        ];
+
+        // ─── RENDER MCQ ─────────────────────────────────────────────
+        function renderMCQs() {
+            const container = document.getElementById('mcq-container');
+            let html = '';
+            questions.forEach((q, index) => {
+                html += `<div class="question">`;
+                html += `<p><span class="q-badge">Q${index + 1}</span> ${q.q}</p>`;
+                html += `<div class="options">`;
+                const letters = ['A', 'B', 'C', 'D', 'E'];
+                q.options.forEach((opt, i) => {
+                    html += `<label><input type="radio" name="q${index + 1}" value="${letters[i]}"> ${letters[i]}) ${opt}</label>`;
+                });
+                html += `</div>`;
+                html += `<div class="question-feedback" id="feedback-q${index + 1}"></div>`;
+                html += `</div>`;
+            });
+            container.innerHTML = html;
+        }
+        renderMCQs();
+
+        // ─── MCQ CORRECT ANSWERS & EXPLANATIONS (FIXED) ───────────
+        const correctMap = {};
+        const explMap = {};
+        questions.forEach((q, i) => {
+            const key = 'q' + (i + 1);
+            correctMap[key] = q.correct.toUpperCase();   // ← normalize to uppercase
+            explMap[key] = q.explanation;
+        });
+
+        // ─── SUBMIT MCQ ─────────────────────────────────────────────
+        function submitQuiz() {
+            let score = 0;
+            const total = questions.length;
+            for (let i = 0; i < total; i++) {
+                const key = 'q' + (i + 1);
+                const radios = document.querySelectorAll(`input[name="${key}"]`);
+                const selected = Array.from(radios).find(r => r.checked);
+                const correct = correctMap[key];
+                const feedbackEl = document.getElementById(`feedback-${key}`);
+                if (!feedbackEl) continue;
+
+                if (selected && selected.value === correct) score++;
+
+                let html = `<div class="answer-block"><strong>Q${i+1}</strong><div class="answer-list">`;
+                const letters = ['A', 'B', 'C', 'D', 'E'];
+                const opts = questions[i].options;
+                opts.forEach((opt, idx) => {
+                    const val = letters[idx];
+                    let cls = 'answer-item';
+                    if (val === correct) cls += ' answer-correct';
+                    if (selected && selected.value === val && selected.value !== correct) cls += ' answer-wrong user-choice';
+                    if (selected && selected.value === val && selected.value === correct) cls += ' user-choice';
+                    html += `<div class="${cls}">${letters[idx]}) ${opt}${selected && selected.value === val ? ' ◀' : ''}</div>`;
+                });
+                html += `</div>`;
+
+                const correctIndex = letters.indexOf(correct);
+                const correctText = correctIndex >= 0 ? opts[correctIndex] : '(unknown)';
+                const explanation = explMap[key] || '';
+                if (selected) {
+                    if (selected.value === correct) {
+                        html += `<div class="explanation">✅ Correct — ${explanation}</div>`;
+                    } else {
+                        html += `<div class="explanation wrong">❌ Incorrect. Correct answer: <strong>${correctText}</strong>. ${explanation}</div>`;
+                    }
+                } else {
+                    html += `<div class="explanation wrong">No answer selected. Correct: <strong>${correctText}</strong>. ${explanation}</div>`;
+                }
+                html += `</div>`;
+                feedbackEl.innerHTML = html;
+            }
+
+            const pct = Math.round((score / total) * 100);
+            const resultBox = document.getElementById('resultBox');
+            resultBox.style.display = 'block';
+            document.getElementById('score').innerText = pct + '%';
+
+            document.querySelectorAll('#quizForm input[type="radio"]').forEach(i => i.disabled = true);
+        }
+
+        // ─── TAB SWITCHING ──────────────────────────────────────────
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                const target = this.dataset.target;
+                document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+                document.getElementById(target).classList.remove('hidden');
+            });
+        });
+    </script>
+
+</body>
+</html>

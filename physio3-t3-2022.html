@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2022 Physiology Test 3 – 3rd Year</title>
+    <style>
+        :root {
+            --primary: #1a6b6b;
+            --accent: #2ea8a0;
+            --dark: #0f2a2a;
+            --light: #f4f8f7;
+            --radius: 12px;
+            --shadow: 0 4px 14px rgba(0, 30, 30, 0.08);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #edf3f2;
+            color: var(--dark);
+            min-height: 100vh;
+            padding-top: 72px;
+        }
+        header {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            background: linear-gradient(145deg, var(--primary), var(--dark));
+            color: #fff; padding: 0.6rem 0;
+            box-shadow: 0 4px 18px rgba(0, 20, 20, 0.25);
+        }
+        .header-inner {
+            max-width: 1000px; margin: 0 auto; padding: 0 1.5rem;
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 0.3rem;
+        }
+        .logo { display: flex; align-items: center; gap: 0.6rem; }
+        .logo i { font-size: 1.5rem; color: #8dd9d4; }
+        .logo h1 { font-size: 1.15rem; font-weight: 700; letter-spacing: 0.2px; }
+        .badge {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 0.2rem 1rem; border-radius: 40px;
+            font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+            color: #b3e6e0; letter-spacing: 0.5px;
+        }
+        .container { max-width: 920px; margin: 0 auto; padding: 0 1.2rem 2.5rem; }
+        .tab-bar { display: flex; gap: 0.5rem; margin: 0.5rem 0 1.5rem 0; flex-wrap: wrap; }
+        .tab-btn {
+            background: #dce8e8; border: none; padding: 0.5rem 1.8rem;
+            border-radius: 40px; font-weight: 600; font-size: 0.95rem;
+            color: var(--dark); cursor: pointer; transition: 0.2s;
+        }
+        .tab-btn:hover { background: #c0d6d6; }
+        .tab-btn.active {
+            background: var(--primary); color: #fff;
+            box-shadow: 0 2px 10px rgba(26, 107, 107, 0.25);
+        }
+        .tab-panel { display: block; }
+        .tab-panel.hidden { display: none; }
+        .section-title {
+            font-size: 1.25rem; font-weight: 700; color: var(--primary);
+            margin: 0 0 0.8rem 0; padding-bottom: 0.4rem;
+            border-bottom: 3px solid rgba(26, 107, 107, 0.18);
+            display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;
+        }
+        .section-title .count {
+            font-size: 0.7rem; font-weight: 600; background: var(--primary);
+            color: #fff; border-radius: 40px; padding: 0 0.7rem; line-height: 1.7;
+        }
+        .section-subtitle { color: #4f6e6e; font-size: 0.9rem; margin-bottom: 1rem; }
+        .question {
+            background: #ffffff; border-radius: var(--radius);
+            padding: 1.1rem 1.2rem 0.2rem 1.2rem; margin-bottom: 1rem;
+            box-shadow: var(--shadow); border: 1px solid rgba(26, 107, 107, 0.05);
+            transition: box-shadow 0.2s;
+        }
+        .question:hover { box-shadow: 0 6px 20px rgba(0, 30, 30, 0.07); }
+        .question .q-badge {
+            display: inline-block; background: var(--primary); color: #fff;
+            border-radius: 40px; padding: 0 0.65rem; font-size: 0.7rem;
+            font-weight: 700; line-height: 1.6; margin-right: 0.4rem;
+        }
+        .question p { font-weight: 600; font-size: 0.97rem; margin-bottom: 0.4rem; color: var(--dark); }
+        .options label {
+            display: block; background: #fafcfc; border: 1px solid #dde8e8;
+            border-radius: 7px; padding: 0.4rem 0.85rem; margin-top: 0.4rem;
+            cursor: pointer; transition: all 0.15s; font-weight: 450; font-size: 0.92rem;
+        }
+        .options label:hover { background: #e8f5f4; border-color: var(--accent); }
+        .options input[type="radio"] { margin-right: 0.5rem; accent-color: var(--primary); transform: scale(1.04); }
+        .question-feedback { margin-top: 0.8rem; padding: 0.4rem 0 0.1rem 0; border-top: 1px dashed #dce6e6; }
+        .answer-block strong { display: block; margin-bottom: 3px; color: var(--primary); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.3px; }
+        .answer-list { display: flex; flex-direction: column; gap: 2px; }
+        .answer-item {
+            padding: 4px 10px; border-radius: 5px; border: 1px solid #e4edec;
+            background: #ffffff; font-weight: 500; font-size: 0.88rem;
+        }
+        .answer-correct { background: #e8f7ef; border-color: #a8d8c0; color: #0a4f3a; }
+        .answer-wrong { background: #fde9ea; border-color: #f5b8b8; color: #8a1f2b; }
+        .user-choice { outline: 2px dashed rgba(0, 0, 0, 0.06); }
+        .explanation {
+            margin-top: 5px; padding: 8px 13px; border-radius: 7px;
+            background: #f0f8f6; color: #065f4a; font-size: 0.88rem;
+            line-height: 1.55; border-left: 4px solid var(--accent);
+        }
+        .explanation.wrong { background: #fdf1f1; color: #7a1f1f; border-left-color: #e68080; }
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            color: #fff; border: none; padding: 0.55rem 1.8rem;
+            border-radius: var(--radius); font-weight: 600; font-size: 0.95rem;
+            cursor: pointer; transition: transform 0.15s, box-shadow 0.2s;
+            box-shadow: 0 4px 14px rgba(26, 107, 107, 0.25);
+        }
+        .btn:hover { transform: scale(1.02); box-shadow: 0 6px 24px rgba(26, 107, 107, 0.32); }
+        .btn:active { transform: scale(0.96); }
+        .btn-sm { padding: 0.35rem 1rem; font-size: 0.82rem; border-radius: 8px; }
+        .btn-outline {
+            background: #ffffff; color: var(--primary);
+            border: 2px solid var(--primary); box-shadow: none;
+        }
+        .btn-outline:hover { background: #e8f5f4; box-shadow: 0 2px 8px rgba(26, 107, 107, 0.15); }
+        .submit-wrap { text-align: center; margin: 1.5rem 0 1.8rem; }
+        .result {
+            margin-top: 1.5rem; padding: 1.5rem 1.5rem 0.8rem;
+            background: #eaf6f4; border-radius: var(--radius);
+            text-align: center; display: none; border: 1px solid #b8dbd6;
+        }
+        .result h3 { font-size: 1.1rem; font-weight: 600; color: var(--dark); }
+        .score { font-size: 2.4rem; font-weight: 800; color: var(--primary); margin: 0.1rem 0 0.2rem; }
+        .text-muted { color: #4f6e6e; font-size: 0.9rem; }
+        .hidden { display: none !important; }
+        .model-answer {
+            margin-top: 0.8rem; padding: 0.9rem 1.1rem; border-radius: 8px;
+            background: #f7fbfa; border: 1px solid #c8e2de;
+            border-left: 5px solid var(--accent);
+            font-size: 0.9rem; line-height: 1.6; color: #0a3d38;
+        }
+        .model-answer h4 {
+            font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.4px;
+            color: var(--primary); margin-bottom: 0.4rem;
+        }
+        .model-answer ul, .model-answer ol { margin-left: 1.2rem; margin-top: 0.3rem; }
+        .model-answer li { margin-bottom: 0.2rem; }
+        .text-answer-wrap { margin-top: 0.6rem; }
+        .text-answer-wrap textarea {
+            width: 100%; min-height: 90px; border: 1px solid #d5e3e2;
+            border-radius: 8px; padding: 0.6rem 0.8rem; font-family: inherit;
+            font-size: 0.9rem; line-height: 1.5; resize: vertical;
+            background: #fdfefe; color: var(--dark);
+        }
+        .text-answer-wrap textarea:focus {
+            outline: none; border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(46, 168, 160, 0.12);
+        }
+        .reveal-wrap { margin-top: 0.6rem; }
+        .tf-row {
+            display: flex; align-items: center; gap: 1rem;
+            padding: 0.35rem 0.7rem; border-radius: 6px;
+            margin-top: 0.35rem; background: #fafcfc;
+            border: 1px solid #dde8e8; font-size: 0.9rem; font-weight: 500;
+            flex-wrap: wrap;
+        }
+        .tf-row .tf-label { flex: 1; min-width: 200px; }
+        .tf-row .tf-options { display: flex; gap: 1rem; }
+        .tf-row .tf-options label {
+            display: inline-flex; align-items: center; gap: 0.3rem;
+            cursor: pointer; font-weight: 600; padding: 0.15rem 0.5rem;
+            border-radius: 6px; border: 1px solid transparent;
+        }
+        .tf-row .tf-options label:hover { background: #e8f5f4; }
+        .tf-row .tf-options input[type="radio"] { accent-color: var(--primary); }
+        .tf-feedback { margin-top: 0.5rem; padding: 0.3rem 0 0 0; }
+        .tf-item-result {
+            display: inline-block; padding: 2px 8px; border-radius: 5px;
+            margin: 2px 3px 2px 0; font-size: 0.82rem; font-weight: 600;
+        }
+        .tf-correct { background: #e8f7ef; color: #0a4f3a; border: 1px solid #a8d8c0; }
+        .tf-wrong { background: #fde9ea; color: #8a1f2b; border: 1px solid #f5b8b8; }
+        @media (max-width: 700px) {
+            body { padding-top: 68px; }
+            .logo h1 { font-size: 0.95rem; }
+            .header-inner { padding: 0 1rem; flex-direction: column; align-items: stretch; gap: 0.2rem; }
+            .badge { align-self: flex-start; }
+            .question { padding: 0.9rem 0.9rem 0.1rem 0.9rem; }
+            .section-title { font-size: 1.05rem; }
+            .score { font-size: 2rem; }
+            .btn { padding: 0.5rem 1.2rem; font-size: 0.85rem; }
+            .tab-btn { padding: 0.4rem 1.2rem; font-size: 0.85rem; }
+            .tf-row { flex-direction: column; align-items: flex-start; }
+        }
+        @media (max-width: 420px) {
+            .logo h1 { font-size: 0.8rem; }
+            .options label { font-size: 0.85rem; padding: 0.35rem 0.65rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-inner">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+                <h1>2022 Physiology Test 3 – 3rd Year</h1>
+            </div>
+            <span class="badge"><i class="fas fa-pencil-alt"></i> &nbsp;Sections A, B &amp; C</span>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+
+            <div class="tab-bar">
+                <button class="tab-btn active" data-target="A">📝 Section A – MCQs</button>
+                <button class="tab-btn" data-target="TF">✅ True / False</button>
+                <button class="tab-btn" data-target="B">✍️ Section B – Structured</button>
+            </div>
+
+            <!-- ============ SECTION A ============ -->
+            <div id="panel-A" class="tab-panel">
+                <div class="section-title">
+                    <i class="fas fa-list-ul"></i> Section A – Multiple Choice Questions
+                    <span class="count">18</span>
+                </div>
+                <p class="section-subtitle">Select the best answer for each question, then click <strong>Submit Section A</strong> below.</p>
+                <form id="form-A">
+                    <div id="container-A"></div>
+                    <div class="submit-wrap">
+                        <button type="button" class="btn" onclick="submitSectionA()">
+                            <i class="fas fa-check-circle"></i> Submit Section A
+                        </button>
+                    </div>
+                </form>
+                <div class="result" id="result-A">
+                    <h3><i class="fas fa-chart-simple"></i> Your Score – Section A</h3>
+                    <div class="score" id="score-A">0</div>
+                    <p class="text-muted">Review the feedback below each question.</p>
+                </div>
+            </div>
+
+            <!-- ============ TRUE / FALSE ============ -->
+            <div id="panel-TF" class="tab-panel hidden">
+                <div class="section-title">
+                    <i class="fas fa-check-double"></i> Multiple True / False
+                    <span class="count">7 questions · 28 items</span>
+                </div>
+                <p class="section-subtitle">Mark each statement as <strong>True (T)</strong> or <strong>False (F)</strong>. Each question = 4 marks (1 mark per item). Click <strong>Submit True/False</strong> when done.</p>
+                <form id="form-TF">
+                    <div id="container-TF"></div>
+                    <div class="submit-wrap">
+                        <button type="button" class="btn" onclick="submitSectionTF()">
+                            <i class="fas fa-check-circle"></i> Submit True/False
+                        </button>
+                    </div>
+                </form>
+                <div class="result" id="result-TF">
+                    <h3><i class="fas fa-chart-simple"></i> Your Score – True/False</h3>
+                    <div class="score" id="score-TF">0</div>
+                    <p class="text-muted">Review the feedback below each question.</p>
+                </div>
+            </div>
+
+            <!-- ============ SECTION B ============ -->
+            <div id="panel-B" class="tab-panel hidden">
+                <div class="section-title">
+                    <i class="fas fa-pen"></i> Section B – Structured Questions
+                    <span class="count">6</span>
+                </div>
+                <p class="section-subtitle">
+                    Answer each question in the space provided. Write your answer, then click
+                    <strong>Show Model Answer</strong> to reveal a mark-appropriate model answer.
+                </p>
+                <div id="container-B"></div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+    /* =====================================================================
+       SECTION A — 18 MCQs (exact text from 2022 Test 3)
+       ===================================================================== */
+    const sectionA = [
+    {
+        q: `Humans got 31 pairs of spinal nerves. Function of Posterior (dorsal) ramus of a spinal nerve.`,
+        options: [`motor`, `sensory`, `typical`, `atypical`, `mixed`],
+        correct: `E`,
+        explanation: `The posterior (dorsal) ramus of a spinal nerve is a MIXED nerve — it contains both motor (efferent) and sensory (afferent) fibres. After the spinal nerve divides into anterior and posterior rami, each ramus carries both types of fibres. The posterior ramus supplies the deep muscles and skin of the back. It is described as "typical" in the sense that it has the standard composition of a mixed spinal nerve, but the functional classification asked for here is "mixed." The anterior ramus is also mixed.`
+    },
+    {
+        q: `Function of Anterior (ventral) ramus of a spinal nerve.`,
+        options: [`motor`, `sensory`, `typical`, `atypical`, `mixed`],
+        correct: `E`,
+        explanation: `The anterior (ventral) ramus, like the posterior ramus, is a MIXED nerve containing both motor and sensory fibres. It supplies the limbs, the anterior and lateral body wall, and the superficial muscles and skin of the trunk. In the thoracic region, the anterior rami form the intercostal nerves; in other regions, they form the major nerve plexuses (cervical, brachial, lumbar, sacral). The anterior ramus is described as "typical" in the sense that it is a standard mixed nerve, but functionally it is mixed.`
+    },
+    {
+        q: `Functional deficit seen in Ulnar nerve palsy:`,
+        options: [
+            `inability to abduct or adduct toes`,
+            `inability to abduct or adduct fingers`,
+            `inability to chew`,
+            `inability to think`,
+            `inability to talk`
+        ],
+        correct: `B`,
+        explanation: `Ulnar nerve palsy (e.g., from injury at the elbow or wrist) causes weakness and wasting of the intrinsic muscles of the hand, leading to an INABILITY TO ABDUCT OR ADDUCT THE FINGERS. The classic signs are a "claw hand" (hyperextension at the metacarpophalangeal joints and flexion at the interphalangeal joints of the 4th and 5th fingers), loss of finger abduction/adduction (interossei), loss of thumb adduction (adductor pollicis), and Froment's sign (weak thumb-index pinch). The ulnar nerve supplies most of the intrinsic hand muscles (except the thenar muscles and the first two lumbricals, which are median nerve). Inability to abduct or adduct toes would involve the foot (e.g., peroneal or tibial nerve); chewing involves the trigeminal nerve; thinking involves the brain; and talking involves the larynx (recurrent laryngeal nerve).`
+    },
+    {
+        q: `Dermatomes are used in applied neurophysiology studies to track the level of lesion in the spinal cord injuries. Spinal nerve with no dermatome is`,
+        options: [`T1`, `T2`, `C1`, `C2`, `L2`],
+        correct: `C`,
+        explanation: `A dermatome is the area of skin supplied by a single spinal nerve. The C1 spinal nerve has NO DERMATOME because it does not have a cutaneous sensory component — it is primarily a motor nerve supplying the suboccipital muscles (rectus capitis anterior and lateralis). The first cervical nerve (C1) is atypical in this respect. T1 (medial forearm), T2 (axilla/upper chest), C2 (posterior scalp), and L2 (anterior thigh) all have well-defined dermatomes. This is clinically important because the absence of a C1 dermatome means that sensory testing cannot be used to assess the C1 level.`
+    },
+    {
+        q: `Skeletal muscles in humans got internal protective mechanisms that assist in balance of activity. This controls muscle tension by causing muscle relaxation when muscle tension is great.`,
+        options: [
+            `Spinal reflex`,
+            `Stretch reflex`,
+            `Tendon reflex`,
+            `Corneal reflex`,
+            `Defecation reflex`
+        ],
+        correct: `C`,
+        explanation: `The TENDON REFLEX (also called the inverse stretch reflex, Golgi tendon reflex, or clasp-knife reflex) is the protective mechanism that controls muscle tension by causing muscle relaxation when tension becomes excessive. The Golgi tendon organ, located in the tendon, detects the tension generated by muscle contraction. When tension is too high, the Group Ib afferent from the Golgi tendon organ activates an inhibitory interneuron in the spinal cord, which inhibits the alpha motor neuron of the same muscle, causing it to relax. This protects the muscle and tendon from injury. The stretch reflex causes contraction in response to stretch; the corneal reflex is a protective eye reflex; and the defecation reflex is a visceral reflex.`
+    },
+    {
+        q: `Sitting in the first bench of lecture theater, a student started eating bread and drink mojo. Hunger and thirst control centers are located in`,
+        options: [
+            `Thalamus`,
+            `Medulla oblongata`,
+            `Knee joint`,
+            `Hypothalamus`,
+            `Occipital area`
+        ],
+        correct: `D`,
+        explanation: `The HYPOTHALAMUS is the primary control center for hunger and thirst. Specifically, the lateral hypothalamus (feeding center) stimulates hunger, while the ventromedial hypothalamus (satiety center) signals fullness. The thirst center is located in the lateral preoptic area and the supraoptic region of the hypothalamus, which detects increases in plasma osmolality and decreases in blood volume. The thalamus is a sensory relay station; the medulla oblongata controls vital reflexes (respiration, heart rate); the knee joint is a joint; and the occipital area is the visual cortex.`
+    },
+    {
+        q: `Vice Registrar was walking to the podium on the day of Induction ceremony. Unknowingly stepping on small stapler pin on floor can initiate reflex in his same foot on same side.`,
+        options: [`Withdrawal`, `Flexor`, `Peripheral`, `Central`, `Hyper`],
+        correct: `A`,
+        explanation: `Stepping on a sharp object (stapler pin) initiates the WITHDRAWAL REFLEX (also called the flexor reflex) — a polysynaptic reflex that causes the stimulated limb to withdraw from the noxious stimulus. It involves activation of flexor motor neurons and inhibition of extensor motor neurons in the SAME limb (ipsilateral). The withdrawal reflex is the protective response that removes the foot from the painful stimulus. The flexor reflex is another name for the same response, but "Withdrawal" is the term that best describes the functional outcome of the reflex. This is distinct from the crossed extensor reflex, which occurs in the contralateral limb.`
+    },
+    {
+        q: `Kenya and Nigeria got a few medals at Common Wealth Games held in Britain 2022. Unknowingly stepping on gross big nail near the floor of swimming pool can initiate reflex in foot`,
+        options: [`Withdrawal`, `Flexor`, `Crossed extensor`, `Central`, `Hyper`],
+        correct: `C`,
+        explanation: `Stepping on a large nail with one foot initiates the CROSSED EXTENSOR REFLEX. This is a polysynaptic reflex in which the stimulated limb (the one stepping on the nail) withdraws (flexor reflex), while the CONTRALATERAL limb extends to support the body weight and maintain balance. The crossed extensor reflex involves a commissural interneuron that crosses to the opposite side of the spinal cord, activating extensor motor neurons and inhibiting flexor motor neurons in the contralateral limb. This is essential for maintaining posture and preventing a fall when one limb is withdrawn from a painful stimulus.`
+    },
+    {
+        q: `As per news channels, US sponsored research labs are found to be running in Ukraine since decades. Experimental animal, in which the spinal cord is transected, frequently in the neck so that most of the cord still remains functional.`,
+        options: [
+            `Lab animal`,
+            `Phantom`,
+            `Spinal animal`,
+            `Decerebrate animal`,
+            `Domestic animal`
+        ],
+        correct: `C`,
+        explanation: `A SPINAL ANIMAL is an experimental preparation in which the spinal cord is transected, usually in the cervical region (often between C1 and C2), so that the brainstem and higher centers are disconnected from the spinal cord below the lesion. Most of the spinal cord remains functional, but all supraspinal control is lost. Spinal animals are used to study spinal reflexes, spinal shock, and the intrinsic properties of spinal circuits. A decerebrate animal, by contrast, has the brainstem transected at the level of the midbrain (mesencephalon), preserving the medulla and pons. "Phantom" refers to phantom limb sensation; "lab animal" and "domestic animal" are non-specific terms.`
+    },
+    {
+        q: `A myriad number of neurophysiology textbooks were published in early nineteenth century through lab based experiments on animals. An experimental animal in which the brain stem is transected in the middle to lower part of the mesencephalon.`,
+        options: [
+            `Lab animal`,
+            `Phantom`,
+            `Spinal animal`,
+            `Decerebrate animal`,
+            `Domestic animal`
+        ],
+        correct: `D`,
+        explanation: `A DECEREBRATE ANIMAL is an experimental preparation in which the brainstem is transected at the level of the midbrain (mesencephalon) — typically between the superior and inferior colliculi. This disconnects the cerebral cortex from the brainstem and spinal cord but preserves the medulla, pons, and spinal cord. Decerebrate animals exhibit characteristic decerebrate rigidity (extensor posturing) due to the unopposed activity of the reticulospinal and vestibulospinal tracts. This preparation is used to study the role of the brainstem in motor control, posture, and reflexes. A spinal animal has the transection lower, in the cervical spinal cord.`
+    },
+    {
+        q: `Delay of conducting the impulses across a reflex arc is called ___ property.`,
+        options: [
+            `Synaptic cleft`,
+            `Plasticity`,
+            `Elasticity`,
+            `Synaptic delay`,
+            `Malleability`
+        ],
+        correct: `D`,
+        explanation: `SYNAPTIC DELAY is the time taken for the impulse to be transmitted across a chemical synapse — approximately 0.5 milliseconds. This delay is due to the time required for Ca²⁺ influx into the presynaptic terminal, neurotransmitter release, diffusion across the synaptic cleft, binding to postsynaptic receptors, and generation of the postsynaptic potential. Synaptic delay is a fundamental property of chemical synapses and is longer than the delay across an electrical synapse (gap junction), which is nearly instantaneous. "Synaptic cleft" is the anatomical space; "plasticity" refers to the ability of synapses to change strength; "elasticity" and "malleability" are not relevant terms.`
+    },
+    {
+        q: `Mr Lucifer from India, got a black belt in the championship of kung Fu. Muscles contract reflexly with the contraction of agonist and relaxation of an antagonists. This property is called`,
+        options: [
+            `Excitation`,
+            `Inhibition`,
+            `Reciprocal innervation`,
+            `Unidirectional`,
+            `Specificity`
+        ],
+        correct: `C`,
+        explanation: `RECIPROCAL INNERVATION (also called reciprocal inhibition) is the property by which the contraction of an agonist muscle is accompanied by the relaxation of its antagonist. This is essential for smooth, coordinated movement. In the stretch reflex, for example, the Group Ia afferent from the agonist muscle activates the alpha motor neuron of the agonist (via a monosynaptic connection) and simultaneously activates an inhibitory interneuron that inhibits the alpha motor neuron of the antagonist. This ensures that the antagonist does not oppose the movement. The other options do not describe this phenomenon: excitation and inhibition are individual processes; unidirectional refers to the one-way transmission at synapses; and specificity refers to receptor specificity.`
+    },
+    {
+        q: `Humans got internal natural pain killers in the brain. An example for Opiate substances secreted in brain`,
+        options: [
+            `Cytokines`,
+            `Leucotrienes`,
+            `Interferon`,
+            `Beta endorphin`,
+            `Glutamate`
+        ],
+        correct: `D`,
+        explanation: `BETA-ENDORPHIN is an endogenous opioid peptide (endorphin) that acts as a natural pain killer in the brain. It is produced by the cleavage of pro-opiomelanocortin (POMC) in the pituitary and hypothalamus. Beta-endorphin binds to μ-opioid receptors, producing analgesia, euphoria, and modulation of pain perception. Other endogenous opioids include enkephalins (met- and leu-enkephalin) and dynorphins. Cytokines are immune signaling molecules; leukotrienes are inflammatory mediators; interferon is an antiviral protein; and glutamate is an excitatory neurotransmitter, not an opioid.`
+    },
+    {
+        q: `After listening to physiology lecture by Dr Pulapula, a girl student sitting near last bench of Bluish lecture theater suffered severe headache. Headache can be caused due to`,
+        options: [
+            `Stretching of mesentery`,
+            `Intussusception`,
+            `Injury to meninges, venous sinuses`,
+            `Muscle relaxing`,
+            `Prolonged sitting`
+        ],
+        correct: `C`,
+        explanation: `Headache is commonly caused by INJURY TO OR TRACTION ON THE MENINGES AND VENOUS SINUSES, as well as the cerebral arteries and dural sinuses. These structures are innervated by pain-sensitive fibres (from the trigeminal nerve and upper cervical nerves). Stretching or inflammation of the meninges (e.g., meningitis), traction on the venous sinuses, or distension of cerebral arteries can all cause headache. The brain parenchyma itself is insensitive to pain. Stretching of the mesentery causes abdominal pain; intussusception causes bowel obstruction pain; muscle relaxation does not cause headache; and prolonged sitting may cause musculoskeletal discomfort but is not the primary mechanism of headache described in this context.`
+    },
+    {
+        q: `Morphine is used medically as`,
+        options: [
+            `Non narcotic analgesic`,
+            `Pain inducer`,
+            `Pain reliever`,
+            `Pain modulator`,
+            `Narcotic analgesic`
+        ],
+        correct: `E`,
+        explanation: `Morphine is classified as a NARCOTIC ANALGESIC. It is a potent opioid agonist that binds to μ-opioid receptors in the CNS and gastrointestinal tract, producing profound analgesia (pain relief), sedation, euphoria, and respiratory depression. It is used clinically for the management of severe pain (e.g., cancer pain, post-operative pain, myocardial infarction). The term "narcotic" refers to its sedative and addictive properties. "Non-narcotic analgesic" refers to drugs like NSAIDs and paracetamol; "pain inducer" is incorrect; "pain reliever" is a general term but "narcotic analgesic" is the precise pharmacological classification; and "pain modulator" is a broader category.`
+    },
+    {
+        q: `Loss of pain sensation due to destruction of nerves is seen in`,
+        options: [
+            `Tuberculosis`,
+            `Leprosy`,
+            `Meningitis`,
+            `Herpes virus`,
+            `Neuritis`
+        ],
+        correct: `B`,
+        explanation: `LEPROSY (Hansen's disease), caused by Mycobacterium leprae, characteristically causes destruction of peripheral nerves, leading to loss of pain and temperature sensation, particularly in the hands and feet. The bacillus has a predilection for Schwann cells and peripheral nerves, causing demyelination and nerve destruction. This loss of pain sensation is the basis for the classic painless skin lesions, burns, and injuries seen in leprosy. Tuberculosis, meningitis, herpes virus, and neuritis can also affect nerves but leprosy is the classic cause of pain loss due to nerve destruction.`
+    },
+    {
+        q: `Pain due to cholecystitis is most commonly referred to`,
+        options: [
+            `Left shoulder`,
+            `Right shoulder`,
+            `Left groin`,
+            `Right groin`,
+            `Left leg`
+        ],
+        correct: `B`,
+        explanation: `Pain from cholecystitis (inflammation of the gallbladder) is most commonly referred to the RIGHT SHOULDER (and the right scapular region). This is because the gallbladder is innervated by visceral afferent fibres that enter the spinal cord at the T5–T9 levels (via the sympathetic splanchnic nerves). The phrenic nerve (C3–C5) innervates the diaphragm, which is irritated by the inflamed gallbladder, and the pain is referred to the dermatomes of C3–C5 — the shoulder and supraclavicular region. This is a classic example of referred pain from a visceral organ to a somatic structure sharing the same spinal segment.`
+    },
+    {
+        q: `After watching some funny videos of a lecturer on social media [facebook, Taktok], that person unknowingly formed an irrational opinion on the lecturer & started gossiping. This kind of brain thinking is called as`,
+        options: [
+            `Super brain`,
+            `Cleverness`,
+            `Impetus`,
+            `Unconscious Bias/stereotyping`
+        ],
+        correct: `D`,
+        explanation: `UNCONSCIOUS BIAS (also called implicit bias or stereotyping) refers to the automatic, unintentional associations and judgments that people make about others based on factors such as appearance, social media presence, or group membership. These biases operate outside conscious awareness and can lead to irrational opinions and behaviors, such as gossiping based on a superficial impression formed from social media. The other options do not describe this phenomenon: "super brain" is not a scientific term; "cleverness" is the opposite of irrational thinking; and "impetus" refers to a driving force, not a cognitive bias.`
+    }
+    ];
+
+    /* =====================================================================
+       TRUE / FALSE — 7 questions, 28 items (exact text from 2022 Test 3)
+       ===================================================================== */
+    const sectionTF = [
+    {
+        q: `Mr Lucifer, a veteran soldier took retirement from services after suffering battle injuries in Tigray region. Injuries of brachial plexus can result in`,
+        items: [
+            { label: `Erb-Duchenne palsy (waiter's tip)`, correct: `T`,
+              explanation: `TRUE. Erb-Duchenne palsy (upper brachial plexus injury, C5–C6) produces the classic "waiter's tip" posture — the arm hangs adducted and internally rotated, with the forearm extended and the wrist flexed. This occurs from excessive separation of the head and shoulder (e.g., birth trauma, falls, or battle injuries).` },
+            { label: `Wrist drop`, correct: `T`,
+              explanation: `TRUE. Wrist drop is caused by injury to the radial nerve (which is part of the posterior cord of the brachial plexus). The radial nerve supplies the extensors of the wrist and fingers; its injury causes inability to extend the wrist (wrist drop).` },
+            { label: `Foot drop`, correct: `F`,
+              explanation: `FALSE. Foot drop is caused by injury to the common peroneal (fibular) nerve, which is part of the LUMBOSACRAL plexus (L4–L5, S1–S2), not the brachial plexus. Foot drop is a lower limb sign.` },
+            { label: `Finger twister`, correct: `F`,
+              explanation: `FALSE. "Finger twister" is not a recognized clinical condition. Finger deformities from brachial plexus injuries include claw hand (ulnar nerve), ape hand (median nerve), and wrist drop (radial nerve), but "finger twister" is not a standard term.` }
+        ]
+    },
+    {
+        q: `Following are the parasympathetic effects`,
+        items: [
+            { label: `Decrease in heart rate`, correct: `T`,
+              explanation: `TRUE. Parasympathetic stimulation of the heart (via the vagus nerve) acts on M2 muscarinic receptors in the SA node, AV node, and atria, causing bradycardia (decreased heart rate), decreased conduction velocity, and decreased atrial contractility.` },
+            { label: `Dilation of visceral blood vessels`, correct: `T`,
+              explanation: `TRUE. Parasympathetic stimulation causes vasodilation of visceral blood vessels, particularly in the gastrointestinal tract and erectile tissue (via M3 receptors and nitric oxide). This increases blood flow to the digestive organs.` },
+            { label: `Increased digestive function`, correct: `T`,
+              explanation: `TRUE. Parasympathetic stimulation increases gastrointestinal motility, secretion of digestive enzymes and acid, and promotes digestion and absorption — the "rest and digest" response.` },
+            { label: `Pain in fingers`, correct: `F`,
+              explanation: `FALSE. Parasympathetic activation does not cause pain in the fingers. Pain is mediated by nociceptive pathways (somatic and visceral afferents), not by the parasympathetic nervous system.` }
+        ]
+    },
+    {
+        q: `A reflex arc includes:`,
+        items: [
+            { label: `Sensory neuron`, correct: `T`,
+              explanation: `TRUE. The sensory neuron (afferent limb) is the first component of the reflex arc. It carries the impulse from the receptor to the integrating center.` },
+            { label: `Integrating center – spinal cord`, correct: `T`,
+              explanation: `TRUE. The integrating center of a spinal reflex arc is the spinal cord (specifically, the grey matter), where the sensory neuron synapses with interneurons and/or motor neurons.` },
+            { label: `Motor neuron`, correct: `T`,
+              explanation: `TRUE. The motor neuron (efferent limb) is the third component of the reflex arc. It carries the impulse from the integrating center to the effector (muscle or gland).` },
+            { label: `Basal ganglion`, correct: `F`,
+              explanation: `FALSE. The basal ganglia are not part of a reflex arc. They are deep grey matter structures involved in the modulation of voluntary movement, not in the basic reflex arc. A reflex arc consists of a receptor, sensory neuron, integrating center (spinal cord or brainstem), motor neuron, and effector.` }
+        ]
+    },
+    {
+        q: `Reflexes causing muscle spasm are`,
+        items: [
+            { label: `Resulting from a Broken Bone`, correct: `F`,
+              explanation: `FALSE. A broken bone does not directly cause a reflex muscle spasm as its primary effect. Muscle spasm can occur secondary to pain and guarding, but the fracture itself is not a reflex.` },
+            { label: `Peritonitis`, correct: `F`,
+              explanation: `FALSE. Peritonitis causes abdominal rigidity (guarding) due to inflammation and reflex muscle contraction, but this is a pathological response to inflammation, not a primary reflex causing muscle spasm.` },
+            { label: `Muscle Cramps`, correct: `T`,
+              explanation: `TRUE. Muscle cramps are involuntary, painful contractions of skeletal muscle that occur due to abnormal spinal reflex activity, dehydration, electrolyte imbalance, or overuse. They involve hyperexcitability of the motor neurons and reflex arcs.` },
+            { label: `Broken teeth`, correct: `F`,
+              explanation: `FALSE. Broken teeth do not cause reflex muscle spasms. Tooth pain may cause jaw muscle guarding, but this is not a reflex spasm of the type described.` }
+        ]
+    },
+    {
+        q: `Astronauts from China travel to International space station in 2021, from planet earth. Effects of Microgravity of space on spinal cord excitability (reflexes) will be`,
+        items: [
+            { label: `Increased`, correct: `F`,
+              explanation: `FALSE. Microgravity does not increase spinal cord excitability. It actually leads to decreased excitability due to reduced sensory input and lack of gravitational load on the musculoskeletal system.` },
+            { label: `Decreased`, correct: `T`,
+              explanation: `TRUE. Microgravity leads to DECREASED spinal cord excitability and reflexes (hyporeflexia). This is due to reduced proprioceptive input from muscle spindles (which are unloaded in microgravity), muscle atrophy, and changes in the central nervous system's processing of sensory information.` },
+            { label: `No change`, correct: `F`,
+              explanation: `FALSE. There are significant changes in spinal cord excitability in microgravity — reflexes are diminished, and astronauts experience muscle wasting and altered proprioception.` },
+            { label: `unknown`, correct: `F`,
+              explanation: `FALSE. The effects of microgravity on spinal cord excitability have been well-documented through spaceflight research — it is known to decrease.` }
+        ]
+    },
+    {
+        q: `Examples for Motor tics include`,
+        items: [
+            { label: `eye blinking`, correct: `T`,
+              explanation: `TRUE. Eye blinking is a common simple motor tic — a sudden, rapid, recurrent, non-rhythmic movement.` },
+            { label: `facial twitches`, correct: `T`,
+              explanation: `TRUE. Facial twitches (grimacing, nose twitching) are simple motor tics.` },
+            { label: `shoulder shrugging`, correct: `T`,
+              explanation: `TRUE. Shoulder shrugging is a simple motor tic involving the shoulder muscles.` },
+            { label: `pelvic cramps`, correct: `F`,
+              explanation: `FALSE. Pelvic cramps are not a motor tic. Motor tics are sudden, rapid, recurrent, non-rhythmic motor movements (e.g., blinking, shrugging, head jerking). Pelvic cramps are muscle spasms, not tics.` }
+        ]
+    },
+    {
+        q: `Children with stereotypic movement disorder engage in repetitive, seemingly driven behaviors, such as`,
+        items: [
+            { label: `Waving`, correct: `T`,
+              explanation: `TRUE. Waving (hand flapping/waving) is a common stereotypic movement in children with stereotypic movement disorder, especially those with autism spectrum disorder.` },
+            { label: `body rocking`, correct: `T`,
+              explanation: `TRUE. Body rocking is a classic stereotypic behavior — repetitive, rhythmic, and seemingly driven.` },
+            { label: `head-banging`, correct: `T`,
+              explanation: `TRUE. Head-banging is a stereotypic behavior that can cause self-injury and is seen in stereotypic movement disorder.` },
+            { label: `biting other people`, correct: `F`,
+              explanation: `FALSE. Biting other people is an aggressive behavior, not a stereotypic movement. Stereotypic movements are self-directed, repetitive, and rhythmic (e.g., rocking, head-banging, hand waving).` }
+        ]
+    }
+    ];
+
+    /* =====================================================================
+       SECTION B — Structured Questions (mark-appropriate model answers)
+       ===================================================================== */
+    const sectionB = [
+    {
+        q: `Teaching skills are different from communication skills in a classroom or community hall. Specify two functional differences between Broca's area and Wernicke's area in relation to brain activity. Mention the deficits seen in these disorders. [3 marks]`,
+        model: `<h4>Model Answer (3 marks)</h4>
+        <ul>
+            <li><strong>Broca's area (frontal lobe, dominant hemisphere):</strong> Responsible for the MOTOR PRODUCTION of speech (articulation and fluency). Damage → <strong>Broca's (expressive) aphasia</strong> — patient understands language but cannot speak fluently; speech is non-fluent, effortful, and telegraphic.</li>
+            <li><strong>Wernicke's area (temporal lobe, dominant hemisphere):</strong> Responsible for LANGUAGE COMPREHENSION (understanding spoken and written language). Damage → <strong>Wernicke's (receptive) aphasia</strong> — patient speaks fluently but makes no sense; comprehension is severely impaired; speech is fluent but meaningless ("word salad").</li>
+            <li><strong>Key difference:</strong> Broca's = production (output); Wernicke's = comprehension (input).</li>
+        </ul>`
+    },
+    {
+        q: `Heavy weight lifter from India suffered wrist injury at Common Wealth Games 2022, losing Gold medal. Elucidate your understanding on mechanism of crossed extensor reflex in terms of protective function? [5 marks]`,
+        model: `<h4>Model Answer (5 marks)</h4>
+        <ul>
+            <li><strong>Definition:</strong> The crossed extensor reflex is a polysynaptic reflex in which a noxious stimulus to one limb causes flexion (withdrawal) of that limb and simultaneous extension of the contralateral limb.</li>
+            <li><strong>Afferent limb:</strong> Nociceptive afferents (Aδ and C fibres) from the injured limb enter the dorsal horn.</li>
+            <li><strong>Central connections:</strong> Excitatory interneurons activate ipsilateral flexor motor neurons (withdrawal) and, via a commissural interneuron that crosses the anterior white commissure, activate contralateral extensor motor neurons.</li>
+            <li><strong>Efferent response:</strong> Ipsilateral limb flexes (withdraws from the painful stimulus), while the contralateral limb extends to support the body weight and maintain balance.</li>
+            <li><strong>Protective function:</strong> Prevents the individual from falling when one limb is withdrawn from a painful stimulus; maintains posture and balance during the withdrawal response.</li>
+            <li><strong>Clinical relevance:</strong> In the weight lifter's case, a wrist injury could trigger a crossed extensor response in the lower limbs to maintain balance, but the primary injury is local.</li>
+        </ul>`
+    },
+    {
+        q: `DISCUSS any FIVE (5) functions of Parasympathetic receptors with EXAMPLES [5 marks]`,
+        model: `<h4>Model Answer (5 marks)</h4>
+        <ul>
+            <li><strong>1. Cardiac inhibition (M2 receptors):</strong> Decreases heart rate (bradycardia) and conduction velocity. <em>Example:</em> Vagal stimulation slows the heart.</li>
+            <li><strong>2. Increased gastrointestinal activity (M3 receptors):</strong> Increases motility, secretion of digestive enzymes, and promotes peristalsis. <em>Example:</em> Post-prandial digestion.</li>
+            <li><strong>3. Pupillary constriction (M3 receptors):</strong> Causes miosis (constriction of the pupil) and accommodation for near vision. <em>Example:</em> Focusing on a near object.</li>
+            <li><strong>4. Increased glandular secretion (M3 receptors):</strong> Stimulates salivation, lacrimation, and bronchial secretion. <em>Example:</em> Salivation during eating.</li>
+            <li><strong>5. Vasodilation of visceral blood vessels (M3 receptors):</strong> Increases blood flow to the digestive organs and erectile tissue. <em>Example:</em> Penile erection via nitric oxide.</li>
+            <li><strong>6. Bronchoconstriction (M3 receptors):</strong> Constricts bronchial smooth muscle, increasing airway resistance. <em>Example:</em> Asthma exacerbation.</li>
+        </ul>`
+    },
+    {
+        q: `Stephen Dakar, a 70 year old veteran visited hospital having trouble in daily routine muscle activities. Compare and contrast the findings in patients having UMN Vs LMN lesions [5 marks]`,
+        model: `<h4>Model Answer (5 marks)</h4>
+        <table style="width:100%; border-collapse:collapse; font-size:0.85rem;">
+            <tr style="background:#e8f5f4;"><th style="border:1px solid #c8e2de; padding:4px; text-align:left;">Feature</th><th style="border:1px solid #c8e2de; padding:4px; text-align:left;">UMN Lesion</th><th style="border:1px solid #c8e2de; padding:4px; text-align:left;">LMN Lesion</th></tr>
+            <tr><td style="border:1px solid #c8e2de; padding:4px;">1. Type of paralysis</td><td style="border:1px solid #c8e2de; padding:4px;">Spastic paralysis</td><td style="border:1px solid #c8e2de; padding:4px;">Flaccid paralysis</td></tr>
+            <tr><td style="border:1px solid #c8e2de; padding:4px;">2. Atrophy</td><td style="border:1px solid #c8e2de; padding:4px;">Minimal (disuse atrophy)</td><td style="border:1px solid #c8e2de; padding:4px;">Severe, rapid atrophy</td></tr>
+            <tr><td style="border:1px solid #c8e2de; padding:4px;">3. Deep tendon reflexes</td><td style="border:1px solid #c8e2de; padding:4px;">Hyperreflexia</td><td style="border:1px solid #c8e2de; padding:4px;">Hyporeflexia / areflexia</td></tr>
+            <tr><td style="border:1px solid #c8e2de; padding:4px;">4. Babinski sign</td><td style="border:1px solid #c8e2de; padding:4px;">Present (positive)</td><td style="border:1px solid #c8e2de; padding:4px;">Absent</td></tr>
+            <tr><td style="border:1px solid #c8e2de; padding:4px;">5. Superficial reflexes</td><td style="border:1px solid #c8e2de; padding:4px;">Absent (abdominal, cremasteric)</td><td style="border:1px solid #c8e2de; padding:4px;">Present</td></tr>
+            <tr><td style="border:1px solid #c8e2de; padding:4px;">6. Fasciculations</td><td style="border:1px solid #c8e2de; padding:4px;">Absent</td><td style="border:1px solid #c8e2de; padding:4px;">Present</td></tr>
+        </table>`
+    },
+    {
+        q: `Discuss succinctly the physiological concept [various hypotheses] of REFERRED PAIN. Give examples. [8 marks]`,
+        model: `<h4>Model Answer (8 marks)</h4>
+        <ul>
+            <li><strong>Definition:</strong> Referred pain is pain perceived at a location other than the site of the painful stimulus/organ. It is a classic feature of visceral pain.</li>
+            <li><strong>1. Convergence theory (most widely accepted):</strong> Visceral and somatic afferents converge on the same second-order neurons in the dorsal horn. The brain, having learned to associate that pathway with the somatic site, misinterprets the visceral pain as coming from the somatic area. <em>Example:</em> Cardiac ischemia → left arm/shoulder pain (T1–T5 dermatomes).</li>
+            <li><strong>2. Facilitation theory:</strong> Visceral afferents sensitize the dorsal horn neurons, making them more responsive to somatic input from the same dermatome.</li>
+            <li><strong>3. Embryological theory:</strong> Pain is referred to the dermatome corresponding to the embryological origin of the organ. <em>Example:</em> Diaphragmatic irritation (C3–C5) → shoulder tip pain.</li>
+            <li><strong>4. Convergence-projection theory:</strong> The same second-order neuron receives both visceral and somatic input, but the brain projects the sensation to the somatic site because that is where the pathway normally originates.</li>
+            <li><strong>Examples:</strong> (a) Cholecystitis → right shoulder tip pain (phrenic nerve, C3–C5). (b) Myocardial infarction → left arm, jaw, and epigastric pain. (c) Appendicitis → periumbilical pain initially (T10 dermatome). (d) Renal colic → loin to groin pain.</li>
+            <li><strong>Clinical significance:</strong> Referred pain is important in diagnosis — it allows localization of visceral pathology based on the dermatomal pattern of pain.</li>
+        </ul>`
+    },
+    {
+        q: `Explain briefly the neural mechanism underlying the therapeutic application of Diazepam and Barbiturates in the management of CNS synaptic activity. [4 marks]`,
+        model: `<h4>Model Answer (4 marks)</h4>
+        <ul>
+            <li><strong>Diazepam (benzodiazepine):</strong> Binds to a specific site on the GABA-A receptor (the benzodiazepine site) and increases the FREQUENCY of Cl⁻ channel opening in response to GABA. This enhances GABA-mediated inhibition, producing anxiolytic, sedative, muscle relaxant, and anticonvulsant effects.</li>
+            <li><strong>Barbiturates:</strong> Bind to a different site on the GABA-A receptor and increase the DURATION of Cl⁻ channel opening. At high doses, they can directly open the Cl⁻ channel even without GABA, leading to profound CNS depression (and risk of respiratory depression and coma).</li>
+            <li><strong>Common mechanism:</strong> Both drugs enhance the inhibitory effect of GABA at GABA-A receptors, increasing Cl⁻ influx, hyperpolarizing the postsynaptic neuron, and reducing neuronal excitability.</li>
+            <li><strong>Therapeutic application:</strong> Used for anxiolysis, sedation, muscle relaxation, and seizure control. Barbiturates are now less commonly used due to their narrow therapeutic index and high abuse potential.</li>
+        </ul>`
+    }
+    ];
+
+    /* =====================================================================
+       RENDERING — SECTION A
+       ===================================================================== */
+    function renderSectionA() {
+        const container = document.getElementById('container-A');
+        let html = '';
+        sectionA.forEach((q, i) => {
+            const qid = 'A-q' + (i + 1);
+            html += '<div class="question" id="q-' + qid + '">';
+            html += '<p><span class="q-badge">Q' + (i + 1) + '</span> ' + q.q + '</p>';
+            html += '<div class="options">';
+            q.options.forEach((opt, j) => {
+                const L = String.fromCharCode(65 + j);
+                html += '<label><input type="radio" name="' + qid + '" value="' + L + '"> <strong>' + L + ')</strong> ' + opt + '</label>';
+            });
+            html += '</div>';
+            html += '<div class="question-feedback" id="fb-' + qid + '"></div>';
+            html += '</div>';
+        });
+        container.innerHTML = html;
+    }
+
+    function submitSectionA() {
+        let score = 0;
+        sectionA.forEach((q, i) => {
+            const qid = 'A-q' + (i + 1);
+            const radios = document.getElementsByName(qid);
+            let selected = null;
+            for (let r = 0; r < radios.length; r++) {
+                if (radios[r].checked) { selected = radios[r]; break; }
+            }
+            const correct = q.correct.toUpperCase();
+            if (selected && selected.value === correct) score++;
+            let html = '<div class="answer-block"><div class="answer-list">';
+            q.options.forEach((opt, j) => {
+                const L = String.fromCharCode(65 + j);
+                let cls = 'answer-item';
+                if (L === correct) cls += ' answer-correct';
+                if (selected && selected.value === L) {
+                    cls += ' user-choice';
+                    if (L !== correct) cls += ' answer-wrong';
+                }
+                const mark = (selected && selected.value === L) ? ' ◀ your answer' : '';
+                html += '<div class="' + cls + '">' + L + ') ' + opt + mark + '</div>';
+            });
+            html += '</div>';
+            const correctIdx = correct.charCodeAt(0) - 65;
+            const correctText = (correctIdx >= 0 && correctIdx < q.options.length) ? q.options[correctIdx] : '';
+            if (!selected) {
+                html += '<div class="explanation wrong">No answer selected. Correct answer: <strong>' +
+                        correct + ') ' + correctText + '</strong>.<br>' + q.explanation + '</div>';
+            } else if (selected.value === correct) {
+                html += '<div class="explanation">✅ <strong>Correct.</strong><br>' + q.explanation + '</div>';
+            } else {
+                html += '<div class="explanation wrong">❌ <strong>Incorrect.</strong> Correct answer: <strong>' +
+                        correct + ') ' + correctText + '</strong>.<br>' + q.explanation + '</div>';
+            }
+            const fb = document.getElementById('fb-' + qid);
+            if (fb) fb.innerHTML = html;
+        });
+        const total = sectionA.length;
+        const pct = Math.round((score / total) * 100);
+        const box = document.getElementById('result-A');
+        box.style.display = 'block';
+        document.getElementById('score-A').innerText = score + ' / ' + total + '  (' + pct + '%)';
+        document.querySelectorAll('#panel-A input[type="radio"]').forEach(r => r.disabled = true);
+    }
+
+    /* =====================================================================
+       RENDERING — TRUE / FALSE
+       ===================================================================== */
+    function renderSectionTF() {
+        const container = document.getElementById('container-TF');
+        let html = '';
+        sectionTF.forEach((q, i) => {
+            html += '<div class="question">';
+            html += '<p><span class="q-badge">Q' + (i + 1) + '</span> ' + q.q + '</p>';
+            q.items.forEach((item, j) => {
+                const qid = 'TF-q' + (i + 1) + '-' + j;
+                html += '<div class="tf-row">';
+                html += '<span class="tf-label">' + String.fromCharCode(65 + j) + '. ' + item.label + '</span>';
+                html += '<span class="tf-options">';
+                html += '<label><input type="radio" name="' + qid + '" value="T"> T</label>';
+                html += '<label><input type="radio" name="' + qid + '" value="F"> F</label>';
+                html += '</span>';
+                html += '</div>';
+            });
+            html += '<div class="question-feedback" id="fb-TF-' + (i + 1) + '"></div>';
+            html += '</div>';
+        });
+        container.innerHTML = html;
+    }
+
+    function submitSectionTF() {
+        let score = 0;
+        const totalItems = sectionTF.reduce((sum, q) => sum + q.items.length, 0);
+        sectionTF.forEach((q, i) => {
+            let qCorrect = 0;
+            let qHtml = '<div class="answer-block"><strong>Q' + (i + 1) + ' results</strong>';
+            q.items.forEach((item, j) => {
+                const qid = 'TF-q' + (i + 1) + '-' + j;
+                const radios = document.getElementsByName(qid);
+                let selected = null;
+                for (let r = 0; r < radios.length; r++) {
+                    if (radios[r].checked) { selected = radios[r]; break; }
+                }
+                const correct = item.correct;
+                const isCorrect = selected && selected.value === correct;
+                if (isCorrect) { score++; qCorrect++; }
+                const cls = isCorrect ? 'tf-correct' : 'tf-wrong';
+                const chosen = selected ? selected.value : '—';
+                const mark = isCorrect ? '✅' : '❌';
+                qHtml += '<div style="margin-top:4px; padding:5px 8px; border-radius:6px; background:' +
+                         (isCorrect ? '#e8f7ef' : '#fdf1f1') + '; border:1px solid ' +
+                         (isCorrect ? '#a8d8c0' : '#f5b8b8') + '; font-size:0.85rem;">' +
+                         '<strong>' + String.fromCharCode(65 + j) + '. ' + item.label + '</strong><br>' +
+                         'Your answer: <strong>' + chosen + '</strong> | Correct: <strong>' + correct + '</strong> ' + mark +
+                         '<br><span style="color:#065f4a;">' + item.explanation + '</span></div>';
+            });
+            qHtml += '<div style="margin-top:6px; font-weight:600; color:#1a6b6b;">Q' + (i + 1) + ' score: ' +
+                     qCorrect + ' / ' + q.items.length + '</div></div>';
+            const fb = document.getElementById('fb-TF-' + (i + 1));
+            if (fb) fb.innerHTML = qHtml;
+        });
+        const pct = Math.round((score / totalItems) * 100);
+        const box = document.getElementById('result-TF');
+        box.style.display = 'block';
+        document.getElementById('score-TF').innerText = score + ' / ' + totalItems + '  (' + pct + '%)';
+        document.querySelectorAll('#panel-TF input[type="radio"]').forEach(r => r.disabled = true);
+    }
+
+    /* =====================================================================
+       RENDERING — SECTION B
+       ===================================================================== */
+    function renderSectionB() {
+        const container = document.getElementById('container-B');
+        let html = '';
+        sectionB.forEach((item, i) => {
+            const qid = 'B-q' + (i + 1);
+            html += '<div class="question">';
+            html += '<p><span class="q-badge">Q' + (i + 1) + '</span> ' + item.q + '</p>';
+            html += '<div class="text-answer-wrap">';
+            html += '<textarea id="ta-' + qid + '" placeholder="Write your answer here..."></textarea>';
+            html += '</div>';
+            html += '<div class="reveal-wrap">';
+            html += '<button type="button" class="btn btn-sm btn-outline" onclick="toggleModel(\'' + qid + '\')">';
+            html += '<i class="fas fa-eye"></i> Show Model Answer</button>';
+            html += '</div>';
+            html += '<div id="model-' + qid + '" class="model-answer hidden">' + item.model + '</div>';
+            html += '</div>';
+        });
+        container.innerHTML = html;
+    }
+
+    function toggleModel(qid) {
+        const el = document.getElementById('model-' + qid);
+        el.classList.toggle('hidden');
+    }
+
+    /* ─── INIT ─── */
+    renderSectionA();
+    renderSectionTF();
+    renderSectionB();
+
+    /* ─── TAB SWITCHING ─── */
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            const target = this.dataset.target;
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+            document.getElementById('panel-' + target).classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+    </script>
+
+</body>
+</html>

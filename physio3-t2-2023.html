@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2023 Physiology Test 3 – 3rd Year</title>
+    <style>
+        :root {
+            --primary: #1a6b6b;
+            --accent: #2ea8a0;
+            --dark: #0f2a2a;
+            --light: #f4f8f7;
+            --radius: 12px;
+            --shadow: 0 4px 14px rgba(0, 30, 30, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #edf3f2;
+            color: var(--dark);
+            min-height: 100vh;
+            padding-top: 72px;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: linear-gradient(145deg, var(--primary), var(--dark));
+            color: #fff;
+            padding: 0.6rem 0;
+            box-shadow: 0 4px 18px rgba(0, 20, 20, 0.25);
+        }
+
+        .header-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .logo i {
+            font-size: 1.5rem;
+            color: #8dd9d4;
+        }
+
+        .logo h1 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 0.2rem 1rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #b3e6e0;
+            letter-spacing: 0.5px;
+        }
+
+        .container {
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 0 1.2rem 2.5rem;
+        }
+
+        .tab-bar {
+            display: flex;
+            gap: 0.5rem;
+            margin: 0.5rem 0 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: #dce8e8;
+            border: none;
+            padding: 0.5rem 1.8rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--dark);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .tab-btn:hover {
+            background: #c0d6d6;
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 2px 10px rgba(26, 107, 107, 0.25);
+        }
+
+        .tab-panel {
+            display: block;
+        }
+
+        .tab-panel.hidden {
+            display: none;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 0 0 0.8rem 0;
+            padding-bottom: 0.4rem;
+            border-bottom: 3px solid rgba(26, 107, 107, 0.18);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .section-title .count {
+            font-size: 0.7rem;
+            font-weight: 600;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 40px;
+            padding: 0 0.7rem;
+            line-height: 1.7;
+        }
+
+        .section-subtitle {
+            color: #4f6e6e;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .question {
+            background: #ffffff;
+            border-radius: var(--radius);
+            padding: 1.1rem 1.2rem 0.2rem 1.2rem;
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(26, 107, 107, 0.05);
+            transition: box-shadow 0.2s;
+        }
+
+        .question:hover {
+            box-shadow: 0 6px 20px rgba(0, 30, 30, 0.07);
+        }
+
+        .question .q-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 40px;
+            padding: 0 0.65rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            line-height: 1.6;
+            margin-right: 0.4rem;
+        }
+
+        .question p {
+            font-weight: 600;
+            font-size: 0.97rem;
+            margin-bottom: 0.4rem;
+            color: var(--dark);
+        }
+
+        .options label {
+            display: block;
+            background: #fafcfc;
+            border: 1px solid #dde8e8;
+            border-radius: 7px;
+            padding: 0.4rem 0.85rem;
+            margin-top: 0.4rem;
+            cursor: pointer;
+            transition: all 0.15s;
+            font-weight: 450;
+            font-size: 0.92rem;
+        }
+
+        .options label:hover {
+            background: #e8f5f4;
+            border-color: var(--accent);
+        }
+
+        .options input[type="radio"] {
+            margin-right: 0.5rem;
+            accent-color: var(--primary);
+            transform: scale(1.04);
+        }
+
+        .question-feedback {
+            margin-top: 0.8rem;
+            padding: 0.4rem 0 0.1rem 0;
+            border-top: 1px dashed #dce6e6;
+        }
+
+        .answer-block strong {
+            display: block;
+            margin-bottom: 3px;
+            color: var(--primary);
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .answer-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .answer-item {
+            padding: 4px 10px;
+            border-radius: 5px;
+            border: 1px solid #e4edec;
+            background: #ffffff;
+            font-weight: 500;
+            font-size: 0.88rem;
+        }
+
+        .answer-correct {
+            background: #e8f7ef;
+            border-color: #a8d8c0;
+            color: #0a4f3a;
+        }
+
+        .answer-wrong {
+            background: #fde9ea;
+            border-color: #f5b8b8;
+            color: #8a1f2b;
+        }
+
+        .user-choice {
+            outline: 2px dashed rgba(0, 0, 0, 0.06);
+        }
+
+        .explanation {
+            margin-top: 5px;
+            padding: 8px 13px;
+            border-radius: 7px;
+            background: #f0f8f6;
+            color: #065f4a;
+            font-size: 0.88rem;
+            line-height: 1.55;
+            border-left: 4px solid var(--accent);
+        }
+
+        .explanation.wrong {
+            background: #fdf1f1;
+            color: #7a1f1f;
+            border-left-color: #e68080;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            color: #fff;
+            border: none;
+            padding: 0.55rem 1.8rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.2s;
+            box-shadow: 0 4px 14px rgba(26, 107, 107, 0.25);
+        }
+
+        .btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 24px rgba(26, 107, 107, 0.32);
+        }
+
+        .btn:active {
+            transform: scale(0.96);
+        }
+
+        .submit-wrap {
+            text-align: center;
+            margin: 1.5rem 0 1.8rem;
+        }
+
+        .result {
+            margin-top: 1.5rem;
+            padding: 1.5rem 1.5rem 0.8rem;
+            background: #eaf6f4;
+            border-radius: var(--radius);
+            text-align: center;
+            display: none;
+            border: 1px solid #b8dbd6;
+        }
+
+        .result h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .score {
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 0.1rem 0 0.2rem;
+        }
+
+        .text-muted {
+            color: #4f6e6e;
+            font-size: 0.9rem;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @media (max-width: 700px) {
+            body {
+                padding-top: 68px;
+            }
+            .logo h1 {
+                font-size: 0.95rem;
+            }
+            .header-inner {
+                padding: 0 1rem;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.2rem;
+            }
+            .badge {
+                align-self: flex-start;
+            }
+            .question {
+                padding: 0.9rem 0.9rem 0.1rem 0.9rem;
+            }
+            .section-title {
+                font-size: 1.05rem;
+            }
+            .score {
+                font-size: 2rem;
+            }
+            .btn {
+                padding: 0.5rem 1.2rem;
+                font-size: 0.85rem;
+            }
+            .tab-btn {
+                padding: 0.4rem 1.2rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .logo h1 {
+                font-size: 0.8rem;
+            }
+            .options label {
+                font-size: 0.85rem;
+                padding: 0.35rem 0.65rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-inner">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+                <h1>2023 Physiology Test 3 – 3rd Year</h1>
+            </div>
+            <span class="badge"><i class="fas fa-pencil-alt"></i> &nbsp;47 Questions</span>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+
+            <div class="tab-bar">
+                <button class="tab-btn active" data-target="A">📝 Section A – MCQs</button>
+                <button class="tab-btn" data-target="B">🩺 Section B – Scenario</button>
+                <button class="tab-btn" data-target="C">🧪 Section C – Otto Loewi</button>
+            </div>
+
+            <!-- ============ SECTION A ============ -->
+            <div id="panel-A" class="tab-panel">
+                <div class="section-title">
+                    <i class="fas fa-list-ul"></i> Section A – Multiple Choice Questions
+                    <span class="count">27</span>
+                </div>
+                <p class="section-subtitle">Select the best answer for each question, then click <strong>Submit Section A</strong> below.</p>
+                <form id="form-A">
+                    <div id="container-A"></div>
+                    <div class="submit-wrap">
+                        <button type="button" class="btn" onclick="submitSection('A')">
+                            <i class="fas fa-check-circle"></i> Submit Section A
+                        </button>
+                    </div>
+                </form>
+                <div class="result" id="result-A">
+                    <h3><i class="fas fa-chart-simple"></i> Your Score – Section A</h3>
+                    <div class="score" id="score-A">0</div>
+                    <p class="text-muted">Review the feedback below each question.</p>
+                </div>
+            </div>
+
+            <!-- ============ SECTION B ============ -->
+            <div id="panel-B" class="tab-panel hidden">
+                <div class="section-title">
+                    <i class="fas fa-stethoscope"></i> Section B – Scenario Question
+                    <span class="count">10</span>
+                </div>
+                <p class="section-subtitle">
+                    <strong>Case:</strong> Margaret, a 24-year-old medical student, presents with several days of progressive ascending
+                    weakness and numbness beginning in her toes, spreading to her calves and knees and then to her fingertips,
+                    with difficulty lifting her legs, gripping the banister, and shortness of breath. Her vital capacity is markedly
+                    reduced. She cannot feel a pin or a vibrating tuning fork on her legs and below her elbows, but can feel a pin on
+                    her upper chest. Ankle and knee reflexes are absent.
+                    <br><br>
+                    Answer the following questions (options have been provided so the quiz can be auto-marked).
+                </p>
+                <form id="form-B">
+                    <div id="container-B"></div>
+                    <div class="submit-wrap">
+                        <button type="button" class="btn" onclick="submitSection('B')">
+                            <i class="fas fa-check-circle"></i> Submit Section B
+                        </button>
+                    </div>
+                </form>
+                <div class="result" id="result-B">
+                    <h3><i class="fas fa-chart-simple"></i> Your Score – Section B</h3>
+                    <div class="score" id="score-B">0</div>
+                    <p class="text-muted">Review the feedback below each question.</p>
+                </div>
+            </div>
+
+            <!-- ============ SECTION C ============ -->
+            <div id="panel-C" class="tab-panel hidden">
+                <div class="section-title">
+                    <i class="fas fa-flask"></i> Section C – Otto Loewi &amp; his Nobel Prize-winning Experiment
+                    <span class="count">10</span>
+                </div>
+                <p class="section-subtitle">Based on the passage about Otto Loewi. Select the best answer for each question, then click <strong>Submit Section C</strong>.</p>
+                <form id="form-C">
+                    <div id="container-C"></div>
+                    <div class="submit-wrap">
+                        <button type="button" class="btn" onclick="submitSection('C')">
+                            <i class="fas fa-check-circle"></i> Submit Section C
+                        </button>
+                    </div>
+                </form>
+                <div class="result" id="result-C">
+                    <h3><i class="fas fa-chart-simple"></i> Your Score – Section C</h3>
+                    <div class="score" id="score-C">0</div>
+                    <p class="text-muted">Review the feedback below each question.</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+    /* =====================================================================
+       SECTION A — 27 MCQs (Q1–Q10 and Q24–Q40 from the 2023 paper)
+       ===================================================================== */
+    const sectionA = [
+    {
+        q: `Unconscious kinesthetic sensations are carried by:`,
+        options: [
+            `A-beta (Aβ) nerve fibers`,
+            `A-delta (Aδ) nerve fibers`,
+            `C nerve fibers`,
+            `A-alpha (Aα) nerve fibers`
+        ],
+        correct: `D`,
+        explanation: `Unconscious kinesthetic (proprioceptive) sensations arise from muscle spindles (primary endings, Group Ia), Golgi tendon organs (Group Ib) and joint mechanoreceptors, and are relayed to the cerebellum through the spinocerebellar and cuneocerebellar tracts without ever reaching conscious perception. The afferents subserving these sensations are the thickest, fastest-conducting myelinated fibres — Group Ia and Ib, which correspond to Aα fibres (diameter 12–20 μm; conduction velocity 70–120 m/s). Aβ (Group II) fibres carry discriminative (fine) touch, pressure and conscious proprioception; Aδ (Group III) fibres carry fast (pricking) pain, cold and crude touch; C (Group IV) unmyelinated fibres carry slow (burning) pain, warmth and crude touch. Because the question specifies UNCONSCIOUS kinesthesia, the correct choice is Aα.`
+    },
+    {
+        q: `Crude touch sensations are carried by:`,
+        options: [
+            `A-beta (Aβ) nerve fibers`,
+            `A-delta (Aδ) nerve fibers`,
+            `C nerve fibers`,
+            `A-alpha (Aα) nerve fibers`
+        ],
+        correct: `A`,
+        explanation: `Crude (non-discriminative) touch is the poorly localised awareness that something is touching the skin — it does not permit identification of the exact site, texture, size or shape of the object. It is conveyed through the anterior (ventral) spinothalamic pathway to the somatosensory cortex. Among the options, the principal myelinated fibre type assigned to touch — including crude touch — is the Aβ (Group II) fibre. Aβ fibres are medium-to-large myelinated fibres (6–12 μm; 35–75 m/s) that arise from encapsulated mechanoreceptors (Meissner corpuscles, Merkel discs, Pacinian corpuscles, Ruffini endings) and project to the dorsal horn and dorsal column nuclei. Note: Aδ and C fibres also contribute to the crude-touch component of the anterolateral system (which is why some textbooks list crude touch under Aδ and C fibres), but the best single answer here is Aβ, the classic "touch" fibre. Aα fibres carry proprioceptive and motor information; Aδ/C carry predominantly pain and temperature.`
+    },
+    {
+        q: `A unilateral upper motor neuron lesion in the internal capsule is best characterized by:`,
+        options: [
+            `Ipsilateral motor deficits`,
+            `Contralateral motor deficits`,
+            `Sensory deficits`,
+            `Bilateral motor deficits`
+        ],
+        correct: `B`,
+        explanation: `The internal capsule carries the corticospinal (pyramidal) tract, corticobulbar fibres and the thalamocortical radiations. The corticospinal tract descends from the motor cortex through the posterior limb of the internal capsule, the cerebral peduncles, the pons and the medullary pyramids, where ~85–90% of fibres decussate (lateral corticospinal tract) and the remainder continue uncrossed (anterior corticospinal tract). Because decussation occurs BELOW the level of the internal capsule, a unilateral lesion in the internal capsule produces motor deficits on the CONTRALATERAL side of the body (contralateral hemiparesis/hemiplegia), with the face and upper limb typically more affected than the leg (leg fibres are more medial). Upper motor neuron lesions also produce spasticity, hyperreflexia, clonus, Babinski sign and loss of fine voluntary movement — in contrast with the flaccid paralysis, areflexia and muscle atrophy of lower motor neuron lesions. Sensory deficits occur only if the posterior thalamic radiations are also damaged; the classic pure motor stroke of the internal capsule is the "lacunar" syndrome described by Fisher.`
+    },
+    {
+        q: `Loss of the feel of size and shape of an object is seen in lesions of which of the following ascending pathways?`,
+        options: [
+            `Lateral spinothalamic tract`,
+            `Cuneate tract`,
+            `Ventral spinothalamic tract`,
+            `Ventral spinocerebellar tract`
+        ],
+        correct: `B`,
+        explanation: `The ability to recognise the size, shape, texture and weight of an object purely by feeling it is called stereognosis; its loss is astereognosis. It depends on the dorsal column–medial lemniscus (DCML) pathway, which carries fine (discriminative) touch, vibration and conscious proprioception from the upper limb. Fibres from the upper limb (T6 and above) ascend in the fasciculus cuneatus and synapse in the nucleus cuneatus of the medulla; the second-order neurons cross as the internal arcuate fibres and ascend in the medial lemniscus to the thalamus (VPL), then project to the primary somatosensory cortex (postcentral gyrus, areas 3, 1, 2). Damage to the cuneate tract (or the cuneate nucleus, medial lemniscus or sensory cortex) therefore abolishes stereognosis. The lateral spinothalamic tract carries pain and temperature, the ventral spinothalamic tract carries crude touch, and the ventral spinocerebellar tract carries unconscious proprioception to the cerebellum — none of them subserves stereognosis.`
+    },
+    {
+        q: `When the neurotransmitter molecules released from the axon terminals of a neuron have diffused across the synapse and have reached the dendrites of the target neuron, the neurotransmitters:`,
+        options: [
+            `Are reabsorbed by the presynaptic neuron.`,
+            `Are destroyed by enzymes in the synaptic cleft.`,
+            `Bind to receptors on the postsynaptic neuron's dendrites.`,
+            `Continue to travel along the axon of the presynaptic neuron.`
+        ],
+        correct: `C`,
+        explanation: `Chemical synaptic transmission proceeds as follows: (1) an action potential depolarises the presynaptic terminal; (2) voltage-gated Ca²⁺ channels open and Ca²⁺ enters the terminal; (3) synaptic vesicles fuse with the presynaptic membrane and release neurotransmitter by exocytosis into the synaptic cleft; (4) the neurotransmitter diffuses across the cleft and binds to specific receptors on the postsynaptic membrane (dendrites, soma or dendritic spines); (5) receptor binding opens ligand-gated ion channels, producing an excitatory (EPSP) or inhibitory (IPSP) postsynaptic potential. Reuptake into the presynaptic neuron (option a) and enzymatic degradation in the cleft (option b) are mechanisms that TERMINATE the action of the neurotransmitter, not the primary action itself. Neurotransmitter does not travel back along the axon (option d).`
+    },
+    {
+        q: `Sensory receptors are classified functionally according to the following criteria, except:`,
+        options: [
+            `Modality`,
+            `Location in the body`,
+            `Intensity of the stimulus`,
+            `Speed of adaptation`
+        ],
+        correct: `C`,
+        explanation: `Sensory receptors are classified functionally on three main bases: (1) modality — the type of stimulus energy they transduce (mechanoreceptors, thermoreceptors, nociceptors, photoreceptors, chemoreceptors); (2) location — exteroceptors (skin and mucous membranes), interoceptors/visceroceptors (internal organs, blood vessels), and proprioceptors (muscles, tendons, joints, labyrinth); and (3) speed of adaptation — tonic (slowly adapting) receptors that fire continuously during a maintained stimulus (e.g., Merkel discs, Ruffini endings, muscle spindles, nociceptors) versus phasic (rapidly adapting) receptors that fire only at the onset and offset of a stimulus (e.g., Pacinian corpuscles, Meissner corpuscles). The intensity of the stimulus is a property of the stimulus, not a basis for receptor classification — intensity is encoded by the frequency of action potentials and the number of receptors recruited.`
+    },
+    {
+        q: `A specific stimulus produces a receptor potential by`,
+        options: [
+            `Generating an action potential in the receptor`,
+            `Initiating chemical reactions within the receptor`,
+            `Changing the permeability of the receptor's membrane`,
+            `Altering the size of the receptor`
+        ],
+        correct: `C`,
+        explanation: `A receptor (generator) potential is a local, graded, non-propagated depolarisation produced when an adequate stimulus acts on a sensory receptor. The stimulus alters the conformation of the receptor protein, which directly or indirectly opens ion channels in the receptor membrane — that is, it changes the membrane permeability (mainly to Na⁺, and in some receptors to K⁺ or Ca²⁺). This inward current produces the graded depolarisation. The amplitude of the receptor potential is proportional to the strength of the stimulus (it is NOT all-or-none). When the receptor potential reaches threshold, it triggers an action potential in the adjacent axon (a separate, electrically distinct region), which then propagates. The receptor potential itself is NOT an action potential and is not propagated. Chemical second-messenger cascades are involved in some receptors (e.g., photoreceptors, olfactory receptors), but the fundamental mechanism of the receptor potential is a change in membrane permeability.`
+    },
+    {
+        q: `The ability to localize the site of stimuli depends upon:`,
+        options: [
+            `The number of sensory receptors`,
+            `The intensity of the stimulus`,
+            `The type of nerve fiber activated`,
+            `The size of the receptor potential`
+        ],
+        correct: `A`,
+        explanation: `The precision with which a stimulus can be localised (tested clinically by two-point discrimination) depends on: (1) the density of sensory receptors in the skin — the greater the number of receptors per unit area, the smaller the receptive field of each primary afferent and the finer the localisation; (2) the size of the receptive fields (small fields = precise localisation); (3) lateral inhibition in the dorsal column nuclei and thalamus, which sharpens the contrast between the stimulated and neighbouring areas; and (4) the amount of somatosensory cortex devoted to that body part (the cortical "homunculus"). The fingertips, lips and tongue have the highest receptor density and the smallest receptive fields, hence the best two-point discrimination. The intensity of the stimulus does not affect localisation — it affects the perceived magnitude. (Options c and d have been added to complete the question.)`
+    },
+    {
+        q: `A more developed two-point tactile discrimination:`,
+        options: [
+            `Occurs in areas with fewer sensory receptors.`,
+            `Is associated with larger receptive fields.`,
+            `Results in a decreased ability to distinguish between two separate points of touch.`,
+            `Indicates a higher density of sensory receptors and smaller receptive fields.`
+        ],
+        correct: `D`,
+        explanation: `Two-point discrimination is the ability to perceive two simultaneously applied blunt points as separate. It is finest where the density of tactile receptors (especially Meissner corpuscles and Merkel discs) is highest and the receptive fields of the primary afferents are smallest — the fingertips (2–3 mm), lips and tongue. It is poorest on the back, where receptor density is low and receptive fields are large (up to 50–70 mm). The physiological basis includes (a) small receptive fields with minimal overlap, (b) lateral inhibition that enhances contrast between two stimulated points, and (c) a large cortical representation (cortical magnification) of the body part. Therefore, better two-point discrimination is associated with MORE receptors and SMALLER receptive fields.`
+    },
+    {
+        q: `Pain control system:`,
+        options: [
+            `Involves the release of serotonin to enhance pain perception.`,
+            `Is primarily mediated by substance P.`,
+            `Includes the action of endorphins and enkephalins to inhibit pain signals.`,
+            `Relies on substance P to amplify pain sensations.`
+        ],
+        correct: `C`,
+        explanation: `The endogenous analgesia (pain-control) system comprises the periaqueductal grey (PAG) matter, the nucleus raphe magnus (NRM) in the rostral ventromedial medulla, the locus coeruleus, and descending pathways to the dorsal horn. Key components: (1) the PAG receives input from the hypothalamus, amygdala and cortex and sends enkephalinergic projections to the NRM; (2) the NRM sends serotonergic fibres down the dorsolateral funiculus to the dorsal horn; (3) the locus coeruleus sends noradrenergic fibres; (4) in the dorsal horn, these descending fibres (and local interneurons) release enkephalins, dynorphins, serotonin, noradrenaline and GABA, which inhibit the release of substance P and glutamate from primary nociceptive afferents and hyperpolarise second-order spinothalamic neurons. Enkephalins and endorphins act on μ, δ and κ opioid receptors, which are Gi-coupled: they reduce cAMP, close voltage-gated Ca²⁺ channels (decreasing transmitter release) and open K⁺ channels (hyperpolarising the cell). Serotonin does NOT enhance pain — it inhibits it. Substance P facilitates (amplifies) pain transmission, so it is NOT part of the pain-control (inhibitory) system.`
+    },
+    {
+        q: `Enkephalin affects pain transmission by:`,
+        options: [
+            `Enhancing the release of substance P`,
+            `Stimulating pain receptors`,
+            `Binding to opioid receptors and inhibiting neurotransmitter release`,
+            `Increasing the sensitivity of pain receptors`
+        ],
+        correct: `C`,
+        explanation: `Enkephalins (met-enkephalin and leu-enkephalin) are endogenous pentapeptide opioids found in high concentration in the dorsal horn of the spinal cord (laminae I, II and V), the PAG and the NRM. They act on δ (and to a lesser extent μ) opioid receptors, which are Gi/o-coupled GPCRs. Receptor activation causes: (1) inhibition of adenylyl cyclase → ↓cAMP → ↓PKA; (2) opening of G-protein-gated inwardly rectifying K⁺ channels → hyperpolarisation of the postsynaptic neuron; (3) closing of voltage-gated Ca²⁺ channels on the presynaptic terminal → reduced Ca²⁺ influx → decreased release of substance P and glutamate from nociceptive afferents. The net effect is inhibition (damping) of pain transmission — enkephalins close the "gate" in the dorsal horn. They do not enhance substance P release, stimulate nociceptors, or sensitise pain receptors.`
+    },
+    {
+        q: `The spinal pain gate is:`,
+        options: [
+            `Ligand controlled.`,
+            `voltage controlled.`,
+            `opened by enkephalin.`,
+            `closed by substance P.`
+        ],
+        correct: `A`,
+        explanation: `According to the gate-control theory of Melzack and Wall, the "gate" is located in the substantia gelatinosa (lamina II) of the dorsal horn and modulates the flow of nociceptive information from primary afferents to the second-order spinothalamic neurons (in laminae I and V). The gate is CHEMICALLY (ligand) controlled, not voltage-controlled: it is opened by excitatory transmitters such as substance P and glutamate (released by Aδ and C nociceptive afferents) and closed by inhibitory transmitters such as enkephalin, dynorphin, GABA, glycine, serotonin and noradrenaline. Large Aβ afferents (touch, vibration) excite inhibitory interneurons in lamina II that release enkephalin and GABA, closing the gate — which explains why rubbing a painful area, or applying TENS or vibration, reduces pain. Enkephalin CLOSES the gate; substance P OPENS it.`
+    },
+    {
+        q: `Synaptic transmission depends upon:`,
+        options: [
+            `direct transmission of impulses from the presynaptic neuron to the postsynaptic neuron`,
+            `diffusion of neurotransmitters from synaptic knobs into the soma and dendrites of postsynaptic neurons`,
+            `presence of voltage-gated Ca++ channels in membrane of synaptic knobs`,
+            `presence of voltage-gated Ca++ channels in the subsynaptic membrane`
+        ],
+        correct: `C`,
+        explanation: `Chemical synaptic transmission requires: (1) an action potential arriving at the presynaptic terminal; (2) opening of VOLTAGE-GATED Ca²⁺ channels in the membrane of the synaptic knob (presynaptic terminal) — these are essential for Ca²⁺ influx; (3) Ca²⁺-triggered fusion of synaptic vesicles with the presynaptic membrane and exocytosis of neurotransmitter; (4) diffusion of the neurotransmitter across the synaptic cleft; (5) binding to receptors on the postsynaptic (subsynaptic) membrane. Option (a) is wrong because transmission is chemical, not direct electrical (except at gap junctions/electrical synapses). Option (b) is imprecise — neurotransmitter diffuses across the cleft to bind receptors; it is not "diffused into" the soma and dendrites. Option (d) is wrong because the subsynaptic membrane contains LIGAND-gated (chemically gated) ion channels, not voltage-gated Ca²⁺ channels; it is the voltage-gated Ca²⁺ channels in the presynaptic terminal that are the critical requirement.`
+    },
+    {
+        q: `Postsynaptic receptors include all the following types, except:`,
+        options: [
+            `G-protein coupled receptors.`,
+            `ligand-gated cation channels`,
+            `G-protein regulated K+ channels.`,
+            `voltage-gated Cl- channels`
+        ],
+        correct: `D`,
+        explanation: `Postsynaptic (subsynaptic) receptors mediating fast and slow synaptic transmission include: (1) ionotropic receptors — ligand-gated ion channels such as the nicotinic ACh receptor (cation channel), AMPA/kainate glutamate receptors (Na⁺/K⁺), NMDA receptors (Ca²⁺/Na⁺/K⁺), GABA-A receptors (Cl⁻), glycine receptors (Cl⁻) and 5-HT3 receptors; (2) metabotropic receptors — G-protein coupled receptors (e.g., muscarinic ACh, α/β adrenergic, GABA-B, metabotropic glutamate receptors), which act through second messengers or through G-protein-regulated K⁺ channels (GIRKs, as in the vagal slowing of the heart by ACh). Voltage-gated Cl⁻ channels are NOT a class of postsynaptic receptor — Cl⁻ flux across postsynaptic membranes occurs via ligand-gated GABA-A and glycine receptor channels, not through voltage-gated Cl⁻ channels.`
+    },
+    {
+        q: `Synaptic fatigue is due to:`,
+        options: [
+            `decreased synthesis of neurotransmitters`,
+            `inability to release neurotransmitters by exocytosis.`,
+            `failure of action potentials to open voltage-gated Ca++ channels in presynaptic terminal`,
+            `imbalance in between rates of synthesis and release of neurotransmitters`
+        ],
+        correct: `D`,
+        explanation: `Synaptic fatigue (synaptic depression) is the progressive decline in the amplitude of the postsynaptic response during sustained, high-frequency presynaptic activity. The most important cause is exhaustion of the readily releasable pool of synaptic vesicles when the rate of neurotransmitter RELEASE exceeds the rate of SYNTHESIS, reuptake and repackaging — i.e., an imbalance between synthesis and release. Contributing factors include depletion of synaptic vesicles, accumulation of metabolites, receptor desensitisation, and a gradual fall in presynaptic Ca²⁺ influx. It is a protective mechanism that prevents overexcitation (e.g., in the CNS during seizures, and at the neuromuscular junction during tetanic stimulation). Option (c) is incorrect because the action potential still opens voltage-gated Ca²⁺ channels — the problem lies downstream, in vesicle availability. Synaptic fatigue is the basis of habituation and of the fade seen with some neuromuscular blockers.`
+    },
+    {
+        q: `Synaptic facilitation in synapses:`,
+        options: [
+            `is due to increased Ca++ concentration in postsynaptic neurons.`,
+            `is due to increased Ca++ influx into presynaptic neurons.`
+        ],
+        correct: `B`,
+        explanation: `Synaptic facilitation is the short-term ENHANCEMENT of synaptic transmission that follows a conditioning train of action potentials; the postsynaptic response to a subsequent test stimulus is larger. The mechanism is residual free Ca²⁺ that remains in the presynaptic terminal after the conditioning train (because buffering and extrusion of Ca²⁺ are slower than the interval between stimuli). The elevated residual Ca²⁺, acting through synaptotagmin and Ca²⁺-calmodulin-dependent processes, increases the probability of vesicle fusion and the amount of neurotransmitter released by the next action potential. Facilitation is a presynaptic phenomenon, so it depends on increased Ca²⁺ in the PRESYNAPTIC terminal, not the postsynaptic neuron. (If facilitation persists for seconds to minutes it is called augmentation; if it follows tetanic stimulation and lasts longer it merges into post-tetanic potentiation.)`
+    },
+    {
+        q: `Long-term potentiation of synaptic transmission:`,
+        options: [
+            `is involved in pain control system.`,
+            `is caused by increased Ca++ concentration in presynaptic neurons.`,
+            `results from fast repetitive stimulation of synapse`,
+            `is associated with decreased Ca++ concentration in postsynaptic neurons.`
+        ],
+        correct: `C`,
+        explanation: `Long-term potentiation (LTP) is a persistent (hours to days or longer) increase in synaptic strength that follows brief, high-frequency (tetanic) repetitive stimulation of a synapse. It is best characterised in the hippocampus (CA1 region, Schaffer collateral–CA1 synapses) and is widely regarded as a cellular basis of learning and memory. At glutamatergic synapses, high-frequency stimulation releases glutamate, which activates AMPA receptors (depolarisation) and NMDA receptors. The NMDA receptor is blocked by Mg²⁺ at resting potential; depolarisation relieves the Mg²⁺ block, allowing Ca²⁺ to enter the POSTSYNAPTIC spine. The rise in postsynaptic Ca²⁺ activates Ca²⁺/calmodulin-dependent protein kinase II (CaMKII), protein kinase C and tyrosine kinases, which (a) increase the number and conductance of AMPA receptors in the postsynaptic membrane and (b) via retrograde messengers (e.g., NO) increase presynaptic transmitter release. Thus LTP requires increased Ca²⁺ in the POSTSYNAPTIC neuron (not the presynaptic neuron), and it is not part of the pain-control system.`
+    },
+    {
+        q: `Conduction in which type of nerve fibers is blocked maximally by pressure?`,
+        options: [
+            `Type A nerve fibers`,
+            `Type B nerve fibers`,
+            `Type C nerve fibers`,
+            `Type D nerve fibers`
+        ],
+        correct: `A`,
+        explanation: `Pressure (mechanical compression) blocks conduction by deforming the axon and interfering with the opening of voltage-gated Na⁺ channels. The LARGEST and most heavily myelinated fibres are the most susceptible to pressure block — that is, Type A fibres (Aα, Aβ, Aγ, Aδ). This is why, when a limb "goes to sleep" after prolonged compression of a nerve, the first sensations to be lost are fine touch, vibration and proprioception (Aβ and Aα fibres), while pain and temperature (carried by Aδ and C fibres) are preserved until compression is more severe — the familiar experience of a numb limb that still hurts when pinched. By contrast, local anaesthetics block the SMALLEST fibres first (C, then Aδ, then Aβ, then Aα), which is the opposite order. Type B fibres are preganglionic autonomic (small myelinated) and Type C are unmyelinated; "Type D" is not a recognised classification.`
+    },
+    {
+        q: `Corticospinal tract originates from all the following areas, except:`,
+        options: [
+            `Premotor area in the frontal lobe`,
+            `Prefrontal area in the frontal lobe`,
+            `Supplemental motor area in the frontal lobe`,
+            `Somatic sensory area in the parietal lobe`
+        ],
+        correct: `B`,
+        explanation: `The corticospinal (pyramidal) tract arises from pyramidal neurons in layer V of the cerebral cortex. Approximately 30% of fibres come from the primary motor cortex (area 4, precentral gyrus), about 30% from the premotor area (area 6) and the supplementary motor area (medial area 6), and a substantial fraction (up to ~40%, per Guyton) from the somatosensory cortex (areas 3, 1, 2) of the parietal lobe. The prefrontal cortex (areas 9–12) does NOT contribute significantly to the corticospinal tract — it is primarily involved in executive function, personality and behaviour, and projects mainly to other cortical and subcortical structures. Therefore, the prefrontal area is the exception. Note the common trap: the somatic sensory area DOES contribute corticospinal fibres, so it is not the exception.`
+    },
+    {
+        q: `Which of the following best describes primary hyperalgesia?`,
+        options: [
+            `Increased sensitivity to pain outside the area of tissue damage`,
+            `Decreased sensitivity to pain at the site of tissue injury`,
+            `Increased sensitivity to pain at the site of tissue damage`,
+            `The absence of pain sensation in response to noxious stimuli`
+        ],
+        correct: `C`,
+        explanation: `Primary hyperalgesia is increased pain sensitivity confined to the site of tissue injury. It results from PERIPHERAL SENSITISATION: inflammatory mediators (bradykinin, prostaglandins, histamine, serotonin, substance P, cytokines, H⁺, K⁺) released at the site of damage lower the threshold of nociceptors and increase their responsiveness, so that a normally painful stimulus produces a greater pain (hyperalgesia) and even non-noxious stimuli may become painful (allodynia). The mediators act on ion channels (e.g., TRPV1, NaV1.7, NaV1.8) and receptors on the nociceptor terminal. By contrast, secondary hyperalgesia occurs in undamaged tissue surrounding the injury and is due to central sensitisation.`
+    },
+    {
+        q: `What characterizes primary hyperalgesia?`,
+        options: [
+            `It occurs in healthy skin areas.`,
+            `It results from thalamic and spinal cord lesions.`,
+            `Pain thresholds are elevated.`,
+            `Non-noxious stimuli become painful.`
+        ],
+        correct: `D`,
+        explanation: `Primary hyperalgesia is characterised by a LOWERED pain threshold at the site of injury and by the phenomenon of allodynia — non-noxious stimuli (such as a light touch or gentle warming) becoming painful. It occurs at the site of tissue damage (not in healthy skin), is caused by peripheral sensitisation of nociceptors (not by thalamic or spinal cord lesions), and involves a lowered (not elevated) pain threshold. Options a, b and c are therefore incorrect. The other classical feature of primary hyperalgesia is an exaggerated response to suprathreshold noxious stimuli.`
+    },
+    {
+        q: `What is the primary cause of primary hyperalgesia?`,
+        options: [
+            `Sensitization of pain receptors.`,
+            `Thalamic facilitation.`,
+            `Visceral pain.`,
+            `Spinal cord lesions.`
+        ],
+        correct: `A`,
+        explanation: `The primary cause of primary hyperalgesia is sensitisation of peripheral pain receptors (nociceptors) by inflammatory mediators released at the site of tissue damage — bradykinin, prostaglandins (PGE₂, PGI₂), histamine, serotonin, substance P, calcitonin gene-related peptide, cytokines (IL-1β, TNF-α), H⁺ and K⁺. These substances lower the activation threshold of the nociceptor and increase its firing rate for a given stimulus. Sensitisation involves post-translational modification and increased expression of transducer channels (TRPV1, ASICs) and voltage-gated Na⁺ channels (NaV1.7, NaV1.8), as well as phosphorylation by protein kinases A and C. Thalamic facilitation, visceral pain and spinal cord lesions are not the cause of PRIMARY hyperalgesia.`
+    },
+    {
+        q: `What is secondary hyperalgesia characterized by?`,
+        options: [
+            `Lowered pain threshold`,
+            `Increased pain threshold`,
+            `Absence of pain`,
+            `Shortened pain duration`
+        ],
+        correct: `A`,
+        explanation: `Secondary hyperalgesia is characterised by a LOWERED pain threshold and increased pain sensitivity in undamaged tissue surrounding the site of injury (the "flare" zone). It differs from primary hyperalgesia in that it is caused by CENTRAL sensitisation — increased excitability of second-order neurons in the dorsal horn (and higher centres) due to the intense barrage of nociceptive input from the injured area. This central sensitisation involves NMDA receptor activation, wind-up, and changes in receptive fields, so that afferents from surrounding normal skin can now activate the sensitised central neurons. The result is hyperalgesia (and often allodynia) extending beyond the zone of tissue damage.`
+    },
+    {
+        q: `Which mechanism explains secondary hyperalgesia?`,
+        options: [
+            `Convergence facilitation`,
+            `Divergence inhibition`,
+            `Sensory adaptation`,
+            `Central inhibition`
+        ],
+        correct: `A`,
+        explanation: `Secondary hyperalgesia is explained by CONVERGENCE FACILITATION (central sensitisation). In the dorsal horn, second-order neurons receive convergent input from nociceptive afferents of the injured area and from low-threshold mechanoreceptors of the surrounding normal skin. The intense, sustained nociceptive barrage from the site of injury sensitises these central neurons (via NMDA receptor activation, substance P, CGRP, and descending facilitation), so that they now respond more vigorously to input from the surrounding normal skin and to low-threshold mechanoreceptors. This produces hyperalgesia and allodynia in undamaged tissue. Divergence inhibition, sensory adaptation and central inhibition would all REDUCE pain, not increase it.`
+    },
+    {
+        q: `In which area does secondary hyperalgesia occur?`,
+        options: [
+            `At the site of tissue damage`,
+            `In undamaged skin surrounding the site of injury`,
+            `In the contralateral limb only`,
+            `In the thalamus`
+        ],
+        correct: `B`,
+        explanation: `Secondary hyperalgesia occurs in UNDAMAGED skin surrounding the site of injury — that is, outside the zone of primary hyperalgesia. This is the region where the skin is intact but the central (dorsal horn) neurons are sensitised by the intense nociceptive input from the injured area. It contrasts with primary hyperalgesia, which is confined to the site of tissue damage. (Options have been added to complete the question, which was cut off in the original paper.)`
+    },
+    {
+        q: `In which cases can secondary hyperalgesia occur without the presence of primary hyperalgesia, as mentioned in the passage?`,
+        options: [
+            `In all cases of visceral pain`,
+            `In thalamic and spinal cord lesions`,
+            `In cases of convergence facilitation`,
+            `In cases of diseased viscus`
+        ],
+        correct: `D`,
+        explanation: `In cases of a diseased viscus (e.g., appendicitis, cholecystitis, myocardial ischaemia), visceral nociceptive afferents are activated, and the intense visceral input can produce secondary hyperalgesia in the somatic tissues (skin and muscle) of the corresponding dermatome, WITHOUT any primary hyperalgesia because the skin itself is not injured. This is the basis of referred pain and of the associated cutaneous hyperalgesia in visceral disease. The other options are not the described scenario: secondary hyperalgesia without primary hyperalgesia is not a feature of all visceral pain, of thalamic/spinal cord lesions, or of convergence facilitation per se.`
+    },
+    {
+        q: `What contributes to the exaggeration of pain in secondary hyperalgesia?`,
+        options: [
+            `Release of histamine`,
+            `Release of kinins`,
+            `Facilitation of central neurons`,
+            `Divergence inhibition`
+        ],
+        correct: `C`,
+        explanation: `The exaggeration of pain in secondary hyperalgesia is due to FACILITATION OF CENTRAL NEURONS — central sensitisation in the dorsal horn and higher centres. The intense nociceptive barrage from the injured area causes: (1) activation of NMDA receptors by glutamate and glycine, leading to Ca²⁺ influx and increased excitability of second-order neurons; (2) release of substance P, CGRP and neurokinins; (3) activation of descending facilitatory pathways from the brainstem (e.g., serotonergic projections from the NRM); and (4) enlargement of receptive fields of dorsal horn neurons, so that they respond to inputs from undamaged skin. Histamine and kinins are peripherally released mediators that contribute to PRIMARY hyperalgesia by sensitising nociceptors, not to the central facilitation of secondary hyperalgesia. Divergence inhibition would reduce pain.`
+    }
+    ];
+
+    /* =====================================================================
+       SECTION B — 10 Scenario Questions
+       ===================================================================== */
+    const sectionB = [
+    {
+        q: `Margaret can't feel a pinprick in certain locations. Which receptors detect this information?`,
+        options: [
+            `Meissner corpuscles`,
+            `Free nerve endings (nociceptors)`,
+            `Pacinian corpuscles`,
+            `Merkel discs`,
+            `Muscle spindles`
+        ],
+        correct: `B`,
+        explanation: `Pinprick is a noxious mechanical stimulus detected by nociceptors, which are free (unencapsulated) nerve endings in the skin, subcutaneous tissue, periosteum and viscera. Nociceptors are the dendritic terminals of Aδ (fast, pricking, sharp pain) and C (slow, burning, dull pain) primary afferent fibres. They respond to mechanical, thermal and chemical stimuli and have a high threshold. Encapsulated mechanoreceptors such as Meissner corpuscles (rapidly adapting, fine touch), Merkel discs (slowly adapting, texture and form), Pacinian corpuscles (vibration) and Ruffini endings (skin stretch) are NOT activated by a pinprick. Loss of pinprick sensation in Margaret indicates damage to Aδ and C fibres, consistent with a peripheral polyneuropathy such as Guillain–Barré syndrome.`
+    },
+    {
+        q: `Which receptor should be activated by the tuning fork?`,
+        options: [
+            `Meissner corpuscle`,
+            `Merkel disc`,
+            `Pacinian corpuscle`,
+            `Ruffini ending`,
+            `Free nerve ending`
+        ],
+        correct: `C`,
+        explanation: `A vibrating tuning fork (usually 128 Hz) is used clinically to test vibration sense, which is mediated by Pacinian corpuscles — large, rapidly adapting (phasic) lamellated mechanoreceptors located in the deep dermis, subcutaneous tissue, periosteum and interosseous membranes. They have large receptive fields and respond to high-frequency vibration (up to 200–300 Hz), transmitting via large myelinated Aβ (Group II) fibres through the dorsal column–medial lemniscus pathway to the somatosensory cortex. Vibration sense is lost early in large-fibre peripheral neuropathies (e.g., diabetic neuropathy, Guillain–Barré syndrome) and in dorsal column lesions (e.g., subacute combined degeneration, tabes dorsalis). Meissner corpuscles detect low-frequency flutter and fine touch; Merkel discs detect steady pressure and texture; Ruffini endings detect skin stretch; free nerve endings detect pain and temperature.`
+    },
+    {
+        q: `The absence of reflexes in Margaret's ankles and knees may suggest damage to which part of the nervous system?`,
+        options: [
+            `The cerebellum`,
+            `The reflex arc (peripheral nerves and/or spinal cord grey matter)`,
+            `The basal ganglia`,
+            `The cerebral cortex`,
+            `The thalamus`
+        ],
+        correct: `B`,
+        explanation: `A tendon (stretch) reflex requires an intact reflex arc: (1) an afferent limb — Ia fibres from muscle spindles; (2) a central connection in the spinal cord grey matter (monosynaptic to α-motor neurons, with modulation by interneurons); and (3) an efferent limb — α-motor neurons whose axons run in the peripheral nerve to the muscle. Areflexia (loss of reflexes) therefore indicates interruption of the reflex arc, either at the peripheral nerve (sensory or motor fibres) or at the spinal cord grey matter (anterior horn cells). In Margaret's case, the symmetrical, ascending, areflexic weakness with sensory loss is the classic picture of Guillain–Barré syndrome (acute inflammatory demyelinating polyradiculoneuropathy), in which the peripheral nerves and nerve roots are the site of damage. Cerebellar disease causes ataxia and dysmetria, not areflexia; basal ganglia disease causes movement disorders; and cortical or thalamic lesions cause hemiparesis/hemisensory loss, not generalised areflexia.`
+    },
+    {
+        q: `Which sensory modality is primarily affected in Margaret's case?`,
+        options: [
+            `Vision`,
+            `Hearing`,
+            `Somatic sensation (pain, temperature, vibration, proprioception)`,
+            `Taste`,
+            `Smell`
+        ],
+        correct: `C`,
+        explanation: `Margaret has lost pinprick sensation (pain/temperature, carried by Aδ and C fibres) and vibration sense (carried by Aβ fibres via the dorsal columns), together with weakness and areflexia. The pattern indicates a generalised disturbance of SOMATIC sensation — all modalities are involved, with a predilection for large-fibre modalities (vibration, proprioception) early in the disease and subsequently small-fibre modalities (pain, temperature). This pan-sensory, symmetrical, ascending, "glove-and-stocking" pattern is characteristic of a peripheral polyneuropathy such as Guillain–Barré syndrome. Cranial nerve, visual, auditory, gustatory and olfactory functions are not involved in this presentation.`
+    },
+    {
+        q: `Margaret's difficulty in gripping the banister is most likely due to the impairment of which type of receptors?`,
+        options: [
+            `Photoreceptors`,
+            `Proprioceptors (muscle spindles and Golgi tendon organs)`,
+            `Baroreceptors`,
+            `Chemoreceptors`,
+            `Thermoreceptors`
+        ],
+        correct: `B`,
+        explanation: `Gripping the banister requires precise control of hand and forearm muscles, which depends on continuous feedback from proprioceptors — muscle spindles (which signal muscle length and rate of change of length) and Golgi tendon organs (which signal muscle tension). In Guillain–Barré syndrome, the large myelinated Ia and Ib afferents from these receptors are damaged along with motor fibres, so proprioceptive feedback is degraded; combined with the weakness, this makes fine motor tasks such as gripping difficult. Photoreceptors subserve vision; baroreceptors monitor arterial pressure; chemoreceptors monitor blood chemistry; thermoreceptors detect temperature — none of these are relevant to grip strength. (The dominant cause of her difficulty is, of course, the motor weakness itself; the question asks specifically about receptor involvement.)`
+    },
+    {
+        q: `What type of nerve fibers are responsible for carrying the sensation of pinprick?`,
+        options: [
+            `A-alpha (Aα) fibers`,
+            `A-beta (Aβ) fibers`,
+            `A-delta (Aδ) and C fibers`,
+            `B fibers`,
+            `Preganglionic autonomic fibers`
+        ],
+        correct: `C`,
+        explanation: `Pinprick activates nociceptors, and the sensation is carried by two classes of primary afferent: Aδ fibres (Group III; thin, lightly myelinated, 2–5 μm, 12–30 m/s) mediate the fast, sharp, well-localised "first pain"; C fibres (Group IV; unmyelinated, 0.4–1.2 μm, 0.5–2 m/s) mediate the slow, dull, burning, poorly localised "second pain". Both synapse in the dorsal horn (laminae I, II and V) and cross to ascend in the lateral spinothalamic tract to the thalamus and somatosensory cortex. Aα fibres carry proprioception and motor commands; Aβ fibres carry fine touch, pressure and vibration; B fibres are preganglionic autonomic; preganglionic autonomic fibres do not carry somatic sensation. Loss of pinprick in a symmetrical ascending pattern therefore indicates damage to small myelinated and unmyelinated peripheral fibres.`
+    },
+    {
+        q: `The inability to elicit reflexes from Margaret's ankles or knees suggests a problem with which spinal cord component?`,
+        options: [
+            `The dorsal columns`,
+            `The reflex arc — afferent and efferent limbs and the anterior horn motor neurons`,
+            `The spinocerebellar tracts`,
+            `The lateral corticospinal tracts only`,
+            `The spinothalamic tracts`
+        ],
+        correct: `B`,
+        explanation: `Tendon reflexes are segmental spinal reflexes. The knee jerk (L2–L4) and ankle jerk (S1–S2) require: intact muscle spindle afferents (Ia) in the femoral/sciatic nerves; synaptic transmission in the spinal grey matter; and intact α-motor neurons whose axons leave via the ventral roots and peripheral nerves. Loss of these reflexes (areflexia) therefore localises the lesion to the reflex arc — the peripheral nerve, the dorsal root, the spinal grey matter (anterior horn cells), or the ventral root. In Guillain–Barré syndrome the lesion is in the peripheral nerves and nerve roots. The dorsal columns carry vibration and proprioception; the spinocerebellar tracts carry unconscious proprioception; the corticospinal tracts carry voluntary motor commands (their destruction causes hyperreflexia, not areflexia); and the spinothalamic tracts carry pain and temperature.`
+    },
+    {
+        q: `Based on the symptoms described, what type of sensory deficit is Margaret experiencing in her lower extremities?`,
+        options: [
+            `Loss of vibration and position sense only`,
+            `Loss of pain and temperature only`,
+            `Pan-sensory loss (all modalities affected)`,
+            `Hyperaesthesia`,
+            `Paraesthesia only`
+        ],
+        correct: `C`,
+        explanation: `Margaret is unable to feel either a pinprick or a vibrating tuning fork in her legs, and she initially experienced tingling followed by numbness. This means that both small-fibre modalities (pain and temperature, carried by Aδ/C fibres via the spinothalamic tract) and large-fibre modalities (vibration and proprioception, carried by Aβ fibres via the dorsal columns) are affected. The deficit is therefore a pan-sensory (global) sensory loss, ascending and symmetrical — the classic "glove-and-stocking" pattern of a peripheral polyneuropathy. Hyperaesthesia (exaggerated response to a normal stimulus) and paraesthesia (spontaneous abnormal sensations such as tingling) describe altered rather than absent sensation, and Margaret has progressed beyond paraesthesia to frank sensory loss.`
+    },
+    {
+        q: `What type of lesion is most likely causing Margaret's symptoms?`,
+        options: [
+            `A cerebral cortical lesion`,
+            `An acute peripheral demyelinating polyneuropathy (Guillain–Barré syndrome)`,
+            `A spinal cord tumour`,
+            `A brainstem stroke`,
+            `A neuromuscular junction disorder such as myasthenia gravis`
+        ],
+        correct: `B`,
+        explanation: `The combination of (1) a preceding non-specific illness, (2) symmetrical, ASCENDING, flaccid weakness starting in the feet and legs, (3) areflexia, (4) distal symmetrical sensory loss affecting all modalities, and (5) early involvement of respiratory muscles with reduced vital capacity is the classic presentation of Guillain–Barré syndrome (acute inflammatory demyelinating polyradiculoneuropathy, AIDP). It is an autoimmune, post-infectious, demyelinating polyneuropathy affecting nerve roots and peripheral nerves; the ascending pattern reflects the predilection for the nerve roots and the cauda equina. A cerebral cortical lesion would give hemiparesis and hemisensory loss with hyperreflexia; a spinal cord tumour causes a sensory level with spastic paraparesis and hyperreflexia; a brainstem stroke gives cranial nerve palsies with crossed hemiplegia; and myasthenia gravis causes fatigable weakness WITHOUT sensory loss or areflexia.`
+    },
+    {
+        q: `Which corticospinal tracts are responsible for controlling Margaret's respiratory muscles and diaphragm?`,
+        options: [
+            `The lateral corticospinal tract only`,
+            `The anterior (ventral) corticospinal tract, which innervates axial and proximal muscles including the respiratory muscles`,
+            `The rubrospinal tract`,
+            `The vestibulospinal tract`,
+            `The reticulospinal tract`
+        ],
+        correct: `B`,
+        explanation: `Voluntary control of the diaphragm and intercostal muscles is exerted through the corticospinal (pyramidal) system. The lateral corticospinal tract (crossed, ~85–90% of fibres) innervates distal limb muscles, whereas the ANTERIOR (ventral, uncrossed) corticospinal tract innervates axial and proximal muscles of the trunk and neck — including the intercostal muscles and the diaphragm (via the phrenic motor nucleus in C3–C5). Damage to this pathway, or to the phrenic motor neurons themselves, produces respiratory muscle weakness and a reduced vital capacity, as in Margaret's case. The rubrospinal, vestibulospinal and reticulospinal tracts are extrapyramidal descending pathways that modulate posture, tone and gross movements but do not provide the principal voluntary drive to the respiratory muscles. In Guillain–Barré syndrome the site of the lesion is the peripheral nerve and nerve roots, so the descending pathways are intact; the weakness is due to interruption of the final common pathway, and the reduced vital capacity is the most important prognostic indicator for ventilatory failure.`
+    }
+    ];
+
+    /* =====================================================================
+       SECTION C — 10 Questions on Otto Loewi
+       ===================================================================== */
+    const sectionC = [
+    {
+        q: `How did Otto Loewi come up with the idea for his Nobel Prize-winning experiment?`,
+        options: [
+            `Through a series of laboratory experiments`,
+            `During a discussion with colleagues`,
+            `In a dream`,
+            `While studying medicine in Germany`
+        ],
+        correct: `C`,
+        explanation: `Otto Loewi famously conceived the design of the experiment that demonstrated chemical synaptic transmission in a dream on the night before Easter Sunday, 1921. He dreamed that he performed an experiment in which he stimulated the vagus nerve of an isolated frog heart and then transferred the bathing fluid to a second isolated frog heart. He woke, scribbled the idea down, went back to sleep, and the next morning went straight to the laboratory and performed the experiment. The dream came after years of thinking about the problem, prompted by the earlier suggestion of his friend Thomas Renton Elliott that sympathetic nerves might release adrenaline-like substances. This "dream" origin story is one of the most famous in the history of science and illustrates how subconscious processing of a long-standing problem can produce a sudden insight.`
+    },
+    {
+        q: `What did Otto Loewi's experiment involve?`,
+        options: [
+            `Testing the effects of drugs on frog hearts`,
+            `Studying glucose metabolism and nutrition`,
+            `Stimulating nerves in frog hearts`,
+            `Performing surgery on frog hearts`
+        ],
+        correct: `C`,
+        explanation: `Loewi's classic experiment used two isolated, perfused frog hearts. In the first heart, the vagus nerve (parasympathetic) was stimulated, which slowed the heart. Loewi then transferred the Ringer's solution bathing the first heart into the second heart — and the second heart ALSO slowed, even though its nerve supply was not stimulated. This demonstrated that a chemical substance (which he called "Vagusstoff") had been released from the stimulated vagus nerve endings and carried in the fluid. He subsequently performed the mirror-image experiment: stimulating the sympathetic nerves of the first heart accelerated it, and the transferred fluid accelerated the second heart ("Acceleransstoff"). The experiment therefore involved stimulating the autonomic nerves of isolated frog hearts and transferring the perfusate — direct proof of chemical, rather than electrical, synaptic transmission.`
+    },
+    {
+        q: `What did Loewi name the inhibitory factor he discovered in his experiment?`,
+        options: [
+            `Epinephrine`,
+            `Vagustoff`,
+            `Acetylcholine`,
+            `Histamine`
+        ],
+        correct: `B`,
+        explanation: `Loewi named the inhibitory substance released by vagal stimulation "Vagusstoff" (German for "vagus substance"). The stimulatory substance released by sympathetic stimulation he named "Acceleransstoff". He later identified Vagusstoff as acetylcholine by showing that its effects were mimicked by acetylcholine and abolished by atropine (a muscarinic antagonist), and that they were potentiated by physostigmine (an acetylcholinesterase inhibitor). The term "Vagusstoff" is therefore the historical name, and "acetylcholine" is the chemical identity. Epinephrine (adrenaline) was the substance Elliott had proposed for sympathetic transmission; histamine is an unrelated mediator.`
+    },
+    {
+        q: `Which neurotransmitter is now known as Vagustoff?`,
+        options: [
+            `Epinephrine`,
+            `Acetylcholine`,
+            `Dopamine`,
+            `Norepinephrine`
+        ],
+        correct: `B`,
+        explanation: `Vagusstoff was identified as acetylcholine (ACh), the first neurotransmitter to be chemically identified. ACh is synthesised from choline and acetyl-CoA by choline acetyltransferase (ChAT), stored in synaptic vesicles, released by Ca²⁺-dependent exocytosis, and degraded in the synaptic cleft by acetylcholinesterase (AChE). It acts on nicotinic receptors (ionotropic, at the neuromuscular junction, autonomic ganglia, and adrenal medulla) and muscarinic receptors (metabotropic, M1–M5, at parasympathetic target organs and in the CNS). At the heart, ACh acts on M2 receptors, which are Gi-coupled; they open GIRK K⁺ channels (hyperpolarisation) and inhibit adenylyl cyclase, slowing the heart rate — the exact effect Loewi observed in his second frog heart. Epinephrine and norepinephrine are catecholamines released by sympathetic nerves (the "Acceleransstoff" side of Loewi's experiment); dopamine is a catecholamine neurotransmitter in the CNS.`
+    },
+    {
+        q: `What did Otto Loewi and Henry Dale share the Nobel Prize in Physiology or Medicine for?`,
+        options: [
+            `Discovering insulin`,
+            `Identifying neurotransmitters`,
+            `Studying glucose metabolism`,
+            `Mapping the human genome`
+        ],
+        correct: `B`,
+        explanation: `Otto Loewi and Sir Henry Dale shared the 1936 Nobel Prize in Physiology or Medicine "for their discoveries relating to chemical transmission of nerve impulses." Loewi provided the physiological proof (the frog-heart experiment) that nerves release chemical transmitters, while Dale characterised acetylcholine and demonstrated its actions at many sites, including the neuromuscular junction and autonomic ganglia. Together their work established the concept of chemical neurotransmission, which is the foundation of modern neuropharmacology. Insulin was discovered by Banting and Best (1921); glucose metabolism was studied by many (including Loewi early in his career); and the human genome was mapped in 2003.`
+    },
+    {
+        q: `What key concept did Thomas Renton Elliott and Otto Loewi discuss during their meetings?`,
+        options: [
+            `The role of adrenaline in nerve cell communication`,
+            `The effect of glucose metabolism on neurotransmission`,
+            `The discovery of insulin`,
+            `The importance of sympathetic nerve stimulation`
+        ],
+        correct: `A`,
+        explanation: `In 1904 Thomas Renton Elliott, then a young English physiologist, proposed that sympathetic nerve endings release a chemical substance with actions identical to adrenaline (epinephrine), and that this substance mediates the effects of sympathetic stimulation. Elliott and Loewi met and discussed this idea, which strongly influenced Loewi's thinking. The crucial insight — that a chemical released from a nerve ending carries the signal to the effector — was the concept Loewi later proved experimentally. Elliott's idea was not immediately accepted, but it provided the intellectual foundation for Loewi's frog-heart experiment and for the subsequent identification of noradrenaline as the sympathetic transmitter (by von Euler, 1946). The other options (glucose metabolism, insulin, and the general importance of sympathetic stimulation) are not the key concept discussed between them.`
+    },
+    {
+        q: `In what field did Otto Loewi's career as a scientist begin?`,
+        options: [
+            `Neuropharmacology`,
+            `Internal medicine`,
+            `Metabolism`,
+            `Physiology`
+        ],
+        correct: `C`,
+        explanation: `Otto Loewi graduated in medicine from Strasbourg in 1896, but he did not enter clinical practice. His first research posts were in the field of METABOLISM — he worked on glucose metabolism and nutrition, and on the pharmacology of various substances, before turning his attention to the physiology of the autonomic nervous system and to the heart. He was strongly influenced by his training in the laboratories of Franz Hofmeister, Hans Horst Meyer and others. His early metabolic work gave him a rigorous experimental background that he later applied to the elegant frog-heart experiments. Neuropharmacology (and the chemical transmission of nerve impulses) is the field for which he became famous, but that came later in his career.`
+    },
+    {
+        q: `Who was Otto Loewi's close friend and collaborator in the field of neuropharmacology?`,
+        options: [
+            `Ernest Starling`,
+            `Henry Dale`,
+            `Thomas Renton Elliott`,
+            `Walter Ernest Dixon`
+        ],
+        correct: `D`,
+        explanation: `Walter Ernest Dixon was a British pharmacologist at Cambridge and a close friend of Otto Loewi. Loewi spent time in England (around 1902–1903) and the two men formed a lasting friendship and intellectual partnership; Dixon shared Loewi's interest in the pharmacology of the autonomic nervous system and in chemical transmission. Ernest Starling was a British physiologist known for the Frank–Starling law of the heart, gastrointestinal hormones (secretin) and lymph formation; Henry Dale was Loewi's co-Nobel laureate (1936) but is not described as his close friend and collaborator in the way Dixon is; Thomas Renton Elliott was the physiologist whose adrenaline hypothesis influenced Loewi, but their relationship was one of intellectual exchange rather than of the described friendship.`
+    },
+    {
+        q: `How did Otto Loewi's life come to an end?`,
+        options: [
+            `He passed away peacefully in his sleep.`,
+            `He died in a laboratory accident.`,
+            `He succumbed to a long-term illness.`,
+            `He suffered a fall and fractured his pelvis.`
+        ],
+        correct: `D`,
+        explanation: `Otto Loewi died in New York City on 25 December 1961, at the age of 88. His death followed a fall in which he fractured his pelvis; he died shortly afterwards from the complications of that injury. He had emigrated to the United States after the Nazi annexation of Austria in 1938 (he was Jewish and was briefly imprisoned before being allowed to leave), and he spent his final years at the Rockefeller Institute in New York. He did not die in a laboratory accident, was not known to have a long-term terminal illness, and his death was not simply a peaceful death in sleep.`
+    },
+    {
+        q: `What did Otto Loewi's early research focus on when he joined Hans Meyer's laboratory?`,
+        options: [
+            `Glucose metabolism and nutrition`,
+            `The effects of cocaine on nerve stimulation`,
+            `Diuretics and epinephrine hyperglycemia`,
+            `The role of insulin in metabolism`
+        ],
+        correct: `A`,
+        explanation: `When Otto Loewi joined the laboratory of the pharmacologist Hans Horst Meyer at Marburg, his early research was directed at METABOLISM — specifically glucose metabolism and nutrition — rather than at the nervous system. He studied the effects of various substances on carbohydrate metabolism, and he also worked on the pharmacology of the kidney. Only later, after moving to Graz and after his influential conversations with Elliott, did he turn to the autonomic nervous system and the heart, which led to the 1921 frog-heart experiment and the discovery of Vagusstoff. The other options (cocaine, diuretics/epinephrine hyperglycaemia, and insulin) are either later developments or not the focus of his early work in Meyer's laboratory.`
+    }
+    ];
+
+    /* =====================================================================
+       GENERIC RENDERING + MARKING ENGINE
+       ===================================================================== */
+    const sections = {
+        A: { data: sectionA },
+        B: { data: sectionB },
+        C: { data: sectionC }
+    };
+
+    function renderSection(key) {
+        const data = sections[key].data;
+        const container = document.getElementById('container-' + key);
+        let html = '';
+        data.forEach((q, i) => {
+            const qid = key + '-q' + (i + 1);
+            html += '<div class="question" id="q-' + qid + '">';
+            html += '<p><span class="q-badge">Q' + (i + 1) + '</span> ' + q.q + '</p>';
+            html += '<div class="options">';
+            q.options.forEach((opt, j) => {
+                const L = String.fromCharCode(65 + j);
+                html += '<label><input type="radio" name="' + qid + '" value="' + L + '"> <strong>' + L + ')</strong> ' + opt + '</label>';
+            });
+            html += '</div>';
+            html += '<div class="question-feedback" id="fb-' + qid + '"></div>';
+            html += '</div>';
+        });
+        container.innerHTML = html;
+    }
+
+    function submitSection(key) {
+        const data = sections[key].data;
+        let score = 0;
+
+        data.forEach((q, i) => {
+            const qid = key + '-q' + (i + 1);
+            const radios = document.getElementsByName(qid);
+            let selected = null;
+            for (let r = 0; r < radios.length; r++) {
+                if (radios[r].checked) { selected = radios[r]; break; }
+            }
+            const correct = q.correct.toUpperCase();
+            if (selected && selected.value === correct) score++;
+
+            let html = '<div class="answer-block"><div class="answer-list">';
+            q.options.forEach((opt, j) => {
+                const L = String.fromCharCode(65 + j);
+                let cls = 'answer-item';
+                if (L === correct) cls += ' answer-correct';
+                if (selected && selected.value === L) {
+                    cls += ' user-choice';
+                    if (L !== correct) cls += ' answer-wrong';
+                }
+                const mark = (selected && selected.value === L) ? ' ◀ your answer' : '';
+                html += '<div class="' + cls + '">' + L + ') ' + opt + mark + '</div>';
+            });
+            html += '</div>';
+
+            const correctIdx = correct.charCodeAt(0) - 65;
+            const correctText = (correctIdx >= 0 && correctIdx < q.options.length) ? q.options[correctIdx] : '';
+
+            if (!selected) {
+                html += '<div class="explanation wrong">No answer selected. Correct answer: <strong>' +
+                        correct + ') ' + correctText + '</strong>.<br>' + q.explanation + '</div>';
+            } else if (selected.value === correct) {
+                html += '<div class="explanation">✅ <strong>Correct.</strong><br>' + q.explanation + '</div>';
+            } else {
+                html += '<div class="explanation wrong">❌ <strong>Incorrect.</strong> Correct answer: <strong>' +
+                        correct + ') ' + correctText + '</strong>.<br>' + q.explanation + '</div>';
+            }
+
+            const fb = document.getElementById('fb-' + qid);
+            if (fb) fb.innerHTML = html;
+        });
+
+        const total = data.length;
+        const pct = Math.round((score / total) * 100);
+        const box = document.getElementById('result-' + key);
+        box.style.display = 'block';
+        document.getElementById('score-' + key).innerText = score + ' / ' + total + '  (' + pct + '%)';
+
+        document.querySelectorAll('#panel-' + key + ' input[type="radio"]').forEach(r => r.disabled = true);
+    }
+
+    /* ─── INIT ─── */
+    renderSection('A');
+    renderSection('B');
+    renderSection('C');
+
+    /* ─── TAB SWITCHING ─── */
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            const target = this.dataset.target;
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+            document.getElementById('panel-' + target).classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+    </script>
+
+</body>
+</html>

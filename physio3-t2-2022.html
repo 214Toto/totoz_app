@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2022 Physiology Test 2 – 3rd Year</title>
+    <style>
+        :root {
+            --primary: #1a6b6b;
+            --accent: #2ea8a0;
+            --dark: #0f2a2a;
+            --light: #f4f8f7;
+            --radius: 12px;
+            --shadow: 0 4px 14px rgba(0, 30, 30, 0.08);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #edf3f2;
+            color: var(--dark);
+            min-height: 100vh;
+            padding-top: 72px;
+        }
+
+        header {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            background: linear-gradient(145deg, var(--primary), var(--dark));
+            color: #fff; padding: 0.6rem 0;
+            box-shadow: 0 4px 18px rgba(0, 20, 20, 0.25);
+        }
+
+        .header-inner {
+            max-width: 1000px; margin: 0 auto; padding: 0 1.5rem;
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 0.3rem;
+        }
+
+        .logo { display: flex; align-items: center; gap: 0.6rem; }
+        .logo i { font-size: 1.5rem; color: #8dd9d4; }
+        .logo h1 { font-size: 1.15rem; font-weight: 700; letter-spacing: 0.2px; }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 0.2rem 1rem; border-radius: 40px;
+            font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+            color: #b3e6e0; letter-spacing: 0.5px;
+        }
+
+        .container { max-width: 920px; margin: 0 auto; padding: 0 1.2rem 2.5rem; }
+
+        .tab-bar { display: flex; gap: 0.5rem; margin: 0.5rem 0 1.5rem 0; flex-wrap: wrap; }
+
+        .tab-btn {
+            background: #dce8e8; border: none; padding: 0.5rem 1.8rem;
+            border-radius: 40px; font-weight: 600; font-size: 0.95rem;
+            color: var(--dark); cursor: pointer; transition: 0.2s;
+        }
+        .tab-btn:hover { background: #c0d6d6; }
+        .tab-btn.active {
+            background: var(--primary); color: #fff;
+            box-shadow: 0 2px 10px rgba(26, 107, 107, 0.25);
+        }
+
+        .tab-panel { display: block; }
+        .tab-panel.hidden { display: none; }
+
+        .section-title {
+            font-size: 1.25rem; font-weight: 700; color: var(--primary);
+            margin: 0 0 0.8rem 0; padding-bottom: 0.4rem;
+            border-bottom: 3px solid rgba(26, 107, 107, 0.18);
+            display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;
+        }
+
+        .section-title .count {
+            font-size: 0.7rem; font-weight: 600; background: var(--primary);
+            color: #fff; border-radius: 40px; padding: 0 0.7rem; line-height: 1.7;
+        }
+
+        .section-subtitle { color: #4f6e6e; font-size: 0.9rem; margin-bottom: 1rem; }
+
+        .question {
+            background: #ffffff; border-radius: var(--radius);
+            padding: 1.1rem 1.2rem 0.2rem 1.2rem; margin-bottom: 1rem;
+            box-shadow: var(--shadow); border: 1px solid rgba(26, 107, 107, 0.05);
+            transition: box-shadow 0.2s;
+        }
+        .question:hover { box-shadow: 0 6px 20px rgba(0, 30, 30, 0.07); }
+
+        .question .q-badge {
+            display: inline-block; background: var(--primary); color: #fff;
+            border-radius: 40px; padding: 0 0.65rem; font-size: 0.7rem;
+            font-weight: 700; line-height: 1.6; margin-right: 0.4rem;
+        }
+
+        .question p { font-weight: 600; font-size: 0.97rem; margin-bottom: 0.4rem; color: var(--dark); }
+
+        .options label {
+            display: block; background: #fafcfc; border: 1px solid #dde8e8;
+            border-radius: 7px; padding: 0.4rem 0.85rem; margin-top: 0.4rem;
+            cursor: pointer; transition: all 0.15s; font-weight: 450; font-size: 0.92rem;
+        }
+        .options label:hover { background: #e8f5f4; border-color: var(--accent); }
+        .options input[type="radio"] { margin-right: 0.5rem; accent-color: var(--primary); transform: scale(1.04); }
+
+        .question-feedback { margin-top: 0.8rem; padding: 0.4rem 0 0.1rem 0; border-top: 1px dashed #dce6e6; }
+
+        .answer-block strong { display: block; margin-bottom: 3px; color: var(--primary); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.3px; }
+        .answer-list { display: flex; flex-direction: column; gap: 2px; }
+        .answer-item {
+            padding: 4px 10px; border-radius: 5px; border: 1px solid #e4edec;
+            background: #ffffff; font-weight: 500; font-size: 0.88rem;
+        }
+        .answer-correct { background: #e8f7ef; border-color: #a8d8c0; color: #0a4f3a; }
+        .answer-wrong { background: #fde9ea; border-color: #f5b8b8; color: #8a1f2b; }
+        .user-choice { outline: 2px dashed rgba(0, 0, 0, 0.06); }
+
+        .explanation {
+            margin-top: 5px; padding: 8px 13px; border-radius: 7px;
+            background: #f0f8f6; color: #065f4a; font-size: 0.88rem;
+            line-height: 1.55; border-left: 4px solid var(--accent);
+        }
+        .explanation.wrong { background: #fdf1f1; color: #7a1f1f; border-left-color: #e68080; }
+
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            color: #fff; border: none; padding: 0.55rem 1.8rem;
+            border-radius: var(--radius); font-weight: 600; font-size: 0.95rem;
+            cursor: pointer; transition: transform 0.15s, box-shadow 0.2s;
+            box-shadow: 0 4px 14px rgba(26, 107, 107, 0.25);
+        }
+        .btn:hover { transform: scale(1.02); box-shadow: 0 6px 24px rgba(26, 107, 107, 0.32); }
+        .btn:active { transform: scale(0.96); }
+
+        .btn-sm { padding: 0.35rem 1rem; font-size: 0.82rem; border-radius: 8px; }
+        .btn-outline {
+            background: #ffffff; color: var(--primary);
+            border: 2px solid var(--primary); box-shadow: none;
+        }
+        .btn-outline:hover { background: #e8f5f4; box-shadow: 0 2px 8px rgba(26, 107, 107, 0.15); }
+
+        .submit-wrap { text-align: center; margin: 1.5rem 0 1.8rem; }
+
+        .result {
+            margin-top: 1.5rem; padding: 1.5rem 1.5rem 0.8rem;
+            background: #eaf6f4; border-radius: var(--radius);
+            text-align: center; display: none; border: 1px solid #b8dbd6;
+        }
+        .result h3 { font-size: 1.1rem; font-weight: 600; color: var(--dark); }
+        .score { font-size: 2.4rem; font-weight: 800; color: var(--primary); margin: 0.1rem 0 0.2rem; }
+        .text-muted { color: #4f6e6e; font-size: 0.9rem; }
+        .hidden { display: none !important; }
+
+        .model-answer {
+            margin-top: 0.8rem; padding: 0.9rem 1.1rem; border-radius: 8px;
+            background: #f7fbfa; border: 1px solid #c8e2de;
+            border-left: 5px solid var(--accent);
+            font-size: 0.9rem; line-height: 1.6; color: #0a3d38;
+        }
+        .model-answer h4 {
+            font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.4px;
+            color: var(--primary); margin-bottom: 0.4rem;
+        }
+        .model-answer ul, .model-answer ol { margin-left: 1.2rem; margin-top: 0.3rem; }
+        .model-answer li { margin-bottom: 0.2rem; }
+
+        .text-answer-wrap { margin-top: 0.6rem; }
+        .text-answer-wrap textarea {
+            width: 100%; min-height: 90px; border: 1px solid #d5e3e2;
+            border-radius: 8px; padding: 0.6rem 0.8rem; font-family: inherit;
+            font-size: 0.9rem; line-height: 1.5; resize: vertical;
+            background: #fdfefe; color: var(--dark);
+        }
+        .text-answer-wrap textarea:focus {
+            outline: none; border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(46, 168, 160, 0.12);
+        }
+
+        .reveal-wrap { margin-top: 0.6rem; }
+
+        .scenario-intro {
+            background: #f7fbfa; border: 1px solid #c8e2de; border-radius: 10px;
+            padding: 1rem 1.2rem; margin-bottom: 1.2rem;
+            font-size: 0.92rem; line-height: 1.6; color: #0a3d38;
+        }
+        .scenario-intro strong { color: var(--primary); }
+
+        @media (max-width: 700px) {
+            body { padding-top: 68px; }
+            .logo h1 { font-size: 0.95rem; }
+            .header-inner { padding: 0 1rem; flex-direction: column; align-items: stretch; gap: 0.2rem; }
+            .badge { align-self: flex-start; }
+            .question { padding: 0.9rem 0.9rem 0.1rem 0.9rem; }
+            .section-title { font-size: 1.05rem; }
+            .score { font-size: 2rem; }
+            .btn { padding: 0.5rem 1.2rem; font-size: 0.85rem; }
+            .tab-btn { padding: 0.4rem 1.2rem; font-size: 0.85rem; }
+        }
+        @media (max-width: 420px) {
+            .logo h1 { font-size: 0.8rem; }
+            .options label { font-size: 0.85rem; padding: 0.35rem 0.65rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-inner">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+                <h1>2022 Physiology Test 2 – 3rd Year</h1>
+            </div>
+            <span class="badge"><i class="fas fa-pencil-alt"></i> &nbsp;30 MCQs + Structured</span>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+
+            <div class="tab-bar">
+                <button class="tab-btn active" data-target="A">📝 Section A – MCQs</button>
+                <button class="tab-btn" data-target="B">✍️ Section B – Structured</button>
+                <button class="tab-btn" data-target="C">🩺 Section C – Scenarios</button>
+            </div>
+
+            <!-- ============ SECTION A ============ -->
+            <div id="panel-A" class="tab-panel">
+                <div class="section-title">
+                    <i class="fas fa-list-ul"></i> Section A – Multiple Choice Questions
+                    <span class="count">30</span>
+                </div>
+                <p class="section-subtitle">Select the best answer for each question, then click <strong>Submit Section A</strong> below.</p>
+                <form id="form-A">
+                    <div id="container-A"></div>
+                    <div class="submit-wrap">
+                        <button type="button" class="btn" onclick="submitSectionA()">
+                            <i class="fas fa-check-circle"></i> Submit Section A
+                        </button>
+                    </div>
+                </form>
+                <div class="result" id="result-A">
+                    <h3><i class="fas fa-chart-simple"></i> Your Score – Section A</h3>
+                    <div class="score" id="score-A">0</div>
+                    <p class="text-muted">Review the feedback below each question.</p>
+                </div>
+            </div>
+
+            <!-- ============ SECTION B ============ -->
+            <div id="panel-B" class="tab-panel hidden">
+                <div class="section-title">
+                    <i class="fas fa-pen"></i> Section B – Structured and Short Answer Questions
+                    <span class="count">9</span>
+                </div>
+                <p class="section-subtitle">
+                    Answer each question in the space provided. Write your answer in the text box, then click
+                    <strong>Show Model Answer</strong> to reveal a full, high-yield model answer for self-assessment.
+                </p>
+                <div id="container-B"></div>
+            </div>
+
+            <!-- ============ SECTION C ============ -->
+            <div id="panel-C" class="tab-panel hidden">
+                <div class="section-title">
+                    <i class="fas fa-stethoscope"></i> Section C – Scenario Question
+                    <span class="count">2 Cases</span>
+                </div>
+                <div id="container-C"></div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+    /* =====================================================================
+       SECTION A — 30 MCQs (exact text from the 2022 paper)
+       ===================================================================== */
+    const sectionA = [
+    {
+        q: `The following clinical features of Addison's disease are all correct, except`,
+        options: [
+            `Diffuse lipomatosis`,
+            `Weight loss`,
+            `Hyperpigmentation`,
+            `Hypotension`,
+            `Dyspepsia`
+        ],
+        correct: `A`,
+        explanation: `Addison's disease is primary adrenal insufficiency with destruction of the adrenal cortex. The classic features include: (1) weight loss and anorexia (glucocorticoid deficiency), (2) hyperpigmentation of skin and mucous membranes (elevated ACTH/POMC-derived MSH — the "bronzed" appearance, especially in sun-exposed areas, palmar creases and buccal mucosa), (3) hypotension and postural dizziness (mineralocorticoid deficiency → Na⁺ and water loss; glucocorticoid deficiency → reduced vascular tone), (4) dyspepsia, nausea, vomiting and abdominal pain, (5) salt craving, fatigue and weakness, and (6) hyperkalemia, hyponatremia and metabolic acidosis. Diffuse lipomatosis — abnormal diffuse fat deposition — is NOT a feature of Addison's disease. It is seen in Cushing's syndrome (central obesity, moon face, buffalo hump) and in some lipodystrophies.`
+    },
+    {
+        q: `Which statement is not common in panhypopituitarism?`,
+        options: [
+            `Hirsutism`,
+            `Hypogonadism`,
+            `Hypothyroidism`,
+            `Hypocorticism`,
+            `Premature senility`
+        ],
+        correct: `A`,
+        explanation: `Panhypopituitarism is deficiency of all anterior pituitary hormones (GH, TSH, ACTH, LH, FSH, prolactin). The clinical picture includes: (1) hypogonadism — loss of libido, amenorrhea, impotence, infertility, loss of secondary sexual hair; (2) hypothyroidism — cold intolerance, weight gain, dry skin, bradycardia, slow mentation; (3) hypocorticism (secondary adrenal insufficiency) — weakness, fatigue, hypotension, hypoglycemia, but WITHOUT hyperpigmentation (ACTH is low) and usually WITHOUT hyperkalemia (aldosterone is largely preserved); (4) growth failure in children; and (5) premature senility — premature ageing with fine wrinkles and frailty due to loss of GH and sex steroids. Hirsutism (excessive male-pattern hair growth in women) is caused by ANDROGEN EXCESS — seen in PCOS, congenital adrenal hyperplasia, Cushing's syndrome and androgen-secreting tumors. In panhypopituitarism, androgen production is DECREASED, so hirsutism does not occur — indeed, there is LOSS of body hair.`
+    },
+    {
+        q: `Name one criterion, which does not indicate hypoparathyroidism`,
+        options: [
+            `Calcium-containing renal calculi`,
+            `Carpopedal spasm`,
+            `Hyperphosphatemia`,
+            `Tetany`,
+            `Laryngeal stridor`
+        ],
+        correct: `A`,
+        explanation: `Hypoparathyroidism is deficiency of parathyroid hormone (PTH), leading to: (1) hypocalcemia — because PTH is needed for bone resorption, renal Ca²⁺ reabsorption and activation of vitamin D; (2) hyperphosphatemia — because PTH normally inhibits renal phosphate reabsorption, so its loss causes phosphate retention; (3) neuromuscular hyperexcitability — carpopedal spasm, tetany, Trousseau's sign, Chvostek's sign, laryngeal stridor, and in severe cases seizures; and (4) ECG changes — prolonged QT interval. Calcium-containing renal calculi (nephrolithiasis) are a feature of HYPERparathyroidism (primary hyperparathyroidism), because PTH increases serum calcium and the filtered calcium load, promoting stone formation. In hypoparathyroidism, serum calcium is LOW, so calcium stones do not form.`
+    },
+    {
+        q: `Biological activity of vitamin D includes all the following, except:`,
+        options: [
+            `Increase of Ca2+ excretion in kidneys`,
+            `Intensification of Ca2+ absorption in guts`,
+            `Stimulation of synthesis of bone matrix`,
+            `Stimulation of calcification matrix in bone`,
+            `Stimulation of metabolism in muscles`
+        ],
+        correct: `A`,
+        explanation: `The active form of vitamin D, 1,25-dihydroxycholecalciferol (calcitriol), acts on: (1) the intestine — increasing Ca²⁺ absorption (via calbindin and TRPV6) and phosphate absorption; (2) bone — stimulating both bone matrix synthesis (osteoblast activity) and bone mineralization; (3) the kidney — increasing renal Ca²⁺ and phosphate REABSORPTION (not excretion); (4) muscle — supporting normal muscle metabolism and contractility (deficiency causes myopathy); and (5) the parathyroid — inhibiting PTH secretion via negative feedback. Vitamin D does NOT increase renal Ca²⁺ excretion — it decreases it by promoting reabsorption in the distal tubule. Hypercalciuria can occur in vitamin D toxicity because the filtered load of calcium overwhelms the reabsorptive capacity, but the physiological action is increased reabsorption.`
+    },
+    {
+        q: `Which of the following is true regarding human growth hormone?`,
+        options: [
+            `Secretion is stimulated by somatostatin and inhibited by ghrelin`,
+            `It has a long half-life`,
+            `It inhibits protein synthesis`,
+            `It decreases lipolysis`,
+            `Decreases sodium and potassium ion urinary excretion`
+        ],
+        correct: `E`,
+        explanation: `Growth hormone (GH, somatotropin) is a 191-amino-acid peptide secreted by somatotrophs of the anterior pituitary. Its secretion is stimulated by GHRH and ghrelin (the "hunger hormone" from the stomach), and INHIBITED by somatostatin (GHIH) — so option (a) reverses the truth. GH has a SHORT half-life (~20 minutes), so option (b) is false. GH is an anabolic hormone: it STIMULATES protein synthesis (option c is false), stimulates LIPOLYSIS (option d is false), and decreases glucose uptake. GH promotes positive sodium, potassium and water balance — it decreases urinary Na⁺ and K⁺ excretion, partly through its effects on the renal tubule and via IGF-1. This is why acromegalic patients may have expanded extracellular fluid volume and hypertension.`
+    },
+    {
+        q: `Iodides are stored in the thyroid follicles mainly in the form of which of the following?`,
+        options: [
+            `Thyroxine`,
+            `Triiodothyronine`,
+            `Thyroglobulin`,
+            `Monoidodotyrosine`,
+            `Thyroid peroxidase`
+        ],
+        correct: `C`,
+        explanation: `Iodide is taken up by follicular cells via the Na⁺/I⁻ symporter (NIS), transported into the colloid, and oxidised by thyroid peroxidase (TPO) to iodine. It is then incorporated into tyrosine residues of THYROGLOBULIN — a large glycoprotein (660 kDa) synthesised by the follicular cells and secreted into the colloid. Within thyroglobulin, iodination produces monoiodotyrosine (MIT) and diiodotyrosine (DIT), which are coupled to form T4 (thyroxine) and T3 (triiodothyronine). The thyroid gland stores weeks' worth of hormone in this form — thyroglobulin is the storage form of thyroid hormone in the colloid. T4 and T3 are released only after thyroglobulin is endocytosed and proteolysed in the follicular cell. Thyroid peroxidase is the enzyme, not the storage form.`
+    },
+    {
+        q: `Which aspect of glucose transport is enhanced by insulin?`,
+        options: [
+            `Transport into muscle and adipose tissue`,
+            `Transport across the tubular epithelium of the kidney`,
+            `Transport into the brain`,
+            `Transport through the intestinal mucosa`,
+            `Transport against a concentration gradient`
+        ],
+        correct: `A`,
+        explanation: `Insulin promotes glucose uptake into skeletal muscle and adipose tissue by stimulating the translocation of GLUT4-containing vesicles to the cell membrane. This is the rate-limiting step for insulin-stimulated glucose disposal. By contrast: (1) glucose transport in the kidney tubule (SGLT2, GLUT2) is insulin-INDEPENDENT; (2) glucose transport into the brain (GLUT1, GLUT3) is insulin-INDEPENDENT (the brain is not an insulin-sensitive tissue); (3) glucose transport across the intestinal mucosa (SGLT1, GLUT2) is insulin-INDEPENDENT; and (4) glucose transport is by facilitated diffusion (down its concentration gradient) in muscle and fat — insulin does not cause transport against a concentration gradient.`
+    },
+    {
+        q: `The physiological secretion of growth hormone is increased by which of the following?`,
+        options: [
+            `Normal REM sleep`,
+            `Increased cortisol levels`,
+            `Free fatty acids`,
+            `Somatostatin`,
+            `Fasting`
+        ],
+        correct: `E`,
+        explanation: `GH secretion is pulsatile and is increased by: (1) fasting and hypoglycemia (the most potent physiological stimulus); (2) deep (slow-wave, non-REM) sleep — the largest pulse occurs shortly after sleep onset (GH is associated with slow-wave sleep, not REM); (3) exercise; (4) stress and trauma; (5) GHRH and ghrelin; (6) amino acids (especially arginine); and (7) estrogen and testosterone (at puberty). GH secretion is DECREASED by: somatostatin (GHIH), IGF-1 (negative feedback), free fatty acids, glucose, and chronic cortisol excess.`
+    },
+    {
+        q: `Which of the following is the most likely explanation for hypothyroidism in a patient whose iodine level is normal?`,
+        options: [
+            `A disproportionate production of T3 to T4`,
+            `Hypo secretion of TSH`,
+            `Reduced size of thyroid follicles`,
+            `Endemic goiter`,
+            `Decrease in the thyroid secretion of calcitonin`
+        ],
+        correct: `B`,
+        explanation: `If iodine levels are normal and the patient is hypothyroid, the most likely explanation among the options is hyposecretion of TSH — i.e., SECONDARY (central) hypothyroidism due to pituitary or hypothalamic disease. In this case, the thyroid gland itself is normal and iodine is available, but it is not stimulated to produce hormone because TSH is deficient. Features: low free T4, low or inappropriately normal TSH. Option (a) — disproportionate T3/T4 production — is not a recognised cause of hypothyroidism. Option (c) — reduced follicle size — is a consequence, not a cause. Option (d) — endemic goiter — is due to IODINE DEFICIENCY, which contradicts the premise of normal iodine. Option (e) — decreased calcitonin — is irrelevant to thyroid hormone status (calcitonin is made by C cells and regulates calcium, not metabolism).`
+    },
+    {
+        q: `Which of the following statements about the adrenal gland is correct?`,
+        options: [
+            `During stress, TSH stimulates the adrenal cortex and medulla to secrete acetylcholine.`,
+            `During stress, the alpha cells of islets secrete insulin and simultaneously the beta cells of the islets secrete glucagon.`,
+            `During stress, ACTH stimulates the adrenal cortex, and neurons of the sympathetic nervous system stimulate the adrenal medulla.`,
+            `At all times, the anterior portion secretes ACTH, while the posterior portion secretes oxytocin.`,
+            `At all times, the adrenal gland monitors calcium levels in the blood and regulates calcium by secreting the two antagonistic hormones, epinephrine, and norepinephrine.`
+        ],
+        correct: `C`,
+        explanation: `During stress, the hypothalamic-pituitary-adrenal (HPA) axis and the sympathoadrenal system are activated: (1) CRH from the hypothalamus → ACTH from the anterior pituitary → cortisol (and androgens) from the adrenal CORTEX (zona fasciculata and reticularis); (2) sympathetic preganglionic fibres (splanchnic nerves) directly stimulate chromaffin cells of the adrenal MEDULLA to release epinephrine (~80%) and norepinephrine (~20%) into the circulation. This is the classic "fight-or-flight" endocrine response. Option (a) is nonsense — TSH does not stimulate the adrenal; (b) reverses the roles of α- and β-cells (α-cells secrete glucagon, β-cells secrete insulin); (d) is anatomically wrong — the adrenal medulla does not secrete ACTH (the pituitary does) and does not secrete oxytocin (the posterior pituitary does); (e) is wrong — the adrenal gland does not monitor calcium (the parathyroids do), and epinephrine/norepinephrine are not calcium-regulating hormones.`
+    },
+    {
+        q: `The endogenous secretion of ACTH is correctly described in which of the following statements?`,
+        options: [
+            `It shows a circadian rhythm in humans.`,
+            `It is decreased during periods of stress.`,
+            `It is inhibited by aldosterone.`,
+            `It is stimulated by glucocorticoids.`,
+            `It is stimulated by epinephrine.`
+        ],
+        correct: `A`,
+        explanation: `ACTH secretion from the anterior pituitary corticotrophs shows a well-characterised CIRCADIAN RHYTHM: levels peak in the early morning (around 6–8 a.m., just before waking) and are lowest in the late evening/around midnight. This rhythm is driven by the suprachiasmatic nucleus and is entrained by the sleep–wake cycle. Clinically, this is why cortisol is measured at 8 a.m. (peak) and midnight (nadir) when investigating Cushing's syndrome. ACTH is INCREASED (not decreased) during stress; it is INHIBITED (not stimulated) by glucocorticoids via negative feedback; it is NOT regulated by aldosterone (aldosterone is regulated by the renin-angiotensin system and K⁺); and it is NOT stimulated by epinephrine.`
+    },
+    {
+        q: `Biological role of thyroid hormones embraces all the following, except`,
+        options: [
+            `Sexual development`,
+            `Tissue growth`,
+            `Metamorphosis`,
+            `Regulation of metabolic processes`,
+            `Calorigenesis`
+        ],
+        correct: `A`,
+        explanation: `Thyroid hormones (T4 and T3) have widespread actions: (1) regulation of metabolic rate — they increase the basal metabolic rate (BMR) and oxygen consumption in almost all tissues (except the adult brain, spleen, testes, uterus and lymph nodes); (2) calorigenesis — increased heat production (thermogenesis) via stimulation of Na⁺/K⁺-ATPase and mitochondrial uncoupling; (3) growth and development — they are essential for normal tissue growth, especially of the nervous system and skeleton (deficiency causes cretinism); (4) metamorphosis — in amphibians, thyroid hormones trigger the metamorphosis of tadpole to frog; (5) effects on the cardiovascular, gastrointestinal, and neuromuscular systems; and (6) potentiation of catecholamines. SEXUAL DEVELOPMENT is primarily governed by the hypothalamic-pituitary-gonadal (HPG) axis — GnRH, LH, FSH, estrogen, progesterone, testosterone — not by thyroid hormones.`
+    },
+    {
+        q: `Clinical picture of hypothyroidism includes all the following symptoms except`,
+        options: [
+            `Diarrhea`,
+            `Drowsiness`,
+            `Slow speech`,
+            `Weight gain`,
+            `Pernicious anaemia`
+        ],
+        correct: `A`,
+        explanation: `Hypothyroidism causes a general slowing of metabolic processes: (1) weight gain (despite reduced appetite), (2) drowsiness, lethargy, fatigue and somnolence, (3) slow, hoarse speech and slow mentation ("myxedema madness" in severe cases), (4) cold intolerance, (5) bradycardia, (6) dry skin, coarse hair, brittle nails, (7) non-pitting periorbital edema (myxedema), (8) constipation (NOT diarrhea — decreased gut motility), and (9) a normocytic or macrocytic anemia — pernicious anemia (vitamin B12 deficiency) is associated with autoimmune hypothyroidism (both may coexist in polyglandular autoimmune syndrome). Diarrhea is a feature of HYPERTHYROIDISM (increased gut motility), not hypothyroidism.`
+    },
+    {
+        q: `Hypersecretion of vasopressin is evidenced by:`,
+        options: [
+            `Increased osmolality of the ECF`,
+            `Increased diuresis`,
+            `Intensification of Na+ excretion`,
+            `Spasm of uterus`,
+            `Increased glucose reabsorption`
+        ],
+        correct: `C`,
+        explanation: `Hypersecretion of vasopressin (ADH) — as in the syndrome of inappropriate ADH secretion (SIADH) — causes water retention, leading to: (1) hyponatremia and hypo-osmolality of the ECF; (2) continued renal Na⁺ excretion (natriuresis) — the retained water expands the ECF volume, which triggers mechanisms that increase Na⁺ excretion (including increased ANP release, reduced aldosterone, and pressure natriuresis); (3) concentrated urine (high urine osmolality); and (4) decreased diuresis (oliguria). Option (a) — increased ECF osmolality — is the STIMULUS for ADH secretion, not the evidence of hypersecretion; in SIADH, ECF osmolality is LOW. Option (b) — increased diuresis — is the opposite (diabetes insipidus). Option (d) — uterine spasm — is an effect of oxytocin, not ADH. Option (e) — increased glucose reabsorption — is an effect of insulin/SGLT, not ADH.`
+    },
+    {
+        q: `Cardiovascular symptoms of Addison's disease include the following except:`,
+        options: [
+            `Hypotension`,
+            `Syncope`,
+            `Arrhythmias`,
+            `Circulatory failure`,
+            `Bradycardia`
+        ],
+        correct: `C`,
+        explanation: `In Addison's disease (primary adrenal insufficiency), mineralocorticoid deficiency causes Na⁺ and water loss, volume depletion and hyperkalemia, while glucocorticoid deficiency causes reduced vascular tone and impaired cardiac contractility. The cardiovascular features are: (1) hypotension (often postural), (2) syncope (due to cerebral hypoperfusion), (3) circulatory failure/shock in adrenal crisis, and (4) bradycardia (due to hyperkalemia and loss of the permissive effect of cortisol on catecholamines). Cardiac ARRHYTHMIAS are NOT a classic feature of Addison's disease — the ECG typically shows bradycardia, low-voltage QRS, prolonged PR interval and peaked T waves (from hyperkalemia). Arrhythmias (e.g., atrial fibrillation, ventricular tachycardia) are more characteristic of thyrotoxicosis, pheochromocytoma, or other conditions.`
+    },
+    {
+        q: `Mwita presents with primary hypoparathyroidism at his physician's office with dehydration and malaise. Which of the following plasma levels is most likely to be increased?`,
+        options: [
+            `Phosphate`,
+            `Sodium`,
+            `Calcium`,
+            `Potassium`,
+            `Calcitonin`
+        ],
+        correct: `A`,
+        explanation: `In primary hypoparathyroidism, PTH is deficient. PTH normally: (1) increases renal Ca²⁺ reabsorption, (2) inhibits renal phosphate reabsorption (in the proximal tubule), and (3) stimulates 1α-hydroxylase to activate vitamin D. Without PTH: (1) serum CALCIUM falls (hypocalcemia), (2) serum PHOSPHATE rises (hyperphosphatemia) because the kidney cannot excrete phosphate, and (3) vitamin D activation is reduced, worsening hypocalcemia. Therefore, the most likely INCREASED plasma level is PHOSPHATE. Sodium and potassium are not directly regulated by PTH. Calcitonin is secreted by thyroid C cells and is not increased in hypoparathyroidism.`
+    },
+    {
+        q: `Which of the following statements about growth and development is correct?`,
+        options: [
+            `Growth hormone activates the JAK2-STAT pathway`,
+            `Linear growth ceases earlier in boys than in girls`,
+            `Serum IGF-1 levels decrease throughout childhood`,
+            `Growth hormone is essential for prenatal linear growth`,
+            `Normal growth during puberty is independent of thyroid function`
+        ],
+        correct: `A`,
+        explanation: `Growth hormone (GH) binds to its receptor — a class I cytokine receptor — which dimerises and activates the associated JAK2 tyrosine kinase. JAK2 phosphorylates STAT5b, which dimerises and translocates to the nucleus to regulate gene transcription, including the gene for IGF-1. This is the JAK2-STAT pathway, so option (a) is correct. Option (b) is wrong — linear growth ceases LATER in boys than in girls. Option (c) is wrong — serum IGF-1 levels INCREASE during childhood, peaking at puberty. Option (d) is wrong — GH is NOT essential for prenatal linear growth; prenatal growth is driven mainly by insulin, IGF-2 and nutrition. Option (e) is wrong — normal growth during puberty REQUIRES thyroid hormone, which synergises with GH and sex steroids.`
+    },
+    {
+        q: `Which of the following is the hallmark of pheochromocytoma (tumor of the adrenal medulla)?`,
+        options: [
+            `Hypoglycemia`,
+            `Weight gain`,
+            `Dry skin`,
+            `Lethargy`,
+            `Hypertension`
+        ],
+        correct: `E`,
+        explanation: `Pheochromocytoma is a tumour of the chromaffin cells of the adrenal medulla (or extra-adrenal paraganglia) that secretes catecholamines — epinephrine and/or norepinephrine — episodically or continuously. The hallmark is HYPERTENSION, which may be sustained or paroxysmal, often accompanied by the classic triad of headache, palpitations and diaphoresis. Other features include anxiety, tremor, pallor, weight loss (due to increased metabolic rate), and hyperglycemia (catecholamines stimulate glycogenolysis and gluconeogenesis). Hypoglycemia, weight gain, dry skin and lethargy are NOT features — they would suggest hypothyroidism or adrenal insufficiency.`
+    },
+    {
+        q: `Which of the following is true regarding parathyroid hormone (PTH)?`,
+        options: [
+            `It is synthesized and secreted from the oxyphi cells in the parathyroid glands`,
+            `Secretion is increased in response to an increase in plasma-free Ca2+ concentration`,
+            `It acts directly on bone cells to increase, Ca2+ resorption and mobilize Ca2+`,
+            `It acts directly on intestinal cells to increase Ca2+ absorption`,
+            `It increases phosphate reabsorption in the renal proximal tubular cells`
+        ],
+        correct: `C`,
+        explanation: `PTH is synthesised and secreted by the CHIEF cells (principal cells) of the parathyroid glands — not the oxyphil cells (option a is wrong). PTH secretion is INCREASED in response to a DECREASE in plasma-free Ca²⁺ (option b reverses this — hypocalcemia stimulates PTH; hypercalcemia inhibits it). PTH acts DIRECTLY on bone (osteoblasts and osteocytes, which then signal osteoclasts) to increase bone resorption and mobilise calcium and phosphate (option c is correct). PTH does NOT act directly on intestinal cells — it increases intestinal Ca²⁺ absorption INDIRECTLY by stimulating renal 1α-hydroxylase to produce calcitriol (option d is wrong). PTH INHIBITS phosphate reabsorption in the proximal tubule (phosphaturic effect), thereby increasing phosphate excretion — it does not increase phosphate reabsorption (option e is wrong).`
+    },
+    {
+        q: `Regarding the metabolic actions of growth hormone, which of the following is INCORRECT?`,
+        options: [
+            `Growth hormone inhibits glucose uptake into muscle`,
+            `Growth hormone stimulates gluconeogenesis in liver.`,
+            `The actions of growth hormone are the opposite of those of insulin`,
+            `Growth hormone promotes the storage of lipid in adipose tissue`,
+            `Growth hormone stimulates the liver to release a growth factor called IGF-1`
+        ],
+        correct: `D`,
+        explanation: `GH is a counter-regulatory, diabetogenic hormone: it (1) inhibits glucose uptake into muscle (a), (2) stimulates hepatic gluconeogenesis (b), (3) opposes insulin action — hence "the actions of growth hormone are the opposite of those of insulin" (c), and (5) stimulates the liver (and other tissues) to produce IGF-1 (e). GH promotes LIPOLYSIS — the breakdown of stored triglycerides in adipose tissue into free fatty acids and glycerol — NOT the storage of lipid. Insulin promotes lipid storage; GH mobilises it. Therefore, option (d) is the INCORRECT statement.`
+    },
+    {
+        q: `Which of the following would not occur when inhibin levels are high?`,
+        options: [
+            `Induce the release of LH and FSH from the anterior pituitary gland`,
+            `Prevent the release of FSH from the anterior pituitary gland`,
+            `Prevent the release of LH from the anterior pituitary gland`,
+            `Inhibit the secretion of GnRH of the hypothalamus`,
+            `Decreased sperm production`
+        ],
+        correct: `A`,
+        explanation: `Inhibin is a glycoprotein hormone secreted by the Sertoli cells of the testes (and granulosa cells of the ovary). Its principal action is to selectively INHIBIT the secretion of FOLLICLE-STIMULATING HORMONE (FSH) from the anterior pituitary — it does NOT inhibit LH (option c is incorrect as a statement of inhibin's action). Inhibin also inhibits GnRH secretion from the hypothalamus (d), and high inhibin levels are associated with decreased sperm production in some contexts (e). The question asks what would NOT occur when inhibin levels are high: inhibin does NOT induce the release of LH and FSH (option a) — it inhibits FSH, and does not stimulate LH. Therefore, option (a) is the correct answer (the event that would NOT occur).`
+    },
+    {
+        q: `Ovulation is caused by a sudden increase in the secretion of which of the following hormones?`,
+        options: [
+            `LH`,
+            `FSH`,
+            `GnRH`,
+            `Estrogen`,
+            `Progesterone`
+        ],
+        correct: `A`,
+        explanation: `Ovulation is triggered by the mid-cycle LH SURGE — a sudden, dramatic increase in luteinising hormone secretion from the anterior pituitary, occurring about 24–36 hours before ovulation. The LH surge is triggered by the positive feedback of rapidly rising estradiol from the mature Graafian follicle. The LH surge causes: (1) resumption of meiosis I in the oocyte (completing meiosis I and arresting in metaphase II), (2) rupture of the follicular wall and release of the oocyte, and (3) luteinisation of the remaining granulosa and theca cells to form the corpus luteum. While FSH also rises slightly at mid-cycle, it is the LH surge that is the direct trigger.`
+    },
+    {
+        q: `Which of the following is a function of Sertoli cells in the seminiferous tubules?`,
+        options: [
+            `Secretion of FSH into the tubular lumen`,
+            `Secretion of testosterone into the tubular lumen`,
+            `Maintenance of the blood-testis barrier`,
+            `Synthesis of estrogen after puberty`,
+            `Expression of surface LH receptors`
+        ],
+        correct: `C`,
+        explanation: `Sertoli cells (sustentacular cells) are the "nurse cells" of the seminiferous tubules. Their functions include: (1) forming the BLOOD-TESTIS BARRIER via tight junctions between adjacent Sertoli cells — this creates the basal and adluminal compartments and protects developing sperm from immune attack; (2) providing nutrients and structural support to developing germ cells; (3) phagocytosing residual cytoplasm (spermatid residual bodies); (4) secreting androgen-binding protein (ABP), inhibin, activin, Müllerian-inhibiting substance (MIS, in the fetus), and transferrin; (5) converting testosterone to dihydrotestosterone (DHT) and estradiol (via aromatase). Leydig cells secrete testosterone (b) and express LH receptors (e); FSH acts on Sertoli cells (a). The best and most classic answer is the blood-testis barrier.`
+    },
+    {
+        q: `Biological actions of estrogens include a decrease in which of the following?`,
+        options: [
+            `Ovarian follicular growth`,
+            `Duct growth in the breasts`,
+            `Uterine smooth muscle motility`,
+            `Serum cholesterol levels`,
+            `Libido`
+        ],
+        correct: `D`,
+        explanation: `Estrogens have numerous actions, including: (1) stimulation of ovarian follicular growth (a is increased, not decreased), (2) stimulation of ductal growth in the breasts (b is increased), (3) increased uterine smooth muscle motility and excitability (c is increased), (4) increased libido (e is increased), and (5) DECREASED serum cholesterol levels — estrogens increase LDL receptor expression in the liver, increase bile acid secretion, and alter lipoprotein metabolism, leading to lower total cholesterol and LDL, and higher HDL. This is why premenopausal women have a lower risk of cardiovascular disease than men, and why cholesterol rises after menopause.`
+    },
+    {
+        q: `Which of the following statements about progesterone is true?`,
+        options: [
+            `Progesterone is secreted by the corpus luteum.`,
+            `Progesterone secretion by the placenta increases at week 5 of gestation.`,
+            `Plasma levels of progesterone increase during menses.`,
+            `Plasma levels of progesterone remain constant after implantation.`,
+            `Plasma levels of progesterone decrease after ovulation.`
+        ],
+        correct: `A`,
+        explanation: `Progesterone is secreted by the CORPUS LUTEUM after ovulation (and later by the placenta). Option (a) is correct. Option (b) is wrong — the corpus luteum is the main source of progesterone for the first ~6–8 weeks; the placenta takes over progesterone production gradually, with a significant increase after about 8–10 weeks, not at week 5. Option (c) is wrong — progesterone levels are LOW during menses (the corpus luteum has regressed). Option (d) is wrong — progesterone levels rise progressively after implantation, not remain constant. Option (e) is wrong — progesterone levels INCREASE after ovulation (due to the corpus luteum), not decrease.`
+    },
+    {
+        q: `Administration of estrogens in women will do which of the following?`,
+        options: [
+            `Limit the growth of ovarian follicles`,
+            `Produce cyclic changes in the vagina and endometrium`,
+            `Cause cervical mucus to become thicker and more acidic`,
+            `Retard ductal proliferation in the breast`,
+            `Decrease bone density`
+        ],
+        correct: `B`,
+        explanation: `Exogenous estrogen administration produces cyclic changes in the vagina and endometrium (when given cyclically with a progestin, as in hormone replacement therapy or oral contraceptives). Estrogens: (1) stimulate ovarian follicular growth (a is wrong — they do not limit it), (2) cause cervical mucus to become THINNER, clearer, more alkaline and more abundant (spinnbarkeit) — not thicker and acidic (c is wrong), (3) stimulate ductal proliferation in the breast (d is wrong), and (4) INCREASE bone density (e is wrong) by promoting osteoblast activity and inhibiting bone resorption. Therefore, only option (b) is correct.`
+    },
+    {
+        q: `Prolactin secretion is tonically suppressed in nonpregnant women by which of the following hormones?`,
+        options: [
+            `Estrogen`,
+            `Progesterone`,
+            `Dopamine`,
+            `FSH`,
+            `LH`
+        ],
+        correct: `C`,
+        explanation: `Prolactin secretion from the anterior pituitary lactotrophs is under TONIC INHIBITORY control by DOPAMINE (also called prolactin-inhibiting hormone, PIH), which is released from the tuberoinfundibular dopaminergic neurons of the hypothalamus into the hypophyseal portal blood. Dopamine acts on D2 receptors on lactotrophs, which are Gi-coupled, inhibiting adenylyl cyclase and reducing prolactin secretion. This is why dopamine agonists (bromocriptine, cabergoline) are used to treat prolactinomas, and why dopamine antagonists (antipsychotics) cause hyperprolactinemia. Estrogen stimulates prolactin secretion; progesterone, FSH and LH do not tonically suppress it.`
+    },
+    {
+        q: `Physiological changes that occur during pregnancy include which of the following?`,
+        options: [
+            `Decreased production of cortisol and corticosterone`,
+            `Increased conversion of glucose to glycogen`,
+            `Hypercapnia`,
+            `Increased hematocrit`,
+            `Reduced circulating gonadotropin levels`
+        ],
+        correct: `E`,
+        explanation: `During pregnancy: (1) cortisol and corticosterone production INCREASE (a is wrong) — cortisol-binding globulin also rises, so free cortisol is relatively normal but total cortisol is high; (2) conversion of glucose to glycogen is DECREASED and insulin resistance develops in late pregnancy (b is wrong) — this ensures glucose availability to the fetus; (3) there is HYPERVENTILATION and respiratory alkalosis with DECREASED PCO₂ (hypocapnia), not hypercapnia (c is wrong); (4) hematocrit DECREASES due to plasma volume expansion exceeding red cell mass (physiological anemia of pregnancy) (d is wrong); (5) circulating gonadotropin levels (LH, FSH) are REDUCED due to suppression of the hypothalamic-pituitary-gonadal axis by placental hormones (hCG, progesterone, estrogens) (e is correct).`
+    },
+    {
+        q: `Which of the following statements about spermatogenesis is correct?`,
+        options: [
+            `Mature spermatozoa are present at birth but cannot be released until puberty is reached.`,
+            `Spermatogenesis requires a temperature lower than internal body temperature.`,
+            `Spermatogenesis requires continuous release of gonadotropin-releasing hormone (GRH).`,
+            `Leydig cell secretion of testosterone requires FSH.`,
+            `Luteinizing hormone (LH) acts directly on Sertoli cells to promote cell division.`
+        ],
+        correct: `B`,
+        explanation: `Spermatogenesis requires a temperature 2–3°C LOWER than core body temperature. This is why the testes are located in the scrotum, outside the body cavity. Cryptorchidism (undescended testes) causes impaired spermatogenesis and infertility due to the higher intra-abdominal temperature. Option (a) is wrong — mature spermatozoa are NOT present at birth; spermatogenesis begins at puberty. Option (c) is wrong — GnRH is released PULSATILELY, not continuously; continuous GnRH administration actually downregulates the pituitary and suppresses spermatogenesis. Option (d) is wrong — Leydig cell testosterone secretion requires LH, not FSH. Option (e) is wrong — LH acts on LEYDIG cells (not Sertoli cells); FSH acts on Sertoli cells.`
+    },
+    {
+        q: `Which of the following is an indication that ovulation has taken place?`,
+        options: [
+            `An increase in serum FSH levels.`,
+            `A drop in body temperature.`,
+            `An increase in serum LH levels.`,
+            `An increase in serum progesterone levels.`,
+            `An increase in serum estrogen levels.`
+        ],
+        correct: `D`,
+        explanation: `The most reliable hormonal indication that ovulation has occurred is a RISE IN SERUM PROGESTERONE, which is secreted by the corpus luteum after ovulation. Progesterone peaks about 7 days after ovulation (mid-luteal phase). A mid-luteal progesterone level >3 ng/mL is generally accepted as evidence of ovulation. Option (a) — FSH rises slightly at mid-cycle but is not the primary indicator. Option (b) — body temperature RISES (not drops) after ovulation due to the thermogenic effect of progesterone; the temperature rise is a useful marker but less direct than progesterone measurement. Option (c) — the LH surge PRECEDES ovulation (it is the trigger), so it indicates that ovulation is about to occur, not that it has occurred. Option (e) — estrogen peaks just before ovulation and then falls; it is not a reliable post-ovulatory marker.`
+    }
+    ];
+
+    /* =====================================================================
+       SECTION B — Structured and Short Answer Questions (exact text)
+       ===================================================================== */
+    const sectionB = [
+    {
+        q: `Explain what would occur during fetal development to an XY individual with a nonfunctional SRY gene. [5 marks]`,
+        model: `<h4>Model Answer</h4>
+        <p>The SRY gene (Sex-determining Region Y) is located on the short arm of the Y chromosome and encodes the testis-determining factor (TDF). It is the master switch that initiates male gonadal differentiation.</p>
+        <p><strong>If SRY is nonfunctional in an XY individual:</strong></p>
+        <ul>
+            <li><strong>Gonadal differentiation:</strong> The bipotential gonad cannot be induced to form testes. Instead, in the absence of SRY, the gonad follows the default female pathway and develops into an <strong>ovary</strong> (or, more commonly, a streak gonad / fibrous streak).</li>
+            <li><strong>No anti-Müllerian hormone (AMH):</strong> Because there are no Sertoli cells (which produce AMH), the Müllerian ducts are NOT regressed. They persist and develop into the <strong>fallopian tubes, uterus, and upper vagina</strong>.</li>
+            <li><strong>No testosterone:</strong> Because there are no Leydig cells (which produce testosterone), the Wolffian ducts are NOT stimulated. They regress, so the <strong>epididymis, vas deferens, and seminal vesicles do not develop</strong>.</li>
+            <li><strong>External genitalia:</strong> Without dihydrotestosterone (DHT), the external genitalia develop along the female pathway — <strong>clitoris, labia majora, labia minora, and a blind-ending lower vagina</strong>.</li>
+            <li><strong>Clinical phenotype:</strong> The individual is born appearing phenotypically female. This is <strong>Swyer syndrome</strong> (46,XY complete gonadal dysgenesis). At puberty, because the streak gonads cannot produce estrogen or progesterone, there is <strong>no spontaneous puberty</strong> — no breast development, no menarche, and primary amenorrhea. The uterus is present but hypoplastic. Because the gonads are streak, there is a risk of gonadoblastoma, and prophylactic gonadectomy is recommended.</li>
+        </ul>
+        <p><strong>Summary:</strong> A nonfunctional SRY gene in an XY individual results in failure of testis determination, persistence of Müllerian structures, absence of Wolffian structures, female external genitalia, and a phenotypic female with primary amenorrhea and streak gonads (Swyer syndrome).</p>`
+    },
+    {
+        q: `Explain the mechanism by which hyperventilation may increase risk of tetany. [2 marks]`,
+        model: `<h4>Model Answer</h4>
+        <p>Hyperventilation causes excessive loss of CO₂ from the lungs, leading to <strong>respiratory alkalosis</strong> (a rise in blood pH and a fall in PaCO₂).</p>
+        <p>The alkalosis increases the binding of Ca²⁺ to plasma proteins (especially albumin), which <strong>reduces the concentration of ionised (free) calcium</strong> in the plasma, even though total serum calcium may be normal.</p>
+        <p>Ionised calcium is the physiologically active fraction that stabilises neuronal membranes. A fall in ionised calcium increases the excitability of nerve and muscle cells (by lowering the threshold for action potential generation), leading to spontaneous firing and <strong>tetany</strong> — characterised by carpopedal spasm, perioral numbness, tingling in the fingers and toes, and in severe cases laryngeal spasm.</p>
+        <p>This is the basis of the <strong>Trousseau sign</strong> (carpal spasm induced by inflation of a blood pressure cuff) and the hyperventilation provocation test for latent tetany.</p>`
+    },
+    {
+        q: `Describe the cAMP second messenger system, highlighting five cellular responses of this system. [5 marks]`,
+        model: `<h4>Model Answer</h4>
+        <p><strong>The cAMP second messenger system:</strong></p>
+        <ol>
+            <li><strong>Hormone binding:</strong> A hormone (first messenger) — e.g., glucagon, epinephrine (β-adrenergic), ACTH, LH, FSH, TSH, PTH, ADH (V2), or CRH — binds to a specific G-protein-coupled receptor (GPCR) on the cell membrane.</li>
+            <li><strong>Gs activation:</strong> The occupied receptor interacts with the stimulatory G protein (Gs), causing the α-subunit of Gs to exchange GDP for GTP and dissociate from the βγ subunits.</li>
+            <li><strong>Adenylyl cyclase activation:</strong> Gsα-GTP binds to and activates adenylyl cyclase (AC), a membrane-bound enzyme.</li>
+            <li><strong>cAMP generation:</strong> Activated AC catalyses the conversion of ATP to cyclic AMP (cAMP) in the cytosol.</li>
+            <li><strong>PKA activation:</strong> cAMP binds to the regulatory subunits of protein kinase A (PKA), releasing the catalytic subunits, which become active.</li>
+            <li><strong>Phosphorylation:</strong> PKA phosphorylates specific serine/threonine residues on target proteins, altering their activity and producing the cellular response.</li>
+            <li><strong>Termination:</strong> cAMP is degraded to 5′-AMP by phosphodiesterase (PDE). The system is also turned off by GTPase activity of Gsα (hydrolysis of GTP to GDP) and by phosphatases that dephosphorylate target proteins.</li>
+        </ol>
+        <p><strong>Five cellular responses mediated by cAMP:</strong></p>
+        <ul>
+            <li><strong>Glycogenolysis:</strong> In hepatocytes, glucagon and β-adrenergic agonists increase cAMP → PKA → activation of glycogen phosphorylase → breakdown of glycogen to glucose.</li>
+            <li><strong>Lipolysis:</strong> In adipocytes, catecholamines increase cAMP → PKA → activation of hormone-sensitive lipase → breakdown of triglycerides to free fatty acids and glycerol.</li>
+            <li><strong>Increased cardiac contractility:</strong> In cardiac myocytes, β₁-adrenergic stimulation increases cAMP → PKA → phosphorylation of L-type Ca²⁺ channels and phospholamban → increased Ca²⁺ influx and faster reuptake → positive inotropic and chronotropic effects.</li>
+            <li><strong>Water reabsorption:</strong> In collecting duct principal cells, ADH (V2 receptor) increases cAMP → PKA → phosphorylation of aquaporin-2 → insertion into the apical membrane → increased water reabsorption.</li>
+            <li><strong>Thyroid hormone synthesis:</strong> In thyroid follicular cells, TSH increases cAMP → PKA → stimulation of iodide uptake, organification, and thyroglobulin synthesis → increased T4 and T3 production.</li>
+            <li><strong>Steroidogenesis:</strong> In adrenal cortical cells, ACTH increases cAMP → PKA → increased cholesterol uptake and conversion to cortisol; in ovarian granulosa cells, LH/FSH increase cAMP → PKA → estrogen and progesterone synthesis.</li>
+        </ul>`
+    },
+    {
+        q: `Briefly explain how the blood volume and pressure are restored following acute hemorrhage. [4 marks]`,
+        model: `<h4>Model Answer</h4>
+        <p>Acute hemorrhage causes a fall in blood volume, venous return, cardiac output and arterial blood pressure. The body restores volume and pressure through a coordinated set of rapid and slower compensatory mechanisms:</p>
+        <ol>
+            <li><strong>Baroreceptor reflex (seconds):</strong> Reduced stretch of arterial baroreceptors (carotid sinus, aortic arch) decreases afferent firing to the medulla. This increases sympathetic outflow and decreases vagal tone → tachycardia, increased contractility, and arteriolar vasoconstriction → increased total peripheral resistance and cardiac output. Venoconstriction also increases venous return.</li>
+            <li><strong>Chemoreceptor and CNS ischemic response (seconds–minutes):</strong> If hypotension is severe, chemoreceptors and the CNS ischemic response further increase sympathetic outflow and vasoconstriction.</li>
+            <li><strong>Hormonal responses (minutes–hours):</strong> (a) <strong>Renin-angiotensin-aldosterone system (RAAS):</strong> Reduced renal perfusion and sympathetic β₁ stimulation of the juxtaglomerular apparatus release renin → angiotensin I → angiotensin II (via ACE) → potent vasoconstriction and aldosterone secretion → Na⁺ and water retention. (b) <strong>ADH (vasopressin):</strong> Reduced atrial stretch and increased osmolality stimulate ADH release → water reabsorption in the collecting duct (V2) and vasoconstriction (V1A). (c) <strong>Erythropoietin:</strong> Released from the kidney in response to hypoxia, stimulating red blood cell production (over days–weeks).</li>
+            <li><strong>Capillary fluid shift (minutes–hours):</strong> Reduced capillary hydrostatic pressure and increased plasma oncotic pressure cause fluid to move from the interstitial space into the capillaries — restoring plasma volume at the expense of interstitial fluid. This is called <strong>transcapillary refill</strong> and can restore up to 1 litre of plasma volume over 24–48 hours.</li>
+            <li><strong>Thirst and salt appetite (hours–days):</strong> Angiotensin II and reduced extracellular volume stimulate thirst and salt craving, promoting oral replacement of lost fluid and electrolytes.</li>
+        </ol>`
+    },
+    {
+        q: `Briefly explain the hormonal response to extreme cold.`,
+        model: `<h4>Model Answer</h4>
+        <p>Exposure to extreme cold triggers a coordinated neuroendocrine response aimed at increasing heat production (thermogenesis) and minimising heat loss:</p>
+        <ol>
+            <li><strong>Hypothalamic thermoregulatory centre:</strong> Cold-sensitive neurons in the preoptic area and anterior hypothalamus detect the fall in core temperature and activate descending pathways to the posterior hypothalamus and brainstem.</li>
+            <li><strong>Sympathetic nervous system activation:</strong> Increased sympathetic outflow causes:
+                <ul>
+                    <li><strong>Cutaneous vasoconstriction</strong> (α₁-adrenergic) → reduces heat loss from the skin.</li>
+                    <li><strong>Piloerection</strong> (erector pili muscles) → minor insulation in humans.</li>
+                    <li><strong>Non-shivering thermogenesis</strong> in brown adipose tissue (BAT) — norepinephrine acts on β₃ receptors, activating uncoupling protein 1 (UCP1, thermogenin), which uncouples oxidative phosphorylation to produce heat.</li>
+                    <li><strong>Shivering thermogenesis</strong> — increased muscle tone and rhythmic muscle contraction, generating heat.</li>
+                </ul>
+            </li>
+            <li><strong>Thyroid hormones (TRH–TSH–T4/T3 axis):</strong> Cold stimulates the hypothalamus to release <strong>TRH</strong> → anterior pituitary releases <strong>TSH</strong> → thyroid gland secretes <strong>T4 and T3</strong>. Thyroid hormones increase the basal metabolic rate and calorigenesis in almost all tissues, increasing heat production. This response takes hours to days and is more important in chronic cold adaptation.</li>
+            <li><strong>Catecholamines (epinephrine and norepinephrine):</strong> Sympathetic stimulation of the adrenal medulla releases epinephrine, which increases metabolic rate, glycogenolysis, lipolysis and thermogenesis. Norepinephrine from sympathetic nerve endings also stimulates BAT thermogenesis.</li>
+            <li><strong>ACTH–cortisol axis:</strong> Cold stress stimulates CRH → ACTH → cortisol, which supports glucose mobilisation and cardiovascular responsiveness to catecholamines.</li>
+            <li><strong>Other hormones:</strong> Glucagon, growth hormone and ADH may also increase, contributing to substrate mobilisation and water conservation.</li>
+        </ol>
+        <p>In summary, the acute response is dominated by sympathetic activation (vasoconstriction, shivering, non-shivering thermogenesis), while the chronic response involves thyroid hormone and cortisol, which increase metabolic rate and heat production over days to weeks.</p>`
+    },
+    {
+        q: `Explain how high temperatures influence spermatogenesis and the physiological mechanisms by which the body protects the testes.`,
+        model: `<h4>Model Answer</h4>
+        <p><strong>Effect of high temperature on spermatogenesis:</strong> Spermatogenesis is temperature-sensitive and requires a temperature 2–3°C below core body temperature (about 34–35°C). Exposure to high temperatures (e.g., cryptorchidism, prolonged hot baths, fever, tight clothing) impairs spermatogenesis by damaging developing germ cells, particularly primary spermatocytes and spermatids, leading to reduced sperm count (oligospermia), increased abnormal morphology and reduced motility. This can cause temporary or permanent infertility.</p>
+        <p><strong>Physiological mechanisms protecting the testes:</strong></p>
+        <ul>
+            <li><strong>Scrotal location:</strong> The testes are located outside the abdominal cavity in the scrotum, which is 2–3°C cooler than core temperature.</li>
+            <li><strong>Counter-current heat exchange (pampiniform plexus):</strong> The testicular artery is surrounded by the pampiniform venous plexus, which cools arterial blood before it reaches the testis, and warms venous blood returning to the body.</li>
+            <li><strong>Cremasteric reflex:</strong> The cremaster muscle contracts in the cold to draw the testes closer to the body (for warmth) and relaxes in the heat to lower the testes away from the body (for cooling).</li>
+            <li><strong>Dartos muscle:</strong> The dartos muscle in the scrotal wall contracts in the cold (wrinkling the scrotum and reducing surface area) and relaxes in the heat (increasing surface area for heat loss).</li>
+            <li><strong>Sweat glands:</strong> Scrotal sweat glands secrete sweat to promote evaporative cooling.</li>
+            <li><strong>Thermoregulatory vasomotion:</strong> Scrotal skin blood flow increases in warmth and decreases in cold.</li>
+        </ul>`
+    },
+    {
+        q: `Mention 4 functions of the follicle stimulating hormone on the Sertoli cells. [2 marks]`,
+        model: `<h4>Model Answer</h4>
+        <p>FSH acts on Sertoli cells (which express FSH receptors) to promote spermatogenesis through the following functions:</p>
+        <ol>
+            <li><strong>Stimulation of spermatogenesis:</strong> FSH, together with testosterone, stimulates the proliferation and differentiation of spermatogonia and the progression of meiosis in primary spermatocytes to form spermatids and mature spermatozoa.</li>
+            <li><strong>Production of androgen-binding protein (ABP):</strong> FSH stimulates Sertoli cells to secrete ABP, which binds testosterone and concentrates it in the seminiferous tubule lumen and epididymis, maintaining the high local androgen concentration required for spermatogenesis.</li>
+            <li><strong>Secretion of inhibin:</strong> FSH stimulates Sertoli cells to secrete inhibin, which exerts negative feedback on the anterior pituitary to selectively inhibit FSH secretion.</li>
+            <li><strong>Secretion of estrogen (aromatase activity):</strong> FSH stimulates Sertoli cells to convert testosterone to estradiol via aromatase, which is important for spermatogenesis and for feedback regulation.</li>
+            <li><strong>Maintenance of the blood-testis barrier:</strong> FSH supports the structural and functional integrity of the Sertoli cell tight junctions that form the blood-testis barrier.</li>
+            <li><strong>Production of fructose and other nutrients:</strong> FSH stimulates Sertoli cells to produce fructose, transferrin, and other substances that nourish developing sperm.</li>
+        </ol>`
+    },
+    {
+        q: `Mention the scientists who discovered Insulin, the year of discovery and their institutional affiliation. [2 marks]`,
+        model: `<h4>Model Answer</h4>
+        <p><strong>Scientists:</strong> Frederick G. Banting and Charles H. Best (with the collaboration of John J. R. Macleod and James B. Collip).</p>
+        <p><strong>Year:</strong> 1921 (the first successful isolation of insulin; the Nobel Prize was awarded in 1923 to Banting and Macleod).</p>
+        <p><strong>Institutional affiliation:</strong> University of Toronto, Canada (specifically, the Department of Physiology in the Faculty of Medicine).</p>
+        <p><strong>Additional details:</strong> Banting and Best ligated the pancreatic ducts of dogs to induce atrophy of the exocrine pancreas, then extracted the remaining islet tissue and isolated the active substance, which they initially called "isletin" and later "insulin." James Collip, a biochemist, purified the extract for clinical use. The first patient treated was Leonard Thompson in 1922. Banting and Macleod received the 1923 Nobel Prize in Physiology or Medicine; Banting shared his prize money with Best, and Macleod shared his with Collip.</p>`
+    },
+    {
+        q: `Why would patients with atrophy of the seminiferous tubules have elevated FSH levels but normal levels of testosterone and LH secretion? [2 marks]`,
+        model: `<h4>Model Answer</h4>
+        <p><strong>Key point:</strong> FSH secretion is selectively regulated by inhibin, which is produced by Sertoli cells; LH secretion is regulated by testosterone (and to a lesser extent by other factors), which is produced by Leydig cells. The two are therefore dissociable.</p>
+        <p><strong>Explanation:</strong></p>
+        <ul>
+            <li><strong>Seminiferous tubule atrophy:</strong> When the seminiferous tubules are atrophied, the Sertoli cells are damaged or lost. Since Sertoli cells are the source of <strong>inhibin</strong>, inhibin levels fall.</li>
+            <li><strong>Loss of negative feedback on FSH:</strong> Inhibin normally selectively inhibits FSH secretion from the anterior pituitary. With low inhibin, there is loss of this negative feedback, so <strong>FSH levels rise</strong>.</li>
+            <li><strong>Preserved Leydig cells:</strong> The Leydig cells (interstitial cells) are located between the seminiferous tubules and are often spared in processes that selectively damage the tubules. They continue to secrete testosterone in response to LH.</li>
+            <li><strong>Normal LH and testosterone:</strong> Because Leydig cells are intact, testosterone production is normal, and the negative feedback of testosterone on the hypothalamus and pituitary (which regulates LH) remains intact. Therefore, <strong>LH secretion remains normal</strong>, and testosterone levels are normal.</li>
+        </ul>
+        <p><strong>Conclusion:</strong> The selective elevation of FSH with normal LH and testosterone indicates that the primary defect is in the seminiferous tubules (Sertoli cells), with preservation of Leydig cell function. This pattern is seen in conditions such as Sertoli-cell-only syndrome (germinal cell aplasia) and in some cases of testicular damage from chemotherapy or radiation.</p>`
+    }
+    ];
+
+   /* =====================================================================
+   SECTION C — Scenario Questions (exact text from 2022 paper, all parts)
+   ===================================================================== */
+const sectionC = [
+    {
+        q: `ELVINE — Thyrotoxicosis Scenario`,
+        intro: `<strong>Case:</strong> Elvine is a 22-year-old aspiring model who has always dieted to keep her weight in an "acceptable" range. However, within the past 3 months, she has lost 9 kg despite a voracious appetite. She complains of nervousness, sleeplessness, heart palpitations, and irregular menstrual periods. She notes that she is "always hot" and wants the thermostat set lower than her apartment mates. On physical examination, Elvine was restless and had a noticeable tremor in her hands. At 5 feet, 8 inches tall, she weighed only 49 kg. Her arterial blood pressure was 160/85, and her heart rate was 110 beats/min. She had a wide-eyed stare, and her lower neck appeared full; these characteristics were not present in photographs taken 1 year earlier. Based on her symptoms, the physician suspected that Elvine had thyrotoxicosis, or increased circulating levels of thyroid hormones. However, it was unclear from the available information why her thyroid hormone levels were elevated. Laboratory tests were performed to determine the etiology of her condition (Total T4: Increased; Free T4: Increased; TSH: Decreased (undetectable)).`,
+        questions: [
+            {
+                q: `a) i. Weight loss: [2 marks]`,
+                model: `<h4>Model Answer</h4>
+                <p>Thyroid hormones increase the <strong>basal metabolic rate (BMR)</strong> and <strong>thermogenesis</strong> in almost all tissues. They stimulate oxygen consumption, Na⁺/K⁺-ATPase activity, and mitochondrial heat production. This leads to:</p>
+                <ul>
+                    <li><strong>Increased caloric expenditure</strong> — the body burns more energy at rest, so despite a voracious appetite, the net energy balance is negative.</li>
+                    <li><strong>Increased lipolysis and proteolysis</strong> — thyroid hormones enhance the mobilisation of fat and protein stores to meet the increased metabolic demand, leading to loss of adipose tissue and muscle mass.</li>
+                    <li><strong>Increased gut motility</strong> — thyrotoxicosis causes hyperdefecation and malabsorption in some cases, further contributing to weight loss.</li>
+                </ul>
+                <p>The result is progressive weight loss despite adequate or increased food intake, as seen in Elvine (9 kg loss over 3 months).</p>`
+            },
+            {
+                q: `a) ii. Increased arterial blood pressure: [2 marks]`,
+                model: `<h4>Model Answer</h4>
+                <p>Thyroid hormones increase the <strong>systolic blood pressure</strong> (and often widen the pulse pressure) through several mechanisms:</p>
+                <ul>
+                    <li><strong>Increased cardiac output:</strong> Thyroid hormones directly increase heart rate (positive chronotropic effect) and myocardial contractility (positive inotropic effect), and they increase blood volume by stimulating erythropoiesis and activating the renin-angiotensin-aldosterone system. The result is a hyperdynamic circulation with increased cardiac output.</li>
+                    <li><strong>Increased sympathetic activity:</strong> Thyroid hormones potentiate the effects of catecholamines at the receptor level (upregulating β-adrenergic receptors), causing increased vasoconstriction and tachycardia. Elvine's heart rate of 110 beats/min reflects this.</li>
+                    <li><strong>Increased peripheral resistance</strong> in some vascular beds, though thyrotoxicosis typically causes vasodilation and a widened pulse pressure. The net effect on blood pressure is often an increase in systolic pressure.</li>
+                </ul>
+                <p>Elvine's blood pressure of 160/85 with a heart rate of 110 is consistent with the hyperdynamic, catecholamine-sensitised state of thyrotoxicosis.</p>`
+            },
+            {
+                q: `b) Based on your knowledge of the Hypothalamic-Pituitary-Thyroidal axis mention four (04) possible causes of thyrotoxicosis. [2 marks]`,
+                model: `<h4>Model Answer</h4>
+                <p>Thyrotoxicosis can arise from causes at any level of the hypothalamic-pituitary-thyroidal axis:</p>
+                <ol>
+                    <li><strong>Graves' disease:</strong> Autoimmune stimulation of the TSH receptor by thyroid-stimulating immunoglobulins (TSI) — the most common cause. It is characterised by hyperthyroidism, diffuse goitre, ophthalmopathy and dermopathy.</li>
+                    <li><strong>Toxic multinodular goitre / toxic adenoma:</strong> Autonomous functioning thyroid nodules that secrete thyroid hormone independently of TSH regulation.</li>
+                    <li><strong>TSH-secreting pituitary adenoma (thyrotroph adenoma):</strong> A rare pituitary tumour that secretes excess TSH, stimulating the thyroid gland — causes secondary hyperthyroidism with elevated TSH and free T4.</li>
+                    <li><strong>Hypothalamic disease (e.g., hamartoma, glioma) secreting excess TRH:</strong> Rare cause of central hyperthyroidism with elevated TSH.</li>
+                    <li><strong>Other causes:</strong> Thyroiditis (subacute, postpartum, silent) with release of preformed hormone; exogenous thyroid hormone ingestion (factitious thyrotoxicosis); struma ovarii (ovarian teratoma containing thyroid tissue); and metastatic follicular thyroid carcinoma.</li>
+                </ol>`
+            },
+            {
+                q: `c) i. Propylthiouracil: [1 mark]`,
+                model: `<h4>Model Answer</h4>
+                <p><strong>Propylthiouracil (PTU)</strong> is a thioamide antithyroid drug. Its rationale in preparing a thyrotoxic patient for surgery is:</p>
+                <ul>
+                    <li><strong>Inhibition of thyroid peroxidase (TPO):</strong> PTU inhibits the organification of iodide (the oxidation and incorporation of iodine into tyrosine residues on thyroglobulin) and the coupling of iodotyrosines to form T4 and T3. This reduces the synthesis of new thyroid hormone.</li>
+                    <li><strong>Inhibition of peripheral type 1 deiodinase:</strong> PTU (unlike methimazole) also blocks the peripheral conversion of T4 to T3, the more biologically active hormone. This is particularly useful in severe thyrotoxicosis and thyroid storm.</li>
+                </ul>
+                <p>The goal is to reduce circulating thyroid hormone levels and bring the patient to a euthyroid state before surgery, reducing the risk of thyroid storm during the operation.</p>`
+            },
+            {
+                q: `c) ii. Excess iodide [1 mark]`,
+                model: `<h4>Model Answer</h4>
+                <p><strong>Excess iodide</strong> (e.g., Lugol's solution or saturated solution of potassium iodide, SSKI) is given before thyroidectomy for two main reasons:</p>
+                <ul>
+                    <li><strong>Wolff-Chaikoff effect:</strong> A high concentration of iodide inhibits thyroid peroxidase and organification, acutely reducing thyroid hormone synthesis and release. This helps to lower circulating hormone levels and prevents thyroid storm.</li>
+                    <li><strong>Decreased gland vascularity:</strong> Iodide inhibits angiogenesis and reduces blood flow to the thyroid gland, making the gland firmer and less vascular. This reduces intraoperative bleeding and makes surgery safer and easier.</li>
+                </ul>
+                <p>Iodide is typically given 10–14 days before surgery, after the patient has been rendered euthyroid with PTU.</p>`
+            },
+            {
+                q: `d) Briefly describe the histological structure of the thyroid gland in Elvine's condition. [2 marks]`,
+                model: `<h4>Model Answer</h4>
+                <p>In thyrotoxicosis (especially Graves' disease), the thyroid gland shows the following histological features:</p>
+                <ul>
+                    <li><strong>Follicular cell hypertrophy and hyperplasia:</strong> The follicular epithelial cells become tall, columnar (instead of the normal cuboidal or flat), with crowded, hyperchromatic nuclei. This reflects the increased metabolic activity and TSH-receptor stimulation.</li>
+                    <li><strong>Scalloped colloid:</strong> The colloid inside the follicles appears pale and scalloped (with "resorption lacunae") at the margins where the active cells are endocytosing thyroglobulin for hormone release.</li>
+                    <li><strong>Reduced colloid content:</strong> Because hormone is being rapidly synthesised and released, the amount of stored colloid is decreased.</li>
+                    <li><strong>Increased vascularity:</strong> The gland is highly vascular, with prominent capillaries between follicles.</li>
+                    <li><strong>Lymphocytic infiltration:</strong> In Graves' disease, there is typically a diffuse lymphocytic infiltrate with germinal centre formation, reflecting the autoimmune nature of the disease.</li>
+                </ul>
+                <p>In contrast, the normal thyroid has flat or cuboidal follicular cells, abundant dense colloid, and sparse vascularity.</p>`
+            },
+            {
+                q: `e) i. Mention the name of the condition Elvine most likely suffered from in (e) above. [0.5 mark]`,
+                model: `<h4>Model Answer</h4>
+                <p><strong>Tetany</strong> (specifically, <strong>post-thyroidectomy hypocalcaemic tetany</strong>) due to <strong>hypoparathyroidism</strong>.</p>
+                <p>The parathyroid glands are located on the posterior surface of the thyroid gland and are at risk of inadvertent removal or damage during thyroidectomy. Loss of parathyroid hormone (PTH) leads to hypocalcemia, which causes neuromuscular hyperexcitability — manifesting as carpopedal spasm, perioral numbness, tingling in the extremities, and in severe cases laryngeal spasm and seizures.</p>`
+            },
+            {
+                q: `e) ii. Briefly explain the physiological basis for the manifestations. [2 marks]`,
+                model: `<h4>Model Answer</h4>
+                <p>The manifestations are due to <strong>hypocalcemia</strong> resulting from <strong>hypoparathyroidism</strong> (loss of PTH):</p>
+                <ul>
+                    <li><strong>PTH deficiency:</strong> PTH normally increases serum calcium by (a) stimulating bone resorption (osteoclast-mediated), (b) increasing renal Ca²⁺ reabsorption, and (c) activating vitamin D (1α-hydroxylase) to increase intestinal Ca²⁺ absorption. Without PTH, all three mechanisms fail, leading to hypocalcemia.</li>
+                    <li><strong>Neuromuscular hyperexcitability:</strong> A fall in ionised calcium increases the permeability of neuronal membranes to Na⁺ and lowers the threshold for action potential generation. This causes spontaneous firing of sensory and motor nerves, producing: (a) <strong>tingling and numbness</strong> (paraesthesia) in the fingers, toes and perioral region, (b) <strong>muscle spasms</strong> (carpopedal spasm — flexion of the wrists and metacarpophalangeal joints, extension of the interphalangeal joints, and adduction of the thumbs), and (c) <strong>laryngeal stridor</strong> in severe cases (spasm of the laryngeal muscles).</li>
+                    <li><strong>Signs:</strong> Trousseau's sign (carpal spasm induced by inflation of a blood pressure cuff) and Chvostek's sign (facial muscle twitching on tapping the facial nerve) are classic bedside signs of latent tetany.</li>
+                </ul>`
+            },
+            {
+                q: `e) iii. How will you diagnose this condition? [2.5 marks]`,
+                model: `<h4>Model Answer</h4>
+                <p>Diagnosis of post-thyroidectomy hypocalcaemic tetany is based on:</p>
+                <ol>
+                    <li><strong>Clinical signs:</strong> Trousseau's sign (carpal spasm after inflating a blood pressure cuff above systolic pressure for 3 minutes) and Chvostek's sign (facial muscle twitching on tapping the facial nerve just anterior to the ear).</li>
+                    <li><strong>Serum calcium:</strong> Measurement of total and ionised serum calcium — low total calcium (<8.5 mg/dL) with low ionised calcium confirms hypocalcemia.</li>
+                    <li><strong>Serum PTH:</strong> Low or inappropriately normal PTH level confirms hypoparathyroidism (as opposed to other causes of hypocalcemia such as vitamin D deficiency, where PTH is elevated).</li>
+                    <li><strong>Serum phosphate:</strong> Elevated (hyperphosphatemia) due to reduced renal phosphate excretion.</li>
+                    <li><strong>ECG:</strong> Prolonged QT interval (due to prolonged ST segment).</li>
+                    <li><strong>Serum magnesium:</strong> Should be checked, as hypomagnesemia can cause functional hypoparathyroidism and must be corrected for calcium therapy to be effective.</li>
+                </ol>`
+            }
+        ]
+    },
+    {
+        q: `DAVID — Type 1 Diabetes Mellitus Scenario`,
+        intro: `<strong>Case:</strong> David was diagnosed with type I (insulin-dependent) diabetes mellitus when he was 12 years old. At the time of his diagnosis, David was in middle school. At a sleepover party, the unimaginable happened: David wet his sleeping bag! He might not have told his parents except that he was worried about other symptoms he was having. He was constantly thirsty and was urinating every 30 to 40 min. Furthermore, despite a voracious appetite, he seemed to be losing weight, all his pants had become loose in the waist. David's parents panicked because they knew that these were classic symptoms of diabetes mellitus. They took David to see his pediatrician immediately.`,
+        questions: [
+            {
+                q: `a) Briefly explain the physiological mechanisms by which insulin deficiency led to an increase in David's blood glucose concentration? [2 marks]`,
+                model: `<h4>Model Answer</h4>
+                <p>Insulin deficiency in type 1 diabetes mellitus causes hyperglycemia through multiple mechanisms:</p>
+                <ul>
+                    <li><strong>Decreased glucose uptake in muscle and adipose tissue:</strong> Insulin is required for the translocation of GLUT4 transporters to the cell membrane in skeletal muscle and adipocytes. Without insulin, glucose cannot enter these tissues efficiently, so it accumulates in the blood.</li>
+                    <li><strong>Increased hepatic glucose production:</strong> Insulin normally inhibits hepatic gluconeogenesis and glycogenolysis. In its absence, the liver continues to produce glucose from glycogen stores (glycogenolysis) and from precursors such as amino acids, glycerol and lactate (gluconeogenesis), further raising blood glucose.</li>
+                    <li><strong>Increased glucagon action:</strong> Insulin deficiency is accompanied by relative glucagon excess (loss of the paracrine inhibition of α-cells by insulin). Glucagon strongly stimulates glycogenolysis and gluconeogenesis in the liver, compounding the hyperglycemia.</li>
+                    <li><strong>Increased lipolysis and proteolysis:</strong> Without insulin, lipolysis in adipose tissue and proteolysis in muscle are accelerated, providing glycerol and amino acids as substrates for gluconeogenesis.</li>
+                </ul>
+                <p>The net result is a marked increase in blood glucose concentration (hyperglycemia), which exceeds the renal threshold for glucose reabsorption (approximately 180 mg/dL), causing glycosuria and osmotic diuresis — explaining David's polyuria and polydipsia.</p>`
+            },
+            {
+                q: `b) How did insulin deficiency lead to the finding of ketones in David's blood and urine? [2 marks]`,
+                model: `<h4>Model Answer</h4>
+                <p>Insulin deficiency leads to ketone body production through the following sequence:</p>
+                <ol>
+                    <li><strong>Unrestrained lipolysis:</strong> Without insulin, hormone-sensitive lipase in adipose tissue is activated (and the inhibitory effect of insulin is lost), leading to the breakdown of triglycerides into free fatty acids and glycerol. These free fatty acids are released into the circulation and taken up by the liver.</li>
+                    <li><strong>Increased hepatic fatty acid oxidation:</strong> In the liver, the massive influx of free fatty acids exceeds the capacity for re-esterification into triglycerides. The excess fatty acids undergo β-oxidation in the mitochondria, producing large amounts of acetyl-CoA.</li>
+                    <li><strong>Overproduction of ketone bodies:</strong> When acetyl-CoA production exceeds the capacity of the citric acid cycle (which is also impaired because of the low oxaloacetate availability in the insulin-deficient state), the excess acetyl-CoA is diverted to ketogenesis. Two molecules of acetyl-CoA condense to form acetoacetyl-CoA, which is converted to <strong>acetoacetate</strong> and then to <strong>β-hydroxybutyrate</strong> and <strong>acetone</strong>. These are the three ketone bodies.</li>
+                    <li><strong>Ketonemia and ketonuria:</strong> Ketone bodies accumulate in the blood (ketonemia) and are filtered by the kidneys into the urine (ketonuria). They are also volatile — acetone is excreted in the breath, giving a characteristic fruity odour.</li>
+                </ol>
+                <p>The combination of hyperglycemia, ketonemia and metabolic acidosis constitutes <strong>diabetic ketoacidosis (DKA)</strong>, a life-threatening complication of type 1 diabetes.</p>`
+            },
+            {
+                q: `c) Why will David's blood pressure be lower than normal? [2 marks]`,
+                model: `<h4>Model Answer</h4>
+                <p>David's blood pressure is lower than normal because of <strong>volume depletion</strong> caused by osmotic diuresis:</p>
+                <ul>
+                    <li><strong>Osmotic diuresis:</strong> When blood glucose exceeds the renal threshold (~180 mg/dL), the proximal tubule cannot reabsorb all the filtered glucose. The unreabsorbed glucose remains in the tubular fluid, exerting an osmotic effect that prevents water reabsorption in the descending limb and collecting duct. This leads to the excretion of large volumes of urine (polyuria), containing both glucose and water.</li>
+                    <li><strong>Loss of sodium and water:</strong> The osmotic diuresis also causes loss of sodium, potassium and other electrolytes in the urine.</li>
+                    <li><strong>Decreased extracellular fluid (ECF) volume:</strong> The loss of water and sodium reduces the ECF volume, which decreases venous return to the heart.</li>
+                    <li><strong>Reduced cardiac output:</strong> Decreased venous return (preload) reduces stroke volume and cardiac output, leading to a fall in arterial blood pressure.</li>
+                    <li><strong>Compensatory mechanisms:</strong> Baroreceptor reflexes and the renin-angiotensin-aldosterone system attempt to compensate by increasing heart rate and vasoconstriction, but if fluid loss is severe, hypotension results.</li>
+                </ul>
+                <p>This is why hypotension and tachycardia are classic features of diabetic ketoacidosis and why fluid resuscitation is the first step in treatment.</p>`
+            },
+            {
+                q: `d) David takes his insulin parenterally. Why can't he take insulin orally? [1 mark]`,
+                model: `<h4>Model Answer</h4>
+                <p>Insulin is a <strong>polypeptide hormone</strong> (51 amino acids) and cannot be taken orally because:</p>
+                <ul>
+                    <li><strong>Digestion by proteolytic enzymes:</strong> The stomach and small intestine contain proteases (pepsin, trypsin, chymotrypsin) that would hydrolyse insulin into inactive fragments before it could be absorbed.</li>
+                    <li><strong>Denaturation by gastric acid:</strong> The acidic pH of the stomach would denature the tertiary structure of insulin, destroying its biological activity.</li>
+                    <li><strong>Poor absorption:</strong> Even if some intact insulin survived, its large molecular size would prevent efficient absorption across the intestinal mucosa.</li>
+                    <li><strong>First-pass metabolism:</strong> Any insulin absorbed into the portal circulation would be partially degraded by the liver before reaching the systemic circulation.</li>
+                </ul>
+                <p>Therefore, insulin must be administered <strong>parenterally</strong> (subcutaneous injection, intramuscular, or intravenous) to bypass the gastrointestinal tract and deliver active hormone to the circulation.</p>`
+            },
+            {
+                q: `e) What is the mechanism by which injected insulin cause hypokalemia? [1 mark]`,
+                model: `<h4>Model Answer</h4>
+                <p>Insulin causes hypokalemia by <strong>stimulating the Na⁺/K⁺-ATPase pump</strong> in the cell membranes of skeletal muscle, adipose tissue, and other cells:</p>
+                <ul>
+                    <li><strong>Increased K⁺ uptake into cells:</strong> Insulin binds to its receptor and, via the PI3K/Akt pathway, activates the Na⁺/K⁺-ATPase pump. This pump moves 3 Na⁺ ions out of the cell and 2 K⁺ ions into the cell, using ATP.</li>
+                    <li><strong>Shift of K⁺ from ECF to ICF:</strong> The net effect is a shift of potassium from the extracellular fluid (ECF) into the intracellular fluid (ICF), lowering serum potassium concentration.</li>
+                    <li><strong>Clinical significance:</strong> This is why insulin (along with glucose) is used to treat hyperkalemia — it drives K⁺ into cells and lowers serum K⁺. However, in a patient with normal or low potassium, insulin can cause hypokalemia, which can lead to cardiac arrhythmias and muscle weakness.</li>
+                </ul>`
+            },
+            {
+                q: `f) As David's condition worsened, he began to experience episodes of "air hunger". What is "air hunger"? Briefly explain the basis for the air hunger. [2 marks]`,
+                model: `<h4>Model Answer</h4>
+                <p><strong>Air hunger</strong> (also called dyspnea or the sensation of breathlessness) is the uncomfortable awareness of the need to breathe, often described as "not getting enough air" or "hunger for air."</p>
+                <p><strong>Basis in diabetic ketoacidosis:</strong></p>
+                <ul>
+                    <li><strong>Metabolic acidosis:</strong> In DKA, the accumulation of ketone bodies (β-hydroxybutyrate and acetoacetate) and lactic acid causes a severe <strong>metabolic acidosis</strong> (low blood pH, low bicarbonate).</li>
+                    <li><strong>Stimulation of chemoreceptors:</strong> The fall in arterial pH and the rise in H⁺ concentration stimulate the <strong>central chemoreceptors</strong> in the medulla (which respond to H⁺/CO₂) and the <strong>peripheral chemoreceptors</strong> in the carotid and aortic bodies (which respond to H⁺, CO₂, and O₂).</li>
+                    <li><strong>Compensatory hyperventilation:</strong> The chemoreceptors increase the drive to breathe, causing <strong>Kussmaul respirations</strong> — deep, rapid, laboured breathing. This is a compensatory mechanism to blow off CO₂ and raise the pH toward normal.</li>
+                    <li><strong>Air hunger:</strong> The intense stimulation of the respiratory centre produces the sensation of air hunger. The patient feels an overwhelming need to breathe, even though the lungs are working hard.</li>
+                </ul>
+                <p>If the acidosis is not corrected, the respiratory centre may eventually be depressed, leading to respiratory failure and coma.</p>`
+            },
+            {
+                q: `g) Diabetes mellitus is most often associated with poor wound healing. Briefly explain the physiological basis for this phenomenon. [2 marks]`,
+                model: `<h4>Model Answer</h4>
+                <p>Poor wound healing in diabetes mellitus is multifactorial, involving vascular, immune, metabolic and neurological mechanisms:</p>
+                <ul>
+                    <li><strong>Microangiopathy:</strong> Chronic hyperglycemia causes glycosylation of basement membrane proteins and thickening of capillary basement membranes, impairing blood flow and oxygen delivery to healing tissues. This is compounded by atherosclerosis of larger vessels (macrovascular disease).</li>
+                    <li><strong>Impaired immune function:</strong> Hyperglycemia impairs neutrophil chemotaxis, phagocytosis and killing; it also reduces lymphocyte function and antibody production, increasing the risk of wound infection. Infection further delays healing.</li>
+                    <li><strong>Reduced collagen synthesis and fibroblast function:</strong> Insulin is an anabolic hormone required for fibroblast proliferation and collagen synthesis. Insulin deficiency (and insulin resistance) impairs the deposition of new collagen and extracellular matrix, weakening the wound.</li>
+                    <li><strong>Peripheral neuropathy:</strong> Sensory neuropathy leads to repeated unnoticed trauma, and autonomic neuropathy causes dry skin (reduced sweating), which cracks and ulcerates. Motor neuropathy causes foot deformities and abnormal pressure distribution.</li>
+                    <li><strong>Metabolic derangements:</strong> Poor glycemic control leads to dehydration, electrolyte imbalance, and a catabolic state that impairs tissue repair. Advanced glycation end-products (AGEs) accumulate and cause oxidative stress and inflammation that impede healing.</li>
+                    <li><strong>Decreased growth factor production:</strong> Diabetes is associated with reduced levels of IGF-1, VEGF and other growth factors essential for angiogenesis and tissue repair.</li>
+                </ul>
+                <p>These factors combine to produce the classic diabetic foot ulcer and poor wound healing seen in clinical practice.</p>`
+            },
+            {
+                q: `h) Due to poor management of David's condition, he transitioned into coma. Outline the basis for coma in Diabetes mellitus. [2 marks]`,
+                model: `<h4>Model Answer</h4>
+                <p>Coma in diabetes mellitus can occur due to several mechanisms, depending on the type and severity of the metabolic derangement:</p>
+                <ol>
+                    <li><strong>Diabetic ketoacidosis (DKA):</strong> Severe insulin deficiency leads to hyperglycemia, ketonemia, and metabolic acidosis. The acidosis, dehydration, electrolyte imbalance (especially K⁺), and accumulation of ketone bodies depress the central nervous system. Cerebral edema can also occur, especially in children. The result is progressive drowsiness, stupor, and eventually coma.</li>
+                    <li><strong>Hyperosmolar hyperglycemic state (HHS):</strong> More common in type 2 diabetes, this is characterised by extreme hyperglycemia (often >600 mg/dL), severe dehydration, and hyperosmolality, without significant ketosis. The hyperosmolality causes water to shift out of neurons, leading to cellular dehydration and neurological depression — drowsiness, seizures, and coma.</li>
+                    <li><strong>Hypoglycemia:</strong> Over-treatment with insulin or oral hypoglycemic agents can cause severe hypoglycemia (blood glucose <50 mg/dL). The brain depends on glucose for energy; neuroglycopenia causes confusion, seizures, and coma. This is the most rapidly reversible cause of coma in diabetes.</li>
+                    <li><strong>Lactic acidosis:</strong> Poor tissue perfusion, infection, or metformin accumulation can cause lactic acidosis, which also depresses CNS function and can lead to coma.</li>
+                    <li><strong>Cerebral edema:</strong> Rapid correction of hyperglycemia or severe DKA can cause cerebral edema, which increases intracranial pressure and leads to coma and potentially death.</li>
+                </ol>
+                <p>In summary, coma in diabetes results from the combined effects of severe metabolic derangements (acidosis, hyperosmolality, hypoglycemia), dehydration, electrolyte imbalance, and cerebral edema on the central nervous system.</p>`
+            }
+        ]
+    }
+];
+    /* =====================================================================
+       RENDERING — SECTION A (MCQ)
+       ===================================================================== */
+    function renderSectionA() {
+        const container = document.getElementById('container-A');
+        let html = '';
+        sectionA.forEach((q, i) => {
+            const qid = 'A-q' + (i + 1);
+            html += '<div class="question" id="q-' + qid + '">';
+            html += '<p><span class="q-badge">Q' + (i + 1) + '</span> ' + q.q + '</p>';
+            html += '<div class="options">';
+            q.options.forEach((opt, j) => {
+                const L = String.fromCharCode(65 + j);
+                html += '<label><input type="radio" name="' + qid + '" value="' + L + '"> <strong>' + L + ')</strong> ' + opt + '</label>';
+            });
+            html += '</div>';
+            html += '<div class="question-feedback" id="fb-' + qid + '"></div>';
+            html += '</div>';
+        });
+        container.innerHTML = html;
+    }
+
+    function submitSectionA() {
+        let score = 0;
+        sectionA.forEach((q, i) => {
+            const qid = 'A-q' + (i + 1);
+            const radios = document.getElementsByName(qid);
+            let selected = null;
+            for (let r = 0; r < radios.length; r++) {
+                if (radios[r].checked) { selected = radios[r]; break; }
+            }
+            const correct = q.correct.toUpperCase();
+            if (selected && selected.value === correct) score++;
+
+            let html = '<div class="answer-block"><div class="answer-list">';
+            q.options.forEach((opt, j) => {
+                const L = String.fromCharCode(65 + j);
+                let cls = 'answer-item';
+                if (L === correct) cls += ' answer-correct';
+                if (selected && selected.value === L) {
+                    cls += ' user-choice';
+                    if (L !== correct) cls += ' answer-wrong';
+                }
+                const mark = (selected && selected.value === L) ? ' ◀ your answer' : '';
+                html += '<div class="' + cls + '">' + L + ') ' + opt + mark + '</div>';
+            });
+            html += '</div>';
+
+            const correctIdx = correct.charCodeAt(0) - 65;
+            const correctText = (correctIdx >= 0 && correctIdx < q.options.length) ? q.options[correctIdx] : '';
+
+            if (!selected) {
+                html += '<div class="explanation wrong">No answer selected. Correct answer: <strong>' +
+                        correct + ') ' + correctText + '</strong>.<br>' + q.explanation + '</div>';
+            } else if (selected.value === correct) {
+                html += '<div class="explanation">✅ <strong>Correct.</strong><br>' + q.explanation + '</div>';
+            } else {
+                html += '<div class="explanation wrong">❌ <strong>Incorrect.</strong> Correct answer: <strong>' +
+                        correct + ') ' + correctText + '</strong>.<br>' + q.explanation + '</div>';
+            }
+
+            const fb = document.getElementById('fb-' + qid);
+            if (fb) fb.innerHTML = html;
+        });
+
+        const total = sectionA.length;
+        const pct = Math.round((score / total) * 100);
+        const box = document.getElementById('result-A');
+        box.style.display = 'block';
+        document.getElementById('score-A').innerText = score + ' / ' + total + '  (' + pct + '%)';
+
+        document.querySelectorAll('#panel-A input[type="radio"]').forEach(r => r.disabled = true);
+    }
+
+    /* =====================================================================
+       RENDERING — SECTION B (Structured)
+       ===================================================================== */
+    function renderSectionB() {
+        const container = document.getElementById('container-B');
+        let html = '';
+        sectionB.forEach((item, i) => {
+            const qid = 'B-q' + (i + 1);
+            html += '<div class="question">';
+            html += '<p><span class="q-badge">Q' + (i + 1) + '</span> ' + item.q + '</p>';
+            html += '<div class="text-answer-wrap">';
+            html += '<textarea id="ta-' + qid + '" placeholder="Write your answer here..."></textarea>';
+            html += '</div>';
+            html += '<div class="reveal-wrap">';
+            html += '<button type="button" class="btn btn-sm btn-outline" onclick="toggleModel(\'' + qid + '\')">';
+            html += '<i class="fas fa-eye"></i> Show Model Answer</button>';
+            html += '</div>';
+            html += '<div id="model-' + qid + '" class="model-answer hidden">' + item.model + '</div>';
+            html += '</div>';
+        });
+        container.innerHTML = html;
+    }
+
+    function toggleModel(qid) {
+        const el = document.getElementById('model-' + qid);
+        el.classList.toggle('hidden');
+    }
+
+    /* =====================================================================
+       RENDERING — SECTION C (Scenarios)
+       ===================================================================== */
+    function renderSectionC() {
+        const container = document.getElementById('container-C');
+        let html = '';
+        sectionC.forEach((scenario, si) => {
+            html += '<div class="scenario-intro"><strong>' + scenario.q + '</strong><br><br>' + scenario.intro + '</div>';
+            scenario.questions.forEach((item, qi) => {
+                const qid = 'C-' + si + '-' + qi;
+                html += '<div class="question">';
+                html += '<p>' + item.q + '</p>';
+                html += '<div class="text-answer-wrap">';
+                html += '<textarea id="ta-' + qid + '" placeholder="Write your answer here..."></textarea>';
+                html += '</div>';
+                html += '<div class="reveal-wrap">';
+                html += '<button type="button" class="btn btn-sm btn-outline" onclick="toggleModel(\'' + qid + '\')">';
+                html += '<i class="fas fa-eye"></i> Show Model Answer</button>';
+                html += '</div>';
+                html += '<div id="model-' + qid + '" class="model-answer hidden">' + item.model + '</div>';
+                html += '</div>';
+            });
+        });
+        container.innerHTML = html;
+    }
+
+    /* ─── INIT ─── */
+    renderSectionA();
+    renderSectionB();
+    renderSectionC();
+
+    /* ─── TAB SWITCHING ─── */
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            const target = this.dataset.target;
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+            document.getElementById('panel-' + target).classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+    </script>
+
+</body>
+</html>
