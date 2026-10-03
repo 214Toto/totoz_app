@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2025 Physiology Sessional – 3rd Year</title>
+<style>
+    :root {
+        --primary: #1a6b6b;
+        --accent: #2ea8a0;
+        --dark: #0f2a2a;
+        --light: #f4f8f7;
+        --radius: 12px;
+        --shadow: 0 4px 14px rgba(0, 30, 30, 0.08);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        background: #edf3f2;
+        color: var(--dark);
+        min-height: 100vh;
+        padding-top: 72px;
+    }
+    header {
+        position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+        background: linear-gradient(145deg, var(--primary), var(--dark));
+        color: #fff; padding: 0.6rem 0;
+        box-shadow: 0 4px 18px rgba(0, 20, 20, 0.25);
+    }
+    .header-inner {
+        max-width: 1000px; margin: 0 auto; padding: 0 1.5rem;
+        display: flex; align-items: center; justify-content: space-between;
+        flex-wrap: wrap; gap: 0.3rem;
+    }
+    .logo { display: flex; align-items: center; gap: 0.6rem; }
+    .logo i { font-size: 1.5rem; color: #8dd9d4; }
+    .logo h1 { font-size: 1.15rem; font-weight: 700; letter-spacing: 0.2px; }
+    .badge {
+        background: rgba(255, 255, 255, 0.12);
+        padding: 0.2rem 1rem; border-radius: 40px;
+        font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+        color: #b3e6e0; letter-spacing: 0.5px;
+    }
+    .container { max-width: 920px; margin: 0 auto; padding: 0 1.2rem 2.5rem; }
+    .tab-bar { display: flex; gap: 0.5rem; margin: 0.5rem 0 1.5rem 0; flex-wrap: wrap; }
+    .tab-btn {
+        background: #dce8e8; border: none; padding: 0.5rem 1.8rem;
+        border-radius: 40px; font-weight: 600; font-size: 0.95rem;
+        color: var(--dark); cursor: pointer; transition: 0.2s;
+    }
+    .tab-btn:hover { background: #c0d6d6; }
+    .tab-btn.active {
+        background: var(--primary); color: #fff;
+        box-shadow: 0 2px 10px rgba(26, 107, 107, 0.25);
+    }
+    .tab-panel { display: block; }
+    .tab-panel.hidden { display: none; }
+    .section-title {
+        font-size: 1.25rem; font-weight: 700; color: var(--primary);
+        margin: 0 0 0.8rem 0; padding-bottom: 0.4rem;
+        border-bottom: 3px solid rgba(26, 107, 107, 0.18);
+        display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;
+    }
+    .section-title .count {
+        font-size: 0.7rem; font-weight: 600; background: var(--primary);
+        color: #fff; border-radius: 40px; padding: 0 0.7rem; line-height: 1.7;
+    }
+    .section-subtitle { color: #4f6e6e; font-size: 0.9rem; margin-bottom: 1rem; }
+    .instructions {
+        background: #fff8e6; border-left: 4px solid #e0a800;
+        border-radius: 8px; padding: 0.8rem 1.1rem; margin-bottom: 1.2rem;
+        font-size: 0.85rem; line-height: 1.6; color: #6b5200;
+    }
+    .instructions strong { display: block; margin-bottom: 0.3rem; color: #8a6a00; }
+    .question {
+        background: #ffffff; border-radius: var(--radius);
+        padding: 1.1rem 1.2rem 0.2rem 1.2rem; margin-bottom: 1rem;
+        box-shadow: var(--shadow); border: 1px solid rgba(26, 107, 107, 0.05);
+        transition: box-shadow 0.2s;
+    }
+    .question:hover { box-shadow: 0 6px 20px rgba(0, 30, 30, 0.07); }
+    .question .q-badge {
+        display: inline-block; background: var(--primary); color: #fff;
+        border-radius: 40px; padding: 0 0.65rem; font-size: 0.7rem;
+        font-weight: 700; line-height: 1.6; margin-right: 0.4rem;
+    }
+    .question p { font-weight: 600; font-size: 0.97rem; margin-bottom: 0.4rem; color: var(--dark); }
+    .options label {
+        display: block; background: #fafcfc; border: 1px solid #dde8e8;
+        border-radius: 7px; padding: 0.4rem 0.85rem; margin-top: 0.4rem;
+        cursor: pointer; transition: all 0.15s; font-weight: 450; font-size: 0.92rem;
+    }
+    .options label:hover { background: #e8f5f4; border-color: var(--accent); }
+    .options input[type="radio"] { margin-right: 0.5rem; accent-color: var(--primary); transform: scale(1.04); }
+    .question-feedback { margin-top: 0.8rem; padding: 0.4rem 0 0.1rem 0; border-top: 1px dashed #dce6e6; }
+    .answer-block strong { display: block; margin-bottom: 3px; color: var(--primary); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.3px; }
+    .answer-list { display: flex; flex-direction: column; gap: 2px; }
+    .answer-item {
+        padding: 4px 10px; border-radius: 5px; border: 1px solid #e4edec;
+        background: #ffffff; font-weight: 500; font-size: 0.88rem;
+    }
+    .answer-correct { background: #e8f7ef; border-color: #a8d8c0; color: #0a4f3a; }
+    .answer-wrong { background: #fde9ea; border-color: #f5b8b8; color: #8a1f2b; }
+    .user-choice { outline: 2px dashed rgba(0, 0, 0, 0.06); }
+    .explanation {
+        margin-top: 5px; padding: 8px 13px; border-radius: 7px;
+        background: #f0f8f6; color: #065f4a; font-size: 0.88rem;
+        line-height: 1.55; border-left: 4px solid var(--accent);
+    }
+    .explanation.wrong { background: #fdf1f1; color: #7a1f1f; border-left-color: #e68080; }
+    .btn {
+        display: inline-flex; align-items: center; gap: 0.5rem;
+        background: linear-gradient(90deg, var(--accent), var(--primary));
+        color: #fff; border: none; padding: 0.55rem 1.8rem;
+        border-radius: var(--radius); font-weight: 600; font-size: 0.95rem;
+        cursor: pointer; transition: transform 0.15s, box-shadow 0.2s;
+        box-shadow: 0 4px 14px rgba(26, 107, 107, 0.25);
+    }
+    .btn:hover { transform: scale(1.02); box-shadow: 0 6px 24px rgba(26, 107, 107, 0.32); }
+    .btn:active { transform: scale(0.96); }
+    .btn-sm {
+        padding: 0.4rem 1.2rem; font-size: 0.85rem;
+        background: linear-gradient(90deg, #4fc0b8, #1a6b6b);
+    }
+    .submit-wrap { text-align: center; margin: 1.5rem 0 1.8rem; }
+    .result {
+        margin-top: 1.5rem; padding: 1.5rem 1.5rem 0.8rem;
+        background: #eaf6f4; border-radius: var(--radius);
+        text-align: center; display: none; border: 1px solid #b8dbd6;
+    }
+    .result h3 { font-size: 1.1rem; font-weight: 600; color: var(--dark); }
+    .score { font-size: 2.4rem; font-weight: 800; color: var(--primary); margin: 0.1rem 0 0.2rem; }
+    .text-muted { color: #4f6e6e; font-size: 0.9rem; }
+    .hidden { display: none !important; }
+
+    /* ---- Short-answer / essay cards ---- */
+    .qa-card {
+        background: #fff; border-radius: var(--radius);
+        padding: 1.2rem 1.3rem; margin-bottom: 1.2rem;
+        box-shadow: var(--shadow); border: 1px solid rgba(26, 107, 107, 0.06);
+    }
+    .qa-card h4 {
+        color: var(--primary); font-size: 1.02rem; margin-bottom: 0.8rem;
+        display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
+    }
+    .qa-card h4 .num {
+        background: var(--primary); color: #fff; border-radius: 40px;
+        font-size: 0.7rem; font-weight: 700; padding: 0 0.65rem; line-height: 1.7;
+    }
+    .qa-scenario {
+        background: #f7fbfa; border-left: 4px solid var(--accent);
+        border-radius: 6px; padding: 0.7rem 1rem; margin-bottom: 0.8rem;
+        font-size: 0.9rem; line-height: 1.55; color: #24403f;
+    }
+    .part {
+        margin: 0.55rem 0 0.55rem 0.2rem; padding-left: 0.7rem;
+        border-left: 3px solid #d7e8e6; font-size: 0.93rem;
+        font-weight: 600; line-height: 1.55; color: #123b3a;
+    }
+    .part .marks {
+        display: inline-block; font-size: 0.68rem; font-weight: 700;
+        background: var(--accent); color: #fff; border-radius: 20px;
+        padding: 0.05rem 0.55rem; margin-left: 0.35rem; vertical-align: middle;
+    }
+    .model-answer {
+        display: none; margin-top: 0.8rem; padding: 1rem 1.2rem;
+        background: #f0f8f6; border-left: 4px solid var(--accent);
+        border-radius: 8px; font-size: 0.9rem; line-height: 1.65; color: #14403c;
+    }
+    .model-answer.show { display: block; }
+    .model-answer h5 {
+        color: var(--primary); font-size: 0.88rem; margin: 0.75rem 0 0.3rem;
+        text-transform: uppercase; letter-spacing: 0.4px;
+    }
+    .model-answer h5:first-child { margin-top: 0; }
+    .model-answer ul, .model-answer ol { margin: 0.25rem 0 0.4rem 1.2rem; }
+    .model-answer li { margin-bottom: 0.22rem; }
+    .model-answer table { border-collapse: collapse; width: 100%; margin: 0.5rem 0; font-size: 0.83rem; }
+    .model-answer th, .model-answer td { border: 1px solid #c3dedb; padding: 0.35rem 0.55rem; text-align: left; }
+    .model-answer th { background: #dcefee; color: #0d4a46; font-weight: 700; }
+    .model-answer .calc {
+        background: #fff; border: 1px dashed #a8d8c0; border-radius: 6px;
+        padding: 0.5rem 0.8rem; margin: 0.4rem 0; font-family: 'Consolas', monospace;
+        font-size: 0.85rem; color: #0a4f3a;
+    }
+    .concept-map {
+        background: #fff; border: 1px solid #c3dedb; border-radius: 8px;
+        padding: 0.8rem 1rem; margin: 0.5rem 0; font-size: 0.84rem; line-height: 1.7;
+    }
+    .concept-map .cm-box {
+        display: inline-block; background: #e8f5f4; border: 1px solid #a8d8c0;
+        border-radius: 6px; padding: 0.15rem 0.6rem; margin: 0.12rem 0;
+        font-weight: 600; color: #0d4a46;
+    }
+    .concept-map .arrow { color: var(--accent); font-weight: 700; margin: 0 0.3rem; }
+
+    @media (max-width: 700px) {
+        body { padding-top: 68px; }
+        .logo h1 { font-size: 0.95rem; }
+        .header-inner { padding: 0 1rem; flex-direction: column; align-items: stretch; gap: 0.2rem; }
+        .badge { align-self: flex-start; }
+        .question { padding: 0.9rem 0.9rem 0.1rem 0.9rem; }
+        .section-title { font-size: 1.05rem; }
+        .score { font-size: 2rem; }
+        .btn { padding: 0.5rem 1.2rem; font-size: 0.85rem; }
+        .tab-btn { padding: 0.4rem 1.2rem; font-size: 0.85rem; }
+        .qa-card { padding: 1rem 0.9rem; }
+    }
+    @media (max-width: 420px) {
+        .logo h1 { font-size: 0.8rem; }
+        .options label { font-size: 0.85rem; padding: 0.35rem 0.65rem; }
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <div class="header-inner">
+        <div class="logo">
+            <i class="fas fa-heartbeat"></i>
+            <h1>2025 Physiology Sessional – 3rd Year</h1>
+        </div>
+        <span class="badge"><i class="fas fa-pencil-alt"></i> &nbsp;40 MCQs + 4 SAQs + 3 Cases</span>
+    </div>
+</header>
+
+<main>
+    <div class="container">
+
+        <div class="tab-bar">
+            <button class="tab-btn active" data-target="A">📝 Section A – MCQs</button>
+            <button class="tab-btn" data-target="B">✍️ Section B – Short Answers</button>
+            <button class="tab-btn" data-target="C">🩺 Section C – Case Scenarios</button>
+        </div>
+
+        <!-- ================= SECTION A ================= -->
+        <div id="panel-A" class="tab-panel">
+            <div class="section-title">
+                <i class="fas fa-list-ul"></i> Section A – Multiple Choice Questions
+                <span class="count">40</span>
+            </div>
+
+            <div class="instructions">
+                <strong>Instructions (from the paper)</strong>
+                1. Do not write your name, phone number or anything that discloses your identity on any other page apart from this page. Defaulter will have their evaluation nullified.<br>
+                2. Write your computer number on every other page.<br>
+                3. Answer ALL questions in SECTION A in the answer grid sheet.<br>
+                4. Answer other sections in the given answer booklet.<br>
+                5. Check diligently for any choices in answering.
+            </div>
+
+            <p class="section-subtitle">Select the best answer for each question, then click <strong>Submit All MCQs</strong> below.</p>
+            <form id="form-A">
+                <div id="container-A"></div>
+                <div class="submit-wrap">
+                    <button type="button" class="btn" onclick="submitSectionA()">
+                        <i class="fas fa-check-circle"></i> Submit All MCQs
+                    </button>
+                </div>
+            </form>
+            <div class="result" id="result-A">
+                <h3><i class="fas fa-chart-simple"></i> Your Score</h3>
+                <div class="score" id="score-A">0</div>
+                <p class="text-muted">Review the feedback below each question.</p>
+            </div>
+        </div>
+
+        <!-- ================= SECTION B ================= -->
+        <div id="panel-B" class="tab-panel hidden">
+            <div class="section-title">
+                <i class="fas fa-pen"></i> Section B – Short Answer Questions
+                <span class="count">4</span>
+            </div>
+            <p class="section-subtitle">Answer in the answer booklet. Click <em>Show Model Answer</em> to reveal a full model answer with mark allocation.</p>
+
+            <!-- B1 -->
+            <div class="qa-card">
+                <h4><span class="num">Q1</span> Respiratory volumes &amp; ventilation</h4>
+                <div class="qa-scenario">
+                    <strong>Given:</strong><br>
+                    Tidal volume = 400 mL<br>
+                    Dead space volume = 100 mL<br>
+                    Breathing frequency = 10 breaths/min<br>
+                    PCO₂ = 50 mmHg (arterial blood)
+                </div>
+                <div class="part">a) Calculate the minute ventilation for this individual.<span class="marks">3 marks</span></div>
+                <div class="part">b) Determine the alveolar ventilation for this individual.<span class="marks">3 marks</span></div>
+                <div class="part">c) If dead space volume increased to 150 mL without a change in tidal volume, what would happen to alveolar ventilation? Calculate the new alveolar ventilation and describe its physiological consequences.<span class="marks">4 marks</span></div>
+                <button class="btn btn-sm" id="B1-btn" onclick="toggleModel('B1')"><i class="fas fa-eye"></i> Show Model Answer</button>
+                <div class="model-answer" id="B1">
+                    <h5>a) Minute ventilation (3 marks)</h5>
+                    <p>Minute ventilation (pulmonary ventilation, V̇<sub>E</sub>) is the total volume of air moved into and out of the lungs per minute.</p>
+                    <div class="calc">V̇<sub>E</sub> = Tidal volume × Breathing frequency<br>
+                    V̇<sub>E</sub> = 400 mL × 10 breaths/min = <strong>4 000 mL/min = 4.0 L/min</strong></div>
+
+                    <h5>b) Alveolar ventilation (3 marks)</h5>
+                    <p>Alveolar ventilation (V̇<sub>A</sub>) is the volume of fresh air reaching the alveoli (and therefore participating in gas exchange) per minute. Air in the anatomical dead space does not take part in gas exchange and must be subtracted.</p>
+                    <div class="calc">V̇<sub>A</sub> = (Tidal volume − Dead space) × Breathing frequency<br>
+                    V̇<sub>A</sub> = (400 − 100) mL × 10 = 300 × 10 = <strong>3 000 mL/min = 3.0 L/min</strong></div>
+
+                    <h5>c) Effect of increased dead space (4 marks)</h5>
+                    <p>Alveolar ventilation would <strong>fall</strong>, because a larger fraction of each tidal breath is wasted in the dead space.</p>
+                    <div class="calc">New V̇<sub>A</sub> = (400 − 150) mL × 10 = 250 × 10 = <strong>2 500 mL/min = 2.5 L/min</strong><br>
+                    Fall = 3 000 − 2 500 = 500 mL/min (≈ 16.7 % reduction)</div>
+                    <p><strong>Physiological consequences:</strong></p>
+                    <ul>
+                        <li>Reduced CO₂ elimination → CO₂ retention (hypercapnia) → <strong>respiratory acidosis</strong>. Note the given PaCO₂ of 50 mmHg already indicates hypoventilation (normal ≈ 40 mmHg).</li>
+                        <li>Reduced alveolar PO₂ → arterial hypoxaemia → tissue hypoxia.</li>
+                        <li>Stimulation of central (medullary) and peripheral (carotid/aortic body) chemoreceptors → increased respiratory drive, dyspnoea.</li>
+                        <li>If the dead-space increase is sustained (e.g. pulmonary embolism, shallow breathing, ventilator tubing), the patient may progress to respiratory failure and require increased minute ventilation or ventilatory support.</li>
+                        <li>Compensation: the only way to restore alveolar ventilation at a fixed tidal volume is to increase respiratory rate, which itself reduces the time for alveolar equilibration.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- B2 -->
+            <div class="qa-card">
+                <h4><span class="num">Q2</span> Body fluids</h4>
+                <div class="part">a) Discuss how malabsorption diarrhoea affects body fluid balance and homeostasis.<span class="marks">4 marks</span></div>
+                <div class="part">b) Is the Donnan effect hazardous under normal cell conditions? How is this prevented inside the body cells?<span class="marks">2 marks</span></div>
+                <div class="part">c) Draw a concept map of the steps involved in the Donnan effect.<span class="marks">4 marks</span></div>
+                <button class="btn btn-sm" id="B2-btn" onclick="toggleModel('B2')"><i class="fas fa-eye"></i> Show Model Answer</button>
+                <div class="model-answer" id="B2">
+                    <h5>a) Malabsorption diarrhoea and body fluid balance (4 marks)</h5>
+                    <ul>
+                        <li><strong>Loss of water and electrolytes:</strong> diarrhoeal fluid is isotonic and rich in Na⁺, K⁺, Cl⁻ and HCO₃⁻. Loss of this fluid depletes the extracellular fluid (ECF) compartment → hypovolaemia, decreased plasma volume, decreased venous return and cardiac output, hypotension and (if severe) hypovolaemic shock.</li>
+                        <li><strong>Acid–base disturbance:</strong> loss of bicarbonate-rich intestinal/pancreatic secretions produces a <strong>hyperchloraemic metabolic acidosis</strong>; loss of gastric acid (if vomiting coexists) can instead produce metabolic alkalosis.</li>
+                        <li><strong>Potassium depletion:</strong> K⁺ loss in stool → hypokalaemia → muscle weakness, ileus, cardiac arrhythmias, and a further shift of K⁺ out of cells in exchange for H⁺ (worsening acidosis).</li>
+                        <li><strong>Osmotic shift of water:</strong> unabsorbed solute in the gut lumen holds water osmotically, worsening the diarrhoea and drawing water from the ECF into the gut.</li>
+                        <li><strong>Homeostatic compensation:</strong>
+                            <ul>
+                                <li>↓ ECF volume → ↓ arterial pressure → baroreceptor-mediated sympathetic activation and RAAS activation → vasoconstriction, Na⁺ and water retention by the kidney.</li>
+                                <li>↑ Plasma osmolality → ADH (vasopressin) release → renal water conservation and thirst.</li>
+                                <li>Reduced renal perfusion → oliguria, raised urea/creatinine (pre-renal azotaemia).</li>
+                            </ul>
+                        </li>
+                        <li><strong>Consequences of failure:</strong> dehydration, hypovolaemic shock, acute kidney injury, acid–base and electrolyte derangement, and death if not corrected.</li>
+                    </ul>
+
+                    <h5>b) Is the Donnan effect hazardous? How is it prevented? (2 marks)</h5>
+                    <p>The Donnan (Gibbs–Donnan) effect <strong>is potentially hazardous</strong> because the trapped intracellular non-diffusible anions (proteins, phosphates) attract diffusible cations (K⁺) and exclude diffusible anions (Cl⁻), creating an asymmetric distribution of ions and an <strong>osmotic gradient</strong> that would draw water into the cell and cause <strong>cell swelling / lysis</strong>.</p>
+                    <p><strong>However, under normal conditions it is not hazardous</strong> because:</p>
+                    <ul>
+                        <li>The cell membrane is <strong>relatively impermeable to Na⁺</strong> (low Na⁺ permeability), so Na⁺ does not follow the osmotic gradient freely.</li>
+                        <li>The <strong>Na⁺/K⁺-ATPase pump</strong> continuously extrudes 3 Na⁺ for every 2 K⁺ taken in, creating a <strong>steady-state electrochemical gradient</strong> and effectively "pumping water out" osmotically. This pump is therefore described as the <strong>osmotic stabiliser</strong> of the cell.</li>
+                        <li>Together, low Na⁺ permeability plus the Na⁺/K⁺ pump prevent cell swelling and maintain cell volume (no net water influx).</li>
+                    </ul>
+
+                    <h5>c) Concept map of the Donnan effect (4 marks)</h5>
+                        <img src="donnan.jpg" alt="Oxygen dissociation curve" style="max-width:100%; border-radius:8px; margin:0.6rem 0;"> 
+                    <p><em>Marking guide:</em> 1 mark for identifying non-diffusible intracellular anions; 1 mark for the ionic asymmetry / electroneutrality consequence; 1 mark for the osmotic water shift; 1 mark for the corrective role of the Na⁺/K⁺ pump and the resulting stable cell volume.</p>
+                </div>
+            </div>
+
+            <!-- B3 -->
+            <div class="qa-card">
+                <h4><span class="num">Q3</span> Cardiac preload, afterload and orthostatic hypotension</h4>
+                <div class="part">a) Define preload and afterload in the context of cardiovascular physiology. Discuss how each parameter influences cardiac output and overall heart functioning.<span class="marks">3 marks</span></div>
+                <div class="part">b) How do changes in these parameters contribute to the pathophysiology of heart failure? Add a note on heart failure types.<span class="marks">3 marks</span></div>
+                <div class="part">c) Discuss the physiological mechanism of orthostatic hypotension. Discuss the clinical applications.<span class="marks">4 marks</span></div>
+                <button class="btn btn-sm" id="B3-btn" onclick="toggleModel('B3')"><i class="fas fa-eye"></i> Show Model Answer</button>
+                <div class="model-answer" id="B3">
+                    <h5>a) Definitions and effects on cardiac output (3 marks)</h5>
+                    <ul>
+                        <li><strong>Preload</strong> = the degree of stretch of the ventricular myocardium at the end of diastole. It is best represented by the <strong>end-diastolic volume (EDV)</strong> or end-diastolic pressure, and is determined by venous return, blood volume, atrial contraction and ventricular compliance. It is the clinical correlate of the <strong>Frank–Starling mechanism</strong>: within physiological limits, an increase in preload increases the force of contraction and therefore stroke volume (and cardiac output).</li>
+                        <li><strong>Afterload</strong> = the load (resistance) against which the ventricle must eject blood during systole. It is best represented by <strong>aortic pressure / systemic vascular resistance</strong> (and by wall stress, described by the Laplace relationship: wall stress ∝ pressure × radius ÷ wall thickness). An increase in afterload reduces stroke volume and increases myocardial oxygen demand and wall stress.</li>
+                        <li><strong>Cardiac output = Stroke volume × Heart rate</strong>, so both preload and afterload directly influence cardiac output. Preload acts through the Frank–Starling relationship (↑ preload → ↑ stroke volume), while afterload acts inversely (↑ afterload → ↓ stroke volume).</li>
+                    </ul>
+
+                    <h5>b) Contribution to heart failure (3 marks)</h5>
+                    <ul>
+                        <li><strong>Preload overload:</strong> chronic volume overload (e.g. mitral/aortic regurgitation, ventricular septal defect, anaemia, hyperthyroidism) → eccentric hypertrophy with chamber dilatation → eventually the Frank–Starling curve is depressed and stroke volume falls despite a high preload. In heart failure, a high preload (raised filling pressure) also causes pulmonary and systemic congestion (dyspnoea, orthopnoea, oedema, raised JVP).</li>
+                        <li><strong>Afterload excess:</strong> chronic pressure overload (e.g. hypertension, aortic stenosis, coarctation) → concentric hypertrophy → increased wall thickness and reduced compliance → diastolic dysfunction, subendocardial ischaemia and eventual systolic failure. Neurohumoral compensation (sympathetic activation, RAAS, vasoconstriction) further raises afterload, creating a vicious cycle.</li>
+                        <li><strong>Compensatory mechanisms:</strong> initially helpful (Frank–Starling, sympathetic drive, RAAS, ADH, natriuretic peptides), but chronically they increase preload and afterload, promote remodelling, fibrosis and myocyte apoptosis, and worsen failure.</li>
+                        <li><strong>Types of heart failure:</strong>
+                            <ul>
+                                <li><em>Systolic (HFrEF)</em> — impaired contractility, reduced ejection fraction (&lt; 40 %), dilated ventricle, high preload.</li>
+                                <li><em>Diastolic (HFpEF)</em> — impaired relaxation / increased stiffness, preserved ejection fraction, high filling pressures, small stiff ventricle.</li>
+                                <li><em>Left-sided vs right-sided</em> — left-sided causes pulmonary congestion; right-sided causes systemic congestion (raised JVP, hepatomegaly, peripheral oedema).</li>
+                                <li><em>Acute vs chronic</em>; <em>high-output vs low-output</em> failure.</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <h5>c) Orthostatic hypotension – mechanism and clinical application (4 marks)</h5>
+                    <p><strong>Definition:</strong> a fall of ≥ 20 mmHg in systolic BP (or ≥ 10 mmHg in diastolic BP) within 3 minutes of standing from a supine position.</p>
+                    <p><strong>Physiological mechanism:</strong></p>
+                    <ol>
+                        <li>On standing, gravity pools ~ 500–700 mL of blood in the veins of the legs and splanchnic bed → ↓ venous return → ↓ ventricular filling (preload) → ↓ stroke volume → ↓ cardiac output → ↓ arterial pressure.</li>
+                        <li>Arterial baroreceptors (carotid sinus, aortic arch) detect the ↓ stretch → ↓ afferent firing via CN IX and CN X to the nucleus tractus solitarius.</li>
+                        <li>NTS → ↑ sympathetic outflow and ↓ vagal outflow → <strong>tachycardia, increased contractility, arteriolar vasoconstriction and venoconstriction</strong> → restoration of venous return and BP.</li>
+                        <li>Additional support: activation of RAAS (angiotensin II, aldosterone), ADH release, and the skeletal muscle pump with movement.</li>
+                        <li><strong>Failure of these mechanisms</strong> (autonomic neuropathy, hypovolaemia, drugs, prolonged bed rest, ageing, diabetic neuropathy, Shy–Drager syndrome, Parkinson disease) produces orthostatic hypotension, often with dizziness, blurring of vision, syncope and falls.</li>
+                    </ol>
+                    <p><strong>Clinical applications:</strong></p>
+                    <ul>
+                        <li>Bedside measurement of BP and pulse supine, immediately on standing, and at 1 and 3 minutes — a simple test of autonomic function.</li>
+                        <li>Diagnosis of autonomic neuropathy (diabetes, amyloidosis, Guillain–Barré), of hypovolaemia/haemorrhage, and of drug effects (antihypertensives, diuretics, α-blockers, tricyclic antidepressants).</li>
+                        <li>Assessment of fall risk in the elderly; guiding safe mobilisation after surgery or prolonged bed rest.</li>
+                        <li>Therapeutic rationale: slow position changes, compression stockings, adequate salt and fluid intake, avoiding large carbohydrate meals and hot baths, and using fludrocortisone or midodrine in refractory autonomic failure.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- B4 -->
+            <div class="qa-card">
+                <h4><span class="num">Q4</span> Gastric hormones, deglutition, vomiting and the gut brain</h4>
+                <div class="part">a) Define the roles of any THREE gastric hormones in the digestive process. Describe how each hormone contributes to the regulation of digestion and nutrient absorption.<span class="marks">3 marks</span></div>
+                <div class="part">b) Outline the significant stages of deglutition and vomiting regulation.<span class="marks">3 marks</span></div>
+                <div class="part">c) The gut brain is considered as important in digestion. Discuss with labelled diagrams.<span class="marks">4 marks</span></div>
+                <button class="btn btn-sm" id="B4-btn" onclick="toggleModel('B4')"><i class="fas fa-eye"></i> Show Model Answer</button>
+                <div class="model-answer" id="B4">
+                    <h5>a) Three gastric hormones (3 marks)</h5>
+                    <table>
+                        <tr><th>Hormone</th><th>Source</th><th>Stimulus</th><th>Actions</th></tr>
+                        <tr>
+                            <td><strong>Gastrin</strong></td>
+                            <td>G cells of the gastric antrum</td>
+                            <td>Peptides and amino acids in the lumen, gastric distension, vagal stimulation (GRP), alkaline pH</td>
+                            <td>Stimulates HCl secretion by parietal cells, pepsinogen secretion by chief cells, gastric motility and mucosal growth; trophic to the gastric mucosa. Inhibited by acid (negative feedback via somatostatin).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Histamine</strong></td>
+                            <td>Enterochromaffin-like (ECL) cells of the gastric mucosa</td>
+                            <td>Gastrin and acetylcholine</td>
+                            <td>Acts on H₂ receptors on parietal cells → ↑ cAMP → ↑ HCl secretion. Potentiates the effects of gastrin and ACh (the "potentiation" phenomenon). Basis for H₂-blocker therapy (cimetidine, ranitidine).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Somatostatin</strong></td>
+                            <td>D cells of the gastric antrum and duodenum</td>
+                            <td>Acid in the lumen, gastrin</td>
+                            <td>Inhibits gastrin release, HCl secretion, pepsinogen secretion, gastric motility and pancreatic exocrine secretion. A general paracrine "brake" that prevents excessive acid secretion.</td>
+                        </tr>
+                        <tr>
+                            <td><em>(Also acceptable)</em> <strong>Ghrelin</strong></td>
+                            <td>P/D1 cells of the oxyntic mucosa</td>
+                            <td>Fasting, empty stomach</td>
+                            <td>Stimulates appetite and food intake (the "hunger hormone"), increases gastric motility and acid secretion; also involved in GH release and energy balance.</td>
+                        </tr>
+                    </table>
+                    <p><strong>Regulation of digestion and nutrient absorption:</strong> gastrin–histamine–ACh act together (potentiation) to produce a large, well-controlled acid output that denatures protein and activates pepsinogen; somatostatin provides negative feedback so that the gastric pH does not fall dangerously; and ghrelin links the digestive state to the CNS appetite centres. Optimal acid–pepsin activity is essential for protein digestion and for the absorption of vitamin B₁₂ (intrinsic factor) and iron.</p>
+
+                    <h5>b) Stages of deglutition (3 marks)</h5>
+                    <ol>
+                        <li><strong>Oral (voluntary) phase:</strong> the bolus is formed by mastication, the tongue presses it against the hard palate and pushes it posteriorly into the pharynx. Initiated voluntarily.</li>
+                        <li><strong>Pharyngeal (involuntary) phase:</strong> the soft palate elevates to seal the nasopharynx; the epiglottis folds back over the larynx and the vocal cords close (protecting the airway); the upper oesophageal sphincter (cricopharyngeus) relaxes; the pharyngeal constrictors generate a peristaltic wave that drives the bolus into the oesophagus. Controlled by the swallowing centre in the medulla.</li>
+                        <li><strong>Oesophageal (involuntary) phase:</strong> a primary peristaltic wave (continuation of the pharyngeal wave) sweeps the bolus down the oesophagus; if it fails, secondary peristaltic waves initiated by local distension complete the transport. The lower oesophageal sphincter relaxes ahead of the bolus (mediated by VIP/NO) and closes afterwards to prevent reflux. Gravity assists but is not essential (transport occurs even when lying down).</li>
+                    </ol>
+
+                    <h5>Vomiting regulation (3 marks)</h5>
+                    <ul>
+                        <li><strong>Stimuli:</strong> gastrointestinal irritation/toxins, distension, chemotherapy and drugs (via blood), motion sickness (vestibular), pain, raised intracranial pressure, psychological factors, pregnancy.</li>
+                        <li><strong>Afferents:</strong> vagal and sympathetic afferents from the gut; vestibular nuclei (via the cerebellum); higher cortical and limbic centres.</li>
+                        <li><strong>Central integration:</strong> the <strong>vomiting centre</strong> in the medulla (nucleus tractus solitarius / reticular formation) integrates the inputs. The <strong>chemoreceptor trigger zone (CTZ)</strong> in the area postrema, which lies outside the blood–brain barrier, detects blood-borne emetics and relays to the vomiting centre. The CTZ is rich in 5-HT₃ and D₂ receptors — the target of anti-emetics (ondansetron, metoclopramide).</li>
+                        <li><strong>Efferent response:</strong>
+                            <ul>
+                                <li>Autonomic: salivation, sweating, pallor, tachycardia, nausea.</li>
+                                <li>Gastrointestinal: retrograde peristalsis (reverse propulsion), relaxation of the lower oesophageal sphincter and pylorus.</li>
+                                <li>Respiratory: deep inspiration, closure of the glottis.</li>
+                                <li>Muscular: strong contraction of the diaphragm and abdominal wall muscles → ↑ intra-abdominal pressure → expulsion of gastric contents; the glottis remains closed to protect the airway.</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <h5>c) The "gut brain" (enteric nervous system) (4 marks)</h5>
+                    <p>The gut brain is the <strong>enteric nervous system (ENS)</strong> — an intrinsic network of about 500 million neurones embedded in the wall of the gastrointestinal tract, capable of functioning autonomously (the "little brain" of the gut).</p>
+                    <p><strong>Components:</strong></p>
+                    <ul>
+                        <li><strong>Myenteric (Auerbach's) plexus</strong> — lies between the circular and longitudinal muscle layers; controls motility (peristalsis, segmentation).</li>
+                        <li><strong>Submucosal (Meissner's) plexus</strong> — lies in the submucosa; controls secretion, blood flow and absorption.</li>
+                        <li><strong>Sensory neurones</strong> (mechano-, chemo-, osmoreceptors), <strong>interneurones</strong> (ascending and descending), and <strong>motor neurones</strong> (excitatory and inhibitory).</li>
+                        <li><strong>Neurotransmitters:</strong> acetylcholine, serotonin (5-HT), VIP, substance P, nitric oxide, enkephalins, CGRP.</li>
+                    </ul>
+                    <p><strong>Functions in digestion:</strong> coordinates peristalsis and segmentation; regulates sphincter tone; controls secretory and absorptive activity; regulates mucosal blood flow; integrates local reflexes (e.g. the peristaltic reflex, the gastrocolic reflex) independently of the CNS.</p>
+                    <p><strong>Brain–gut axis:</strong> the ENS is modulated by the parasympathetic (vagus, pelvic splanchnic) and sympathetic (splanchnic) divisions, and by the hypothalamic–pituitary–adrenal axis and gut microbiota — an important link in functional bowel disorders such as irritable bowel syndrome.</p>
+
+                    <div class="concept-map">
+                        <strong>Labelled diagram (schematic cross-section of the gut wall):</strong><br>
+                        <span class="cm-box">Mucosa (epithelium, lamina propria, muscularis mucosae)</span><br>
+                        <span class="arrow">↓</span><br>
+                        <span class="cm-box">Submucosa — contains Meissner's (submucosal) plexus</span><br>
+                        <span class="arrow">↓</span><br>
+                        <span class="cm-box">Muscularis externa — inner circular + outer longitudinal layers, with Auerbach's (myenteric) plexus between them</span><br>
+                        <span class="arrow">↓</span><br>
+                        <span class="cm-box">Serosa / adventitia</span><br><br>
+                        <span class="cm-box">Extrinsic input: Vagus (parasympathetic) + Splanchnic nerves (sympathetic)</span>
+                        <span class="arrow">↔</span>
+                        <span class="cm-box">Enteric nervous system (intrinsic, autonomous)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= SECTION C ================= -->
+        <div id="panel-C" class="tab-panel hidden">
+            <div class="section-title">
+                <i class="fas fa-stethoscope"></i> Section C – Case-Based Questions
+                <span class="count">3</span>
+            </div>
+            <p class="section-subtitle">Answer in the answer booklet. Click <em>Show Model Answer</em> to reveal a full model answer with mark allocation.</p>
+
+            <!-- C1 -->
+            <div class="qa-card">
+                <h4><span class="num">Q1</span> Chronic fatigue and macrocytic anaemia</h4>
+                <div class="qa-scenario">
+                    A 34-year-old human has chronic fatigue for 6 months. He has a good appetite but has developed a dislike for vegetables since last 1 year. His physical and neurological examinations are normal. His haemoglobin level is 9.1 g/dL, leukocyte count is 10,000/mm³ and Mean Corpuscular Volume is 122 fL (normal 77–93 fL).
+                </div>
+                <div class="part">a) Explain the significance of the mean corpuscular volume (MCV) of 122 fL in this patient. What type of anaemia does this suggest?<span class="marks">2 marks</span></div>
+                <div class="part">b) Discuss the physiological causes of VARIOUS other types of anaemia.<span class="marks">2 marks</span></div>
+                <div class="part">c) How does chronic fatigue relate to the patient's anaemia?<span class="marks">2 marks</span></div>
+                <button class="btn btn-sm" id="C1-btn" onclick="toggleModel('C1')"><i class="fas fa-eye"></i> Show Model Answer</button>
+                <div class="model-answer" id="C1">
+                    <h5>a) Significance of MCV 122 fL (2 marks)</h5>
+                    <ul>
+                        <li>MCV is the average volume of a single red cell. Normal range 77–93 fL. A value of <strong>122 fL is markedly raised → macrocytosis</strong>.</li>
+                        <li>This indicates a <strong>macrocytic (megaloblastic) anaemia</strong>. The high MCV reflects impaired DNA synthesis in the erythroid precursors, producing nuclear–cytoplasmic asynchrony: the cytoplasm matures (haemoglobinises) while the nucleus remains immature, so the cells are large, oval and often hyper-segmented (megaloblasts).</li>
+                        <li>In this patient the history of <strong>dislike of vegetables for one year</strong> strongly suggests a <strong>folate deficiency</strong> (dietary). Vitamin B₁₂ deficiency (also macrocytic) must be excluded — classically in strict vegetarians/vegans or in pernicious anaemia — as must hypothyroidism, liver disease, myelodysplasia and drugs (methotrexate, hydroxyurea, zidovudine).</li>
+                    </ul>
+
+                    <h5>b) Physiological causes of other types of anaemia (2 marks)</h5>
+                    <table>
+                        <tr><th>Morphological type</th><th>Mechanism</th><th>Examples</th></tr>
+                        <tr>
+                            <td>Microcytic hypochromic (MCV &lt; 77 fL)</td>
+                            <td>Defective haemoglobin synthesis (↓ haem or ↓ globin chains)</td>
+                            <td>Iron deficiency (most common), thalassaemia, sideroblastic anaemia, lead poisoning, anaemia of chronic disease (late)</td>
+                        </tr>
+                        <tr>
+                            <td>Normocytic normochromic (MCV 77–93 fL)</td>
+                            <td>Acute blood loss, ↓ production or ↑ destruction</td>
+                            <td>Acute haemorrhage, aplastic anaemia, chronic kidney disease (↓ erythropoietin), bone-marrow infiltration, hypothyroidism, anaemia of chronic disease</td>
+                        </tr>
+                        <tr>
+                            <td>Macrocytic (MCV &gt; 93 fL)</td>
+                            <td>Impaired DNA synthesis or abnormal membrane lipids</td>
+                            <td>Vitamin B₁₂ deficiency, folate deficiency, liver disease, hypothyroidism, myelodysplasia, drugs</td>
+                        </tr>
+                        <tr>
+                            <td>Haemolytic</td>
+                            <td>Premature red-cell destruction</td>
+                            <td>G6PD deficiency, sickle-cell disease, hereditary spherocytosis, autoimmune haemolysis, malaria, transfusion reaction</td>
+                        </tr>
+                    </table>
+
+                    <h5>c) Chronic fatigue and anaemia (2 marks)</h5>
+                    <ul>
+                        <li>Haemoglobin is the oxygen carrier; a Hb of 9.1 g/dL (well below the normal 13–17 g/dL in males) means the blood <strong>oxygen-carrying capacity is reduced by about 40 %</strong>.</li>
+                        <li>Reduced O₂ delivery to skeletal muscle and brain → cells rely more on anaerobic glycolysis → accumulation of lactic acid → early fatigue, weakness, poor concentration and exertional dyspnoea.</li>
+                        <li>Compensatory mechanisms (↑ cardiac output and heart rate, ↑ 2,3-DPG shifting the O₂ dissociation curve to the right, vasodilatation, ↑ erythropoietin) increase cardiac and respiratory work, contributing further to the sensation of fatigue and tiredness.</li>
+                        <li>The fatigue is therefore a direct physiological consequence of tissue hypoxia, not merely a psychological symptom.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- C2 -->
+            <div class="qa-card">
+                <h4><span class="num">Q2</span> Jaundice, cirrhosis and bile</h4>
+                <div class="qa-scenario">
+                    A 45-year-old male presents to the gastroenterology clinic with complaints of progressive difficulty swallowing both solids and liquids over the past six months. He reports episodes of regurgitation, often accompanied by a bitter taste, and experiences chest pain and heartburn after meals. Initially, he was diagnosed with JAUNDICE and prescribed XXX drugs, but his symptoms have degraded into liver failure. The patient also mentions occasional nocturnal coughing and significant weight loss.
+                </div>
+                <div class="part">a) Based on the symptoms presented, discuss the physiological mechanisms underlying Jaundice. How do these mechanisms differ from those associated with Cirrhosis?<span class="marks">4 marks</span></div>
+                <div class="part">b) Identify and describe the diagnostic lab tests that would be appropriate for confirming a diagnosis of Jaundice in this patient. Include the RATIONALE for each test used.<span class="marks">3 marks</span></div>
+                <div class="part">c) Add a note on the digestive role of bile in fat foods and what goes wrong in ASCITES.<span class="marks">3 marks</span></div>
+                <button class="btn btn-sm" id="C2-btn" onclick="toggleModel('C2')"><i class="fas fa-eye"></i> Show Model Answer</button>
+                <div class="model-answer" id="C2">
+                    <h5>a) Physiological mechanisms of jaundice vs cirrhosis (4 marks)</h5>
+                    <p><strong>Jaundice (icterus)</strong> is the yellow discoloration of skin, sclerae and mucous membranes caused by <strong>hyperbilirubinaemia</strong> (serum bilirubin &gt; 2–3 mg/dL). Bilirubin is produced from the breakdown of haem in the reticuloendothelial system; it is transported bound to albumin (unconjugated), taken up by hepatocytes, conjugated with glucuronic acid by UDP-glucuronosyltransferase, and excreted into bile. Jaundice arises when this pathway is disturbed at one of three levels:</p>
+                    <ul>
+                        <li><strong>Pre-hepatic (haemolytic):</strong> excessive bilirubin production overwhelms hepatic conjugation → <em>unconjugated</em> hyperbilirubinaemia (e.g. haemolysis, ineffective erythropoiesis). Urine bilirubin is absent; urobilinogen is increased; there is no bilirubinuria.</li>
+                        <li><strong>Hepatic (hepatocellular):</strong> impaired uptake, conjugation and/or excretion by damaged hepatocytes → <em>mixed</em> conjugated and unconjugated hyperbilirubinaemia (e.g. viral hepatitis, alcohol, drugs, cirrhosis).</li>
+                        <li><strong>Post-hepatic (obstructive/cholestatic):</strong> obstruction to bile flow → <em>conjugated</em> hyperbilirubinaemia with bilirubinuria, pale stools, dark urine and pruritus (e.g. gallstones, carcinoma of the head of the pancreas, cholangiocarcinoma).</li>
+                    </ul>
+                    <p><strong>Cirrhosis</strong> is the end-stage of chronic liver injury, characterised by <strong>fibrosis and regenerative nodules</strong> that distort the hepatic architecture and vasculature. Jaundice in cirrhosis is therefore predominantly <strong>hepatocellular with an intrahepatic cholestatic component</strong>, but cirrhosis differs from simple jaundice in that it also produces:</p>
+                    <ul>
+                        <li><strong>Portal hypertension</strong> → oesophageal/gastric varices, splenomegaly, caput medusae, ascites.</li>
+                        <li><strong>Hepatic synthetic failure</strong> → hypoalbuminaemia (oedema, ascites), prolonged prothrombin time/INR (coagulopathy).</li>
+                        <li><strong>Detoxification failure</strong> → hepatic encephalopathy (ammonia, false neurotransmitters), spider naevi, palmar erythema, gynaecomastia.</li>
+                        <li><strong>Reduced bile production</strong> → steatorrhoea and fat-soluble vitamin deficiency.</li>
+                    </ul>
+                    <p>Thus, jaundice is a <strong>sign</strong> reflecting hyperbilirubinaemia; cirrhosis is a <strong>disease process</strong> that may produce jaundice as one of several manifestations.</p>
+
+                    <h5>b) Diagnostic laboratory tests for jaundice (3 marks)</h5>
+                    <table>
+                        <tr><th>Test</th><th>Rationale</th></tr>
+                        <tr><td>Serum total, direct (conjugated) and indirect (unconjugated) bilirubin</td><td>Differentiates the type of jaundice: ↑ indirect = haemolytic/pre-hepatic; ↑ direct = obstructive/post-hepatic; mixed = hepatocellular.</td></tr>
+                        <tr><td>Urine bilirubin and urobilinogen</td><td>Conjugated bilirubin is water-soluble and appears in urine in obstructive jaundice; urobilinogen is absent in complete obstruction and increased in haemolysis.</td></tr>
+                        <tr><td>ALT and AST (transaminases)</td><td>Markers of hepatocellular injury; markedly raised in viral/alcoholic hepatitis, less so in obstruction.</td></tr>
+                        <tr><td>Alkaline phosphatase (ALP) and γ-glutamyl transferase (GGT)</td><td>Markers of cholestasis/biliary obstruction; ALP is also raised in bone disease, so GGT confirms a hepatic origin.</td></tr>
+                        <tr><td>Serum albumin and total protein</td><td>Reflect hepatic synthetic function; low albumin suggests chronic liver disease/cirrhosis.</td></tr>
+                        <tr><td>Prothrombin time / INR</td><td>Reflects synthetic function and vitamin K status; prolonged in cirrhosis and cholestasis.</td></tr>
+                        <tr><td>Full blood count and reticulocyte count</td><td>Detects anaemia and haemolysis (↑ reticulocytes, ↓ haptoglobin, ↑ LDH).</td></tr>
+                        <tr><td>Abdominal ultrasound (and MRCP/ERCP if needed)</td><td>Identifies gallstones, biliary dilatation or pancreatic head mass causing obstruction; assesses liver texture and ascites.</td></tr>
+                        <tr><td>Viral hepatitis serology, autoimmune markers (ANA, ASMA, AMA), α-fetoprotein</td><td>Establishes the aetiology of hepatitis or primary biliary cholangitis.</td></tr>
+                        <tr><td>Liver biopsy (if indicated)</td><td>Definitive histological diagnosis of cirrhosis, hepatitis or infiltration.</td></tr>
+                    </table>
+
+                    <h5>c) Digestive role of bile in fat foods, and what goes wrong in ascites (3 marks)</h5>
+                    <p><strong>Role of bile in fat digestion and absorption:</strong></p>
+                    <ul>
+                        <li><strong>Emulsification:</strong> bile salts (and phospholipids) break large fat globules into small droplets, greatly increasing the surface area for pancreatic lipase.</li>
+                        <li><strong>Micelle formation:</strong> bile salts combine with monoglycerides and free fatty acids to form water-soluble <strong>micelles</strong>, which ferry the products of fat digestion to the brush border for absorption.</li>
+                        <li><strong>Transport and absorption:</strong> facilitate the absorption of long-chain fatty acids, cholesterol and the fat-soluble vitamins A, D, E and K.</li>
+                        <li><strong>Neutralisation:</strong> alkaline bile neutralises acidic chyme from the stomach, allowing optimal pancreatic enzyme activity.</li>
+                        <li>Bile is produced by hepatocytes, stored and concentrated in the gallbladder, and released in response to cholecystokinin (CCK) and vagal stimulation. In cholestasis or biliary obstruction, fat digestion is impaired → <strong>steatorrhoea</strong> and fat-soluble vitamin deficiency (night blindness, osteomalacia, bleeding tendency).</li>
+                    </ul>
+                    <p><strong>Ascites — what goes wrong:</strong> ascites is the accumulation of fluid in the peritoneal cavity. In cirrhosis it results from a combination of:</p>
+                    <ul>
+                        <li><strong>Portal hypertension</strong> → increased hydrostatic pressure in the splanchnic capillaries, favouring transudation of fluid into the peritoneum.</li>
+                        <li><strong>Hypoalbuminaemia</strong> (reduced hepatic synthesis) → decreased plasma oncotic pressure → further fluid loss into the peritoneal cavity.</li>
+                        <li><strong>Splanchnic arterial vasodilatation</strong> (↑ NO) → effective arterial hypovolaemia → activation of RAAS and ADH → sodium and water retention, which worsens the ascites.</li>
+                        <li><strong>Lymphatic obstruction</strong> from hepatic fibrosis impairs the return of interstitial fluid.</li>
+                        <li>The result is a <strong>transudative (low-protein) ascites</strong> that causes abdominal distension, raised diaphragm with respiratory compromise, and predisposes to <strong>spontaneous bacterial peritonitis</strong>.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- C3 -->
+            <div class="qa-card">
+                <h4><span class="num">Q3</span> Spirometry in a mine worker</h4>
+                <div class="qa-scenario">
+                    In a mine worker suffering with some lung disease, as a medical graduate, HOW can you interpret the findings from the spirometry recording of FEV₁ as shown below? <em>(The graph plots exhaled volume in litres against time in seconds; FEV₁ is the volume expired in the first second after the extrapolated volume, and VC is the total volume expired.)</em>
+                </div>
+                    <img src="fev.jpg" alt="Oxygen dissociation curve" style="max-width:100%; border-radius:8px; margin:0.6rem 0;"> 
+                <div class="part">Interpret the FEV₁ findings from the spirometry recording.<span class="marks">5 marks</span></div>
+                <div class="part">Compare and contrast between obstructive lung diseases and restrictive lung diseases with examples.<span class="marks">5 marks</span></div>
+                <button class="btn btn-sm" id="C3-btn" onclick="toggleModel('C3')"><i class="fas fa-eye"></i> Show Model Answer</button>
+                <div class="model-answer" id="C3">
+                    <h5>Interpretation of the spirometry recording (5 marks)</h5>
+                    <ul>
+                        <li><strong>What the graph shows:</strong> a maximal forced expiration from full inspiration. The vertical axis is exhaled volume (litres) and the horizontal axis is time (seconds). The <em>extrapolated volume</em> is the small volume lost before the test begins (back-extrapolation to time zero).</li>
+                        <li><strong>FEV₁</strong> = the forced expiratory volume in the first second — the volume of air expelled in the first second of a maximal forced expiration. It is read at the 1-second mark on the volume–time curve.</li>
+                        <li><strong>FVC (or VC on the graph)</strong> = the total volume expelled during the full forced expiration.</li>
+                        <li><strong>The key ratio is FEV₁/FVC (the FEV₁ ratio):</strong>
+                            <ul>
+                                <li>Normal ≈ 0.75–0.80 (75–80 %).</li>
+                                <li><strong>Obstructive</strong> pattern: FEV₁ is reduced <em>disproportionately</em> more than FVC → FEV₁/FVC <strong>&lt; 0.70</strong>. The curve shows a prolonged, concave ("scooped") expiratory limb, taking many seconds to reach plateau — air trapping and increased airway resistance.</li>
+                                <li><strong>Restrictive</strong> pattern: both FEV₁ and FVC are reduced <em>proportionately</em> → FEV₁/FVC is <strong>normal or increased (&gt; 0.80)</strong>. The curve falls steeply and reaches its plateau quickly because the total volume is small.</li>
+                            </ul>
+                        </li>
+                        <li><strong>In this mine worker:</strong> occupational dust exposure can produce either pattern — <em>obstructive</em> (coal-worker's COPD/bronchitis, chronic dust exposure) or <em>restrictive</em> (silicosis, coal-worker's pneumoconiosis, asbestosis with pulmonary fibrosis). The FEV₁/FVC ratio is therefore the decisive measurement: if it is low, the disease is obstructive; if it is normal/high with a low FVC, the disease is restrictive.</li>
+                        <li><strong>Additional measurements that help:</strong> peak expiratory flow rate (PEFR), FEF₂₅–₇₅ (mid-expiratory flow), residual volume and total lung capacity (TLC) — TLC is <em>increased</em> in obstruction (hyperinflation) and <em>decreased</em> in restriction. A bronchodilator response (↑ FEV₁ ≥ 12 % and ≥ 200 mL) suggests reversible obstruction (asthma).</li>
+                        <li><strong>Conclusion:</strong> the spirometry must be interpreted together with the FEV₁/FVC ratio, the shape of the curve, TLC and the clinical/occupational history.</li>
+                    </ul>
+
+                    <h5>Obstructive vs restrictive lung disease (5 marks)</h5>
+                    <table>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Obstructive</th>
+                            <th>Restrictive</th>
+                        </tr>
+                        <tr>
+                            <td>Primary defect</td>
+                            <td>Increased airway resistance (narrowed/obstructed airways)</td>
+                            <td>Reduced lung or chest-wall compliance (stiff lungs/chest wall)</td>
+                        </tr>
+                        <tr>
+                            <td>FEV₁</td>
+                            <td>↓↓</td>
+                            <td>↓</td>
+                        </tr>
+                        <tr>
+                            <td>FVC</td>
+                            <td>Normal or ↓</td>
+                            <td>↓↓</td>
+                        </tr>
+                        <tr>
+                            <td>FEV₁/FVC ratio</td>
+                            <td><strong>&lt; 0.70 (low)</strong></td>
+                            <td><strong>Normal or &gt; 0.80 (high)</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Total lung capacity (TLC)</td>
+                            <td>Normal or ↑ (hyperinflation, air trapping)</td>
+                            <td>↓</td>
+                        </tr>
+                        <tr>
+                            <td>Residual volume (RV)</td>
+                            <td>↑</td>
+                            <td>↓ or normal</td>
+                        </tr>
+                        <tr>
+                            <td>Expiratory flow–volume curve</td>
+                            <td>Scooped/concave, prolonged expiration</td>
+                            <td>Small but normal-shaped curve</td>
+                        </tr>
+                        <tr>
+                            <td>Gas transfer (DLCO)</td>
+                            <td>↓ in emphysema, normal in asthma</td>
+                            <td>↓ (fibrosis), normal in chest-wall/neuromuscular disease</td>
+                        </tr>
+                        <tr>
+                            <td>Main mechanism of hypoxia</td>
+                            <td>V/Q mismatch, hypoventilation</td>
+                            <td>V/Q mismatch, diffusion limitation, hypoventilation</td>
+                        </tr>
+                        <tr>
+                            <td>Examples</td>
+                            <td>Asthma, chronic bronchitis, emphysema (COPD), bronchiectasis, cystic fibrosis, foreign body, tumour</td>
+                            <td>Pulmonary fibrosis (silicosis, asbestosis, coal-worker's pneumoconiosis, sarcoidosis, idiopathic pulmonary fibrosis), kyphoscoliosis, obesity, pleural effusion, neuromuscular disease (myasthenia gravis, Guillain–Barré), interstitial lung disease</td>
+                        </tr>
+                    </table>
+                    <p><strong>Clinical correlation in this patient:</strong> a mine worker with a chronic lung disease most likely has an <em>occupational pneumoconiosis</em>. Silicosis and asbestosis are classically <strong>restrictive</strong> (fibrosis, ↓ FVC, normal/high FEV₁/FVC, ↓ DLCO, ↓ TLC), whereas coal dust and other irritants can produce <strong>obstructive</strong> COPD (↓ FEV₁/FVC, ↑ RV and TLC). The distinction is made by the FEV₁/FVC ratio and lung volumes, and it determines management (bronchodilators and smoking cessation for obstruction; removal from exposure, supportive care and treatment of the underlying fibrosis for restriction).</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<script>
+/* =====================================================================
+   SECTION A — 40 MCQs (exact text from the 2025 Sessional paper)
+   ===================================================================== */
+const sectionA = [
+{
+    q: `____ is produced quickly by the clotting mechanism and slowly by the clotting mechanism.`,
+    options: [
+        `Prothrombin activator – extrinsic – intrinsic`,
+        `Prothrombin activator – intrinsic – extrinsic`,
+        `Thrombin – extrinsic – intrinsic`,
+        `Thrombin – intrinsic – extrinsic`,
+        `Plasmin – intrinsic – extrinsic`
+    ],
+    correct: `A`,
+    explanation: `Blood coagulation proceeds by two pathways that converge on a common final sequence. The <strong>extrinsic pathway</strong> is triggered by tissue factor (thromboplastin) released from damaged tissue and is therefore <strong>rapid</strong> — it produces prothrombin activator within seconds and is the pathway that initiates clotting in vivo. The <strong>intrinsic pathway</strong> is triggered by contact of factor XII with exposed collagen and is much <strong>slower</strong>, taking several minutes. Both pathways produce the same end product: <strong>prothrombin activator</strong>, which converts prothrombin to thrombin, which in turn converts fibrinogen to fibrin. Thrombin and plasmin are products of the cascade, not the two pathways, so the correct pairing is prothrombin activator – extrinsic (quick) – intrinsic (slow).`
+},
+{
+    q: `When a macrophage ingests invading bacteria and takes the antigen to a lymph node, what happens next?`,
+    options: [
+        `The macrophage will present it to the first B-cell it encounters, and the B-cell will in turn change its surface receptors to match the antigen`,
+        `A B-cell will only become activated if it already has a match for the antigen`,
+        `A matching B-cell will become activated into a cytotoxic T-cell`,
+        `The cells of the lymph node will release histamine`,
+        `The lymph node will increase production of neutrophils`
+    ],
+    correct: `B`,
+    explanation: `This describes antigen presentation and the clonal selection theory. The macrophage is an antigen-presenting cell: it processes the bacterial antigen, displays it on its surface with MHC class II, and migrates to the lymph node. There it presents the antigen to lymphocytes. B cells each carry a unique, pre-formed surface immunoglobulin (B-cell receptor) that is specific for one antigen — <strong>B cells do not change their receptors to match an antigen</strong>. Only the B cell whose receptor already matches the presented antigen will bind it, become activated, proliferate (clonal expansion) and differentiate into antibody-secreting plasma cells and memory B cells. Option (a) is wrong because receptors are genetically predetermined; (c) is wrong because B cells do not become cytotoxic T cells (T cells do, and only CD8+ T cells); (d) histamine is released by mast cells/basophils, not lymph node cells; (e) neutrophils are produced in bone marrow, not in the lymph node.`
+},
+{
+    q: `Which of the following is most necessary for coagulation?`,
+    options: [`Vitamin A`, `Vitamin D`, `Vitamin E`, `Vitamin K`, `Vitamin C`],
+    correct: `D`,
+    explanation: `Several clotting factors — prothrombin (factor II), factor VII, factor IX and factor X — require <strong>γ-carboxylation of glutamate residues</strong> to bind calcium and become functionally active. This carboxylation reaction is vitamin K–dependent. Vitamin K deficiency therefore causes prolonged prothrombin time and a bleeding tendency (as seen in haemorrhagic disease of the newborn, obstructive jaundice and warfarin therapy, since warfarin blocks the vitamin K cycle). Vitamin A is needed for vision and epithelial integrity; vitamin D for calcium and bone metabolism; vitamin E as an antioxidant; vitamin C for collagen synthesis and as a cofactor in hydroxylation reactions — none of these are directly required for the clotting cascade.`
+},
+{
+    q: `During hemoglobin recycling, iron is transported to the liver by ____ and stored there as ____`,
+    options: [
+        `Transferrin – ferritin`,
+        `Ferritin – transferrin`,
+        `Albumin – transferrin`,
+        `Transferrin – albumin`,
+        `Basophils – hemoglobin`
+    ],
+    correct: `A`,
+    explanation: `When senescent red blood cells are destroyed by macrophages in the spleen, liver and bone marrow, haemoglobin is split into globin (broken down to amino acids), haem and iron. The iron released is bound to <strong>transferrin</strong> (a β-globulin synthesised in the liver) for transport in the plasma to the liver and bone marrow. In the liver (and in macrophages), iron is stored in combination with apoferritin to form <strong>ferritin</strong>, the main storage form; a small amount is stored as haemosiderin. Ferritin is the storage protein, transferrin the transport protein — the reverse pairing (b) is therefore incorrect. Albumin transports bilirubin, fatty acids and drugs, not iron.`
+},
+{
+    q: `Hematocrit:`,
+    options: [
+        `Would be expected to decrease in polycythemia`,
+        `Would be expected to increase due to hemolytic anemia`,
+        `Is typically between 28% and 48% in normal adult males`,
+        `Could be increased due to an increase in erythropoietin release by the kidney`,
+        `Is defined as the percentage of plasma that is occupied by packed red blood cells`
+    ],
+    correct: `D`,
+    explanation: `Haematocrit (packed cell volume) is the percentage of the total blood volume occupied by packed red cells — not the percentage of plasma (option e is therefore wrong; plasma occupies roughly 55 %). Normal values are about 40–54 % in adult males and 37–47 % in females, so 28–48 % (option c) is incorrect for males. Polycythaemia is an increase in red cell mass and therefore <strong>raises</strong> the haematocrit, not lowers it (option a is wrong). Haemolytic anaemia destroys red cells and <strong>lowers</strong> the haematocrit, not raises it (option b is wrong). Erythropoietin (EPO) is released by the kidney in response to tissue hypoxia and stimulates red cell production in the bone marrow; an increase in EPO therefore increases red cell mass and <strong>increases the haematocrit</strong> — this is the correct statement.`
+},
+{
+    q: `Which of the following WBCs contains granules filled with chemicals involved in the inflammatory process?`,
+    options: [`Basophils`, `Lymphocytes`, `Platelets`, `Neutrophils`, `Eosinophils`],
+    correct: `A`,
+    explanation: `Basophils (like tissue mast cells) contain large cytoplasmic granules filled with <strong>histamine</strong>, <strong>heparin</strong> and other vasoactive mediators. When activated (e.g. during inflammation or allergic reactions), they release histamine, which causes vasodilatation, increased capillary permeability and attraction of other leucocytes to the site of injury — the classic inflammatory response. Lymphocytes are agranular and mediate specific immunity; platelets are cell fragments involved in haemostasis, not a WBC; neutrophils are phagocytic and their granules contain enzymes and bactericidal substances; eosinophils contain enzymes that attack parasites and modulate allergic reactions. The question specifically points to the granule-filled, inflammation-mediating cell — the basophil.`
+},
+{
+    q: `A leukocyte is:`,
+    options: [
+        `The production of WBCs stimulated by chemical messengers`,
+        `An abnormally low WBC count commonly induced by drugs`,
+        `A group of cancerous conditions involving WBCs`,
+        `WBCs that protect the body from damage by bacteria, viruses, parasites, toxins and tumor cells`,
+        `The ability of a WBC to slip out of capillary blood vessels`
+    ],
+    correct: `D`,
+    explanation: `A leucocyte is simply a <strong>white blood cell</strong> — a nucleated blood cell that defends the body against bacteria, viruses, parasites, toxins and tumour cells. Option (a) describes leucopoiesis (stimulated by colony-stimulating factors and interleukins); option (b) describes leucopenia; option (c) describes leukaemia; option (e) describes diapedesis. Only option (d) correctly defines the leucocyte itself.`
+},
+{
+    q: `This type of lymphocyte gives rise to plasma cells, which produce antibodies that are released into the blood.`,
+    options: [`Neutrophils`, `B cells`, `Monocytes`, `T cell`, `Lymphoblasts`],
+    correct: `B`,
+    explanation: `B lymphocytes (B cells) are the cells of humoral immunity. When a B cell binds its specific antigen it becomes activated, proliferates, and differentiates into <strong>plasma cells</strong> — which are essentially antibody factories that secrete large quantities of immunoglobulin (antibody) into the blood and lymph — and into memory B cells. T cells mediate cell-mediated immunity and do not produce antibodies; neutrophils and monocytes are phagocytes; lymphoblasts are immature precursor cells.`
+},
+{
+    q: `FIONAA, a pure vegetarian comes to doctor with complaint of exertional dyspnea. On examination he has pallor. Initial lab tests show Hb 7.4 g/dL, MCV is 115 fL. What is the most probable cause of anemia in this patient?`,
+    options: [`Folic acid deficiency`, `Vitamin B12 deficiency`, `Iron deficiency`, `Hemolysis`, `G6PD deficiency`],
+    correct: `B`,
+    explanation: `The MCV of 115 fL (normal 77–93 fL) indicates a <strong>macrocytic anaemia</strong>. The patient is a <strong>strict vegetarian</strong>, and vitamin B₁₂ occurs almost exclusively in animal products (meat, liver, eggs, dairy) — a pure vegetarian diet is therefore a classic cause of B₁₂ deficiency, producing megaloblastic anaemia with a high MCV. Dietary folate deficiency can also cause macrocytic anaemia, but folates are abundant in leafy green vegetables (which vegetarians eat in quantity), so B₁₂ deficiency is far more likely in this patient. Iron deficiency causes a <strong>microcytic hypochromic</strong> anaemia (low MCV), not macrocytic. Haemolysis and G6PD deficiency cause a normocytic anaemia with reticulocytosis, jaundice and a normal or slightly raised MCV.`
+},
+{
+    q: `A lady presented with shock due to post-partum hemorrhage, her blood group was unknown but became coagulated when mixed with serum containing anti-A antibodies and similarly her serum coagulated with B positive blood. The most suitable blood group to be transfused in this case is:`,
+    options: [`O negative`, `O positive`, `A positive`, `AB positive`, `B positive`],
+    correct: `C`,
+    explanation: `The two reactions identify the patient's ABO group. Her red cells agglutinate with anti-A serum → she carries the <strong>A antigen</strong> (so she is group A or AB). Her serum agglutinates B-positive cells → her serum contains <strong>anti-B</strong> (so she must be group A or O). The only group that satisfies both is <strong>group A</strong>. A group A patient can safely receive group A blood (and, in an emergency, group O blood). Of the options given, <strong>A positive</strong> is the group-specific, most suitable blood for this patient. O negative is the universal donor and would be used if the blood group were truly unknown, but here the group has been established as A; B positive would be attacked by her anti-B; AB positive carries both A and B antigens and is also compatible from the ABO point of view only for group AB recipients.`
+},
+{
+    q: `In the alveoli of lungs, What is the purpose of surfactant?`,
+    options: [
+        `Facilitate in the diffusion of oxygen across the respiratory membrane`,
+        `Reduce alveolar surface tension and prevent alveolar collapse`,
+        `Increase alveolar surface tension to maintain airway patency`,
+        `Humidify and warm the inspired air`,
+        `Trap and remove inhaled particulate matter`
+    ],
+    correct: `B`,
+    explanation: `Pulmonary surfactant is a complex mixture of phospholipids (mainly dipalmitoyl phosphatidylcholine), proteins and calcium, secreted by <strong>type II alveolar epithelial cells</strong>. Its principal function is to <strong>reduce alveolar surface tension</strong>, which: (i) prevents alveolar collapse at end-expiration (maintains stability of alveoli of different sizes according to Laplace's law, P = 2T/r); (ii) increases lung compliance, reducing the work of breathing; (iii) prevents transudation of fluid into the alveoli; and (iv) aids the recruitment of collapsed alveoli. Surfactant deficiency in premature infants causes respiratory distress syndrome. Surfactant does not primarily facilitate oxygen diffusion, humidify air or filter particles — those are functions of the respiratory membrane, the upper airway and the mucociliary escalator respectively. <em>(Note: the source paper showed only option (a); the remaining options are the standard textbook options for this question.)</em>`
+},
+{
+    q: `During the transport of CO2 from the tissues to the lungs, which of the following occurs in venous blood?`,
+    options: [
+        `Conversion of CO2 and H2O to H+ and HCO3− in the red blood cells (RBCs)`,
+        `Buffering of H+ by oxyhemoglobin`,
+        `Shifting of HCO3− into the RBCs from plasma in exchange for Cl−`,
+        `Binding of HCO3− to hemoglobin`,
+        `Alkalization of the RBCs`
+    ],
+    correct: `A`,
+    explanation: `About 70 % of CO₂ is transported as bicarbonate. In the tissues, CO₂ diffuses into the red cell and is rapidly hydrated to carbonic acid by the enzyme <strong>carbonic anhydrase</strong>; the acid dissociates into H⁺ and HCO₃⁻ — this is option (a). The H⁺ is buffered mainly by <strong>deoxyhaemoglobin</strong> (not oxyhaemoglobin, which is a stronger acid and gives up its O₂ in the tissues — the Haldane effect), so option (b) is wrong. The HCO₃⁻ formed inside the red cell then moves <strong>out of the red cell into the plasma</strong> in exchange for Cl⁻ (the chloride shift), which is the reverse of option (c). CO₂ binds to the globin (amino) groups of haemoglobin to form carbamino compounds — not HCO₃⁻ binding to haemoglobin (option d is wrong). The red cell interior becomes slightly <strong>acidic</strong> (not alkalised) in venous blood, so option (e) is wrong.`
+},
+{
+    q: `The difference of total lung capacity and vital capacity is:`,
+    options: [
+        `Expiratory reserve volume`,
+        `Functional residual capacity`,
+        `Inspiratory reserve volume`,
+        `Residual volume`,
+        `Tidal volume`
+    ],
+    correct: `D`,
+    explanation: `Total lung capacity (TLC) is the maximum volume to which the lungs can be expanded — about 6 000 mL in an average adult male. Vital capacity (VC) is the maximum volume that can be expelled after a maximal inspiration — about 4 800 mL. TLC = VC + residual volume (RV). The residual volume (~1 200 mL) is the air that remains in the lungs after the most forceful expiration and cannot be measured by simple spirometry; it is what distinguishes TLC from VC. Therefore TLC − VC = <strong>residual volume</strong>.`
+},
+{
+    q: `During the acclimatization at high altitude, the change not likely to occur is:`,
+    options: [
+        `Accelerated erythropoiesis`,
+        `Increased hemoglobin concentration`,
+        `Increased rate of pulmonary ventilation`,
+        `Increased concentration of 2:3 diphosphoglycerate`,
+        `Respiratory acidosis`
+    ],
+    correct: `E`,
+    explanation: `Acclimatisation to high altitude involves several compensatory changes: hypoxia stimulates the carotid bodies → <strong>increased pulmonary ventilation</strong> (option c); renal excretion of bicarbonate in response to the resulting hypocapnia allows ventilation to remain high; hypoxia stimulates the kidney to release <strong>erythropoietin</strong> → accelerated erythropoiesis and increased haemoglobin concentration and haematocrit (options a and b); and <strong>2,3-DPG</strong> rises, shifting the oxygen–haemoglobin dissociation curve to the right and improving oxygen unloading to tissues (option d). What does <em>not</em> occur is <strong>respiratory acidosis</strong>. If anything, the hyperventilation of acclimatisation blows off CO₂ and produces a <strong>respiratory alkalosis</strong> (compensated by renal bicarbonate loss). Respiratory acidosis would occur with hypoventilation, which is the opposite of the acclimatised state.`
+},
+{
+    q: `Regarding vital capacity, all are true EXCEPT`,
+    options: [
+        `It is the volume of air expired from full inspiration to full expiration`,
+        `It is reduced as one grows older`,
+        `It is greater in men than in women of the same age and height`,
+        `It is related more to total body mass than to lean body mass`,
+        `It is the sum of the inspiratory and expiratory reserve volumes`
+    ],
+    correct: `D`,
+    explanation: `Vital capacity is the maximum volume of air that can be expelled from the lungs after a maximal inspiration — that is, from full inspiration to full expiration (option a is true). VC declines steadily with age as the lungs and chest wall lose elasticity (option b is true). Because men have a larger thoracic cage and greater muscle mass than women of the same age and height, VC is greater in men (option c is true). VC correlates best with <strong>height and lean body mass</strong> — that is, the mass of the respiratory muscles and the size of the thoracic cage — and <strong>not</strong> with total body mass (adipose tissue is metabolically inactive and does not ventilate). Option (d) is therefore <strong>false</strong>, and is the exception being sought. Option (e) is a simplification of VC = tidal volume + inspiratory reserve volume + expiratory reserve volume, and is accepted as true in the context of this question.`
+},
+{
+    q: `In which phase of the ventricular muscle action potential is the potassium permeability the highest?`,
+    options: [`0`, `1`, `2`, `3`, `4`],
+    correct: `D`,
+    explanation: `The ventricular action potential has five phases: phase 0 = rapid depolarisation (Na⁺ influx); phase 1 = early rapid repolarisation (K⁺ efflux, Ito); phase 2 = plateau (Ca²⁺ influx balanced by K⁺ efflux); phase 3 = final rapid repolarisation (K⁺ efflux through the delayed rectifier channels IKr and IKs); phase 4 = resting membrane potential. During <strong>phase 3</strong>, the delayed rectifier potassium channels open widely and the membrane conductance to potassium (gK) rises steeply, driving the membrane potential back towards the potassium equilibrium potential — this is the phase of <strong>highest potassium permeability</strong>. Phase 4 has a high but lower resting K⁺ conductance (IK1), and phases 0–2 are dominated by Na⁺ and Ca²⁺ conductances.`
+},
+{
+    q: `Which of the following best explains how sympathetic stimulation affects the heart?`,
+    options: [
+        `Permeability of the S-A node to sodium decreases`,
+        `Permeability of the A-V node to sodium decreases`,
+        `Permeability of the S-A node to potassium increases`,
+        `There is an increased rate of upward drift of the resting membrane potential of the S-A node`,
+        `There is a decreased rate of upward drift of the resting membrane potential of the A-V node`
+    ],
+    correct: `D`,
+    explanation: `Sympathetic stimulation of the heart acts via noradrenaline on β₁ receptors, increasing cAMP and opening the "funny" (HCN) channels and T-type Ca²⁺ channels in the sinoatrial node. This <strong>increases the slope of the spontaneous phase-4 depolarisation</strong> (the pacemaker potential) of the S-A node, so the membrane potential reaches threshold sooner and the heart rate increases (positive chronotropic effect). Sympathetic stimulation also increases A-V nodal conduction (positive dromotropic), myocardial contractility (positive inotropic) and rate of relaxation (positive lusitropic) — all through increased Ca²⁺ entry. Options (a)–(c) describe changes that would <em>slow</em> the heart (these are the effects of vagal/parasympathetic stimulation, which increases K⁺ permeability and decreases the slope of phase 4). Option (e) describes the opposite of the sympathetic effect on the A-V node.`
+},
+{
+    q: `Myocardial contractility is best correlated with the intracellular concentration of`,
+    options: [`Na+`, `K+`, `Ca2+`, `Mg2+`, `Fe2+`],
+    correct: `C`,
+    explanation: `Excitation–contraction coupling in cardiac muscle depends on calcium. During the plateau phase of the action potential, Ca²⁺ enters the cell through L-type (dihydropyridine) channels and triggers the release of a much larger amount of Ca²⁺ from the sarcoplasmic reticulum via ryanodine receptors — the process of <strong>calcium-induced calcium release</strong>. The resulting rise in intracellular free Ca²⁺ binds troponin C, removes the inhibition of tropomyosin, allows actin–myosin cross-bridge cycling and produces contraction. The magnitude of the intracellular Ca²⁺ transient correlates directly with the force of contraction, so <strong>contractility is best correlated with intracellular Ca²⁺</strong>. Digitalis, for example, increases intracellular Ca²⁺ and therefore increases contractility. Na⁺ and K⁺ govern the action potential and resting potential; Mg²⁺ and Fe²⁺ do not directly drive cross-bridge cycling.`
+},
+{
+    q: `During which phase of the ventricular action potential is the membrane potential closest to the K+ equilibrium potential?`,
+    options: [`Phase 0`, `Phase 1`, `Phase 2`, `Phase 3`, `Phase 4`],
+    correct: `E`,
+    explanation: `The equilibrium potential for potassium (E_K) in cardiac muscle is about −94 mV. During <strong>phase 4</strong>, the resting membrane potential of ventricular muscle is stable at about −90 mV, which is almost identical to E_K — the membrane is predominantly permeable to K⁺ at rest (through the inward rectifier IK1 channels), so the resting potential sits close to the potassium equilibrium potential. During phase 0 the membrane is dominated by Na⁺ (E_Na ≈ +60 mV); during phase 2 it is dominated by Ca²⁺; during phase 3 the potential is <em>moving towards</em> E_K but has not yet reached it.`
+},
+{
+    q: `During which phase of the ventricular action potential is the conductance to Ca2+ highest?`,
+    options: [`Phase 0`, `Phase 1`, `Phase 2`, `Phase 3`, `Phase 4`],
+    correct: `C`,
+    explanation: `The <strong>plateau phase (phase 2)</strong> of the ventricular action potential is produced by a slow, sustained inward current carried mainly by Ca²⁺ through L-type (slow) calcium channels, balanced by a simultaneous efflux of K⁺. During this phase the calcium conductance is at its highest, and the prolonged plateau is responsible for the long refractory period of cardiac muscle (which prevents tetanisation). Phase 0 is dominated by fast Na⁺ channels; phase 1 by transient K⁺ efflux; phase 3 by K⁺ efflux; phase 4 by the resting K⁺ conductance.`
+},
+{
+    q: `Which of the following enzymes is responsible for phosphorylating myosin light chains to activate smooth muscle contraction?`,
+    options: [
+        `Calmodulin`,
+        `Myosin light chain kinase`,
+        `Myosin light chain phosphatase`,
+        `Myosin ATPase`,
+        `Actomyosin ATPase`
+    ],
+    correct: `B`,
+    explanation: `Smooth muscle contraction is regulated by the calcium–calmodulin–myosin light chain kinase system. When intracellular Ca²⁺ rises, it binds to <strong>calmodulin</strong> (a calcium-binding regulatory protein, not an enzyme). The Ca²⁺–calmodulin complex activates <strong>myosin light chain kinase (MLCK)</strong>, which phosphorylates the regulatory light chains of myosin. This phosphorylation enables the myosin ATPase (actin-activated) to hydrolyse ATP and produce cross-bridge cycling, i.e. contraction. Relaxation occurs when intracellular Ca²⁺ falls and <strong>myosin light chain phosphatase</strong> dephosphorylates the light chains. Calmodulin is the calcium sensor; MLCK is the enzyme that does the phosphorylating.`
+},
+{
+    q: `Which characteristic or component is shared by skeletal muscle and smooth muscle?`,
+    options: [
+        `Thick and thin filaments arranged in sarcomeres`,
+        `Troponin`,
+        `Elevation of intracellular [Ca2+] for excitation–contraction coupling`,
+        `Spontaneous depolarization of the membrane potential`,
+        `High degree of electrical coupling between cells`
+    ],
+    correct: `C`,
+    explanation: `In <strong>all</strong> muscle types — skeletal, cardiac and smooth — the immediate trigger for contraction is a rise in the intracellular free calcium concentration, which ultimately allows actin–myosin interaction. In skeletal muscle, Ca²⁺ is released from the sarcoplasmic reticulum and binds troponin C; in smooth muscle, Ca²⁺ binds calmodulin and activates myosin light chain kinase. The other options are not shared: sarcomeres with troponin are characteristic of skeletal (and cardiac) muscle but are <strong>absent in smooth muscle</strong>; spontaneous depolarisation is a feature of smooth muscle (single-unit) and cardiac pacemaker tissue, not of skeletal muscle; and high electrical coupling via gap junctions occurs in single-unit smooth muscle and cardiac muscle but not in skeletal muscle, where each fibre is independently innervated.`
+},
+{
+    q: `A 56-year-old woman with severe muscle weakness is hospitalized. The only abnormality in her laboratory values is an elevated serum K+ concentration. The elevated serum K+ causes muscle weakness because`,
+    options: [
+        `the resting membrane potential is hyperpolarized`,
+        `the resting membrane potential is depolarized and sodium channels are inactivated`,
+        `the threshold for excitation is lowered`,
+        `the sodium–potassium pump is stimulated`,
+        `calcium release from the sarcoplasmic reticulum is enhanced`
+    ],
+    correct: `B`,
+    explanation: `The resting membrane potential depends on the ratio of extracellular to intracellular K⁺. In hyperkalaemia, the extracellular K⁺ concentration is raised, so the K⁺ gradient across the membrane is reduced and the resting membrane potential becomes <strong>less negative (partially depolarised)</strong>. A sustained depolarisation inactivates the voltage-gated sodium channels (they enter the inactivated state and cannot reopen), so the muscle fibre becomes <strong>inexcitable</strong> — producing weakness and, in the heart, conduction abnormalities. Option (a) is incorrect: hyperkalaemia depolarises, it does not hyperpolarise (hypokalaemia hyperpolarises). Option (c) is wrong — the threshold is not lowered; the problem is failure to reach threshold. Options (d) and (e) are not the mechanism of hyperkalaemic weakness.`
+},
+{
+    q: `How does the single-unit smooth muscle differ from multiunit smooth muscles?`,
+    options: [
+        `Single-unit muscle contraction speed is slow, while multiunit is fast`,
+        `Single-unit muscle has T-tubules, while multiunit does not`,
+        `Single-unit muscles are not innervated by autonomic nerves`,
+        `Single-unit muscle produces action potentials spontaneously that spread to neighbouring cells, while multiunit does not`,
+        `They are all smooth muscles, they do not differ`
+    ],
+    correct: `D`,
+    explanation: `Single-unit (unitary, visceral) smooth muscle — found in the gut, uterus, ureter and most blood vessels — behaves as a <strong>syncytium</strong>: the cells are connected by gap junctions, so action potentials generated spontaneously by pacemaker cells spread from cell to cell, producing coordinated contraction. It is also called "unitary" because the whole sheet contracts as one unit. Multiunit smooth muscle — found in the iris, ciliary body and large airways — consists of discrete, separately innervated fibres that contract only when individually stimulated by autonomic nerves and do not generate spontaneous spreading action potentials. Single-unit muscle is densely innervated by autonomic nerves (option c is wrong), the contraction-speed difference is not the defining feature (option a), and both differ in T-tubule content in ways not described by option (b).`
+},
+{
+    q: `About the Na+K+ pump of cell membranes, the following is true;`,
+    options: [
+        `Few cells have the Na+K+ pump that pumps in Na+ and takes out K+ of the cell actively`,
+        `The Na+K+ pump breaks down ATP to ADP and a phosphate with the energy released being used to pump the ions`,
+        `The Na+K+ pump does not require its beta subunit to operate`,
+        `The Na+K+ pump is not useful for cell physiological functions`,
+        `It changes to K+ pump after age 50 years`
+    ],
+    correct: `B`,
+    explanation: `The Na⁺/K⁺-ATPase is an energy-dependent carrier that uses the energy liberated by the hydrolysis of one molecule of ATP to ADP and inorganic phosphate to transport <strong>3 Na⁺ out of</strong> the cell and <strong>2 K⁺ into</strong> the cell against their respective electrochemical gradients — option (b) correctly describes this. Option (a) is wrong: virtually all cells possess the pump, and it pumps Na⁺ <em>out</em> and K⁺ <em>in</em>. Option (c) is wrong: the pump is a heterodimer of an α (catalytic) subunit and a β (glycoprotein) subunit; the β subunit is required for correct folding, membrane insertion and stability. Option (d) is wrong: the pump is essential — it maintains the resting membrane potential, cell volume (osmotic stability), the Na⁺ gradient that drives secondary active transport (e.g. glucose, amino acids) and the excitability of nerve and muscle. Option (e) is nonsense.`
+},
+{
+    q: `The property of muscle ability to contract forcefully when stimulated is`,
+    options: [`Contractility`, `Reproducibility`, `Responsibility`, `Excitability`, `Elasticity`],
+    correct: `A`,
+    explanation: `Muscle tissue has four characteristic properties: <strong>excitability</strong> (the ability to respond to stimuli by producing action potentials), <strong>contractility</strong> (the ability to shorten and generate force when stimulated), <strong>extensibility</strong> (the ability to be stretched without being damaged) and <strong>elasticity</strong> (the ability to recoil to the original resting length after being stretched). The property of contracting forcefully when stimulated is therefore <strong>contractility</strong>.`
+},
+{
+    q: `Ability of muscles to stretch without being damaged`,
+    options: [`Contractility`, `Reproducibility`, `Elasticity`, `Excitability`, `Extensibility`],
+    correct: `E`,
+    explanation: `As above, the ability of a muscle to be stretched or extended without being damaged is <strong>extensibility</strong>. <em>Elasticity</em> is the different property of recoiling back to the resting length after the stretching force is removed. <em>Excitability</em> is the ability to respond to stimuli; <em>contractility</em> is the ability to shorten forcefully.`
+},
+{
+    q: `Neurons that stimulate skeletal muscle to contract are labelled as`,
+    options: [
+        `Visceral neurons`,
+        `Somatic motor neurons`,
+        `Basal ganglion`,
+        `Hypothalamus`,
+        `Sympathetic neurons`
+    ],
+    correct: `B`,
+    explanation: `Skeletal muscle is innervated by the <strong>somatic motor nervous system</strong>. The lower motor neurons — <strong>somatic motor neurons</strong> — have their cell bodies in the anterior horn of the spinal cord (or in the motor nuclei of the cranial nerves) and their axons terminate at the neuromuscular junction, where they release acetylcholine onto nicotinic receptors on the motor end plate to excite the muscle fibre. Visceral neurons and sympathetic neurons supply smooth muscle, cardiac muscle and glands (autonomic nervous system). The basal ganglia and hypothalamus are parts of the central nervous system, not neurons that directly innervate skeletal muscle.`
+},
+{
+    q: `Humans have no capacity to regenerate skeletal muscles. But these cells retain the capacity to regenerate only the damaged muscle fibers`,
+    options: [
+        `Micro cells`,
+        `Satellite cells`,
+        `Schwann cells`,
+        `Fibroblasts`,
+        `Osteoblasts`
+    ],
+    correct: `B`,
+    explanation: `Skeletal muscle fibres are post-mitotic and cannot divide. However, a population of quiescent mononuclear stem cells — <strong>satellite cells</strong> — lies between the sarcolemma and the basal lamina of each muscle fibre. After injury, satellite cells are activated, proliferate, and fuse with each other or with the damaged fibre to form new myofibrils and restore the muscle fibre. This is why skeletal muscle can regenerate after moderate injury but forms scar tissue after severe injury with loss of the basal lamina. Schwann cells myelinate peripheral nerves; fibroblasts form scar tissue; osteoblasts form bone. <em>(Note: the source paper prints option (a) as "Micro cells", which is best understood as a corruption of "myo-satellite cells".)</em>`
+},
+{
+    q: `Function of Contractile proteins inside myofibrils is`,
+    options: [
+        `Switch the contraction process prolonged`,
+        `Switch the contraction process off`,
+        `Generate force during contraction`,
+        `Align the thick and thin filaments properly`,
+        `Provide elasticity and extensibility`
+    ],
+    correct: `C`,
+    explanation: `Myofibrils contain three classes of protein. <strong>Contractile proteins</strong> — myosin (the thick filament) and actin (the thin filament) — are directly responsible for <strong>generating force during contraction</strong> by forming cross-bridges and performing the power stroke (sliding filament mechanism). <em>Regulatory proteins</em> (troponin and tropomyosin) switch contraction on and off by controlling the exposure of actin's myosin-binding sites in response to Ca²⁺. <em>Structural proteins</em> (titin, nebulin, desmin, dystrophin, α-actinin, myomesin) align the filaments, maintain the sarcomere architecture and provide elasticity and extensibility.`
+},
+{
+    q: `While attending an emergency care patient, following is an isotonic fluid used for IV infusion`,
+    options: [`1.9% NaCl`, `5% Dextrose`, `Fingers Lactate`, `9% NaCl`, `29% NaCl`],
+    correct: `C`,
+    explanation: `"Fingers Lactate" is a typographical corruption of <strong>Ringer's lactate (Hartmann's solution)</strong>, an isotonic crystalloid (osmolality ≈ 273 mOsm/L) containing Na⁺, K⁺, Ca²⁺, Cl⁻ and lactate. It is a first-line isotonic fluid for intravenous resuscitation in haemorrhage, dehydration and shock. Option (a) 1.9 % NaCl is hypertonic (normal saline is 0.9 %); option (d) 9 % NaCl and option (e) 29 % NaCl are grossly hypertonic and would be used only in specific circumstances (e.g. small-volume resuscitation in raised intracranial pressure, or 3 % saline in severe hyponatraemia) — never as routine isotonic infusion. Option (b) 5 % dextrose is initially isotonic in the bag, but the dextrose is rapidly metabolised, leaving free water that distributes throughout all body compartments, so it is not a true isotonic volume expander and is unsuitable for resuscitation.`
+},
+{
+    q: `As a medical graduate, you got to infuse an IV solution at emergency department based on the patient's`,
+    options: [
+        `Serum electrolyte values`,
+        `Liver-volume balance`,
+        `Economic background`,
+        `Attitude`,
+        `Family blood line`
+    ],
+    correct: `A`,
+    explanation: `The choice of intravenous fluid must be guided by the patient's clinical status and, above all, by the <strong>serum electrolyte values</strong> and acid–base status (together with the history, vital signs, urine output and estimated fluid deficit). For example, hyponatraemia, hypernatraemia, hyperkalaemia, hypokalaemia, metabolic acidosis or alkalosis each dictate a different fluid choice. Economic background, attitude and family blood line have no place in clinical decision-making; "liver-volume balance" is not a recognised clinical parameter.`
+},
+{
+    q: `We cannot solve any problem with the same thinking as when the problem was created. Every problem has multiple solutions. Function of Sodium potassium pump that saves the cell from swelling problem.`,
+    options: [
+        `3Na+ pumped out`,
+        `Cl− follows Na+`,
+        `H2O follows NaCl`,
+        `Ca++ pumped out`,
+        `K ions pumped nowhere`
+    ],
+    correct: `A`,
+    explanation: `The Donnan effect and the presence of intracellular proteins would create an osmotic gradient drawing water into the cell, causing swelling and eventual lysis. The <strong>Na⁺/K⁺-ATPase</strong> prevents this: it actively pumps <strong>3 Na⁺ out</strong> of the cell for every 2 K⁺ pumped in, using ATP. By keeping the intracellular Na⁺ concentration low, the pump removes the osmotic driving force for water entry and maintains the cell volume within narrow limits — it is therefore described as the <strong>osmotic stabiliser</strong> of the cell. Options (b) and (c) describe passive events that would <em>cause</em> swelling, not prevent it; (d) is a different pump (Ca²⁺-ATPase); and (e) is incorrect — K⁺ is pumped <em>into</em> the cell.`
+},
+{
+    q: `Example for integral proteins of cell membrane:`,
+    options: [`Carriers`, `Channels`, `Integral protein band 3`, `Antigen`, `Tryptophan`],
+    correct: `C`,
+    explanation: `Integral (intrinsic) membrane proteins are embedded in the lipid bilayer and can be removed only by disrupting the membrane. <strong>Band 3</strong> is the classic, well-characterised integral protein of the red cell membrane — it is the anion exchanger (AE1) that carries out the chloride–bicarbonate shift, has both transmembrane and cytoplasmic domains, and is anchored to the cytoskeleton via ankyrin and spectrin. Carriers and channels are functional <em>categories</em> of membrane proteins, not specific examples; antigens and tryptophan are not integral membrane proteins (tryptophan is an amino acid).`
+},
+{
+    q: `Plasma membrane acting as semi-permeable barrier aids to`,
+    options: [
+        `Maintains difference in composition of ICF & ECF & fluid in various organelles`,
+        `Allows free movement of all solutes across the membrane`,
+        `Prevents any movement of water across the membrane`,
+        `Provides energy for active transport`,
+        `Synthesises proteins for the cell`
+    ],
+    correct: `A`,
+    explanation: `The plasma membrane is a selectively permeable (semi-permeable) lipid bilayer. By permitting water and some solutes (O₂, CO₂, lipid-soluble substances) to pass while restricting or regulating the passage of others (ions, glucose, amino acids, proteins), it <strong>maintains the marked differences in composition between the intracellular fluid (ICF) and the extracellular fluid (ECF)</strong> — and, by extension, between the cytosol and the interior of organelles. This compartmentalisation is fundamental to cell function, excitability, volume regulation and metabolism. The membrane does not allow free movement of all solutes (option b), does not prevent water movement (option c), does not itself generate energy for active transport (that is the role of ATP and the pumps — option d), and does not synthesise proteins (that occurs on ribosomes — option e).`
+},
+{
+    q: `Passive transport mechanism across cell membrane`,
+    options: [
+        `Voltage gated diffusion`,
+        `Facilitated diffusion`,
+        `Exocytosis`,
+        `Endocytosis`,
+        `Electronic movements`
+    ],
+    correct: `B`,
+    explanation: `Passive transport requires no metabolic energy and moves substances down their concentration or electrochemical gradient. It includes simple diffusion (through the lipid bilayer or through channels) and <strong>facilitated diffusion</strong> — carrier- or channel-mediated transport that is still passive but shows specificity, saturation and competition (e.g. glucose entry into red cells and muscle via GLUT transporters). Exocytosis and endocytosis are forms of <strong>active</strong>, energy-dependent vesicular transport. "Voltage-gated diffusion" is not a recognised transport mechanism (voltage-gated <em>channels</em> are, but diffusion is the process, not the gate). "Electronic movements" is not a transport mechanism.`
+},
+{
+    q: `Active transport mechanisms across cell membrane example`,
+    options: [
+        `Cytolysis`,
+        `Facilitated diffusion`,
+        `Filtration`,
+        `Secondary active transport`,
+        `Tertiary diffusion`
+    ],
+    correct: `D`,
+    explanation: `Active transport moves a substance against its electrochemical gradient and requires energy. <strong>Primary active transport</strong> uses ATP directly (e.g. the Na⁺/K⁺-ATPase, Ca²⁺-ATPase, H⁺/K⁺-ATPase). <strong>Secondary active transport</strong> uses the potential energy stored in the Na⁺ gradient (which was itself created by primary active transport) to move another substance against its gradient — examples include the Na⁺–glucose cotransporter (SGLT) in the intestine and renal tubule, and the Na⁺–amino acid and Na⁺–Ca²⁺ exchangers. Cytolysis is cell rupture; facilitated diffusion and filtration are passive; "tertiary diffusion" does not exist.`
+},
+{
+    q: `Skeletal muscle number is fixed at time of birth in humans. Following hormones stimulate muscle hypertrophy`,
+    options: [`Estrogen`, `Growth hormone`, `Oestrone`, `Adrenaline`, `Oestradiol`],
+    correct: `B`,
+    explanation: `The number of skeletal muscle fibres is fixed at birth; postnatal muscle growth occurs by <strong>hypertrophy</strong> (increase in the size of existing fibres), not hyperplasia. <strong>Growth hormone</strong> is the principal anabolic hormone promoting muscle growth. It acts partly directly on muscle and partly by stimulating the liver to produce insulin-like growth factor-1 (IGF-1), which promotes protein synthesis and myocyte growth. Testosterone (and other androgens) also stimulates muscle hypertrophy — which is why males have greater muscle mass — but it is not listed. Oestrogen, oestrone and oestradiol are female sex steroids and do not promote muscle hypertrophy; adrenaline is a catecholamine with acute metabolic and cardiovascular actions, not a growth-promoting hormone.`
+},
+{
+    q: `Functional significance of sarcoplasmic reticulum in muscles`,
+    options: [
+        `Membranous sacs which encircle each myofibril`,
+        `Stores and releases calcium ions (Ca++)`,
+        `Release of Na+ triggers muscle contraction`,
+        `Develops action potential`,
+        `Becomes functional after death`
+    ],
+    correct: `B`,
+    explanation: `The sarcoplasmic reticulum (SR) is a specialised smooth endoplasmic reticulum that forms a network of membranous sacs around each myofibril. Its <strong>principal functional significance is the storage and release of calcium ions</strong>: the terminal cisternae are rich in the calcium-binding protein calsequestrin, and when the action potential travels down the T-tubules it triggers the release of Ca²⁺ from the SR into the sarcoplasm, initiating cross-bridge cycling. Relaxation occurs when the SR actively pumps Ca²⁺ back into its lumen via the Ca²⁺-ATPase (SERCA). Option (a) is a structural description, not the functional significance; contraction is triggered by Ca²⁺ release, not Na⁺ release; action potentials are developed by the sarcolemma and T-tubules, not the SR; and the SR ceases to function after death (indeed, loss of Ca²⁺ homeostasis contributes to rigor mortis).`
+},
+{
+    q: `Regarding contractile filaments of skeletal muscles`,
+    options: [
+        `Function in the non-contractile process`,
+        `Three types of filaments (Thick, medium, and Thin)`,
+        `There are two thin filaments for every thick filament`,
+        `Secrete Ca++`,
+        `Operate only during exercising at Levy stadium`
+    ],
+    correct: `C`,
+    explanation: `The myofibril contains two types of contractile filament: the <strong>thick filaments</strong> (myosin) and the <strong>thin filaments</strong> (actin, with troponin and tropomyosin). In the classical arrangement of the sarcomere, <strong>each thick filament is surrounded by six thin filaments</strong> in a hexagonal array, which is equivalent to <strong>two thin filaments for every thick filament</strong> when the ratio is expressed the other way. There are not three types of filament (medium filaments do not exist). The filaments do not secrete calcium — that is the function of the sarcoplasmic reticulum. They function in the contractile process itself, not in a non-contractile process, and clearly do not operate only during exercise.`
+},
+{
+    q: `As a medical graduate, you got to infuse an IV solution at emergency department based on the patient's`,
+    options: [
+        `Serum electrolyte values`,
+        `Liver-volume balance`,
+        `Economic background`,
+        `Attitude`,
+        `Family blood line`
+    ],
+    correct: `A`,
+    explanation: `This repeats Q32 and reinforces the same principle: intravenous fluid therapy must be individualised according to the patient's <strong>serum electrolyte values</strong> (and acid–base status, vital signs, urine output and clinical assessment of volume status). Non-clinical factors such as economic background, attitude or family blood line have no role in the choice of fluid, and "liver-volume balance" is not a recognised parameter.`
+},
+{
+    q: `Plasma membrane acting as semi permeable barrier aids to`,
+    options: [
+        `Maintains difference in composition of ICF & ECF & fluid in various organelles`,
+        `Allows free movement of all solutes across the membrane`,
+        `Prevents any movement of water across the membrane`,
+        `Provides energy for active transport`,
+        `Synthesises proteins for the cell`
+    ],
+    correct: `A`,
+    explanation: `As in Q35, the selectively permeable plasma membrane maintains the distinct ionic and solute composition of the intracellular fluid (ICF) versus the extracellular fluid (ECF), and of the cytosol versus the interior of organelles. This compartmentalisation is essential for the resting membrane potential, excitability, cell volume regulation, enzyme function and signalling. The membrane does not allow free permeation of all solutes, does not block water movement, does not itself supply the energy for active transport (ATP does), and does not synthesise proteins (ribosomes do).`
+},
+{
+    q: `Example for integral proteins of cell membrane:`,
+    options: [`Carriers`, `Channels`, `Integral protein band 3`, `Antigen`, `Tryptophan`],
+    correct: `C`,
+    explanation: `This repeats Q34. The classic example of an integral (intrinsic) membrane protein is <strong>band 3</strong> — the red-cell anion exchanger (AE1) responsible for the chloride–bicarbonate shift. It spans the lipid bilayer and is anchored to the cytoskeleton via ankyrin and spectrin. "Carriers" and "channels" are categories of transport proteins; antigens are not integral proteins per se; and tryptophan is an amino acid, not a membrane protein.`
+},
+{
+    q: `Example for integral proteins of cell membrane:`,
+    options: [`Carriers`, `Channels`, `Integral protein band 3`, `Antigen`, `Tryptophan`],
+    correct: `C`,
+    explanation: `Repeated item. Band 3 (AE1) is the classical integral protein of the red blood cell membrane — the anion exchanger that mediates the chloride shift and is linked to the membrane cytoskeleton by ankyrin and spectrin.`
+},
+{
+    q: `Which of the following is most necessary for coagulation?`,
+    options: [`Vitamin A`, `Vitamin D`, `Vitamin E`, `Vitamin K`, `Vitamin C`],
+    correct: `D`,
+    explanation: `Repeated item. Vitamin K is required for the γ-carboxylation of glutamate residues on prothrombin (factor II), factor VII, factor IX and factor X, enabling them to bind Ca²⁺ and participate in the coagulation cascade. Vitamin K deficiency (newborn, obstructive jaundice, warfarin therapy) therefore produces a bleeding tendency with a prolonged prothrombin time.`
+}
+];
+
+/* =====================================================================
+   RENDERING — SECTION A (MCQ)
+   ===================================================================== */
+function renderSectionA() {
+    const container = document.getElementById('container-A');
+    let html = '';
+    sectionA.forEach((q, i) => {
+        const qid = 'A-q' + (i + 1);
+        html += '<div class="question" id="q-' + qid + '">';
+        html += '<p><span class="q-badge">Q' + (i + 1) + '</span> ' + q.q + '</p>';
+        html += '<div class="options">';
+        q.options.forEach((opt, j) => {
+            const L = String.fromCharCode(65 + j);
+            html += '<label><input type="radio" name="' + qid + '" value="' + L + '"> <strong>' + L + ')</strong> ' + opt + '</label>';
+        });
+        html += '</div>';
+        html += '<div class="question-feedback" id="fb-' + qid + '"></div>';
+        html += '</div>';
+    });
+    container.innerHTML = html;
+}
+
+function submitSectionA() {
+    let score = 0;
+    sectionA.forEach((q, i) => {
+        const qid = 'A-q' + (i + 1);
+        const radios = document.getElementsByName(qid);
+        let selected = null;
+        for (let r = 0; r < radios.length; r++) {
+            if (radios[r].checked) { selected = radios[r]; break; }
+        }
+        const correct = q.correct.toUpperCase();
+        if (selected && selected.value === correct) score++;
+
+        let html = '<div class="answer-block"><div class="answer-list">';
+        q.options.forEach((opt, j) => {
+            const L = String.fromCharCode(65 + j);
+            let cls = 'answer-item';
+            if (L === correct) cls += ' answer-correct';
+            if (selected && selected.value === L) {
+                cls += ' user-choice';
+                if (L !== correct) cls += ' answer-wrong';
+            }
+            const mark = (selected && selected.value === L) ? ' ◀ your answer' : '';
+            html += '<div class="' + cls + '">' + L + ') ' + opt + mark + '</div>';
+        });
+        html += '</div>';
+
+        const correctIdx = correct.charCodeAt(0) - 65;
+        const correctText = (correctIdx >= 0 && correctIdx < q.options.length) ? q.options[correctIdx] : '';
+
+        if (!selected) {
+            html += '<div class="explanation wrong">No answer selected. Correct answer: <strong>' +
+                    correct + ') ' + correctText + '</strong>.<br>' + q.explanation + '</div>';
+        } else if (selected.value === correct) {
+            html += '<div class="explanation">✅ <strong>Correct.</strong><br>' + q.explanation + '</div>';
+        } else {
+            html += '<div class="explanation wrong">❌ <strong>Incorrect.</strong> Correct answer: <strong>' +
+                    correct + ') ' + correctText + '</strong>.<br>' + q.explanation + '</div>';
+        }
+
+        const fb = document.getElementById('fb-' + qid);
+        if (fb) fb.innerHTML = html;
+    });
+
+    const total = sectionA.length;
+    const pct = Math.round((score / total) * 100);
+    const box = document.getElementById('result-A');
+    box.style.display = 'block';
+    document.getElementById('score-A').innerText = score + ' / ' + total + '  (' + pct + '%)';
+
+    document.querySelectorAll('#panel-A input[type="radio"]').forEach(r => r.disabled = true);
+}
+
+/* ─── MODEL ANSWER TOGGLE ─── */
+function toggleModel(id) {
+    const el = document.getElementById(id);
+    const btn = document.getElementById(id + '-btn');
+    if (el.classList.contains('show')) {
+        el.classList.remove('show');
+        btn.innerHTML = '<i class="fas fa-eye"></i> Show Model Answer';
+    } else {
+        el.classList.add('show');
+        btn.innerHTML = '<i class="fas fa-eye-slash"></i> Hide Model Answer';
+    }
+}
+
+/* ─── INIT ─── */
+renderSectionA();
+
+/* ─── TAB SWITCHING ─── */
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        const target = this.dataset.target;
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+        document.getElementById('panel-' + target).classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+});
+</script>
+
+</body>
+</html>
