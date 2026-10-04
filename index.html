@@ -1927,6 +1927,287 @@
             background: #eef4fa;
             border-radius: 20px;
         }
+
+        /* ============================================================
+           SEARCH — styles
+           ============================================================ */
+        .btn-search {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: 1px solid rgba(45, 123, 158, 0.25);
+            background: rgba(45, 123, 158, 0.08);
+            color: #2d7b9e;
+            font-size: 1rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            flex-shrink: 0;
+        }
+        .btn-search:hover {
+            background: #2d7b9e;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(45, 123, 158, 0.3);
+        }
+
+        .search-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(12px);
+            display: none;
+            align-items: flex-start;
+            justify-content: center;
+            z-index: 5000;
+            padding: 4.5rem 1.2rem 1.5rem;
+            animation: fadeInOverlay 0.25s ease;
+        }
+        .search-overlay.active {
+            display: flex;
+        }
+        .search-box {
+            background: #fff;
+            border-radius: 32px;
+            width: 100%;
+            max-width: 720px;
+            max-height: 84vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 40px 90px rgba(0, 0, 0, 0.35);
+            animation: scaleIn 0.25s ease;
+        }
+        .search-header {
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+            padding: 1.1rem 1.4rem;
+            border-bottom: 1px solid #eef2f7;
+            flex-shrink: 0;
+        }
+        .search-header > i {
+            color: #2d7b9e;
+            font-size: 1.15rem;
+        }
+        #searchInput {
+            flex: 1;
+            border: none;
+            outline: none;
+            background: transparent;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.05rem;
+            color: #1f2a41;
+            min-width: 0;
+        }
+        #searchInput::placeholder {
+            color: #9fb0c4;
+        }
+        .close-search {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #8a9bb0;
+            cursor: pointer;
+            line-height: 1;
+            padding: 0 0.3rem;
+            transition: 0.2s;
+        }
+        .close-search:hover {
+            color: #0a2b4a;
+            transform: rotate(90deg);
+        }
+        .search-filters {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            padding: 0.7rem 1.4rem 0.3rem;
+            flex-shrink: 0;
+        }
+        .search-chip {
+            border: 1px solid #dce6ef;
+            background: #f6f9fc;
+            color: #3c4d66;
+            border-radius: 30px;
+            padding: 0.3rem 0.95rem;
+            font-size: 0.78rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .search-chip:hover {
+            background: #e4eefa;
+            border-color: #b4d2e8;
+        }
+        .search-chip.active {
+            background: #2d7b9e;
+            border-color: #2d7b9e;
+            color: #fff;
+        }
+        .search-scope {
+            padding: 0.55rem 1.4rem 0.7rem;
+            font-size: 0.78rem;
+            color: #5a6e87;
+            border-bottom: 1px solid #eef2f7;
+            flex-shrink: 0;
+        }
+        .search-scope i {
+            color: #2d7b9e;
+            margin-right: 0.3rem;
+        }
+        .search-results {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0.8rem 1rem 1.2rem;
+        }
+        .search-group {
+            margin-bottom: 0.9rem;
+        }
+        .search-group-title {
+            font-size: 0.74rem;
+            font-weight: 800;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            color: #7a8ca0;
+            padding: 0.35rem 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+        .search-group-title i {
+            color: #2d7b9e;
+        }
+        .search-group-title .count {
+            background: #eef4fa;
+            color: #2d7b9e;
+            border-radius: 20px;
+            padding: 0.05rem 0.5rem;
+            font-size: 0.68rem;
+        }
+        .search-item {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            padding: 0.65rem 0.75rem;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 1px solid transparent;
+        }
+        .search-item:hover {
+            background: #f4f9fe;
+            border-color: #dbeaf6;
+            transform: translateX(4px);
+        }
+        .si-icon {
+            width: 34px;
+            height: 34px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            background: #eef4fa;
+            color: #2d7b9e;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+        }
+        .search-item:hover .si-icon {
+            background: #2d7b9e;
+            color: #fff;
+        }
+        .si-body {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        .si-title {
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: #1f2a41;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .si-sub {
+            font-size: 0.74rem;
+            color: #7a8ca0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .si-go {
+            color: #b8c9da;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+        }
+        .search-item:hover .si-go {
+            color: #2d7b9e;
+        }
+        .search-empty {
+            text-align: center;
+            padding: 2.5rem 1.5rem;
+            color: #7a8ca0;
+        }
+        .search-empty i {
+            font-size: 2.6rem;
+            color: #dce6ef;
+            display: block;
+            margin-bottom: 0.7rem;
+        }
+        .search-more {
+            text-align: center;
+            font-size: 0.78rem;
+            color: #8a9bb0;
+            padding: 0.5rem;
+        }
+        .search-footer {
+            padding: 0.7rem 1.4rem;
+            border-top: 1px solid #eef2f7;
+            text-align: center;
+            font-size: 0.72rem;
+            color: #8a9bb0;
+            flex-shrink: 0;
+        }
+        .search-footer i {
+            color: #2d7b9e;
+            margin-right: 0.3rem;
+        }
+
+        @media (max-width: 820px) {
+            .nav-wrapper {
+                gap: 0.8rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .search-overlay {
+                padding: 3.5rem 0.7rem 1rem;
+            }
+            .search-box {
+                border-radius: 24px;
+                max-height: 88vh;
+            }
+            .search-header {
+                padding: 0.9rem 1rem;
+            }
+            .search-filters {
+                padding: 0.6rem 1rem 0.2rem;
+            }
+            .search-scope {
+                padding: 0.5rem 1rem 0.6rem;
+            }
+            .search-results {
+                padding: 0.6rem 0.6rem 1rem;
+            }
+            .btn-search {
+                width: 38px;
+                height: 38px;
+                font-size: 0.9rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -2098,6 +2379,31 @@
         </div>
     </div>
 
+    <!-- SEARCH OVERLAY -->
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-box">
+            <div class="search-header">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search topics, videos, documents…" autocomplete="off" spellcheck="false" />
+                <button class="close-search" id="closeSearch" aria-label="Close search"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="search-filters" id="searchFilters">
+                <button class="search-chip active" data-filter="all">All</button>
+                <button class="search-chip" data-filter="topic">Topics</button>
+                <button class="search-chip" data-filter="document">Documents</button>
+                <button class="search-chip" data-filter="video">Videos</button>
+                <button class="search-chip" data-filter="audio">Audio</button>
+                <button class="search-chip" data-filter="quiz">Quizzes</button>
+                <button class="search-chip" data-filter="pastpaper">Past Papers</button>
+            </div>
+            <div class="search-scope" id="searchScope"></div>
+            <div class="search-results" id="searchResults"></div>
+            <div class="search-footer">
+                <i class="fas fa-graduation-cap"></i> ToToZ Search — results are limited to your year of study
+            </div>
+        </div>
+    </div>
+
     <header>
         <div class="logo"><i class="fas fa-heartbeat"></i><span>ToToZ</span></div>
         <div class="nav-wrapper">
@@ -2108,6 +2414,7 @@
                 <li><a href="#about">About</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
+            <button class="btn-search" id="searchNavBtn" title="Search (Ctrl + K)" aria-label="Search topics and resources"><i class="fas fa-search"></i></button>
             <button class="btn-signup" id="signupNavBtn"><i class="fas fa-user-plus" style="margin-right:8px;"></i>Sign In</button>
         </div>
     </header>
@@ -3552,6 +3859,77 @@
                                 'Rh Alloimmunization',
                                 'Fetal Growth Restriction and Fetal Surveillance'
                             ]
+                        }, { 
+                            name: 'OBGY Past Papers',
+                            topics: [
+                                '## 2020',
+                                '2020 OBGY Test 1 answered',
+                                '2020 OCTOBER GROUP 3 OBGYN Test',
+                                '2020 Revision Test answered',
+                                '2020 Term 1 Test OBGY answered',
+                        
+                                '## 2021',
+                                '2021 sessional OBS MARKING KEY Test 1',
+                                '2021 sessional OBS MARKING KEY Test 2',
+                                '2021 to 2025 Tests Dr. Chikunyu',
+                        
+                                '## 2022',
+                                '2022 Answered Test OBGY',
+                                '2022 OBGYN SESSIONAL MARKING KEY 1',
+                                '2022 OBGYN SESSIONAL MARKING KEY 2',
+                                '2022 OBGYN SESSIONAL MARKING KEY 3',
+                                '2022 Sessional OBGY',
+                            
+                                'OBGY 510 OSCE 2022 answered',
+                        
+                                '## 2023',
+                                '2023 Answers OBGY Test 2',
+                                '2023 OBGY Test',
+                                '2023 Sesional OBGY',
+                                '2023 SESSIONAL WRITTEN IN MARKING KEY',
+                                '2023 SESSIONAL',
+                                '2023 Term 2 Test Answers OBGY',
+                                '2023 Term 2 Test OBGY',
+                                '2023 Term 2 Test OBGY 2',
+                                'obs & gyn 2023 Sessional',
+                                'OBSTETRICS SESSIONAL 2023 WRITTEN',
+                        
+                                '## 2024',
+                                '2024 5th Year Sessional',
+                                '2024 GYNAE Test PAPER 2',
+                                '2024 OBSTETRICS SESSIONAL answered',
+                                '2024 OBSTETRICS SESSIONAL',
+                                '2024 Sessional OBGY',
+                                '2024 Sessional OBGY 2',
+                                '2024 Sessional OBS',
+                                '2024 Sessional OBS 2',
+                                '2024 Sessional Paper 1 Obs',
+                                '2024 Sessional Paper 1',
+                                '2024 Term 1 Test OBGY',
+                                '2024 Term 1 Test OBGYN MARKING KEY',
+                                '2024 Term 2 OBGYN MARKING KEY',
+                                '2024 Term 2 Test OBGYN MARKING KEY',
+                                'GYNAECOLOGY SESSIONAL 2024 Test',
+                                'OBS PAPER 1 2024',
+                                'Term 1 OBGYN 2024 June MARKING KEY',
+                        
+                                '## 2025',
+                                '2025 Sessional GYN',
+                                '2025 Test 2',
+                                'Sessional Paper 2 GYN 2025',
+                        
+                                '## General / Undated Tests',
+                                'ANSWERED FOURTH YEAR CLINICAL Test',
+                                'Answers (QUESTIONS) OBGY T 2 Test',
+                                'KITWE TEST',
+                                'MK_OBGY_OSCE_HOLY_GRAIL',
+                                'OBGY MCQ Test',
+                                'OBGY P1 MCQ Test',
+                                'OBGYN Group D Term 2 End of Rotation Test',
+                                'Obs and GYN term 2 Test',
+                                'OSCE DATA MUST GO THROUGH Test',
+                                'Term 2 Test OBGY'
+                            ]
                         }]
                     }
                 },
@@ -3802,7 +4180,7 @@
                                     'Site C: Pneumonia Care'
                                 ] },
                             { name: 'Nephrology',
-                            topics: ['Site C: AKI Care', 'Site C: CKD Support', 'Site C: Dialysis'] }
+                                topics: ['Site C: AKI Care', 'Site C: CKD Support', 'Site C: Dialysis'] }
                         ]
                     },
                     'surgery4': {
@@ -4140,6 +4518,76 @@
         };
 
         const pdfLinks = {
+            
+
+    // 2020
+    '2020 OBGY Test 1 answered': 'https://drive.google.com/file/d/1ln1jh4yKPZi7x7NKk_9m0xFNG6qUACSk/view?usp=drivesdk',
+    '2020 OCTOBER GROUP 3 OBGYN Test': 'https://drive.google.com/file/d/1bSAWKSTKJdH1D0TR_L4UuxUEmDmVWO7s/view?usp=drivesdk',
+    '2020 Revision Test answered': 'https://docs.google.com/presentation/d/17jIY3RO9XXg_ULt2cUQhfN63mjBP1m5t/edit?usp=drivesdk&ouid=110700472908024825820&rtpof=true&sd=true',
+    '2020 Term 1 Test OBGY answered': 'https://drive.google.com/file/d/159X3RYTNhknM2exlljWQREYLkn0iW6W1/view?usp=drivesdk',
+
+    // 2021
+    '2021 sessional OBS MARKING KEY Test 1': 'https://drive.google.com/file/d/14lQuxPKqhPRP4koCYYlDqX4MyAeCvj9T/view?usp=drivesdk',
+    '2021 sessional OBS MARKING KEY Test 2': 'https://drive.google.com/file/d/1sKfpmTQBt1R1VrQlKVwIhsemAeCdWZFy/view?usp=drivesdk',
+    '2021 to 2025 Tests Dr. Chikunyu': 'https://drive.google.com/file/d/1VAVy0VWZtUGtVpqMZ5G_Qgv59palX-k5/view?usp=drivesdk',
+
+    // 2022
+    '2022 Answered Test OBGY': 'https://drive.google.com/file/d/15C7w9boWpEekjxJFN4O_Bddzai2Bqo2h/view?usp=drivesdk',
+    '2022 OBGYN SESSIONAL MARKING KEY 1': 'https://drive.google.com/file/d/1IokoooFf1CeSUP8K4swXtvv_AesktKTm/view?usp=drivesdk',
+    '2022 OBGYN SESSIONAL MARKING KEY 2': 'https://drive.google.com/file/d/1mw34Ca9NpZIOHTJYKnpgGCqZ70pZxVHV/view?usp=drivesdk',
+    '2022 OBGYN SESSIONAL MARKING KEY 3': 'https://drive.google.com/file/d/1oSLvDd__UH35uOQ2XoASO_OjXqNC1bmS/view?usp=drivesdk',
+    '2022 Sessional OBGY': 'https://drive.google.com/file/d/1IBguzwPSZgkFaLpVTskwTQgHmveNgGzH/view?usp=drivesdk',
+    
+    'OBGY 510 OSCE 2022 answered': 'https://drive.google.com/file/d/1K7CWAIU2KPNjLoXCzJh3cCUhyt3MJ362/view?usp=drivesdk',
+
+    // 2023
+    '2023 Answers OBGY Test 2': 'https://drive.google.com/file/d/1T8gFAk5xtuccRxeCQQIemIOSLA7Pgb7U/view?usp=drivesdk',
+    '2023 OBGY Test': 'https://drive.google.com/file/d/1Qwj3HInzcCTmw_D0APba_tq5aqm2-p7l/view?usp=drivesdk',
+    '2023 Sesional OBGY': 'https://drive.google.com/file/d/1l5PiCTXpLpcAbIK7vHU4UHMiH-W9lPLJ/view?usp=drivesdk',
+    '2023 SESSIONAL WRITTEN IN MARKING KEY': 'https://drive.google.com/file/d/1XPSiK_u-buDE_JvnmZ8OjFpRia5tv-Q0/view?usp=drivesdk',
+    '2023 SESSIONAL': 'https://drive.google.com/file/d/10dxGjCMdapaxjgSaGUdEayqRPgwxrizh/view?usp=drivesdk',
+    '2023 Term 2 Test Answers OBGY': 'https://drive.google.com/file/d/1AL9iv7brxn6PIt63wpxF051jD7thJEU2/view?usp=drivesdk',
+    '2023 Term 2 Test OBGY': 'https://drive.google.com/file/d/1ARTDWCeY0EPz2WTGAzDKRdMMH2AWgOYi/view?usp=drivesdk',
+    '2023 Term 2 Test OBGY 2': 'https://drive.google.com/file/d/1zy8ovyH5WS9TKvA0gFyxOoJGRM6SW84h/view?usp=drivesdk',
+    'obs & gyn 2023 Sessional': 'https://drive.google.com/file/d/1VO6tRdWGjtfFW5vA1NGCIkRfbQZRoXKA/view?usp=drivesdk',
+    'OBSTETRICS SESSIONAL 2023 WRITTEN': 'https://drive.google.com/file/d/19AzczXQZd5wPeSXiuCq8f38ukjJIoeSb/view?usp=drivesdk',
+
+    // 2024
+    '2024 5th Year Sessional': 'https://drive.google.com/file/d/1VUc_b3FCPtzJOuEwdSlnEWQs8WjRij51/view?usp=drivesdk',
+    '2024 GYNAE Test PAPER 2': 'https://drive.google.com/file/d/1DCCQNEc79IvVvJkePhkxBT1k8nguD3cM/view?usp=drivesdk',
+    '2024 OBSTETRICS SESSIONAL answered': 'https://drive.google.com/file/d/1LQtUDU1a_s-oKPPwmPdvQkEcX_X22u-4/view?usp=drivesdk',
+    '2024 OBSTETRICS SESSIONAL': 'https://drive.google.com/file/d/1d0DXcSOtvyZfr-YtfYVxwbiMbAl96MEZ/view?usp=drivesdk',
+    '2024 Sessional OBGY': 'https://drive.google.com/file/d/1cXp9NvSItc0FzpaTltMnATq4bpMubcCA/view?usp=drivesdk',
+    '2024 Sessional OBGY 2': 'https://drive.google.com/file/d/1LvOPBY5YB_d4HzeFAlVFXwpJrj_hynr4/view?usp=drivesdk',
+    '2024 Sessional OBS': 'https://drive.google.com/file/d/1b3sVixYX9TGS8UrxzACkdK_ZG-dHLS5j/view?usp=drivesdk',
+    '2024 Sessional OBS 2': 'https://drive.google.com/file/d/1cXp9NvSItc0FzpaTltMnATq4bpMubcCA/view?usp=drivesdk',
+    '2024 Sessional Paper 1 Obs': 'https://drive.google.com/file/d/1U1kLcWsM9WwgdJGFRR29s2zl5X2XCalA/view?usp=drivesdk',
+    '2024 Sessional Paper 1': 'https://drive.google.com/file/d/1pfm9cT7b709n34vWC3m7KdPnwvR4m9E2/view?usp=drivesdk',
+    '2024 Term 1 Test OBGY': 'https://drive.google.com/file/d/1k7v_-n7391FU3oPr1Ol5p9BA5PfgAlLp/view?usp=drivesdk',
+    '2024 Term 1 Test OBGYN MARKING KEY': 'https://drive.google.com/file/d/1FBDL637yr20QB4LbsMcN2UDNkesUEJIK/view?usp=drivesdk',
+    '2024 Term 2 OBGYN MARKING KEY': 'https://drive.google.com/file/d/10Lte0CIXB7FHslJ_O6NuWlR-6Fxr8n8g/view?usp=drivesdk',
+    '2024 Term 2 Test OBGYN MARKING KEY': 'https://drive.google.com/file/d/1k7v_-n7391FU3oPr1Ol5p9BA5PfgAlLp/view?usp=drivesdk',
+    'GYNAECOLOGY SESSIONAL 2024 Test': 'https://drive.google.com/file/d/1mX2bjC5sfvJ3IQMmvjpaw5in9SLWpmEn/view?usp=drivesdk',
+    'OBS PAPER 1 2024': '',
+    'Term 1 Test OBGYN 2024 June MARKING KEY': 'https://drive.google.com/file/d/1lzlowTN6YHvttEb57Hj1zcK7qxC8M6BY/view?usp=drivesdk',
+
+    // 2025
+    '2025 Sessional GYN': 'https://drive.google.com/file/d/1lNDNmWRHRYi6LgViKPjgpUduNNL7Oyec/view?usp=drivesdk',
+    '2025 Test 2': 'https://drive.google.com/file/d/1rgYkQM9aWotKhnWPwUhuUNmUXM0bCfmm/view?usp=drivesdk',
+    'Sessional Paper 2 GYN 2025': 'https://drive.google.com/file/d/10L1_aJ1gqTx-RgoXtJd_eduWgXzzwxEL/view?usp=drivesdk',
+
+    // General / Undated Tests
+    'ANSWERED FOURTH YEAR CLINICAL Test': 'https://drive.google.com/file/d/1yBBKcZ_ryQGb-WnBRL3nIYgFb0R6Ljrb/view?usp=drivesdk',
+    'Answers (QUESTIONS) OBGY T 2 Test': 'https://drive.google.com/file/d/1m0LshWI5sKFgemtWlBQiHzaq4auI5gMx/view?usp=drivesdk',
+    'KITWE TEST': 'https://drive.google.com/file/d/1RAxubtkccn1CNao0YPxkcNNRbGNtN_zJ/view?usp=drivesdk',
+    'MK_OBGY_OSCE_HOLY_GRAIL': 'https://drive.google.com/file/d/1uWl4SKT8mvv-AOLwmkhaBiRDfFEElWig/view?usp=drivesdk',
+    'OBGY MCQ Test': 'https://drive.google.com/file/d/1UBMC2Ds6F-g1bRQ62vvVU5OdLk3hb9nE/view?usp=drivesdk',
+    'OBGY P1 MCQ Test': 'https://drive.google.com/file/d/1Iyq7nl0Sznie3HWl-4Ewd6YeyHS4HvCx/view?usp=drivesdk',
+    'OBGYN Group D Term 2 End of Rotation Test': 'https://drive.google.com/file/d/1xulacx6xJA7YkrOjIQt7yEa19dg_okB4/view?usp=drivesdk',
+    'Obs and GYN term 2 Test': 'https://drive.google.com/file/d/1yJjaw4N5xzR-xKh4Ni8N5iXLJSOURHiX/view?usp=drivesdk',
+    'OSCE DATA MUST GO THROUGH Test': '',
+    'Term 2 Test OBGY': '',
+
             
                 '2019 Pathology2 Test 1': 'https://drive.google.com/file/d/1DgKVncj-dwGcygQJwGotUqtMs9eTmjQV/view?usp=drivesdk',
                 '2023 Pathology2 Test 1': 'https://drive.google.com/file/d/1QMIVF8Qd_C8lYuVQeWkBNNsmPJu2pPrK/view?usp=drivesdk',
@@ -6491,7 +6939,7 @@
                     url: 'https://drive.google.com/file/d/1LvHSPnt80xtAZUO4hflwSV8pJ0P5-bRD/view?usp=drive_link' },
             ],
             'Pelvic Organ Prolapse': [
-                { title: 'Class Notes',
+                { title: '2026 Class Notes',
                     url: 'https://drive.google.com/file/d/18YY7c3zVxKEoiZpU-dbGsnWd8Jtf1kZ8/view?usp=drive_link' },
                 { title: 'Class Notes',
                     url: 'https://drive.google.com/file/d/1ennSA_eXqMgB3MVrZ9TixmZT0HqQRNKh/view?usp=drive_link' },
@@ -7559,6 +8007,9 @@ const TOPIC_MAP = {
             currentCourseId = null;
             currentTermIndex = null;
             currentTopicIndex = null;
+
+            // ⬇️ NEW: build the year-scoped search index for this user
+            buildSearchIndex();
         }
 
         document.getElementById('signinBtn').addEventListener('click', function() {
@@ -8111,9 +8562,422 @@ const TOPIC_MAP = {
             if (e.key === 'Escape') closePpqPopup();
         });
 
+        /* ============================================================
+           SEARCH ENGINE
+           ------------------------------------------------------------
+           • Year-scoped: only indexes courses belonging to the signed-in
+             user's year (plus their rotation site for 4th / 6th year, and
+             their restricted course list if one is set).
+           • Indexes: topics, documents, videos, audio, quizzes, past papers
+           • Opens with the header 🔍 button or Ctrl / Cmd + K
+           ============================================================ */
+        let searchIndex = [];
+        let searchResultsData = [];
+        let searchFilter = 'all';
+
+        const searchOverlayEl   = document.getElementById('searchOverlay');
+        const searchInputEl     = document.getElementById('searchInput');
+        const searchResultsEl   = document.getElementById('searchResults');
+        const searchScopeEl     = document.getElementById('searchScope');
+        const searchNavBtnEl    = document.getElementById('searchNavBtn');
+        const closeSearchBtnEl  = document.getElementById('closeSearch');
+        const searchFiltersEl   = document.getElementById('searchFilters');
+
+        const SEARCH_GROUPS = [
+            { key: 'topic',     label: 'Topics',      icon: 'fa-bookmark' },
+            { key: 'document',  label: 'Documents',   icon: 'fa-file-alt' },
+            { key: 'video',     label: 'Videos',      icon: 'fa-video' },
+            { key: 'audio',     label: 'Audio',       icon: 'fa-headphones' },
+            { key: 'quiz',      label: 'Quizzes',     icon: 'fa-pencil-alt' },
+            { key: 'pastpaper', label: 'Past Papers', icon: 'fa-file-pdf' }
+        ];
+
+        const SEARCH_MAX_RESULTS = 150;
+
+        function escHtml(s) {
+            return String(s == null ? '' : s)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function searchYearLabel(y) {
+            return y === 2 ? '2nd Year' : y === 3 ? '3rd Year' : y === 4 ? '4th Year' : '6th Year';
+        }
+
+        /* ---- 1. BUILD THE INDEX (year-scoped) ---- */
+        function buildSearchIndex() {
+            searchIndex = [];
+            if (!currentUserYear) return;
+
+            const year = currentUserYear;
+            const courses = [];
+            const seenCourseIds = new Set();
+
+            if ((year === 4 || year === 6) && currentSite) {
+                const siteData = siteCourses[currentSite] && siteCourses[currentSite][year];
+                if (siteData) {
+                    Object.keys(siteData).forEach(function (id) {
+                        courses.push(Object.assign({ id: id }, siteData[id]));
+                    });
+                }
+            } else {
+                courseData.forEach(function (c) {
+                    if (c.year !== year) return;
+                    if (seenCourseIds.has(c.id)) return;              // mirrors renderDrill()
+                    if (currentUserCourses && currentUserCourses.indexOf(c.id) === -1) return;
+                    seenCourseIds.add(c.id);
+                    courses.push(c);
+                });
+            }
+
+            const seenTopicKeys = new Set();
+
+            courses.forEach(function (course) {
+                (course.terms || []).forEach(function (term, termIdx) {
+                    (term.topics || []).forEach(function (topic, topicIdx) {
+                        if (typeof topic !== 'string' || topic.indexOf('## ') === 0) return;
+
+                        const key = course.id + '::' + term.name + '::' + topic;
+                        if (seenTopicKeys.has(key)) return;
+                        seenTopicKeys.add(key);
+
+                        const base = {
+                            topic: topic,
+                            term: term.name,
+                            courseId: course.id,
+                            courseName: course.name,
+                            termIdx: termIdx,
+                            topicIdx: topicIdx,
+                            year: year
+                        };
+
+                        /* ---- the topic itself ---- */
+                        searchIndex.push(Object.assign({
+                            type: 'topic',
+                            icon: 'fa-bookmark',
+                            title: topic,
+                            sub: course.name + ' · ' + term.name,
+                            url: ''
+                        }, base));
+
+                        /* ---- documents ---- */
+                        (docData[topic] || []).forEach(function (d) {
+                            if (!d || !d.title || !d.url) return;
+                            searchIndex.push(Object.assign({
+                                type: 'document',
+                                icon: 'fa-file-alt',
+                                title: d.title,
+                                sub: 'Document · ' + topic,
+                                url: d.url
+                            }, base));
+                        });
+
+                        /* ---- videos ---- */
+                        (videoData[topic] || []).forEach(function (v) {
+                            if (!v || !v.title || !v.url) return;
+                            searchIndex.push(Object.assign({
+                                type: 'video',
+                                icon: 'fa-video',
+                                title: v.title,
+                                sub: 'Video · ' + topic,
+                                url: v.url
+                            }, base));
+                        });
+
+                        /* ---- audio ---- */
+                        (audioData[topic] || []).forEach(function (a) {
+                            if (!a || !a.title || !a.url) return;
+                            searchIndex.push(Object.assign({
+                                type: 'audio',
+                                icon: 'fa-headphones',
+                                title: a.title,
+                                sub: 'Audio · ' + topic,
+                                url: a.url
+                            }, base));
+                        });
+
+                        /* ---- quizzes ---- */
+                        const qz = quizData[topic];
+                        if (Array.isArray(qz)) {
+                            qz.forEach(function (q) {
+                                if (!q || !q.url) return;
+                                searchIndex.push(Object.assign({
+                                    type: 'quiz',
+                                    icon: 'fa-pencil-alt',
+                                    title: q.title || 'Quiz',
+                                    sub: 'Quiz · ' + topic,
+                                    url: q.url
+                                }, base));
+                            });
+                        }
+
+                        /* ---- past paper PDFs ---- */
+                        if (pdfLinks[topic]) {
+                            searchIndex.push(Object.assign({
+                                type: 'pastpaper',
+                                icon: 'fa-file-pdf',
+                                title: topic + ' — Past Paper',
+                                sub: 'Past Paper · ' + course.name,
+                                url: pdfLinks[topic]
+                            }, base));
+                        }
+                    });
+                });
+            });
+        }
+
+        /* ---- 2. SCOPE LABEL ---- */
+        function updateSearchScope() {
+            if (!currentUserYear) {
+                searchScopeEl.innerHTML =
+                    '<i class="fas fa-lock"></i> Please sign in to search your course topics.';
+                return;
+            }
+            const siteTxt = ((currentUserYear === 4 || currentUserYear === 6) && currentSite)
+                ? ' · Site: ' + currentSite : '';
+            const topicCount = searchIndex.filter(function (i) { return i.type === 'topic'; }).length;
+            const totalCount = searchIndex.length;
+            searchScopeEl.innerHTML =
+                '<i class="fas fa-filter"></i> Searching <strong>' + searchYearLabel(currentUserYear) +
+                '</strong> courses' + siteTxt + ' · ' + topicCount + ' topics · ' +
+                totalCount + ' resources indexed';
+        }
+
+        /* ---- 3. SCORING ---- */
+        function scoreSearchItem(item, q) {
+            const t = (item.title || '').toLowerCase();
+            let s = 0;
+            if (t === q) s += 120;
+            else if (t.indexOf(q) === 0) s += 70;
+            else if (t.indexOf(q) !== -1) s += 35;
+            if (item.type === 'topic') s += 12;
+            if (item.type === 'document') s += 4;
+            return s;
+        }
+
+        /* ---- 4. RUN THE SEARCH ---- */
+        function performSearch() {
+            if (!currentUserYear) {
+                searchResultsData = [];
+                searchResultsEl.innerHTML =
+                    '<div class="search-empty"><i class="fas fa-lock"></i>' +
+                    '<p>Please sign in to search your course topics, videos and documents.</p></div>';
+                return;
+            }
+
+            const raw = searchInputEl.value.trim();
+            if (!raw) {
+                searchResultsData = [];
+                renderSearchResults([]);
+                return;
+            }
+
+            const q = raw.toLowerCase();
+            const words = q.split(/\s+/).filter(Boolean);
+
+            let matches = searchIndex.filter(function (item) {
+                if (searchFilter !== 'all' && item.type !== searchFilter) return false;
+                const hay = (item.title + ' ' + item.sub + ' ' + item.topic + ' ' +
+                             item.term + ' ' + item.courseName).toLowerCase();
+                return words.every(function (w) { return hay.indexOf(w) !== -1; });
+            });
+
+            matches.sort(function (a, b) {
+                const diff = scoreSearchItem(b, q) - scoreSearchItem(a, q);
+                if (diff !== 0) return diff;
+                return (a.title || '').localeCompare(b.title || '');
+            });
+
+            searchResultsData = matches;
+            renderSearchResults(matches);
+        }
+
+        /* ---- 5. RENDER RESULTS ---- */
+        function renderSearchResults(items) {
+            if (!currentUserYear) {
+                searchResultsEl.innerHTML =
+                    '<div class="search-empty"><i class="fas fa-lock"></i>' +
+                    '<p>Please sign in to search your course topics, videos and documents.</p></div>';
+                return;
+            }
+
+            if (!items || items.length === 0) {
+                const q = searchInputEl.value.trim();
+                searchResultsEl.innerHTML = q
+                    ? '<div class="search-empty"><i class="fas fa-search-minus"></i>' +
+                      '<p>No results for “' + escHtml(q) + '”.</p>' +
+                      '<p style="font-size:.85rem;margin-top:.3rem;">Try a shorter keyword, or check a different filter.</p></div>'
+                    : '<div class="search-empty"><i class="fas fa-lightbulb"></i>' +
+                      '<p>Start typing to search your ' + searchYearLabel(currentUserYear) +
+                      ' topics, videos, documents, audio and quizzes.</p></div>';
+                return;
+            }
+
+            const capped = items.slice(0, SEARCH_MAX_RESULTS);
+            const groups = {};
+            capped.forEach(function (item, i) {
+                if (!groups[item.type]) groups[item.type] = [];
+                groups[item.type].push(i);
+            });
+
+            let html = '';
+            SEARCH_GROUPS.forEach(function (g) {
+                const idxs = groups[g.key];
+                if (!idxs || !idxs.length) return;
+                html += '<div class="search-group">' +
+                        '<div class="search-group-title"><i class="fas ' + g.icon + '"></i> ' +
+                        g.label + ' <span class="count">' + idxs.length + '</span></div>';
+                idxs.forEach(function (i) {
+                    const it = searchResultsData[i];
+                    html += '<div class="search-item" data-index="' + i + '">' +
+                            '<span class="si-icon"><i class="fas ' + (it.icon || g.icon) + '"></i></span>' +
+                            '<span class="si-body">' +
+                              '<span class="si-title">' + escHtml(it.title) + '</span>' +
+                              '<span class="si-sub">' + escHtml(it.sub) + '</span>' +
+                            '</span>' +
+                            '<span class="si-go"><i class="fas fa-arrow-right"></i></span>' +
+                            '</div>';
+                });
+                html += '</div>';
+            });
+
+            if (items.length > capped.length) {
+                html += '<p class="search-more">Showing first ' + capped.length + ' of ' +
+                        items.length + ' results — keep typing to narrow down.</p>';
+            }
+
+            searchResultsEl.innerHTML = html;
+        }
+
+        /* ---- 6. OPEN / CLOSE ---- */
+        function openSearch() {
+            searchOverlayEl.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            if (currentUserYear && searchIndex.length === 0) buildSearchIndex();
+            updateSearchScope();
+            performSearch();
+            setTimeout(function () { try { searchInputEl.focus(); } catch (e) {} }, 60);
+        }
+
+        function closeSearch() {
+            searchOverlayEl.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        /* ---- 7. OPEN VIDEO (handles YouTube / Drive / internal video.html) ---- */
+        function openSearchVideo(rawUrl, rawTitle, fallbackTopic) {
+            if (!rawUrl) return;
+            if (/^https?:\/\//i.test(rawUrl) && rawUrl.indexOf('video.html') === -1) {
+                window.open(rawUrl, '_blank', 'noopener');
+                return;
+            }
+            let topicKey = null;
+            const m = rawUrl.match(/video\.html\?topic=([^&]+)/);
+            if (m) topicKey = decodeURIComponent(m[1]);
+            if (!topicKey && TOPIC_MAP[rawTitle]) topicKey = TOPIC_MAP[rawTitle];
+            if (!topicKey) topicKey = fallbackTopic;
+            window.open('video.html?topic=' + encodeURIComponent(topicKey) + '&start=0', '_blank', 'noopener');
+        }
+
+        /* ---- 8. RESULT CLICK HANDLER ---- */
+        function handleSearchResultClick(item) {
+            if (!item) return;
+
+            if (item.type === 'topic') {
+                closeSearch();
+                renderDrill(item.courseId, item.termIdx, item.topicIdx);
+                setTimeout(function () {
+                    const sec = document.getElementById('courses');
+                    if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 60);
+                return;
+            }
+
+            if (item.type === 'video') {
+                openSearchVideo(item.url, item.title, item.topic);
+                return;
+            }
+
+            if (item.type === 'pastpaper') {
+                closeSearch();
+                showPpqPopup(item.topic, item.url, htmlAnsweredLinks[item.topic] || '#');
+                return;
+            }
+
+            // document / audio / quiz → open the stored link
+            if (item.url) window.open(item.url, '_blank', 'noopener');
+        }
+
+        /* ---- 9. WIRING ---- */
+        if (searchNavBtnEl) {
+            searchNavBtnEl.addEventListener('click', openSearch);
+        }
+        if (closeSearchBtnEl) {
+            closeSearchBtnEl.addEventListener('click', closeSearch);
+        }
+        if (searchOverlayEl) {
+            searchOverlayEl.addEventListener('click', function (e) {
+                if (e.target === searchOverlayEl) closeSearch();
+            });
+        }
+
+        if (searchInputEl) {
+            let searchTimer = null;
+            searchInputEl.addEventListener('input', function () {
+                clearTimeout(searchTimer);
+                searchTimer = setTimeout(performSearch, 110);
+            });
+            searchInputEl.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter') {
+                    clearTimeout(searchTimer);
+                    performSearch();
+                    const first = searchResultsEl.querySelector('.search-item');
+                    if (first) first.click();
+                }
+            });
+        }
+
+        if (searchFiltersEl) {
+            searchFiltersEl.addEventListener('click', function (e) {
+                const chip = e.target.closest('.search-chip');
+                if (!chip) return;
+                searchFiltersEl.querySelectorAll('.search-chip').forEach(function (c) {
+                    c.classList.remove('active');
+                });
+                chip.classList.add('active');
+                searchFilter = chip.dataset.filter || 'all';
+                performSearch();
+            });
+        }
+
+        if (searchResultsEl) {
+            searchResultsEl.addEventListener('click', function (e) {
+                const el = e.target.closest('.search-item');
+                if (!el) return;
+                const idx = parseInt(el.dataset.index, 10);
+                handleSearchResultClick(searchResultsData[idx]);
+            });
+        }
+
+        // Ctrl / Cmd + K toggles search, Escape closes it
+        document.addEventListener('keydown', function (e) {
+            if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K')) {
+                e.preventDefault();
+                if (searchOverlayEl.classList.contains('active')) closeSearch();
+                else openSearch();
+            }
+            if (e.key === 'Escape' && searchOverlayEl.classList.contains('active')) {
+                closeSearch();
+            }
+        });
+
         console.log('✅ ToToZ — In-app YouTube player loaded!');
         console.log('🎬 Click any video in the video list to watch it inside the app.');
         console.log('📝 Multiple quizzes per topic now supported via the Quiz popup.');
+        console.log('🔍 Search is live — header button or Ctrl/Cmd + K. Results are year-scoped.');
         console.log('ℹ️ If topics become unclickable, check the browser console (F12) for errors.');
     </script>
 </body>
