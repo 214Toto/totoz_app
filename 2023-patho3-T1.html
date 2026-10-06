@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2023 Pathology Test 1 – 3rd Year</title>
+    <style>
+        :root {
+            --primary: #1a6b6b;
+            --accent: #2ea8a0;
+            --dark: #0f2a2a;
+            --light: #f4f8f7;
+            --radius: 12px;
+            --shadow: 0 4px 14px rgba(0, 30, 30, 0.08);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #edf3f2;
+            color: var(--dark);
+            min-height: 100vh;
+            padding-top: 72px;
+        }
+        header {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            background: linear-gradient(145deg, var(--primary), var(--dark));
+            color: #fff; padding: 0.6rem 0;
+            box-shadow: 0 4px 18px rgba(0, 20, 20, 0.25);
+        }
+        .header-inner {
+            max-width: 1000px; margin: 0 auto; padding: 0 1.5rem;
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 0.3rem;
+        }
+        .logo { display: flex; align-items: center; gap: 0.6rem; }
+        .logo i { font-size: 1.5rem; color: #8dd9d4; }
+        .logo h1 { font-size: 1.15rem; font-weight: 700; }
+        .badge {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 0.2rem 1rem; border-radius: 40px;
+            font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+            color: #b3e6e0;
+        }
+        .container { max-width: 920px; margin: 0 auto; padding: 0 1.2rem 2.5rem; }
+        .tab-bar { display: flex; gap: 0.5rem; margin: 0.5rem 0 1.5rem 0; flex-wrap: wrap; }
+        .tab-btn {
+            background: #dce8e8; border: none; padding: 0.5rem 1.8rem;
+            border-radius: 40px; font-weight: 600; font-size: 0.95rem;
+            color: var(--dark); cursor: pointer; transition: 0.2s;
+        }
+        .tab-btn:hover { background: #c0d6d6; }
+        .tab-btn.active {
+            background: var(--primary); color: #fff;
+            box-shadow: 0 2px 10px rgba(26, 107, 107, 0.25);
+        }
+        .tab-panel { display: block; }
+        .tab-panel.hidden { display: none; }
+        .section-title {
+            font-size: 1.25rem; font-weight: 700; color: var(--primary);
+            margin: 0 0 0.8rem 0; padding-bottom: 0.4rem;
+            border-bottom: 3px solid rgba(26, 107, 107, 0.18);
+            display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;
+        }
+        .section-title .count {
+            font-size: 0.7rem; font-weight: 600; background: var(--primary);
+            color: #fff; border-radius: 40px; padding: 0 0.7rem; line-height: 1.7;
+        }
+        .section-subtitle { color: #4f6e6e; font-size: 0.9rem; margin-bottom: 1rem; }
+        .question {
+            background: #ffffff; border-radius: var(--radius);
+            padding: 1.1rem 1.2rem 0.2rem 1.2rem; margin-bottom: 1rem;
+            box-shadow: var(--shadow); border: 1px solid rgba(26, 107, 107, 0.05);
+        }
+        .question .q-badge {
+            display: inline-block; background: var(--primary); color: #fff;
+            border-radius: 40px; padding: 0 0.65rem; font-size: 0.7rem;
+            font-weight: 700; line-height: 1.6; margin-right: 0.4rem;
+        }
+        .question p { font-weight: 600; font-size: 0.97rem; margin-bottom: 0.4rem; color: var(--dark); }
+        .options label {
+            display: block; background: #fafcfc; border: 1px solid #dde8e8;
+            border-radius: 7px; padding: 0.4rem 0.85rem; margin-top: 0.4rem;
+            cursor: pointer; transition: all 0.15s; font-weight: 450; font-size: 0.92rem;
+        }
+        .options label:hover { background: #e8f5f4; border-color: var(--accent); }
+        .options input[type="radio"] { margin-right: 0.5rem; accent-color: var(--primary); }
+        .question-feedback { margin-top: 0.8rem; padding: 0.4rem 0 0.1rem 0; border-top: 1px dashed #dce6e6; }
+        .answer-block strong { display: block; margin-bottom: 3px; color: var(--primary); font-size: 0.78rem; text-transform: uppercase; }
+        .answer-list { display: flex; flex-direction: column; gap: 2px; }
+        .answer-item {
+            padding: 4px 10px; border-radius: 5px; border: 1px solid #e4edec;
+            background: #ffffff; font-weight: 500; font-size: 0.88rem;
+        }
+        .answer-correct { background: #e8f7ef; border-color: #a8d8c0; color: #0a4f3a; }
+        .answer-wrong { background: #fde9ea; border-color: #f5b8b8; color: #8a1f2b; }
+        .user-choice { outline: 2px dashed rgba(0, 0, 0, 0.06); }
+        .explanation {
+            margin-top: 5px; padding: 8px 13px; border-radius: 7px;
+            background: #f0f8f6; color: #065f4a; font-size: 0.88rem;
+            line-height: 1.55; border-left: 4px solid var(--accent);
+        }
+        .explanation.wrong { background: #fdf1f1; color: #7a1f1f; border-left-color: #e68080; }
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            color: #fff; border: none; padding: 0.55rem 1.8rem;
+            border-radius: var(--radius); font-weight: 600; font-size: 0.95rem;
+            cursor: pointer; transition: transform 0.15s, box-shadow 0.2s;
+            box-shadow: 0 4px 14px rgba(26, 107, 107, 0.25);
+        }
+        .btn:hover { transform: scale(1.02); box-shadow: 0 6px 24px rgba(26, 107, 107, 0.32); }
+        .btn:active { transform: scale(0.96); }
+        .btn-sm {
+            padding: 0.35rem 1.1rem; font-size: 0.82rem;
+            border-radius: 8px; margin-top: 0.5rem;
+        }
+        .submit-wrap { text-align: center; margin: 1.5rem 0 1.8rem; }
+        .result {
+            margin-top: 1.5rem; padding: 1.5rem 1.5rem 0.8rem;
+            background: #eaf6f4; border-radius: var(--radius);
+            text-align: center; display: none; border: 1px solid #b8dbd6;
+        }
+        .result h3 { font-size: 1.1rem; font-weight: 600; color: var(--dark); }
+        .score { font-size: 2.4rem; font-weight: 800; color: var(--primary); margin: 0.1rem 0 0.2rem; }
+        .text-muted { color: #4f6e6e; font-size: 0.9rem; }
+        .hidden { display: none !important; }
+        .tf-options { display: flex; gap: 1.5rem; margin-top: 0.4rem; }
+        .tf-options label {
+            display: flex; align-items: center; gap: 0.35rem;
+            background: #fafcfc; border: 1px solid #dde8e8;
+            border-radius: 7px; padding: 0.35rem 1.2rem;
+            cursor: pointer; transition: all 0.15s; font-weight: 500; font-size: 0.92rem;
+        }
+        .tf-options label:hover { background: #e8f5f4; border-color: var(--accent); }
+        .tf-options input[type="radio"] { accent-color: var(--primary); }
+        .tf-statement {
+            padding: 0.5rem 0.7rem; border-bottom: 1px solid #eef4f4;
+            font-size: 0.93rem;
+        }
+        .tf-statement:last-child { border-bottom: none; }
+        .tf-statement .stmt-text { font-weight: 500; }
+        .tf-feedback { margin-top: 0.3rem; padding: 0.4rem 0.7rem; border-radius: 6px; font-size: 0.88rem; }
+        .tf-feedback.correct { background: #e8f7ef; color: #0a4f3a; border-left: 3px solid #1a7a4a; }
+        .tf-feedback.incorrect { background: #fde9ea; color: #8a1f2b; border-left: 3px solid #b33a3a; }
+        .tf-feedback.missed { background: #fff8e6; color: #7a5a00; border-left: 3px solid #e6b800; }
+        .essay-answer {
+            margin-top: 0.8rem; padding: 1rem 1.2rem;
+            background: #f0f8f6; border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            font-size: 0.92rem; line-height: 1.6;
+            display: none;
+        }
+        .essay-answer.show { display: block; }
+        .essay-answer h4 { color: var(--primary); margin-bottom: 0.4rem; font-size: 0.95rem; }
+        .essay-answer ul, .essay-answer ol { margin-left: 1.2rem; margin-bottom: 0.5rem; }
+        .essay-answer li { margin-bottom: 0.2rem; }
+        @media (max-width: 700px) {
+            body { padding-top: 68px; }
+            .logo h1 { font-size: 0.95rem; }
+            .header-inner { padding: 0 1rem; flex-direction: column; align-items: stretch; gap: 0.2rem; }
+            .badge { align-self: flex-start; }
+            .question { padding: 0.9rem 0.9rem 0.1rem 0.9rem; }
+            .section-title { font-size: 1.05rem; }
+            .score { font-size: 2rem; }
+            .btn { padding: 0.5rem 1.2rem; font-size: 0.85rem; }
+            .tab-btn { padding: 0.4rem 1.2rem; font-size: 0.85rem; }
+            .tf-options { flex-direction: column; gap: 0.3rem; }
+        }
+        @media (max-width: 420px) {
+            .logo h1 { font-size: 0.8rem; }
+            .options label { font-size: 0.85rem; padding: 0.35rem 0.65rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-inner">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+                <h1>2023 Pathology Test 1 – 3rd Year</h1>
+            </div>
+            <span class="badge"><i class="fas fa-pencil-alt"></i> &nbsp;All Sections</span>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+
+            <div class="tab-bar">
+                <button class="tab-btn active" data-target="A">✅ Section A – True/False</button>
+                <button class="tab-btn" data-target="B">📝 Section B – MCQs</button>
+                <button class="tab-btn" data-target="C">📖 Section C – Short Notes</button>
+                <button class="tab-btn" data-target="D">📝 Section D – Long Essays</button>
+            </div>
+
+            <!-- ==================== SECTION A ==================== -->
+            <div id="panel-A" class="tab-panel">
+                <div class="section-title">
+                    <i class="fas fa-check-double"></i> Section A – True / False
+                    <span class="count" id="count-A">0</span>
+                </div>
+                <p class="section-subtitle">Analyse each statement and indicate whether it is <strong>True</strong> or <strong>False</strong>. Then click <strong>Submit All True/False</strong> below.</p>
+                <form id="form-A">
+                    <div id="container-A"></div>
+                    <div class="submit-wrap">
+                        <button type="button" class="btn" onclick="submitSectionA()">
+                            <i class="fas fa-check-circle"></i> Submit All True/False
+                        </button>
+                    </div>
+                </form>
+                <div class="result" id="result-A">
+                    <h3><i class="fas fa-chart-simple"></i> Your Score</h3>
+                    <div class="score" id="score-A">0</div>
+                    <p class="text-muted">Review the feedback below each statement.</p>
+                </div>
+            </div>
+
+            <!-- ==================== SECTION B ==================== -->
+            <div id="panel-B" class="tab-panel hidden">
+                <div class="section-title">
+                    <i class="fas fa-list-ul"></i> Section B – Multiple Choice Questions
+                    <span class="count" id="count-B">0</span>
+                </div>
+                <p class="section-subtitle">Select the best answer for each question, then click <strong>Submit All MCQs</strong> below.</p>
+                <form id="form-B">
+                    <div id="container-B"></div>
+                    <div class="submit-wrap">
+                        <button type="button" class="btn" onclick="submitSectionB()">
+                            <i class="fas fa-check-circle"></i> Submit All MCQs
+                        </button>
+                    </div>
+                </form>
+                <div class="result" id="result-B">
+                    <h3><i class="fas fa-chart-simple"></i> Your Score</h3>
+                    <div class="score" id="score-B">0</div>
+                    <p class="text-muted">Review the feedback below each question.</p>
+                </div>
+            </div>
+
+            <!-- ==================== SECTION C ==================== -->
+            <div id="panel-C" class="tab-panel hidden">
+                <div class="section-title">
+                    <i class="fas fa-book-open"></i> Section C – Short Notes
+                    <span class="count" id="count-C">0</span>
+                </div>
+                <p class="section-subtitle">Click <strong>Show Answer</strong> to reveal the model answer for each question.</p>
+                <div id="container-C"></div>
+            </div>
+
+            <!-- ==================== SECTION D ==================== -->
+            <div id="panel-D" class="tab-panel hidden">
+                <div class="section-title">
+                    <i class="fas fa-pen-fancy"></i> Section D – Long Essays
+                    <span class="count" id="count-D">0</span>
+                </div>
+                <p class="section-subtitle">Click <strong>Show Answer</strong> to reveal the model answer for each question.</p>
+                <div id="container-D"></div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+    /* =====================================================================
+       SECTION A — TRUE / FALSE (20 questions)
+       ===================================================================== */
+    const sectionA = [
+    {
+        q: `Causes of male infertility include:`,
+        statements: [
+            { text: `Prostatectomy`, correct: true, expl: `Prostatectomy can cause retrograde ejaculation or damage to nerves, leading to infertility.` },
+            { text: `Diabetes mellitus`, correct: true, expl: `Diabetes can cause erectile dysfunction and retrograde ejaculation, leading to infertility.` },
+            { text: `Testicular cancer`, correct: true, expl: `Testicular cancer and its treatment (chemotherapy, radiation) can impair fertility.` },
+            { text: `Prostatic hyperplasia`, correct: false, expl: `Benign prostatic hyperplasia is not a direct cause of infertility, though it can cause urinary symptoms.` },
+            { text: `Exposure to radiation`, correct: true, expl: `Radiation exposure can damage spermatogenesis and cause infertility.` }
+        ]
+    },
+    {
+        q: `The following are germ cell tumors:`,
+        statements: [
+            { text: `Granulosa cell tumor`, correct: false, expl: `Granulosa cell tumor is a sex cord-stromal tumor, not a germ cell tumor.` },
+            { text: `Seminoma`, correct: true, expl: `Seminoma is a germ cell tumor.` },
+            { text: `Embryonal carcinoma`, correct: true, expl: `Embryonal carcinoma is a germ cell tumor.` },
+            { text: `Teratoma`, correct: true, expl: `Teratoma is a germ cell tumor.` },
+            { text: `Leydig cell tumour`, correct: false, expl: `Leydig cell tumor is a sex cord-stromal tumor.` }
+        ]
+    },
+    {
+        q: `Male hypogonadism:`,
+        statements: [
+            { text: `May be caused by bilateral orchitis`, correct: true, expl: `Bilateral orchitis (e.g., mumps) can damage the testes and cause hypogonadism.` },
+            { text: `Can occur in prostate cancer therapy`, correct: true, expl: `Androgen deprivation therapy for prostate cancer causes hypogonadism.` },
+            { text: `Can cause raised gonadotrophins`, correct: true, expl: `Primary hypogonadism causes elevated FSH and LH due to loss of negative feedback.` },
+            { text: `May present with azoospermia`, correct: true, expl: `Hypogonadism can cause azoospermia (absence of sperm in semen).` },
+            { text: `Occurs in varicocele`, correct: true, expl: `Varicocele is associated with impaired testicular function and hypogonadism.` }
+        ]
+    },
+    {
+        q: `Teratomas:`,
+        statements: [
+            { text: `May be solid or cystic`, correct: true, expl: `Teratomas can be solid or cystic (e.g., dermoid cyst).` },
+            { text: `Are mixed tumours`, correct: true, expl: `Teratomas contain tissues from more than one germ layer, so they are mixed tumors.` },
+            { text: `Are always benign`, correct: false, expl: `Teratomas can be benign (mature) or malignant (immature).` },
+            { text: `May be malignant`, correct: true, expl: `Immature teratomas are malignant.` },
+            { text: `Prognosis is excellent`, correct: false, expl: `Prognosis depends on the type; malignant teratomas have a poorer prognosis.` }
+        ]
+    },
+    {
+        q: `The following is TRUE about nodular hyperplasia:`,
+        statements: [
+            { text: `Precedes cancer of prostate`, correct: false, expl: `BPH does not typically precede prostate cancer; they are distinct entities.` },
+            { text: `The glands are enlarged`, correct: true, expl: `BPH causes enlargement of the prostate glands.` },
+            { text: `May cause urethral obstruction`, correct: true, expl: `BPH can cause urethral obstruction and urinary symptoms.` },
+            { text: `Is hormone dependent`, correct: true, expl: `BPH is dependent on androgens (dihydrotestosterone).` },
+            { text: `None of the above`, correct: false, expl: `Options b, c, and d are true.` }
+        ]
+    },
+    {
+        q: `Cancer of prostate:`,
+        statements: [
+            { text: `Majority of cases are asymptomatic`, correct: true, expl: `Early prostate cancer is often asymptomatic.` },
+            { text: `Is hormone dependent`, correct: true, expl: `Prostate cancer is androgen-dependent.` },
+            { text: `Orchidectomy may be a treatment option`, correct: true, expl: `Bilateral orchidectomy reduces androgen levels and is a treatment option.` },
+            { text: `Commonly arises from peripheral zone`, correct: true, expl: `Prostate cancer most commonly arises in the peripheral zone.` },
+            { text: `Is common seen in men below 20 years`, correct: false, expl: `Prostate cancer is rare in men under 40; it is most common in older men.` }
+        ]
+    },
+    {
+        q: `Prostatic specific antigen (PSA):`,
+        statements: [
+            { text: `Once elevated above normal is diagnostic of cancer`, correct: false, expl: `PSA can be elevated in BPH, prostatitis, and other conditions, not just cancer.` },
+            { text: `May be used to diagnose metastatic disease`, correct: true, expl: `PSA can help assess tumor burden and metastatic disease.` },
+            { text: `Is produced only by malignant cells`, correct: false, expl: `PSA is produced by normal prostate epithelial cells as well as malignant ones.` }
+        ]
+    },
+    {
+        q: `Cryptorchidism:`,
+        statements: [
+            { text: `Diagnosis may be made at age 40 years`, correct: false, expl: `Cryptorchidism is usually diagnosed in infancy or childhood.` },
+            { text: `No treatment is available`, correct: false, expl: `Treatment (orchiopexy) is available and recommended.` },
+            { text: `May give rise to nodular hyperplasia`, correct: false, expl: `Cryptorchidism is not associated with BPH.` },
+            { text: `May cause chronic urinary retention`, correct: false, expl: `Cryptorchidism does not cause urinary retention.` },
+            { text: `Is the major of infertility in females`, correct: false, expl: `Cryptorchidism is a male condition.` }
+        ]
+    },
+    {
+        q: `Seminoma:`,
+        statements: [
+            { text: `Is a germ cell tumour`, correct: true, expl: `Seminoma is a germ cell tumor.` },
+            { text: `Is a tumour of prostate`, correct: false, expl: `Seminoma is a testicular tumor, not prostatic.` },
+            { text: `Is a mixed tumour`, correct: false, expl: `Seminoma is a pure germ cell tumor, not mixed.` },
+            { text: `Is a teratoma`, correct: false, expl: `Seminoma is distinct from teratoma.` },
+            { text: `Is a common cancer in males`, correct: true, expl: `Seminoma is a common testicular cancer in young men.` }
+        ]
+    },
+    {
+        q: `Complications of prostatic hyperplasia include:`,
+        statements: [
+            { text: `Hydronephrosis`, correct: true, expl: `BPH can cause urinary obstruction leading to hydronephrosis.` },
+            { text: `Cholelithiasis`, correct: false, expl: `Cholelithiasis is not a complication of BPH.` },
+            { text: `Bilharzia`, correct: false, expl: `Bilharzia is a parasitic infection, not a complication of BPH.` },
+            { text: `Prostatic cancer`, correct: false, expl: `BPH does not directly cause prostate cancer.` },
+            { text: `All of the above`, correct: false, expl: `Only hydronephrosis is a recognized complication.` }
+        ]
+    },
+    {
+        q: `A 4 year old boy presents with swollen parotid glands fever and swollen testicles. What is the most likely diagnosis?`,
+        statements: [
+            { text: `Syphilis of testis`, correct: false, expl: `Syphilis is rare in a 4-year-old and does not cause parotid swelling.` },
+            { text: `Mumps orchitis`, correct: true, expl: `Mumps causes parotid swelling and can cause orchitis.` },
+            { text: `Gonorrhoea epididymitis`, correct: false, expl: `Gonorrhoea is rare in a 4-year-old and does not cause parotid swelling.` },
+            { text: `Non-specific infection`, correct: false, expl: `Non-specific infection does not cause parotid swelling.` },
+            { text: `All of the above`, correct: false, expl: `Only mumps orchitis fits the clinical picture.` }
+        ]
+    },
+    {
+        q: `What are the other causative organisms in Question 13?`,
+        statements: [
+            { text: `Syphilis`, correct: false, expl: `Syphilis is not a common cause of orchitis in children.` },
+            { text: `Mumps virus`, correct: true, expl: `Mumps virus is the causative organism.` },
+            { text: `Gonorrhoea`, correct: false, expl: `Gonorrhoea is not the cause in this case.` },
+            { text: `Staphylococcous aureus`, correct: false, expl: `Staph aureus is not the cause of mumps orchitis.` },
+            { text: `All of the above`, correct: false, expl: `Only mumps virus is correct.` }
+        ]
+    },
+    {
+        q: `A 2year old boy presents with chorde and urinates in the sitting position ventrally. What is the likely diagnosis?`,
+        statements: [
+            { text: `Hypospadias`, correct: true, expl: `Hypospadias is a congenital condition where the urethral opening is on the ventral side of the penis.` },
+            { text: `Epispadias`, correct: false, expl: `Epispadias is on the dorsal side of the penis.` },
+            { text: `Urethral strictures`, correct: false, expl: `Urethral strictures do not present with chordee and ventral urination.` },
+            { text: `Can be treated by surgically`, correct: true, expl: `Hypospadias is treated surgically.` },
+            { text: `None of the above`, correct: false, expl: `Options a and d are correct.` }
+        ]
+    },
+    {
+        q: `Tumours of the penis:`,
+        statements: [
+            { text: `Are very common in neonates`, correct: false, expl: `Penile tumors are rare in neonates.` }
+        ]
+    },
+    {
+        q: `Regarding tumour markers:`,
+        statements: [
+            { text: `Lactate dehydrogenase is used to assess tumour burden`, correct: true, expl: `LDH is a marker for tumor burden, especially in seminoma.` },
+            { text: `α-FT is produced in high levels in yolk sac tumour`, correct: true, expl: `AFP is elevated in yolk sac tumors.` },
+            { text: `HCG is commonly seen in choriocarcinoma`, correct: true, expl: `hCG is elevated in choriocarcinoma.` },
+            { text: `Cannot be used be used to stage the tumour`, correct: false, expl: `Tumor markers can be used to help stage tumors.` },
+            { text: `None of the above`, correct: false, expl: `Options a, b, and c are true.` }
+        ]
+    },
+    {
+        q: `The following can be used for diagnosis and confirmation:`,
+        statements: [
+            { text: `Digital examination`, correct: true, expl: `Digital rectal examination is used for initial assessment.` },
+            { text: `Transrectal ultrasound scan`, correct: true, expl: `TRUS is used to visualize the prostate and guide biopsy.` },
+            { text: `CT scan, MRI`, correct: true, expl: `CT and MRI are used for staging and diagnosis.` },
+            { text: `PSA`, correct: true, expl: `PSA is used as a screening and monitoring tool.` },
+            { text: `Biopsy`, correct: true, expl: `Biopsy is the definitive diagnostic tool.` }
+        ]
+    },
+    {
+        q: `Prostatitis:`,
+        statements: [
+            { text: `Is commonly caused by bacterial infection`, correct: true, expl: `Bacterial prostatitis is common.` },
+            { text: `Is commonly caused by parasitic infection`, correct: false, expl: `Parasitic prostatitis is rare.` },
+            { text: `Is commonly caused by viral infection`, correct: false, expl: `Viral prostatitis is rare.` },
+            { text: `Can cause acute focal or diffuse suppurative inflammation`, correct: true, expl: `Acute bacterial prostatitis can cause suppurative inflammation.` },
+            { text: `Can be associated with infertility`, correct: true, expl: `Chronic prostatitis can affect fertility.` }
+        ]
+    },
+    {
+        q: `Testicular torsion:`,
+        statements: [
+            { text: `Is a common urological emergency`, correct: true, expl: `Testicular torsion is a common urological emergency.` },
+            { text: `Can lead to testicular swelling`, correct: true, expl: `Torsion causes swelling and pain.` },
+            { text: `Is associated with twisting of the veins and artery in the spermatic cord`, correct: true, expl: `Torsion involves twisting of the spermatic cord, compromising blood flow.` },
+            { text: `Can lead to permeant damage to the testis if surgery is not performed in the first 6hrs`, correct: true, expl: `Testicular damage occurs if surgery is delayed beyond 6 hours.` },
+            { text: `None of the above`, correct: false, expl: `Options a, b, c, and d are true.` }
+        ]
+    },
+    {
+        q: `Which of the following are None spermatic Non germ cell tumours`,
+        statements: [
+            { text: `Teratoma`, correct: false, expl: `Teratoma is a germ cell tumor.` },
+            { text: `Embryonal carcinoma`, correct: false, expl: `Embryonal carcinoma is a germ cell tumor.` },
+            { text: `Yolk sac tumour`, correct: false, expl: `Yolk sac tumor is a germ cell tumor.` },
+            { text: `Syncytiotrophoblast`, correct: false, expl: `Syncytiotrophoblast is part of germ cell tumors.` },
+            { text: `Seminoma`, correct: false, expl: `Seminoma is a germ cell tumor.` }
+        ]
+    },
+    {
+        q: `Which on the following are not vascular disorders of the testes`,
+        statements: [
+            { text: `Viral orchitis`, correct: true, expl: `Viral orchitis is an inflammatory condition, not vascular.` },
+            { text: `Prostatitis`, correct: true, expl: `Prostatitis is an inflammatory condition of the prostate, not a testicular vascular disorder.` },
+            { text: `Hematoccele`, correct: false, expl: `Hematocele is a vascular disorder (accumulation of blood).` },
+            { text: `Torsion`, correct: false, expl: `Torsion is a vascular disorder (compromised blood flow).` },
+            { text: `seminal vesiculitis`, correct: true, expl: `Seminal vesiculitis is an inflammatory condition, not a testicular vascular disorder.` }
+        ]
+    }
+    ];
+
+    /* =====================================================================
+       SECTION B — MCQs (30 questions)
+       ===================================================================== */
+    const sectionB = [
+    {
+        q: `Bartholin gland secrets its content into....`,
+        options: [`Vagina`, `Cervix`, `Vestibule`, `Endometrium`, `Labia majora`],
+        correct: `C`,
+        explanation: `Bartholin glands secrete their content into the vestibule of the vagina.`
+    },
+    {
+        q: `Super imposed infection in a Bartholin cyst may result into....`,
+        options: [`Formation of dysplastic cells`, `Formation of cystic fluid`, `Formation of Pus`, `Development of clear cell carcinoma`, `Development of VIN F`],
+        correct: `C`,
+        explanation: `Superimposed infection in a Bartholin cyst leads to the formation of pus (abscess).`
+    },
+    {
+        q: `A woman in her reproductive years comes complaining of pain on her external genitalian. On examinations, you discover a unilateral reddish patch on the left lower quadrant of the vestibule adjacent to the vaginal canal which is warm and tender to touching. The woman says, the pain has been there for the past one week. What could be the most probable diagnosis?`,
+        options: [`Pure Bartholin cyst`, `Extra mammary pagent disease`, `Superimposed Bartholin cystic infection`, `Vulva carcinoma in situ`, `Candidiasis`],
+        correct: `C`,
+        explanation: `The clinical picture of a warm, tender, unilateral reddish patch at the vestibule suggests an infected Bartholin cyst (abscess).`
+    },
+    {
+        q: `Which of the following HPV strains are most likely to cause warty neoplasms of the vulva skin?`,
+        options: [`HPV 16 and 11`, `HPV 31 and 6`, `HPV 6 and 33`, `HPV 11 and 6`, `HPV 18 and 33`],
+        correct: `D`,
+        explanation: `HPV types 6 and 11 are most commonly associated with warty neoplasms (condyloma acuminatum).`
+    },
+    {
+        q: `Which of the following statements are true about condyloma?`,
+        options: [`The koilocyte is characteristic malignant cell`, `Always progresses to cancer`, `Benign lesion which has a low risk of developing into carcinoma`, `It is as a result HPV 11, 31, 6 infections`, `HPV 18 can equally cause condyloma`],
+        correct: `C`,
+        explanation: `Condyloma is a benign lesion with a low risk of progression to carcinoma.`
+    },
+    {
+        q: `High risk HPV can be distinguished from low risk HPV by....`,
+        options: [`Looking at the viruses using electron microscope`, `Studying the viruses using light microscope`, `Assessing the type of lesion produced by the viruses`, `Doing DNA sequence`, `Using immunohistochemical stains`],
+        correct: `D`,
+        explanation: `High-risk and low-risk HPV are distinguished by DNA sequencing.`
+    },
+    {
+        q: `Which of the following has a low risk of developing into malignancy?`,
+        options: [`Lichen sclerosis`, `Condyloma`, `Lichen simplex chronicus`, `Extra mammary paget disease`, `Bartholin cyst`],
+        correct: `B`,
+        explanation: `Condyloma (genital warts) has a low risk of malignancy.`
+    },
+    {
+        q: `Which of the following statements are not correct?`,
+        options: [`Adenosis can be a precancerous lesion for squamous cell carcinoma`, `Adenosis is due to persistent of glandular cells on the lower 1/3 of the vagina`, `Adenosis cases increased in females exposed to DES in utero`, `Clear cell carcinoma develops from upper 2/3 of the vagina`, `Always, clear cell adenocarcinoma develops from adenosis lesion`],
+        correct: `E`,
+        explanation: `It is not always true that clear cell adenocarcinoma develops from adenosis.`
+    },
+    {
+        q: `Which of the following statements are correct?`,
+        options: [`About 2/3 of cancers from the lower vagina spread to the inguinal nodes`, `Cancers from 1/3 of the lower vagina spread to the iliac nodes`, `Cancers from 2/3 of the lower vagina spread to the iliac nodes`, `About 1/3 of cancers from upper vagina spread to the iliac nodes`, `Cancers from 1/3 upper vagina spread to the iliac nodes`],
+        correct: `A`,
+        explanation: `Cancers from the lower 2/3 of the vagina spread to the inguinal nodes.`
+    },
+    {
+        q: `The most critical portion of the female reproductive part which is vulnerable to HPV is`,
+        options: [`The vulva`, `The ectocervix`, `Endometrium`, `Squamous-Columnar junction`, `Squamous lining of the vagina`],
+        correct: `D`,
+        explanation: `The squamous-columnar junction is the most vulnerable area for HPV infection and cervical cancer.`
+    },
+    {
+        q: `The squamous columnar junction in a postmenopausal women is likely to be`,
+        options: [`Entropion`, `Ectropion`, `On the ectocervix`, `both A and B`, `None of the above`],
+        correct: `A`,
+        explanation: `In postmenopausal women, the SCJ recedes into the endocervical canal (entropion).`
+    },
+    {
+        q: `Loss of cytochrome C maybe as a result of`,
+        options: [`Destructions of P53 protein`, `Destructions of RB protein`, `Normal regulatory functions of P53 gene on abnormal cell`, `Normal regulatory functions of RB gene on abnormal cell`, `When BL2 protein is functions accordingly`],
+        correct: `C`,
+        explanation: `Loss of cytochrome C occurs when P53 functions normally to induce apoptosis in abnormal cells.`
+    },
+    {
+        q: `One of the advantages of High Risk HPV over immune suppressed individual is by`,
+        options: [`Expressing the lethal action of destroying BL2 protein`, `Promoting production of Bax protein`, `Inactivating both RB and BL2 proteins`, `Activating P53 and RB protein`, `Inactivating both P53 and RB proteins`],
+        correct: `E`,
+        explanation: `High-risk HPV inactivates both P53 and RB proteins, allowing uncontrolled cell proliferation.`
+    },
+    {
+        q: `The following precancerous lesions have high chance of developing into squamous cell carcinoma?`,
+        options: [`CIN II`, `CIN I`, `CIN III and CIN I`, `CIS T`, `SCC`],
+        correct: `A`,
+        explanation: `CIN II has a high chance of progressing to squamous cell carcinoma.`
+    },
+    {
+        q: `The low grade squamous intraepithelial lesion (LSIL) is a cytological reporting of precancerous lesion. Which of the following is a corresponding histological precancerous lesion to LSIL?`,
+        options: [`CIS`, `CIN III`, `SCC`, `Mild dysplasia and CIN I`, `Both CIN III and CIS`],
+        correct: `D`,
+        explanation: `LSIL corresponds histologically to mild dysplasia and CIN I.`
+    },
+    {
+        q: `A patient with a history of abdominal mass on the left lower quadrant, scan shows ovarian mass. Biopsy results shows dysplastic cells with signet rings. Special stain PAS is positive. Which of the following statements below are correct about this tumour?`,
+        options: [`The tumour is more of a germ cell origin`, `The tumour has a high possibility of originating from sex cord tumours`, `The tumour is more of epithelial by origin`, `It is one of the commonest primary tumours of the sex cord origin`, `It is the commonest tumour of the sex cord origin`],
+        correct: `C`,
+        explanation: `Signet ring cells with PAS positivity suggest a mucinous epithelial ovarian tumor.`
+    },
+    {
+        q: `Female aged 30 with a clinical history of a tender mass which appears monthly during her menstruation period above the umbilical cord. When the Fine needle aspirate biopsy was done, it showed some normal endometrial cells. Which of the following statements is correct about this condition?`,
+        options: [`Adenocarcinoma originating from adenosis lesion`, `Patient has invasive cervical cancer which has spread to the nearest lymph nodes`, `Endometriosis is most probable diagnosis to this patient`, `Germ cell tumour is the most likely diagnosis`, `It is the squamous cell carcinoma originating from endometriosis lesion`],
+        correct: `C`,
+        explanation: `The clinical picture and presence of endometrial cells suggest endometriosis.`
+    },
+    {
+        q: `All the following tumours are sex cord tumours except...`,
+        options: [`Granulosa`, `Androblastoma`, `Thecoma-Fibroma`, `Gynandroblastoma`, `Endometrioid`],
+        correct: `E`,
+        explanation: `Endometrioid tumors are epithelial tumors, not sex cord tumors.`
+    },
+    {
+        q: `Some of the following are not epithelial type of tumours`,
+        options: [`Mucinous borderline tumour`, `Serous malignant tumour`, `Endometrioid benign tumour`, `Teratoma`, `Dysgerminoma and serous malignant tumour`],
+        correct: `D`,
+        explanation: `Teratoma is a germ cell tumor, not epithelial.`
+    },
+    {
+        q: `An expecting mother comes to the hospital with a history of vaginal bleeding in her third- trimester. On examinations you discover that the placenta overlies the cervical os. Which of the following statements are correct about this condition?`,
+        options: [`The most likely risk factor to this condition is scarring`, `The woman can still deliver normally with problems`, `The suitable mode of delivery is through vaginal canal`, `The condition above defines ectopic pregnancy`, `The above condition is also known as placenta previa`],
+        correct: `E`,
+        explanation: `Placenta overlying the cervical os is placenta previa.`
+    },
+    {
+        q: `Which one of the following is true about placenta accreta`,
+        options: [`The major cause of still birth`, `Placenta implants in the decidua wall`, `Placenta implants in the myometrium`, `Often results into death`, `Placenta overlie the cervix os`],
+        correct: `C`,
+        explanation: `Placenta accreta is the abnormal implantation of the placenta into the myometrium.`
+    },
+    {
+        q: `Which one of the following statements is not correct about pre-eclampsia?`,
+        options: [`Abnormality is in the maternal-fetal vascular interface in the placenta`, `There is fibrin necrosis in the placenta vessel`, `Seizures are rarely observed`, `There is loss of protein via urine`, `The key solution is to remove the placenta`],
+        correct: `C`,
+        explanation: `Seizures are characteristic of eclampsia, the severe form of pre-eclampsia.`
+    },
+    {
+        q: `About Pap smear`,
+        options: [`Cervical brush is used to collect endometrial cells`, `Spectrum is used to collect cells from the transformation zone`, `Pre- cancerous lesions cannot be detected`, `Can be done when someone is on her monthly periods`, `Used to screen dysplastic cells`],
+        correct: `E`,
+        explanation: `Pap smear is used to screen for dysplastic cells in the cervix.`
+    },
+    {
+        q: `Which of the following is the equivalent of CIS in cytology?`,
+        options: [`Low grade intraepithelial lesion`, `Atypical squamous cells of undetermined significance`, `High grade squamous intraepithelial lesion`, `Both A and B`, `None of the above`],
+        correct: `C`,
+        explanation: `CIS (Carcinoma in Situ) corresponds cytologically to High Grade Squamous Intraepithelial Lesion (HSIL).`
+    },
+    {
+        q: `A woman with a history of breast mass for 3 months. On examination, No nipple discharge, the mass not fixed or tender to touch. Mammography shows calcification. Biopsy results shows calcification and giant cells with dirty in the background. What could be the suitable diagnosis?`,
+        options: [`Lulular carcinoma in situ`, `Periductal mastitis`, `Ductal carcinoma`, `Acute mastitis`, `Fat necrosis`],
+        correct: `E`,
+        explanation: `The presence of calcification, giant cells, and dirty background is characteristic of fat necrosis.`
+    },
+    {
+        q: `A premenopausal women with a history of bloody nipple discharge, very small mass felt on palpitation. Using ultra sound guided FNA (Fine needle aspirate) the slide shows Fibrovascular tissue with both epithelial and myoepithelial cells. Which of the following is the most likely diagnosis?`,
+        options: [`Papillary carcinoma`, `Periductal mastitis`, `Ductal carcinoma`, `Lulular carcinoma`, `Intraductal papilloma`],
+        correct: `E`,
+        explanation: `Bloody nipple discharge with fibrovascular tissue and epithelial/myoepithelial cells suggests intraductal papilloma.`
+    },
+    {
+        q: `Which of the following type of carcinoma is detected accidentally?`,
+        options: [`DCIS`, `LCIS`, `Ductal carcinoma`, `Lulular carcinoma`, `Papillary carcinoma`],
+        correct: `B`,
+        explanation: `LCIS (Lobular Carcinoma in Situ) is often an incidental finding on biopsy.`
+    },
+    {
+        q: `A female patient aged 34 years old with a history of breast mass on the LOQ for 9 months which is tender whenever she is on her monthly periods. On examinations, the mass is well circumscribed, mobile and not fixed to underlying muscle. FNA biopsy shows ductal cells in honey-comb pattern, antler horn formation with no inflammatory cells in the background. Which of the following statement will be correct about this mass?`,
+        options: [`The patient is more likely to have fibrocystic disease`, `The mass is more likely to be Phyllodes tumor`, `Patient is likely to have breast cancer`, `Lulular carcinoma is the most likely type of cancer`, `The patient is more likely to have Fibroadenoma`],
+        correct: `E`,
+        explanation: `A well-circumscribed, mobile mass in a young woman with honey-comb ductal cells on FNA is classic for fibroadenoma.`
+    },
+    {
+        q: `A 36 years old female with a history of breast mass without any associated pain. On examination, the mass is 3 by 4 cm in size, none mobile and solitary. Tissue biopsy shows malignant cells, necrosis and dystrophic calcification at the center. NO microinvasion is observed. Which of the following statements are not correct about this lesion?`,
+        options: [`The mass is likely to be DCIS`, `Mostly, its comedo type of carcinoma in situ`, `The description favours LCIS`, `The mass is mostly likely to be papillary carcinoma`, `The description is for ductal carcinoma`],
+        correct: `C`,
+        explanation: `The description (necrosis, calcification, no microinvasion) favours DCIS (comedo type), not LCIS.`
+    },
+    {
+        q: `The following type of breast cancer cells lack E - cardherin`,
+        options: [`LCIS`, `DCIS`, `Mucinous Ductal carcinoma`, `Papillary Carcinoma`, `Lobular cell carcinoma`],
+        correct: `A`,
+        explanation: `Loss of E-cadherin is a hallmark of LCIS and lobular carcinoma.`
+    }
+    ];
+
+    /* =====================================================================
+       SECTION C — SHORT NOTES
+       ===================================================================== */
+    const sectionC = [
+    {
+        q: `Discuss ectopic pregnancy`,
+        answer: `<h4>Model Answer</h4>
+        <p>Ectopic pregnancy is the implantation of the fertilized ovum outside the uterine cavity. The most common site is the fallopian tube (tubal pregnancy), followed by the cervix, ovary, and abdominal cavity.</p>
+        <p><strong>Risk Factors:</strong> Previous pelvic inflammatory disease (salpingitis), previous ectopic pregnancy, tubal surgery, endometriosis, intrauterine device (IUD), and smoking.</p>
+        <p><strong>Clinical Features:</strong> Classic triad of amenorrhea (missed period), lower abdominal pain, and vaginal bleeding. If ruptured, it presents with sudden severe abdominal pain, shock, and signs of peritonitis.</p>
+        <p><strong>Diagnosis:</strong> Serum β-hCG (lower than expected for gestational age), transvaginal ultrasound (absence of intrauterine gestational sac, presence of adnexal mass), and laparoscopy.</p>
+        <p><strong>Complications:</strong> Tubal rupture, hemorrhage, shock, and death.</p>
+        <p><strong>Treatment:</strong> Medical management with methotrexate for unruptured cases; surgical management (laparoscopy or laparotomy) for ruptured or unstable cases.</p>`
+    },
+    {
+        q: `Discuss endometriosis`,
+        answer: `<h4>Model Answer</h4>
+        <p>Endometriosis is a condition characterized by the presence of functioning endometrial tissue (glands and stroma) outside the uterine cavity. Common sites include the ovaries, fallopian tubes, pelvic peritoneum, and rectovaginal septum.</p>
+        <p><strong>Pathogenesis:</strong> Retrograde menstruation (Sampson's theory), coelomic metaplasia, lymphatic/vascular dissemination, and immune dysfunction.</p>
+        <p><strong>Clinical Features:</strong> Dysmenorrhea (painful periods), dyspareunia (painful intercourse), chronic pelvic pain, infertility, and menstrual irregularities. Symptoms often worsen during menstruation.</p>
+        <p><strong>Gross Pathology:</strong> "Chocolate cysts" (endometriomas) on the ovaries, adhesions, and "powder-burn" lesions on the peritoneum.</p>
+        <p><strong>Microscopy:</strong> Endometrial glands and stroma, hemorrhage, and hemosiderin-laden macrophages.</p>
+        <p><strong>Complications:</strong> Infertility, ovarian cancer (endometrioid and clear cell types), and adhesions causing bowel obstruction.</p>
+        <p><strong>Treatment:</strong> Analgesics, hormonal therapy (oral contraceptives, progestins, GnRH agonists), and surgery (laparoscopic excision or hysterectomy).</p>`
+    },
+    {
+        q: `Briefly, List and define NSGCTs`,
+        answer: `<h4>Model Answer</h4>
+        <p>NSGCTs (Non-Seminomatous Germ Cell Tumors) are a group of testicular tumors that arise from primitive germ cells and do not have the classic histology of seminoma. They include:</p>
+        <ul>
+            <li><strong>Embryonal Carcinoma:</strong> A highly malignant tumor with pleomorphic cells, high mitotic rate, and frequent necrosis. It is associated with elevated AFP and hCG.</li>
+            <li><strong>Yolk Sac Tumor (Endodermal Sinus Tumor):</strong> Characterized by Schiller-Duval bodies and elevated AFP. It is the most common testicular tumor in infants.</li>
+            <li><strong>Choriocarcinoma:</strong> Composed of syncytiotrophoblasts and cytotrophoblasts. It produces high levels of hCG and is highly malignant with early hematogenous spread.</li>
+            <li><strong>Teratoma:</strong> Contains tissues from all three germ layers (ectoderm, mesoderm, endoderm). It may be mature (benign) or immature (malignant).</li>
+            <li><strong>Mixed Germ Cell Tumors:</strong> Contain more than one histologic type (e.g., embryonal carcinoma + teratoma). They are the most common NSGCTs.</li>
+        </ul>`
+    },
+    {
+        q: `Discuss clinical features of prostate cancer`,
+        answer: `<h4>Model Answer</h4>
+        <p>Prostate cancer is often asymptomatic in its early stages. When symptoms do occur, they may include:</p>
+        <ul>
+            <li><strong>Urinary Symptoms:</strong> Difficulty initiating urination, weak urinary stream, frequency, urgency, nocturia, and incomplete bladder emptying.</li>
+            <li><strong>Obstructive Symptoms:</strong> Urinary retention, dribbling, and hematuria.</li>
+            <li><strong>Metastatic Symptoms:</strong> Bone pain (especially back, hips, and pelvis), pathological fractures, spinal cord compression, and lower extremity edema.</li>
+            <li><strong>Digital Rectal Examination (DRE):</strong> Hard, irregular, nodular prostate with loss of median sulcus.</li>
+            <li><strong>Systemic Symptoms:</strong> Weight loss, fatigue, and anemia in advanced disease.</li>
+            <li><strong>PSA:</strong> Elevated prostate-specific antigen levels (though it can be elevated in BPH and prostatitis as well).</li>
+        </ul>`
+    }
+    ];
+
+    /* =====================================================================
+       SECTION D — LONG ESSAYS
+       ===================================================================== */
+    const sectionD = [
+    {
+        q: `Discuss the common congenital anomalies of penis development.`,
+        answer: `<h4>Model Answer</h4>
+        <p>Congenital anomalies of the penis include:</p>
+        <ul>
+            <li><strong>Hypospadias:</strong> The urethral opening is on the ventral (underside) of the penis. It is often associated with chordee (downward curvature of the penis). It is the most common congenital anomaly of the penis.</li>
+            <li><strong>Epispadias:</strong> The urethral opening is on the dorsal (top) side of the penis. It is less common than hypospadias and is often associated with bladder exstrophy.</li>
+            <li><strong>Chordee:</strong> A congenital downward curvature of the penis, often associated with hypospadias.</li>
+            <li><strong>Phimosis:</strong> Tightening of the foreskin that prevents retraction over the glans. It can be congenital or acquired.</li>
+            <li><strong>Paraphimosis:</strong> Retracted foreskin that cannot be pulled back over the glans, causing swelling and pain. It is a urologic emergency.</li>
+            <li><strong>Micropenis:</strong> An abnormally small penis, often due to hormonal deficiencies (e.g., hypogonadism).</li>
+            <li><strong>Aphallia:</strong> Complete absence of the penis (rare).</li>
+            <li><strong>Diphallia:</strong> Duplication of the penis (rare).</li>
+            <li><strong>Webbed Penis:</strong> A fold of skin connects the scrotum to the penis.</li>
+        </ul>`
+    },
+    {
+        q: `Discuss the risk factors and complications of prostate cancer`,
+        answer: `<h4>Model Answer</h4>
+        <p><strong>Risk Factors:</strong></p>
+        <ul>
+            <li><strong>Age:</strong> Risk increases significantly after age 50; most cases occur in men over 65.</li>
+            <li><strong>Race/Ethnicity:</strong> African-American men have a higher risk and more aggressive disease.</li>
+            <li><strong>Family History:</strong> First-degree relatives with prostate cancer increase risk.</li>
+            <li><strong>Genetics:</strong> Mutations in BRCA1, BRCA2, and HOXB13 increase risk.</li>
+            <li><strong>Hormones:</strong> Androgens (testosterone) play a role in prostate cancer development.</li>
+            <li><strong>Diet:</strong> High-fat diet, especially red meat, may increase risk.</li>
+            <li><strong>Obesity:</strong> Associated with increased risk of aggressive prostate cancer.</li>
+            <li><strong>Smoking:</strong> May increase risk of aggressive disease.</li>
+        </ul>
+        <p><strong>Complications:</strong></p>
+        <ul>
+            <li><strong>Urinary Obstruction:</strong> Difficulty urinating, retention, hydronephrosis, and renal failure.</li>
+            <li><strong>Metastasis:</strong> Most commonly to bones (osteoblastic lesions), lungs, liver, and lymph nodes.</li>
+            <li><strong>Bone Pain and Fractures:</strong> Due to bone metastases.</li>
+            <li><strong>Spinal Cord Compression:</strong> From vertebral metastases.</li>
+            <li><strong>Anemia:</strong> Due to bone marrow involvement.</li>
+            <li><strong>Lymphedema:</strong> Due to pelvic lymph node involvement.</li>
+            <li><strong>Death:</strong> If untreated or advanced.</li>
+        </ul>`
+    },
+    {
+        q: `Breast cancer is one of the cause of mortality among Zambian women. The major reason for this is due to late or wrong diagnosis. Suggest any possible way you think can be effective in breast cancer screening. Give any necessary examples to support your answer.`,
+        answer: `<h4>Model Answer</h4>
+        <p>Effective breast cancer screening strategies for Zambia include:</p>
+        <ul>
+            <li><strong>Public Awareness Campaigns:</strong> Educating women about breast self-examination (BSE) and the importance of early detection. Use local languages and community leaders.</li>
+            <li><strong>Clinical Breast Examination (CBE):</strong> Training healthcare workers to perform CBE during routine visits. This is cost-effective and feasible in low-resource settings.</li>
+            <li><strong>Mammography:</strong> Establishing mammography centers in urban areas for women over 40. However, this is expensive and may not be accessible to all.</li>
+            <li><strong>Ultrasound:</strong> Useful for women with dense breast tissue and for evaluating palpable masses.</li>
+            <li><strong>Mobile Screening Units:</strong> Bringing screening services to rural areas. Example: Mobile mammography vans.</li>
+            <li><strong>Telemedicine:</strong> Using telemedicine to connect rural healthcare workers with specialists for consultation and interpretation of imaging.</li>
+            <li><strong>National Screening Guidelines:</strong> Developing and implementing age-specific screening guidelines (e.g., annual CBE from age 20, mammography from age 40).</li>
+            <li><strong>Training of Healthcare Workers:</strong> Continuous medical education on breast cancer screening and diagnosis.</li>
+            <li><strong>Community Health Workers:</strong> Training community health workers to educate and refer women for screening.</li>
+            <li><strong>Partnerships:</strong> Collaborating with NGOs, religious organizations, and international bodies to fund and implement screening programs.</li>
+        </ul>
+        <p><strong>Examples:</strong> The "Breast Cancer Awareness Month" campaigns in Zambia, and the "Pink Ribbon" initiative, have helped raise awareness. Mobile screening units in countries like Rwanda have improved access to screening.</p>`
+    },
+    {
+        q: `There several risk factors for cervical cancer. Mention four and explain one of those in details how it contributes in causing cervical cancer.`,
+        answer: `<h4>Model Answer</h4>
+        <p><strong>Four Risk Factors for Cervical Cancer:</strong></p>
+        <ol>
+            <li>Human Papillomavirus (HPV) infection (especially types 16 and 18)</li>
+            <li>Multiple sexual partners or early onset of sexual activity</li>
+            <li>Smoking</li>
+            <li>Immunosuppression (e.g., HIV infection)</li>
+        </ol>
+        <p><strong>Detailed Explanation of HPV Infection:</strong></p>
+        <p>HPV is the primary cause of cervical cancer. High-risk HPV types (16 and 18) produce two viral oncoproteins, E6 and E7. E6 binds to and degrades the tumor suppressor protein p53, while E7 binds to and inactivates the retinoblastoma (Rb) protein. This leads to uncontrolled cell cycle progression, accumulation of mutations, and eventually malignant transformation of cervical epithelial cells. Persistent HPV infection is necessary for the development of cervical cancer, although most HPV infections are transient and cleared by the immune system.</p>`
+    }
+    ];
+
+    /* =====================================================================
+       RENDERING FUNCTIONS
+       ===================================================================== */
+    function renderSectionA() {
+        const container = document.getElementById('container-A');
+        let html = '';
+        sectionA.forEach((q, i) => {
+            const qid = 'A-q' + (i + 1);
+            html += '<div class="question" id="q-' + qid + '">';
+            html += '<p><span class="q-badge">Q' + (i + 1) + '</span> ' + q.q + '</p>';
+            html += '<div class="tf-statements">';
+            q.statements.forEach((stmt, j) => {
+                const sid = qid + '-s' + (j + 1);
+                html += '<div class="tf-statement">';
+                html += '<div class="stmt-text">' + (j + 1) + '. ' + stmt.text + '</div>';
+                html += '<div class="tf-options">';
+                html += '<label><input type="radio" name="' + sid + '" value="true"> True</label>';
+                html += '<label><input type="radio" name="' + sid + '" value="false"> False</label>';
+                html += '</div>';
+                html += '<div class="tf-feedback" id="fb-' + sid + '"></div>';
+                html += '</div>';
+            });
+            html += '</div>';
+            html += '</div>';
+        });
+        container.innerHTML = html;
+        document.getElementById('count-A').textContent = sectionA.length;
+    }
+
+    function submitSectionA() {
+        let totalStatements = 0;
+        let correctStatements = 0;
+
+        sectionA.forEach((q, i) => {
+            const qid = 'A-q' + (i + 1);
+            q.statements.forEach((stmt, j) => {
+                totalStatements++;
+                const sid = qid + '-s' + (j + 1);
+                const radios = document.getElementsByName(sid);
+                let selected = null;
+                for (let r = 0; r < radios.length; r++) {
+                    if (radios[r].checked) { selected = radios[r]; break; }
+                }
+                const correctVal = stmt.correct ? 'true' : 'false';
+                let isCorrect = false;
+                if (selected && selected.value === correctVal) {
+                    isCorrect = true;
+                    correctStatements++;
+                }
+
+                const fb = document.getElementById('fb-' + sid);
+                if (!fb) return;
+
+                let feedbackHtml = '';
+                if (!selected) {
+                    feedbackHtml = '<div class="tf-feedback missed">⚠️ No answer selected. Correct answer: <strong>' +
+                        (stmt.correct ? 'True' : 'False') + '</strong>. ' + stmt.expl + '</div>';
+                } else if (isCorrect) {
+                    feedbackHtml = '<div class="tf-feedback correct">✅ <strong>Correct.</strong> ' + stmt.expl + '</div>';
+                } else {
+                    feedbackHtml = '<div class="tf-feedback incorrect">❌ <strong>Incorrect.</strong> Correct answer: <strong>' +
+                        (stmt.correct ? 'True' : 'False') + '</strong>. ' + stmt.expl + '</div>';
+                }
+                fb.innerHTML = feedbackHtml;
+            });
+        });
+
+        const pct = Math.round((correctStatements / totalStatements) * 100);
+        const box = document.getElementById('result-A');
+        box.style.display = 'block';
+        document.getElementById('score-A').innerText = correctStatements + ' / ' + totalStatements + '  (' + pct + '%)';
+
+        document.querySelectorAll('#panel-A input[type="radio"]').forEach(r => r.disabled = true);
+    }
+
+    function renderSectionB() {
+        const container = document.getElementById('container-B');
+        let html = '';
+        sectionB.forEach((q, i) => {
+            const qid = 'B-q' + (i + 1);
+            html += '<div class="question" id="q-' + qid + '">';
+            html += '<p><span class="q-badge">Q' + (i + 1) + '</span> ' + q.q + '</p>';
+            html += '<div class="options">';
+            q.options.forEach((opt, j) => {
+                const L = String.fromCharCode(65 + j);
+                html += '<label><input type="radio" name="' + qid + '" value="' + L + '"> <strong>' + L + ')</strong> ' + opt + '</label>';
+            });
+            html += '</div>';
+            html += '<div class="question-feedback" id="fb-' + qid + '"></div>';
+            html += '</div>';
+        });
+        container.innerHTML = html;
+        document.getElementById('count-B').textContent = sectionB.length;
+    }
+
+    function submitSectionB() {
+        let score = 0;
+        sectionB.forEach((q, i) => {
+            const qid = 'B-q' + (i + 1);
+            const radios = document.getElementsByName(qid);
+            let selected = null;
+            for (let r = 0; r < radios.length; r++) {
+                if (radios[r].checked) { selected = radios[r]; break; }
+            }
+            const correct = q.correct.toUpperCase();
+            if (selected && selected.value === correct) score++;
+
+            let html = '<div class="answer-block"><div class="answer-list">';
+            q.options.forEach((opt, j) => {
+                const L = String.fromCharCode(65 + j);
+                let cls = 'answer-item';
+                if (L === correct) cls += ' answer-correct';
+                if (selected && selected.value === L) {
+                    cls += ' user-choice';
+                    if (L !== correct) cls += ' answer-wrong';
+                }
+                const mark = (selected && selected.value === L) ? ' ◀ your answer' : '';
+                html += '<div class="' + cls + '">' + L + ') ' + opt + mark + '</div>';
+            });
+            html += '</div>';
+
+            const correctIdx = correct.charCodeAt(0) - 65;
+            const correctText = (correctIdx >= 0 && correctIdx < q.options.length) ? q.options[correctIdx] : '';
+
+            if (!selected) {
+                html += '<div class="explanation wrong">No answer selected. Correct answer: <strong>' +
+                        correct + ') ' + correctText + '</strong>.<br>' + q.explanation + '</div>';
+            } else if (selected.value === correct) {
+                html += '<div class="explanation">✅ <strong>Correct.</strong><br>' + q.explanation + '</div>';
+            } else {
+                html += '<div class="explanation wrong">❌ <strong>Incorrect.</strong> Correct answer: <strong>' +
+                        correct + ') ' + correctText + '</strong>.<br>' + q.explanation + '</div>';
+            }
+
+            const fb = document.getElementById('fb-' + qid);
+            if (fb) fb.innerHTML = html;
+        });
+
+        const total = sectionB.length;
+        const pct = Math.round((score / total) * 100);
+        const box = document.getElementById('result-B');
+        box.style.display = 'block';
+        document.getElementById('score-B').innerText = score + ' / ' + total + '  (' + pct + '%)';
+
+        document.querySelectorAll('#panel-B input[type="radio"]').forEach(r => r.disabled = true);
+    }
+
+    function renderSectionC() {
+        const container = document.getElementById('container-C');
+        let html = '';
+        sectionC.forEach((q, i) => {
+            const qid = 'C-q' + (i + 1);
+            html += '<div class="question" id="q-' + qid + '">';
+            html += '<p><span class="q-badge">Q' + (i + 1) + '</span> ' + q.q + '</p>';
+            html += '<button type="button" class="btn btn-sm" onclick="toggleAnswer(\'' + qid + '\')"><i class="fas fa-eye"></i> Show Answer</button>';
+            html += '<div class="essay-answer" id="ans-' + qid + '">' + q.answer + '</div>';
+            html += '</div>';
+        });
+        container.innerHTML = html;
+        document.getElementById('count-C').textContent = sectionC.length;
+    }
+
+    function renderSectionD() {
+        const container = document.getElementById('container-D');
+        let html = '';
+        sectionD.forEach((q, i) => {
+            const qid = 'D-q' + (i + 1);
+            html += '<div class="question" id="q-' + qid + '">';
+            html += '<p><span class="q-badge">Q' + (i + 1) + '</span> ' + q.q + '</p>';
+            html += '<button type="button" class="btn btn-sm" onclick="toggleAnswer(\'' + qid + '\')"><i class="fas fa-eye"></i> Show Answer</button>';
+            html += '<div class="essay-answer" id="ans-' + qid + '">' + q.answer + '</div>';
+            html += '</div>';
+        });
+        container.innerHTML = html;
+        document.getElementById('count-D').textContent = sectionD.length;
+    }
+
+    function toggleAnswer(qid) {
+        const el = document.getElementById('ans-' + qid);
+        if (el) el.classList.toggle('show');
+    }
+
+    /* ─── INIT ─── */
+    renderSectionA();
+    renderSectionB();
+    renderSectionC();
+    renderSectionD();
+
+    /* ─── TAB SWITCHING ─── */
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            const target = this.dataset.target;
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+            document.getElementById('panel-' + target).classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+    </script>
+
+</body>
+</html>

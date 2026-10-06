@@ -44,29 +44,23 @@
             animation: fadeDown 0.8s ease-out;
         }
         @keyframes fadeDown {
-            0% {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            0% { opacity: 0; transform: translateY(-30px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
         .topic-header {
-    font-size: 1.4rem;
-    font-weight: 800;
-    color: #0a2b4a;
-    text-align: center;
-    margin: 1.2rem 0 0.6rem 0;
-    padding: 0.4rem 1.5rem;
-    background: rgba(45, 123, 158, 0.12);
-    border-radius: 30px;
-    display: inline-block;
-    width: 100%;
-    letter-spacing: 0.5px;
-    border: 1px dashed rgba(45, 123, 158, 0.25);
-}
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #0a2b4a;
+            text-align: center;
+            margin: 1.2rem 0 0.6rem 0;
+            padding: 0.4rem 1.5rem;
+            background: rgba(45, 123, 158, 0.12);
+            border-radius: 30px;
+            display: inline-block;
+            width: 100%;
+            letter-spacing: 0.5px;
+            border: 1px dashed rgba(45, 123, 158, 0.25);
+        }
         .logo {
             display: flex;
             align-items: center;
@@ -81,13 +75,8 @@
             animation: pulse 3s infinite ease-in-out;
         }
         @keyframes pulse {
-            0%,
-            100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.08);
-            }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
         }
         .nav-wrapper {
             display: flex;
@@ -161,14 +150,8 @@
             animation: fadeUp 1s ease-out;
         }
         @keyframes fadeUp {
-            0% {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            0% { opacity: 0; transform: translateY(40px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
         .hero h1 {
             font-size: 3.2rem;
@@ -473,17 +456,11 @@
             background: rgba(255, 255, 255, 0.08);
         }
         @keyframes floatAround {
-            0% {
-                transform: translate(0, 0) scale(1);
-            }
-            100% {
-                transform: translate(40px, -30px) scale(1.1);
-            }
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(40px, -30px) scale(1.1); }
         }
         @media (max-width: 820px) {
-            .hamburger {
-                display: block;
-            }
+            .hamburger { display: block; }
             .nav-links {
                 position: absolute;
                 top: 100%;
@@ -516,32 +493,15 @@
                 border-bottom: 1px solid rgba(0, 0, 0, 0.04);
                 padding-bottom: 0.5rem;
             }
-            .nav-links li:last-child {
-                border-bottom: none;
-            }
-            .nav-links a {
-                font-size: 1.2rem;
-                display: block;
-                padding: 0.4rem 0;
-            }
-            .hero h1 {
-                font-size: 2.4rem;
-            }
-            .about-grid {
-                grid-template-columns: 1fr;
-            }
+            .nav-links li:last-child { border-bottom: none; }
+            .nav-links a { font-size: 1.2rem; display: block; padding: 0.4rem 0; }
+            .hero h1 { font-size: 2.4rem; }
+            .about-grid { grid-template-columns: 1fr; }
         }
         @media (max-width: 480px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-            .stat-number {
-                font-size: 2.2rem;
-            }
-            .btn-signup {
-                padding: 0.4rem 1rem;
-                font-size: 0.85rem;
-            }
+            .hero h1 { font-size: 2rem; }
+            .stat-number { font-size: 2.2rem; }
+            .btn-signup { padding: 0.4rem 1rem; font-size: 0.85rem; }
         }
 
         /* drill-down styles */
@@ -556,9 +516,7 @@
             transition: all 0.3s ease;
             display: none;
         }
-        .drill-container.visible {
-            display: block;
-        }
+        .drill-container.visible { display: block; }
         .drill-level {
             margin-bottom: 1.5rem;
             text-align: center;
@@ -592,10 +550,7 @@
             transition: 0.2s;
             padding: 0 0.5rem;
         }
-        .back-btn:hover {
-            color: #0a2b4a;
-            transform: scale(1.1);
-        }
+        .back-btn:hover { color: #0a2b4a; transform: scale(1.1); }
         .term-list {
             display: flex;
             flex-wrap: wrap;
@@ -672,9 +627,7 @@
             align-items: center;
             gap: 6px;
         }
-        .topic-actions .btn-sm i {
-            margin-right: 6px;
-        }
+        .topic-actions .btn-sm i { margin-right: 6px; }
         .topic-actions .btn-sm:hover {
             background: #2d7b9e;
             color: white;
@@ -741,9 +694,7 @@
             color: #2d7b9e;
             text-decoration: none;
         }
-        .link-section a:hover {
-            text-decoration: underline;
-        }
+        .link-section a:hover { text-decoration: underline; }
 
         /* ---- SIGNUP OVERLAY ---- */
         .signup-overlay {
@@ -819,9 +770,7 @@
             border-top: 1px solid #eef2f7;
             padding-top: 1rem;
         }
-        .hidden {
-            display: none !important;
-        }
+        .hidden { display: none !important; }
 
         /* Site selection overlay */
         .site-overlay {
@@ -837,9 +786,7 @@
             justify-content: center;
             z-index: 1001;
         }
-        .site-overlay.active {
-            display: flex;
-        }
+        .site-overlay.active { display: flex; }
         .site-box {
             background: white;
             padding: 2.5rem 3rem;
@@ -903,18 +850,10 @@
             z-index: 2000;
             animation: fadeInOverlay 0.3s ease;
         }
-        .ppq-overlay.active {
-            display: flex;
-        }
+        .ppq-overlay.active { display: flex; }
         @keyframes fadeInOverlay {
-            0% {
-                opacity: 0;
-                transform: scale(0.96);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
+            0% { opacity: 0; transform: scale(0.96); }
+            100% { opacity: 1; transform: scale(1); }
         }
         .ppq-box {
             background: white;
@@ -991,44 +930,24 @@
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
             width: 100%;
         }
-        .signup-box .hidden {
-            display: none !important;
-        }
-        .signup-box #loginForm {
-            display: block;
-        }
-        .signup-box #loginForm.hidden {
-            display: none;
-        }
-        .signup-box #signupFlow {
-            display: none;
-        }
-        .signup-box #signupFlow.visible {
-            display: block;
-        }
+        .signup-box .hidden { display: none !important; }
+        .signup-box #loginForm { display: block; }
+        .signup-box #loginForm.hidden { display: none; }
+        .signup-box #signupFlow { display: none; }
+        .signup-box #signupFlow.visible { display: block; }
         .signup-box #signupFlow .btn-primary {
             background: #25D366;
             border: none;
         }
-        .signup-box #signupFlow .btn-primary:hover {
-            background: #1da851;
-        }
-        .signup-box #signupFlow .btn-primary i {
-            margin-right: 8px;
-        }
-        .ppq-btn i {
-            font-size: 1.4rem;
-        }
-        .ppq-btn.pdf-btn {
-            background: linear-gradient(135deg, #d32f2f, #b71c1c);
-        }
+        .signup-box #signupFlow .btn-primary:hover { background: #1da851; }
+        .signup-box #signupFlow .btn-primary i { margin-right: 8px; }
+        .ppq-btn i { font-size: 1.4rem; }
+        .ppq-btn.pdf-btn { background: linear-gradient(135deg, #d32f2f, #b71c1c); }
         .ppq-btn.pdf-btn:hover {
             transform: translateY(-3px) scale(1.02);
             box-shadow: 0 12px 32px rgba(211, 47, 47, 0.35);
         }
-        .ppq-btn.html-btn {
-            background: linear-gradient(135deg, #2d7b9e, #1a5f7a);
-        }
+        .ppq-btn.html-btn { background: linear-gradient(135deg, #2d7b9e, #1a5f7a); }
         .ppq-btn.html-btn:hover {
             transform: translateY(-3px) scale(1.02);
             box-shadow: 0 12px 32px rgba(45, 123, 158, 0.35);
@@ -1048,22 +967,12 @@
             border-top: 1px solid #eef2f7;
             padding-top: 1rem;
         }
-        .ppq-footer-note i {
-            color: #2d7b9e;
-            margin-right: 4px;
-        }
+        .ppq-footer-note i { color: #2d7b9e; margin-right: 4px; }
 
         @media (max-width: 480px) {
-            .ppq-box {
-                padding: 2rem 1.5rem 2.2rem;
-            }
-            .ppq-btn {
-                font-size: 0.95rem;
-                padding: 0.8rem 1.2rem;
-            }
-            .ppq-box h2 {
-                font-size: 1.3rem;
-            }
+            .ppq-box { padding: 2rem 1.5rem 2.2rem; }
+            .ppq-btn { font-size: 0.95rem; padding: 0.8rem 1.2rem; }
+            .ppq-box h2 { font-size: 1.3rem; }
         }
 
         /* ---- VIDEO POPUP STYLES (list) ---- */
@@ -1082,9 +991,7 @@
             animation: fadeInOverlay 0.3s ease;
             padding: 1.5rem;
         }
-        .video-overlay.active {
-            display: flex;
-        }
+        .video-overlay.active { display: flex; }
         .video-box {
             background: white;
             border-radius: 44px;
@@ -1099,14 +1006,8 @@
             animation: scaleIn 0.3s ease;
         }
         @keyframes scaleIn {
-            0% {
-                transform: scale(0.92);
-                opacity: 0;
-            }
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
+            0% { transform: scale(0.92); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
         .video-box .video-header {
             padding: 1.5rem 2rem 0.5rem 2rem;
@@ -1124,9 +1025,7 @@
             align-items: center;
             gap: 0.6rem;
         }
-        .video-box .video-header h3 i {
-            color: #2d7b9e;
-        }
+        .video-box .video-header h3 i { color: #2d7b9e; }
         .video-box .video-header .close-video {
             background: none;
             border: none;
@@ -1189,9 +1088,7 @@
             width: 2rem;
             text-align: center;
         }
-        .video-box .video-list .video-item:hover i {
-            color: white;
-        }
+        .video-box .video-list .video-item:hover i { color: white; }
         .video-box .video-list .video-item .video-info {
             flex: 1;
             min-width: 0;
@@ -1210,18 +1107,14 @@
             display: block;
             transition: 0.2s;
         }
-        .video-box .video-list .video-item:hover .video-info .video-sub {
-            color: rgba(255, 255, 255, 0.8);
-        }
+        .video-box .video-list .video-item:hover .video-info .video-sub { color: rgba(255, 255, 255, 0.8); }
         .video-box .video-list .video-item .video-play {
             font-size: 1.2rem;
             color: #2d7b9e;
             transition: 0.2s;
             flex-shrink: 0;
         }
-        .video-box .video-list .video-item:hover .video-play {
-            color: white;
-        }
+        .video-box .video-list .video-item:hover .video-play { color: white; }
         .video-box .video-empty {
             padding: 2rem 2rem 2.5rem;
             text-align: center;
@@ -1241,10 +1134,7 @@
             color: #8a9bb0;
             flex-shrink: 0;
         }
-        .video-box .video-footer i {
-            color: #2d7b9e;
-            margin-right: 4px;
-        }
+        .video-box .video-footer i { color: #2d7b9e; margin-right: 4px; }
 
         /* ---- IN-APP VIDEO PLAYER OVERLAY ---- */
         .video-player-overlay {
@@ -1262,9 +1152,7 @@
             animation: fadeInOverlay 0.35s ease;
             padding: 1.5rem;
         }
-        .video-player-overlay.active {
-            display: flex;
-        }
+        .video-player-overlay.active { display: flex; }
         .video-player-box {
             background: #111;
             border-radius: 32px;
@@ -1299,10 +1187,7 @@
             text-overflow: ellipsis;
             max-width: 70%;
         }
-        .video-player-box .player-header .player-title i {
-            color: #ff0000;
-            font-size: 1.2rem;
-        }
+        .video-player-box .player-header .player-title i { color: #ff0000; font-size: 1.2rem; }
         .video-player-box .player-header .close-player {
             background: none;
             border: none;
@@ -1340,22 +1225,12 @@
             color: #6a7a8a;
             flex-shrink: 0;
         }
-        .video-player-box .player-footer i {
-            color: #ff0000;
-            margin-right: 4px;
-        }
+        .video-player-box .player-footer i { color: #ff0000; margin-right: 4px; }
 
         @media (max-width: 480px) {
-            .video-player-box .player-header {
-                padding: 0.8rem 1.2rem;
-            }
-            .video-player-box .player-header .player-title {
-                font-size: 0.85rem;
-                max-width: 60%;
-            }
-            .video-player-box .player-header .close-player {
-                font-size: 1.4rem;
-            }
+            .video-player-box .player-header { padding: 0.8rem 1.2rem; }
+            .video-player-box .player-header .player-title { font-size: 0.85rem; max-width: 60%; }
+            .video-player-box .player-header .close-player { font-size: 1.4rem; }
         }
 
         /* ---- DOCUMENT POPUP STYLES (mirrors video) ---- */
@@ -1374,9 +1249,7 @@
             animation: fadeInOverlay 0.3s ease;
             padding: 1.5rem;
         }
-        .document-overlay.active {
-            display: flex;
-        }
+        .document-overlay.active { display: flex; }
         .document-box {
             background: white;
             border-radius: 44px;
@@ -1406,9 +1279,7 @@
             align-items: center;
             gap: 0.6rem;
         }
-        .document-box .doc-header h3 i {
-            color: #2d7b9e;
-        }
+        .document-box .doc-header h3 i { color: #2d7b9e; }
         .document-box .doc-header .close-doc {
             background: none;
             border: none;
@@ -1471,9 +1342,7 @@
             width: 2rem;
             text-align: center;
         }
-        .document-box .doc-list .doc-item:hover i {
-            color: white;
-        }
+        .document-box .doc-list .doc-item:hover i { color: white; }
         .document-box .doc-list .doc-item .doc-info {
             flex: 1;
             min-width: 0;
@@ -1492,18 +1361,14 @@
             display: block;
             transition: 0.2s;
         }
-        .document-box .doc-list .doc-item:hover .doc-info .doc-sub {
-            color: rgba(255, 255, 255, 0.8);
-        }
+        .document-box .doc-list .doc-item:hover .doc-info .doc-sub { color: rgba(255, 255, 255, 0.8); }
         .document-box .doc-list .doc-item .doc-play {
             font-size: 1.2rem;
             color: #2d7b9e;
             transition: 0.2s;
             flex-shrink: 0;
         }
-        .document-box .doc-list .doc-item:hover .doc-play {
-            color: white;
-        }
+        .document-box .doc-list .doc-item:hover .doc-play { color: white; }
         .document-box .doc-empty {
             padding: 2rem 2rem 2.5rem;
             text-align: center;
@@ -1523,10 +1388,7 @@
             color: #8a9bb0;
             flex-shrink: 0;
         }
-        .document-box .doc-footer i {
-            color: #2d7b9e;
-            margin-right: 4px;
-        }
+        .document-box .doc-footer i { color: #2d7b9e; margin-right: 4px; }
 
         /* ---- AUDIO POPUP STYLES ---- */
         .audio-overlay {
@@ -1544,9 +1406,7 @@
             animation: fadeInOverlay 0.3s ease;
             padding: 1.5rem;
         }
-        .audio-overlay.active {
-            display: flex;
-        }
+        .audio-overlay.active { display: flex; }
         .audio-box {
             background: white;
             border-radius: 44px;
@@ -1576,9 +1436,7 @@
             align-items: center;
             gap: 0.6rem;
         }
-        .audio-box .audio-header h3 i {
-            color: #2d7b9e;
-        }
+        .audio-box .audio-header h3 i { color: #2d7b9e; }
         .audio-box .audio-header .close-audio {
             background: none;
             border: none;
@@ -1641,9 +1499,7 @@
             width: 2rem;
             text-align: center;
         }
-        .audio-box .audio-list .audio-item:hover i {
-            color: white;
-        }
+        .audio-box .audio-list .audio-item:hover i { color: white; }
         .audio-box .audio-list .audio-item .audio-info {
             flex: 1;
             min-width: 0;
@@ -1662,18 +1518,14 @@
             display: block;
             transition: 0.2s;
         }
-        .audio-box .audio-list .audio-item:hover .audio-info .audio-sub {
-            color: rgba(255, 255, 255, 0.8);
-        }
+        .audio-box .audio-list .audio-item:hover .audio-info .audio-sub { color: rgba(255, 255, 255, 0.8); }
         .audio-box .audio-list .audio-item .audio-play {
             font-size: 1.2rem;
             color: #2d7b9e;
             transition: 0.2s;
             flex-shrink: 0;
         }
-        .audio-box .audio-list .audio-item:hover .audio-play {
-            color: white;
-        }
+        .audio-box .audio-list .audio-item:hover .audio-play { color: white; }
         .audio-box .audio-empty {
             padding: 2rem 2rem 2.5rem;
             text-align: center;
@@ -1693,10 +1545,7 @@
             color: #8a9bb0;
             flex-shrink: 0;
         }
-        .audio-box .audio-footer i {
-            color: #2d7b9e;
-            margin-right: 4px;
-        }
+        .audio-box .audio-footer i { color: #2d7b9e; margin-right: 4px; }
 
         /* ---- QUIZ POPUP STYLES ---- */
         .quiz-overlay {
@@ -1714,9 +1563,7 @@
             animation: fadeInOverlay 0.3s ease;
             padding: 1.5rem;
         }
-        .quiz-overlay.active {
-            display: flex;
-        }
+        .quiz-overlay.active { display: flex; }
         .quiz-box {
             background: white;
             border-radius: 44px;
@@ -1746,9 +1593,7 @@
             align-items: center;
             gap: 0.6rem;
         }
-        .quiz-box .quiz-header h3 i {
-            color: #2d7b9e;
-        }
+        .quiz-box .quiz-header h3 i { color: #2d7b9e; }
         .quiz-box .quiz-header .close-quiz {
             background: none;
             border: none;
@@ -1811,9 +1656,7 @@
             width: 2rem;
             text-align: center;
         }
-        .quiz-box .quiz-list .quiz-item:hover i {
-            color: white;
-        }
+        .quiz-box .quiz-list .quiz-item:hover i { color: white; }
         .quiz-box .quiz-list .quiz-item .quiz-info {
             flex: 1;
             min-width: 0;
@@ -1832,18 +1675,14 @@
             display: block;
             transition: 0.2s;
         }
-        .quiz-box .quiz-list .quiz-item:hover .quiz-info .quiz-sub {
-            color: rgba(255, 255, 255, 0.8);
-        }
+        .quiz-box .quiz-list .quiz-item:hover .quiz-info .quiz-sub { color: rgba(255, 255, 255, 0.8); }
         .quiz-box .quiz-list .quiz-item .quiz-play {
             font-size: 1.2rem;
             color: #2d7b9e;
             transition: 0.2s;
             flex-shrink: 0;
         }
-        .quiz-box .quiz-list .quiz-item:hover .quiz-play {
-            color: white;
-        }
+        .quiz-box .quiz-list .quiz-item:hover .quiz-play { color: white; }
         .quiz-box .quiz-empty {
             padding: 2rem 2rem 2.5rem;
             text-align: center;
@@ -1863,48 +1702,27 @@
             color: #8a9bb0;
             flex-shrink: 0;
         }
-        .quiz-box .quiz-footer i {
-            color: #2d7b9e;
-            margin-right: 4px;
-        }
+        .quiz-box .quiz-footer i { color: #2d7b9e; margin-right: 4px; }
 
         @media (max-width: 480px) {
-            .video-box,
-            .document-box,
-            .audio-box,
-            .quiz-box {
+            .video-box, .document-box, .audio-box, .quiz-box {
                 max-width: 100%;
                 border-radius: 28px;
                 max-height: 90vh;
             }
-            .video-box .video-header,
-            .document-box .doc-header,
-            .audio-box .audio-header,
-            .quiz-box .quiz-header {
+            .video-box .video-header, .document-box .doc-header, .audio-box .audio-header, .quiz-box .quiz-header {
                 padding: 1rem 1.2rem 0.3rem 1.2rem;
             }
-            .video-box .video-header h3,
-            .document-box .doc-header h3,
-            .audio-box .audio-header h3,
-            .quiz-box .quiz-header h3 {
+            .video-box .video-header h3, .document-box .doc-header h3, .audio-box .audio-header h3, .quiz-box .quiz-header h3 {
                 font-size: 1.1rem;
             }
-            .video-box .video-list,
-            .document-box .doc-list,
-            .audio-box .audio-list,
-            .quiz-box .quiz-list {
+            .video-box .video-list, .document-box .doc-list, .audio-box .audio-list, .quiz-box .quiz-list {
                 padding: 0.3rem 1.2rem 1.2rem 1.2rem;
             }
-            .video-box .video-list .video-item,
-            .document-box .doc-list .doc-item,
-            .audio-box .audio-list .audio-item,
-            .quiz-box .quiz-list .quiz-item {
+            .video-box .video-list .video-item, .document-box .doc-list .doc-item, .audio-box .audio-list .audio-item, .quiz-box .quiz-list .quiz-item {
                 padding: 0.7rem 1rem;
             }
-            .video-box .video-topic-badge,
-            .document-box .doc-topic-badge,
-            .audio-box .audio-topic-badge,
-            .quiz-box .quiz-topic-badge {
+            .video-box .video-topic-badge, .document-box .doc-topic-badge, .audio-box .audio-topic-badge, .quiz-box .quiz-topic-badge {
                 padding: 0.1rem 1.2rem;
                 font-size: 0.75rem;
                 margin: 0.1rem 1.2rem 0.4rem 1.2rem;
@@ -1965,9 +1783,7 @@
             padding: 4.5rem 1.2rem 1.5rem;
             animation: fadeInOverlay 0.25s ease;
         }
-        .search-overlay.active {
-            display: flex;
-        }
+        .search-overlay.active { display: flex; }
         .search-box {
             background: #fff;
             border-radius: 32px;
@@ -2002,9 +1818,7 @@
             color: #1f2a41;
             min-width: 0;
         }
-        #searchInput::placeholder {
-            color: #9fb0c4;
-        }
+        #searchInput::placeholder { color: #9fb0c4; }
         .close-search {
             background: none;
             border: none;
@@ -2063,9 +1877,7 @@
             overflow-y: auto;
             padding: 0.8rem 1rem 1.2rem;
         }
-        .search-group {
-            margin-bottom: 0.9rem;
-        }
+        .search-group { margin-bottom: 0.9rem; }
         .search-group-title {
             font-size: 0.74rem;
             font-weight: 800;
@@ -2077,9 +1889,7 @@
             align-items: center;
             gap: 0.45rem;
         }
-        .search-group-title i {
-            color: #2d7b9e;
-        }
+        .search-group-title i { color: #2d7b9e; }
         .search-group-title .count {
             background: #eef4fa;
             color: #2d7b9e;
@@ -2144,9 +1954,7 @@
             font-size: 0.8rem;
             flex-shrink: 0;
         }
-        .search-item:hover .si-go {
-            color: #2d7b9e;
-        }
+        .search-item:hover .si-go { color: #2d7b9e; }
         .search-empty {
             text-align: center;
             padding: 2.5rem 1.5rem;
@@ -2172,41 +1980,19 @@
             color: #8a9bb0;
             flex-shrink: 0;
         }
-        .search-footer i {
-            color: #2d7b9e;
-            margin-right: 0.3rem;
-        }
+        .search-footer i { color: #2d7b9e; margin-right: 0.3rem; }
 
         @media (max-width: 820px) {
-            .nav-wrapper {
-                gap: 0.8rem;
-            }
+            .nav-wrapper { gap: 0.8rem; }
         }
         @media (max-width: 480px) {
-            .search-overlay {
-                padding: 3.5rem 0.7rem 1rem;
-            }
-            .search-box {
-                border-radius: 24px;
-                max-height: 88vh;
-            }
-            .search-header {
-                padding: 0.9rem 1rem;
-            }
-            .search-filters {
-                padding: 0.6rem 1rem 0.2rem;
-            }
-            .search-scope {
-                padding: 0.5rem 1rem 0.6rem;
-            }
-            .search-results {
-                padding: 0.6rem 0.6rem 1rem;
-            }
-            .btn-search {
-                width: 38px;
-                height: 38px;
-                font-size: 0.9rem;
-            }
+            .search-overlay { padding: 3.5rem 0.7rem 1rem; }
+            .search-box { border-radius: 24px; max-height: 88vh; }
+            .search-header { padding: 0.9rem 1rem; }
+            .search-filters { padding: 0.6rem 1rem 0.2rem; }
+            .search-scope { padding: 0.5rem 1rem 0.6rem; }
+            .search-results { padding: 0.6rem 0.6rem 1rem; }
+            .btn-search { width: 38px; height: 38px; font-size: 0.9rem; }
         }
     </style>
 </head>
@@ -2218,7 +2004,7 @@
         <div class="shape"></div>
     </div>
 
-        <!-- SIGNUP OVERLAY -->
+    <!-- SIGNUP OVERLAY -->
     <div class="signup-overlay" id="signupOverlay">
         <div class="signup-box">
             <h2><i class="fas fa-user-graduate" style="color:#2d7b9e;"></i> ToToZ</h2>
@@ -2263,7 +2049,7 @@
         </div>
     </div>
 
-    <!-- SITE SELECTION OVERLAY (for 4th & 6th year) -->
+    <!-- SITE SELECTION OVERLAY -->
     <div class="site-overlay" id="siteOverlay">
         <div class="site-box">
             <h2><i class="fas fa-hospital" style="color:#2d7b9e;"></i> Select Your Rotation Site</h2>
@@ -2478,8 +2264,7 @@
         // ---------- particle system ----------
         const canvas = document.getElementById('particles-canvas');
         const ctx = canvas.getContext('2d');
-        let particles = [],
-            w, h;
+        let particles = [], w, h;
 
         function resizeCanvas() {
             w = canvas.width = window.innerWidth;
@@ -2532,8 +2317,7 @@
 
         function animateParticles() {
             ctx.clearRect(0, 0, w, h);
-            particles.forEach(p => { p.update();
-                p.draw(); });
+            particles.forEach(p => { p.update(); p.draw(); });
             connectParticles();
             requestAnimationFrame(animateParticles);
         }
@@ -2557,8 +2341,7 @@
                     const step = Math.ceil(target / 60);
                     const interval = setInterval(() => {
                         current += step;
-                        if (current >= target) { current = target;
-                            clearInterval(interval); }
+                        if (current >= target) { current = target; clearInterval(interval); }
                         counter.textContent = current + suffix;
                     }, 30);
                 });
@@ -2713,7 +2496,6 @@
                             '2022 Sup Physiology sessional ✅️',
                             '2023 physiology sessional ✅️',
                             '2025 physiology sessional ✅️'
-                            
                         ] }
                 ]
             },
@@ -2762,15 +2544,6 @@
                 type: 'preclinical',
                 desc: 'Study gametogenesis, fertilization, early embryonic development, and organogenesis.',
                 terms: [
-                    // { name: 'Term 1',
-                    //     topics: ['Cell Division', 'Ovulation and Menstruation', 'Gametogenesis', 'Fertilization',
-                    //         '2nd Week of Developmnet', '3rd Week of Development', '4th Week of Development',
-                    //         'Placenta and Twinning', 'Teratology'
-                    //     ] },
-                    // { name: 'Term 2',
-                    //     topics: ['Development of the Respoiratory System', 'Development of the Axial SKeleton',
-                    //         'Development of the Appendicular Skeleton', 'Development of the Skin', 'Heart Development', 'Pharyngeal Apparatus', 'Blood Vessel Development'
-                    //     ] },
                     { name: 'Term 3',
                         topics: ['GIT Part 1', 'GIT Part 2' ] }
                 ]
@@ -2814,25 +2587,6 @@
                 type: 'preclinical',
                 desc: 'Study the microscopic anatomy of cells, tissues, and organ systems.',
                 terms: [
-                    // { name: 'Term 1',
-                    //     topics: [
-                    //         'Tissue Preparation & Staining',
-                    //         'Cytology',
-                    //         'Epithelial Tissue',
-                    //         'Connective Tissue',
-                    //         'Cartilage',
-                    //         'Bone Tissue',
-                    //         'Adipose Tissue',
-                    //         'Nerve Tissue',
-                    //         'Muscle Tissue',
-                    //     ]
-                    // },
-                    // { name: 'Term 2',
-                    //     topics: [
-                    //         'Respiratory System',
-                    //         'Cardiovascular System',
-                    //     ]
-                    // },
                     { name: 'Term 3',
                         topics: [
                             'GIT Histology',
@@ -2873,45 +2627,45 @@
                         name: 'Pathology Past Papers',
                         topics: [
                             '## Test 1',
-                            '2016 Pathology Mid Term 1 Test',
-                            '2016 Pathology Test 1',
-                            '2017 Pathology Test 1',
-                            '2018 Pathology Test 1',
-                            '2019 PATHOLOGY TERM 1 (2)',
-                            '2020 Pathology term 1',
-                            '2022 pathology test 1',
-                            '2023 Pathology Test 1 3rd year',
-                            '2024 Pathology test 1',
-                            'pathology test 1',
+                            '2016 Pathology3 Mid Term 1 Test',
+                            '2016 Pathology3 Test 1',
+                            '2017 Pathology3 Test 1',
+                            '2018 Pathology3 Test 1',
+                            '2019 PATHOLOGY3 TERM 1 (2)',
+                            '2020 Pathology3 term 1',
+                            '2022 pathology3 test 1 ✅',
+                            '2023 Pathology3 Test 1 3rd year ✅',
+                            '2024 Pathology3 Test 1 ✅',
+                            'pathology3 test 1',
                             'Pathos',
                             '## Test 2',
-                            '2015,16 Pathology Test 2',
-                            '2018 Pathology term 2 test',
-                            '2018 Pathology Test 2',
-                            '2020 Pathology Test 2',
-                            '2021 pathology T2',
-                            '2021 Pathology test 2 .pdf answered',
-                            '2021 Pathology test 2',
-                            '2022 Term 2 Pathology',
-                            'Pathology CNS Revison',
-                            'Pathology test 2',
+                            '2015,16 Pathology3 Test 2',
+                            '2018 Pathology3 term 2 test',
+                            '2018 Pathology3 Test 2',
+                            '2020 Pathology3 Test 2',
+                            '2021 pathology3 T2',
+                            '2021 Pathology3 test 2 .pdf answered',
+                            '2021 Pathology3 test 2',
+                            '2022 Term 2 Pathology3',
+                            'Pathology CNS Revison Test',
+                            'Pathology3 test 2',
                             '## Test 3',
-                            '2017 Pathology Mid Term 3',
-                            '2017 Pathology Test 3',
-                            '2019 Pathology Test 3',
-                            '2021 PATHOLOGY TEST 3 - Copy (2).pdf answered',
-                            '2021 PATHOLOGY TEST 3',
-                            '2021-22 Term 3 - Pathology',
+                            '2017 Pathology3 Mid Term 3',
+                            '2017 Pathology3 Test 3',
+                            '2019 PATHOLOGY3 Test 3',
+                            '2021 PATHOLOGY3 TEST 3 - Copy (2).pdf answered',
+                            '2021 PATHOLOGY3 TEST 3',
+                            '2021-22 Term 3 - Pathology3',
                             '## Sessional Exams',
-                            '2017 Pathology Sessional',
-                            '2017 Pathology Term 3',
-                            '2019 Pathology Test 3',
-                            '2020 Pathology Sessional',
-                            '2021 Pathology - Sessional',
-                            '2021 Pathology Deferred Sessional',
-                            '2021 Pathology Test 3',
-                            '2022 Pathology Sessional',
-                            'Pathology - Sessional 2021'
+                            '2017 Pathology3 Sessional',
+                            '2017 Pathology3 Term 3',
+                            '2019 Pathology3 Test 3',
+                            '2020 Pathology3 Sessional',
+                            '2021 Pathology3 - Sessional',
+                            '2021 Pathology3 Deferred Sessional',
+                            '2021 Pathology3 Test 3',
+                            '2022 Pathology3 Sessional',
+                            'Pathology3 - Sessional 2021'
                         ]
                     }
                 ]
@@ -3091,7 +2845,6 @@
 
         // Lab Science 
             {
-            
                 id: 'lab_science',
                 name: 'Lab Science',
                 icon: 'fa-flask',
@@ -3099,92 +2852,92 @@
                 type: 'preclinical',
                 desc: 'Study gametogene',
                 terms: [
-    {
-        name: 'Term 1',
-        topics: [
-            'Laboratory Diagnosis of Disorders of the Testes',
-            'Laboratory Diagnosis of Non-Infectious Disorders Male',
-            'Laboratory Investigations for Infectious Diseases of the Male Reproductive System Part 2',
-            'Laboratory Investigations for Infectious Diseases of the Male Reproductive System',
-            'Laboratory Diagnosis of Disorders of the Pituitary Gland',
-            'Laboratory Diagnosis of Non-Infectious Diseases of Female Reproductive System',
-            'Principles of Hormonal Assays'
-        ]
-    },
-    {
-        name: 'Term 2',
-        topics: [
-            'Examination of the Synovial Fluid',
-            'Laboratory Investigations for Non-Infectious Diseases of the Skin',
-            'Laboratory Investigations in Non-Infectious Diseases of the Musculoskeletal System',
-            'Parasitic Infections of the CNS',
-            'The Cerebral Spinal Fluid Examination',
-            'Laboratory Investigation of Infectious Diseases of the Skin',
-            'Laboratory Investigations for Bacterial and Fungal Infections'
-        ]
-    },
-    {
-        name: 'Term 3',
-        topics: [
-            'Laboratory Investigations for Bacterial and Fungal Infections Part 2',
-            'Laboratory Investigations for Infections of the Musculoskeletal System',
-            'Malignant and Hemorrhagic Conditions of the CNS',
-            'Non-Infectious and Degenerative CNS Conditions',
-            'Reticuloendothelial System and Parasitic Infections Laboratory'
-        ]
-    },
-    {
-    name: 'Lab Science 3rd Year Past Papers',
-    topics: [
-        '## Test 1',
-        '2015 lab science test 1',
-        '2016 lab science test 1',
-        '2017 lab science test 1',
-        '2019 lab_science_term_1',
-        '2020 Lab science test 1',
-        '2021 lab science T1',
-        '2022 Lab Science Test 1 -',
-        '2023 Lab Science Test 1',
-        'Lab Science 1',
-        'LAB SCIENCE TEST 1 COLLECTION',
-        '## Test 2',
-        '2013 lab science Test 2',
-        '2014 Lab Science Term 2 Past Papers',
-        '2017 lab_science_term_2',
-        '2018 lab_science_term_2',
-        '2019 lab_science_term_2',
-        '2020 Lab Science test 2',
-        '2021 Lab Science test 2 (2)',
-        '2021 Lab science Test 2',
-        '2022 lab science test 2',
-        '2023 Lab Science Test 2',
-        'Lab science possible essay questions term 2',
-        'lab science test 2',
-        '## Test 3',
-        '2015 lab_science_term_3',
-        '2016 lab_science_term_3',
-        '2017 lab science term 2',
-        '2017 lab_science_term_3',
-        '2018 Lab_Science_term_3',
-        '2019 lab_science_term_3',
-        '2020 Lab science term 2',
-        '2021 lab science test 3  ✅',
-        '2022 test 3 lab science ✅',
-        '2023 Lab Science Test 3 ✅',
-        'Lab Science Term 3 possible essays',
-        '## Sessional',
-        '2017 Lab Science sessional',
-        '2018 lab Science Differed Sessional',
-        '2018 Lab Science Sessional',
-        '2019 Lab Science deffered sessional',
-        '2019 Lab Science Sessional',
-        '2020 lab science sessional',
-        '2021 Lab Science Sessional ✅',
-        '2021 lab science sup',
-        '2022 and 2020 differed sessional lab science'
-    ]
-}
-]
+                    {
+                        name: 'Term 1',
+                        topics: [
+                            'Laboratory Diagnosis of Disorders of the Testes',
+                            'Laboratory Diagnosis of Non-Infectious Disorders Male',
+                            'Laboratory Investigations for Infectious Diseases of the Male Reproductive System Part 2',
+                            'Laboratory Investigations for Infectious Diseases of the Male Reproductive System',
+                            'Laboratory Diagnosis of Disorders of the Pituitary Gland',
+                            'Laboratory Diagnosis of Non-Infectious Diseases of Female Reproductive System',
+                            'Principles of Hormonal Assays'
+                        ]
+                    },
+                    {
+                        name: 'Term 2',
+                        topics: [
+                            'Examination of the Synovial Fluid',
+                            'Laboratory Investigations for Non-Infectious Diseases of the Skin',
+                            'Laboratory Investigations in Non-Infectious Diseases of the Musculoskeletal System',
+                            'Parasitic Infections of the CNS',
+                            'The Cerebral Spinal Fluid Examination',
+                            'Laboratory Investigation of Infectious Diseases of the Skin',
+                            'Laboratory Investigations for Bacterial and Fungal Infections'
+                        ]
+                    },
+                    {
+                        name: 'Term 3',
+                        topics: [
+                            'Laboratory Investigations for Bacterial and Fungal Infections Part 2',
+                            'Laboratory Investigations for Infections of the Musculoskeletal System',
+                            'Malignant and Hemorrhagic Conditions of the CNS',
+                            'Non-Infectious and Degenerative CNS Conditions',
+                            'Reticuloendothelial System and Parasitic Infections Laboratory'
+                        ]
+                    },
+                    {
+                        name: 'Lab Science 3rd Year Past Papers',
+                        topics: [
+                            '## Test 1',
+                            '2015 lab science test 1',
+                            '2016 lab science test 1',
+                            '2017 lab science test 1',
+                            '2019 lab_science_term_1',
+                            '2020 Lab science test 1',
+                            '2021 lab science T1',
+                            '2022 Lab Science Test 1 -',
+                            '2023 Lab Science Test 1',
+                            'Lab Science 1',
+                            'LAB SCIENCE TEST 1 COLLECTION',
+                            '## Test 2',
+                            '2013 lab science Test 2',
+                            '2014 Lab Science Term 2 Past Papers',
+                            '2017 lab_science_term_2',
+                            '2018 lab_science_term_2',
+                            '2019 lab_science_term_2',
+                            '2020 Lab Science test 2',
+                            '2021 Lab Science test 2 (2)',
+                            '2021 Lab science Test 2',
+                            '2022 lab science test 2',
+                            '2023 Lab Science Test 2',
+                            'Lab science possible essay questions term 2',
+                            'lab science test 2',
+                            '## Test 3',
+                            '2015 lab_science_term_3',
+                            '2016 lab_science_term_3',
+                            '2017 lab science term 2',
+                            '2017 lab_science_term_3',
+                            '2018 Lab_Science_term_3',
+                            '2019 lab_science_term_3',
+                            '2020 Lab science term 2',
+                            '2021 lab science test 3  ✅',
+                            '2022 test 3 lab science ✅',
+                            '2023 Lab Science Test 3 ✅',
+                            'Lab Science Term 3 possible essays',
+                            '## Sessional',
+                            '2017 Lab Science sessional',
+                            '2018 lab Science Differed Sessional',
+                            '2018 Lab Science Sessional',
+                            '2019 Lab Science deffered sessional',
+                            '2019 Lab Science Sessional',
+                            '2020 lab science sessional',
+                            '2021 Lab Science Sessional ✅',
+                            '2021 lab science sup',
+                            '2022 and 2020 differed sessional lab science'
+                        ]
+                    }
+                ]
             },
             // physioogy 3dr year 
             {
@@ -3214,7 +2967,6 @@
                             '2021 3rd year test 1 physiology',
                             '2021 3rd year TEST 1 REDEMPTION 3rd Yr',
                             '2022 3rd year Physiology Term 1 3rd Yr',
-
                             '2023 3rd year Physiology Test 1 ✅',
                             '2025 3rd year physiology test 1 ✅',
                             '2026 3rd year Physiology test 1 ✅',
@@ -3231,37 +2983,14 @@
                             '2023 3rd year physiology test 3',
                             '2024 3rd year Physiology test 3 ✅',
                             '2025 3rd year physiology test 3 ✅',
+                            '2026 3rd year physiology test 3 ✅',
                             'Physiology Test 3 2023 3rd year'
                         ]
                     }
                 ]
             },
 
-            // Physiology 2nd year 
-            {
-                id: 'physiology',
-                name: 'Physiology',
-                icon: 'fa-dna',
-                year: 2,
-                type: 'preclinical',
-                desc: 'Study gametogenesis, fertilization, early embryonic development, and organogenesis.',
-                terms: [
-                    { name: 'Term 1',
-                        topics: ['Introduction to Physiology', 'Cells and its Components', 'Cells and Tissues',
-                            'Membrane Transport', 'Smooth Muscle', 'Skeletal Muscle Tissue', 'Cardiac Muscle',
-                            'Nerve Tissue', 'Synapse', 'Action Potential', 'Muscle Tissue Disorders', 'Body Fluids',
-                            'Pathophysiology of Diarrhoea'
-                        ] },
-                    { name: 'Term 2',
-                        topics: ['Blood Physiology', 'The Cardiovascular System', 'The ECG', 'Cardiac Cycle',
-                            'Blood Flow Regulation', 'BP Regulation', 'Cardiac Output'
-                        ] },
-                    { name: 'Term 3',
-                        topics: ['Introduction to the Respiratory Syst', 'Mechanics of Breathing'] }
-                ]
-            },
-
-            // {ublic Health rd year }
+            // Public Health 3rd year
             {
                 id: 'public_health',
                 name: 'Public Health',
@@ -3558,25 +3287,23 @@
 
         // ---- USER DATA with year access ----
         const users = {
-                        '2': { name: 'Doc Toto', password: 'p2', year: 2 },
+            '2': { name: 'Doc Toto', password: 'p2', year: 2 },
             'Ruth': { name: 'Dr. Ndabala', password: '6778', year: 2, courses: ['biochemistry'] },
-
-              'Christabel': { name: 'Dr. Lombi', password: 'p1', year: 2 },
-              'Luckson': { name: 'DR MVULA', password: 'p2', year: 2 },
-              'Khekhe': { name: 'Dr. Kheke', password: 'p3', year: 2 },
-              'myasa': { name: 'Dr. Amyasa', password: 'p4', year: 2 },
-              'Sails': { name: 'Dr. Sails', password: 'p5', year: 2 },
-              'Goma': { name: 'Dr. Mazyo', password: 'p6', year: 2 },
-              'Kondwanii': { name: 'Dr. Banda', password: 'p7', year: 2 },
-              'Kondwaniii': { name: 'Dr.Sakala', password: 'p8', year: 2 },
-              'Mary': { name: 'Mary', password: 'p9', year: 2 },
-              'namwinga': { name: 'Dr. Namwinga', password: '10', year: 2 },
-              'Theresa': { name: 'Theresa', password: '11', year: 2 },
-              'Vee': { name: 'Ms Vee', password: '12', year: 2 },
-              'Tee': { name: 'Ms Tee', password: '13', year: 2 },
-              'Cheelo': { name: 'Ms. Cheelo', password: 'p14', year: 2 },
-              'Teresa': { name: 'Theresa', password: 'p16', year: 2 },
-
+            'Christabel': { name: 'Dr. Lombi', password: 'p1', year: 2 },
+            'Luckson': { name: 'DR MVULA', password: 'p2', year: 2 },
+            'Khekhe': { name: 'Dr. Kheke', password: 'p3', year: 2 },
+            'myasa': { name: 'Dr. Amyasa', password: 'p4', year: 2 },
+            'Sails': { name: 'Dr. Sails', password: 'p5', year: 2 },
+            'Goma': { name: 'Dr. Mazyo', password: 'p6', year: 2 },
+            'Kondwanii': { name: 'Dr. Banda', password: 'p7', year: 2 },
+            'Kondwaniii': { name: 'Dr.Sakala', password: 'p8', year: 2 },
+            'Mary': { name: 'Mary', password: 'p9', year: 2 },
+            'namwinga': { name: 'Dr. Namwinga', password: '10', year: 2 },
+            'Theresa': { name: 'Theresa', password: '11', year: 2 },
+            'Vee': { name: 'Ms Vee', password: '12', year: 2 },
+            'Tee': { name: 'Ms Tee', password: '13', year: 2 },
+            'Cheelo': { name: 'Ms. Cheelo', password: 'p14', year: 2 },
+            'Teresa': { name: 'Theresa', password: 'p16', year: 2 },
 
             // 3rd year 
             '3': { name: 'Doc Toto', password: 'pp', year: 3 },
@@ -3603,6 +3330,7 @@
             'Lilly': { name: 'Dr. Sikasiye', password: '0010', year: 3, courses: ['pathology3', 'therap3', 'biochemistry_3', 'physiology_3', 'anatomy3'] },
             'Khalessi': { name: 'Dr. Khalessi', password: '003', year: 3, courses: ['pathology3', 'therap3', 'biochemistry_3', 'lab_science'] },
             'Mwangala': { name: 'Dr. Mwangala', password: '001', year: 3, courses: ['pathology3', 'therap3', 'biochemistry_3', 'physiology_3', 'anatomy3'] },
+            'Lydia': { name: 'Dr. Funda', password: '321', year: 3, courses: ['pathology3', 'anatomy3'] },
             'Kondwa': { name: 'Dr. Hamweemba', password: '01', year: 3, courses: ['physiology_3', 'anatomy3'] },
 
             // 4th year
@@ -3628,7 +3356,6 @@
             'Gillien': { name: 'Dr. Gïlliẽn', password: '07', year: 4 },
             'Betty': { name: 'Dr. Betty 🩺', password: '08', year: 4 },
             'Mumba': { name: 'Dr. Mumba', password: '11', year: 4 },
-
             'e4': { name: 'Emma', password: 'pass4', year: 4 },
             '6': { name: 'Doc Toto', password: '6', year: 6 },
             'd6': { name: 'David', password: 'pass6', year: 6 }
@@ -3825,7 +3552,6 @@
                                 'Lower Genital Tract Infections, Vaginal Discharge and PID',
                              
                                 'HIV in Pregnancy',
-                                // 'Uterine Fibroids'
                             ]
                         }, {
                             name: 'Week 5',
@@ -3911,7 +3637,7 @@
                                 '2024 Term 2 Test OBGYN MARKING KEY',
                                 'GYNAECOLOGY SESSIONAL 2024 Test',
                                 'OBS PAPER 1 2024',
-                                'Term 1 OBGYN 2024 June MARKING KEY',
+                                'Term 1 Test OBGYN 2024 June MARKING KEY',
                         
                                 '## 2025',
                                 '2025 Sessional GYN',
@@ -4355,12 +4081,12 @@
 
         // ---- HTML ANSWERED VERSION LINKS for past papers & quizzes ----
         const htmlAnsweredLinks = {
-            
+             '2024 Pathology3 Test 1 ✅': '2024-patho3-T1.html',
+             '2023 Pathology3 Test 1 3rd year ✅': '2023-patho3-T1.html',
+             '2022 pathology3 test 1 ✅': '2022-patho3-T1.html',
+             
             'Test 1 Biochem': 'https://214toto.github.io/myclass/MBS-230-B/biochem-test-1.html',
             'Test 2 Biochem': 'https://214toto.github.io/myclass/MBS-230-B/biochem-test-2.html',
-
-
-
             '2023 3rd year Physiology Test 1 ✅': 'physio3-t1-2023.html',
             '2025 3rd year physiology test 1 ✅': 'physio3-t1-2025.html',
             '2026 3rd year Physiology test 1 ✅': 'physio3-t1-2026.html',
@@ -4369,8 +4095,8 @@
             '2022 3rd year physiology test 3 ✅': 'physio3-t3-2022.html',
             '2024 3rd year Physiology test 3 ✅': 'physio3-t3-2024.html',
             '2025 3rd year physiology test 3 ✅': 'physio3-t3-2025.html',
-            
-             '2018 Anatomy test 1': 'https://drive.google.com/file/d/1u0b2sRl1Qfrp_yhZmYv1u4Ap3M0sqX1T/view?usp=drive_link',
+            '2026 3rd year physiology test 3 ✅': '2026-physio3-T3.html',
+            '2018 Anatomy test 1': 'https://drive.google.com/file/d/1u0b2sRl1Qfrp_yhZmYv1u4Ap3M0sqX1T/view?usp=drive_link',
             '2023 ANATOMY TEST 1': 'https://drive.google.com/file/d/1St4nfvaVN7fqK2Dq2ev4vwH8E9l8PnhJ/view?usp=drive_link',
             '2023 Anatomy test1 DK': 'https://drive.google.com/file/d/17anOoCBgr0Q3ErWnf426sBp4j_p6O9D2/view?usp=drive_link',
             '2025 Anatomy Test 1 ✅': 'https://214toto.github.io/myclass/MBS-200/2025-T1.html',
@@ -4381,7 +4107,6 @@
             '2026 Anatomy Test 2 ✅': 'https://drive.google.com/file/d/1jkyNdmMygZjTbKPMIwpb9WX2BbZfZFvN/view?usp=drivesdk',
             '2026 Anatomy Test 3 ✅': '2026-anatomy-t3.html',
             'anatomy test 3 2025 ✅': '2025-anatomy-t3.html',
-            
             '2019 sessional Deferred physiology ✅️': 'physio1-2019-def.html', 
             '2019 sessional Physiology ✅️': 'physio2-2019-sup.html', 
             '2020 Sup Physiology sessional ✅️': 'physio2-2020-sup.html', 
@@ -4389,12 +4114,8 @@
             '2022 Sup Physiology sessional ✅️': 'physio2-2022-sup.html', 
             '2023 physiology sessional ✅️': 'physio2-2023-sess.html',
             '2025 physiology sessional ✅️': '2025-sessional-physio2.html', 
-
-            // 4th year srgery 
             '2026 Test 2 Surgery': 'clinicals/Surgery/surgery-2026-T1.html',
             '2025 Test Surgery': 'clinicals/Surgery/surgery-2025-T1.html',
-
-            // 3rd year biochemistry
             '2023 Test 3 biochem 3rd Year ✅': 'biochem-3rd-year/Past-papers/test3-2023.html',
             '2021 Test 3 biochem 3rd Year ✅': 'biochem-3rd-year/Past-papers/test3-2021.html',
             '2019 Test 3 biochem 3rd Year ✅': 'biochem-3rd-year/Past-papers/test3-2019.html',
@@ -4404,8 +4125,6 @@
             '2023 Sessional biochem 3rd Year ✅': 'biochem-3rd-year/Past-papers/sessional-2023.html',
             '2022 Sessional biochem 3rd Year ✅': 'biochem-3rd-year/Past-papers/sessional-2022.html',
             '2022 Sessional biochem 3rd Year ✅': 'biochem-3rd-year/Past-papers/sessional-2022.html',
-
-            // 3rd year therap
             '2021 Test 1 (MBS 330)': 'https://drive.google.com/file/d/13Y0YtXKSvOeSNbqLlP8CkC8jbD8SnHZF/view?usp=drive_link',
             '2021 Therapeutics Test 2': 'https://drive.google.com/file/d/1IdRv-5FkHlK5EvhgJS64Qyh-uGeGfNuR/view?usp=drive_link',
             '2021 Therapeutics Test 3 ✅': 'therap-3/past-papers/2021_therap3_T3.html',
@@ -4418,67 +4137,66 @@
             'Therapeutics week 3 Test ✅': 'therap-3/past-papers/term_3_test.html',
             '2024 Therapeutics (MBS 330) Test 1': 'https://drive.google.com/file/d/1lbLpcjW1XfVZ5OWeYVUWqWaK7YS4c0D8/view?usp=drive_link',
             '2024 Therapeutics MBS330 test 2 ✅': 'therap-3/past-papers/2024_therap3_T2.html',
-
-
-            // 3rd Year lab science 
             '2023 Lab Science Test 3 ✅': 'lab_science3/papers/2023-test3.html',
             '2022 test 3 lab science ✅': 'lab_science3/papers/2022-test3.html',
             '2021 lab science test 3  ✅': 'lab_science3/papers/2021-test3.html',
             '2021 Lab Science Sessional ✅': 'lab_science3/papers/2021-sessional.html',
+        }
 
+        // ============================================================
+        // NEW HELPER FUNCTION: Safe lookup for HTML answered links
+        // Handles emoji mismatches (e.g., '✅️' vs '✅') and whitespace.
+        // ============================================================
+        function getHtmlAnsweredLink(topic) {
+            if (!topic) return '#';
+            
+            // 1. Direct match
+            if (htmlAnsweredLinks[topic]) return htmlAnsweredLinks[topic];
+
+            // 2. Normalized match (remove emojis, trim spaces, lowercase)
+            const clean = (str) => str.replace(/[\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF]/g, '').trim().toLowerCase();
+
+            const cleanTopic = clean(topic);
+            for (const key in htmlAnsweredLinks) {
+                if (clean(key) === cleanTopic) {
+                    return htmlAnsweredLinks[key];
+                }
+            }
+            return '#';
         }
 
         const quizLinks = {
-
-            // 3rd year anatomy quiz
-
             'Anti-asthmatic Drugs': 'therap-2/quiz/asthma_quiz.html',
             'Anti-asthmatic Drugs': 'therap-2/quiz/asthma_quiz.html',
-            
-            // 2nd year therapeutcs
             'Anti-asthmatic Drugs': 'therap-2/quiz/asthma_quiz.html',
             'Drugs used in the Treatment of TB': 'therap-2/quiz/TB_quiz.html',
             'Drugs used to Treat Common Cold': 'therap-2/quiz/common_cold_quiz.html',
             'Drugs acting on Cough': 'therap-2/quiz/cough_quiz.html',
             'Use of Steroids in Respiratory Disorders': 'therap-2/quiz/antifugal_quiz.html',
             'Anti-fungal': 'therap-2/quiz/antifugal_quiz.html',
-
-
-
-            // 3r year biochem
             'Nucleotide Metabolism': 'biochem-3rd-year/nucleotide-quiz.html',
-
-            // 3rd year physiology 
             'Renal Function, Anatomy and Blood Flow': 'physio3/quiz/renal-functional-quiz.html',
             'Mechanism of Urine Formation': 'physio3/quiz/urine-formation-quiz.html',
             'Concentration, Dilution and Acidification': 'physio3/quiz/conc-quiz.html',
         }
 
         // ---- NEW: MULTIPLE QUIZZES PER TOPIC ----
-        // ✅ IMPORTANT: Make sure there are NO trailing commas after the last entry!
         const quizData = {
-            
              'Synapse': [
                 { title: 'Synapse Quiz', url: 'synapse.html' },
             ],
-            
              'Skeletal Muscle Tissue': [
                  { title: 'Skeletal Muscle Quiz', url: 'GH.html' },
              ],
-             
               'Body Fluids': [
                 { title: 'Body Fluids Quiz', url: 'Fluid.html' },
             ],
-            
              'Smooth Muscle': [
                 { title: 'Smooth Muscle Quiz', url: 'smooth.html' },
             ],
-            
              'Membrane Transport': [
                 { title: 'Membrane Transport Quiz', url: 'membrane.html' },
             ],
-            
-            
              'Growth Hormone': [
                 { title: 'Growth Hormone Quiz', url: 'GH.html' },
             ],
@@ -4488,7 +4206,6 @@
              'ADH': [
                 { title: 'ADH Quiz', url: 'ADH.html' },
             ],
-            // Example topics with multiple quizzes
             'Anti-asthmatic Drugs': [
                 { title: 'Quiz 1 – Basics of Asthma Pharmacology', url: 'therap-2/quiz/asthma_quiz.html' },
                 { title: 'Quiz 2 – Drug Interactions & Side Effects', url: 'therap-2/quiz/asthma_quiz2.html' },
@@ -4502,7 +4219,6 @@
                 { title: 'Quiz 1 – Renal Anatomy & Blood Flow', url: 'physio3/quiz/renal-functional-quiz.html' },
                 { title: 'Quiz 2 – Renal Autoregulation', url: 'physio3/quiz/renal-autoregulation-quiz.html' }
             ],
-            // ✅ CORRECT: Add Head Osteology with proper syntax (NO trailing comma after the last item inside the array!)
             'Head Osteology': [
                 { title: 'Quiz 1', url: 'anatomy3/quiz/osteology-quiz1.html' },
                 { title: 'Quiz 2', url: 'anatomy3/quiz/osteology-quiz2.html' }
@@ -4514,108 +4230,80 @@
                 { title: 'Cerebellar Quiz', url: 'anatomy3/quiz/cerebellum-quiz.html' },
                 { title: 'Reticular & Limbic System', url: 'anatomy3/quiz/reticular-quiz.html' },
             ]
-            // ⚠️ IMPORTANT: NO trailing comma after the last entry!
         };
 
         const pdfLinks = {
-            
-
-    // 2020
-    '2020 OBGY Test 1 answered': 'https://drive.google.com/file/d/1ln1jh4yKPZi7x7NKk_9m0xFNG6qUACSk/view?usp=drivesdk',
-    '2020 OCTOBER GROUP 3 OBGYN Test': 'https://drive.google.com/file/d/1bSAWKSTKJdH1D0TR_L4UuxUEmDmVWO7s/view?usp=drivesdk',
-    '2020 Revision Test answered': 'https://docs.google.com/presentation/d/17jIY3RO9XXg_ULt2cUQhfN63mjBP1m5t/edit?usp=drivesdk&ouid=110700472908024825820&rtpof=true&sd=true',
-    '2020 Term 1 Test OBGY answered': 'https://drive.google.com/file/d/159X3RYTNhknM2exlljWQREYLkn0iW6W1/view?usp=drivesdk',
-
-    // 2021
-    '2021 sessional OBS MARKING KEY Test 1': 'https://drive.google.com/file/d/14lQuxPKqhPRP4koCYYlDqX4MyAeCvj9T/view?usp=drivesdk',
-    '2021 sessional OBS MARKING KEY Test 2': 'https://drive.google.com/file/d/1sKfpmTQBt1R1VrQlKVwIhsemAeCdWZFy/view?usp=drivesdk',
-    '2021 to 2025 Tests Dr. Chikunyu': 'https://drive.google.com/file/d/1VAVy0VWZtUGtVpqMZ5G_Qgv59palX-k5/view?usp=drivesdk',
-
-    // 2022
-    '2022 Answered Test OBGY': 'https://drive.google.com/file/d/15C7w9boWpEekjxJFN4O_Bddzai2Bqo2h/view?usp=drivesdk',
-    '2022 OBGYN SESSIONAL MARKING KEY 1': 'https://drive.google.com/file/d/1IokoooFf1CeSUP8K4swXtvv_AesktKTm/view?usp=drivesdk',
-    '2022 OBGYN SESSIONAL MARKING KEY 2': 'https://drive.google.com/file/d/1mw34Ca9NpZIOHTJYKnpgGCqZ70pZxVHV/view?usp=drivesdk',
-    '2022 OBGYN SESSIONAL MARKING KEY 3': 'https://drive.google.com/file/d/1oSLvDd__UH35uOQ2XoASO_OjXqNC1bmS/view?usp=drivesdk',
-    '2022 Sessional OBGY': 'https://drive.google.com/file/d/1IBguzwPSZgkFaLpVTskwTQgHmveNgGzH/view?usp=drivesdk',
-    
-    'OBGY 510 OSCE 2022 answered': 'https://drive.google.com/file/d/1K7CWAIU2KPNjLoXCzJh3cCUhyt3MJ362/view?usp=drivesdk',
-
-    // 2023
-    '2023 Answers OBGY Test 2': 'https://drive.google.com/file/d/1T8gFAk5xtuccRxeCQQIemIOSLA7Pgb7U/view?usp=drivesdk',
-    '2023 OBGY Test': 'https://drive.google.com/file/d/1Qwj3HInzcCTmw_D0APba_tq5aqm2-p7l/view?usp=drivesdk',
-    '2023 Sesional OBGY': 'https://drive.google.com/file/d/1l5PiCTXpLpcAbIK7vHU4UHMiH-W9lPLJ/view?usp=drivesdk',
-    '2023 SESSIONAL WRITTEN IN MARKING KEY': 'https://drive.google.com/file/d/1XPSiK_u-buDE_JvnmZ8OjFpRia5tv-Q0/view?usp=drivesdk',
-    '2023 SESSIONAL': 'https://drive.google.com/file/d/10dxGjCMdapaxjgSaGUdEayqRPgwxrizh/view?usp=drivesdk',
-    '2023 Term 2 Test Answers OBGY': 'https://drive.google.com/file/d/1AL9iv7brxn6PIt63wpxF051jD7thJEU2/view?usp=drivesdk',
-    '2023 Term 2 Test OBGY': 'https://drive.google.com/file/d/1ARTDWCeY0EPz2WTGAzDKRdMMH2AWgOYi/view?usp=drivesdk',
-    '2023 Term 2 Test OBGY 2': 'https://drive.google.com/file/d/1zy8ovyH5WS9TKvA0gFyxOoJGRM6SW84h/view?usp=drivesdk',
-    'obs & gyn 2023 Sessional': 'https://drive.google.com/file/d/1VO6tRdWGjtfFW5vA1NGCIkRfbQZRoXKA/view?usp=drivesdk',
-    'OBSTETRICS SESSIONAL 2023 WRITTEN': 'https://drive.google.com/file/d/19AzczXQZd5wPeSXiuCq8f38ukjJIoeSb/view?usp=drivesdk',
-
-    // 2024
-    '2024 5th Year Sessional': 'https://drive.google.com/file/d/1VUc_b3FCPtzJOuEwdSlnEWQs8WjRij51/view?usp=drivesdk',
-    '2024 GYNAE Test PAPER 2': 'https://drive.google.com/file/d/1DCCQNEc79IvVvJkePhkxBT1k8nguD3cM/view?usp=drivesdk',
-    '2024 OBSTETRICS SESSIONAL answered': 'https://drive.google.com/file/d/1LQtUDU1a_s-oKPPwmPdvQkEcX_X22u-4/view?usp=drivesdk',
-    '2024 OBSTETRICS SESSIONAL': 'https://drive.google.com/file/d/1d0DXcSOtvyZfr-YtfYVxwbiMbAl96MEZ/view?usp=drivesdk',
-    '2024 Sessional OBGY': 'https://drive.google.com/file/d/1cXp9NvSItc0FzpaTltMnATq4bpMubcCA/view?usp=drivesdk',
-    '2024 Sessional OBGY 2': 'https://drive.google.com/file/d/1LvOPBY5YB_d4HzeFAlVFXwpJrj_hynr4/view?usp=drivesdk',
-    '2024 Sessional OBS': 'https://drive.google.com/file/d/1b3sVixYX9TGS8UrxzACkdK_ZG-dHLS5j/view?usp=drivesdk',
-    '2024 Sessional OBS 2': 'https://drive.google.com/file/d/1cXp9NvSItc0FzpaTltMnATq4bpMubcCA/view?usp=drivesdk',
-    '2024 Sessional Paper 1 Obs': 'https://drive.google.com/file/d/1U1kLcWsM9WwgdJGFRR29s2zl5X2XCalA/view?usp=drivesdk',
-    '2024 Sessional Paper 1': 'https://drive.google.com/file/d/1pfm9cT7b709n34vWC3m7KdPnwvR4m9E2/view?usp=drivesdk',
-    '2024 Term 1 Test OBGY': 'https://drive.google.com/file/d/1k7v_-n7391FU3oPr1Ol5p9BA5PfgAlLp/view?usp=drivesdk',
-    '2024 Term 1 Test OBGYN MARKING KEY': 'https://drive.google.com/file/d/1FBDL637yr20QB4LbsMcN2UDNkesUEJIK/view?usp=drivesdk',
-    '2024 Term 2 OBGYN MARKING KEY': 'https://drive.google.com/file/d/10Lte0CIXB7FHslJ_O6NuWlR-6Fxr8n8g/view?usp=drivesdk',
-    '2024 Term 2 Test OBGYN MARKING KEY': 'https://drive.google.com/file/d/1k7v_-n7391FU3oPr1Ol5p9BA5PfgAlLp/view?usp=drivesdk',
-    'GYNAECOLOGY SESSIONAL 2024 Test': 'https://drive.google.com/file/d/1mX2bjC5sfvJ3IQMmvjpaw5in9SLWpmEn/view?usp=drivesdk',
-    'OBS PAPER 1 2024': '',
-    'Term 1 Test OBGYN 2024 June MARKING KEY': 'https://drive.google.com/file/d/1lzlowTN6YHvttEb57Hj1zcK7qxC8M6BY/view?usp=drivesdk',
-
-    // 2025
-    '2025 Sessional GYN': 'https://drive.google.com/file/d/1lNDNmWRHRYi6LgViKPjgpUduNNL7Oyec/view?usp=drivesdk',
-    '2025 Test 2': 'https://drive.google.com/file/d/1rgYkQM9aWotKhnWPwUhuUNmUXM0bCfmm/view?usp=drivesdk',
-    'Sessional Paper 2 GYN 2025': 'https://drive.google.com/file/d/10L1_aJ1gqTx-RgoXtJd_eduWgXzzwxEL/view?usp=drivesdk',
-
-    // General / Undated Tests
-    'ANSWERED FOURTH YEAR CLINICAL Test': 'https://drive.google.com/file/d/1yBBKcZ_ryQGb-WnBRL3nIYgFb0R6Ljrb/view?usp=drivesdk',
-    'Answers (QUESTIONS) OBGY T 2 Test': 'https://drive.google.com/file/d/1m0LshWI5sKFgemtWlBQiHzaq4auI5gMx/view?usp=drivesdk',
-    'KITWE TEST': 'https://drive.google.com/file/d/1RAxubtkccn1CNao0YPxkcNNRbGNtN_zJ/view?usp=drivesdk',
-    'MK_OBGY_OSCE_HOLY_GRAIL': 'https://drive.google.com/file/d/1uWl4SKT8mvv-AOLwmkhaBiRDfFEElWig/view?usp=drivesdk',
-    'OBGY MCQ Test': 'https://drive.google.com/file/d/1UBMC2Ds6F-g1bRQ62vvVU5OdLk3hb9nE/view?usp=drivesdk',
-    'OBGY P1 MCQ Test': 'https://drive.google.com/file/d/1Iyq7nl0Sznie3HWl-4Ewd6YeyHS4HvCx/view?usp=drivesdk',
-    'OBGYN Group D Term 2 End of Rotation Test': 'https://drive.google.com/file/d/1xulacx6xJA7YkrOjIQt7yEa19dg_okB4/view?usp=drivesdk',
-    'Obs and GYN term 2 Test': 'https://drive.google.com/file/d/1yJjaw4N5xzR-xKh4Ni8N5iXLJSOURHiX/view?usp=drivesdk',
-    'OSCE DATA MUST GO THROUGH Test': '',
-    'Term 2 Test OBGY': '',
-
-            
-                '2019 Pathology2 Test 1': 'https://drive.google.com/file/d/1DgKVncj-dwGcygQJwGotUqtMs9eTmjQV/view?usp=drivesdk',
-                '2023 Pathology2 Test 1': 'https://drive.google.com/file/d/1QMIVF8Qd_C8lYuVQeWkBNNsmPJu2pPrK/view?usp=drivesdk',
-                '2024 Pathology2 Test 1': 'https://drive.google.com/file/d/1okdfvIsjO4j5Pu33lFimHYwlc2AQ15ks/view?usp=drivesdk',
-                
-                '2022 TERM 2 PATHOLOGY2': 'https://drive.google.com/file/d/1ognHfzuX1PLBqqhjC_3kraK8RIagws0s/view?usp=drivesdk',
-                '2023 Pathology2 test 2': 'https://drive.google.com/file/d/1F07dqIb0kYOFMZCPcUfUhOudSof7VqOl/view?usp=drivesdk',
-                '2024 pathology2 test 2': 'https://drive.google.com/file/d/1aj0w1rvDQIuqvUv29ujfhL_xdC2fCdHY/view?usp=drivesdk',
-                '2025 Pathology2 T2': 'https://drive.google.com/file/d/1blCIO1FuXM72Z7eu7AijnYZZ4-rd_1fP/view?usp=drivesdk',
-                
-                '2023 pathology2 test 3': 'https://drive.google.com/file/d/194Ngm2niiYOvPpu3MZsknGEyhl7d1LMo/view?usp=drivesdk',
-                '2024 Pathology2 Test 3': 'https://drive.google.com/file/d/1iSDbj-5x9my1mY3sjFP8RwfjeLN3BjsJ/view?usp=drivesdk',
-                
-                '2024 pathology2 sessional': 'https://drive.google.com/file/d/12uYzQoFEi11Mcb96iHyG7EX592Gl3bmD/view?usp=drivesdk',
-                '2025 pathology2 sessional': 'https://drive.google.com/file/d/15D2mODWDl5ZrQ8LNBNDeiINmOfJnwVvJ/view?usp=drivesdk',
-
-            
-               'Test 1 Biochem': 'https://214toto.github.io/myclass/MBS-230-B/biochem-test-1.html',
-                'Test 2 Biochem': 'https://214toto.github.io/myclass/MBS-230-B/biochem-test-2.html',
-
-
-
-           '2018 3rd year physiology test 1': 'https://drive.google.com/file/d/1lDKDMsJxvYaYrx_uB9HJQCMb0MJFDboT/view?usp=drive_link',
+            '2020 OBGY Test 1 answered': 'https://drive.google.com/file/d/1ln1jh4yKPZi7x7NKk_9m0xFNG6qUACSk/view?usp=drivesdk',
+            '2020 OCTOBER GROUP 3 OBGYN Test': 'https://drive.google.com/file/d/1bSAWKSTKJdH1D0TR_L4UuxUEmDmVWO7s/view?usp=drivesdk',
+            '2020 Revision Test answered': 'https://docs.google.com/presentation/d/17jIY3RO9XXg_ULt2cUQhfN63mjBP1m5t/edit?usp=drivesdk&ouid=110700472908024825820&rtpof=true&sd=true',
+            '2020 Term 1 Test OBGY answered': 'https://drive.google.com/file/d/159X3RYTNhknM2exlljWQREYLkn0iW6W1/view?usp=drivesdk',
+            '2021 sessional OBS MARKING KEY Test 1': 'https://drive.google.com/file/d/14lQuxPKqhPRP4koCYYlDqX4MyAeCvj9T/view?usp=drivesdk',
+            '2021 sessional OBS MARKING KEY Test 2': 'https://drive.google.com/file/d/1sKfpmTQBt1R1VrQlKVwIhsemAeCdWZFy/view?usp=drivesdk',
+            '2021 to 2025 Tests Dr. Chikunyu': 'https://drive.google.com/file/d/1VAVy0VWZtUGtVpqMZ5G_Qgv59palX-k5/view?usp=drivesdk',
+            '2022 Answered Test OBGY': 'https://drive.google.com/file/d/15C7w9boWpEekjxJFN4O_Bddzai2Bqo2h/view?usp=drivesdk',
+            '2022 OBGYN SESSIONAL MARKING KEY 1': 'https://drive.google.com/file/d/1IokoooFf1CeSUP8K4swXtvv_AesktKTm/view?usp=drivesdk',
+            '2022 OBGYN SESSIONAL MARKING KEY 2': 'https://drive.google.com/file/d/1mw34Ca9NpZIOHTJYKnpgGCqZ70pZxVHV/view?usp=drivesdk',
+            '2022 OBGYN SESSIONAL MARKING KEY 3': 'https://drive.google.com/file/d/1oSLvDd__UH35uOQ2XoASO_OjXqNC1bmS/view?usp=drivesdk',
+            '2022 Sessional OBGY': 'https://drive.google.com/file/d/1IBguzwPSZgkFaLpVTskwTQgHmveNgGzH/view?usp=drivesdk',
+            'OBGY 510 OSCE 2022 answered': 'https://drive.google.com/file/d/1K7CWAIU2KPNjLoXCzJh3cCUhyt3MJ362/view?usp=drivesdk',
+            '2023 Answers OBGY Test 2': 'https://drive.google.com/file/d/1T8gFAk5xtuccRxeCQQIemIOSLA7Pgb7U/view?usp=drivesdk',
+            '2023 OBGY Test': 'https://drive.google.com/file/d/1Qwj3HInzcCTmw_D0APba_tq5aqm2-p7l/view?usp=drivesdk',
+            '2023 Sesional OBGY': 'https://drive.google.com/file/d/1l5PiCTXpLpcAbIK7vHU4UHMiH-W9lPLJ/view?usp=drivesdk',
+            '2023 SESSIONAL WRITTEN IN MARKING KEY': 'https://drive.google.com/file/d/1XPSiK_u-buDE_JvnmZ8OjFpRia5tv-Q0/view?usp=drivesdk',
+            '2023 SESSIONAL': 'https://drive.google.com/file/d/10dxGjCMdapaxjgSaGUdEayqRPgwxrizh/view?usp=drivesdk',
+            '2023 Term 2 Test Answers OBGY': 'https://drive.google.com/file/d/1AL9iv7brxn6PIt63wpxF051jD7thJEU2/view?usp=drivesdk',
+            '2023 Term 2 Test OBGY': 'https://drive.google.com/file/d/1ARTDWCeY0EPz2WTGAzDKRdMMH2AWgOYi/view?usp=drivesdk',
+            '2023 Term 2 Test OBGY 2': 'https://drive.google.com/file/d/1zy8ovyH5WS9TKvA0gFyxOoJGRM6SW84h/view?usp=drivesdk',
+            'obs & gyn 2023 Sessional': 'https://drive.google.com/file/d/1VO6tRdWGjtfFW5vA1NGCIkRfbQZRoXKA/view?usp=drivesdk',
+            'OBSTETRICS SESSIONAL 2023 WRITTEN': 'https://drive.google.com/file/d/19AzczXQZd5wPeSXiuCq8f38ukjJIoeSb/view?usp=drivesdk',
+            '2024 5th Year Sessional': 'https://drive.google.com/file/d/1VUc_b3FCPtzJOuEwdSlnEWQs8WjRij51/view?usp=drivesdk',
+            '2024 GYNAE Test PAPER 2': 'https://drive.google.com/file/d/1DCCQNEc79IvVvJkePhkxBT1k8nguD3cM/view?usp=drivesdk',
+            '2024 OBSTETRICS SESSIONAL answered': 'https://drive.google.com/file/d/1LQtUDU1a_s-oKPPwmPdvQkEcX_X22u-4/view?usp=drivesdk',
+            '2024 OBSTETRICS SESSIONAL': 'https://drive.google.com/file/d/1d0DXcSOtvyZfr-YtfYVxwbiMbAl96MEZ/view?usp=drivesdk',
+            '2024 Sessional OBGY': 'https://drive.google.com/file/d/1cXp9NvSItc0FzpaTltMnATq4bpMubcCA/view?usp=drivesdk',
+            '2024 Sessional OBGY 2': 'https://drive.google.com/file/d/1LvOPBY5YB_d4HzeFAlVFXwpJrj_hynr4/view?usp=drivesdk',
+            '2024 Sessional OBS': 'https://drive.google.com/file/d/1b3sVixYX9TGS8UrxzACkdK_ZG-dHLS5j/view?usp=drivesdk',
+            '2024 Sessional OBS 2': 'https://drive.google.com/file/d/1cXp9NvSItc0FzpaTltMnATq4bpMubcCA/view?usp=drivesdk',
+            '2024 Sessional Paper 1 Obs': 'https://drive.google.com/file/d/1U1kLcWsM9WwgdJGFRR29s2zl5X2XCalA/view?usp=drivesdk',
+            '2024 Sessional Paper 1': 'https://drive.google.com/file/d/1pfm9cT7b709n34vWC3m7KdPnwvR4m9E2/view?usp=drivesdk',
+            '2024 Term 1 Test OBGY': 'https://drive.google.com/file/d/1k7v_-n7391FU3oPr1Ol5p9BA5PfgAlLp/view?usp=drivesdk',
+            '2024 Term 1 Test OBGYN MARKING KEY': 'https://drive.google.com/file/d/1FBDL637yr20QB4LbsMcN2UDNkesUEJIK/view?usp=drivesdk',
+            '2024 Term 2 OBGYN MARKING KEY': 'https://drive.google.com/file/d/10Lte0CIXB7FHslJ_O6NuWlR-6Fxr8n8g/view?usp=drivesdk',
+            '2024 Term 2 Test OBGYN MARKING KEY': 'https://drive.google.com/file/d/1k7v_-n7391FU3oPr1Ol5p9BA5PfgAlLp/view?usp=drivesdk',
+            'GYNAECOLOGY SESSIONAL 2024 Test': 'https://drive.google.com/file/d/1mX2bjC5sfvJ3IQMmvjpaw5in9SLWpmEn/view?usp=drivesdk',
+            'OBS PAPER 1 2024': '',
+            'Term 1 Test OBGYN 2024 June MARKING KEY': 'https://drive.google.com/file/d/1lzlowTN6YHvttEb57Hj1zcK7qxC8M6BY/view?usp=drivesdk',
+            '2025 Sessional GYN': 'https://drive.google.com/file/d/1lNDNmWRHRYi6LgViKPjgpUduNNL7Oyec/view?usp=drivesdk',
+            '2025 Test 2': 'https://drive.google.com/file/d/1rgYkQM9aWotKhnWPwUhuUNmUXM0bCfmm/view?usp=drivesdk',
+            'Sessional Paper 2 GYN 2025': 'https://drive.google.com/file/d/10L1_aJ1gqTx-RgoXtJd_eduWgXzzwxEL/view?usp=drivesdk',
+            'ANSWERED FOURTH YEAR CLINICAL Test': 'https://drive.google.com/file/d/1yBBKcZ_ryQGb-WnBRL3nIYgFb0R6Ljrb/view?usp=drivesdk',
+            'Answers (QUESTIONS) OBGY T 2 Test': 'https://drive.google.com/file/d/1m0LshWI5sKFgemtWlBQiHzaq4auI5gMx/view?usp=drivesdk',
+            'KITWE TEST': 'https://drive.google.com/file/d/1RAxubtkccn1CNao0YPxkcNNRbGNtN_zJ/view?usp=drivesdk',
+            'MK_OBGY_OSCE_HOLY_GRAIL': 'https://drive.google.com/file/d/1uWl4SKT8mvv-AOLwmkhaBiRDfFEElWig/view?usp=drivesdk',
+            'OBGY MCQ Test': 'https://drive.google.com/file/d/1UBMC2Ds6F-g1bRQ62vvVU5OdLk3hb9nE/view?usp=drivesdk',
+            'OBGY P1 MCQ Test': 'https://drive.google.com/file/d/1Iyq7nl0Sznie3HWl-4Ewd6YeyHS4HvCx/view?usp=drivesdk',
+            'OBGYN Group D Term 2 End of Rotation Test': 'https://drive.google.com/file/d/1xulacx6xJA7YkrOjIQt7yEa19dg_okB4/view?usp=drivesdk',
+            'Obs and GYN term 2 Test': 'https://drive.google.com/file/d/1yJjaw4N5xzR-xKh4Ni8N5iXLJSOURHiX/view?usp=drivesdk',
+            'OSCE DATA MUST GO THROUGH Test': '',
+            'Term 2 Test OBGY': '',
+            '2019 Pathology2 Test 1': 'https://drive.google.com/file/d/1DgKVncj-dwGcygQJwGotUqtMs9eTmjQV/view?usp=drivesdk',
+            '2023 Pathology2 Test 1': 'https://drive.google.com/file/d/1QMIVF8Qd_C8lYuVQeWkBNNsmPJu2pPrK/view?usp=drivesdk',
+            '2024 Pathology2 Test 1': 'https://drive.google.com/file/d/1okdfvIsjO4j5Pu33lFimHYwlc2AQ15ks/view?usp=drivesdk',
+            '2022 TERM 2 PATHOLOGY2': 'https://drive.google.com/file/d/1ognHfzuX1PLBqqhjC_3kraK8RIagws0s/view?usp=drivesdk',
+            '2023 Pathology2 test 2': 'https://drive.google.com/file/d/1F07dqIb0kYOFMZCPcUfUhOudSof7VqOl/view?usp=drivesdk',
+            '2024 pathology2 test 2': 'https://drive.google.com/file/d/1aj0w1rvDQIuqvUv29ujfhL_xdC2fCdHY/view?usp=drivesdk',
+            '2025 Pathology2 T2': 'https://drive.google.com/file/d/1blCIO1FuXM72Z7eu7AijnYZZ4-rd_1fP/view?usp=drivesdk',
+            '2023 pathology2 test 3': 'https://drive.google.com/file/d/194Ngm2niiYOvPpu3MZsknGEyhl7d1LMo/view?usp=drivesdk',
+            '2024 Pathology2 Test 3': 'https://drive.google.com/file/d/1iSDbj-5x9my1mY3sjFP8RwfjeLN3BjsJ/view?usp=drivesdk',
+            '2024 pathology2 sessional': 'https://drive.google.com/file/d/12uYzQoFEi11Mcb96iHyG7EX592Gl3bmD/view?usp=drivesdk',
+            '2025 pathology2 sessional': 'https://drive.google.com/file/d/15D2mODWDl5ZrQ8LNBNDeiINmOfJnwVvJ/view?usp=drivesdk',
+            'Test 1 Biochem': 'https://214toto.github.io/myclass/MBS-230-B/biochem-test-1.html',
+            'Test 2 Biochem': 'https://214toto.github.io/myclass/MBS-230-B/biochem-test-2.html',
+            '2018 3rd year physiology test 1': 'https://drive.google.com/file/d/1lDKDMsJxvYaYrx_uB9HJQCMb0MJFDboT/view?usp=drive_link',
             '2019 3rd year Physiology test 1': 'https://drive.google.com/file/d/1ZPSmHEtPBcWPmGrJofCRa5wdGMSOtQ48/view?usp=drive_link',
             '2021 3rd year test 1 physiology': 'https://drive.google.com/file/d/1IztbHlksHzYd7_Av-piaQDVepL_fjKp0/view?usp=drive_link',
             '2021 3rd year TEST 1 REDEMPTION 3rd Yr': 'https://drive.google.com/file/d/1qt_gX8yGM5o9OxY4rnVOIDvAfqW3hC3_/view?usp=drive_link',
             '2022 3rd year Physiology Term 1 3rd Yr': 'https://drive.google.com/file/d/1I_uc4EX9fquCbQBb1NdkCyn5KtUErKCW/view?usp=drive_link',
-
             '2023 3rd year Physiology Test 1 ✅': 'https://drive.google.com/file/d/1aHSIzqna0mmMIwU9juCoaA9ADSIpQs4O/view?usp=drive_link',
             '2025 3rd year physiology test 1 ✅': 'https://drive.google.com/file/d/1vAW2bTNcB3fEL9GM0i1b9toNoXXFYcDJ/view?usp=drive_link',
             '2026 3rd year Physiology test 1 ✅': 'https://drive.google.com/file/d/14WwlKg862lXg9S5T1cFBz25hNf6xReYm/view?usp=drive_link',
@@ -4629,11 +4317,8 @@
             '2022 3rd year physiology test 3 ✅': 'https://drive.google.com/file/d/1MbWXBjzX4tdZB8fbH-wG53SoerGxaE4z/view?usp=drive_link',
             '2024 3rd year Physiology test 3 ✅': 'https://drive.google.com/file/d/1Y1xv9KCcMrlXlokuUcDKZ8q9851EUcJo/view?usp=drive_link',
             '2025 3rd year physiology test 3 ✅': 'https://drive.google.com/file/d/1-Oa4Imc0p8FR3DY7pL-kt9rIxlwxaFJs/view?usp=drive_link',
-
+            '2026 3rd year physiology test 3 ✅': 'https://drive.google.com/file/d/1zNZFkuoS0QwMvyEsNcF2ff7vY3drVmAx/view?usp=drivesdk',
             'Physiology Test 3 2023 3rd year': 'https://drive.google.com/file/d/14dJ-8H1SyoZ8iErN2DBnkCatSn1Csl0X/view?usp=drive_link',
-
-
-
             '2018 Anatomy test 1': 'https://drive.google.com/file/d/1u0b2sRl1Qfrp_yhZmYv1u4Ap3M0sqX1T/view?usp=drive_link',
             '2023 ANATOMY TEST 1': 'https://drive.google.com/file/d/1St4nfvaVN7fqK2Dq2ev4vwH8E9l8PnhJ/view?usp=drive_link',
             '2023 Anatomy test1 DK': 'https://drive.google.com/file/d/17anOoCBgr0Q3ErWnf426sBp4j_p6O9D2/view?usp=drive_link',
@@ -4645,30 +4330,24 @@
             '2026 Anatomy Test 2 ✅': 'https://drive.google.com/file/d/1jkyNdmMygZjTbKPMIwpb9WX2BbZfZFvN/view?usp=drivesdk',
             '2026 Anatomy Test 3 ✅': 'https://drive.google.com/file/d/1NHRdWeHZwAvIzrumveFCYXeI4ThPkcId/view?usp=drive_link',
             'anatomy test 3 2025 ✅': 'https://drive.google.com/file/d/1zjJwS6_DLUQvu-f7jSyZjwOqz7tjK9qx/view?usp=drive_link',
-            
             '2017 Test 2 Physiology': 'https://drive.google.com/file/d/1GFOSByODYrScm0jH0rFDsNX849Wj7bRw/view?usp=drivesdk', 
-                            '2021 Test 1 Physiology': 'https://drive.google.com/file/d/1UpDV_2qcmIe4O5CyzqaMME2OqPduzwKJ/view?usp=drivesdk', 
-                            '2022 Test 1 Physiology': 'https://drive.google.com/file/d/1CxZ8AoS0G25xzevv9ZxB5Tnb2-9DutJY/view?usp=drivesdk', 
-                            '2023 Test 1 Physiology': 'https://drive.google.com/file/d/1DeQ8B5WC_bb2Rgg466qlSPxiklcUZidp/view?usp=drivesdk', 
-                            '2024 physiology test 1': 'https://drive.google.com/file/d/1uxWtkXJbg15m70WBB8QhKeQiOWUOUybz/view?usp=drivesdk', 
-                            '2025 physiology test 1': 'https://drive.google.com/file/d/1Sif84A8678zePeJuXDqLOc73i9gP7s5u/view?usp=drivesdk', 
-                            '2026 Physiology test 1': 'https://drive.google.com/file/d/1VYZBBOZhmsW_AoDUZNKDn7Ihgzmv-Qwk/view?usp=drivesdk', 
-                            'PHYSIOLOGY TEST 1 PAPER': 'https://drive.google.com/file/d/1aVtnVtra2B1nAbQx-5nvEzWl-kcDP0Qf/view?usp=drivesdk', 
-                            
-                            '2017 physiology Test 2': 'https://drive.google.com/file/d/1CbN5Uw8YVbwbowBP5mHLJOWDXV-x66hC/view?usp=drivesdk', 
-                            '2019 PHYSIOLOGY PAPER test': 'https://drive.google.com/file/d/1I8T32auwKYbkW0S02Y96GZEQMf2zdlIw/view?usp=drivesdk', 
-                            '2022 Physiology test 2': 'https://drive.google.com/file/d/11_7t1G6x8xAiFeFKhVYVFO_ld7tqIDPG/view?usp=drivesdk', 
-                            '2024 PHYSIOLOGY Test 2': 'https://drive.google.com/file/d/1hdZ-qIyyONFF0Pjvh7H9LcoGrRZ-rDAK/view?usp=drivesdk', 
-                            '2025 physiology test 2': 'https://drive.google.com/file/d/14KN_LOb21ipfD33MjRs7SdaXs4ecnf1k/view?usp=drivesdk', 
-                            '2026 physiology test 2': 'https://drive.google.com/file/d/1Oiro3Jy4khDS-SxyOfpOIDaxRD_nhmjT/view?usp=drivesdk', 
-                            
-                            '2017 Test 1 Physiology': 'https://drive.google.com/file/d/1i0eiqtdd_weFix3yVQ9SI06YwBTVfND3/view?usp=drivesdk', 
-                            '2022 physiology test 3': 'https://drive.google.com/file/d/1HAYPJ-jYR8MbLaSz4dGuXOS7BpgKcMxJ/view?usp=drivesdk', 
-                            '2024 Physiology test 3': 'https://drive.google.com/file/d/1l9eBCCDqlpdC5tRlLXqrBsU15vh-nMSJ/view?usp=drivesdk', 
-                            '2025 physiology test 3': 'https://drive.google.com/file/d/1NsHrLqBhzoDFK5RJJyEbxq8yhtyH59XO/view?usp=drivesdk', 
-            
-            
-            
+            '2021 Test 1 Physiology': 'https://drive.google.com/file/d/1UpDV_2qcmIe4O5CyzqaMME2OqPduzwKJ/view?usp=drivesdk', 
+            '2022 Test 1 Physiology': 'https://drive.google.com/file/d/1CxZ8AoS0G25xzevv9ZxB5Tnb2-9DutJY/view?usp=drivesdk', 
+            '2023 Test 1 Physiology': 'https://drive.google.com/file/d/1DeQ8B5WC_bb2Rgg466qlSPxiklcUZidp/view?usp=drivesdk', 
+            '2024 physiology test 1': 'https://drive.google.com/file/d/1uxWtkXJbg15m70WBB8QhKeQiOWUOUybz/view?usp=drivesdk', 
+            '2025 physiology test 1': 'https://drive.google.com/file/d/1Sif84A8678zePeJuXDqLOc73i9gP7s5u/view?usp=drivesdk', 
+            '2026 Physiology test 1': 'https://drive.google.com/file/d/1VYZBBOZhmsW_AoDUZNKDn7Ihgzmv-Qwk/view?usp=drivesdk', 
+            'PHYSIOLOGY TEST 1 PAPER': 'https://drive.google.com/file/d/1aVtnVtra2B1nAbQx-5nvEzWl-kcDP0Qf/view?usp=drivesdk', 
+            '2017 physiology Test 2': 'https://drive.google.com/file/d/1CbN5Uw8YVbwbowBP5mHLJOWDXV-x66hC/view?usp=drivesdk', 
+            '2019 PHYSIOLOGY PAPER test': 'https://drive.google.com/file/d/1I8T32auwKYbkW0S02Y96GZEQMf2zdlIw/view?usp=drivesdk', 
+            '2022 Physiology test 2': 'https://drive.google.com/file/d/11_7t1G6x8xAiFeFKhVYVFO_ld7tqIDPG/view?usp=drivesdk', 
+            '2024 PHYSIOLOGY Test 2': 'https://drive.google.com/file/d/1hdZ-qIyyONFF0Pjvh7H9LcoGrRZ-rDAK/view?usp=drivesdk', 
+            '2025 physiology test 2': 'https://drive.google.com/file/d/14KN_LOb21ipfD33MjRs7SdaXs4ecnf1k/view?usp=drivesdk', 
+            '2026 physiology test 2': 'https://drive.google.com/file/d/1Oiro3Jy4khDS-SxyOfpOIDaxRD_nhmjT/view?usp=drivesdk', 
+            '2017 Test 1 Physiology': 'https://drive.google.com/file/d/1i0eiqtdd_weFix3yVQ9SI06YwBTVfND3/view?usp=drivesdk', 
+            '2022 physiology test 3': 'https://drive.google.com/file/d/1HAYPJ-jYR8MbLaSz4dGuXOS7BpgKcMxJ/view?usp=drivesdk', 
+            '2024 Physiology test 3': 'https://drive.google.com/file/d/1l9eBCCDqlpdC5tRlLXqrBsU15vh-nMSJ/view?usp=drivesdk', 
+            '2025 physiology test 3': 'https://drive.google.com/file/d/1NsHrLqBhzoDFK5RJJyEbxq8yhtyH59XO/view?usp=drivesdk', 
             '2019 sessional Deferred physiology ✅️': 'https://drive.google.com/file/d/1mi5OXXOP4zm9pEeY2ybk7hjDrxE0yb_e/view?usp=drivesdk', 
             '2019 sessional Physiology ✅️': 'https://drive.google.com/file/d/1ZEux_ex0wjh7-2tsH_-_6DUcpoti0Pam/view?usp=drivesdk', 
             '2020 Sup Physiology sessional ✅️': 'https://drive.google.com/file/d/10MFg5ns899Ycj6vweydlBxakVoF41N3u/view?usp=drivesdk', 
@@ -4676,7 +4355,6 @@
             '2022 Sup Physiology sessional ✅️': 'https://drive.google.com/file/d/1WRzia3H12Eic2-i1SaZ3muF3jBHbVd4G/view?usp=drivesdk', 
             '2023 physiology sessional ✅️': 'https://drive.google.com/file/d/1OH4JfZCiUkBXCMrE5Pn8qYP8Wr7Uyyt5/view?usp=drivesdk', 
             '2025 physiology sessional ✅️': 'https://drive.google.com/file/d/1Ahp8aePXvIdBURTjyqXE-eLp_8JUvggK/view?usp=drivesdk', 
-
             '2017 4th Year Test 2 End of Term': 'https://drive.google.com/file/d/1pP47kqbEm4qp6kfBqqW0xijvG6sIUwHO/view?usp=drive_link',
             '2018 4th Year Test 2 End of Term': 'https://drive.google.com/file/d/1GRACSQPRyUw8-mwWFbjY_t0FeNao3ORJ/view?usp=drive_link',
             '2018 4th year Test Paper 1': 'https://drive.google.com/file/d/1pVPdhfR0Sl7tUtgRUKwb8mCI7zBy3wDa/view?usp=drive_link',
@@ -4696,46 +4374,39 @@
             '2023 imed Test p2 term 1': 'https://drive.google.com/file/d/123BgMLigpXN8TvU95B4qvWRRvwoKesZO/view?usp=drive_link',
             '2023 Test MCS-600-T2-P2': 'https://drive.google.com/file/d/1-naFv_DqDIoVSqQHuICJYxTlkYsdqeAH/view?usp=drive_link',
             '2023 Test t4 imed': 'https://drive.google.com/file/d/1ld73OkkzUJykU35hmevQqGkU5KH5dwk2/view?usp=drive_link',
-
-            // 3rd year Pathology
-            '2016 Pathology Mid Term 1 Test': '',
-            '2016 Pathology Test 1': '',
-            '2017 Pathology Test 1': '',
-            '2018 Pathology Test 1': '',
-            '2019 PATHOLOGY TERM 1 (2)': '',
-            '2020 Pathology term 1': '',
-            '2022 pathology test 1': '',
-            '2023 Pathology Test 1 3rd year': '',
-            '2024 Pathology test 1': '',
-            'pathology test 1': '',
-            'Pathos': '',
-            '2015,16 Pathology Test 2': '',
-            '2018 Pathology term 2 test': '',
-            '2018 Pathology Test 2': '',
-            '2020 Pathology Test 2': '',
-            '2021 pathology T2': '',
-            '2021 Pathology test 2 .pdf answered': '',
-            '2021 Pathology test 2': '',
-            '2022 Term 2 Pathology': '',
-            'Pathology CNS Revison': 'https://drive.google.com/file/d/1afzr2UNtFqRKKwvDhR7L6Q8T04NTBb2Y/view?usp=drive_link',
-            'Pathology test 2': 'https://drive.google.com/file/d/1PMhc_bR4QldyWk09ouh43VqCwX82gOh2/view?usp=drive_link',
-            '2017 Pathology Mid Term 3': 'https://drive.google.com/file/d/1s1OtbRFCRElqvOWGt0wU3Lpiz5QFYfoU/view?usp=drive_link',
-            '2017 Pathology Test 3': 'https://drive.google.com/file/d/1FmSUQNKMkoqVid48ulfJiZt1SRmHcc2v/view?usp=drive_link',
-            '2019 Pathology Test 3': 'https://drive.google.com/file/d/1ynY2u6H5seBcgKueyp44HI3841laFHR3/view?usp=drive_link',
-            '2021 PATHOLOGY TEST 3 - Copy (2).pdf answered': 'https://drive.google.com/file/d/1kDFfmkZ5RLZJ7CGC8SJpUm1o48xN5cuj/view?usp=drive_link',
-            '2021 PATHOLOGY TEST 3': 'https://drive.google.com/file/d/19CuR0AxiLlaulgLS_8Pt9LsEb9S3D6ob/view?usp=drive_link',
-            '2021-22 Term 3 - Pathology': 'https://drive.google.com/file/d/1Tq7DPEv2QmY18jxuHapud8xnDqxFPmuo/view?usp=drive_link',
-            '2017 Pathology Sessional': 'https://drive.google.com/file/d/13iOq2FPyWYjbdB5TD1hU7Bcs9reNv_AF/view?usp=drive_link',
-            '2019 Pathology Term 3': '',
-            '2020 Pathology Sessional': 'https://drive.google.com/file/d/1axX12KOeBph1zL33YeLcNBw9qqAi0kRg/view?usp=drive_link',
-            
-
-            '2021 Pathology Deferred Sessional': 'https://drive.google.com/file/d/1pzVoorTOg30czCSg__ZwIq9LfiCcjfaW/view?usp=drive_link',
-            '2022 Pathology Sessional': 'https://drive.google.com/file/d/16dtNLbInxvvVdj5rWPbtmbz84mZN0d9d/view?usp=drive_link',
-            'Pathology - Sessional 2021': 'https://drive.google.com/file/d/1Tj3uf-GgSCatC8DruRyc_yQr-chnsXa5/view?usp=drive_link',
-
-            // Anatomy 3rd year 
-
+            '2016 Pathology3 Mid Term 1 Test': 'https://drive.google.com/file/d/16zUXuh7s3UQ-bconzH-7hXpGDtbWqMMU/view?usp=drivesdk',
+            '2016 Pathology3 Test 1': 'https://drive.google.com/file/d/1xXGiwQswGeyzRDNj8HYffd-ZoiD2g57R/view?usp=drivesdk',
+            '2017 Pathology3 Test 1': 'https://drive.google.com/file/d/1FGW2tKd2VjCIIjZA7ZoxFyn6gtonEas-/view?usp=drivesdk',
+            '2018 Pathology3 Test 1': 'https://drive.google.com/file/d/13TEZt24aHby_xZlqPZzV8JZkXxRKEvZU/view?usp=drivesdk',
+            '2019 PATHOLOGY3 TERM 1 (2)': 'https://drive.google.com/file/d/1Q7_noqR5O7K4McYZ8E5BUW430RFcbodd/view?usp=drivesdk',
+            '2020 Pathology3 term 1': 'https://drive.google.com/file/d/1KDyl6GOTc2kQOOiwZ3T9ITQPV1qEnTs5/view?usp=drivesdk',
+            '2022 pathology3 test 1 ✅': 'https://drive.google.com/file/d/1s3IJ-JV9pbM95AmUo675PIo5l9xW-E1q/view?usp=drivesdk',
+            '2023 Pathology3 Test 1 3rd year ✅': 'https://drive.google.com/file/d/1XuY6xTu8hzpib7xuwOMN2rkaj_Xh73pS/view?usp=drivesdk',
+            '2024 Pathology3 Test 1 ✅': 'https://drive.google.com/file/d/1_btRuO_1d7dsMjNp-lwcMrI3zwklHVy0/view?usp=drivesdk',
+            'pathology3 test 1': 'https://drive.google.com/file/d/1ERPflvOwOoRf8kkYyHpBZfjN4qvZ3Nip/view?usp=drivesdk',
+            'Pathos': 'https://drive.google.com/file/d/1dfbkUbl0hMGXtPnZ2nQOUlKYJIbnJuFy/view?usp=drivesdk',
+            '2015,16 Pathology3 Test 2': 'https://drive.google.com/file/d/10_d0NqlGdWQqwHc0i--xA2fxbhZGInd2/view?usp=drivesdk',
+            '2018 Pathology3 term 2 test': 'https://drive.google.com/file/d/1wbD8xP7R3sYnanCIvoV-cN3_C9hk6e-6/view?usp=drivesdk',
+            '2018 Pathology3 Test 2': 'https://drive.google.com/file/d/11rSSP2TmfubBEN53RzXpmATUzSIEKBnY/view?usp=drivesdk',
+            '2020 Pathology3 Test 2': 'https://drive.google.com/file/d/1JzPQkQ3dxtUp_u0SfqnBUwn7R7mDc6J4/view?usp=drivesdk',
+            '2021 pathology3 T2': 'https://drive.google.com/file/d/1gGRp1kJmjtxf1KA3XwHHUWjGxH_L6vKg/view?usp=drivesdk',
+            '2021 Pathology3 test 2 .pdf answered': 'https://drive.google.com/file/d/1cKNvw8o99lnVHSTyoq-L0NgfVvsA__hl/view?usp=drivesdk',
+            '2021 Pathology3 test 2': 'https://drive.google.com/file/d/1bpcfNDmHfKjL-2U9eqMqgnjaiFzsURXa/view?usp=drivesdk',
+            '2022 Term 2 Pathology3': 'https://drive.google.com/file/d/1VdlocccfFGY1h9HWXZzbWaE_rhV-VQer/view?usp=drivesdk',
+            'Pathology CNS Revison Test': 'https://drive.google.com/file/d/1afzr2UNtFqRKKwvDhR7L6Q8T04NTBb2Y/view?usp=drive_link',
+            'Pathology3 test 2': 'https://drive.google.com/file/d/1PMhc_bR4QldyWk09ouh43VqCwX82gOh2/view?usp=drivesdk',
+            '2017 Pathology3 Mid Term 3': 'https://drive.google.com/file/d/1s1OtbRFCRElqvOWGt0wU3Lpiz5QFYfoU/view?usp=drive_link',
+            '2017 Pathology3 Test 3': 'https://drive.google.com/file/d/1FmSUQNKMkoqVid48ulfJiZt1SRmHcc2v/view?usp=drive_link',
+            '2019 Pathology3 Test 3': 'https://drive.google.com/file/d/1ynY2u6H5seBcgKueyp44HI3841laFHR3/view?usp=drive_link',
+            '2021 PATHOLOGY3 TEST 3 - Copy (2).pdf answered': 'https://drive.google.com/file/d/1kDFfmkZ5RLZJ7CGC8SJpUm1o48xN5cuj/view?usp=drive_link',
+            '2021 PATHOLOGY3 TEST 3': 'https://drive.google.com/file/d/19CuR0AxiLlaulgLS_8Pt9LsEb9S3D6ob/view?usp=drive_link',
+            '2021-22 Term 3 - Pathology3': 'https://drive.google.com/file/d/1Tq7DPEv2QmY18jxuHapud8xnDqxFPmuo/view?usp=drive_link',
+            '2017 Pathology3 Sessional': 'https://drive.google.com/file/d/13iOq2FPyWYjbdB5TD1hU7Bcs9reNv_AF/view?usp=drive_link',
+            '2019 Pathology3 Term 3': '',
+            '2020 Pathology3 Sessional': 'https://drive.google.com/file/d/1axX12KOeBph1zL33YeLcNBw9qqAi0kRg/view?usp=drive_link',
+            '2021 Pathology3 Deferred Sessional': 'https://drive.google.com/file/d/1pzVoorTOg30czCSg__ZwIq9LfiCcjfaW/view?usp=drive_link',
+            '2022 Pathology3 Sessional': 'https://drive.google.com/file/d/16dtNLbInxvvVdj5rWPbtmbz84mZN0d9d/view?usp=drive_link',
+            'Pathology3 - Sessional 2021': 'https://drive.google.com/file/d/1Tj3uf-GgSCatC8DruRyc_yQr-chnsXa5/view?usp=drive_link',
             '2019 Test 3 Anatomy': 'https://drive.google.com/file/d/1TojEI5tWN2B41cWc89RyRKaxh9pVoUCY/view?usp=drive_link',
             '2021 Test 3 Anatomy': 'https://drive.google.com/file/d/1hNhJvvvTOQ7NwhKp6WgNGxciTaHEVDz3/view?usp=drive_link',
             '2022 Test 3 Anatomy': 'https://drive.google.com/file/d/1lTq5dzynIrzgbmHA_LfFWPpF3o18kM7v/view?usp=drive_link',
@@ -4746,9 +4417,6 @@
             '2019 Anatomy Sessional': 'https://drive.google.com/file/d/1-76Tvej_c51aBkTiRmcDw9YQNjD6kjXH/view?usp=drive_link',
             '2019 Anatomy Sessional Sup': 'https://drive.google.com/file/d/1lm-IQDA6Sla1sp1rnoOG1zx8UbZk0M7C/view?usp=drive_link',
             '2020 Anatomy Sessional': 'https://drive.google.com/file/d/12WwyiqZ7QwxAqXP-xjeEj8nXDS1Kymu8/view?usp=drive_link',
-
-
-            // lab science 3rd year 
             '2015 lab science test 1': 'https://drive.google.com/file/d/19zMmuuOpNKThNcEJcIVLbKOe3p_c8jNA/view?usp=drive_link',
             '2016 lab science test 1': '',
             '2017 lab science test 1': '',
@@ -4791,8 +4459,6 @@
             '2021 Lab Science Sessional ✅': 'https://drive.google.com/file/d/1pf3hNfeDPsYZV_Nqg-xRKRJvQcl-MuIg/view?usp=drive_link',
             '2021 lab science sup': 'https://drive.google.com/file/d/1CkJZgAWjLB4iNj9u0pQNl8KNnC101YpF/view?usp=drive_link',
             '2022 and 2020 differed sessional lab science': 'https://drive.google.com/file/d/1N905aAmUN0TAoeeJucomTfATXnXdScyu/view?usp=drive_link',
-
-            // 4th year Public HEalth
             '2020 Test': 'https://drive.google.com/file/d/1KaKOHuD-BhXyCNnyo_ezk1CdE3EAKkD9/view?usp=drive_link',
             '2021 Sessional': 'https://drive.google.com/file/d/13IO0FNc9OgPFT7RTctGNSrR86BuOcIfC/view?usp=drive_link',
             '2022 Sessional Dec': 'https://drive.google.com/file/d/1gJEiTGMCL3xSsIBNuTla0OpLYOZhqLVW/view?usp=drive_link',
@@ -4810,8 +4476,6 @@
             'Heamatology Practice Questions': 'https://drive.google.com/file/d/1ykgKjGbwoLwkBTk1nAcbXqG0x5889V7o/view?usp=drive_link',
             'Parasitology Practice Questions': 'https://drive.google.com/file/d/1aboifmNexlzakZ1WU94EBRiI9IJiKLaO/view?usp=drive_link',
             'Public Health Past Papers': 'https://drive.google.com/drive/folders/1yr5nQIUcoqmgtezewhJWTB21awS91X20?usp=drive_link',
-
-            // 3dr year Publi HEalth 
             '2021 Sessional': 'https://drive.google.com/file/d/13IO0FNc9OgPFT7RTctGNSrR86BuOcIfC/view?usp=drive_link',
             '20something Sessional PH': 'https://drive.google.com/file/d/12Ru35MAck4b7epbluvTmPuPPboi40Mf3/view?usp=drive_link',
             '20something Test PH (biostats)': 'https://drive.google.com/file/d/1bHpkT8sv7DjsIUpLFUW5Vex9vPh55Kkk/view?usp=drive_link',
@@ -4849,11 +4513,6 @@
             'pht2': 'https://drive.google.com/file/d/1jNdkwkLc9sR_kQ6xn3SPC06M58-M3rMT/view?usp=drive_link',
             'Public Health Questions from Tutorial': 'https://drive.google.com/file/d/1aOv4bXyvBjMrS5kVOgEidGHW6SLFRdP7/view?usp=drive_link',
             'public health test 1 2022': 'https://drive.google.com/file/d/1Nweq0sOJKT6Xwk_Y_GTFszLSsgzIyrgG/view?usp=drive_link',
-            // ... add all your past papers with their PDF links
-            // '2026 Test 2 Surgery': 'clinicals/Surgery/surgery-2026-T1.pdf',   // local or full URL
-            // etc.
-
-            // 4th surgery past papers 
             '2025 Test Surgery': 'https://drive.google.com/file/d/1NvIi2e8yLT_cjcxCGwV0kOj6RqkxQEAS/view?usp=drive_link',
             '2024 Test Surgery': 'https://drive.google.com/file/d/1SRsTajXDmz6DQ4-DdDrLK51dWuEL5N-Z/view?usp=drive_link',
             '2024 Test 2': 'https://drive.google.com/file/d/1wlbDbixqNp-Re6D-JhKf0Yh5nCDGZt1N/view?usp=drive_link',
@@ -4865,16 +4524,9 @@
             '2021 Sept Test Surgery': 'https://drive.google.com/file/d/1Xv0PVYRLdLjKdY5ouyNk0TH2QHb9dQ7s/view?usp=drive_link',
             'OSCE Test Surgery': 'https://drive.google.com/file/d/1aHEXKk_7rqhk_KV0r4xm9eOWG6abYwml/view?usp=drive_link',
             'Term 2, 3, 4 Test Surgery': 'https://drive.google.com/file/d/1etzIJ58RKWy_UcWCTcGVHGBr_DiGa4F8/view?usp=drive_link',
-
             'Term 1 Test Surgery': 'https://drive.google.com/file/d/17-POlkxb2pV68RPWuVeYnnwUEAKYPsBC/view?usp=drive_link',
             'Online Test Revision Surgery': 'https://drive.google.com/file/d/10VMjv91otcHDJ41kt-431tQhtH3fEvIk/view?usp=drive_link',
-
-            // IMED PAPERS
-
             '2026 Test 1 IMED': 'https://drive.google.com/file/d/1YOUR_HTML_ANSWERED_2021_SEPT_SURGERY/view?usp=drive_link',
-
-            // 3rd year biochemistry 
-            // Test 1s
             '2017 Test 1 biochem 3rd Year': 'https://drive.google.com/file/d/1ksoYCKXrf8sBigTOSOyZWDVct-SmPTTn/view?usp=drive_link',
             '2020 Test 1 biochem 3rd Year': 'https://drive.google.com/file/d/1G_xStlMthg_qaYZEHud35vF_t9KTjQsw/view?usp=drive_link',
             '2021 Test 1 biochem 3rd Year': 'https://drive.google.com/file/d/1rR2zmaudJo_ZcWXasKJKEHIO7BFwGR6J/view?usp=drive_link',
@@ -4884,16 +4536,12 @@
             '2024 Test 1 biochem 3rd Year': 'https://drive.google.com/file/d/16xLEeA3mB8ziwHnw9ZluNxx2UwjlSzPx/view?usp=drive_link',
             'BIOCHEM TEST 1 COLLECTION.pdf': 'https://drive.google.com/file/d/1vhnkK2eL2YbSnKPPOTg4xNJIF3KDziQ0/view?usp=drive_link',
             'Biochem test 1 sample-1.pdf': 'https://drive.google.com/file/d/1ZZosoVdhkhJuHDXjcHRcydH9CZuESqHs/view?usp=drive_link',
-
-            // Test 2s
             '20something Test 2 Def biochem 3rd Year': 'https://drive.google.com/file/d/1yLZGxrh6eh0j2yRWQZ3LKP63Fn4HfMEd/view?usp=drive_link',
             '2021 Test 2 biochem 3rd Year': 'https://drive.google.com/file/d/1BNA4ShEDgN9eNfXqEt15J43vZZvAjHXz/view?usp=drive_link',
             '2023 Test 2 biochem 3rd Year': 'https://drive.google.com/file/d/1BFieotIGIpAcZ7poAxRWLTaGyDnyC-kI/view?usp=drive_link',
             '2024 Test 2 biochem 3rd Year Biomed': 'https://drive.google.com/file/d/1QTQNRujaF_DATX-2ES9oE0bfODwR4ytC/view?usp=drive_link',
             '2024 Test 2 biochem 3rd Year': 'https://drive.google.com/file/d/1kwH5opoR2CBVlvZaDS4Q692-6cp5CauI/view?usp=drive_link',
             'Biochemistry 2025 test 2 - ToToZ App.pdf': 'https://drive.google.com/file/d/1y5APt3wfj12MAxXN6w9aryoQM5mwZ9Wt/view?usp=drive_link',
-
-            // Test 3s
             '2017 Test 3 biochem 3rd Year': 'https://drive.google.com/file/d/1IFfJXZr-ciUHBhZllIYBnbE1-XbSB6qZ/view?usp=drive_link',
             '2018 Test 3 biochem 3rd Year ✅': 'https://drive.google.com/file/d/1KjQFOthOtdcDxRg6clrd6dEoPhVZsk7J/view?usp=drive_link',
             '2019 Test 3 biochem 3rd Year ✅': 'https://drive.google.com/file/d/1vD7YELBTEDi33bmS8RYuRGZtnsgvjlLJ/view?usp=drive_link',
@@ -4902,8 +4550,6 @@
             '2025 Test 3 biochem 3rd Year ✅': 'https://drive.google.com/file/d/12k6Hy0ilWuCeapwZVCGyqDUObTCqCuZF/view?usp=drive_link',
             '2022 Test 3 biochem 3rd Year ✅': 'https://drive.google.com/file/d/1pL20tHRoHo7VJAAX2mEHLHt7LwZhRn2i/view?usp=drive_link',
             'Biochem term 3 Written section year 3.pdf': 'https://drive.google.com/file/d/1TquQ2IW09mRMHuKJQaE9WGeqPs5f8OrH/view?usp=drive_link',
-
-            // Sessionals
             '20something Sessional biochem 3rd Year': 'https://drive.google.com/file/d/1AJ_RduRYnOTBSiYgBcIzV6k9R8j3U_hp/view?usp=drive_link',
             '2017 Sessional biochem 3rd Year': 'https://drive.google.com/file/d/1apujUOk-EKMe9q9Q_KjR10r-oEFE8QwH/view?usp=drive_link',
             '2018 Sessional biochem 3rd Year': 'https://drive.google.com/file/d/17j36ZJxKov-kGEhtlE6Epri-9iSOXGHW/view?usp=drive_link',
@@ -4914,8 +4560,6 @@
             '2021 Sessional biochem 3rd Year': 'https://drive.google.com/file/d/1ndnu6EuHY4xboOtz8Ojm8QdVu6NenXsv/view?usp=drive_link',
             '2022 Sessional biochem 3rd Year ✅': 'https://drive.google.com/file/d/1R2VU8CIFa8QjMwVUiOnm8iStF9mIRV40/view?usp=drive_link',
             '2023 Sessional biochem 3rd Year ✅': 'https://drive.google.com/file/d/1GDyPsVNMNb9rfNmpStcZNG2WrguTPfm_/view?usp=drive_link',
-
-            // 3rd year therapeutics 
             'Therapeutics Test 1 (MBS 330)': 'https://drive.google.com/file/d/1l1FljauzBuWR8wle0v25x4QF82wlbp0R/view?usp=drive_link',
             '2023 Therapeutics Test 1 (MBS 330)': 'https://drive.google.com/file/d/1D-MYaEsEtuj2l01DRoreKWeoIqW3evlb/view?usp=drive_link',
             '2021 Test 1 (MBS 330)': 'https://drive.google.com/file/d/13Y0YtXKSvOeSNbqLlP8CkC8jbD8SnHZF/view?usp=drive_link',
@@ -4938,26 +4582,20 @@
 
         // ---- VIDEO DATA: maps topic names to an array of video objects with YouTube URLs ----
         const videoData = {
-            
             'The Cardiovascular System': [
                 { title: 'ECG Part 1', url: 'https://drive.google.com/file/d/1hNmfT_hC8B7SQ9z3w57oZsNc66K6FSBC/view?usp=drivesdk' },
                 { title: 'ECG Part 2', url: 'https://drive.google.com/file/d/14UXNy8fHgw_lxym94nTvvrjo7RY-KyZF/view?usp=drivesdk' },
                 { title: 'Cardiac Cycle', url: 'https://drive.google.com/file/d/1-Y8DA1EUN17HGQEmWT0sqR5UzqBjoaTb/view?usp=drivesdk' },
             ],
-            
             'Synapse': [
                 { title: 'Synapse Part 1', url: 'https://drive.google.com/file/d/1JLfq58GhcYszDHw1k04JK3gkEzfBQ8b7/view?usp=drivesdk' },
                  { title: 'Synapse Part 2', url: 'https://drive.google.com/file/d/1FIX0T7KNxMLNOtMbZvqvHcb9FrcFFcP5/view?usp=drivesdk' },
                  { title: 'Synapse Part 3', url: 'https://drive.google.com/file/d/1YwczU5ttpt1U45Sk2stC339JIeurmUww/view?usp=drivesdk' },
                  { title: 'Synapse Part 4', url: 'https://drive.google.com/file/d/1xy54FXpuPfCS4l8x95hUCmtfvdCZMXVN/view?usp=drivesdk' },
-            
             ],
-            
             'Smooth Muscle': [
                 { title: 'Smooth Muscle Video', url: 'https://drive.google.com/file/d/1T9Z2KNMiD5EW40okZ9REVtYBQDS8Krt0/view?usp=drivesdk' },
-            
             ],
-            
             'Membrane Transport': [
                 { title: 'Membrane Transport Part 1', url: 'https://drive.google.com/file/d/1oVO-3zmydZysjSCsCcdL6WqVEjGTStrt/view?usp=drivesdk' },
                 { title: 'Membrane Transport Part 2', url: 'https://drive.google.com/file/d/1h3NOew0TzdWD_xgaqHnMHNMwUHFQ7NXn/view?usp=drivesdk' },
@@ -4966,15 +4604,7 @@
             ],
             'Respiratory System': [
                 { title: 'Mechanics of Breathing', url: 'https://drive.google.com/drive/folders/1pEsK7OHr5WUYgPdC15GBT-JjmjUfYRtj' },
-         
             ],
-            
-            
-            
-            
-            
-            
-            
             'GIT Pathology': [
                 { title: 'Oral Cavity', url: 'https://drive.google.com/file/d/1vBYQ8HkiQbizZJ20tlhXM4XZG7cuWrYw/view?usp=drivesdk' },
                 { title: 'Salivary Gland', url: 'https://drive.google.com/file/d/1r60x4WFgALsEKNmGZjc3FJV3qeNuKQmz/view?usp=drivesdk' },
@@ -4985,7 +4615,6 @@
                 { title: 'Colon', url: 'https://drive.google.com/file/d/1UYwoLaSl5Zw-P4gnLttWbhlbKIsauiJG/view?usp=drivesdk' },
                 { title: 'Colorectal Carcinoma', url: 'https://drive.google.com/file/d/1DQ8xS_zkR4Q_5qvhRcFHZRI2ZAZp7IFF/view?usp=drivesdk' },
             ],
-            
             'Accessory Organos of the GIT': [
                 { title: 'Gall Bladder & Billiary Tract', url: 'https://drive.google.com/file/d/1lLAlW5BakGk6UxGjvoZxWBjMhmfifGzA/view?usp=drivesdk' },
                 { title: 'Pancreas', url: 'https://drive.google.com/file/d/1H-koN4VD6vebIMnPnCx-t2c5bzzOV2BZ/view?usp=drivesdk' },
@@ -4993,8 +4622,6 @@
                 { title: 'Liver Part 2', url: 'https://drive.google.com/file/d/11w_IV5_rYz0X6betS4528XWq_OAl0FeZ/view?usp=drivesdk' },
                 { title: 'Liver Part 3', url: 'https://drive.google.com/file/d/19V0Z3kk8jvUpyrB9dCsEqQXBghTcOZ8Q/view?usp=drivesdk' },
             ],
-            
-            
             'Nucleotide Metabolism': [
                 { title: 'Lesson Video Part 1', url: 'https://drive.google.com/file/d/1m3Tjby8Zo9bgV5jviE90_cQX5ktMMmQ-/view?usp=drive_link' },
                 { title: 'Lesson Video Part 2', url: 'https://drive.google.com/file/d/1bFizeAl3LE5C6F83JRLxPHkHhiOvHkT-/view?usp=drive_link' },
@@ -5065,7 +4692,6 @@
                 { title: 'Accessory Nerve', url: 'video.html?topic=11' },
                 { title: 'Hypoglossal Nerve', url: 'video.html?topic=12' },
             ],
-
 
             // ========== 2nd Year Therapeutics ==========
             'Common Terminologies Used in Pharmacology': [
@@ -5270,15 +4896,11 @@
                  'Heamoglobin': [
                 { title: 'Hemoglobin Lesson',
                     url: 'https://drive.google.com/file/d/1pgG_XMonYImXymtBOv2kMrenPfeYQdDH/view?usp=drivesdk' },
-        
             ],
             'Carbohydrates': [
                 { title: 'Carbohydrates Lesson',
                     url: 'https://drive.google.com/file/d/19jPzWapqgjk47vWWoaeJNewXCTuvvonW/view?usp=drivesdk' },
-                
-                
             ],
-       
             'Lipids': [
                 { title: 'Lipids Part 1',
                     url: 'https://drive.google.com/file/d/1qs5wYHggPN5W8y0gZe8o228EQkX5l06U/view?usp=drivesdk' },
@@ -5289,7 +4911,6 @@
             'Pituitary Gland': [
                 { title: 'Anti-Diuretic Hormone', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
             ],
-
             'Thyroid Gland': [
                 { title: 'Thyroid Hormone Synthesis',
                     url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
@@ -5297,23 +4918,18 @@
                     url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
                 { title: 'Thyroid Disorders', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
             ],
-            
              'ADH': [
                 { title: 'ADH Lesson', url: 'https://drive.google.com/file/d/1OwaOrOan5a-7-jOfVUxv_xsDuhkIZgL8/view?usp=drivesdk' },
             ],
-            
              'Parathyroid Gland': [
                 { title: 'Parathyroid Gland Lesson', url: 'https://drive.google.com/file/d/19vdQ87zj-89iFrWEaYIZDDi7IXatf1AR/view?usp=drivesdk' },
             ],
-
             'Renal Function, Anatomy and Blood Flow': [
                 { title: 'Renal Anatomy', url: 'https://drive.google.com/file/d/1Lg-b2ULZ-UZx2-YTI6pBKKHrx-b9iZcN/view?usp=drive_link' },
             ],
-
             'Mechanism of Urine Formation': [
                 { title: 'Urine Formation', url: 'https://drive.google.com/file/d/1yaqs7_lyRmMHriEybqO8YpHErdNrUhgj/view?usp=drive_link' },
             ],
-
             'Energy Metabolism and Nutrition': [
                 { title: 'Protein Sparing Effect', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
                 { title: 'Recommended Dietary Allowance',
@@ -5706,7 +5322,6 @@
                 { title: 'Antibiotic Management of UTIs',
                     url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
             ],
-
             'Site A: Cardiac Rehab': [
                 { title: 'Cardiac Rehabilitation Programs at NTH',
                     url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
@@ -5735,8 +5350,6 @@
                 { title: 'Dialysis Access – AV Fistula and Catheters at NTH',
                     url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
             ],
-
-            // ========== Site B Clinical Topics ==========
             'Site B: HF Guidelines': [
                 { title: 'Heart Failure Guidelines at Kitwe Teaching Hospital',
                     url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
@@ -5761,8 +5374,6 @@
                 { title: 'Bowel Obstruction Management at Site B',
                     url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
             ],
-
-            // ========== Site C Clinical Topics ==========
             'Site C: Community HF': [
                 { title: 'Community Heart Failure Care at Site C',
                     url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
@@ -5779,8 +5390,6 @@
                 { title: 'Day Surgery Procedures at Site C',
                     url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
             ],
-
-            // ========== 6th Year Advanced Topics ==========
             'Site A: Sepsis Protocol': [
                 { title: 'Sepsis Management Protocol at NTH – Advanced',
                     url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
@@ -5805,8 +5414,6 @@
                 { title: 'Sepsis Care in Community Settings at Site C',
                     url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
             ],
-
-            // ========== Additional General Topics ==========
             'Heart Failure': [
                 { title: 'Heart Failure – Pathophysiology and Treatment',
                     url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
@@ -5940,20 +5547,15 @@
 
         // ---- AUDIO DATA: maps topic names to an array of audio objects ----
         const audioData = {
-            
              'Thyroid Gland': [
                 { title: 'Thyroid Gland Audio', url: 'https://drive.google.com/file/d/1di3dbO6GJ_XkPoP983wyIO_7X0ylzF-4/view?usp=drivesdk' },
             ],
-            
              'Growth Hormone': [
                 { title: 'Growth Hormone Audio', url: 'https://drive.google.com/file/d/1-cJU5XZQ4Fq941SB8xCWug2tOKqNIS1f/view?usp=drivesdk' },
             ],
-            
              'ADH': [
                 { title: 'ADH Audio', url: 'https://drive.google.com/file/d/1pzRUO_M2KUUp3G7QZu8x2-StJXhqYG3K/view?usp=drivesdk' },
             ],
-
-            
             'Mechanism of Urine Formation': [
                 { title: 'Audio Lecture',
                     url: 'https://drive.google.com/file/d/10mXt_orOdy18XyuIjVDucKmbk2fbcMPY/view?usp=drive_link' },
@@ -5974,8 +5576,6 @@
                 { title: 'Audio Lecture',
                     url: 'https://drive.google.com/file/d/1BGzU2XfZ-dTtIzSWgf1abftBF4Wx4FGV/view?usp=drive_link' },
             ],
-
-            // 2nd Year Therapeutics
             'Common Terminologies Used in Pharmacology': [
                 { title: 'Pharmacology Terms – Audio Lecture',
                     url: 'https://drive.google.com/file/d/1kvnbKUYuoTevA5t30hUreEFOSGWZD2LO/view?usp=drive_link' },
@@ -5988,11 +5588,6 @@
                 { title: 'Drug Distribution – Audio Summary',
                     url: 'https://drive.google.com/file/d/1audio_distribution/view?usp=drive_link' },
             ],
-
-            // 2nd Year Biochemistry
-      
-
-            // Term 1
             'Drugs affecting fertility and reproduction': [
                 { title: 'Class Notes',
                     url: 'https://drive.google.com/file/d/1kvnbKUYuoTevA5t30hUreEFOSGWZD2LO/view?usp=drive_link' }
@@ -6021,8 +5616,6 @@
                 { title: 'Class Notes',
                     url: 'https://drive.google.com/file/d/1rdntvzQY5bW-siiPzAslMPvYbKn9AaFT/view?usp=drive_link' }
             ],
-
-            // Term 2
             'Anti-Gout drugs': [
                 { title: 'Class Notes',
                     url: 'https://drive.google.com/file/d/1WcpFCqvMLl3lYDhgNDGl6Gi2k7GW8or_/view?usp=drive_link' }
@@ -6051,8 +5644,6 @@
                 { title: 'Class Notes',
                     url: 'https://drive.google.com/file/d/16Roc52y3nysRuGKSt36qj_A6T1DEz4Xw/view?usp=drive_link' }
             ],
-
-            // Term 3
             'Antiretroviral': [
                 { title: 'Class Notes',
                     url: 'https://drive.google.com/file/d/1nP9AyyLTnCGZcYZgg6OacVHliEQA4L9P/view?usp=drive_link' }
@@ -6081,8 +5672,6 @@
                 { title: 'Class Notes',
                     url: 'https://drive.google.com/file/d/1RNl9eMJhpf9T_D4zRhCXQvX891lrBhQZ/view?usp=drive_link' }
             ],
-
-            // 3rd Year Public Health
             'Introduction to Epidemiology': [
                 { title: 'Epidemiology Intro – Audio',
                     url: 'https://drive.google.com/file/d/1audio_epi_intro/view?usp=drive_link' },
@@ -6091,8 +5680,6 @@
                 { title: 'Measures of Association – Audio',
                     url: 'https://drive.google.com/file/d/1audio_association/view?usp=drive_link' },
             ],
-
-            // 4th Year Surgery
             'Acute Appendicitis': [
                 { title: 'Appendicitis – Audio Lecture',
                     url: 'https://drive.google.com/file/d/1audio_appendicitis/view?usp=drive_link' },
@@ -6101,8 +5688,6 @@
                 { title: 'GIT Bleeding – Audio Summary',
                     url: 'https://drive.google.com/file/d/1audio_git_bleeding/view?usp=drive_link' },
             ],
-
-            // 4th Year OB/GYN
             'Diagnosis of Labour and Normal Labour': [
                 { title: 'Labour Diagnosis – Audio',
                     url: 'https://drive.google.com/file/d/1audio_labour/view?usp=drive_link' },
@@ -6115,7 +5700,6 @@
 
         // ---- DOCUMENT DATA: maps topic names to an array of document objects ----
         const docData = {
-            
             'Introduction to Physiology': [
                 { title: 'Class notes', url: 'https://drive.google.com/file/d/1fhRTFXxO5IpQEeaHo02aRiutYkbc7EDB/view?usp=drivesdk' }
             ],
@@ -6184,9 +5768,7 @@
                 { title: 'Digestion of Carb, PROT, FAT', url: 'https://drive.google.com/file/d/15w5auMlkJBSRAjj3KGgMoi1wJvRDznZT/view?usp=drivesdk' },
                 { title: 'GI motility, MASTICATION, DEGLUTITION', url: 'https://drive.google.com/file/d/1oyL8ZHkvb8-yL3BRXTjzZuLCym25NqXL/view?usp=drivesdk' },
                 { title: 'Pancreatic secretion', url: 'https://drive.google.com/file/d/1Br53q-ZkBAvh70wxfcytAQsyF_4opG8H/view?usp=drivesdk' },
-        
             ],
-            
             'GIT Pathology': [
                 { title: 'Gastrointestinal Tract', url: 'https://drive.google.com/file/d/1xscvSnBn6GSx-blsdufmXaE31PNIrTo8/view?usp=drivesdk' },
                 { title: 'The small intestines', url: 'https://drive.google.com/file/d/1OeepHnSgjkZ84kRveSnMhi585N-qSHga/view?usp=drivesdk' },
@@ -6194,12 +5776,9 @@
                 { title: 'Appendix', url: 'https://drive.google.com/file/d/1fM4bGMR8vsR_S62Ld2DH6by8cpc4MYTZ/view?usp=drivesdk' },
                 { title: 'GIT Pathoma - ToToZ Collection', url: 'https://drive.google.com/file/d/11rNGOuqBvC6d5BgKHDwo1RbGHLeBAC6H/view?usp=drivesdk' },
             ],
-            
             'Accessory Organos of the GIT': [
                 { title: 'Class Notes', url: 'https://drive.google.com/file/d/15ZMB3b00UasjE2uJTFvZJUNAXojWGirk/view?usp=drivesdk' },
             ],
-
-            // 3rd Year Pathology
             'Disorders of the Male Reproductive System': [
                 { title: 'Class Notes', url: 'https://drive.google.com/file/d/1AkjMrMD1Am36MJrV1nfa79b40E_aIQ7Z/view?usp=drive_link' },
             ],
@@ -6234,8 +5813,6 @@
                 { title: 'Class Notes Part 1', url: 'https://drive.google.com/file/d/1ChBRToFyev1wUotBnhsnX09vSSRTcyJr/view?usp=drive_link' },
                 { title: 'Class Notes Part 2', url: 'https://drive.google.com/file/d/1oh3o6ticbMiTYwQuaG9u2G4vmH3kKT47/view?usp=drive_link' },
             ],
-            // 3rd year Lab Science 
-
             'Laboratory Diagnosis of Disorders of the Testes': [
                 { title: 'Class Notes', url: 'https://drive.google.com/file/d/1IFRnbBDp3BttaLd8m9kIYjzx9v4OnURL/view?usp=drive_link' },
             ],
@@ -6293,8 +5870,6 @@
             'Reticuloendothelial System and Parasitic Infections Laboratory': [
                 { title: 'Class Notes', url: 'https://drive.google.com/file/d/1fg9WBojhFBGx6WV6H4xWIWJnVpSVZ_8Z/view?usp=drive_link' },
             ],
-
-            // 3rd Year anatomy 
             'Pelvic Osteology': [
                 { title: 'Class Notes', url: '' },
             ],
@@ -6360,7 +5935,6 @@
             'Head Neurovasculature': [
                 { title: 'ToToZ Notes', url: 'https://drive.google.com/file/d/17WHLMvyKcIzN6c0t1EneFc6lUiQ6I1Ha/view?usp=drive_link' }
             ],
-
             'Brain': [
                 { title: 'Class Notes', url: 'https://drive.google.com/file/d/1n1kxlbLLvCLgabFKg9mTh4YnF_E-nxk4/view?usp=drive_link' },
                 { title: 'Cerebral Cortex-ToToZ Collection', url: 'https://drive.google.com/file/d/1427KbGcaPJ1cHbK7nH3FizQFG9ZJVbAJ/view?usp=drive_link' },
@@ -6399,10 +5973,6 @@
             'Nerve Supply': [
                 { title: 'Class Notes', url: '' }
             ],
-
-
-
-            // Term 1
             'Drugs affecting fertility and reproduction': [
                 { title: 'Class Notes',
                     url: 'https://drive.google.com/file/d/1bBv75VlNogLTszs-qP0E2PIs_ZAxE3v_/view?usp=drive_link' }
@@ -6431,8 +6001,6 @@
                 { title: 'Class Notes',
                     url: 'https://drive.google.com/file/d/1vdrmj3yI33BWPRN6ULxkuk13T9wcE6zx/view?usp=drive_link' }
             ],
-
-            // Term 2
             'Anti-Gout drugs': [
                 { title: 'Class Notes',
                     url: 'https://drive.google.com/file/d/1WcpFCqvMLl3lYDhgNDGl6Gi2k7GW8or_/view?usp=drive_link' }
@@ -6461,8 +6029,6 @@
                 { title: 'Class Notes',
                     url: 'https://drive.google.com/file/d/1WEtMF2S8UDUqtTM3mEk4eQDV_bpGCA06/view?usp=drive_link' }
             ],
-
-            // Term 3
             'Antiretroviral': [
                 { title: 'Class Notes',
                     url: 'https://drive.google.com/file/d/1UoUSIG7IVrfj-d5tIkOYz4aEI0UNDgBJ/view?usp=drive_link' }
@@ -6534,7 +6100,6 @@
                     url: 'https://drive.google.com/file/d/1x6CDJ926Xy9NhJf-sC1_c6kwiuVKKYKb/view?usp=drive_link' },
                 { title: 'Variations in the Life Cycle of the 4 Species of Plasmodium',
                     url: 'https://drive.google.com/file/d/1AnWBQe9c0JbwlWgnUVaXeWKfWvIKYDWq/view?usp=drive_link' },
-
             ],
             'Ultimate Compiled notes': [
                 { title: 'Class Notes',
@@ -6642,8 +6207,6 @@
                 { title: 'Class Notes',
                     url: 'https://drive.google.com/file/d/1gqB9c7ZL9rixaAwT7F9QrxlwqEOXDcma/view?usp=drive_link' },
             ],
-
-            // surgery department
             'Breast Cancer': [
                 { title: 'Class Notes',
                     url: 'https://drive.google.com/file/d/1KFcceEzCw73YXhdyQ1GbBPVPzwH95Vhj/view?usp=drive_link' },
@@ -6782,8 +6345,6 @@
                 { title: 'Class Notes',
                     url: 'https://drive.google.com/file/d/18fLCHdngPyUwHxOQqwLEDnd9uzVE07Df/view?usp=drive_link' },
             ],
-
-
             'Diagnosis of Labour and Normal Labour': [
                 { title: 'Class Notes',
                     url: 'https://drive.google.com/file/d/1iuhlqpdJuXOw1U_G7_l9lsqARYEatbZb/view?usp=drive_link' },
@@ -6827,7 +6388,6 @@
                     url: 'https://drive.google.com/file/d/15f_vZpiWwTVJthRixD2p7g7UUvVmgGjX/view?usp=drive_link' },
             ],
             'Disorders of the Menstrual Cycle': [
-         
                 { title: 'Old Notes',
                     url: 'https://drive.google.com/file/d/1QpTbFY60R5QuUJjIQ68Fzgkswk7nc2l8/view?usp=drive_link' },
                 { title: 'Class Notes 2026',
@@ -6958,12 +6518,10 @@
                 { title: 'Class Notes Part 1 & 2',
                     url: 'https://drive.google.com/file/d/1JZtrZ9reDctOWX3DkBKUdvH1TXnnvqNm/view?usp=drivesdk' },
             ],
-            
              'Contraception': [
                 { title: '2026 Class Notes',
                     url: 'https://drive.google.com/file/d/11eeotqYUFfSuA9XAUBT8n54TtP9lIzLN/view?usp=drivesdk' },
             ],
-            
             'Rh Alloimmunization': [
                 { title: '2026 Class Notes',
                     url: 'https://drive.google.com/file/d/18ucGkp715a-ksEU-gTaCuMOnEOsbajk9/view?usp=drivesdk' },
@@ -6976,9 +6534,7 @@
                 { title: '2026 Class Notes',
                     url: 'https://drive.google.com/file/d/1fVJ_jxuKXSefe-b9PlcJ8l2Us122xkJe/view?usp=drivesdk' },
             ],
-
-
-            // ========== 2nd Year Therapeutics ==========
+            // 2nd Year Therapeutics
             'Common Terminologies Used in Pharmacology': [
                 { title: 'Pharmacology Terminology – Glossary',
                     url: 'https://drive.google.com/file/d/1d1_Pharma_Terms.pdf/view?usp=drive_link' },
@@ -7143,17 +6699,14 @@
                 { title: 'Azoles, Echinocandins, and Polyene Antifungals',
                     url: 'https://drive.google.com/file/d/1d55_Antifungal_Classes.pdf/view?usp=drive_link' },
             ],
-
-            // ========== 2nd Year Biochemistry ==========
+            // 2nd Year Biochemistry
             'Amino Acids': [
                 { title: 'Amino Acids Class Notes',
                     url: 'https://drive.google.com/file/d/1og-Q7KXUOoTVgwy6Nm9ePewspKOkt4FZ/view?usp=drivesdk' },
-               
             ],
             'Peptides': [
                 { title: 'Peptides – Class Notes',
                     url: 'https://drive.google.com/file/d/1Ksh3vQOLpDKmUDMl1XGbh9Fduc4k4Ly5/view?usp=drivesdk' },
-        
             ],
             'Plasma Proteins': [
                 { title: 'Plasma Proteins – Class Notes',
@@ -7171,15 +6724,9 @@
                 { title: 'Carbohydrates – Class Notes',
                     url: 'https://drive.google.com/file/d/1-yTJyaEihzqAVHp3Yg-dNlVavEajd4iy/view?usp=drivesdk' },
             ],
-       
-
-       
-       
-            
             'Lipids': [
                 { title: 'Lipids – Class Notes',
                     url: 'https://drive.google.com/file/d/1h2XiP1SmMZP0j4GjB2gFgvAyClnJZJpC/view?usp=drivesdk' },
-               
             ],
             'Minerals and Vitamins': [
                 { title: 'Minerals and Vitamins – Essential Nutrients',
@@ -7231,8 +6778,6 @@
                 { title: 'Class Notes',
                     url: 'https://drive.google.com/file/d/1wlmi2Zahi1kLjPt0R3r8ryZ507PFIeDA/view?usp=sharing' },
             ],
-
-            // 3rd year [hysiology]
             'Renal Function, Anatomy and Blood Flow': [
                 { title: 'Class Notes',
                     url: 'https://drive.google.com/file/d/1sxjV0lEwXijzJyRy9HLYW72nimNjsf6X/view?usp=sharing' },
@@ -7253,8 +6798,6 @@
                 { title: 'Class Notes',
                     url: 'https://drive.google.com/file/d/1Usw4T_sYulovjFUObY4Uiw38sGAyCe0O/view?usp=drive_link' },
             ],
-
-            // ========== 3rd Year Biochemistry ==========
             'Overview of metabolism (metabolic pathways)': [
                 { title: 'Metabolic Pathways – An Overview',
                     url: 'https://drive.google.com/file/d/1d77_Metabolism_Overview.pdf/view?usp=drive_link' },
@@ -7319,8 +6862,6 @@
                 { title: 'Class Notes',
                     url: 'https://drive.google.com/file/d/1d97_Glycogen_Metabolism.pdf/view?usp=drive_link' },
             ],
-
-            // ========== 3rd Year Public Health ==========
             'Introduction and types of variables': [
                 { title: 'Variables in Public Health Research',
                     url: 'https://drive.google.com/file/d/1d99_Variables.pdf/view?usp=drive_link' },
@@ -7475,10 +7016,6 @@
                 { title: 'Establishing Causation in Public Health',
                     url: 'https://drive.google.com/file/d/1d147_Causation_Establish.pdf/view?usp=drive_link' },
             ],
-
-
-
-            // ========== Site A Clinical Topics ==========
             'Site A: HF Management': [
                 { title: 'Heart Failure Management at NTH – Protocols',
                     url: 'https://drive.google.com/file/d/1d214_NTH_HF_Management.pdf/view?usp=drive_link' },
@@ -7519,8 +7056,6 @@
                 { title: 'Dialysis Access – AV Fistula and Catheters at NTH',
                     url: 'https://drive.google.com/file/d/1d224_NTH_Dialysis_Access.pdf/view?usp=drive_link' },
             ],
-
-            // ========== Site B Clinical Topics ==========
             'Site B: HF Guidelines': [
                 { title: 'Heart Failure Guidelines at Kitwe Teaching Hospital',
                     url: 'https://drive.google.com/file/d/1d225_SiteB_HF.pdf/view?usp=drive_link' },
@@ -7545,8 +7080,6 @@
                 { title: 'Bowel Obstruction Management at Site B',
                     url: 'https://drive.google.com/file/d/1d230_SiteB_Bowel_Obstruction.pdf/view?usp=drive_link' },
             ],
-
-            // ========== Site C Clinical Topics ==========
             'Site C: Community HF': [
                 { title: 'Community Heart Failure Care at Site C',
                     url: 'https://drive.google.com/file/d/1d231_SiteC_HF.pdf/view?usp=drive_link' },
@@ -7563,8 +7096,6 @@
                 { title: 'Day Surgery Procedures at Site C',
                     url: 'https://drive.google.com/file/d/1d234_SiteC_Day_Surgery.pdf/view?usp=drive_link' },
             ],
-
-            // ========== 6th Year Advanced Topics ==========
             'Site A: Sepsis Protocol': [
                 { title: 'Sepsis Management Protocol at NTH – Advanced',
                     url: 'https://drive.google.com/file/d/1d235_NTH6_Sepsis.pdf/view?usp=drive_link' },
@@ -7589,8 +7120,6 @@
                 { title: 'Sepsis Care in Community Settings at Site C',
                     url: 'https://drive.google.com/file/d/1d240_SiteC6_Sepsis_Care.pdf/view?usp=drive_link' },
             ],
-
-            // ========== Additional General Topics ==========
             'Heart Failure': [
                 { title: 'Heart Failure – Pathophysiology and Treatment',
                     url: 'https://drive.google.com/file/d/1d241_Heart_Failure.pdf/view?usp=drive_link' },
@@ -7647,183 +7176,138 @@
             ],
         };
 
-
         /* ============================================================
-   IN-APP DOCUMENT VIEWER MAP
-   Maps a topic name (must match EXACTLY the topic string in
-   courseData / siteCourses) to a document id in doc.html
-   ============================================================ */
-const docViewerMap = {
-  // ── Anatomy ──────────────────────────────────────────────
-  'Upper limb Osteology':      'upperlimb',
-  'Lower Limb Osteology':      'lowerlimb',
-  'Head Osteology':            'skull',
-  'Head Musculature':          'head-musculature',
-  'Head Neurovasculature':     'head-neuro',
-  'Brain':                     'brain',
-  'Central Nervous System':    'cns',
-  'Peripheral Nervous System': 'pns',
-  'BrainStem':                 'brainstem',
+           IN-APP DOCUMENT VIEWER MAP
+           Maps a topic name (must match EXACTLY the topic string in
+           courseData / siteCourses) to a document id in doc.html
+           ============================================================ */
+        const docViewerMap = {
+            'Upper limb Osteology':      'upperlimb',
+            'Lower Limb Osteology':      'lowerlimb',
+            'Head Osteology':            'skull',
+            'Head Musculature':          'head-musculature',
+            'Head Neurovasculature':     'head-neuro',
+            'Brain':                     'brain',
+            'Central Nervous System':    'cns',
+            'Peripheral Nervous System': 'pns',
+            'BrainStem':                 'brainstem',
+            'Pelvic Osteology': 'pelvis-bones',
+            'Pelvic Musculature': 'pelvis-muscles',
+            'Pelvic Neurovasculature': 'pelvis-nerves',
+            'Male Gross': 'male-gross',
+            'Female Gross': 'female-gross',
+            'Male Histology': 'male-histology',
+            'Female Histology': 'female-histology',
+            'CNS Pathology':             'cns-path',
+            'Renal Pathology':           'renal-path',
+            'Renal Function, Anatomy and Blood Flow': 'renal-physio',
+            'Nucleotide Metabolism':                  'nucleotide',
+        };
 
-//   pelvic anatomy ]
-    'Pelvic Osteology': 'pelvis-bones',
-    'Pelvic Musculature': 'pelvis-muscles',
-    'Pelvic Neurovasculature': 'pelvis-nerves',
-
-    // Reproductive system 
-    'Male Gross': 'male-gross',
-    'Female Gross': 'female-gross',
-    'Male Histology': 'male-histology',
-    'Female Histology': 'female-histology',
-
-
-  // ── Pathology ────────────────────────────────────────────
-  'CNS Pathology':             'cns-path',
-  'Renal Pathology':           'renal-path',
-
-  // ── Physiology / Biochemistry ────────────────────────────
-  'Renal Function, Anatomy and Blood Flow': 'renal-physio',
-  'Nucleotide Metabolism':                  'nucleotide',
-
-  // ... add more as you build more image folders ...
-};
-
-
-// ═══════════════════════════════════════════════════════════
-//  TOPIC MAP — translates full topic names (from index.html)
-//  to the correct playlist key in PLAYLISTS.
-//  Add new mappings here whenever you add a new playlist.
-// ═══════════════════════════════════════════════════════════
-const TOPIC_MAP = {
-    // Brain views
-    'Olfactory Nerve':                '1',
-    'Optic Nerve':                    '2',
-    'Oculomotor, Trochlear & Abducens Nerves': '3',
-    'Ophthalmic Nerve':               '5a',
-    'Maxillary Nerve':                '5b',
-    'Mandibular Nerve':               '5c',
-    'Facial Nerve':                   '7',
-    'Vestibulocochlear Nerve':        '8',
-    'Glossopharyngeal Nerve':         '9',
-    'Vagus Nerve':                    '10',
-    'Accessory Nerve':                '11',
-    'Hypoglossal Nerve':              '12',
-    'Cranial Nerves Overview':        'overview',
-    'BrainStem':                      'brainstem',
-    // Brain views
-    'Medial View of the Brains':      'medial-view-brain',
-    'Lateral View of the Brains':     'lateral-view-brain',
-    'Horizontal View of the Brains':  'horizontal-view-brain',
-    'Basal View of the Brains':       'basal-view-brain',
-    // Skull views
-    'Superior View of the Skull':     'sup-view-skull',
-    'Midsagittal View of the Skull':  'midsag-view-skull',
-    'Anterior Lateral View of the Skull': 'ant-view-skull',
-    'Posterior LateraL View of the Skull': 'post-view-skull',
-    'Calvaria':                       'calvaria',
-    'Ethmoid Bone':                   'ethmoid',
-    'Sphenoid Bone':                  'sphenoid',
-    'Temporal Bone':                  'temporal',
-    'Mandible':                       'mandible',
-    'Arteres of the Brain':           'brain-arteries',
-    'CSF FLOW':                       'csf-flow',
-    'Masseter Muscle':                'masseter',
-    'Temporal Muscle':                'temporal-muscle',
-    'Lateral Pterygoid Muscle':       'later-pter',
-    'Medial Pterygoid Muscle':        'medial-techproper',
-    'Muscles of Mastication':         'mastication',
-    'Muscles of the Tongue':          'toungue-muscles',
-
-    // brain 
-    'Cerebellum': 'cerebellum',
-    'Thalamus': 'thalamus',
-    'Medial View of the Brains': 'medial-view-brain',
-    'Lateral View of the Brain': 'lateral-view-brain',
-    'Horizontal View of the Brains': 'horizontal-view-brain',
-    'Basal View of the Brains': 'basal-view-brain',
-    'Cerebral Cortex': 'cortex',
-
-    
-    // upperlimb osteology 
-    'Overview of Bones of the Upper Limb':          'overview_upper_bones',
-    'Carpal Bones':          'carpal_bones',
-    'Metacarpal Bones':          'metacarpal_bones',
-    'Bones of the Hand':          'hand_bones',
-    'Phalanges':          'phalanges',
-    'Radius & Ulna':          'radius_ulna',
-    'Scapula & Humerus':          'scapula_humerus',
-
-    // eya 
-    // neurovasculature
-    'Arteries of the Upper Limb': 'arteries_upper_limb',
-    'Axillary Artery': 'axillary_artery',
-    'Brachial Plexus': 'brachial_plexus',
-    'Elbow & Forearm': 'elbow_forearm',
-    'Hand Neurovasculature': 'hand_neurovasculature',
-    'Main Nerves': 'main_nerves',
-    'Median Nerve': 'median_nerve',
-    'Musculocutaneous Nerve': 'musculocutaneous_nerve',
-    'Radial Nerve': 'radial_nerve',
-    'Upper Arm Neurovasculature': 'upper_arm_neurovasculature',
-    'Veins': 'veins_lowerlimb',
-    // hand
-    'Anatomic Snuffbox': 'anatomic_snuffbox',
-    'Hand Muscles': 'hand_muscles',
-    'Metacarpal Muscles': 'metacarpal_muscles',
-    // arm shoulder
-    'Arm Muscles': 'arm_muscles',
-    'Rotator Cuff': 'rotator_cuff',
-    'Shoulder Muscles': 'shoulder_muscles',
-    // forearm
-    'Anterior Forearm': 'anterior_forearm',
-    'Cubital Fossa': 'cubital_fossa',
-    'Posterior Forearm': 'posterior_forearm',
-
-    // lowerlimb
-    // foot
-    'Central Plantar': 'central_planter',
-    'Central Sole': 'central_sole',
-    'Dorsum Muscles': 'dorsum_muscles',
-    'Lateral Plantar': 'lateral_planter',
-    'Lateral Sole': 'lateral_sole',
-    'Lumbrical Muscles': 'lumbrical_muscles',
-    'Medial Plantar': 'medial_planter',
-    'Medial Sole': 'medial_sole',
-    'Overall Foot Muscles': 'overall_foot_muscles',
-    // leg
-    'Anterior-Lateral Leg': 'anterior_lateral_leg',
-    'Posterior Leg': 'posterior_leg',
-    // neurovasculature
-    'Arteries': 'lower_extremity_arteries',
-    'Foot Supply': 'foot_supply',
-    'Iliohypogastric Nerve': 'iliohypogastric',
-    'Ilioinguinal Nerve': 'ilioinguinal',
-    'Lower Leg Supply': 'lower_leg_supply',
-    'Nerves': 'nerves_lowerlimb',
-    'Veins': 'veins_lowerlimb',
-    // lowerlimb osteology
-    'Bones of the Foot': 'bones_foot',
-    'Bones of the Leg': 'bones_leg',
-    'Femur': 'femur',
-    'Osteology Overview': 'osteology_overview_lowerlimb',
-    // thigh
-    'Adductor Canal': 'adductor_canal',
-    'Anterior Thigh': 'anterior_thigh',
-    'Medial Thigh': 'medial_thigh',
-    'Overall Thigh Muscles': 'overall_thigh_muscles',
-    'Posterior Thigh': 'posterior_thigh',
-    };
-
+        const TOPIC_MAP = {
+            'Olfactory Nerve':                '1',
+            'Optic Nerve':                    '2',
+            'Oculomotor, Trochlear & Abducens Nerves': '3',
+            'Ophthalmic Nerve':               '5a',
+            'Maxillary Nerve':                '5b',
+            'Mandibular Nerve':               '5c',
+            'Facial Nerve':                   '7',
+            'Vestibulocochlear Nerve':        '8',
+            'Glossopharyngeal Nerve':         '9',
+            'Vagus Nerve':                    '10',
+            'Accessory Nerve':                '11',
+            'Hypoglossal Nerve':              '12',
+            'Cranial Nerves Overview':        'overview',
+            'BrainStem':                      'brainstem',
+            'Medial View of the Brains':      'medial-view-brain',
+            'Lateral View of the Brains':     'lateral-view-brain',
+            'Horizontal View of the Brains':  'horizontal-view-brain',
+            'Basal View of the Brains':       'basal-view-brain',
+            'Superior View of the Skull':     'sup-view-skull',
+            'Midsagittal View of the Skull':  'midsag-view-skull',
+            'Anterior Lateral View of the Skull': 'ant-view-skull',
+            'Posterior LateraL View of the Skull': 'post-view-skull',
+            'Calvaria':                       'calvaria',
+            'Ethmoid Bone':                   'ethmoid',
+            'Sphenoid Bone':                  'sphenoid',
+            'Temporal Bone':                  'temporal',
+            'Mandible':                       'mandible',
+            'Arteres of the Brain':           'brain-arteries',
+            'CSF FLOW':                       'csf-flow',
+            'Masseter Muscle':                'masseter',
+            'Temporal Muscle':                'temporal-muscle',
+            'Lateral Pterygoid Muscle':       'later-pter',
+            'Medial Pterygoid Muscle':        'medial-techproper',
+            'Muscles of Mastication':         'mastication',
+            'Muscles of the Tongue':          'toungue-muscles',
+            'Cerebellum': 'cerebellum',
+            'Thalamus': 'thalamus',
+            'Medial View of the Brains': 'medial-view-brain',
+            'Lateral View of the Brain': 'lateral-view-brain',
+            'Horizontal View of the Brains': 'horizontal-view-brain',
+            'Basal View of the Brains': 'basal-view-brain',
+            'Cerebral Cortex': 'cortex',
+            'Overview of Bones of the Upper Limb':          'overview_upper_bones',
+            'Carpal Bones':          'carpal_bones',
+            'Metacarpal Bones':          'metacarpal_bones',
+            'Bones of the Hand':          'hand_bones',
+            'Phalanges':          'phalanges',
+            'Radius & Ulna':          'radius_ulna',
+            'Scapula & Humerus':          'scapula_humerus',
+            'Arteries of the Upper Limb': 'arteries_upper_limb',
+            'Axillary Artery': 'axillary_artery',
+            'Brachial Plexus': 'brachial_plexus',
+            'Elbow & Forearm': 'elbow_forearm',
+            'Hand Neurovasculature': 'hand_neurovasculature',
+            'Main Nerves': 'main_nerves',
+            'Median Nerve': 'median_nerve',
+            'Musculocutaneous Nerve': 'musculocutaneous_nerve',
+            'Radial Nerve': 'radial_nerve',
+            'Upper Arm Neurovasculature': 'upper_arm_neurovasculature',
+            'Veins': 'veins_lowerlimb',
+            'Anatomic Snuffbox': 'anatomic_snuffbox',
+            'Hand Muscles': 'hand_muscles',
+            'Metacarpal Muscles': 'metacarpal_muscles',
+            'Arm Muscles': 'arm_muscles',
+            'Rotator Cuff': 'rotator_cuff',
+            'Shoulder Muscles': 'shoulder_muscles',
+            'Anterior Forearm': 'anterior_forearm',
+            'Cubital Fossa': 'cubital_fossa',
+            'Posterior Forearm': 'posterior_forearm',
+            'Central Plantar': 'central_planter',
+            'Central Sole': 'central_sole',
+            'Dorsum Muscles': 'dorsum_muscles',
+            'Lateral Plantar': 'lateral_planter',
+            'Lateral Sole': 'lateral_sole',
+            'Lumbrical Muscles': 'lumbrical_muscles',
+            'Medial Plantar': 'medial_planter',
+            'Medial Sole': 'medial_sole',
+            'Overall Foot Muscles': 'overall_foot_muscles',
+            'Anterior-Lateral Leg': 'anterior_lateral_leg',
+            'Posterior Leg': 'posterior_leg',
+            'Arteries': 'lower_extremity_arteries',
+            'Foot Supply': 'foot_supply',
+            'Iliohypogastric Nerve': 'iliohypogastric',
+            'Ilioinguinal Nerve': 'ilioinguinal',
+            'Lower Leg Supply': 'lower_leg_supply',
+            'Nerves': 'nerves_lowerlimb',
+            'Veins': 'veins_lowerlimb',
+            'Bones of the Foot': 'bones_foot',
+            'Bones of the Leg': 'bones_leg',
+            'Femur': 'femur',
+            'Osteology Overview': 'osteology_overview_lowerlimb',
+            'Adductor Canal': 'adductor_canal',
+            'Anterior Thigh': 'anterior_thigh',
+            'Medial Thigh': 'medial_thigh',
+            'Overall Thigh Muscles': 'overall_thigh_muscles',
+            'Posterior Thigh': 'posterior_thigh',
+        };
 
         // ---- Default document list for topics without specific data ----
         function getDefaultDocs(topic) {
-            const searchSlug = encodeURIComponent(topic + ' notes');
-            return [
-                { title: `${topic} – Detailed Notes`,
-                    url: `https://drive.google.com/drive/folders/1default-docs?q=${searchSlug}` },
-                { title: `${topic} – Summary`,
-                    url: `https://drive.google.com/drive/folders/1default-docs?q=${searchSlug}` },
-            ];
+            // Note: No longer used for broken Google Drive fallback.
+            // We now show an empty state if docs are missing.
+            return [];
         }
 
         // ---- Default topic links for document/video/quiz ----
@@ -8258,9 +7742,8 @@ const TOPIC_MAP = {
 
         function openDocumentPopup(topic) {
             let docs = docData[topic] || [];
-            if (!docs || docs.length === 0) {
-                docs = getDefaultDocs(topic);
-            }
+            // REMOVED THE FALLBACK TO FAKE GOOGLE DRIVE LINKS
+            // If no docs are found, it simply shows an empty state.
 
             docPopupTitle.textContent = 'Documents';
             docPopupTopic.textContent = topic;
@@ -8372,15 +7855,21 @@ const TOPIC_MAP = {
 
                 if (isPastPaper || isQuiz) {
                     const pdfUrl = pdfLinks[topic] || links.document || '#';
-                    const htmlUrl = htmlAnsweredLinks[topic] || '#';
+                    // Use the safe lookup function here
+                    const htmlUrl = getHtmlAnsweredLink(topic);
                     showPpqPopup(topic, pdfUrl, htmlUrl);
 
                     html +=
                         `<h5><button class="back-btn" onclick="selectTopic('${courseId}', ${termIdx}, null)"><i class="fas fa-arrow-left"></i></button> ${term.name} → ${topic}</h5>`;
                     html += `<div class="topic-actions">`;
                     html += `<a href="${pdfUrl}" target="_blank" class="btn-sm"><i class="fas fa-file-pdf"></i> PDF Document</a>`;
-                    html +=
-                        `<a href="${htmlAnsweredLinks[topic] || '#'}" target="_blank" class="btn-sm"><i class="fas fa-file-code"></i> HTML Answered</a>`;
+                    // Use safe lookup function for the button too
+                    const safeHtmlUrl = getHtmlAnsweredLink(topic);
+                    if (safeHtmlUrl !== '#') {
+                        html += `<a href="${safeHtmlUrl}" target="_blank" class="btn-sm"><i class="fas fa-file-code"></i> HTML Answered</a>`;
+                    } else {
+                        html += `<span class="btn-sm" style="opacity:0.5; pointer-events:none;"><i class="fas fa-file-code"></i> HTML Not Available</span>`;
+                    }
                     html += `</div>`;
                     html +=
                         `<p class="info-text" style="color:#2d7b9e;font-weight:600;"><i class="fas fa-external-link-alt"></i> A popup has opened with both options. Click the buttons above or use the popup.</p>`;
@@ -8537,11 +8026,20 @@ const TOPIC_MAP = {
             ppqPdfBtn.href = pdfUrl || '#';
             ppqPdfBtn.target = '_blank';
 
-            if (htmlUrl && htmlUrl !== '#') {
-                ppqHtmlBtn.href = htmlUrl;
+            // Use the safe lookup function here
+            const safeHtmlUrl = getHtmlAnsweredLink(topic);
+            if (safeHtmlUrl && safeHtmlUrl !== '#') {
+                ppqHtmlBtn.href = safeHtmlUrl;
+                ppqHtmlBtn.style.opacity = '1';
+                ppqHtmlBtn.style.pointerEvents = 'auto';
             } else {
-                const searchQuery = encodeURIComponent(topic + ' answered ToToZ');
-                ppqHtmlBtn.href = `https://drive.google.com/drive/folders/1default-answered?q=${searchQuery}`;
+                // Instead of a broken Google Drive link, disable the button
+                ppqHtmlBtn.href = '#';
+                ppqHtmlBtn.style.opacity = '0.5';
+                ppqHtmlBtn.style.pointerEvents = 'none';
+                // Reset the text in case it was previously modified
+                const span = ppqHtmlBtn.querySelector('span');
+                if (span) span.textContent = 'Not Available Yet';
             }
             ppqHtmlBtn.target = '_blank';
 
@@ -8564,12 +8062,6 @@ const TOPIC_MAP = {
 
         /* ============================================================
            SEARCH ENGINE
-           ------------------------------------------------------------
-           • Year-scoped: only indexes courses belonging to the signed-in
-             user's year (plus their rotation site for 4th / 6th year, and
-             their restricted course list if one is set).
-           • Indexes: topics, documents, videos, audio, quizzes, past papers
-           • Opens with the header 🔍 button or Ctrl / Cmd + K
            ============================================================ */
         let searchIndex = [];
         let searchResultsData = [];
@@ -8607,7 +8099,6 @@ const TOPIC_MAP = {
             return y === 2 ? '2nd Year' : y === 3 ? '3rd Year' : y === 4 ? '4th Year' : '6th Year';
         }
 
-        /* ---- 1. BUILD THE INDEX (year-scoped) ---- */
         function buildSearchIndex() {
             searchIndex = [];
             if (!currentUserYear) return;
@@ -8626,7 +8117,7 @@ const TOPIC_MAP = {
             } else {
                 courseData.forEach(function (c) {
                     if (c.year !== year) return;
-                    if (seenCourseIds.has(c.id)) return;              // mirrors renderDrill()
+                    if (seenCourseIds.has(c.id)) return;
                     if (currentUserCourses && currentUserCourses.indexOf(c.id) === -1) return;
                     seenCourseIds.add(c.id);
                     courses.push(c);
@@ -8729,7 +8220,6 @@ const TOPIC_MAP = {
             });
         }
 
-        /* ---- 2. SCOPE LABEL ---- */
         function updateSearchScope() {
             if (!currentUserYear) {
                 searchScopeEl.innerHTML =
@@ -8746,7 +8236,6 @@ const TOPIC_MAP = {
                 totalCount + ' resources indexed';
         }
 
-        /* ---- 3. SCORING ---- */
         function scoreSearchItem(item, q) {
             const t = (item.title || '').toLowerCase();
             let s = 0;
@@ -8758,7 +8247,6 @@ const TOPIC_MAP = {
             return s;
         }
 
-        /* ---- 4. RUN THE SEARCH ---- */
         function performSearch() {
             if (!currentUserYear) {
                 searchResultsData = [];
@@ -8795,7 +8283,6 @@ const TOPIC_MAP = {
             renderSearchResults(matches);
         }
 
-        /* ---- 5. RENDER RESULTS ---- */
         function renderSearchResults(items) {
             if (!currentUserYear) {
                 searchResultsEl.innerHTML =
@@ -8852,7 +8339,6 @@ const TOPIC_MAP = {
             searchResultsEl.innerHTML = html;
         }
 
-        /* ---- 6. OPEN / CLOSE ---- */
         function openSearch() {
             searchOverlayEl.classList.add('active');
             document.body.style.overflow = 'hidden';
@@ -8867,7 +8353,6 @@ const TOPIC_MAP = {
             document.body.style.overflow = '';
         }
 
-        /* ---- 7. OPEN VIDEO (handles YouTube / Drive / internal video.html) ---- */
         function openSearchVideo(rawUrl, rawTitle, fallbackTopic) {
             if (!rawUrl) return;
             if (/^https?:\/\//i.test(rawUrl) && rawUrl.indexOf('video.html') === -1) {
@@ -8882,7 +8367,6 @@ const TOPIC_MAP = {
             window.open('video.html?topic=' + encodeURIComponent(topicKey) + '&start=0', '_blank', 'noopener');
         }
 
-        /* ---- 8. RESULT CLICK HANDLER ---- */
         function handleSearchResultClick(item) {
             if (!item) return;
 
@@ -8903,7 +8387,7 @@ const TOPIC_MAP = {
 
             if (item.type === 'pastpaper') {
                 closeSearch();
-                showPpqPopup(item.topic, item.url, htmlAnsweredLinks[item.topic] || '#');
+                showPpqPopup(item.topic, item.url, getHtmlAnsweredLink(item.topic));
                 return;
             }
 
@@ -8911,7 +8395,6 @@ const TOPIC_MAP = {
             if (item.url) window.open(item.url, '_blank', 'noopener');
         }
 
-        /* ---- 9. WIRING ---- */
         if (searchNavBtnEl) {
             searchNavBtnEl.addEventListener('click', openSearch);
         }
