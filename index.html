@@ -3767,7 +3767,8 @@ function applyYearTheme(year) {
                                 topics: ['Rheumatoid Arthritis'
                                 ] },
                             { name: 'Other Systems',
-                                topics: ['Karposis Sarcoma', 'Organophosphate Poisoning'
+                                topics: ['Karposis Sarcoma', 'Organophosphate Poisoning', 'HHS',
+                                    'Jaundice', 'Sickle Cell', 'Asthma'
                                 ] },
                             { name: 'IMED Past Papers',
                                 topics: [
@@ -4592,27 +4593,7 @@ function applyYearTheme(year) {
 
         const pdfLinks = {
 
-            'COPD': '',
-            'Pulmonary Embolism': '',
-            'Pleura Effusions': '',
-            'Pleura Effusions & Empyema': '',
-            'Pneumonia': '',
-            'TB': '',
-            'ECG Interpretation': '',
-            'Heart Failure': '',
-            'ABG Interpretaiton': '',
-            'Rheuatic Fever': '',
-            'Shock': '',
-            'AKI & CKD': '',
-            'Diagnostic Renal Disease': '',
-            'Acute Liver Disease': '',
-            'Chronic Liver Disease': '',
-            'Viral Hepatitis B Infection': '',
-            'Approach To Unconcious Patient': '',
-            'CVA': '',
-            'Rheumatoid Arthritis': '',
-            'Karposis Sarcoma': '',
-            'Organophosphate Poisoning': '',
+        
 
 
             // Biomed 2 Past Papers
@@ -6094,6 +6075,73 @@ function applyYearTheme(year) {
 
         // ---- DOCUMENT DATA: maps topic names to an array of document objects ----
         const docData = {
+                
+                'COPD': [
+                    { title: 'Class notes', url: 'https://drive.google.com/file/d/1TRXeylsfQOwdsdTE4nGODYg0_IwStxIq/view?usp=drivesdk' }
+                ],
+                 'Asthma': [
+                    { title: 'Class notes', url: 'https://drive.google.com/file/d/1n1cGli0tZUIx824_4bIlcXn6pZek5YCK/view?usp=drivesdk' }
+                ],
+                 'Sickle Cell': [
+                    { title: 'Class notes', url: 'https://drive.google.com/file/d/1g2AbKBRaE1GZwJNn55Zv0dxqE6z3QkA9/view?usp=drivesdk' }
+                ],
+                'Pulmonary Embolism': [
+                    { title: 'Class notes Nkole', url: 'https://drive.google.com/file/d/1THeWofl8nI9Cv1-AYrwKKjJwN7i9b-AC/view?usp=drivesdk' },
+                    { title: 'Class notes Unilus', url: 'https://drive.google.com/file/d/18LsT7O21_IgiWXtLAS4oXpwy79crvg9l/view?usp=drivesdk' },
+                ],
+                'Pleura Effusions': [
+                    { title: 'Class notes', url: 'https://drive.google.com/file/d/1VliUZrTYK4DRw_hE7fI2S8m_U6_eRLsO/view?usp=drivesdk' }
+                ],
+                'Pleura Effusions & Empyema': [
+                    { title: 'Class notes', url: 'https://drive.google.com/file/d/1aMjiRqFhnuPlcoJhQ8_SX28-i8kbB5n6/view?usp=drivesdk' }
+                ],
+                'Pneumonia': [
+                    { title: 'Class notes', url: 'https://drive.google.com/file/d/1bo2TjXwWaguRg5Daw6ukoDwE4Mh7lMZg/view?usp=drivesdk' }
+                ],
+                'TB': [
+                    { title: 'Class notes', url: 'https://drive.google.com/file/d/1ht_3a-ph2FBDO7WG-lG5frhWi9WhdsDs/view?usp=drivesdk' }
+                ],
+                'ECG Interpretation': [
+                    { title: 'Class notes', url: 'https://drive.google.com/file/d/1NKpMK4YUYOmoaFjjjAOIRgiEJlm0xdbj/view?usp=drivesdk' }
+                ],
+                'Heart Failure': [
+                    { title: 'Class notes', url: 'https://drive.google.com/file/d/1nc6tp6Pwb-S7lvu7QwWMnQ6n1OasV6sO/view?usp=drivesdk' }
+                ],
+                'ABG Interpretaiton': [
+                    { title: 'Class notes', url: 'https://drive.google.com/file/d/1MMNKLtM4lkq0Ts2lpreDgm-7TSKq9_9x/view?usp=drivesdk' }
+                ],
+                'Rheuatic Fever': [
+                    { title: 'Class notes', url: 'https://drive.google.com/file/d/1QeACw-QgnhCSH-absv9sLHGf73ryTADh/view?usp=drivesdk' }
+                ],
+                'Shock': [
+                    { title: 'Class notes', url: 'https://drive.google.com/file/d/13ZuEsVQ1Kt0yJJ1JSk8aca-vCnn7m8gj/view?usp=drivesdk' }
+                ],
+                'AKI & CKD': [
+                    { title: 'Class notes Justo Banda', url: 'https://drive.google.com/file/d/10l1V6rU0LHVewUGbJSOZTb02hx6Pgf4n/view?usp=drivesdk' },
+                    { title: 'Class notes Dr. Kapambwe', url: 'https://drive.google.com/file/d/1bMg4VlNWgNyfyk15M27lMAIQUuegSnJs/view?usp=drivesdk' },
+                ],
+                'Diagnostic Renal Disease': [
+                    { title: 'Class notes', url: 'https://drive.google.com/file/d/1IzlM5Wy5wBBXDJNYjdtK7KQJ13RCXn-U/view?usp=drivesdk' }
+                ],
+                'Acute Liver Disease': [
+                    { title: 'Class notes', url: 'https://drive.google.com/file/d/1VsPpwT7d7XQ_R80V3f-l3PrBQKNgCEpD/view?usp=drivesdk' }
+                ],
+                'Chronic Liver Disease': [
+                    { title: 'Class notes', url: 'https://drive.google.com/file/d/1ewV8a-ztAF9DjrMLjopCcHHyjtN16I3a/view?usp=drivesdk' }
+                ],
+                'Viral Hepatitis B Infection': [
+                    { title: 'Class notes', url: 'https://drive.google.com/file/d/1PDT7UOhxGv0POB-1nJ-hOH-sA_i0MQ3W/view?usp=drivesdk' }
+                ],
+                'Approach To Unconcious Patient': [
+                    { title: 'Class notes', url: 'https://drive.google.com/file/d/18F2884FbMOJsGrh2X6mchVLx8AY9OYR4/view?usp=drivesdk' }
+                ],
+                 'Jaundice': [
+                    { title: 'Class notes', url: 'https://drive.google.com/file/d/1SyTnb7OjvpF0Sfjo1LfNcgx5uoIbqvaL/view?usp=drivesdk' }
+                ],
+                 'HHS': [
+                    { title: 'Class notes', url: 'https://drive.google.com/file/d/1H0zbsQLUoOaBzSw28iViE3EZ_yILbTt5/view?usp=drivesdk' }
+                ],
+
             'Introduction to Physiology': [
                 { title: 'Class notes', url: 'https://drive.google.com/file/d/1fhRTFXxO5IpQEeaHo02aRiutYkbc7EDB/view?usp=drivesdk' }
             ],
