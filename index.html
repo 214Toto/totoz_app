@@ -13,6 +13,255 @@
             padding: 0;
             box-sizing: border-box;
         }
+        /* ============================================================
+   YEAR-BASED THEME COLORS
+   Each year gets its own distinct accent color palette.
+   Applied to <body> via theme-year-X classes.
+   ============================================================ */
+:root {
+    --theme-primary: #2d7b9e;
+    --theme-primary-dark: #1f5f7a;
+    --theme-primary-deep: #0a2b4a;
+    --theme-primary-light: rgba(45, 123, 158, 0.12);
+    --theme-primary-glow: rgba(45, 123, 158, 0.3);
+    --theme-primary-soft: rgba(45, 123, 158, 0.08);
+    --theme-gradient-start: #0a2b4a;
+    --theme-gradient-end: #2d7b9e;
+    --theme-card-border: #b4d2e8;
+    --theme-chip-bg: #eef4fa;
+    --theme-chip-border: #dce6ef;
+    --theme-btn-bg: #2d7b9e;
+    --theme-btn-hover: #1f5f7a;
+    --theme-btn-shadow: rgba(45, 123, 158, 0.3);
+    --theme-bg-gradient-start: #e4edf5;
+    --theme-bg-gradient-end: #d2e1f0;
+}
+
+/* 2nd Year — Royal Blue */
+body.theme-year-2 {
+    --theme-primary: #2563eb; --theme-primary-dark: #1d4ed8;
+    --theme-primary-deep: #172554; --theme-primary-light: rgba(37, 99, 235, 0.12);
+    --theme-primary-glow: rgba(37, 99, 235, 0.3); --theme-primary-soft: rgba(37, 99, 235, 0.08);
+    --theme-gradient-start: #172554; --theme-gradient-end: #2563eb;
+    --theme-card-border: #b8cdfd; --theme-chip-bg: #eaf1fe; --theme-chip-border: #d3e0fc;
+    --theme-btn-bg: #2563eb; --theme-btn-hover: #1d4ed8; --theme-btn-shadow: rgba(37, 99, 235, 0.3);
+    --theme-bg-gradient-start: #e6eefe; --theme-bg-gradient-end: #c9d9fc;
+}
+/* 3rd Year — Emerald */
+body.theme-year-3 {
+    --theme-primary: #475569; --theme-primary-dark: #334155;
+    --theme-primary-deep: #0f172a; --theme-primary-light: rgba(71, 85, 105, 0.12);
+    --theme-primary-glow: rgba(71, 85, 105, 0.3); --theme-primary-soft: rgba(71, 85, 105, 0.08);
+    --theme-gradient-start: #0f172a; --theme-gradient-end: #475569;
+    --theme-card-border: #c0c9d6; --theme-chip-bg: #eef1f5; --theme-chip-border: #dde2ea;
+    --theme-btn-bg: #475569; --theme-btn-hover: #334155; --theme-btn-shadow: rgba(71, 85, 105, 0.3);
+    --theme-bg-gradient-start: #e8ecf1; --theme-bg-gradient-end: #d3dae3;
+}
+/* 4th Year — Orange Coral */
+body.theme-year-4 {
+    --theme-primary: #ea580c; --theme-primary-dark: #c2410c;
+    --theme-primary-deep: #431407; --theme-primary-light: rgba(234, 88, 12, 0.12);
+    --theme-primary-glow: rgba(234, 88, 12, 0.3); --theme-primary-soft: rgba(234, 88, 12, 0.08);
+    --theme-gradient-start: #431407; --theme-gradient-end: #ea580c;
+    --theme-card-border: #fcc9a8; --theme-chip-bg: #fef2ea; --theme-chip-border: #fddcc9;
+    --theme-btn-bg: #ea580c; --theme-btn-hover: #c2410c; --theme-btn-shadow: rgba(234, 88, 12, 0.3);
+    --theme-bg-gradient-start: #fdeadd; --theme-bg-gradient-end: #fbd3ba;
+}
+/* 6th Year — Rose / Crimson */
+body.theme-year-6 {
+    --theme-primary: #e11d48; --theme-primary-dark: #be123c;
+    --theme-primary-deep: #4c0519; --theme-primary-light: rgba(225, 29, 72, 0.12);
+    --theme-primary-glow: rgba(225, 29, 72, 0.3); --theme-primary-soft: rgba(225, 29, 72, 0.08);
+    --theme-gradient-start: #4c0519; --theme-gradient-end: #e11d48;
+    --theme-card-border: #f9b8c8; --theme-chip-bg: #fef0f3; --theme-chip-border: #fdd9e2;
+    --theme-btn-bg: #e11d48; --theme-btn-hover: #be123c; --theme-btn-shadow: rgba(225, 29, 72, 0.3);
+    --theme-bg-gradient-start: #fde8ee; --theme-bg-gradient-end: #fbd0dc;
+}
+/* Biomed 2 — Deep Teal */
+body.theme-year-b2 {
+    --theme-primary: #0f766e; --theme-primary-dark: #115e59;
+    --theme-primary-deep: #042f2e; --theme-primary-light: rgba(15, 118, 110, 0.12);
+    --theme-primary-glow: rgba(15, 118, 110, 0.3); --theme-primary-soft: rgba(15, 118, 110, 0.08);
+    --theme-gradient-start: #042f2e; --theme-gradient-end: #0f766e;
+    --theme-card-border: #99ddd6; --theme-chip-bg: #e4f5f3; --theme-chip-border: #c0e8e3;
+    --theme-btn-bg: #0f766e; --theme-btn-hover: #115e59; --theme-btn-shadow: rgba(15, 118, 110, 0.3);
+    --theme-bg-gradient-start: #ddf2f0; --theme-bg-gradient-end: #bce5e0;
+}
+/* Biomed 3 — Olive Sage */
+body.theme-year-b3 {
+    --theme-primary: #657a2e; --theme-primary-dark: #4d5d22;
+    --theme-primary-deep: #1a2410; --theme-primary-light: rgba(101, 122, 46, 0.12);
+    --theme-primary-glow: rgba(101, 122, 46, 0.3); --theme-primary-soft: rgba(101, 122, 46, 0.08);
+    --theme-gradient-start: #1a2410; --theme-gradient-end: #657a2e;
+    --theme-card-border: #c2d495; --theme-chip-bg: #f1f5e3; --theme-chip-border: #dfe8c1;
+    --theme-btn-bg: #657a2e; --theme-btn-hover: #4d5d22; --theme-btn-shadow: rgba(101, 122, 46, 0.3);
+    --theme-bg-gradient-start: #ebf0d9; --theme-bg-gradient-end: #d9e4b9;
+}
+
+/* -------- Apply theme variables to existing UI -------- */
+#particles-canvas {
+    background: linear-gradient(145deg, var(--theme-bg-gradient-start) 0%, var(--theme-bg-gradient-end) 100%) !important;
+}
+.logo i { color: var(--theme-primary) !important; }
+.nav-links a:hover { color: var(--theme-primary) !important; }
+.nav-links a::after { background: var(--theme-primary) !important; }
+.btn-signup {
+    background: var(--theme-btn-bg) !important;
+    box-shadow: 0 4px 12px var(--theme-btn-shadow) !important;
+}
+.btn-signup:hover { background: var(--theme-btn-hover) !important; }
+.hero h1 {
+    background: linear-gradient(135deg, var(--theme-gradient-start), var(--theme-gradient-end)) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+}
+.btn-primary {
+    background: var(--theme-primary-deep) !important;
+    box-shadow: 0 6px 18px var(--theme-primary-glow) !important;
+}
+.btn-primary:hover { background: var(--theme-primary-dark) !important; }
+.btn-outline {
+    border-color: var(--theme-primary) !important;
+    color: var(--theme-primary) !important;
+}
+.btn-outline:hover {
+    background: var(--theme-primary) !important;
+    color: white !important;
+}
+.section-title { color: var(--theme-primary-deep) !important; }
+.topic-header {
+    color: var(--theme-primary-deep) !important;
+    background: var(--theme-primary-light) !important;
+    border-color: var(--theme-primary-glow) !important;
+}
+.card i { color: var(--theme-primary) !important; }
+.card:hover.active i { color: var(--theme-primary-deep) !important; }
+.card:hover.active { border-color: var(--theme-card-border) !important; }
+.card .btn-primary {
+    background: var(--theme-btn-bg) !important;
+    box-shadow: 0 4px 12px var(--theme-btn-shadow) !important;
+}
+.card .btn-primary:hover.active { background: var(--theme-btn-hover) !important; }
+.about-text i { color: var(--theme-primary) !important; }
+.about-image {
+    background: var(--theme-primary-light) !important;
+    color: var(--theme-primary) !important;
+}
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: var(--theme-primary) !important;
+    box-shadow: 0 0 0 4px var(--theme-primary-light) !important;
+}
+.term-item { border-color: var(--theme-chip-border) !important; }
+.term-item:hover {
+    background: var(--theme-primary) !important;
+    border-color: var(--theme-primary) !important;
+    box-shadow: 0 12px 28px var(--theme-primary-glow) !important;
+}
+.topic-item:hover {
+    background: var(--theme-primary) !important;
+    border-color: var(--theme-primary) !important;
+}
+.topic-actions .btn-sm:hover {
+    background: var(--theme-primary) !important;
+    border-color: var(--theme-primary) !important;
+    box-shadow: 0 8px 20px var(--theme-primary-glow) !important;
+}
+.topic-actions .btn-sm.video-btn {
+    border-color: var(--theme-primary) !important;
+    color: var(--theme-primary-dark) !important;
+}
+.topic-actions .btn-sm.doc-btn {
+    border-color: var(--theme-primary) !important;
+    color: var(--theme-primary-dark) !important;
+}
+.topic-actions .btn-sm.audio-btn {
+    border-color: var(--theme-primary) !important;
+    color: var(--theme-primary-dark) !important;
+}
+.topic-actions .btn-sm.quiz-btn {
+    border-color: var(--theme-primary) !important;
+    color: var(--theme-primary-dark) !important;
+}
+.back-btn { color: var(--theme-primary) !important; }
+.back-btn:hover { color: var(--theme-primary-deep) !important; }
+.drill-level h4,
+.drill-level h5 { color: var(--theme-primary-deep) !important; }
+.link-section a { color: var(--theme-primary) !important; }
+.search-chip.active {
+    background: var(--theme-primary) !important;
+    border-color: var(--theme-primary) !important;
+}
+.search-header > i,
+.search-scope i,
+.search-group-title i,
+.search-footer i { color: var(--theme-primary) !important; }
+.search-item:hover .si-icon { background: var(--theme-primary) !important; }
+.search-item:hover { border-color: var(--theme-primary-light) !important; }
+.btn-search {
+    border-color: var(--theme-primary-light) !important;
+    background: var(--theme-primary-soft) !important;
+    color: var(--theme-primary) !important;
+}
+.btn-search:hover {
+    background: var(--theme-primary) !important;
+    box-shadow: 0 6px 16px var(--theme-primary-glow) !important;
+}
+.ppq-box .ppq-icon,
+.ppq-topic-name { color: var(--theme-primary) !important; }
+.ppq-topic-name { background: var(--theme-chip-bg) !important; }
+.ppq-btn.html-btn {
+    background: linear-gradient(135deg, var(--theme-primary), var(--theme-primary-dark)) !important;
+}
+.ppq-btn.html-btn:hover {
+    box-shadow: 0 12px 32px var(--theme-primary-glow) !important;
+}
+.video-box .video-header h3 i,
+.document-box .doc-header h3 i,
+.audio-box .audio-header h3 i,
+.quiz-box .quiz-header h3 i { color: var(--theme-primary) !important; }
+.video-box .video-list .video-item:hover,
+.document-box .doc-list .doc-item:hover,
+.audio-box .audio-list .audio-item:hover,
+.quiz-box .quiz-list .quiz-item:hover {
+    background: var(--theme-primary) !important;
+    border-color: var(--theme-primary) !important;
+    box-shadow: 0 8px 24px var(--theme-primary-glow) !important;
+}
+.video-box .video-list .video-item i,
+.document-box .doc-list .doc-item i,
+.audio-box .audio-list .audio-item i,
+.quiz-box .quiz-list .quiz-item i { color: var(--theme-primary) !important; }
+.video-box .video-topic-badge,
+.document-box .doc-topic-badge,
+.audio-box .audio-topic-badge,
+.quiz-box .quiz-topic-badge {
+    color: var(--theme-primary) !important;
+    background: var(--theme-chip-bg) !important;
+}
+.video-box .video-footer i,
+.document-box .doc-footer i,
+.audio-box .audio-footer i,
+.quiz-box .quiz-footer i { color: var(--theme-primary) !important; }
+.signup-box .btn-primary { background: var(--theme-btn-bg) !important; }
+.signup-box .btn-primary:hover { background: var(--theme-btn-hover) !important; }
+.signup-box h2 i { color: var(--theme-primary) !important; }
+.site-btn:hover {
+    background: var(--theme-primary) !important;
+    border-color: var(--theme-primary) !important;
+}
+.site-box h2 i { color: var(--theme-primary) !important; }
+.stat-number { color: var(--theme-primary-deep) !important; }
+
+/* Smooth transition when theme changes */
+body, #particles-canvas, .hero h1,
+.card, .btn-primary, .btn-outline, .btn-signup,
+.term-item, .topic-item, .topic-actions .btn-sm,
+.search-chip, .btn-search, .ppq-btn, .site-btn {
+    transition: background-color 0.5s ease, background 0.5s ease,
+                border-color 0.5s ease, color 0.5s ease,
+                box-shadow 0.5s ease;
+}
         body {
             font-family: 'Inter', sans-serif;
             background: #f4f7fc;
@@ -2261,6 +2510,28 @@
     <footer id="footer"><p>&copy; 2026 ToToZ — Education for a healthier world. <a href="#">Privacy</a> · <a href="#">Terms</a></p></footer>
 
     <script>
+        // ============================================================
+// YEAR-BASED THEME APPLICATION
+// Applies a distinct color theme based on the user's year of study.
+// ============================================================
+function applyYearTheme(year) {
+    document.body.classList.remove(
+        'theme-year-2', 'theme-year-3', 'theme-year-4',
+        'theme-year-6', 'theme-year-b2', 'theme-year-b3'
+    );
+    let themeClass = '';
+    switch (year) {
+        case 2:    themeClass = 'theme-year-2';  break;
+        case 3:    themeClass = 'theme-year-3';  break;
+        case 4:    themeClass = 'theme-year-4';  break;
+        case 6:    themeClass = 'theme-year-6';  break;
+        case 'B2': themeClass = 'theme-year-b2'; break;
+        case 'B3': themeClass = 'theme-year-b3'; break;
+        default:   themeClass = '';
+    }
+    if (themeClass) document.body.classList.add(themeClass);
+}
+
         // ---------- particle system ----------
         const canvas = document.getElementById('particles-canvas');
         const ctx = canvas.getContext('2d');
@@ -3124,6 +3395,55 @@
                      ] }
                 ] },
 
+            // ============================================================
+            // BIOMED 2ND YEAR
+            // ============================================================
+            {
+                id: 'biomed2_biochem',
+                name: 'Biochemistry',
+                icon: 'fa-dna',
+                year: 'B2',
+                type: 'biomed',
+                desc: 'Biomedical Biochemistry - 2nd Year',
+                terms: [
+                    { name: 'Term 1',
+                        topics: [
+                            'Amino Acids',
+                            'Peptides',
+                            'Plasma Proteins',
+                            'Enzymes',
+                            'Heamoglobin'
+                        ]
+                    },
+                    { name: 'Term 2',
+                        topics: [
+                            'Carbohydrates',
+                            'Complex Carbohydrates',
+                            'Lipids'
+                        ]
+                    },
+                    { name: 'Term 3',
+                        topics: [
+                            'Energy Metabolism and Nutrition',
+                            'Micronutrients and Vitamins',
+                            'Fat Soluble Vitamins',
+                            'Mineral Metabolism'
+                        ]
+                    },
+                    { name: 'Biomed 2nd Year Biochemistry Past Papers',
+                        topics: [
+                            '## Test 1',
+                            'Test 1 Biochem Biomed 2',
+                            'Biomed 2 Biochemistry Test 1',
+                            '2024 Biomed 2 Biochem Test 1',
+                            '2025 Biomed 2 Biochem Test 1'
+                        ]
+                    }
+                ]
+            },
+
+            
+
             // 4th Year Clinical Rotations
             {
                 id: 'BS4',
@@ -3287,6 +3607,10 @@
 
         // ---- USER DATA with year access ----
         const users = {
+            
+            '6': { name: 'Doc Toto', password: 'p6', year: 6 },
+            
+            
             '2': { name: 'Doc Toto', password: 'p2', year: 2 },
             'Ruth': { name: 'Dr. Ndabala', password: '6778', year: 2, courses: ['biochemistry'] },
             'Christabel': { name: 'Dr. Lombi', password: 'p1', year: 2 },
@@ -3332,6 +3656,14 @@
             'Mwangala': { name: 'Dr. Mwangala', password: '001', year: 3, courses: ['pathology3', 'therap3', 'biochemistry_3', 'physiology_3', 'anatomy3'] },
             'Lydia': { name: 'Dr. Funda', password: '321', year: 3, courses: ['pathology3', 'anatomy3'] },
             'Kondwa': { name: 'Dr. Hamweemba', password: '01', year: 3, courses: ['physiology_3', 'anatomy3'] },
+
+            // Biomed 2nd Year
+            'B2': { name: 'Doc Toto Biomed', password: 'b2', year: 'B2' },
+            'biomed2': { name: 'Biomed Student', password: 'b2', year: 'B2' },
+
+            // Biomed 3rd Year
+            'B3': { name: 'Doc Toto Biomed', password: 'b3', year: 'B3' },
+            'biomed3': { name: 'Biomed Student', password: 'b3', year: 'B3' },
 
             // 4th year
             '4': { name: 'Doc Toto', password: 'p4', year: 4 },
@@ -3411,17 +3743,31 @@
                         icon: 'fa-heart',
                         desc: 'Clinical rotation in Internal Medicine - Site A',
                         terms: [
-                            { name: 'Cardiology',
-                                topics: ['Site A: HF Management', 'Site A: ECG Interpretation',
-                                    'Site A: Cardiac Rehab'
+                            { name: 'Respiratory System',
+                                topics: ['COPD', 'Pulmonary Embolism',
+                                    'Pleura Effusions', 'Pleura Effusions & Empyema',
+                                    'Pneumonia', 'TB'
                                 ] },
-                            { name: 'Pulmonology',
-                                topics: ['Site A: COPD Care', 'Site A: Asthma Protocol',
-                                    'Site A: Pneumonia Treatment'
+                            { name: 'Cardiovascular System',
+                                topics: ['ECG Interpretation', 'Heart Failure',
+                                    'Rheuatic Fever', 'Shock', 'ABG Interpretaiton'
                                 ] },
-                            { name: 'Nephrology',
-                                topics: ['Site A: AKI Protocol', 'Site A: CKD Management',
-                                    'Site A: Dialysis Access'
+                            { name: 'Nephrology System',
+                                topics: ['AKI & CKD', 'Diagnostic Renal Disease',
+                                ] },
+                            { name: 'GIT',
+                                topics: ['Acute Liver Disease', 'Chronic Liver Disease',
+                                'Viral Hepatitis B Infection'
+                                ] },
+                            { name: 'Nervous System',
+                                topics: ['Approach To Unconcious Patient', 'CVA',
+                                
+                                ] },
+                            { name: 'Muscoloskeletal System',
+                                topics: ['Rheumatoid Arthritis'
+                                ] },
+                            { name: 'Other Systems',
+                                topics: ['Karposis Sarcoma', 'Organophosphate Poisoning'
                                 ] },
                             { name: 'IMED Past Papers',
                                 topics: [
@@ -4089,7 +4435,7 @@
             'Test 2 Biochem': 'https://214toto.github.io/myclass/MBS-230-B/biochem-test-2.html',
             '2023 3rd year Physiology Test 1 ✅': 'physio3-t1-2023.html',
             '2025 3rd year physiology test 1 ✅': 'physio3-t1-2025.html',
-            '2026 3rd year Physiology test 1 ✅': 'physio3-t1-2026.html',
+            '2026 3rd year Physiology Test 1 ✅': 'physio3-t1-2026.html',
             '2022 3rd year Physiology Test 2 ✅': 'physio3-t2-2022.html',
             '2023 3rd year physiology test 3 ✅': 'physio3-t2-2023.html',
             '2022 3rd year physiology test 3 ✅': 'physio3-t3-2022.html',
@@ -4141,6 +4487,18 @@
             '2022 test 3 lab science ✅': 'lab_science3/papers/2022-test3.html',
             '2021 lab science test 3  ✅': 'lab_science3/papers/2021-test3.html',
             '2021 Lab Science Sessional ✅': 'lab_science3/papers/2021-sessional.html',
+
+            // Biomed 2 HTML Answered
+            'Test 1 Biochem Biomed 2': 'biomed2/biochem-test1.html',
+            'Biomed 2 Biochemistry Test 1': 'biomed2/biochem-test1.html',
+            '2024 Biomed 2 Biochem Test 1': 'biomed2/2024-biochem-test1.html',
+            '2025 Biomed 2 Biochem Test 1': 'biomed2/2025-biochem-test1.html',
+
+            // Biomed 3 HTML Answered
+            'Biomed 3 Biochemistry Test 1': 'biomed3/biochem-test1.html',
+            '2023 Biomed 3 Biochem Test 1': 'biomed3/2023-biochem-test1.html',
+            '2024 Biomed 3 Biochem Test 1': 'biomed3/2024-biochem-test1.html',
+            '2025 Biomed 3 Biochem Test 1': 'biomed3/2025-biochem-test1.html',
         }
 
         // ============================================================
@@ -4233,6 +4591,42 @@
         };
 
         const pdfLinks = {
+
+            'COPD': '',
+            'Pulmonary Embolism': '',
+            'Pleura Effusions': '',
+            'Pleura Effusions & Empyema': '',
+            'Pneumonia': '',
+            'TB': '',
+            'ECG Interpretation': '',
+            'Heart Failure': '',
+            'ABG Interpretaiton': '',
+            'Rheuatic Fever': '',
+            'Shock': '',
+            'AKI & CKD': '',
+            'Diagnostic Renal Disease': '',
+            'Acute Liver Disease': '',
+            'Chronic Liver Disease': '',
+            'Viral Hepatitis B Infection': '',
+            'Approach To Unconcious Patient': '',
+            'CVA': '',
+            'Rheumatoid Arthritis': '',
+            'Karposis Sarcoma': '',
+            'Organophosphate Poisoning': '',
+
+
+            // Biomed 2 Past Papers
+            'Test 1 Biochem Biomed 2': 'https://drive.google.com/file/d/YOUR_BIOMED2_TEST1_LINK/view?usp=drive_link',
+            'Biomed 2 Biochemistry Test 1': 'https://drive.google.com/file/d/YOUR_BIOMED2_TEST1_LINK2/view?usp=drive_link',
+            '2024 Biomed 2 Biochem Test 1': 'https://drive.google.com/file/d/YOUR_BIOMED2_2024_TEST1_LINK/view?usp=drive_link',
+            '2025 Biomed 2 Biochem Test 1': 'https://drive.google.com/file/d/YOUR_BIOMED2_2025_TEST1_LINK/view?usp=drive_link',
+
+            // Biomed 3 Past Papers
+            'Biomed 3 Biochemistry Test 1': 'https://drive.google.com/file/d/YOUR_BIOMED3_TEST1_LINK/view?usp=drive_link',
+            '2023 Biomed 3 Biochem Test 1': 'https://drive.google.com/file/d/YOUR_BIOMED3_2023_TEST1_LINK/view?usp=drive_link',
+            '2024 Biomed 3 Biochem Test 1': 'https://drive.google.com/file/d/YOUR_BIOMED3_2024_TEST1_LINK/view?usp=drive_link',
+            '2025 Biomed 3 Biochem Test 1': 'https://drive.google.com/file/d/YOUR_BIOMED3_2025_TEST1_LINK/view?usp=drive_link',
+
             '2020 OBGY Test 1 answered': 'https://drive.google.com/file/d/1ln1jh4yKPZi7x7NKk_9m0xFNG6qUACSk/view?usp=drivesdk',
             '2020 OCTOBER GROUP 3 OBGYN Test': 'https://drive.google.com/file/d/1bSAWKSTKJdH1D0TR_L4UuxUEmDmVWO7s/view?usp=drivesdk',
             '2020 Revision Test answered': 'https://docs.google.com/presentation/d/17jIY3RO9XXg_ULt2cUQhfN63mjBP1m5t/edit?usp=drivesdk&ouid=110700472908024825820&rtpof=true&sd=true',
@@ -7409,8 +7803,8 @@
                 card.className = 'card';
                 card.id = `card-${course.id}`;
                 const yearLabel = course.year === 2 ? '2nd Year' : course.year === 3 ? '3rd Year' : course.year === 4 ?
-                    '4th Year' : '6th Year';
-                const typeLabel = course.type === 'clinical' ? '🔄 Clinical' : '📚 Preclinical';
+                    '4th Year' : course.year === 6 ? '6th Year' : course.year === 'B2' ? 'Biomed 2' : 'Biomed 3';
+                const typeLabel = course.type === 'clinical' ? '🔄 Clinical' : course.type === 'biomed' ? '🧬 Biomed' : '📚 Preclinical';
                 card.innerHTML = `
               <i class="fas ${course.icon}"></i>
               <h3>${course.name} <span style="font-size:0.7rem;color:#2d7b9e;font-weight:600;">(${yearLabel})</span></h3>
@@ -7425,8 +7819,9 @@
 
         // ---- SIGNUP LOGIC ----
         function personalizeUI(userName, userYear, site = null) {
-            const yearLabel = userYear === 2 ? '2nd Year' : userYear === 3 ? '3rd Year' : userYear === 4 ? '4th Year' :
-                '6th Year';
+            applyYearTheme(userYear); // ← ADD THIS LINE (ensures theme persists after site selection)
+
+            const yearLabel = userYear === 2 ? '2nd Year' : userYear === 3 ? '3rd Year' : userYear === 4 ? '4th Year' : userYear === 6 ? '6th Year' : userYear === 'B2' ? 'Biomed 2nd Year' : 'Biomed 3rd Year';
             const siteText = site ? ` (Site: ${site})` : '';
             document.getElementById('heroTitle').innerHTML =
                 `👋 Welcome, ${userName}! <br> Learn Today, Lead Tomorrow`;
@@ -7512,6 +7907,8 @@
                 currentUser = user.name;
                 currentUserYear = user.year;
                 currentUserCourses = user.courses || null;
+                
+                applyYearTheme(user.year);
 
                 document.getElementById('signupOverlay').classList.add('hidden');
 
@@ -7595,8 +7992,9 @@
             if (!currentUser) {
                 document.getElementById('signupOverlay').classList.remove('hidden');
             } else {
+                const yearDisplay = currentUserYear === 2 ? '2nd' : currentUserYear === 3 ? '3rd' : currentUserYear === 4 ? '4th' : currentUserYear === 6 ? '6th' : currentUserYear === 'B2' ? 'Biomed 2nd' : 'Biomed 3rd';
                 alert(
-                    `You are signed in as ${currentUser} (${currentUserYear === 2 ? '2nd' : currentUserYear === 3 ? '3rd' : currentUserYear === 4 ? '4th' : '6th'} Year). To switch user, refresh the page.`
+                    `You are signed in as ${currentUser} (${yearDisplay} Year). To switch user, refresh the page.`
                 );
             }
         });
@@ -8096,7 +8494,7 @@
         }
 
         function searchYearLabel(y) {
-            return y === 2 ? '2nd Year' : y === 3 ? '3rd Year' : y === 4 ? '4th Year' : '6th Year';
+            return y === 2 ? '2nd Year' : y === 3 ? '3rd Year' : y === 4 ? '4th Year' : y === 6 ? '6th Year' : y === 'B2' ? 'Biomed 2nd Year' : 'Biomed 3rd Year';
         }
 
         function buildSearchIndex() {
@@ -8461,6 +8859,7 @@
         console.log('🎬 Click any video in the video list to watch it inside the app.');
         console.log('📝 Multiple quizzes per topic now supported via the Quiz popup.');
         console.log('🔍 Search is live — header button or Ctrl/Cmd + K. Results are year-scoped.');
+        console.log('🧬 Biomed 2 & Biomed 3 years added — Biochemistry with Terms 1-3 and Test 1 past papers.');
         console.log('ℹ️ If topics become unclickable, check the browser console (F12) for errors.');
     </script>
 </body>
