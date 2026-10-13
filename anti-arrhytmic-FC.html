@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anti-Arrhythmic Drugs Flashcards</title>
+  <style>
+    :root {
+      --bg-dark: #090d16;
+      --card-bg: #111827;
+      --card-border: #1f293d;
+      --primary-green: #10b981;
+      --emerald-glow: #059669;
+      --accent-mint: #34d399;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    header {
+      width: 100%;
+      max-width: 1100px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      color: var(--accent-mint);
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .controls-container {
+      width: 100%;
+      max-width: 1100px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: space-between;
+      align-items: center;
+      background: #131c2e;
+      padding: 15px;
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+      margin-bottom: 25px;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 250px;
+      position: relative;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 8px;
+      background: #0d1322;
+      border: 1px solid #2b3952;
+      color: var(--text-main);
+      outline: none;
+      font-size: 0.9rem;
+    }
+
+    .search-box input:focus {
+      border-color: var(--primary-green);
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    button, select {
+      background: #1a263d;
+      color: var(--accent-mint);
+      border: 1px solid #2b3952;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.85rem;
+      transition: all 0.2s ease;
+    }
+
+    button:hover, select:hover {
+      background: var(--primary-green);
+      color: #000;
+      border-color: var(--primary-green);
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      max-width: 1100px;
+      height: 6px;
+      background: #1e293b;
+      border-radius: 3px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--primary-green), var(--accent-mint));
+      transition: width 0.3s ease;
+    }
+
+    .flashcards-wrapper {
+      width: 100%;
+      max-width: 1100px;
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 25px;
+      scroll-behavior: smooth;
+    }
+
+    .flashcards-wrapper::-webkit-scrollbar {
+      height: 10px;
+    }
+
+    .flashcards-wrapper::-webkit-scrollbar-track {
+      background: #0d1322;
+      border-radius: 5px;
+    }
+
+    .flashcards-wrapper::-webkit-scrollbar-thumb {
+      background: #24344d;
+      border-radius: 5px;
+    }
+
+    .card-container {
+      flex: 0 0 100%;
+      max-width: 600px;
+      height: 420px;
+      perspective: 1000px;
+      scroll-snap-align: center;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 768px) {
+      .card-container {
+        flex: 0 0 550px;
+      }
+    }
+
+    .card {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+    }
+
+    .card.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 16px;
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid var(--card-border);
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    }
+
+    .card-front {
+      background: radial-gradient(circle at top left, #1a273e, #111827);
+    }
+
+    .card-back {
+      background: radial-gradient(circle at bottom right, #062c22, #111827);
+      transform: rotateY(180deg);
+      border-color: var(--primary-green);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--accent-mint);
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .card-body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      flex: 1;
+      font-size: 1.15rem;
+      line-height: 1.6;
+      padding: 10px;
+      color: var(--text-main);
+      overflow-y: auto;
+    }
+
+    .card-back .card-body {
+      font-size: 0.95rem;
+      text-align: left;
+      align-items: flex-start;
+    }
+
+    .card-footer {
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 10px;
+    }
+
+    .bullet-list {
+      list-style-type: disc;
+      padding-left: 20px;
+      margin-bottom: 5px;
+    }
+
+    .bullet-list li {
+      margin-bottom: 4px;
+    }
+
+    .no-results {
+      width: 100%;
+      text-align: center;
+      padding: 50px;
+      color: var(--text-muted);
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Anti-Arrhythmic Drugs Pharmacology</h1>
+    <p>Comprehensive Flashcards • Scroll Horizontally or Use Navigation Controls</p>
+  </header>
+
+  <div class="controls-container">
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search concepts, drugs, mechanisms..." oninput="filterCards()">
+    </div>
+    
+    <select id="jumpSelect" onchange="jumpToCard(this.value)">
+      <!-- Options populated via JS -->
+    </select>
+
+    <div class="btn-group">
+      <button onclick="scrollCards(-1)">← Prev</button>
+      <button onclick="scrollCards(1)">Next →</button>
+      <button onclick="shuffleCards()">🔀 Shuffle</button>
+    </div>
+  </div>
+
+  <div class="progress-bar-container">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <div class="flashcards-wrapper" id="cardsWrapper" onscroll="updateProgress()">
+    <!-- Cards will be injected by JavaScript -->
+  </div>
+
+  <script>
+    const flashcardData = [
+      { id: 1, topic: "Cardiac Tissue", question: "What are the two types of cardiac tissue?", answer: "<ul class='bullet-list'><li><b>I- Conducting Tissue</b> (SA node, AV node, and Purkinje).</li><li><b>II- Contractile Tissue</b> (Atrial and Ventricular muscles).</li></ul>" },
+      { id: 2, topic: "Conducting Tissue", question: "What are the two main characteristics of Conducting Tissue?", answer: "<ul class='bullet-list'><li>Can initiate impulses which excite the rest of the heart and are automatic.</li><li>SA node is the pacemaker.</li></ul>" },
+      { id: 3, topic: "Contractile Tissue", question: "What are the two main characteristics of Contractile Tissue?", answer: "<ul class='bullet-list'><li>Cannot initiate an impulse; therefore, they are not automatic.</li><li>Can respond to an impulse and are excitable.</li></ul>" },
+      { id: 4, topic: "Contractile AP", question: "What is the state of contractile tissue during diastole?", answer: "It is in a <b>polarized state</b> (inside of the membrane is negative relative to the outside due to unequal distribution of ions: Na+, Ca++, K+ across the cell membrane)." },
+      { id: 5, topic: "Contractile AP", question: "What establishes the polarized state of contractile tissue during diastole?", answer: "This is established by the <b>Na+/K+ATPase pump</b> and fixed anion charges within the cell." },
+      { id: 6, topic: "Contractile AP", question: "What happens on arrival of an impulse from conducting tissue in contractile tissue?", answer: "Changes in membrane permeability to Na+, K+, Ca++ result in membrane depolarization (inside becomes positive) (<b>Phase 0</b>) followed by its repolarization (returns to its polarized state) (<b>Phase I, II and III</b>)." },
+      { id: 7, topic: "Contractile AP", question: "How do ions move across the cell membrane during the action potential?", answer: "Ions move across cell membrane through specific ion channels. At rest, Na+ channels are closed." },
+      { id: 8, topic: "Phases of Cardiac AP", question: "What occurs during Phase 0 of the Cardiac Action Potential?", answer: "Arrival of an impulse leading to depolarization to threshold voltage which results in opening of Na+ channel and fast influx of Na+ thereby moving the transmembrane potential to +65mV. Na+ channels rapidly inactivate." },
+      { id: 9, topic: "Phases of Cardiac AP", question: "What determines conduction velocity in the Cardiac Action Potential?", answer: "<b>Maximum rate of depolarization (Vmax)</b> determines conduction velocity." },
+      { id: 10, topic: "Phases of Cardiac AP", question: "What occurs during Phase I of the Cardiac Action Potential?", answer: "Rapid repolarization: Rapid outflux of K+." },
+      { id: 11, topic: "Phases of Cardiac AP", question: "What occurs during Phase II of the Cardiac Action Potential?", answer: "Delay in repolarization (Plateau): Slow Ca++ influx and equal K+efflux." },
+      { id: 12, topic: "Phases of Cardiac AP", question: "What occurs during Phase III of the Cardiac Action Potential?", answer: "Rapid repolarization: K+ outflux." },
+      { id: 13, topic: "Phases of Cardiac AP", question: "What occurs during Phase IV of the Cardiac Action Potential?", answer: "Full repolarization (return to resting membrane potential): due to active pumping of Na+ and Ca++ out of the cell in exchange for K+ under the activity of Na+/K+ ATPase pump." },
+      { id: 14, topic: "Phases of Cardiac AP", question: "What is the significance of the action potential duration (APD)?", answer: "During the action potential duration (APD), the heart is in refractory (ERP) and cannot receive an impulse." },
+      { id: 15, topic: "Automatic Tissues", question: "What happens during Phase IV in automatic tissues (SAN, AVN, Purkinje)?", answer: "The membrane of automatic tissue is not resting; it undergoes spontaneous depolarization: 1- Due to increased Na+ or Ca++ influx. 2- Decreased K+ outflux." },
+      { id: 16, topic: "Automatic Tissues", question: "How does the membrane potential change during spontaneous depolarization in automatic tissues?", answer: "The membrane becomes less negative inside until a certain potential is reached (Threshold potential) leading to firing of an impulse." },
+      { id: 17, topic: "Automatic Tissues", question: "Why is the SA node the pacemaker of the heart?", answer: "SAN is the fastest to reach threshold; therefore, it is the pacemaker of the heart." },
+      { id: 18, topic: "Automatic Tissues", question: "What causes Phase 0 depolarization in automatic tissue?", answer: "The membrane potential at threshold is 60mV; therefore, most of Na+ channels are closed. Thus, Phase 0 depolarization in automatic tissue is caused by <b>Ca++ influx</b> not Na+." },
+      { id: 19, topic: "Automatic Tissues", question: "Why are automatic tissue responses called 'Slow responses'?", answer: "Since Ca++ influx is slow, automatic tissue responses are called 'Slow responses' (with small Vmax)." },
+      { id: 20, topic: "Automatic Tissues", question: "When can Slow responses develop in contractile tissues?", answer: "Slow responses could develop in contractile tissues if they undergo spontaneous depolarization, e.g., after <b>Digitalis, Ischemia and Sympathetic Activation</b>." },
+      { id: 21, topic: "Arrhythmia Pathophysiology", question: "What are the two main categories of Arrhythmia Pathophysiology?", answer: "<ul class='bullet-list'><li>Disturbance in impulse generation</li><li>Disturbance in impulse conduction</li></ul>" },
+      { id: 22, topic: "Arrhythmia Pathophysiology", question: "What are the three types of Disturbance in impulse generation?", answer: "<ol class='bullet-list'><li>Increased Automaticity of automatic tissue e.g. with increased sympathetic activity resulting in tachyarrhythmias.</li><li>Decreased Automaticity of automatic tissue (increased vagal tone) leading to brady-arrhythmias.</li><li>Development of Automaticity in non-automatic tissue (ectopic focus) e.g. with Digitalis, ischemia and increased sympathetic activity.</li></ol>" },
+      { id: 23, topic: "Arrhythmia Pathophysiology", question: "What are the two types of Disturbance in impulse conduction?", answer: "<ol class='bullet-list'><li>AV block.</li><li>Re-entry.</li></ol>" },
+      { id: 24, topic: "Re-entry Arrhythmia", question: "What is Re-entry?", answer: "One impulse re-enters and excites the heart more than once causing arrhythmia." },
+      { id: 25, topic: "Re-entry Arrhythmia", question: "How does normal cardiac impulse conduction work?", answer: "Normally cardiac impulse bifurcates into two branches I and II to supply the entire ventricle. The impulses along branch I and II are conducted at equal velocities stimulating." },
+      { id: 26, topic: "Re-entry Arrhythmia", question: "Describe the mechanism of Re-entry in abnormal conduction.", answer: "Impulses along Purkinje fibers reach the point of bifurcation. One branch has anterograde conduction blocked. The impulse travels retrograde, re-entering the ventricular muscle." },
+      { id: 27, topic: "Re-entry Mechanism", question: "How do anti-arrhythmic drugs abolish re-entry?", answer: "<ol class='bullet-list'><li>Decreasing retrograde conduction along branch II.</li><li>Increasing refractoriness (ERP) at bifurcation point.</li><li>Increasing conduction velocity along branch II so that impulse reaches bifurcation point while it is still refractory.</li></ol>" },
+      { id: 28, topic: "WPW Syndrome", question: "What is Wolf Parkinson White Syndrome (W.P.W)?", answer: "An accessory pathway (e.g., Bundle of Kent) conducts impulses anterogradely from atria to ventricles at a higher conduction velocity than that of the AV node. Impulses conducted then travel retrogradely through AV node re-exciting the atria causing arrhythmias." },
+      { id: 29, topic: "Anti-Arrhythmic Drugs", question: "What is the Vaughan Williams Classification of Anti-Arrhythmic Drugs?", answer: "Classification according to electric effects: Class I, Class II, Class III, Class IV." },
+      { id: 30, topic: "Class I Drugs", question: "What is the general mechanism of Class I Anti-Arrhythmic Drugs?", answer: "<b>Membrane stabilizers; Sodium channel blockers</b>:<br><ul class='bullet-list'><li>Block Na+ channels leading to decreased Vmax resulting in decreased conduction velocity and decreased excitability.</li><li>Decreases spontaneous depolarization of automatic fibers thereby decreases their rate of discharge.</li></ul>" },
+      { id: 31, topic: "Class I Drugs", question: "How are Class I Agents classified?", answer: "Class I Agents are classified according to their effect on APD and Conduction velocity: Ia, Ib, Ic." },
+      { id: 32, topic: "Class Ia Drugs", question: "Name the Class Ia drugs and their effect on conduction velocity and APD.", answer: "<b>Drugs:</b> Quinidine, Procainamide, Disopyramide.<br><b>Effect:</b> Moderate decrease in conduction velocity (C.V). Increase APD through prolonging repolarization (block K+ channels)." },
+      { id: 33, topic: "Class Ib Drugs", question: "Name the Class Ib drugs and their effect on conduction velocity and APD.", answer: "<b>Drugs:</b> Lidocaine, Phenytoin, Mexiletine.<br><b>Effect:</b> Decrease conduction velocity only in ischemic tissue (no effect on AVN). Decrease APD through enhancing repolarization (Activate K+ channels)." },
+      { id: 34, topic: "Class Ic Drugs", question: "Name the Class Ic drug and its effect on conduction velocity.", answer: "<b>Drug:</b> Propafenone.<br><b>Effect:</b> Marked decrease in conduction velocity." },
+      { id: 35, topic: "Class II Drugs", question: "What is the mechanism of Class II Anti-Arrhythmic Drugs?", answer: "<b>Beta-adrenoceptor blockers; Propranolol, Esmolol:</b><br><ul class='bullet-list'><li>Block intrinsic sympathetic activity resulting in: Decreased spontaneous depolarization of automatic fibers.</li><li>Protect against sympathetic induced ectopic focus.</li></ul>" },
+      { id: 36, topic: "Class III Drugs", question: "What is the mechanism of Class III Anti-Arrhythmic Drugs?", answer: "<b>Potassium channel blockers: Amiodarone, Sotalol:</b><br><ul class='bullet-list'><li>Delay repolarization leading to increased APD producing increased ERP thereby block re-entry.</li></ul>" },
+      { id: 37, topic: "Class IV Drugs", question: "What is the mechanism of Class IVa Anti-Arrhythmic Drugs?", answer: "<b>Calcium channel blockers: Verapamil</b><br><ul class='bullet-list'><li>Block slow Ca++ currents (slow responses).</li><li>Slows SAN firing rate and AVN conduction.</li><li>Suppress slow responses in ischemia and Digitalis toxicity.</li></ul>" },
+      { id: 38, topic: "Class IV Drugs", question: "What is the mechanism of Class IVb Anti-Arrhythmic Drugs?", answer: "<b>Potassium channel openers: Adenosine</b><br><ul class='bullet-list'><li>Hyperpolarization leading to block of Ca++ channels resulting in block of AV conduction.</li></ul>" },
+      { id: 39, topic: "Quinidine", question: "What are the pharmacological properties of Quinidine (Class Ia)?", answer: "<b>A) Cardiac effects:</b> Na+ channel blocker. It blocks Na+ channels reducing the maximum rate of depolarization (Vmax) decreasing conduction velocity and depressing excitability." },
+      { id: 40, topic: "Quinidine", question: "What are the additional cardiac effects of Quinidine?", answer: "<ul class='bullet-list'><li>Inhibits spontaneous depolarization of automatic fibers decreasing their rate of discharge.</li><li>Increase APD through prolonging repolarization (block K+ channels).</li></ul>" },
+      { id: 41, topic: "Quinidine", question: "What are the Autonomic effects of Quinidine?", answer: "<b>B) Autonomic effects:</b><br><ul class='bullet-list'><li>1- Atropine-like action.</li><li>2- Alpha-blocking action causing hypotension and reflex tachycardia.</li></ul>" },
+      { id: 42, topic: "Quinidine", question: "What are the therapeutic uses of Quinidine?", answer: "<b>Therapeutic uses:</b> Broad spectrum especially in Atrial flutter or Atrial fibrillation refractory to other agents." },
+      { id: 43, topic: "Quinidine", question: "What is a specific caution when using Quinidine for Atrial flutter or Atrial fibrillation?", answer: "Autonomic effects of Quinidine increase AVN conduction leading to paradoxical ventricular tachycardia. Hence Digitalis or Verapamil should be used before Quinidine in Atrial flutter or Atrial fibrillation to block AVN conduction." },
+      { id: 44, topic: "Quinidine", question: "What are the adverse effects of Quinidine (Cardiac toxicity)?", answer: "<b>A) Cardiac toxicity:</b> SAN block, AVN block, ventricular arrhythmias. Quinidine can cause syncope and death. Paradoxical ventricular tachycardia in patients with Atrial fibrillation." },
+      { id: 45, topic: "Quinidine", question: "What are the adverse effects of Quinidine (Extracardiac toxicity)?", answer: "<b>B) Extracardiac toxicity:</b> GIT upset, Hypotension. Cinchonism: tinnitus, loss of hearing, blurred vision and photophobia. Drug fever, thrombocytopenia, anaphylactic shock. Embolism following conversion of Atrial fibrillation to sinus rhythm." },
+      { id: 46, topic: "Procainamide", question: "What is the mechanism of action of Procainamide (Class Ia)?", answer: "<ul class='bullet-list'><li>Blocks Na+ channels reducing Vmax leading to moderate decrease in conduction velocity.</li><li>Increases APD through prolonging repolarization (blocks K+ channels).</li><li>Inhibits spontaneous depolarization of automatic fibers decreasing their rate of discharge.</li></ul>" },
+      { id: 47, topic: "Procainamide", question: "What are the therapeutic uses and side effects of Procainamide?", answer: "<b>Therapeutic uses:</b> Broad spectrum Anti-arrhythmic: used in treatment of ventricular arrhythmias after cardiac infarction.<br><b>Side effects:</b> Systemic Lupus Erythematosus. Congestive heart failure (negative inotropic effect)." },
+      { id: 48, topic: "Disopyramide", question: "What is the mechanism of action of Disopyramide (Class Ia)?", answer: "Na+ channel blocker that decreases conduction velocity and responsiveness. Similar to Quinidine with marked anti-cholinergic and negative inotropic effect." },
+      { id: 49, topic: "Disopyramide", question: "What are the therapeutic uses of Disopyramide?", answer: "Broad spectrum used in:<br><ol class='bullet-list'><li>Ventricular arrhythmias.</li><li>Supraventricular arrhythmias.</li><li>Wolf Parkinson White Syndrome.</li></ol>" },
+      { id: 50, topic: "Lidocaine", question: "What is the mechanism of action of Lidocaine (Class Ib)?", answer: "<ul class='bullet-list'><li>Na+ channel blocker that decreases conduction velocity and excitability.</li><li>Decreases APD through enhancing repolarization (activate K+ channels).</li><li>No effect on atrial or AVN conduction therefore ineffective in supraventricular arrhythmias.</li><li>Lidocaine is selective on ventricular tissue especially when ischemic.</li></ul>" },
+      { id: 51, topic: "Lidocaine", question: "What are the therapeutic uses and dosage of Lidocaine?", answer: "<b>Therapeutic uses:</b> Ventricular arrhythmias (in cardiac surgery, acute myocardial infarction, Digitalis toxicity).<br><b>Dosage:</b> Loading dose (1 – 2mg/kg) I.V bolus followed by maintenance infusion." },
+      { id: 52, topic: "Lidocaine", question: "What are the pharmacokinetic properties and CNS side effects of Lidocaine?", answer: "Lidocaine is not effective orally due to extensive first pass metabolism.<br><b>CNS Side effects:</b> Paresthesia, tremors, dizziness, slurred speech and disturbs hearing." },
+      { id: 53, topic: "Lidocaine", question: "What are the adverse effects of Lidocaine?", answer: "It is the least cardiotoxic anti-arrhythmic drug. However, in diseased hearts, it may precipitate SAN standstill or worsen impaired conduction." },
+      { id: 54, topic: "Mexiletine", question: "What are the clinical uses of Mexiletine (Class Ib)?", answer: "Given orally in Ventricular arrhythmias of acute myocardial infarction." },
+      { id: 55, topic: "Phenytoin", question: "What are the clinical uses of Phenytoin (Class Ib)?", answer: "May be used in Digitalis-induced arrhythmias." },
+      { id: 56, topic: "Propafenone", question: "What are the properties of Propafenone (Class Ic)?", answer: "<ul class='bullet-list'><li>Na+ channel blocker produces marked reduction in conduction velocity.</li><li>No effect on action potential duration (APD).</li><li>It has weak Beta-blocking activity, weak K+ channel blocking activity and weak Ca++ channel blocking properties.</li></ul>" },
+      { id: 57, topic: "Propafenone", question: "What are the uses and adverse effects of Propafenone?", answer: "<b>Uses:</b> Supraventricular arrhythmias. Ventricular arrhythmias if there is no heart failure.<br><b>Adverse effects:</b> Cardiac arrhythmias, AV block and Heart failure." },
+      { id: 58, topic: "Beta-Blockers", question: "What are the pharmacological actions of Beta-Blockers (Class II)?", answer: "<ul class='bullet-list'><li>Block intrinsic sympathetic activity resulting in: Decreased spontaneous depolarization of autonomic fibers.</li><li>Protect against sympathetic-induced ectopic focus.</li><li>Sotalol also possesses K+ channel blocking action and hence prolongs the action potential duration and ERP.</li></ul>" },
+      { id: 59, topic: "Beta-Blockers", question: "What are the therapeutic uses of Beta-Blockers?", answer: "<ol class='bullet-list'><li>Supraventricular arrhythmias particularly those associated with sympathetic over activity as in Thyrotoxicosis, Exercise-induced arrhythmias, Pheochromocytoma.</li><li>Prophylactic (to prevent ventricular arrhythmias) following myocardial infarction.</li><li>Esmolol is used I.V in acute arrhythmias during surgery or emergency.</li></ol>" },
+      { id: 60, topic: "Amiodarone", question: "What is the mechanism of action of Amiodarone (Class III)?", answer: "<ul class='bullet-list'><li>It is a heavily iodinated K+ channel blocking agent.</li><li>Blockade of K+ channels leads to delaying depolarization resulting in increased APD and ERP.</li><li>Amiodarone possesses also Na+ channel blocking action, a weak Ca++ channel blocker and Beta-receptor blocker.</li><li>Slowing of sinus rate and AVN conduction.</li><li>Vasodilator effect on coronary and peripheral vessels.</li></ul>" },
+      { id: 61, topic: "Amiodarone", question: "What are the therapeutic uses of Amiodarone?", answer: "<ol class='bullet-list'><li>Treatment and Prophylaxis of supraventricular arrhythmias.</li><li>Arrhythmias associated with Wolf Parkinson White syndrome.</li><li>Refractory cases of Ventricular arrhythmias.</li></ol>" },
+      { id: 62, topic: "Amiodarone", question: "What is the dosage regimen for Amiodarone?", answer: "It has a long t1/2 (weeks), given once daily. A loading dose of 0.8 – 1.2 gram/day is given for 2-4 weeks and maintain on 0.2 gram/day." },
+      { id: 63, topic: "Amiodarone", question: "What are the adverse effects of Amiodarone?", answer: "<ol class='bullet-list'><li>Corneal deposits, are reversible.</li><li>Alteration of thyroid function.</li><li>Photosensitivity.</li><li>Pulmonary infiltrates and pulmonary fibrosis.</li><li>Proximal myopathy and neuropathy.</li><li>AV block and sinus bradycardia.</li></ol>" },
+      { id: 64, topic: "Amiodarone", question: "What are the drug interactions of Amiodarone?", answer: "Amiodarone potentiates Warfarin and increases Digoxin and Quinidine levels." },
+      { id: 65, topic: "Sotalol", question: "What is the classification and use of Sotalol?", answer: "<b>Class II and III</b><br><b>Therapeutic uses:</b> Broad spectrum in supraventricular, ventricular arrhythmias and Wolf Parkinson White syndrome." },
+      { id: 66, topic: "Verapamil/Diltiazem", question: "What is the mechanism of action of Verapamil and Diltiazem (Class IV agents)?", answer: "Block slow Ca++ current:<br><ol class='bullet-list'><li>Slow SAN firing rate and AVN conduction.</li><li>Suppress slow responses in ischemia and Digitalis toxicity.</li></ol>" },
+      { id: 67, topic: "Verapamil/Diltiazem", question: "What are the therapeutic uses of Verapamil and Diltiazem?", answer: "<ol class='bullet-list'><li>Supraventricular tachycardia.</li><li>Reduce ventricular rate in atrial flutter and fibrillation.</li></ol>" },
+      { id: 68, topic: "Adenosine", question: "What is the mechanism of action of Adenosine?", answer: "<ul class='bullet-list'><li>K+ channel opener producing hyperpolarization leading to Ca++ channel blockade thereby slowing AVN conduction.</li><li>Dilates coronary and peripheral blood vessels.</li><li>Has a very short duration of action (about 15 seconds).</li></ul>" },
+      { id: 69, topic: "Adenosine", question: "What are the therapeutic uses of Adenosine?", answer: "Adenosine is the drug of choice in paroxysmal Supra-ventricular tachycardia." },
+      { id: 70, topic: "Adenosine", question: "What is the dosage and side effects of Adenosine?", answer: "<b>Dosage:</b> Rapid bolus of 6mg (I.V) which may be repeated after 1-2 minutes.<br><b>Side effects:</b> Bronchospasm, Flushing and headache, Chest pain.<br><b>Contraindications:</b> Bronchial asthma and AV block." },
+      { id: 71, topic: "Clinical Applications", question: "What is the clinical application of anti-arrhythmic drugs for Atrial fibrillation (A.F)?", answer: "<ul class='bullet-list'><li>Anti-coagulants (to avoid thrombo-embolism) + Anti-arrhythmics.</li><li>Anti-arrhythmic drugs that block AV node: Digoxin, Verapamil, Beta-blockers, Amiodarone.</li><li>Cardioversion preceded by Quinidine.</li></ul>" },
+      { id: 72, topic: "Clinical Applications", question: "What is the clinical application of anti-arrhythmic drugs for Supra-ventricular tachycardia?", answer: "<ul class='bullet-list'><li>Adenosine is the drug of choice.</li><li>Verapamil is the second choice.</li></ul>" },
+      { id: 73, topic: "Clinical Applications", question: "What is the clinical application of anti-arrhythmic drugs for Ventricular tachycardia?", answer: "<ul class='bullet-list'><li>Lidocaine is the drug of first choice.</li><li>Procainamide and Mexiletine are alternatives.</li></ul>" },
+      { id: 74, topic: "Clinical Applications", question: "What is the clinical application of anti-arrhythmic drugs for Bradyarrhythmias?", answer: "<ul class='bullet-list'><li>Atropine (I.V) produces bradycardia following myocardial infarction.</li><li>Isoprenaline; may be useful in some cases of heart block.</li><li>Cardiac pacing (if no response to Atropine).</li></ul>" }
+    ];
+
+    let activeData = [...flashcardData];
+
+    function renderCards(data) {
+      const wrapper = document.getElementById('cardsWrapper');
+      const select = document.getElementById('jumpSelect');
+      
+      wrapper.innerHTML = '';
+      select.innerHTML = '<option value="">Jump to Card...</option>';
+
+      if (data.length === 0) {
+        wrapper.innerHTML = '<div class="no-results">No matching flashcards found.</div>';
+        return;
+      }
+
+      data.forEach((card, index) => {
+        const cardElem = document.createElement('div');
+        cardElem.className = 'card-container';
+        cardElem.id = `card-${index}`;
+        cardElem.innerHTML = `
+          <div class="card" onclick="flipCard(this)">
+            <div class="card-face card-front">
+              <div class="card-header">
+                <span>${card.topic}</span>
+                <span>#${card.id}</span>
+              </div>
+              <div class="card-body">
+                <p>${card.question}</p>
+              </div>
+              <div class="card-footer">
+                Click to Reveal Answer ↷
+              </div>
+            </div>
+            <div class="card-face card-back">
+              <div class="card-header">
+                <span>Answer</span>
+                <span>#${card.id}</span>
+              </div>
+              <div class="card-body">
+                <div>${card.answer}</div>
+              </div>
+              <div class="card-footer">
+                Click to Flip Back ↶
+              </div>
+            </div>
+          </div>
+        `;
+        wrapper.appendChild(cardElem);
+
+        const opt = document.createElement('option');
+        opt.value = index;
+        opt.textContent = `Card ${card.id}: ${card.topic} - ${card.question.substring(0, 30)}...`;
+        select.appendChild(opt);
+      });
+
+      updateProgress();
+    }
+
+    function flipCard(cardElem) {
+      cardElem.classList.toggle('flipped');
+    }
+
+    function scrollCards(direction) {
+      const wrapper = document.getElementById('cardsWrapper');
+      const cardWidth = wrapper.querySelector('.card-container').offsetWidth + 20;
+      wrapper.scrollBy({ left: direction * cardWidth, behavior: 'smooth' });
+    }
+
+    function jumpToCard(index) {
+      if (index === '') return;
+      const targetCard = document.getElementById(`card-${index}`);
+      if (targetCard) {
+        targetCard.scrollIntoView({ behavior: 'smooth', inline: 'center' });
+      }
+    }
+
+    function shuffleCards() {
+      activeData.sort(() => Math.random() - 0.5);
+      renderCards(activeData);
+    }
+
+    function filterCards() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      activeData = flashcardData.filter(c => 
+        c.question.toLowerCase().includes(query) || 
+        c.answer.toLowerCase().includes(query) ||
+        c.topic.toLowerCase().includes(query)
+      );
+      renderCards(activeData);
+    }
+
+    function updateProgress() {
+      const wrapper = document.getElementById('cardsWrapper');
+      const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
+      const currentScroll = wrapper.scrollLeft;
+      const percentage = maxScroll > 0 ? (currentScroll / maxScroll) * 100 : 100;
+      document.getElementById('progressBar').style.width = `${Math.min(100, Math.max(5, percentage))}%`;
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+      if (e.key === 'ArrowRight') scrollCards(1);
+      if (e.key === 'ArrowLeft') scrollCards(-1);
+    });
+
+    renderCards(activeData);
+  </script>
+</body>
+</html>

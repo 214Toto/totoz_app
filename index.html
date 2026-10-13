@@ -2662,6 +2662,7 @@ function applyYearTheme(year) {
                         topics: [
                             'Common Terminologies Used in Pharmacology',
                             'Membrane Transport and Absoprtion',
+                            'Introduction to Pharmacokinetics and Pharmacodynamics',
                             'Biovailability First-Pass Elimination',
                             'Drug Distribution',
                             'Drug Excretion',
@@ -2681,17 +2682,22 @@ function applyYearTheme(year) {
                     { name: 'Term 2',
                         topics: [
                             'Management of Heart Failure',
-                            'Anti-arrhythmis Drugs',
-                            'Drugs used in Angin Treatment',
+                            'Anti-arrhythmic Drugs',
+                            'Drugs used in Angina Treatment',
                             'Antihypertensive Drugs',
                             'Drugs used in the treatment of Hyperlipidemia',
                         ]
                     },
                     { name: 'Term 3',
                         topics: [
+                            'Anti-Emetic Drugs',
                             'Anti-asthmatic Drugs',
                             'Drugs used in the Treatment of TB',
+                            // 'Drugs used to Treat Cough',
+                            'Drugs used to Treat IBD',
                             'Drugs used to Treat Common Cold',
+                            'Drugs used to Management of PUD',
+                            'Drugs used to Management of GERD',
                             'Drugs acting on Cough',
                             'Use of Steroids in Respiratory Disorders',
                             'Anti-fungal',
@@ -3767,8 +3773,7 @@ function applyYearTheme(year) {
                                 topics: ['Rheumatoid Arthritis'
                                 ] },
                             { name: 'Other Systems',
-                                topics: ['Karposis Sarcoma', 'Organophosphate Poisoning', 'HHS',
-                                    'Jaundice', 'Sickle Cell', 'Asthma'
+                                topics: ['Karposis Sarcoma', 'Organophosphate Poisoning'
                                 ] },
                             { name: 'IMED Past Papers',
                                 topics: [
@@ -4533,6 +4538,7 @@ function applyYearTheme(year) {
             'Drugs acting on Cough': 'therap-2/quiz/cough_quiz.html',
             'Use of Steroids in Respiratory Disorders': 'therap-2/quiz/antifugal_quiz.html',
             'Anti-fungal': 'therap-2/quiz/antifugal_quiz.html',
+        
             'Nucleotide Metabolism': 'biochem-3rd-year/nucleotide-quiz.html',
             'Renal Function, Anatomy and Blood Flow': 'physio3/quiz/renal-functional-quiz.html',
             'Mechanism of Urine Formation': 'physio3/quiz/urine-formation-quiz.html',
@@ -4565,11 +4571,48 @@ function applyYearTheme(year) {
              'ADH': [
                 { title: 'ADH Quiz', url: 'ADH.html' },
             ],
+
+            // 2nd year therapeutics
+
             'Anti-asthmatic Drugs': [
-                { title: 'Quiz 1 – Basics of Asthma Pharmacology', url: 'therap-2/quiz/asthma_quiz.html' },
-                { title: 'Quiz 2 – Drug Interactions & Side Effects', url: 'therap-2/quiz/asthma_quiz2.html' },
-                { title: 'Quiz 3 – Clinical Case Scenarios', url: 'therap-2/quiz/asthma_quiz3.html' }
+                { title: 'Test Set up', url: 'therap-2/quiz/asthma_quiz.html' },
+                { title: 'Flashcards', url: '' },
             ],
+            'Drugs used in the Treatment of TB': [
+                { title: 'Test Set up', url: 'therap-2/quiz/TB_quiz.html' },
+                { title: 'Flashcards', url: '' },
+            ],
+            'Drugs used to Treat Common Cold': [
+                { title: 'Test Set up', url: 'therap-2/quiz/common_cold_quiz.html' },
+                { title: 'Flashcards', url: '' },
+            ],
+            'Anti-Emetic Drugs': [
+                { title: 'Flashcards', url: 'anti-emetic-FC.html' },
+            ],
+            'Drugs used in Angina Treatment': [
+                { title: 'Flashcards', url: 'Anti-Anginal-FC.html' },
+            ],
+            'Anti-arrhythmic Drugs': [
+                { title: 'Flashcards', url: 'anti-arrhytmic-FC.html' },
+            ],
+            'Drugs used in the treatment of Hyperlipidemia': [
+                { title: 'Flashcards', url: 'dyslipidemia-FC.html' },
+            ],
+            'Drugs used in the Treatment of TB': [
+                { title: 'Flashcards', url: 'TB-FC.html' },
+            ],
+            'Drugs acting on Cough': [
+                { title: 'Test Set up', url: 'therap-2/quiz/cough_quiz.html' },
+            ],
+            'Use of Steroids in Respiratory Disorders': [
+                { title: 'Test Set up', url: 'therap-2/quiz/antifugal_quiz.html' },
+                { title: 'Flashcards', url: '' },
+            ],
+            'Anti-fungal': [
+                { title: 'Test Set up', url: 'therap-2/quiz/antifugal_quiz.html' },
+                { title: 'Flashcards', url: '' },
+            ],
+
             'Nucleotide Metabolism': [
                 { title: 'Quiz 1 – Nucleotide Synthesis', url: 'biochem-3rd-year/nucleotide-quiz.html' },
                 { title: 'Quiz 2 – Degradation & Salvage Pathways', url: 'biochem-3rd-year/nucleotide-quiz2.html' }
@@ -4593,7 +4636,27 @@ function applyYearTheme(year) {
 
         const pdfLinks = {
 
-        
+            'COPD': '',
+            'Pulmonary Embolism': '',
+            'Pleura Effusions': '',
+            'Pleura Effusions & Empyema': '',
+            'Pneumonia': '',
+            'TB': '',
+            'ECG Interpretation': '',
+            'Heart Failure': '',
+            'ABG Interpretaiton': '',
+            'Rheuatic Fever': '',
+            'Shock': '',
+            'AKI & CKD': '',
+            'Diagnostic Renal Disease': '',
+            'Acute Liver Disease': '',
+            'Chronic Liver Disease': '',
+            'Viral Hepatitis B Infection': '',
+            'Approach To Unconcious Patient': '',
+            'CVA': '',
+            'Rheumatoid Arthritis': '',
+            'Karposis Sarcoma': '',
+            'Organophosphate Poisoning': '',
 
 
             // Biomed 2 Past Papers
@@ -4957,6 +5020,28 @@ function applyYearTheme(year) {
 
         // ---- VIDEO DATA: maps topic names to an array of video objects with YouTube URLs ----
         const videoData = {
+
+            'Introduction to Pharmacokinetics and Pharmacodynamics': [
+                { title: 'Part 1', url: 'https://drive.google.com/file/d/1SD5a-0IUPYeC_MWhUIsTo3jnFqFm7V4j/view?usp=drive_link' },
+                { title: 'Part 2', url: 'https://drive.google.com/file/d/1j_zcrtWEU8JuJsvG3eqpjTbZbctf6ESH/view?usp=drive_link' },
+                { title: 'Part 3', url: 'https://drive.google.com/file/d/1mQA0Kf2b8DcKGsJ9FOkrW3rm1AYcYwOD/view?usp=drive_link' },
+                { title: 'Part 4', url: 'https://drive.google.com/file/d/1rdSlDd8Dh0ccVFepDPZCAq4OiRo1ez2n/view?usp=drive_link' },
+                { title: 'Part 5', url: 'https://drive.google.com/file/d/1_wV6-EMYXfNv1JNFtKr2wxXn6NOO57QL/view?usp=drive_link' },
+                { title: 'Part 6', url: 'https://drive.google.com/file/d/1S4r4RGgM6bJZoU0DplJQ00oLYWzl1S69/view?usp=drive_link' },
+            ],
+
+            'Pelvic Musculature': [
+                { title: 'Pelvic Muscles', url: 'video.html?topic=pelvis-muscles' },
+            ],
+
+            'Pelvic Neurovasculature': [
+                { title: 'Pelvic Muscles', url: 'video.html?topic=pelvis-supply' },
+            ],
+
+            'Neck Musculature': [
+                { title: 'Neck Muscle Compartments', url: 'video.html?topic=neck-muscle' },
+            ],
+
             'The Cardiovascular System': [
                 { title: 'ECG Part 1', url: 'https://drive.google.com/file/d/1hNmfT_hC8B7SQ9z3w57oZsNc66K6FSBC/view?usp=drivesdk' },
                 { title: 'ECG Part 2', url: 'https://drive.google.com/file/d/14UXNy8fHgw_lxym94nTvvrjo7RY-KyZF/view?usp=drivesdk' },
@@ -5069,181 +5154,183 @@ function applyYearTheme(year) {
             ],
 
             // ========== 2nd Year Therapeutics ==========
-            'Common Terminologies Used in Pharmacology': [
-                { title: 'Pharmacology Basics – Key Terms Explained',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'Introduction to Pharmacodynamics & Pharmacokinetics',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-            ],
-            'Membrane Transport and Absoprtion': [
-                { title: 'Membrane Transport Mechanisms in Drug Absorption',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'Passive & Active Transport – Pharmacology',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-            ],
-            'Biovailability First-Pass Elimination': [
-                { title: 'Bioavailability and First-Pass Metabolism',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'First-Pass Effect – Clinical Significance',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-            ],
-            'Drug Distribution': [
-                { title: 'Drug Distribution – Volume of Distribution',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'Factors Affecting Drug Distribution',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-            ],
-            'Drug Excretion': [
-                { title: 'Drug Excretion – Renal and Biliary Routes',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'Clearance and Elimination Half-Life',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-            ],
-            'Drug Metabolism': [
-                { title: 'Phase I and Phase II Drug Metabolism',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'Cytochrome P450 Enzyme System',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-            ],
-            'Routes of Administration': [
-                { title: 'Enteral and Parenteral Routes of Drug Administration',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'Advantages and Disadvantages of Different Routes',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-            ],
-            'Therapeutic Drug Monitoring': [
-                { title: 'Principles of Therapeutic Drug Monitoring',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'TDM in Clinical Practice – Case Studies',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-            ],
-            'Mechanism of Drug Action': [
-                { title: 'Receptor Theory and Drug Action',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'Enzyme Inhibition and Drug Action',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-            ],
-            'Autonomic Pharmacology': [
-                { title: 'Autonomic Nervous System – Overview',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'Sympathetic and Parasympathetic Pharmacology',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-            ],
-            'Neuro-Hormonal Transmision in the ANS': [
-                { title: 'Neurotransmission in the Autonomic Nervous System',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'Hormonal Regulation of the ANS',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-            ],
-            'ANS Regulation': [
-                { title: 'Regulation of Autonomic Function',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'Baroreflex and Autonomic Control',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-            ],
+            // 'Common Terminologies Used in Pharmacology': [
+            //     { title: 'Pharmacology Basics – Key Terms Explained',
+            //         url: ' ' },
+            //     { title: 'Introduction to Pharmacodynamics & Pharmacokinetics',
+            //         url: ' ' },
+            // ],
+            // 'Membrane Transport and Absoprtion': [
+            //     { title: 'Membrane Transport Mechanisms in Drug Absorption',
+            //         url: ' ' },
+            //     { title: 'Passive & Active Transport – Pharmacology',
+            //         url: ' ' },
+            // ],
+            // 'Biovailability First-Pass Elimination': [
+            //     { title: 'Bioavailability and First-Pass Metabolism',
+            //         url: ' ' },
+            //     { title: 'First-Pass Effect – Clinical Significance',
+            //         url: ' ' },
+            // ],
+            // 'Drug Distribution': [
+            //     { title: 'Drug Distribution – Volume of Distribution',
+            //         url: ' ' },
+            //     { title: 'Factors Affecting Drug Distribution',
+            //         url: ' ' },
+            // ],
+            // 'Drug Excretion': [
+            //     { title: 'Drug Excretion – Renal and Biliary Routes',
+            //         url: ' ' },
+            //     { title: 'Clearance and Elimination Half-Life',
+            //         url: ' ' },
+            // ],
+            // 'Drug Metabolism': [
+            //     { title: 'Video Lesson',
+            //         url: 'https://drive.google.com/file/d/1L6VDY05Owy9llX_p6obPwCh4IGxAa4eH/view?usp=drive_link' },
+            // ],
+            // 'Routes of Administration': [
+            //     { title: 'Enteral and Parenteral Routes of Drug Administration',
+            //         url: ' ' },
+            //     { title: 'Advantages and Disadvantages of Different Routes',
+            //         url: ' ' },
+            // ],
+            // 'Therapeutic Drug Monitoring': [
+            //     { title: 'Principles of Therapeutic Drug Monitoring',
+            //         url: ' ' },
+            //     { title: 'TDM in Clinical Practice – Case Studies',
+            //         url: ' ' },
+            // ],
+            // 'Mechanism of Drug Action': [
+            //     { title: 'Receptor Theory and Drug Action',
+            //         url: ' ' },
+            //     { title: 'Enzyme Inhibition and Drug Action',
+            //         url: ' ' },
+            // ],
+            // 'Autonomic Pharmacology': [
+            //     { title: 'Autonomic Nervous System – Overview',
+            //         url: ' ' },
+            //     { title: 'Sympathetic and Parasympathetic Pharmacology',
+            //         url: ' ' },
+            // ],
+            // 'Neuro-Hormonal Transmision in the ANS': [
+            //     { title: 'Neurotransmission in the Autonomic Nervous System',
+            //         url: ' ' },
+            //     { title: 'Hormonal Regulation of the ANS',
+            //         url: ' ' },
+            // ],
+            // 'ANS Regulation': [
+            //     { title: 'Regulation of Autonomic Function',
+            //         url: ' ' },
+            //     { title: 'Baroreflex and Autonomic Control',
+            //         url: ' ' },
+            // ],
             'Muscarinic Agonists': [
-                { title: 'Muscarinic Receptor Agonists – Pharmacology',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'Clinical Uses of Muscarinic Agonists',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                { title: 'Online Video',
+                    url: 'https://drive.google.com/file/d/1SbZE1Wygelul1C08OawoNVWi0jtZ2ewt/view?usp=drive_link' },
+            
             ],
             'Muscarinic Antagonists': [
-                { title: 'Muscarinic Receptor Antagonists – Pharmacology',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'Atropine and Other Anticholinergic Drugs',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                { title: 'Online Lesson',
+                    url: 'https://drive.google.com/file/d/1QrrNnRBKS6NPxskmKMRAdWnBRIpCxALC/view?usp=drive_link' },
             ],
             'Sympathomimetic Drugs (Adrenergic Agonists)': [
                 { title: 'Adrenergic Agonists – Mechanism and Clinical Use',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Alpha and Beta Adrenergic Agonists',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Sympatholitic Drugs (Adrenergic Blockers)': [
                 { title: 'Adrenergic Blockers – Alpha and Beta Antagonists',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Clinical Applications of Beta-Blockers',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
-            'Management of Heart Failure': [
-                { title: 'Pharmacological Management of Heart Failure',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'Diuretics, ACE Inhibitors, and Beta-Blockers in HF',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-            ],
-            'Anti-arrhythmis Drugs': [
-                { title: 'Classification of Antiarrhythmic Drugs',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'Mechanism of Action of Antiarrhythmic Agents',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-            ],
-            'Drugs used in Angin Treatment': [
-                { title: 'Anti-Anginal Drugs – Nitrates and Calcium Channel Blockers',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'Management of Stable and Unstable Angina',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+            // 'Management of Heart Failure': [
+            //     { title: 'Pharmacological Management of Heart Failure',
+            //         url: ' ' },
+            //     { title: 'Diuretics, ACE Inhibitors, and Beta-Blockers in HF',
+            //         url: ' ' },
+            // ],
+            // 'Anti-arrhythmic Drugs': [
+            //     { title: 'Classification of Antiarrhythmic Drugs',
+            //         url: ' ' },
+            //     { title: 'Mechanism of Action of Antiarrhythmic Agents',
+            //         url: ' ' },
+            // ],
+            'Drugs used in Angina Treatment': [
+                { title: 'Angina Part 1',
+                    url: 'https://drive.google.com/file/d/1QFoedegmgAwllw1rCLa6fvX1s9TfRLuO/view?usp=drive_link' },
+                { title: 'Angina Part 2',
+                    url: 'https://drive.google.com/file/d/1I-_6SUCqjYQFL73krLygNEqbynGqbNH_/view?usp=drive_link' },
+                { title: 'Angina Part 3',
+                    url: 'https://drive.google.com/file/d/1M64G7Uy2aWbL2mAe6mXzkNZ0GAspI75B/view?usp=drive_link' },
+                { title: 'Angina Part 4',
+                    url: 'https://drive.google.com/file/d/1aqve7FvVPSDT2_YC27_Hl6M02EEs4zGs/view?usp=drive_link' },
+                { title: 'Angina Part 5',
+                    url: 'https://drive.google.com/file/d/1lTe5mHiOwKCP_9IoemJd405nu2Dqb9H8/view?usp=drive_link' },
+                { title: 'Angina Part 6',
+                    url: 'https://drive.google.com/file/d/1XVNomQkVWf5iHowKsfY139dOEpe7MNzk/view?usp=drive_link' },
+                { title: 'Angina Part 7',
+                    url: 'https://drive.google.com/file/d/1whtrEW0lFpx4BS9fWBiE30mwwvgStIAS/view?usp=drive_link' },
             ],
             'Antihypertensive Drugs': [
-                { title: 'Pharmacological Treatment of Hypertension',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'ACE Inhibitors, ARBs, and Calcium Channel Blockers',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                { title: 'Online Class',
+                    url: 'https://drive.google.com/file/d/1L11q5bG4M-ssaehJyhHgUON6Sckx9vWb/view?usp=drive_link' },
             ],
-            'Drugs used in the treatment of Hyperlipidemia': [
-                { title: 'Statins and Other Lipid-Lowering Drugs',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'Management of Hyperlipidemia – Clinical Approach',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-            ],
+            // 'Drugs used in the treatment of Hyperlipidemia': [
+            //     { title: 'Statins and Other Lipid-Lowering Drugs',
+            //         url: ' ' },
+            //     { title: 'Management of Hyperlipidemia – Clinical Approach',
+            //         url: ' ' },
+            // ],
             'Anti-asthmatic Drugs': [
-                { title: 'Pharmacology of Anti-Asthmatic Drugs',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'Bronchodilators and Anti-Inflammatory Agents in Asthma',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                { title: 'Online Lesson',
+                    url: 'https://drive.google.com/file/d/1amncQR3bnVkrxYENUw2EkbKlx2S05-8L/view?usp=drive_link' },
+               
             ],
-            'Drugs used in the Treatment of TB': [
-                { title: 'First-Line Anti-Tubercular Drugs',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'Management of Tuberculosis – Drug Regimens',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-            ],
-            'Drugs used to Treat Common Cold': [
-                { title: 'Over-the-Counter Medications for the Common Cold',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'Antihistamines and Decongestants',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-            ],
-            'Drugs acting on Cough': [
-                { title: 'Antitussives and Expectorants – Pharmacology',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'Management of Acute and Chronic Cough',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-            ],
-            'Use of Steroids in Respiratory Disorders': [
-                { title: 'Corticosteroids in Respiratory Medicine',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'Inhaled vs Systemic Corticosteroids',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-            ],
-            'Anti-fungal': [
-                { title: 'Antifungal Drugs – Mechanisms and Clinical Use',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'Azoles, Echinocandins, and Polyene Antifungals',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-            ],
+            // 'Drugs used in the Treatment of TB': [
+            //     { title: 'First-Line Anti-Tubercular Drugs',
+            //         url: ' ' },
+            //     { title: 'Management of Tuberculosis – Drug Regimens',
+            //         url: ' ' },
+            // ],
+            // 'Drugs used to Treat Common Cold': [
+            //     { title: 'Over-the-Counter Medications for the Common Cold',
+            //         url: ' ' },
+            //     { title: 'Antihistamines and Decongestants',
+            //         url: ' ' },
+            // ],
+            // 'Drugs acting on Cough': [
+            //     { title: 'Antitussives and Expectorants – Pharmacology',
+            //         url: ' ' },
+            //     { title: 'Management of Acute and Chronic Cough',
+            //         url: ' ' },
+            // ],
+            // 'Use of Steroids in Respiratory Disorders': [
+            //     { title: 'Corticosteroids in Respiratory Medicine',
+            //         url: ' ' },
+            //     { title: 'Inhaled vs Systemic Corticosteroids',
+            //         url: ' ' },
+            // ],
+            // 'Anti-fungal': [
+            //     { title: 'Antifungal Drugs – Mechanisms and Clinical Use',
+            //         url: ' ' },
+            //     { title: 'Azoles, Echinocandins, and Polyene Antifungals',
+            //         url: ' ' },
+            // ],
 
             // ========== 2nd Year Biochemistry ==========
             'Amino Acids': [
                 { title: 'Amino Acids – Structure and Classification',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Essential and Non-Essential Amino Acids',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Peptides': [
                 { title: 'Peptides – Synthesis and Function',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Bioactive Peptides in Medicine',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Plasma Proteins': [
                 { title: 'Plasma Proteins – Part 1',
@@ -5284,14 +5371,14 @@ function applyYearTheme(year) {
             ],
 
             'Pituitary Gland': [
-                { title: 'Anti-Diuretic Hormone', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                { title: 'Anti-Diuretic Hormone', url: ' ' },
             ],
             'Thyroid Gland': [
                 { title: 'Thyroid Hormone Synthesis',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Action of Thyroid Hormones',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'Thyroid Disorders', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
+                { title: 'Thyroid Disorders', url: ' ' },
             ],
              'ADH': [
                 { title: 'ADH Lesson', url: 'https://drive.google.com/file/d/1OwaOrOan5a-7-jOfVUxv_xsDuhkIZgL8/view?usp=drivesdk' },
@@ -5306,542 +5393,542 @@ function applyYearTheme(year) {
                 { title: 'Urine Formation', url: 'https://drive.google.com/file/d/1yaqs7_lyRmMHriEybqO8YpHErdNrUhgj/view?usp=drive_link' },
             ],
             'Energy Metabolism and Nutrition': [
-                { title: 'Protein Sparing Effect', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                { title: 'Protein Sparing Effect', url: ' ' },
                 { title: 'Recommended Dietary Allowance',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'Protein Quality', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'Total Energy Requirement', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
+                { title: 'Protein Quality', url: ' ' },
+                { title: 'Total Energy Requirement', url: ' ' },
                 { title: 'Specific Dynamic Action (SDA)',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'Respiratory Quotient', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'Overnutrition', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
+                { title: 'Respiratory Quotient', url: ' ' },
+                { title: 'Overnutrition', url: ' ' },
             ],
             'Fat Soluble Vitamins': [
-                { title: 'Vitamin A Part 1', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'Vitamin A Part 2', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'Vitamin A Part 3', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'Vitamin A Part 4', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'Vitamin D', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'Vitamin E', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'Vitamin K', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                { title: 'Vitamin A Part 1', url: ' ' },
+                { title: 'Vitamin A Part 2', url: ' ' },
+                { title: 'Vitamin A Part 3', url: ' ' },
+                { title: 'Vitamin A Part 4', url: ' ' },
+                { title: 'Vitamin D', url: ' ' },
+                { title: 'Vitamin E', url: ' ' },
+                { title: 'Vitamin K', url: ' ' },
             ],
             'Micronutrients and Vitamins': [
-                { title: 'Vitamin B1', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'Vitamin B2', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'Vitamin B3', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'Vitamin B5', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'Vitamin B6', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'Vitamin B7', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'Vitamin B9', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'Vitamin B12', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'Vitamin C', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                { title: 'Vitamin B1', url: ' ' },
+                { title: 'Vitamin B2', url: ' ' },
+                { title: 'Vitamin B3', url: ' ' },
+                { title: 'Vitamin B5', url: ' ' },
+                { title: 'Vitamin B6', url: ' ' },
+                { title: 'Vitamin B7', url: ' ' },
+                { title: 'Vitamin B9', url: ' ' },
+                { title: 'Vitamin B12', url: ' ' },
+                { title: 'Vitamin C', url: ' ' },
             ],
 
             // ========== 3rd Year Biochemistry ==========
             'Overview of metabolism (metabolic pathways)': [
                 { title: 'Metabolic Pathways – An Overview',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Integration of Metabolic Pathways',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Biological Oxidation: ETC & oxidative phosphorylation': [
                 { title: 'Electron Transport Chain and Oxidative Phosphorylation',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'ATP Synthesis and Regulation',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Carbohydrate metabolism: Glycolysis': [
                 { title: 'Glycolysis – Steps and Regulation',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Clinical Correlates of Glycolysis',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Pentose phosphate pathway': [
                 { title: 'Pentose Phosphate Pathway – NADPH and Ribose',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Clinical Significance of the Pentose Phosphate Pathway',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'TCA cycle (krebs cycle)': [
-                { title: 'Class Notes', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
-                { title: 'ToToZ Notes', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                { title: 'Class Notes', url: ' ' },
+                { title: 'ToToZ Notes', url: ' ' },
             ],
             'Carbohydrate metabolism: Galactose and Fructose': [
                 { title: 'Galactose and Fructose Metabolism',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Inborn Errors of Galactose and Fructose Metabolism',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Gluconeogenesis': [
                 { title: 'Gluconeogenesis – Pathway and Regulation',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Substrates and Hormonal Control of Gluconeogenesis',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Blood glucose homeostasis': [
                 { title: 'Blood Glucose Homeostasis – Insulin and Glucagon',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Diabetes Mellitus – Pathophysiology and Management',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Alcohol metabolism': [
                 { title: 'Alcohol Metabolism – Ethanol to Acetate',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Clinical Consequences of Alcohol Metabolism',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Uronic acid pathway': [
                 { title: 'Uronic Acid Pathway – Glucuronic Acid Synthesis',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Role of Glucuronic Acid in Detoxification',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Glycogen metabolism': [
                 { title: 'Glycogenesis and Glycogenolysis',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Regulation of Glycogen Metabolism',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
 
             // ========== 3rd Year Public Health ==========
             'Introduction and types of variables': [
-                { title: 'Class Notes', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                { title: 'Class Notes', url: ' ' },
             ],
             'Tables and graphs': [
-                { title: 'Class Notes', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                { title: 'Class Notes', url: ' ' },
             ],
             'Measures of central tendecy': [
-                { title: 'Class Notes', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                { title: 'Class Notes', url: ' ' },
             ],
             'Measures of spread': [
-                { title: 'Class Notes', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                { title: 'Class Notes', url: ' ' },
             ],
             'probabilities': [
-                { title: 'Class Notes', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                { title: 'Class Notes', url: ' ' },
             ],
             'normal distribution': [
-                { title: 'Class Notes', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                { title: 'Class Notes', url: ' ' },
             ],
             'significance testing': [
-                { title: 'Class Notes', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                { title: 'Class Notes', url: ' ' },
             ],
             'z test for one population': [
-                { title: 'Class Notes', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                { title: 'Class Notes', url: ' ' },
             ],
             'z test for two independent populations': [
-                { title: 'Class Notes', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                { title: 'Class Notes', url: ' ' },
             ],
             't test for one sample': [
-                { title: 'Class Notes', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                { title: 'Class Notes', url: ' ' },
             ],
             't test for two samples': [
-                { title: 'Class Notes', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                { title: 'Class Notes', url: ' ' },
             ],
             'Pearson product moment corraltion coefficinet': [
-                { title: 'Class Notes', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                { title: 'Class Notes', url: ' ' },
             ],
             'simple linear regression': [
-                { title: 'Class Notes', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                { title: 'Class Notes', url: ' ' },
             ],
             'Intorduction to research': [
-                { title: 'Class Notes', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                { title: 'Class Notes', url: ' ' },
             ],
             'Research Objectives': [
-                { title: 'Class Notes', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                { title: 'Class Notes', url: ' ' },
             ],
             'Literature Review': [
-                { title: 'Class Notes', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                { title: 'Class Notes', url: ' ' },
             ],
             'Referencing and citations': [
-                { title: 'Class Notes', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                { title: 'Class Notes', url: ' ' },
             ],
             'Sampling techniques': [
-                { title: 'Class Notes', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                { title: 'Class Notes', url: ' ' },
             ],
             'Study designs': [
-                { title: 'Class Notes', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                { title: 'Class Notes', url: ' ' },
             ],
             'Sample Size Determination': [
-                { title: 'Class Notes', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                { title: 'Class Notes', url: ' ' },
             ],
             'Data analysis and ethics': [
-                { title: 'Class Notes', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                { title: 'Class Notes', url: ' ' },
             ],
             'Using Mendeley Referencing': [
-                { title: 'Class Notes', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                { title: 'Class Notes', url: ' ' },
             ],
             'Introduction to Epidemiology': [
-                { title: 'Class Notes', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                { title: 'Class Notes', url: ' ' },
             ],
             'Frequency Measures used in Epidemiology 2023': [
-                { title: 'Class Notes', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                { title: 'Class Notes', url: ' ' },
             ],
             'Overview of study designs I': [
-                { title: 'Class Notes', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                { title: 'Class Notes', url: ' ' },
             ],
             'Measures of association': [
-                { title: 'Class Notes', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                { title: 'Class Notes', url: ' ' },
             ],
             'Overview of study designs II': [
-                { title: 'Class Notes', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                { title: 'Class Notes', url: ' ' },
             ],
             'Concept of cause': [
-                { title: 'Class Notes', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                { title: 'Class Notes', url: ' ' },
             ],
             'Principles_Terms_and_Concerpts_of_Infectious_Diseases_Epidemiology': [
-                { title: 'Class Notes', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' }
+                { title: 'Class Notes', url: ' ' }
             ],
             'Natural_History_of_Disease_&_Concerpts_of_Disease_Prevention': [
-                { title: 'Class Notes', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' }
+                { title: 'Class Notes', url: ' ' }
             ],
             'Immunisation & Vaccination': [
-                { title: 'Class Notes', url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' }
+                { title: 'Class Notes', url: ' ' }
             ],
 
             // ========== 4th Year Surgery ==========
             'PUD, GERD & Gastritis': [
                 { title: 'Peptic Ulcer Disease – Pathophysiology and Management',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'GERD and Gastritis – Clinical Approach',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Acute Appendicitis': [
                 { title: 'Acute Appendicitis – Presentation and Diagnosis',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Management of Appendicitis – Surgical and Medical',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'GIT Bleeding': [
                 { title: 'Gastrointestinal Bleeding – Causes and Management',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Upper vs Lower GI Bleeding – Clinical Approach',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Abdominal Trauma': [
                 { title: 'Abdominal Trauma – Assessment and Management',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Blunt vs Penetrating Abdominal Trauma',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Gall Bladder & Billiary Tree': [
                 { title: 'Gallbladder and Biliary Tree – Anatomy and Pathology',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Cholecystitis and Cholangitis – Clinical Management',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Intestinal Obstruction by Dr. Mwila': [
                 { title: 'Intestinal Obstruction – Pathophysiology and Diagnosis',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Management of Small and Large Bowel Obstruction',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Intestinal Obstruction by Dr. Mulenga': [
                 { title: 'Intestinal Obstruction – Surgical Perspectives',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Complications and Prognosis of Intestinal Obstruction',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Gastric Cancers': [
                 { title: 'Gastric Cancer – Epidemiology and Pathogenesis',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Surgical Management of Gastric Cancer',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Esophageal Cancers': [
                 { title: 'Esophageal Cancer – Risk Factors and Diagnosis',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Management of Esophageal Cancer – Surgical and Medical',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Anal Pain': [
                 { title: 'Anal Pain – Differential Diagnosis',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Hemorrhoids, Fissures, and Abscesses',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Pancreatitis': [
                 { title: 'Acute Pancreatitis – Pathophysiology and Management',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Chronic Pancreatitis – Complications and Treatment',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Groin Hernia': [
                 { title: 'Groin Hernias – Inguinal and Femoral',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Surgical Repair of Groin Hernias',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Ventral Hernia': [
                 { title: 'Ventral Hernias – Causes and Types',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Management of Ventral Hernias – Surgical Options',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Venous Diseases': [
                 { title: 'Venous Diseases – Varicose Veins and Deep Vein Thrombosis',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Management of Venous Insufficiency',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Peripheral Vascular Diseases': [
                 { title: 'Peripheral Vascular Disease – Pathophysiology',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Management of PVD – Medical and Surgical',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Surviving Sepsis': [
                 { title: 'Sepsis – Pathophysiology and Early Recognition',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Surviving Sepsis Guidelines – Clinical Approach',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Fluid & Electrolytes': [
                 { title: 'Fluid and Electrolyte Balance – Physiology',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Management of Electrolyte Imbalances in Surgery',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Septic Arthritis': [
                 { title: 'Septic Arthritis – Diagnosis and Management',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Surgical Drainage and Antibiotic Therapy',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Fractures': [
                 { title: 'Fractures – Classification and Management',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Principles of Fracture Fixation',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Surgical Soft Tissue Infection': [
                 { title: 'Surgical Soft Tissue Infections – Classification',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Necrotizing Fasciitis and Gas Gangrene',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Joint Dislocations': [
                 { title: 'Joint Dislocations – Diagnosis and Management',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Reduction Techniques for Common Dislocations',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Osteomyelytis': [
                 { title: 'Osteomyelitis – Pathophysiology and Diagnosis',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Surgical and Medical Management of Osteomyelitis',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Neurological  Examination': [
                 { title: 'Neurological Examination – A Systematic Approach',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Neurological Assessment in Surgical Patients',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Approach to Thoracic Chest Trauma': [
                 { title: 'Thoracic Trauma – Assessment and Management',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Chest Tube Insertion and Emergency Thoracotomy',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Burns': [
                 { title: 'Burn Injuries – Assessment and Classification',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Surgical Management of Burns',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Diabetic Foot': [
                 { title: 'Diabetic Foot – Pathophysiology and Assessment',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Surgical Management of Diabetic Foot Complications',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Breast Cancer': [
                 { title: 'Breast Cancer – Epidemiology and Risk Factors',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Surgical Management of Breast Cancer',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Thyroid Cancers': [
                 { title: 'Thyroid Cancer – Diagnosis and Management',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Surgical Approaches to Thyroid Malignancy',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Testicular Swelling': [
                 { title: 'Testicular Swelling – Differential Diagnosis',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Management of Testicular Tumors and Hydrocele',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Prostate Cancer': [
                 { title: 'Prostate Cancer – Epidemiology and Diagnosis',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Surgical Management of Prostate Cancer',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Benign Breast Changes': [
                 { title: 'Benign Breast Conditions – Classification',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Fibrocystic Disease and Fibroadenoma',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'BPH': [
                 { title: 'Benign Prostatic Hyperplasia – Pathophysiology',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Management of BPH – Medical and Surgical',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'UTI & Urethritis': [
                 { title: 'Urinary Tract Infections and Urethritis',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Antibiotic Management of UTIs',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Site A: Cardiac Rehab': [
                 { title: 'Cardiac Rehabilitation Programs at NTH',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Site A: COPD Care': [
                 { title: 'COPD Care and Management at NTH',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Site A: Asthma Protocol': [
                 { title: 'Asthma Management Protocol at NTH',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Site A: Pneumonia Treatment': [
                 { title: 'Pneumonia Treatment Guidelines at NTH',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Site A: AKI Protocol': [
                 { title: 'AKI Management Protocol at NTH',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Site A: CKD Management': [
                 { title: 'CKD Management at NTH – A Comprehensive Approach',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Site A: Dialysis Access': [
                 { title: 'Dialysis Access – AV Fistula and Catheters at NTH',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Site B: HF Guidelines': [
                 { title: 'Heart Failure Guidelines at Kitwe Teaching Hospital',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Site B: EP Studies': [
                 { title: 'Electrophysiology Studies at Site B',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Site B: Device Therapy': [
                 { title: 'Device Therapy for Heart Failure at Site B',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Site B: Open Appendectomy': [
                 { title: 'Open Appendectomy Technique at Site B',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Site B: Complicated Cholecystitis': [
                 { title: 'Management of Complicated Cholecystitis at Site B',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Site B: Bowel Obstruction': [
                 { title: 'Bowel Obstruction Management at Site B',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Site C: Community HF': [
                 { title: 'Community Heart Failure Care at Site C',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Site C: Telemedicine': [
                 { title: 'Telemedicine in Cardiology at Site C',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Site C: Home Care': [
                 { title: 'Home Care for Heart Failure Patients at Site C',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Site C: Day Surgery': [
                 { title: 'Day Surgery Procedures at Site C',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Site A: Sepsis Protocol': [
                 { title: 'Sepsis Management Protocol at NTH – Advanced',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Site A: ARDS Management': [
                 { title: 'ARDS Management at NTH – Advanced Critical Care',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Site B: Sepsis Management': [
                 { title: 'Sepsis Management at Kitwe – Advanced',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Site B: ARDS Protocol': [
                 { title: 'ARDS Protocol at Site B – Advanced',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Site C: Community Critical Care': [
                 { title: 'Community Critical Care at Site C – Advanced',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Site C: Sepsis Care': [
                 { title: 'Sepsis Care in Community Settings at Site C',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Heart Failure': [
                 { title: 'Heart Failure – Pathophysiology and Treatment',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Heart Failure – Clinical Case Discussions',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Arrhythmias': [
                 { title: 'Arrhythmias – Mechanisms and Management',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Atrial Fibrillation – Diagnosis and Treatment',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Ischemic Heart Disease': [
                 { title: 'Ischemic Heart Disease – Pathophysiology',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Acute Coronary Syndrome – Management',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'COPD': [
                 { title: 'COPD – Diagnosis and Management',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'COPD Exacerbations – Management Protocol',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Asthma': [
                 { title: 'Asthma – Pathophysiology and Treatment',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Acute Asthma Management – Clinical Approach',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Pneumonia': [
                 { title: 'Pneumonia – Community-Acquired and Hospital-Acquired',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Pneumonia Treatment – Antibiotic Guidelines',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'AKI': [
                 { title: 'Acute Kidney Injury – Diagnosis and Management',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'AKI – Clinical Case Presentations',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'CKD': [
                 { title: 'Chronic Kidney Disease – Staging and Management',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'CKD Complications – Anemia, Bone Disease, and Electrolytes',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
             'Glomerular Diseases': [
                 { title: 'Glomerular Diseases – Pathophysiology and Diagnosis',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
                 { title: 'Nephrotic vs Nephritic Syndromes',
-                    url: 'https://youtu.be/bOA3Tf9ai3Y?si=BfGhZGf9i7Tbuu7-' },
+                    url: ' ' },
             ],
 
             'Upper limb Osteology': [
@@ -6075,73 +6162,10 @@ function applyYearTheme(year) {
 
         // ---- DOCUMENT DATA: maps topic names to an array of document objects ----
         const docData = {
-                
-                'COPD': [
-                    { title: 'Class notes', url: 'https://drive.google.com/file/d/1TRXeylsfQOwdsdTE4nGODYg0_IwStxIq/view?usp=drivesdk' }
-                ],
-                 'Asthma': [
-                    { title: 'Class notes', url: 'https://drive.google.com/file/d/1n1cGli0tZUIx824_4bIlcXn6pZek5YCK/view?usp=drivesdk' }
-                ],
-                 'Sickle Cell': [
-                    { title: 'Class notes', url: 'https://drive.google.com/file/d/1g2AbKBRaE1GZwJNn55Zv0dxqE6z3QkA9/view?usp=drivesdk' }
-                ],
-                'Pulmonary Embolism': [
-                    { title: 'Class notes Nkole', url: 'https://drive.google.com/file/d/1THeWofl8nI9Cv1-AYrwKKjJwN7i9b-AC/view?usp=drivesdk' },
-                    { title: 'Class notes Unilus', url: 'https://drive.google.com/file/d/18LsT7O21_IgiWXtLAS4oXpwy79crvg9l/view?usp=drivesdk' },
-                ],
-                'Pleura Effusions': [
-                    { title: 'Class notes', url: 'https://drive.google.com/file/d/1VliUZrTYK4DRw_hE7fI2S8m_U6_eRLsO/view?usp=drivesdk' }
-                ],
-                'Pleura Effusions & Empyema': [
-                    { title: 'Class notes', url: 'https://drive.google.com/file/d/1aMjiRqFhnuPlcoJhQ8_SX28-i8kbB5n6/view?usp=drivesdk' }
-                ],
-                'Pneumonia': [
-                    { title: 'Class notes', url: 'https://drive.google.com/file/d/1bo2TjXwWaguRg5Daw6ukoDwE4Mh7lMZg/view?usp=drivesdk' }
-                ],
-                'TB': [
-                    { title: 'Class notes', url: 'https://drive.google.com/file/d/1ht_3a-ph2FBDO7WG-lG5frhWi9WhdsDs/view?usp=drivesdk' }
-                ],
-                'ECG Interpretation': [
-                    { title: 'Class notes', url: 'https://drive.google.com/file/d/1NKpMK4YUYOmoaFjjjAOIRgiEJlm0xdbj/view?usp=drivesdk' }
-                ],
-                'Heart Failure': [
-                    { title: 'Class notes', url: 'https://drive.google.com/file/d/1nc6tp6Pwb-S7lvu7QwWMnQ6n1OasV6sO/view?usp=drivesdk' }
-                ],
-                'ABG Interpretaiton': [
-                    { title: 'Class notes', url: 'https://drive.google.com/file/d/1MMNKLtM4lkq0Ts2lpreDgm-7TSKq9_9x/view?usp=drivesdk' }
-                ],
-                'Rheuatic Fever': [
-                    { title: 'Class notes', url: 'https://drive.google.com/file/d/1QeACw-QgnhCSH-absv9sLHGf73ryTADh/view?usp=drivesdk' }
-                ],
-                'Shock': [
-                    { title: 'Class notes', url: 'https://drive.google.com/file/d/13ZuEsVQ1Kt0yJJ1JSk8aca-vCnn7m8gj/view?usp=drivesdk' }
-                ],
-                'AKI & CKD': [
-                    { title: 'Class notes Justo Banda', url: 'https://drive.google.com/file/d/10l1V6rU0LHVewUGbJSOZTb02hx6Pgf4n/view?usp=drivesdk' },
-                    { title: 'Class notes Dr. Kapambwe', url: 'https://drive.google.com/file/d/1bMg4VlNWgNyfyk15M27lMAIQUuegSnJs/view?usp=drivesdk' },
-                ],
-                'Diagnostic Renal Disease': [
-                    { title: 'Class notes', url: 'https://drive.google.com/file/d/1IzlM5Wy5wBBXDJNYjdtK7KQJ13RCXn-U/view?usp=drivesdk' }
-                ],
-                'Acute Liver Disease': [
-                    { title: 'Class notes', url: 'https://drive.google.com/file/d/1VsPpwT7d7XQ_R80V3f-l3PrBQKNgCEpD/view?usp=drivesdk' }
-                ],
-                'Chronic Liver Disease': [
-                    { title: 'Class notes', url: 'https://drive.google.com/file/d/1ewV8a-ztAF9DjrMLjopCcHHyjtN16I3a/view?usp=drivesdk' }
-                ],
-                'Viral Hepatitis B Infection': [
-                    { title: 'Class notes', url: 'https://drive.google.com/file/d/1PDT7UOhxGv0POB-1nJ-hOH-sA_i0MQ3W/view?usp=drivesdk' }
-                ],
-                'Approach To Unconcious Patient': [
-                    { title: 'Class notes', url: 'https://drive.google.com/file/d/18F2884FbMOJsGrh2X6mchVLx8AY9OYR4/view?usp=drivesdk' }
-                ],
-                 'Jaundice': [
-                    { title: 'Class notes', url: 'https://drive.google.com/file/d/1SyTnb7OjvpF0Sfjo1LfNcgx5uoIbqvaL/view?usp=drivesdk' }
-                ],
-                 'HHS': [
-                    { title: 'Class notes', url: 'https://drive.google.com/file/d/1H0zbsQLUoOaBzSw28iViE3EZ_yILbTt5/view?usp=drivesdk' }
-                ],
 
+            'Introduction to Pharmacokinetics and Pharmacodynamics': [
+                { title: 'Class notes', url: 'https://drive.google.com/file/d/1j81eN7oRZ9UpYehPnbvWDp1k7xuMVIY7/view?usp=drive_link' }
+            ],
             'Introduction to Physiology': [
                 { title: 'Class notes', url: 'https://drive.google.com/file/d/1fhRTFXxO5IpQEeaHo02aRiutYkbc7EDB/view?usp=drivesdk' }
             ],
@@ -6976,170 +7000,106 @@ function applyYearTheme(year) {
                 { title: '2026 Class Notes',
                     url: 'https://drive.google.com/file/d/1fVJ_jxuKXSefe-b9PlcJ8l2Us122xkJe/view?usp=drivesdk' },
             ],
-            // 2nd Year Therapeutics
+            // Term 1
             'Common Terminologies Used in Pharmacology': [
-                { title: 'Pharmacology Terminology – Glossary',
-                    url: 'https://drive.google.com/file/d/1d1_Pharma_Terms.pdf/view?usp=drive_link' },
-                { title: 'Introduction to Pharmacology – Lecture Notes',
-                    url: 'https://drive.google.com/file/d/1d2_Pharma_Intro.pdf/view?usp=drive_link' },
-                { title: 'Key Definitions in Pharmacology',
-                    url: 'https://drive.google.com/file/d/1d3_Pharma_Definitions.pdf/view?usp=drive_link' },
+                { title: 'Class Notes', url: 'https://drive.google.com/file/d/1coAV92I6Srg24uctUbTtoA8IF68yuIrV/view?usp=drive_link' },
             ],
-            'Membrane Transport and Absoprtion': [
-                { title: 'Membrane Transport Mechanisms – Detailed Notes',
-                    url: 'https://drive.google.com/file/d/1d4_Membrane_Transport.pdf/view?usp=drive_link' },
-                { title: 'Drug Absorption – Factors and Routes',
-                    url: 'https://drive.google.com/file/d/1d5_Absorption.pdf/view?usp=drive_link' },
+            'Membrane Transport and Absorption': [
+                { title: 'Class Notes', url: 'https://drive.google.com/file/d/1T2c6mwIO3YaAJ0t7_2-LQnc-qb51uzrr/view?usp=drive_link' },
             ],
-            'Biovailability First-Pass Elimination': [
-                { title: 'Bioavailability and First-Pass Effect – Comprehensive',
-                    url: 'https://drive.google.com/file/d/1d6_Bioavailability.pdf/view?usp=drive_link' },
-                { title: 'First-Pass Metabolism – Clinical Implications',
-                    url: 'https://drive.google.com/file/d/1d7_FirstPass_Clinical.pdf/view?usp=drive_link' },
+            'Introduction to Pharmacokinetics and Pharmacodynamics': [
+                { title: 'Class Notes', url: 'https://drive.google.com/file/d/1j81eN7oRZ9UpYehPnbvWDp1k7xuMVIY7/view?usp=drive_link' },
+            ],
+            'Bioavailability First-Pass Elimination': [
+                { title: 'Class Notes', url: 'https://drive.google.com/file/d/1LJtvHJEmaRPnXSzfxIX4OpLSeKIkSI_6/view?usp=drive_link' },
             ],
             'Drug Distribution': [
-                { title: 'Drug Distribution – Volume and Factors',
-                    url: 'https://drive.google.com/file/d/1d8_Distribution.pdf/view?usp=drive_link' },
-                { title: 'Protein Binding and Drug Distribution',
-                    url: 'https://drive.google.com/file/d/1d9_Protein_Binding.pdf/view?usp=drive_link' },
+                { title: 'Class Notes', url: 'https://drive.google.com/file/d/1R6HR_RMh7UAHja6KsrWXvlzGQx1t9DRv/view?usp=drive_link' },
             ],
             'Drug Excretion': [
-                { title: 'Drug Excretion – Renal and Biliary',
-                    url: 'https://drive.google.com/file/d/1d10_Excretion.pdf/view?usp=drive_link' },
-                { title: 'Clearance and Elimination Kinetics',
-                    url: 'https://drive.google.com/file/d/1d11_Clearance.pdf/view?usp=drive_link' },
+                { title: 'Class Notes', url: 'https://drive.google.com/file/d/1RXgaCRanwaGzAZ1NJ8bR6UHkS8y7oxKd/view?usp=drive_link' },
             ],
             'Drug Metabolism': [
-                { title: 'Phase I and Phase II Metabolism – Detailed',
-                    url: 'https://drive.google.com/file/d/1d12_Metabolism.pdf/view?usp=drive_link' },
-                { title: 'Cytochrome P450 – Enzyme Families',
-                    url: 'https://drive.google.com/file/d/1d13_CYP450.pdf/view?usp=drive_link' },
+                { title: 'Class Notes', url: 'https://drive.google.com/file/d/1-BgWTgmOJL5HCM8z5fWVT8f9_K_sc2Dx/view?usp=drive_link' },
             ],
             'Routes of Administration': [
-                { title: 'Routes of Drug Administration – Complete Guide',
-                    url: 'https://drive.google.com/file/d/1d14_Routes.pdf/view?usp=drive_link' },
-                { title: 'Comparison of Enteral and Parenteral Routes',
-                    url: 'https://drive.google.com/file/d/1d15_Routes_Compare.pdf/view?usp=drive_link' },
+                { title: 'Class Notes', url: 'https://drive.google.com/file/d/1KTA96tE61gPk-eJXxio2Yw3azp88fekE/view?usp=drive_link' },
             ],
             'Therapeutic Drug Monitoring': [
-                { title: 'TDM – Principles and Practice',
-                    url: 'https://drive.google.com/file/d/1d16_TDM.pdf/view?usp=drive_link' },
-                { title: 'TDM in Clinical Settings – Case Studies',
-                    url: 'https://drive.google.com/file/d/1d17_TDM_Cases.pdf/view?usp=drive_link' },
+                { title: 'Class Notes', url: 'https://drive.google.com/file/d/1wyEUjy9gm68FAywTy_50K3R3olXoJy3p/view?usp=drive_link' },
             ],
             'Mechanism of Drug Action': [
-                { title: 'Receptor Theory – Detailed Notes',
-                    url: 'https://drive.google.com/file/d/1d18_Receptor_Theory.pdf/view?usp=drive_link' },
-                { title: 'Enzyme Inhibition – Mechanisms and Examples',
-                    url: 'https://drive.google.com/file/d/1d19_Enzyme_Inhibition.pdf/view?usp=drive_link' },
+                { title: 'Class Notes', url: 'https://drive.google.com/file/d/1qoR9OyIiw2zxjWRcIkQczkxH1wqqKMuP/view?usp=drive_link' },
             ],
             'Autonomic Pharmacology': [
-                { title: 'ANS – Anatomy and Physiology Overview',
-                    url: 'https://drive.google.com/file/d/1d20_ANS.pdf/view?usp=drive_link' },
-                { title: 'Pharmacology of the Autonomic Nervous System',
-                    url: 'https://drive.google.com/file/d/1d21_ANS_Pharma.pdf/view?usp=drive_link' },
+                { title: 'Class Notes', url: 'https://drive.google.com/file/d/1PrIoGWDu8l_dMhKhsCt6rdM3mzQEkHxO/view?usp=drive_link' },
             ],
-            'Neuro-Hormonal Transmision in the ANS': [
-                { title: 'Neurotransmission in ANS – Detailed',
-                    url: 'https://drive.google.com/file/d/1d22_Neurotransmission.pdf/view?usp=drive_link' },
-                { title: 'Hormonal Regulation of ANS Function',
-                    url: 'https://drive.google.com/file/d/1d23_ANS_Hormones.pdf/view?usp=drive_link' },
+            'Neuro-Hormonal Transmission in the ANS': [
+                { title: 'Class Notes', url: 'https://drive.google.com/file/d/131P94kXaUA_QpJwOmCk6JA0jjN1uh9rS/view?usp=drive_link' },
             ],
             'ANS Regulation': [
-                { title: 'Regulation of Autonomic Functions',
-                    url: 'https://drive.google.com/file/d/1d24_ANS_Regulation.pdf/view?usp=drive_link' },
-                { title: 'Baroreflex and Autonomic Control',
-                    url: 'https://drive.google.com/file/d/1d25_Baroreflex.pdf/view?usp=drive_link' },
+                { title: 'Class Notes', url: 'https://drive.google.com/file/d/1iXowQRK3QSv7c7SeA40Wf6e4peeHJ-ME/view?usp=drive_link' },
             ],
             'Muscarinic Agonists': [
-                { title: 'Muscarinic Agonists – Pharmacology',
-                    url: 'https://drive.google.com/file/d/1d26_Muscarinic_Agonists.pdf/view?usp=drive_link' },
-                { title: 'Clinical Applications of Muscarinic Agonists',
-                    url: 'https://drive.google.com/file/d/1d27_Muscarinic_Clinical.pdf/view?usp=drive_link' },
+                { title: 'Class Notes', url: 'https://drive.google.com/file/d/1ewl6UW1dNvTD3inrwgGaK4P0umcdiuf5/view?usp=drive_link' },
             ],
             'Muscarinic Antagonists': [
-                { title: 'Muscarinic Antagonists – Pharmacology',
-                    url: 'https://drive.google.com/file/d/1d28_Muscarinic_Antagonists.pdf/view?usp=drive_link' },
-                { title: 'Atropine and Anticholinergic Drugs',
-                    url: 'https://drive.google.com/file/d/1d29_Atropine.pdf/view?usp=drive_link' },
+                { title: 'Class Notes', url: 'https://drive.google.com/file/d/1nKgvELH5zzl7APQWb7SVu2THchl1HFDs/view?usp=drive_link' },
             ],
             'Sympathomimetic Drugs (Adrenergic Agonists)': [
-                { title: 'Adrenergic Agonists – Mechanism and Uses',
-                    url: 'https://drive.google.com/file/d/1d30_Sympathomimetics.pdf/view?usp=drive_link' },
-                { title: 'Alpha and Beta Adrenergic Agonists – Comparison',
-                    url: 'https://drive.google.com/file/d/1d31_Adrenergic_Agonists.pdf/view?usp=drive_link' },
+                { title: 'Class Notes', url: 'https://drive.google.com/file/d/1dIDimZpbB956viIIi1R3ImdQOn9gaPKg/view?usp=drive_link' },
             ],
-            'Sympatholitic Drugs (Adrenergic Blockers)': [
-                { title: 'Adrenergic Blockers – Alpha and Beta Antagonists',
-                    url: 'https://drive.google.com/file/d/1d32_Sympatholytics.pdf/view?usp=drive_link' },
-                { title: 'Clinical Pharmacology of Beta-Blockers',
-                    url: 'https://drive.google.com/file/d/1d33_Beta_Blockers.pdf/view?usp=drive_link' },
+            'Sympatholytic Drugs (Adrenergic Blockers)': [
+                { title: 'Class Notes', url: 'https://drive.google.com/file/d/17rJQ-4xDNHBaS9M1mPzZ1NFfJeKdx4pH/view?usp=drive_link' },
             ],
+
+            // Term 2
             'Management of Heart Failure': [
-                { title: 'Heart Failure – Pharmacological Management',
-                    url: 'https://drive.google.com/file/d/1d34_HF_Management.pdf/view?usp=drive_link' },
-                { title: 'Diuretics, ACE Inhibitors, and Beta-Blockers in HF',
-                    url: 'https://drive.google.com/file/d/1d35_HF_Drugs.pdf/view?usp=drive_link' },
+                { title: 'Class Notes', url: 'https://drive.google.com/file/d/1D0nAvId8twAg99ktNUfpls_jCV2RqpnX/view?usp=drive_link' },
             ],
-            'Anti-arrhythmis Drugs': [
-                { title: 'Antiarrhythmic Drugs – Classification and Mechanisms',
-                    url: 'https://drive.google.com/file/d/1d36_Antiarrhythmic.pdf/view?usp=drive_link' },
-                { title: 'Clinical Use of Antiarrhythmic Agents',
-                    url: 'https://drive.google.com/file/d/1d37_Antiarrhythmic_Clinical.pdf/view?usp=drive_link' },
+            'Anti-arrhythmic Drugs': [
+                { title: 'Class Notes', url: 'https://drive.google.com/file/d/1xnbYzfiwWb-aZyJzLZbAAx1OVM2d0RUr/view?usp=drive_link' },
             ],
-            'Drugs used in Angin Treatment': [
-                { title: 'Anti-Anginal Drugs – Nitrates and Calcium Blockers',
-                    url: 'https://drive.google.com/file/d/1d38_Angina_Drugs.pdf/view?usp=drive_link' },
-                { title: 'Angina Management – Pharmacological Approach',
-                    url: 'https://drive.google.com/file/d/1d39_Angina_Management.pdf/view?usp=drive_link' },
+            'Drugs used in Angina Treatment': [
+                { title: 'Class Notes', url: 'https://drive.google.com/file/d/1dS4I66SBv_Weq-aStvjBdnoc7iSdybXs/view?usp=drive_link' },
             ],
             'Antihypertensive Drugs': [
-                { title: 'Antihypertensive Drugs – Classes and Mechanisms',
-                    url: 'https://drive.google.com/file/d/1d40_Antihypertensives.pdf/view?usp=drive_link' },
-                { title: 'ACE Inhibitors, ARBs, and Calcium Channel Blockers',
-                    url: 'https://drive.google.com/file/d/1d41_Antihypertensive_Classes.pdf/view?usp=drive_link' },
+                { title: 'Class Notes', url: 'https://drive.google.com/file/d/1pEI26LaeXDCICcfvuMZ5NctiuutXqwhH/view?usp=drive_link' },
             ],
             'Drugs used in the treatment of Hyperlipidemia': [
-                { title: 'Lipid-Lowering Drugs – Statins and More',
-                    url: 'https://drive.google.com/file/d/1d42_Lipid_Lowering.pdf/view?usp=drive_link' },
-                { title: 'Hyperlipidemia Management – Clinical Guidelines',
-                    url: 'https://drive.google.com/file/d/1d43_Hyperlipidemia_Management.pdf/view?usp=drive_link' },
+                { title: 'Class Notes', url: 'https://drive.google.com/file/d/1P_-rWcJ84JSMgSK3br0TGgvheHUzHo9W/view?usp=drive_link' },
+            ],
+
+            // Term 3
+            'Anti-Emetic Drugs': [
+                { title: 'Class Notes', url: 'https://drive.google.com/file/d/11k6gcZuA9rxzDtTgDhK-KfDBna8E4-Ad/view?usp=drive_link' },
             ],
             'Anti-asthmatic Drugs': [
-                { title: 'Anti-Asthmatic Drugs – Pharmacology',
-                    url: 'https://drive.google.com/file/d/1d44_Asthma_Drugs.pdf/view?usp=drive_link' },
-                { title: 'Bronchodilators and Anti-Inflammatory Agents',
-                    url: 'https://drive.google.com/file/d/1d45_Asthma_Agents.pdf/view?usp=drive_link' },
+                { title: 'Class Notes', url: 'https://drive.google.com/file/d/1RYCu-jf44i5cBzaV0ub7yYxBxeDXM3dw/view?usp=drive_link' },
             ],
             'Drugs used in the Treatment of TB': [
-                { title: 'Anti-Tubercular Drugs – First-Line Agents',
-                    url: 'https://drive.google.com/file/d/1d46_TB_Drugs.pdf/view?usp=drive_link' },
-                { title: 'TB Treatment Regimens and Drug Resistance',
-                    url: 'https://drive.google.com/file/d/1d47_TB_Regimens.pdf/view?usp=drive_link' },
+                { title: 'Class Notes', url: 'https://drive.google.com/file/d/1tpXCu-35e17UkwJAdlX-zckvZEcvbAAB/view?usp=drive_link' },
+            ],
+            'Drugs used to Treat IBD': [
+                { title: 'Class Notes', url: 'https://drive.google.com/file/d/1GtlZ-Q6QTW2l1kQJomFS1sAPGedaPG9i/view?usp=drive_link' },
             ],
             'Drugs used to Treat Common Cold': [
-                { title: 'OTC Cold Medications – Pharmacology',
-                    url: 'https://drive.google.com/file/d/1d48_Cold_Drugs.pdf/view?usp=drive_link' },
-                { title: 'Antihistamines and Decongestants – Guide',
-                    url: 'https://drive.google.com/file/d/1d49_Cold_Antihistamines.pdf/view?usp=drive_link' },
+                { title: 'Class Notes', url: 'https://drive.google.com/file/d/1Mhs0UJQhg6h6Vn4X3M0RxnW8zgWZfDe9/view?usp=drive_link' },
+            ],
+            'Drugs used in Management of PUD': [
+                { title: 'Class Notes', url: 'https://drive.google.com/file/d/1tJP3DEHLUF3Pj15mHywQ7ygjMhpzCYTW/view?usp=drive_link' },
+            ],
+            'Drugs used in Management of GERD': [
+                { title: 'Class Notes', url: 'https://drive.google.com/file/d/1h8O8g87aB_uXa7KCdKvcHzcrEbKhg4OC/view?usp=drive_link' },
             ],
             'Drugs acting on Cough': [
-                { title: 'Antitussives and Expectorants – Pharmacology',
-                    url: 'https://drive.google.com/file/d/1d50_Cough_Drugs.pdf/view?usp=drive_link' },
-                { title: 'Cough Management – Drug Therapy',
-                    url: 'https://drive.google.com/file/d/1d51_Cough_Management.pdf/view?usp=drive_link' },
+                { title: 'Class Notes', url: 'https://drive.google.com/file/d/1OZExkLiV6hJwnkH8H4Pa58KM6Knn6Ml3/view?usp=drive_link' },
             ],
             'Use of Steroids in Respiratory Disorders': [
-                { title: 'Corticosteroids in Respiratory Medicine',
-                    url: 'https://drive.google.com/file/d/1d52_Steroids_Respiratory.pdf/view?usp=drive_link' },
-                { title: 'Inhaled vs Systemic Corticosteroids',
-                    url: 'https://drive.google.com/file/d/1d53_Steroids_Inhaled.pdf/view?usp=drive_link' },
+                { title: 'Class Notes', url: 'https://drive.google.com/file/d/1mlS5xwk82P11CBgvLoAn5RcYBWm4SPIj/view?usp=drive_link' },
             ],
             'Anti-fungal': [
-                { title: 'Antifungal Drugs – Classification and Mechanisms',
-                    url: 'https://drive.google.com/file/d/1d54_Antifungals.pdf/view?usp=drive_link' },
-                { title: 'Azoles, Echinocandins, and Polyene Antifungals',
-                    url: 'https://drive.google.com/file/d/1d55_Antifungal_Classes.pdf/view?usp=drive_link' },
+                { title: 'Class Notes', url: 'https://drive.google.com/file/d/1JonGiZTBKIbSF0BiozJ-1tkuHY3UVDHG/view?usp=drive_link' },
             ],
             // 2nd Year Biochemistry
             'Amino Acids': [
@@ -7635,7 +7595,7 @@ function applyYearTheme(year) {
             'BrainStem':                 'brainstem',
             'Pelvic Osteology': 'pelvis-bones',
             'Pelvic Musculature': 'pelvis-muscles',
-            'Pelvic Neurovasculature': 'pelvis-nerves',
+            'Pelvic Neurovasculature': 'pelvis-supply',
             'Male Gross': 'male-gross',
             'Female Gross': 'female-gross',
             'Male Histology': 'male-histology',
@@ -7644,6 +7604,8 @@ function applyYearTheme(year) {
             'Renal Pathology':           'renal-path',
             'Renal Function, Anatomy and Blood Flow': 'renal-physio',
             'Nucleotide Metabolism':                  'nucleotide',
+            
+            'Neck Musculature':                  'neck-muscle',
         };
 
         const TOPIC_MAP = {
@@ -7743,6 +7705,8 @@ function applyYearTheme(year) {
             'Medial Thigh': 'medial_thigh',
             'Overall Thigh Muscles': 'overall_thigh_muscles',
             'Posterior Thigh': 'posterior_thigh',
+
+
         };
 
         // ---- Default document list for topics without specific data ----

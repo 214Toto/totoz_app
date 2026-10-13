@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Antimycobacterial Pharmacology Flashcards</title>
+  <style>
+    :root {
+      --bg-dark: #090d16;
+      --card-bg: #111827;
+      --card-border: #1f293d;
+      --primary-green: #10b981;
+      --emerald-glow: #059669;
+      --accent-mint: #34d399;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    header {
+      width: 100%;
+      max-width: 1100px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      color: var(--accent-mint);
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .controls-container {
+      width: 100%;
+      max-width: 1100px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: space-between;
+      align-items: center;
+      background: #131c2e;
+      padding: 15px;
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+      margin-bottom: 25px;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 250px;
+      position: relative;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 8px;
+      background: #0d1322;
+      border: 1px solid #2b3952;
+      color: var(--text-main);
+      outline: none;
+      font-size: 0.9rem;
+    }
+
+    .search-box input:focus {
+      border-color: var(--primary-green);
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    button, select {
+      background: #1a263d;
+      color: var(--accent-mint);
+      border: 1px solid #2b3952;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.85rem;
+      transition: all 0.2s ease;
+    }
+
+    button:hover, select:hover {
+      background: var(--primary-green);
+      color: #000;
+      border-color: var(--primary-green);
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      max-width: 1100px;
+      height: 6px;
+      background: #1e293b;
+      border-radius: 3px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--primary-green), var(--accent-mint));
+      transition: width 0.3s ease;
+    }
+
+    .flashcards-wrapper {
+      width: 100%;
+      max-width: 1100px;
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 25px;
+      scroll-behavior: smooth;
+    }
+
+    .flashcards-wrapper::-webkit-scrollbar {
+      height: 10px;
+    }
+
+    .flashcards-wrapper::-webkit-scrollbar-track {
+      background: #0d1322;
+      border-radius: 5px;
+    }
+
+    .flashcards-wrapper::-webkit-scrollbar-thumb {
+      background: #24344d;
+      border-radius: 5px;
+    }
+
+    .card-container {
+      flex: 0 0 100%;
+      max-width: 600px;
+      height: 420px;
+      perspective: 1000px;
+      scroll-snap-align: center;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 768px) {
+      .card-container {
+        flex: 0 0 550px;
+      }
+    }
+
+    .card {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+    }
+
+    .card.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 16px;
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid var(--card-border);
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    }
+
+    .card-front {
+      background: radial-gradient(circle at top left, #1a273e, #111827);
+    }
+
+    .card-back {
+      background: radial-gradient(circle at bottom right, #062c22, #111827);
+      transform: rotateY(180deg);
+      border-color: var(--primary-green);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--accent-mint);
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .card-body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      flex: 1;
+      font-size: 1.15rem;
+      line-height: 1.6;
+      padding: 10px;
+      color: var(--text-main);
+      overflow-y: auto;
+    }
+
+    .card-back .card-body {
+      font-size: 0.95rem;
+      text-align: left;
+      align-items: flex-start;
+    }
+
+    .card-footer {
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 10px;
+    }
+
+    .bullet-list {
+      list-style-type: disc;
+      padding-left: 20px;
+      margin-bottom: 5px;
+    }
+
+    .bullet-list li {
+      margin-bottom: 4px;
+    }
+
+    .no-results {
+      width: 100%;
+      text-align: center;
+      padding: 50px;
+      color: var(--text-muted);
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Antimycobacterial Pharmacology</h1>
+    <p>Comprehensive Flashcards • Scroll Horizontally or Use Navigation Controls</p>
+  </header>
+
+  <div class="controls-container">
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search concepts, drugs, mechanisms..." oninput="filterCards()">
+    </div>
+    
+    <select id="jumpSelect" onchange="jumpToCard(this.value)">
+      <!-- Options populated via JS -->
+    </select>
+
+    <div class="btn-group">
+      <button onclick="scrollCards(-1)">← Prev</button>
+      <button onclick="scrollCards(1)">Next →</button>
+      <button onclick="shuffleCards()">🔀 Shuffle</button>
+    </div>
+  </div>
+
+  <div class="progress-bar-container">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <div class="flashcards-wrapper" id="cardsWrapper" onscroll="updateProgress()">
+    <!-- Cards will be injected by JavaScript -->
+  </div>
+
+  <script>
+    const flashcardData = [
+      { id: 1, topic: "TB Treatment", question: "What is the aim of treatment in Tuberculosis (TB)?", answer: "The aim of treatment in TB is to <b>kill the dividing bacilli and to destroy the persistors</b> in order to prevent relapse and ensure complete cure. This requires prolonged therapy." },
+      { id: 2, topic: "TB Treatment", question: "Why does the treatment of TB involve combination therapy?", answer: "<ul class='bullet-list'><li>To delay the development of resistance</li><li>To reduce toxicity</li><li>To shorten the course of treatment</li></ul>" },
+      { id: 3, topic: "First-Line Drugs", question: "What are the four First-line anti-tuberculosis drugs?", answer: "<ol class='bullet-list'><li>Isoniazid</li><li>Rifampicin</li><li>Pyrazinamide</li><li>Ethambutol</li></ol>" },
+      { id: 4, topic: "Isoniazid", question: "What is the chemical structure of Isoniazid (INH, H)?", answer: "Structural analogue of <b>pyridoxine</b>." },
+      { id: 5, topic: "Isoniazid", question: "What is the Mechanism of Action of Isoniazid (INH)?", answer: "Inhibits the synthesis of <b>mycolic acids</b> (by inhibiting the enzyme enoyl-acyl carrier protein reductase) which are important components of the mycobacterial cell wall (mycolic acids are unique to mycobacteria)." },
+      { id: 6, topic: "Isoniazid", question: "What is the spectrum of activity of Isoniazid?", answer: "<ul class='bullet-list'><li>Tuberculocidal for rapidly multiplying bacilli and tuberculostatic for resting bacilli.</li><li>Effective against both intracellular and extracellular organisms.</li></ul>" },
+      { id: 7, topic: "Isoniazid", question: "What are the general characteristics of Isoniazid (INH)?", answer: "<ul class='bullet-list'><li>It is the most active drug for the treatment of tuberculosis.</li><li>Active against Mycobacterium tuberculosis only.</li><li>Administered in combination with other anti-TB drugs for treatment of TB.</li><li>For prophylaxis, INH is used alone.</li></ul>" },
+      { id: 8, topic: "Isoniazid", question: "What are the Pharmacokinetics of Isoniazid?", answer: "<ul class='bullet-list'><li>Completely absorbed orally and penetrates all tissues.</li><li>Metabolized by acetylation and the metabolite is excreted via the biliary tract. Metabolism of INH is genetically determined - patients can be fast or slow acetylators depending on genetic inheritance.</li></ul>" },
+      { id: 9, topic: "Isoniazid", question: "What are the Drug interactions of Isoniazid?", answer: "Inhibits cytochrome P450 thereby reducing metabolism of some drugs (e.g. phenytoin)." },
+      { id: 10, topic: "Isoniazid", question: "What are the Adverse effects of Isoniazid related to peripheral neuritis?", answer: "<b>Peripheral neuritis</b> - due to interference with utilisation (inhibits pyridoxal kinase) and increased excretion of pyridoxine. More common in slow acetylators. Can be prevented by giving prophylactic pyridoxine." },
+      { id: 11, topic: "Isoniazid", question: "What are the Adverse effects of Isoniazid related to Hepatitis?", answer: "<b>Hepatitis</b> (due to the metabolite acetylisoniazid [acetylhydrazine]). More common in fast acetylators." },
+      { id: 12, topic: "Isoniazid", question: "What are the Other adverse effects of Isoniazid?", answer: "Psychosis, anorexia, GI discomfort, fever, allergic reactions and haemolysis in patients with G-6-P-D deficiency." },
+      { id: 13, topic: "Rifampicin", question: "What is the Mechanism of Action of Rifampicin (R)?", answer: "Inhibits DNA-dependent RNA polymerase thus inhibits RNA synthesis." },
+      { id: 14, topic: "Rifampicin", question: "What is the spectrum of activity of Rifampicin?", answer: "Bactericidal to M.tuberculosis, M.leprae and atypical mycobacteria. Also inhibits most gram positive and gram negative bacteria. Acts on both intra- and extracellular organisms." },
+      { id: 15, topic: "Rifampicin", question: "How does resistance develop to Rifampicin?", answer: "Resistance develops rapidly when the drug is used alone (due to reduced affinity for the drug by the RNA polymerase)." },
+      { id: 16, topic: "Rifampicin", question: "What are the Pharmacokinetics of Rifampicin?", answer: "<ul class='bullet-list'><li>Well absorbed orally and penetrates all tissues.</li><li>Induces cytochrome P450 enzymes (hence accelerates metabolism of many drugs).</li></ul>" },
+      { id: 17, topic: "Rifampicin", question: "What are the Adverse effects of Rifampicin?", answer: "<ul class='bullet-list'><li>Hepatotoxicity</li><li>GI disturbances: epigastric distress, nausea, vomiting, abdominal cramps, diarrhoea</li><li>Flu-like syndrome (more common with intermittent dosing)</li><li>CNS: headache, drowsiness, dizziness, ataxia, confusion, peripheral neuropathy</li><li>Hypersensitivity reactions</li><li>Stains sweat, tears, saliva and urine an orange red colour</li></ul>" },
+      { id: 18, topic: "Rifampicin", question: "What are the Clinical Indications for Rifampicin?", answer: "<ul class='bullet-list'><li>Tuberculosis, leprosy and atypical mycobacterial infections</li><li>Prophylaxis of Haemophilus influenzae</li><li>Treatment of resistant staphylococcal infections</li><li>Brucellosis</li><li>Eradication of carrier state of N. meningitis, H. influenzae and S. aureus</li></ul>" },
+      { id: 19, topic: "Rifabutin", question: "What are the characteristics of Rifabutin (Rifampicin analogue)?", answer: "<ul class='bullet-list'><li>More active against atypical mycobacteria than rifampicin</li><li>Less cytochrome P450 induction than rifampicin</li><li>Can be used in place of rifampicin in patients receiving drugs that are substrates for cytochrome P450 (e.g. protease inhibitors)</li><li>Can be used for multi-drug resistance tuberculosis (MDR-TB)</li></ul>" },
+      { id: 20, topic: "Rifapentine", question: "What are the characteristics of Rifapentine (Rifampicin analogue)?", answer: "<ul class='bullet-list'><li>Its pharmacodynamics is similar to rifampicin but has a longer half-life</li><li>Used once weekly in TB treatment after sputum cultures convert to negative (during the continuation phase of TB therapy)</li></ul>" },
+      { id: 21, topic: "Pyrazinamide", question: "What is the chemical structure of Pyrazinamide (PZ, Z)?", answer: "An analogue of <b>nicotinamide</b>." },
+      { id: 22, topic: "Pyrazinamide", question: "What is the Mechanism of Action of Pyrazinamide?", answer: "Inhibits mycolic acid synthesis." },
+      { id: 23, topic: "Pyrazinamide", question: "What is the spectrum of activity of Pyrazinamide?", answer: "<ul class='bullet-list'><li>Active only against Mycobacterium tuberculosis</li><li>Tuberculocidal for rapidly multiplying bacilli and tuberculostatic for resting bacilli</li><li>Active against intracellular bacilli. Inactive at neutral pH, thus does not affect extracellular bacilli. Inhibits the bacilli in the phagosomes of macrophages where the pH is 5.</li></ul>" },
+      { id: 24, topic: "Pyrazinamide", question: "What are the Pharmacokinetics of Pyrazinamide?", answer: "<ul class='bullet-list'><li>Well absorbed orally and penetrates all tissues.</li><li>Metabolised in the liver and the metabolites are excreted by the kidneys (the metabolites are toxic and can accumulate in renal impairment).</li></ul>" },
+      { id: 25, topic: "Pyrazinamide", question: "What are the Adverse effects of Pyrazinamide?", answer: "Hepatotoxicity, hyper-uricaemia with precipitation of gout (reduces excretion of uric acid), arthralgia, anorexia, vomiting and rashes." },
+      { id: 26, topic: "Ethambutol", question: "What is the Mechanism of Action of Ethambutol (E)?", answer: "Inhibits the incorporation of mycolic acids into the mycobacterial cell wall (inhibits arabinosyl transferases involved in this process)." },
+      { id: 27, topic: "Ethambutol", question: "What is the spectrum of activity of Ethambutol?", answer: "<ul class='bullet-list'><li>Acts on fast multiplying bacilli</li><li>Also effective against atypical mycobacteria</li></ul>" },
+      { id: 28, topic: "Ethambutol", question: "What are the Pharmacokinetics of Ethambutol?", answer: "<ul class='bullet-list'><li>Well absorbed orally</li><li>50% of ethambutol is excreted in urine unchanged. It accumulates in renal failure and the dose should be reduced by half if creatinine clearance is less than 10mL/min.</li></ul>" },
+      { id: 29, topic: "Ethambutol", question: "What are the Adverse effects of Ethambutol related to vision?", answer: "Causes reversible optic (retrobulbar) neuritis resulting in reduced visual acuity and inability to differentiate red from green. Avoid in children because it is not easy to reliably test for visual acuity in them." },
+      { id: 30, topic: "Ethambutol", question: "What are the Other adverse effects of Ethambutol?", answer: "Nausea, anorexia, headache, fever, allergic reactions and gout precipitation (decreases excretion of uric acid)." },
+      { id: 31, topic: "Second-Line Drugs", question: "What are the Second line anti-tuberculosis drugs listed?", answer: "Include ethionamide, streptomycin, amikacin, kanamycin, capreomycin, cycloserine, fluoroquinolones, bedaquiline, delamanid, linezolid, clofazimine and rifabutin." },
+      { id: 32, topic: "Second-Line Drugs", question: "When are second line drugs usually considered?", answer: "The second line drugs usually considered only in the following cases:<br><ul class='bullet-list'><li>Resistance to first-line drugs</li><li>Failure of clinical response to conventional therapy</li><li>Serious treatment-limiting adverse drug reactions with the first-line drugs</li></ul>" },
+      { id: 33, topic: "Ethionamide", question: "What are the characteristics of Ethionamide?", answer: "<ul class='bullet-list'><li>An analogue of isoniazid, and acts by inhibiting synthesis of mycolic acid</li><li>Does not exhibit cross-resistance with INH</li><li>Effective against both intra- and extracellular organisms</li><li>Also effective in atypical mycobacteria</li><li>Poorly tolerated</li></ul>" },
+      { id: 34, topic: "Ethionamide", question: "What are the Adverse effects of Ethionamide?", answer: "Anorexia, nausea, metallic taste, hepatitis, skin rashes, peripheral neuritis (prevent with prophylactic pyridoxine)." },
+      { id: 35, topic: "Cycloserine", question: "What are the characteristics of Cycloserine?", answer: "<ul class='bullet-list'><li>An analogue of d-alanine</li><li>Inhibits cell wall synthesis</li><li>Given orally</li><li>Also effective against some gram positive organisms</li></ul>" },
+      { id: 36, topic: "Cycloserine", question: "What are the Adverse effects of Cycloserine?", answer: "Headache, depression, psychosis, tremors and seizures. Should be given with pyridoxine to reduce neurotoxicity." },
+      { id: 37, topic: "Aminoglycosides", question: "What are the characteristics of Streptomycin, amikacin, kanamycin and capreomycin?", answer: "<ul class='bullet-list'><li>Streptomycin, amikacin and kanamycin are aminoglycosides, while capreomycin is a peptide antibiotic</li><li>MOA: Inhibit 30s ribosomal subunit thereby inhibit protein synthesis</li><li>Given parenterally</li><li>Are ototoxic and nephrotoxic</li><li>Amikacin is also effective against atypical mycobacteria</li></ul>" },
+      { id: 38, topic: "Fluoroquinolones", question: "What are the characteristics of Fluoroquinolones used in TB?", answer: "<ul class='bullet-list'><li>The fluoroquinolones that are used as second-line TB treatment are gatifloxacin, moxifloxacin, levofloxacin and ofloxacin</li><li>Are active against Mycobacterium tuberculosis and atypical mycobacteria</li><li>Useful in multi-drug resistance tuberculosis (MDR-TB) in combination with other drugs</li></ul>" },
+      { id: 39, topic: "Bedaquiline", question: "What is the Mechanism of Action of Bedaquiline?", answer: "Bedaquiline inhibits adenosine 5'-triphosphate (ATP) synthase in mycobacteria thereby blocking the bacilli from making ATP." },
+      { id: 40, topic: "Bedaquiline", question: "What are the Indications and Adverse effects of Bedaquiline?", answer: "<b>Indication:</b> MDR-TB in combination other medications for tuberculosis. Given by mouth.<br><b>Adverse effects:</b> Nausea, joint pains, headaches, chest pain, QT prolongation and liver dysfunction." },
+      { id: 41, topic: "Delamanid", question: "What is the Mechanism of Action of Delamanid?", answer: "Blocks the synthesis of mycolic acids thus destabilizing the bacterial cell wall." },
+      { id: 42, topic: "Delamanid", question: "What are the Indications and Adverse effects of Delamanid?", answer: "<b>Indication:</b> MDR-TB in combination with other anti-tuberculosis drugs. It is taken by mouth.<br><b>Adverse effects:</b> Headache, dizziness, nausea and QT prolongation." },
+      { id: 43, topic: "Linezolid/Clofazimine", question: "What are the characteristics of Linezolid, Clofazimine and Rifabutin in MDR-TB?", answer: "<ul class='bullet-list'><li><b>Linezolid:</b> Can be used in combination with other drugs to treat multi-drug resistant tuberculosis</li><li><b>Clofazimine:</b> Has shown activity against MDR-TB and is now recommended by WHO for use in combination with other drugs to treat MDR-TB as a medicine with 'unclear efficacy'</li><li><b>Rifabutin:</b> An analogue of rifampicin that is effective in MDR-TB treatment in combination with other drugs</li></ul>" },
+      { id: 44, topic: "MAC Treatment", question: "What drugs are effective in Mycobacterium avium complex (MAC)?", answer: "Drugs that are effective in MAC include: rifampicin, rifabutin, macrolides (clarithromycin and azithromycin), fluoroquinolones, ethambutol, clofazimine, amikacin and ethionamide." },
+      { id: 45, topic: "MAC Treatment", question: "What is the first choice drug in MAC and what is used for prophylaxis?", answer: "The macrolides are highly effective and are the first choice drugs in MAC. Rifabutin or a macrolide are used for prophylaxis." },
+      { id: 46, topic: "Leprosy: Dapsone", question: "What is the chemical nature of Dapsone?", answer: "A sulfone related to sulfonamides." },
+      { id: 47, topic: "Leprosy: Dapsone", question: "What is the Mechanism of Action of Dapsone?", answer: "Inhibits dihydropteroate synthetase, therefore inhibits synthesis of folic acid." },
+      { id: 48, topic: "Leprosy: Dapsone", question: "What is the spectrum of activity of Dapsone?", answer: "It is leprostatic. Also used as a second-line drug in the treatment of pneumocystis pneumonia." },
+      { id: 49, topic: "Leprosy: Dapsone", question: "What are the Adverse effects of Dapsone?", answer: "<ul class='bullet-list'><li>Anorexia, nausea, vomiting, hepatitis, agranulocytosis, and haemolysis in G-6-P-D deficiency</li><li>Erythema nodosum leprosum: An inflammatory process that develops during dapsone therapy of lepromatous leprosy, suppressed by corticosteroids or thalidomide</li></ul>" },
+      { id: 50, topic: "Leprosy: Clofazimine", question: "What are the characteristics of Clofazimine?", answer: "<ul class='bullet-list'><li>A dye that has weak bactericidal actions against M. leprae</li><li>Has anti-inflammatory properties which is useful in suppressing lepra reactions</li></ul>" },
+      { id: 51, topic: "Leprosy: Clofazimine", question: "What are the Adverse effects of Clofazimine?", answer: "Reddish-black discoloration of the skin, dryness of the skin, pruritus and photo-dermatitis." },
+      { id: 52, topic: "Leprosy: Clofazimine", question: "What is the Mechanism of anti-mycobacterial action of Clofazimine?", answer: "<ul class='bullet-list'><li>Binds to the guanine bases of bacterial DNA, thereby blocking the template function of the DNA and inhibiting bacterial proliferation. It is selective for mycobacterial DNA.</li><li>It also increases activity of bacterial phospholipase A2, leading to release and accumulation of lysophospholipids which are toxic and inhibit bacterial proliferation.</li></ul>" },
+      { id: 53, topic: "Leprosy: Rifampicin", question: "What is the role of Rifampicin in leprosy treatment?", answer: "<ul class='bullet-list'><li>Rapidly bactericidal to M. leprae and is highly effective – a single dose of 1500mg can kill 99% of the lepra bacilli</li><li>It can be given once monthly</li><li>Used in combination with dapsone</li></ul>" },
+      { id: 54, topic: "Leprosy: Other Drugs", question: "What other drugs are used in leprosy treatment?", answer: "<ul class='bullet-list'><li><b>Fluoroquinolones:</b> Ofloxacin is lepricidal and is used in multi-drug regimens along with rifampicin</li><li><b>Minocycline:</b> Used in combination regimens to shorten the duration of treatment</li><li><b>Clarithromycin:</b> Has bactericidal activity against M. leprae</li><li><b>Ethionamide:</b> Bactericidal to M.leprae, but more toxic than dapsone. Used in multidrug regimen in patients who cannot tolerate clofazimine.</li></ul>" },
+      { id: 55, topic: "Leprosy Treatment", question: "What is the WHO recommended approach for the treatment of leprosy?", answer: "WHO has recommended a combination of drugs in leprosy in order to:<br><ul class='bullet-list'><li>Eliminate persistors</li><li>Prevent drug resistance</li><li>Reduce the duration of therapy</li></ul>" },
+      { id: 56, topic: "Learning Outcomes", question: "What are the Learning Outcomes for this topic?", answer: "Students must be able to comprehend:<br><ol class='bullet-list'><li>The relevant pharmacology (mechanisms of actions, clinical indications, anti-microbial resistance, adverse effects, drug interactions, precautions and contraindications) of drugs used in the treatment of mycobacterial infections</li><li>The rationale for prolonged therapy and combination therapy in the treatment of mycobacterial infections</li></ol>" },
+      { id: 57, topic: "Quiz Q1", question: "Q1. As an antitubercular drug, isoniazid has the following advantages except:", answer: "<b>c) Tubercle bacilli do not develop resistance against it</b><br><br>(Isoniazid is tuberculocidal, acts on both extra and intracellular bacilli, and is cheap. However, resistance does develop when used alone.)" },
+      { id: 58, topic: "Quiz Q2", question: "Q2. Which of the following antitubercular drugs is not hepatotoxic:", answer: "<b>h) Ethambutol</b><br><br>(Isoniazid, Rifampicin, and Pyrazinamide are all hepatotoxic. Ethambutol's main toxicity is optic neuritis.)" },
+      { id: 59, topic: "Quiz Q3", question: "Q3. Ethambutol is not used in children below 6 years of age because:", answer: "<b>c) It is difficult to detect ethambutol induced visual impairment in young children</b>" },
+      { id: 60, topic: "Quiz Q4", question: "Q4. The characteristic toxicity of ethambutol is:", answer: "<b>f) Visual defects</b><br><br>(Ethambutol causes reversible optic neuritis.)" }
+    ];
+
+    let activeData = [...flashcardData];
+
+    function renderCards(data) {
+      const wrapper = document.getElementById('cardsWrapper');
+      const select = document.getElementById('jumpSelect');
+      
+      wrapper.innerHTML = '';
+      select.innerHTML = '<option value="">Jump to Card...</option>';
+
+      if (data.length === 0) {
+        wrapper.innerHTML = '<div class="no-results">No matching flashcards found.</div>';
+        return;
+      }
+
+      data.forEach((card, index) => {
+        const cardElem = document.createElement('div');
+        cardElem.className = 'card-container';
+        cardElem.id = `card-${index}`;
+        cardElem.innerHTML = `
+          <div class="card" onclick="flipCard(this)">
+            <div class="card-face card-front">
+              <div class="card-header">
+                <span>${card.topic}</span>
+                <span>#${card.id}</span>
+              </div>
+              <div class="card-body">
+                <p>${card.question}</p>
+              </div>
+              <div class="card-footer">
+                Click to Reveal Answer ↷
+              </div>
+            </div>
+            <div class="card-face card-back">
+              <div class="card-header">
+                <span>Answer</span>
+                <span>#${card.id}</span>
+              </div>
+              <div class="card-body">
+                <div>${card.answer}</div>
+              </div>
+              <div class="card-footer">
+                Click to Flip Back ↶
+              </div>
+            </div>
+          </div>
+        `;
+        wrapper.appendChild(cardElem);
+
+        const opt = document.createElement('option');
+        opt.value = index;
+        opt.textContent = `Card ${card.id}: ${card.topic} - ${card.question.substring(0, 30)}...`;
+        select.appendChild(opt);
+      });
+
+      updateProgress();
+    }
+
+    function flipCard(cardElem) {
+      cardElem.classList.toggle('flipped');
+    }
+
+    function scrollCards(direction) {
+      const wrapper = document.getElementById('cardsWrapper');
+      const cardWidth = wrapper.querySelector('.card-container').offsetWidth + 20;
+      wrapper.scrollBy({ left: direction * cardWidth, behavior: 'smooth' });
+    }
+
+    function jumpToCard(index) {
+      if (index === '') return;
+      const targetCard = document.getElementById(`card-${index}`);
+      if (targetCard) {
+        targetCard.scrollIntoView({ behavior: 'smooth', inline: 'center' });
+      }
+    }
+
+    function shuffleCards() {
+      activeData.sort(() => Math.random() - 0.5);
+      renderCards(activeData);
+    }
+
+    function filterCards() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      activeData = flashcardData.filter(c => 
+        c.question.toLowerCase().includes(query) || 
+        c.answer.toLowerCase().includes(query) ||
+        c.topic.toLowerCase().includes(query)
+      );
+      renderCards(activeData);
+    }
+
+    function updateProgress() {
+      const wrapper = document.getElementById('cardsWrapper');
+      const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
+      const currentScroll = wrapper.scrollLeft;
+      const percentage = maxScroll > 0 ? (currentScroll / maxScroll) * 100 : 100;
+      document.getElementById('progressBar').style.width = `${Math.min(100, Math.max(5, percentage))}%`;
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+      if (e.key === 'ArrowRight') scrollCards(1);
+      if (e.key === 'ArrowLeft') scrollCards(-1);
+    });
+
+    renderCards(activeData);
+  </script>
+</body>
+</html>

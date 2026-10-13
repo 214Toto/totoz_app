@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2024 Biochemistry Test 1 – Interactive Exam</title>
+    <style>
+        :root {
+            --primary: #1a6b6b;
+            --accent: #2ea8a0;
+            --dark: #0f2a2a;
+            --light: #f4f8f7;
+            --radius: 12px;
+            --shadow: 0 4px 14px rgba(0, 30, 30, 0.08);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #edf3f2;
+            color: var(--dark);
+            min-height: 100vh;
+            padding-top: 72px;
+        }
+        header {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            background: linear-gradient(145deg, var(--primary), var(--dark));
+            color: #fff; padding: 0.6rem 0;
+            box-shadow: 0 4px 18px rgba(0, 20, 20, 0.25);
+        }
+        .header-inner {
+            max-width: 1000px; margin: 0 auto; padding: 0 1.5rem;
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 0.3rem;
+        }
+        .logo { display: flex; align-items: center; gap: 0.6rem; }
+        .logo i { font-size: 1.5rem; color: #8dd9d4; }
+        .logo h1 { font-size: 1.15rem; font-weight: 700; }
+        .badge {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 0.2rem 1rem; border-radius: 40px;
+            font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+            color: #b3e6e0;
+        }
+        .container { max-width: 920px; margin: 0 auto; padding: 0 1.2rem 2.5rem; }
+        .tab-bar { display: flex; gap: 0.5rem; margin: 0.5rem 0 1.5rem 0; flex-wrap: wrap; }
+        .tab-btn {
+            background: #dce8e8; border: none; padding: 0.5rem 1.8rem;
+            border-radius: 40px; font-weight: 600; font-size: 0.95rem;
+            color: var(--dark); cursor: pointer; transition: 0.2s;
+        }
+        .tab-btn:hover { background: #c0d6d6; }
+        .tab-btn.active {
+            background: var(--primary); color: #fff;
+            box-shadow: 0 2px 10px rgba(26, 107, 107, 0.25);
+        }
+        .tab-panel { display: block; }
+        .tab-panel.hidden { display: none; }
+        .section-title {
+            font-size: 1.25rem; font-weight: 700; color: var(--primary);
+            margin: 0 0 0.8rem 0; padding-bottom: 0.4rem;
+            border-bottom: 3px solid rgba(26, 107, 107, 0.18);
+            display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;
+        }
+        .section-title .count {
+            font-size: 0.7rem; font-weight: 600; background: var(--primary);
+            color: #fff; border-radius: 40px; padding: 0 0.7rem; line-height: 1.7;
+        }
+        .section-subtitle { color: #4f6e6e; font-size: 0.9rem; margin-bottom: 1rem; }
+        .question {
+            background: #ffffff; border-radius: var(--radius);
+            padding: 1.1rem 1.2rem 0.2rem 1.2rem; margin-bottom: 1rem;
+            box-shadow: var(--shadow); border: 1px solid rgba(26, 107, 107, 0.05);
+        }
+        .question .q-badge {
+            display: inline-block; background: var(--primary); color: #fff;
+            border-radius: 40px; padding: 0 0.65rem; font-size: 0.7rem;
+            font-weight: 700; line-height: 1.6; margin-right: 0.4rem;
+        }
+        .question p { font-weight: 600; font-size: 0.97rem; margin-bottom: 0.4rem; color: var(--dark); }
+        .options label {
+            display: block; background: #fafcfc; border: 1px solid #dde8e8;
+            border-radius: 7px; padding: 0.4rem 0.85rem; margin-top: 0.4rem;
+            cursor: pointer; transition: all 0.15s; font-weight: 450; font-size: 0.92rem;
+        }
+        .options label:hover { background: #e8f5f4; border-color: var(--accent); }
+        .options input[type="radio"] { margin-right: 0.5rem; accent-color: var(--primary); }
+        .question-feedback { margin-top: 0.8rem; padding: 0.4rem 0 0.1rem 0; border-top: 1px dashed #dce6e6; }
+        .answer-block strong { display: block; margin-bottom: 3px; color: var(--primary); font-size: 0.78rem; text-transform: uppercase; }
+        .answer-list { display: flex; flex-direction: column; gap: 2px; }
+        .answer-item {
+            padding: 4px 10px; border-radius: 5px; border: 1px solid #e4edec;
+            background: #ffffff; font-weight: 500; font-size: 0.88rem;
+        }
+        .answer-correct { background: #e8f7ef; border-color: #a8d8c0; color: #0a4f3a; }
+        .answer-wrong { background: #fde9ea; border-color: #f5b8b8; color: #8a1f2b; }
+        .user-choice { outline: 2px dashed rgba(0, 0, 0, 0.06); }
+        .explanation {
+            margin-top: 5px; padding: 8px 13px; border-radius: 7px;
+            background: #f0f8f6; color: #065f4a; font-size: 0.88rem;
+            line-height: 1.55; border-left: 4px solid var(--accent);
+        }
+        .explanation.wrong { background: #fdf1f1; color: #7a1f1f; border-left-color: #e68080; }
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            color: #fff; border: none; padding: 0.55rem 1.8rem;
+            border-radius: var(--radius); font-weight: 600; font-size: 0.95rem;
+            cursor: pointer; transition: transform 0.15s, box-shadow 0.2s;
+            box-shadow: 0 4px 14px rgba(26, 107, 107, 0.25);
+        }
+        .btn:hover { transform: scale(1.02); box-shadow: 0 6px 24px rgba(26, 107, 107, 0.32); }
+        .btn:active { transform: scale(0.96); }
+        .btn-sm {
+            padding: 0.35rem 1.1rem; font-size: 0.82rem;
+            border-radius: 8px; margin-top: 0.5rem;
+        }
+        .submit-wrap { text-align: center; margin: 1.5rem 0 1.8rem; }
+        .result {
+            margin-top: 1.5rem; padding: 1.5rem 1.5rem 0.8rem;
+            background: #eaf6f4; border-radius: var(--radius);
+            text-align: center; display: none; border: 1px solid #b8dbd6;
+        }
+        .result h3 { font-size: 1.1rem; font-weight: 600; color: var(--dark); }
+        .score { font-size: 2.4rem; font-weight: 800; color: var(--primary); margin: 0.1rem 0 0.2rem; }
+        .text-muted { color: #4f6e6e; font-size: 0.9rem; }
+        .hidden { display: none !important; }
+        .essay-answer {
+            margin-top: 0.8rem; padding: 1rem 1.2rem;
+            background: #f0f8f6; border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            font-size: 0.92rem; line-height: 1.6;
+            display: none;
+        }
+        .essay-answer.show { display: block; }
+        .essay-answer h4 { color: var(--primary); margin-bottom: 0.4rem; font-size: 0.95rem; }
+        .essay-answer ul, .essay-answer ol { margin-left: 1.2rem; margin-bottom: 0.5rem; }
+        .essay-answer li { margin-bottom: 0.2rem; }
+        .case-block {
+            background: #f8fdfc; border-left: 4px solid var(--accent);
+            padding: 0.8rem 1rem; margin: 0.8rem 0; border-radius: 0 8px 8px 0;
+            font-size: 0.93rem; line-height: 1.6;
+        }
+        .subq {
+            background: #ffffff; border-radius: 10px;
+            padding: 0.9rem 1rem 0.2rem 1rem; margin-top: 0.8rem;
+            border: 1px solid #dde8e8;
+        }
+        .subq .subq-text { font-weight: 500; font-size: 0.93rem; margin-bottom: 0.3rem; }
+        .subq .subq-marks { font-size: 0.75rem; color: #6b8a8a; font-weight: 600; }
+        @media (max-width: 700px) {
+            body { padding-top: 68px; }
+            .logo h1 { font-size: 0.95rem; }
+            .header-inner { padding: 0 1rem; flex-direction: column; align-items: stretch; gap: 0.2rem; }
+            .badge { align-self: flex-start; }
+            .question { padding: 0.9rem 0.9rem 0.1rem 0.9rem; }
+            .section-title { font-size: 1.05rem; }
+            .score { font-size: 2rem; }
+            .btn { padding: 0.5rem 1.2rem; font-size: 0.85rem; }
+            .tab-btn { padding: 0.4rem 1.2rem; font-size: 0.85rem; }
+        }
+        @media (max-width: 420px) {
+            .logo h1 { font-size: 0.8rem; }
+            .options label { font-size: 0.85rem; padding: 0.35rem 0.65rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-inner">
+            <div class="logo">
+                <i class="fas fa-flask"></i>
+                <h1>2024 Biochemistry Test 1 – Interactive Exam</h1>
+            </div>
+            <span class="badge"><i class="fas fa-pencil-alt"></i> &nbsp;All Sections</span>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+
+            <div class="tab-bar">
+                <button class="tab-btn active" data-target="A">✅ Section A – MCQs (40)</button>
+                <button class="tab-btn" data-target="B">📝 Section B – Case Questions (6)</button>
+            </div>
+
+            <!-- ==================== SECTION A ==================== -->
+            <div id="panel-A" class="tab-panel">
+                <div class="section-title">
+                    <i class="fas fa-list-ul"></i> Section A – Multiple Choice Questions
+                    <span class="count" id="count-A">0</span>
+                </div>
+                <p class="section-subtitle">Circle the best answer. Select an option for each question, then click <strong>Submit All MCQs</strong> below.</p>
+                <form id="form-A">
+                    <div id="container-A"></div>
+                    <div class="submit-wrap">
+                        <button type="button" class="btn" onclick="submitSectionA()">
+                            <i class="fas fa-check-circle"></i> Submit All MCQs
+                        </button>
+                    </div>
+                </form>
+                <div class="result" id="result-A">
+                    <h3><i class="fas fa-chart-simple"></i> Your Score</h3>
+                    <div class="score" id="score-A">0</div>
+                    <p class="text-muted">Review the feedback below each question.</p>
+                </div>
+            </div>
+
+            <!-- ==================== SECTION B ==================== -->
+            <div id="panel-B" class="tab-panel hidden">
+                <div class="section-title">
+                    <i class="fas fa-book-open"></i> Section B – Case-Based Short Answer Questions
+                    <span class="count" id="count-B">0</span>
+                </div>
+                <p class="section-subtitle">Each question has multiple parts. Click <strong>Show Model Answer</strong> for each part to compare.</p>
+                <div id="container-B"></div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+    /* =====================================================================
+       SECTION A — 40 MCQs (2024 Biochemistry Test 1)
+       ===================================================================== */
+    const sectionA = [
+        {
+            q: `Which of the following enzyme is used for the diagnosis of thiamine deficiency?`,
+            options: [
+                `Transketolase`,
+                `Glucose-6-P dehydrogenase`,
+                `Transaldolase`,
+                `Phosphogluconate dehydrogenase`,
+                `Pyruvate kinase`
+            ],
+            correct: `A`,
+            explanation: `<strong>Transketolase</strong> is a thiamine pyrophosphate (TPP)-dependent enzyme in the pentose phosphate pathway. Its activity in erythrocytes is measured to assess thiamine status. A low transketolase activity or an increased activation coefficient upon adding TPP is diagnostic of thiamine deficiency. G6PD, transaldolase, phosphogluconate dehydrogenase, and pyruvate kinase are not TPP-dependent and are not used for this diagnosis.`
+        },
+        {
+            q: `Which of the following steps is inhibited during arsenate poisoning?`,
+            options: [
+                `Phosphoglycerate mutase`,
+                `1,3-Bisphosphoglycerate Kinase`,
+                `Enolase`,
+                `Pyruvate kinase`,
+                `Hexokinase`
+            ],
+            correct: `B`,
+            explanation: `Arsenate poisoning inhibits <strong>1,3-bisphosphoglycerate kinase</strong> (and GAPDH) by competing with inorganic phosphate (Pi). Arsenate forms an unstable 1-arseno-3-phosphoglycerate that spontaneously hydrolyzes, bypassing the substrate-level phosphorylation step and reducing ATP yield. Phosphoglycerate mutase, enolase, pyruvate kinase, and hexokinase are not directly inhibited by arsenate.`
+        },
+        {
+            q: `How many ATP molecules are produced from the complete oxidation of one molecule of glucose during oxidative phosphorylation?`,
+            options: [
+                `2 ATP`,
+                `15 ATP`,
+                `30 ATP`,
+                `38 ATP`,
+                `24 ATP`
+            ],
+            correct: `C`,
+            explanation: `Complete oxidation of one glucose molecule yields approximately <strong>30 ATP</strong> using modern P/O ratios (2.5 ATP per NADH, 1.5 ATP per FADH₂). This includes ~4 ATP from substrate-level phosphorylation (2 from glycolysis, 2 from TCA cycle) and ~26 ATP from oxidative phosphorylation (10 NADH × 2.5 = 25 ATP, 2 FADH₂ × 1.5 = 3 ATP; total ~32, but accounting for transport costs, ~30 ATP is the net yield). The classic value is 36-38 ATP, but modern estimates are 30-32 ATP.`
+        },
+        {
+            q: `What is the primary function of oxidative phosphorylation in cellular respiration?`,
+            options: [
+                `Glycolysis`,
+                `ATP production`,
+                `Protein synthesis`,
+                `Lipid storage`,
+                `Pumping of protons`
+            ],
+            correct: `B`,
+            explanation: `The primary function of oxidative phosphorylation is <strong>ATP production</strong>. It uses the proton gradient generated by the electron transport chain to drive ATP synthase, producing the majority of cellular ATP. Glycolysis, protein synthesis, lipid storage, and proton pumping are related processes but not the primary function of OxPhos.`
+        },
+        {
+            q: `Which of the following enzyme causes congenital lactic acidosis?`,
+            options: [
+                `Isocitrate dehydrogenase`,
+                `Alpha-ketoglutarate dehydrogenase`,
+                `Pyruvate dehydrogenase`,
+                `Malate dehydrogenase`,
+                `Lactate dehydrogenase`
+            ],
+            correct: `C`,
+            explanation: `Congenital lactic acidosis is most commonly caused by <strong>pyruvate dehydrogenase (PDH) deficiency</strong>. PDH converts pyruvate to acetyl-CoA; without it, pyruvate accumulates and is reduced to lactate, causing lactic acidosis. It also leads to neurological impairment because the brain depends on PDH for glucose oxidation. Isocitrate dehydrogenase, α-ketoglutarate dehydrogenase, malate dehydrogenase, and lactate dehydrogenase deficiencies are not classic causes of congenital lactic acidosis.`
+        },
+        {
+            q: `What is the general term used for the anaerobic degradation of glucose to obtain energy?`,
+            options: [
+                `Anabolism`,
+                `Oxidation`,
+                `Fermentation`,
+                `Metabolism`,
+                `Catabolism`
+            ],
+            correct: `C`,
+            explanation: `The anaerobic degradation of glucose to obtain energy is called <strong>fermentation</strong>. In humans, this refers to anaerobic glycolysis where pyruvate is reduced to lactate (lactic acid fermentation). In yeast, it refers to ethanol fermentation. Anabolism is biosynthesis, oxidation is electron loss, metabolism is all chemical reactions, and catabolism is breakdown of molecules (which includes fermentation but is broader).`
+        },
+        {
+            q: `Which of the following is a function of NADPH produced by the HMP Shunt?`,
+            options: [
+                `Preventing oxidative stress`,
+                `ATP synthesis`,
+                `Glycolysis`,
+                `Protein folding`,
+                `Fatty acid oxidation`
+            ],
+            correct: `A`,
+            explanation: `NADPH produced by the HMP shunt (pentose phosphate pathway) is essential for <strong>preventing oxidative stress</strong>. It maintains reduced glutathione (GSH), which neutralizes reactive oxygen species and protects cells (especially RBCs) from oxidative damage. NADPH is also used for reductive biosynthesis (fatty acid synthesis, cholesterol synthesis) but not ATP synthesis, glycolysis, protein folding, or fatty acid oxidation.`
+        },
+        {
+            q: `Which of the following organisms cannot convert acetyl-CoA derived from fatty acids into glucose?`,
+            options: [
+                `Animals`,
+                `Plants`,
+                `Bacteria`,
+                `Virus`,
+                `Microorganisms`
+            ],
+            correct: `A`,
+            explanation: `<strong>Animals</strong> cannot convert acetyl-CoA derived from fatty acids into glucose because the pyruvate dehydrogenase reaction is irreversible. Acetyl-CoA enters the TCA cycle and is oxidized to CO₂; it cannot be used as a net carbon source for gluconeogenesis. Plants, bacteria, and microorganisms have the glyoxylate cycle, which bypasses the decarboxylation steps of the TCA cycle and allows net conversion of acetyl-CoA to glucose. Viruses are not cellular organisms and do not carry out metabolism.`
+        },
+        {
+            q: `Which of the following statements is false about gluconeogenesis?`,
+            options: [
+                `From the hydrolysis of triacylglycerol, fatty acids can be used as a carbon source`,
+                `From red blood cells, lactate can be used as a carbon source`,
+                `From the hydrolysis of triacylglycerol, glycerol is converted to glucose in gluconeogenesis`,
+                `From muscle vigorous muscle activity, lactate can be used as a carbon source`,
+                `From TCA cycle, the intermediates can be used as a carbon source`
+            ],
+            correct: `A`,
+            explanation: `The <strong>false</strong> statement is that fatty acids can be used as a carbon source for gluconeogenesis in animals. Fatty acids are broken down to acetyl-CoA, which cannot be used for net glucose synthesis in animals (the pyruvate dehydrogenase reaction is irreversible). Glycerol from triacylglycerol hydrolysis can be used. Lactate from RBCs and muscle can be used. TCA cycle intermediates (e.g., oxaloacetate) can be used.`
+        },
+        {
+            q: `Which of the following glucose transporters is important in fructose transport in the intestine?`,
+            options: [
+                `GLUT2`,
+                `GLUT5`,
+                `GLUT3`,
+                `GLUT4`,
+                `GLUT7`
+            ],
+            correct: `B`,
+            explanation: `<strong>GLUT5</strong> is the primary fructose transporter in the small intestine (apical membrane of enterocytes). It facilitates fructose absorption. GLUT2 is involved in glucose and fructose transport across the basolateral membrane. GLUT3 is primarily a glucose transporter in neurons. GLUT4 is insulin-responsive in muscle and adipose tissue. GLUT7 is found in the small intestine and colon but is not the primary fructose transporter.`
+        },
+        {
+            q: `A female with classic galactosemia due to GALT deficiency is able to produce lactose in breast milk because:`,
+            options: [
+                `Free (nonphosphorylated) galactose is the acceptor of glucose transferred by lactose synthase in the synthesis of lactose.`,
+                `Galactose can be produced from a glucose metabolite by epimerization.`,
+                `Hexokinase can efficiently phosphorylate dietary galactose to galactose 1-phosphate.`,
+                `The enzyme deficient in galactosemia is activated by a hormone produced in the mammary gland.`,
+                `Galactose can be produced from fructose by isomerization.`
+            ],
+            correct: `B`,
+            explanation: `In classic galactosemia, GALT (galactose-1-phosphate uridyltransferase) is deficient, but the mammary gland can still produce lactose because <strong>galactose can be produced from glucose via epimerization</strong>. UDP-glucose is converted to UDP-galactose by UDP-galactose 4-epimerase, and then galactose is transferred to glucose by lactose synthase to form lactose. Free galactose is not the direct acceptor; UDP-galactose is the donor. Hexokinase does not efficiently phosphorylate galactose. The deficient enzyme is not activated by mammary hormones. Galactose is not produced from fructose by isomerization.`
+        },
+        {
+            q: `What is the primary purpose of the Cori cycle?`,
+            options: [
+                `Preventing accumulation of lactic acid`,
+                `Producing citric acid`,
+                `Synthesizing glycerol`,
+                `Forming pyruvate`,
+                `Forming lactate`
+            ],
+            correct: `A`,
+            explanation: `The primary purpose of the Cori cycle is <strong>preventing accumulation of lactic acid</strong> (and recycling it into glucose). Lactate produced by anaerobic glycolysis in muscle and RBCs is transported to the liver, converted back to glucose via gluconeogenesis, and returned to the muscle. This prevents lactic acidosis and provides a sustained glucose supply to muscle.`
+        },
+        {
+            q: `During fasting, which hormone stimulates glycogen breakdown in the liver to release glucose into the bloodstream?`,
+            options: [
+                `Insulin`,
+                `Glucagon`,
+                `Cortisol`,
+                `Epinephrine`,
+                `Thyroxine`
+            ],
+            correct: `B`,
+            explanation: `During fasting, <strong>glucagon</strong> is the primary hormone that stimulates glycogen breakdown (glycogenolysis) in the liver to release glucose into the bloodstream. It activates glycogen phosphorylase and inhibits glycogen synthase via cAMP-dependent phosphorylation. Insulin promotes glycogen synthesis. Cortisol, epinephrine, and thyroxine also affect metabolism but glucagon is the primary fasting hormone for hepatic glycogenolysis.`
+        },
+        {
+            q: `Ethanol ingestion is incapable of supplying carbons for gluconeogenesis. This is due to which of the following?`,
+            options: [
+                `Ethanol is converted to acetone, and the carbons are lost during exhalation`,
+                `Ethanol is lost directly in the urine`,
+                `Ethanol cannot enter the liver, where gluconeogenesis predominantly occurs`,
+                `Ethanol's carbons are lost as carbon dioxide before a gluconeogenic precursor can be generated`,
+                `Ethanol is converted to lysine, which is strictly a ketogenic amino acid`
+            ],
+            correct: `D`,
+            explanation: `Ethanol is oxidized to acetaldehyde and then to acetate, which is converted to acetyl-CoA. <strong>Acetyl-CoA cannot be used for net gluconeogenesis in animals</strong> because the pyruvate dehydrogenase reaction is irreversible. The carbons of acetyl-CoA are oxidized to CO₂ in the TCA cycle, so they are lost before a gluconeogenic precursor (like oxaloacetate or pyruvate) can be generated. Ethanol is not converted to acetone, lost in urine, unable to enter the liver, or converted to lysine.`
+        },
+        {
+            q: `Which one of the following is an obligatory intermediate in the conversion of ribose-5-phosphate to glucose-6-phosphate?`,
+            options: [
+                `Pyruvate`,
+                `1,3-bisphosphoglycerate`,
+                `Oxaloacetate`,
+                `Xylulose-5-phosphate`,
+                `6-phosphogluconate`
+            ],
+            correct: `D`,
+            explanation: `In the pentose phosphate pathway, ribose-5-phosphate is converted to glucose-6-phosphate through a series of reversible reactions involving transketolase and transaldolase. <strong>Xylulose-5-phosphate</strong> is an obligatory intermediate in this process. Pyruvate, 1,3-bisphosphoglycerate, and oxaloacetate are not intermediates of the pentose phosphate pathway. 6-Phosphogluconate is an intermediate in the oxidative phase of the pathway but not in the conversion of ribose-5-phosphate to glucose-6-phosphate.`
+        },
+        {
+            q: `Which one of the following disorders would lead to increased activity of the HMP shunt pathway?`,
+            options: [
+                `Glycogen phosphorylase deficiency`,
+                `Glucose-6-phosphatase deficiency`,
+                `Fructose-1,6-bisphosphatase deficiency`,
+                `Pyruvate kinase deficiency`,
+                `Pyruvate dehydrogenase deficiency`
+            ],
+            correct: `D`,
+            explanation: `<strong>Pyruvate kinase deficiency</strong> leads to increased activity of the HMP shunt. When glycolysis is blocked at pyruvate kinase, glucose-6-phosphate accumulates and is shunted into the pentose phosphate pathway, increasing NADPH production. This is a compensatory mechanism in RBCs. The other deficiencies do not specifically increase HMP shunt activity.`
+        },
+        {
+            q: `Which of the following statements is true concerning glycogen synthesis and utilization?`,
+            options: [
+                `Glycogen is synthesized in the liver in the fed state, then exported to other tissues in low-density lipoproteins.`,
+                `Glycogen reserves in liver and muscle will meet energy requirements for several days in prolonged fasting.`,
+                `Liver synthesizes more glycogen when the hepatic portal blood concentration of glucose is high because of the activity of glucokinase in the liver.`,
+                `Muscle synthesizes glycogen in the fed state because glycogen phosphorylase is activated in response to insulin.`,
+                `The plasma concentration of glycogen increases in the fed state.`
+            ],
+            correct: `C`,
+            explanation: `The true statement is that <strong>liver synthesizes more glycogen when hepatic portal blood glucose is high because of glucokinase activity</strong>. Glucokinase has a high Km for glucose and is not inhibited by glucose-6-phosphate, allowing the liver to take up and store glucose when portal glucose is high. Glycogen is not exported in lipoproteins. Glycogen reserves are depleted within ~24 hours of fasting. Muscle glycogen phosphorylase is inhibited by insulin, not activated. Glycogen is not present in plasma.`
+        },
+        {
+            q: `Ethanol is oxidized to acetaldehyde in the liver cytoplasm by which enzyme?`,
+            options: [
+                `Alcohol dehydrogenase`,
+                `Alcohol carboxylase`,
+                `Pyruvate carboxylase`,
+                `Pyruvate kinase`,
+                `Mono-oxygenase`
+            ],
+            correct: `A`,
+            explanation: `Ethanol is oxidized to acetaldehyde in the liver cytoplasm by <strong>alcohol dehydrogenase (ADH)</strong>. This NAD⁺-dependent enzyme is the primary pathway for ethanol metabolism at moderate concentrations. The microsomal ethanol-oxidizing system (MEOS, involving CYP2E1) and catalase also contribute at high concentrations. Alcohol carboxylase, pyruvate carboxylase, pyruvate kinase, and mono-oxygenase are not the primary enzymes for this reaction.`
+        },
+        {
+            q: `Following the intravenous injection of lactose into a rat, none of the lactose is metabolized. However, ingestion of lactose leads to rapid metabolism of this disaccharide. Based on these observations, which one of the following statements is true?`,
+            options: [
+                `The lactase is present in the serum.`,
+                `The hepatic galactokinase is absent.`,
+                `The lactase is present in the stomach.`,
+                `The lactase is present in the intestine.`,
+                `The lactase is present in saliva.`
+            ],
+            correct: `D`,
+            explanation: `The observation that intravenous lactose is not metabolized but ingested lactose is rapidly metabolized indicates that <strong>lactase is present in the intestine</strong> (brush border of enterocytes). Lactase is not present in serum, stomach, or saliva. Hepatic galactokinase is present and would metabolize galactose if it entered the circulation, but lactose itself cannot be metabolized without first being hydrolyzed by intestinal lactase.`
+        },
+        {
+            q: `Which of the following statements is false concerning vigorously contracting skeletal muscle as compared with the resting state?`,
+            options: [
+                `An increased conversion of pyruvate to lactate.`,
+                `Decreased oxidation of pyruvate to CO₂ and water.`,
+                `An increased NADH/NAD⁺ ratio`,
+                `An increased concentration of AMP.`,
+                `A change in the concentration of fructose 2,6-bisphosphate is not a key regulatory factor.`
+            ],
+            correct: `E`,
+            explanation: `The <strong>false</strong> statement is that a change in fructose 2,6-bisphosphate concentration is not a key regulatory factor. In fact, during vigorous muscle contraction, fructose 2,6-bisphosphate levels increase (due to AMP-activated protein kinase and PFK-2 activation), stimulating PFK-1 and glycolysis. The other statements are true: increased pyruvate to lactate conversion, decreased pyruvate oxidation, increased NADH/NAD⁺ ratio, and increased AMP concentration all occur during vigorous contraction.`
+        },
+        {
+            q: `Which of the following statements is false concerning an individual who is rested and fasted for 12 hours?`,
+            options: [
+                `Gluconeogenesis is the major process by which blood glucose is maintained.`,
+                `Adenylate cyclase has been activated in liver.`,
+                `Liver glycogen storage have not been depleted.`,
+                `Glycogen phosphorylase, pyruvate kinase, and glycogen synthase are phosphorylated in the liver.`,
+                `Glycogen synthase and pyruvate kinase have been inactivated.`
+            ],
+            correct: `A`,
+            explanation: `The <strong>false</strong> statement is that gluconeogenesis is the major process by which blood glucose is maintained after a 12-hour fast. At 12 hours of fasting, <strong>glycogenolysis</strong> is still the major source of blood glucose; gluconeogenesis becomes the major source after ~24 hours of fasting. Adenylate cyclase is activated by glucagon, liver glycogen is not yet depleted, and glycogen phosphorylase, pyruvate kinase, and glycogen synthase are phosphorylated (with phosphorylase active, and synthase and pyruvate kinase inactivated).`
+        },
+        {
+            q: `What is the collective term for all the chemical reactions occurring within an organism?`,
+            options: [
+                `Anabolism`,
+                `Catabolism`,
+                `Metabolism`,
+                `Polymorphism`,
+                `Integrated metabolism`
+            ],
+            correct: `C`,
+            explanation: `<strong>Metabolism</strong> is the collective term for all the chemical reactions occurring within an organism. Anabolism is biosynthesis (building larger molecules), catabolism is breakdown of molecules to release energy, polymorphism is genetic variation, and integrated metabolism refers to the coordination of metabolic pathways.`
+        },
+        {
+            q: `Which type of metabolic process involves building large molecules that the cell needs?`,
+            options: [
+                `Anabolism`,
+                `Catabolism`,
+                `Oxidation`,
+                `De novo synthesis`,
+                `Salvage synthesis`
+            ],
+            correct: `A`,
+            explanation: `<strong>Anabolism</strong> is the metabolic process that involves building large molecules from smaller precursors, consuming energy (ATP). Catabolism breaks down large molecules to release energy. Oxidation is electron loss. De novo synthesis and salvage synthesis are specific types of anabolic pathways.`
+        },
+        {
+            q: `Which of the following statements is false concerning general principles common to metabolic pathways?`,
+            options: [
+                `All metabolic pathways are not irreversible`,
+                `Metabolic pathways are interconnected`,
+                `All metabolic pathways are linear`,
+                `Metabolic pathways are localized to specific compartments within the cell`,
+                `Metabolic pathways are regulated`
+            ],
+            correct: `C`,
+            explanation: `The <strong>false</strong> statement is that all metabolic pathways are linear. Metabolic pathways can be <strong>linear, cyclic, or branched</strong>. For example, glycolysis is linear, the TCA cycle is cyclic, and amino acid biosynthesis is often branched. The other statements are true: pathways are not all irreversible, they are interconnected, they are compartmentalized, and they are regulated.`
+        },
+        {
+            q: `The Chemiosmotic theory of oxidative phosphorylation contends that:`,
+            options: [
+                `the energy of a proton gradient is utilized for the synthesis of ATP`,
+                `an electron gradient is generated at the internal mitochondrial membrane`,
+                `hydrolysis of ATP is used for the formation of an energy rich proton gradient`,
+                `protons accumulate in the mitochondrial matrix and are then pumped out through the complex Fo-F1`,
+                `gradients of electrons as well as protons are generated on both sides of the internal mitochondrial membrane`
+            ],
+            correct: `A`,
+            explanation: `The Chemiosmotic theory (proposed by Peter Mitchell) states that <strong>the energy of a proton gradient is utilized for the synthesis of ATP</strong>. The electron transport chain pumps protons from the mitochondrial matrix to the intermembrane space, creating a proton motive force. ATP synthase uses this gradient to drive ATP synthesis. An electron gradient is not generated; protons are pumped out of the matrix, not accumulated in it.`
+        },
+        {
+            q: `The mitochondria were blocked at the site of NADH oxidation, and succinate was used as a substrate. What would the P:O ratio be?`,
+            options: [
+                `Zero`,
+                `One less than normally produced by succinate`,
+                `Same as that normally produced by succinate`,
+                `One more than normally produced by succinate`,
+                `Doubled`
+            ],
+            correct: `C`,
+            explanation: `If Complex I (NADH oxidation site) is blocked but succinate is used as a substrate, electrons enter at Complex II (succinate dehydrogenase) via FADH₂, bypassing Complex I. The P:O ratio would be <strong>the same as that normally produced by succinate</strong> (2 ATP per FADH₂, or 1.5 using modern ratios). Blocking Complex I does not affect succinate oxidation because succinate feeds electrons into CoQ via Complex II.`
+        },
+        {
+            q: `If oxidative phosphorylation were uncoupled in the mitochondria, what would one expect?`,
+            options: [
+                `A decreased concentration of ADP in the mitochondria`,
+                `Increased inorganic phosphate in the mitochondria`,
+                `A decreased oxidative rate`,
+                `A decreased production of heat`,
+                `A increased concentration of ATP in the mitochondria`
+            ],
+            correct: `B`,
+            explanation: `If oxidative phosphorylation is uncoupled, the proton gradient is dissipated, and ATP synthesis is impaired. Oxygen consumption (oxidative rate) increases as the ETC tries to restore the gradient, but ATP is not produced. <strong>Inorganic phosphate accumulates</strong> in the mitochondria because it is not being used for ATP synthesis. ADP concentration would increase (not decrease), heat production would increase (not decrease), and ATP concentration would decrease (not increase).`
+        },
+        {
+            q: `Whenever the cell's ATP supply is depleted, which enzyme's activity is increased?`,
+            options: [
+                `Hexokinase`,
+                `Pyruvate kinase`,
+                `Glucokinase`,
+                `Phosphofructokinase`,
+                `Glyceraldehyde 3 phosphate dehydrogenase`
+            ],
+            correct: `D`,
+            explanation: `When ATP is depleted, <strong>phosphofructokinase-1 (PFK-1)</strong> activity is increased. PFK-1 is allosterically activated by AMP and ADP (indicators of low energy charge) and inhibited by ATP and citrate. This stimulates glycolysis to produce more ATP. Hexokinase, pyruvate kinase, glucokinase, and GAPDH are also glycolytic enzymes but PFK-1 is the key rate-limiting enzyme regulated by energy charge.`
+        },
+        {
+            q: `Which of the following statements is false concerning glycolysis?`,
+            options: [
+                `The conversion of glucose to lactate do not require the presence of oxygen.`,
+                `Hexokinase is important in hepatic glucose metabolism only in the absorptive period following consumption of a carbohydrate-containing meal.`,
+                `Fructose 2,6-bisphosphate is a potent stimulator of phosphofructokinase.`,
+                `The regulated reactions are also the irreversible reactions.`,
+                `The conversion of glucose to lactate yields two ATP.`
+            ],
+            correct: `B`,
+            explanation: `The <strong>false</strong> statement is that hexokinase is important in hepatic glucose metabolism only in the absorptive period. In the liver, <strong>glucokinase</strong> (not hexokinase) is the primary enzyme for glucose phosphorylation during the absorptive period. Hexokinase is present in most tissues but has a low Km and is saturated at normal blood glucose levels; it is not the main hepatic enzyme. The other statements are true: glycolysis does not require oxygen, fructose-2,6-bisphosphate stimulates PFK-1, regulated reactions are irreversible, and anaerobic glycolysis yields 2 ATP per glucose.`
+        },
+        {
+            q: `Where is the HMP Shunt most active in humans?`,
+            options: [
+                `Brain`,
+                `Liver`,
+                `Kidneys`,
+                `Heart`,
+                `Skeletal Muscle`
+            ],
+            correct: `B`,
+            explanation: `The HMP shunt (pentose phosphate pathway) is most active in the <strong>liver</strong>, where it produces NADPH for reductive biosynthesis (fatty acid synthesis, cholesterol synthesis) and ribose-5-phosphate for nucleotide synthesis. It is also active in adipose tissue, adrenal cortex, and RBCs. Brain, kidneys, heart, and skeletal muscle have lower HMP shunt activity.`
+        },
+        {
+            q: `Which of the following can be produced when sorbitol is further oxidized?`,
+            options: [
+                `Glucose`,
+                `Fructose`,
+                `Galactose`,
+                `Mannose`,
+                `Galactitol`
+            ],
+            correct: `B`,
+            explanation: `Sorbitol is oxidized by <strong>sorbitol dehydrogenase</strong> (polyol dehydrogenase) to <strong>fructose</strong>. This reaction occurs in the polyol pathway, particularly in the lens, nerves, and seminal vesicles. In diabetes, aldose reductase converts glucose to sorbitol, which is then slowly oxidized to fructose. Galactitol is formed from galactose by aldose reductase. Glucose, galactose, and mannose are not direct oxidation products of sorbitol.`
+        },
+        {
+            q: `Citrate synthase is the enzyme that catalyzes the condensation of acetyl CoA and oxaloacetate to citrate. Which of the following is an activator of this enzyme?`,
+            options: [
+                `Succinyl CoA`,
+                `NADH`,
+                `Fatty Acyl CoA`,
+                `ADP`,
+                `ATP`
+            ],
+            correct: `D`,
+            explanation: `<strong>ADP</strong> is an activator of citrate synthase. Citrate synthase is inhibited by ATP, NADH, succinyl-CoA, and fatty acyl-CoA (indicators of high energy charge and abundant fuel). ADP (indicator of low energy charge) activates the enzyme, stimulating the TCA cycle to produce more ATP.`
+        },
+        {
+            q: `In Krebs (TCA) cycle, when two-carbon Acetyl CoA is oxidized to CO₂, the total yield of ATP is:`,
+            options: [
+                `8`,
+                `12`,
+                `14`,
+                `16`,
+                `24`
+            ],
+            correct: `B`,
+            explanation: `Complete oxidation of one acetyl-CoA in the TCA cycle produces:<br><br>• 3 NADH → 3 × 2.5 = 7.5 ATP<br>• 1 FADH₂ → 1 × 1.5 = 1.5 ATP<br>• 1 GTP → 1 ATP<br><br>Total = <strong>12 ATP</strong> (using classic P/O ratios of 3 for NADH and 2 for FADH₂: 3×3 + 1×2 + 1 = 12). Using modern ratios, it is 10 ATP.`
+        },
+        {
+            q: `Which enzyme is responsible for the hydrolysis of α(1-6) glycosidic bonds present at a branching point of glycogen molecules?`,
+            options: [
+                `β-Glucosidase`,
+                `α-Glucosidase`,
+                `Glycosidase`,
+                `Phosphorylase`,
+                `Phophatase`
+            ],
+            correct: `B`,
+            explanation: `<strong>α-Glucosidase</strong> (specifically the debranching enzyme, amylo-1,6-glucosidase) is responsible for hydrolyzing the α(1-6) glycosidic bonds at branch points of glycogen. Glycogen phosphorylase cleaves α(1-4) bonds but cannot cleave α(1-6) bonds. β-Glucosidase, glycosidase, and phosphatase are not the correct enzymes for this specific bond.`
+        },
+        {
+            q: `Liver glycogen contributes to glucose maintenance, but muscle glycogen does not. Which enzyme is absent in muscle?`,
+            options: [
+                `Glycogen phosphorylase`,
+                `Hexokinase`,
+                `Glucose-6-phosphatase`,
+                `Debranching enzyme`,
+                `Glucose-6-phosphate Dehydrogenase`
+            ],
+            correct: `C`,
+            explanation: `The key difference is that the liver possesses <strong>glucose-6-phosphatase</strong>, which hydrolyzes glucose-6-phosphate to free glucose that can be exported into the blood. Muscle lacks this enzyme, so glucose-6-phosphate from muscle glycogenolysis enters glycolysis for local energy production and cannot be released into the bloodstream. Glycogen phosphorylase, hexokinase, debranching enzyme, and G6PD are all present in muscle.`
+        },
+        {
+            q: `In response to glucagon and epinephrine, cells undergo changes that phosphorylate activate glycogen phosphorylase. Which enzyme is responsible for this covalent modification?`,
+            options: [
+                `Protein kinase A`,
+                `Phosphorylase kinase`,
+                `Protein kinase C`,
+                `Protein kinase B`,
+                `Adenylate cyclase`
+            ],
+            correct: `B`,
+            explanation: `<strong>Phosphorylase kinase</strong> is responsible for phosphorylating and activating glycogen phosphorylase. Glucagon and epinephrine activate adenylate cyclase → cAMP → protein kinase A → phosphorylase kinase → glycogen phosphorylase. Protein kinase A activates phosphorylase kinase but does not directly phosphorylate glycogen phosphorylase. Protein kinase C and B are not involved in this pathway. Adenylate cyclase produces cAMP.`
+        },
+        {
+            q: `Erythrocytes undergo glycolysis for the production of ATP. The deficiency of which enzyme leads to hemolytic anemia?`,
+            options: [
+                `Glucokinase`,
+                `Phosphofructokinase I`,
+                `Phosphoglucomutase`,
+                `Pyruvate Kinase`,
+                `Phosphofructokinase II`
+            ],
+            correct: `D`,
+            explanation: `<strong>Pyruvate kinase deficiency</strong> is the most common glycolytic enzyme defect causing hemolytic anemia. RBCs rely on glycolysis for ATP; without pyruvate kinase, ATP production falls, leading to membrane damage and hemolysis. Glucokinase is not present in RBCs. PFK-1 deficiency is rare and affects muscle more than RBCs. Phosphoglucomutase and PFK-2 deficiencies do not cause hemolytic anemia.`
+        },
+        {
+            q: `What is the primary purpose of the Cori cycle?`,
+            options: [
+                `Preventing accumulation of lactic acid`,
+                `Producing citric acid`,
+                `Synthesizing glycerol`,
+                `Forming pyruvate`,
+                `Supply of glucose to muscle`
+            ],
+            correct: `A`,
+            explanation: `The primary purpose of the Cori cycle is <strong>preventing accumulation of lactic acid</strong> (and recycling it into glucose). Lactate produced by anaerobic glycolysis in muscle and RBCs is transported to the liver, converted back to glucose via gluconeogenesis, and returned to the muscle. This prevents lactic acidosis and provides a sustained glucose supply to muscle.`
+        },
+        {
+            q: `Which enzyme is deficient in McArdle disease (GSD V)?`,
+            options: [
+                `Glucokinase`,
+                `Galactokinase`,
+                `Glycogen phosphorylase`,
+                `Glucose-6-phosphatase`,
+                `Phosphofructokinase`
+            ],
+            correct: `C`,
+            explanation: `McArdle disease (Glycogen Storage Disease Type V) is caused by a deficiency of <strong>muscle glycogen phosphorylase</strong>. It presents with exercise intolerance, muscle cramps, and myoglobinuria. Glucokinase deficiency is not a glycogen storage disease. Galactokinase deficiency causes galactosemia. Glucose-6-phosphatase deficiency is von Gierke disease (GSD I). Phosphofructokinase deficiency is Tarui disease (GSD VII).`
+        },
+        {
+            q: `Which hormone is responsible for lowering blood glucose levels by promoting glucose uptake into cells?`,
+            options: [
+                `Insulin`,
+                `Glucagon`,
+                `Cortisol`,
+                `Epinephrine`,
+                `Growth hormone`
+            ],
+            correct: `A`,
+            explanation: `<strong>Insulin</strong> is the primary hormone responsible for lowering blood glucose levels. It promotes glucose uptake into muscle and adipose tissue (via GLUT4 translocation), stimulates glycogen synthesis, and inhibits gluconeogenesis. Glucagon, cortisol, epinephrine, and growth hormone all increase blood glucose levels.`
+        }
+    ];
+
+    /* =====================================================================
+       SECTION B — 6 Case-Based Short Answer Questions with Subquestions
+       ===================================================================== */
+    const sectionB = [
+        {
+            q: `Case 1: To answer the questions below, refer to ETC and oxidative phosphorylation.`,
+            subquestions: [
+                {
+                    q: `a) Why do we need OxPhos activity in our system?`,
+                    marks: `2 marks`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>Oxidative phosphorylation (OxPhos) is essential because it produces the majority of cellular ATP (~30 ATP per glucose) through the electron transport chain and ATP synthase. It uses the reducing equivalents NADH and FADH₂ generated by the TCA cycle, β-oxidation, and glycolysis. The electron transport chain creates a proton gradient that drives ATP synthesis. Without OxPhos, cells would rely solely on anaerobic glycolysis, which produces only 2 ATP per glucose—insufficient for the high energy demands of most tissues, especially the brain, heart, and muscle.</p>`
+                },
+                {
+                    q: `b) Differentiate oxidative phosphorylation from substrate level phosphorylation.`,
+                    marks: `2 marks`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Substrate-level phosphorylation:</strong> ATP is formed by direct transfer of a phosphate group from a high-energy substrate to ADP. It occurs in glycolysis (1,3-bisphosphoglycerate kinase, pyruvate kinase) and the TCA cycle (succinyl-CoA synthetase). It does not require oxygen or the electron transport chain.</p>
+                    <p><strong>Oxidative phosphorylation:</strong> ATP is formed by ATP synthase using the proton gradient generated by the electron transport chain. It requires oxygen as the final electron acceptor and occurs in the inner mitochondrial membrane. It produces ~26 of the ~30 ATP from glucose oxidation.</p>`
+                },
+                {
+                    q: `c) What is the role of uncouplers in oxidative phosphorylation?`,
+                    marks: `2 marks`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>Uncouplers (e.g., 2,4-dinitrophenol, thermogenin/UCP1) increase the permeability of the inner mitochondrial membrane to protons, dissipating the proton gradient. This allows electron transport to continue but ATP synthesis is halted. The energy from oxidation is released as <strong>heat</strong> instead of being stored as ATP. This is important in brown adipose tissue for thermogenesis in hibernating animals and newborns.</p>`
+                },
+                {
+                    q: `d) Differentiate the mechanism of ETC inhibitors from uncoupler of oxidative phosphorylation.`,
+                    marks: `2 marks`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>ETC inhibitors</strong> (e.g., rotenone, antimycin A, cyanide) block electron transfer at specific complexes, stopping both electron transport and ATP synthesis. The proton gradient collapses because protons are not pumped. Oxygen consumption decreases.</p>
+                    <p><strong>Uncouplers</strong> (e.g., DNP) do not block electron transfer; they dissipate the proton gradient by increasing membrane permeability to protons. Electron transport and oxygen consumption continue (or even increase), but ATP synthesis is impaired. Energy is released as heat.</p>`
+                }
+            ]
+        },
+        {
+            q: `Case 2: Emily, a 25-year-old woman of northern European descent, presents with fatigue, weakness, shortness of breath, and palpitations. Her family history reveals an older brother was having similar presentations. Laboratory analysis revealed an increased bilirubin levels, abnormally low lactate production and decreased hemoglobin levels (anemic). Iron chelation therapy and regular follow-ups are part of her management plan.`,
+            subquestions: [
+                {
+                    q: `a) What is the most likely enzyme deficiency in this case and what is its genetic basis?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Enzyme deficiency:</strong> Pyruvate kinase deficiency.</p>
+                    <p><strong>Genetic basis:</strong> It is an autosomal recessive disorder (the gene PKLR is on chromosome 1). The question states "X-linked" in the original answer, but pyruvate kinase deficiency is actually autosomal recessive. However, the student's answer says X-linked, which is incorrect. The correct genetic basis is autosomal recessive.</p>`
+                },
+                {
+                    q: `b) What is the normal catalysis of this enzyme and how important is this reaction in RBCs?`,
+                    marks: `2 marks`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Reaction:</strong> Phosphoenolpyruvate (PEP) + ADP → Pyruvate + ATP</p>
+                    <p><strong>Importance in RBCs:</strong> This is the final step of glycolysis and the second substrate-level phosphorylation. It produces ATP, which is essential for RBC function, particularly for the Na⁺/K⁺ ATPase that maintains ion balance and cell shape. Without ATP, RBCs undergo hemolysis.</p>`
+                },
+                {
+                    q: `c) Which metabolic pathway is disturbed due to this deficiency and what is the primary function of this pathway?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Pathway:</strong> Glycolysis (anaerobic glycolysis).</p>
+                    <p><strong>Primary function:</strong> To produce ATP for RBCs, which lack mitochondria and rely exclusively on glycolysis for energy.</p>`
+                },
+                {
+                    q: `d) How is this enzyme regulated under normal physiological condition?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>Pyruvate kinase is allosterically activated by fructose-1,6-bisphosphate (feed-forward activation) and inhibited by ATP, alanine, and acetyl-CoA. In the liver, it is also regulated by phosphorylation (inhibited by glucagon via PKA).</p>`
+                },
+                {
+                    q: `e) What type of anemia does Emily have and what is the cause of anemia in this case?`,
+                    marks: `2 marks`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Type:</strong> Chronic hemolytic anemia.</p>
+                    <p><strong>Cause:</strong> Pyruvate kinase deficiency reduces ATP production in RBCs. Without sufficient ATP, the Na⁺/K⁺ ATPase fails, causing osmotic imbalance, cell swelling, membrane damage, and decreased deformability. These rigid cells are trapped and destroyed in the spleen, leading to hemolysis.</p>`
+                },
+                {
+                    q: `f) Explain biochemically why is the level of lactate production abnormally low in this patient.`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>Lactate production is low because the glycolytic block at pyruvate kinase prevents the conversion of PEP to pyruvate. Without pyruvate, lactate dehydrogenase cannot produce lactate. Thus, lactate levels are abnormally low.</p>`
+                }
+            ]
+        },
+        {
+            q: `Case 3: This pathway begins with the glycolytic intermediate and it reconnects with glycolysis. It is, for this reason that it is often referred to as a shunt. This pathway is normally more active in RBC and in tissues where fat, cholesterol and steroids syntheses. It is an alternative route for the metabolism of glucose but does not generate ATP.`,
+            subquestions: [
+                {
+                    q: `a) Name the shunt and state the major two metabolic role of this shunt.`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Shunt:</strong> Hexose Monophosphate Shunt (HMP Shunt) or Pentose Phosphate Pathway (PPP).</p>
+                    <p><strong>Major metabolic roles:</strong></p>
+                    <ul>
+                        <li>Production of NADPH for reductive biosynthesis (fatty acid synthesis, cholesterol synthesis) and maintenance of reduced glutathione (antioxidant defense).</li>
+                        <li>Production of ribose-5-phosphate for nucleotide and nucleic acid synthesis.</li>
+                    </ul>`
+                },
+                {
+                    q: `b) Which is the rate-limiting enzyme in this shunt and how is it normally regulated?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Rate-limiting enzyme:</strong> Glucose-6-phosphate dehydrogenase (G6PD).</p>
+                    <p><strong>Regulation:</strong> G6PD is inhibited by high NADPH/NADP⁺ ratio and activated by low NADPH/NADP⁺ ratio. It is also induced by insulin in the fed state.</p>`
+                },
+                {
+                    q: `c) What is the normal catalysis of this enzyme?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Reaction:</strong></p>
+                    <p>Glucose-6-phosphate + NADP⁺ → 6-Phosphogluconolactone + NADPH + H⁺</p>
+                    <p>This is the rate-limiting and committed step of the pentose phosphate pathway.</p>`
+                },
+                {
+                    q: `d) Explain how inherited deficiency of this enzyme causes hemolytic anemia.`,
+                    marks: `2 marks`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>G6PD deficiency reduces NADPH production, which is needed to maintain reduced glutathione (GSH). Without GSH, reactive oxygen species (ROS) accumulate and oxidize hemoglobin, causing denaturation (Heinz bodies) and membrane damage. The spleen removes these damaged RBCs, leading to hemolytic anemia.</p>`
+                },
+                {
+                    q: `e) What is favism and how is it related to this enzyme deficiency?`,
+                    marks: `2 marks`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Favism:</strong> Acute hemolytic anemia triggered by ingestion of fava beans in individuals with G6PD deficiency.</p>
+                    <p><strong>Relation:</strong> Fava beans contain divicine and isouramil, which generate reactive oxygen species. In G6PD-deficient individuals, the lack of NADPH and reduced glutathione leads to oxidative damage and hemolysis.</p>`
+                },
+                {
+                    q: `f) Which enzyme activity of this pathway is used in the assessment of thiamine deficiency?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Enzyme:</strong> Transketolase.</p>
+                    <p>Transketolase is a TPP-dependent enzyme in the pentose phosphate pathway. Its activity in erythrocytes is measured to assess thiamine status.</p>`
+                }
+            ]
+        },
+        {
+            q: `Case 4: Blood glucose levels are maintained within a very narrow range even though the nature of a person's diet may vary widely. Even under circumstances when a person does not eat for extended periods of time, blood glucose levels decrease only slowly as gluconeogenesis supplies blood glucose continuously.`,
+            subquestions: [
+                {
+                    q: `a) What is gluconeogenesis?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Gluconeogenesis</strong> is the synthesis of glucose from non-carbohydrate precursors such as lactate, glycerol, alanine, and other amino acids. It occurs primarily in the liver and kidneys.</p>`
+                },
+                {
+                    q: `b) Why is gluconeogenesis necessary for the body?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>Gluconeogenesis is necessary to maintain blood glucose levels during fasting or starvation, when dietary glucose is unavailable and liver glycogen stores are depleted. It provides glucose for glucose-dependent tissues like the brain, RBCs, and renal medulla.</p>`
+                },
+                {
+                    q: `c) Enumerate any three precursors used for gluconeogenesis.`,
+                    marks: `1.5 marks`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>Three precursors for gluconeogenesis:</p>
+                    <ul>
+                        <li>Lactate</li>
+                        <li>Glycerol</li>
+                        <li>Alanine (and other gluconeogenic amino acids)</li>
+                    </ul>
+                    <p>Other precursors: pyruvate, propionate, and TCA cycle intermediates.</p>`
+                },
+                {
+                    q: `d) Name the enzymes catalyzing the by-pass reactions of gluconeogenesis?`,
+                    marks: `1.5 marks`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>The four key enzymes that catalyze the bypass reactions of gluconeogenesis are:</p>
+                    <ol>
+                        <li><strong>Pyruvate carboxylase:</strong> Pyruvate + CO₂ + ATP → Oxaloacetate + ADP + Pi</li>
+                        <li><strong>PEP carboxykinase (PEPCK):</strong> Oxaloacetate + GTP → Phosphoenolpyruvate + GDP + CO₂</li>
+                        <li><strong>Fructose-1,6-bisphosphatase:</strong> Fructose-1,6-bisphosphate + H₂O → Fructose-6-phosphate + Pi</li>
+                        <li><strong>Glucose-6-phosphatase:</strong> Glucose-6-phosphate + H₂O → Glucose + Pi</li>
+                    </ol>`
+                },
+                {
+                    q: `e) Which enzyme of this pathway is affected if someone eats raw eggs for a prolonged time? Why?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Enzyme:</strong> Pyruvate carboxylase.</p>
+                    <p><strong>Reason:</strong> Raw egg whites contain avidin, which binds biotin with high affinity, preventing its absorption. Biotin is a required cofactor for pyruvate carboxylase. Chronic consumption of raw eggs leads to biotin deficiency, impairing pyruvate carboxylase and gluconeogenesis.</p>`
+                },
+                {
+                    q: `f) Describe "Cori cycle" schematically.`,
+                    marks: `2 marks`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Cori cycle:</strong></p>
+                    <ul>
+                        <li>In muscle (and RBCs): Glucose → Pyruvate → Lactate (anaerobic glycolysis). Lactate is released into the blood.</li>
+                        <li>In liver: Lactate → Pyruvate → Glucose (gluconeogenesis). Glucose is released into the blood and taken up by muscle.</li>
+                    </ul>
+                    <p><strong>Diagram:</strong> Muscle → Lactate → Blood → Liver → Glucose → Blood → Muscle.</p>
+                    <p><strong>Purpose:</strong> Prevents lactic acidosis and recycles lactate into glucose to sustain muscle energy needs.</p>`
+                }
+            ]
+        },
+        {
+            q: `Case 5: Outline the following pathways and list any two of their major biomedical importances.`,
+            subquestions: [
+                {
+                    q: `a) Leloir pathway`,
+                    marks: `4 marks`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Leloir pathway for galactose metabolism:</strong></p>
+                    <ol>
+                        <li>Galactose + ATP → Galactose-1-phosphate + ADP (galactokinase)</li>
+                        <li>Galactose-1-phosphate + UDP-glucose → UDP-galactose + Glucose-1-phosphate (GALT)</li>
+                        <li>UDP-galactose → UDP-glucose (UDP-galactose 4-epimerase)</li>
+                        <li>Glucose-1-phosphate → Glucose-6-phosphate (phosphoglucomutase) → glycolysis</li>
+                    </ol>
+                    <p><strong>Biomedical importance:</strong></p>
+                    <ul>
+                        <li>Provides a route for the metabolism of dietary galactose (from lactose).</li>
+                        <li>Defects in GALT cause classic galactosemia (cataracts, liver damage, mental retardation).</li>
+                    </ul>`
+                },
+                {
+                    q: `b) TCA cycle`,
+                    marks: `4 marks`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>TCA (Krebs) cycle:</strong></p>
+                    <ol>
+                        <li>Acetyl-CoA + Oxaloacetate → Citrate (citrate synthase)</li>
+                        <li>Citrate → Isocitrate → α-Ketoglutarate (generating NADH)</li>
+                        <li>α-Ketoglutarate → Succinyl-CoA (generating NADH)</li>
+                        <li>Succinyl-CoA → Succinate (generating GTP)</li>
+                        <li>Succinate → Fumarate → Malate (generating FADH₂)</li>
+                        <li>Malate → Oxaloacetate (generating NADH)</li>
+                    </ol>
+                    <p><strong>Biomedical importance:</strong></p>
+                    <ul>
+                        <li>Final common pathway for oxidation of carbohydrates, fats, and proteins, producing NADH, FADH₂, and GTP.</li>
+                        <li>Amphibolic: provides precursors for biosynthesis (e.g., oxaloacetate for gluconeogenesis, α-ketoglutarate for amino acids).</li>
+                    </ul>`
+                }
+            ]
+        },
+        {
+            q: `Case 6: A 6-month-old infant was brought to the pediatrician due to fussiness and a tender abdomen. The child seemed to do well until the time between feeding was increased to more than 3 h. The baby always seemed hungry and irritable if not fed frequently. Upon examination, hepatomegaly and enlarged kidneys were noted, and blood work showed fasting hypoglycemia. Subsequent laboratory analysis demonstrated that in response to a glucagon challenge, only about 10% of the normal amount of glucose was released into circulation, which significantly contributed to the fasting hypoglycemia.`,
+            subquestions: [
+                {
+                    q: `a. Which enzyme defect is most likely in the patient?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Enzyme defect:</strong> Glucose-6-phosphatase deficiency (Von Gierke disease, Glycogen Storage Disease Type I).</p>`
+                },
+                {
+                    q: `b. Which are the tissue and cellular location of this enzyme?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Tissue:</strong> Liver and kidneys (renal tubular cells).</p>
+                    <p><strong>Cellular location:</strong> Endoplasmic reticulum.</p>`
+                },
+                {
+                    q: `c. What is the normal catalysis of this enzyme?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Reaction:</strong></p>
+                    <p>Glucose-6-phosphate + H₂O → Glucose + Pi</p>
+                    <p>This is the final common step for glucose release from both glycogenolysis and gluconeogenesis.</p>`
+                },
+                {
+                    q: `d. Which are the two pathways that would be disturbed due to deficiency of this enzyme?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Pathways:</strong></p>
+                    <ul>
+                        <li>Glycogenolysis</li>
+                        <li>Gluconeogenesis</li>
+                    </ul>`
+                },
+                {
+                    q: `e. Which enzyme is responsible for the release of 10% of the normal amount of glucose into circulation during a glucagon challenge?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Enzyme:</strong> Amylo-1,6-glucosidase (debranching enzyme).</p>
+                    <p>It releases free glucose from the branch points of glycogen, accounting for the residual glucose response.</p>`
+                },
+                {
+                    q: `f. What is the basis of fasting hypoglycemia in this case?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>Fasting hypoglycemia occurs because the liver cannot release free glucose from either glycogenolysis or gluconeogenesis due to glucose-6-phosphatase deficiency. Glucose-6-phosphate is trapped inside hepatocytes and cannot be exported into the blood.</p>`
+                },
+                {
+                    q: `g. What is the basis of hepatomegaly and enlarged kidneys and why only these organs are affected?`,
+                    marks: `2 marks`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Basis:</strong> Glucose-6-phosphate accumulates and is shunted into glycogen synthesis and lipid synthesis, causing glycogen and lipid accumulation in the liver and kidneys.</p>
+                    <p><strong>Why only these organs:</strong> Glucose-6-phosphatase is expressed primarily in the liver and kidneys. These are the only tissues that can release free glucose into the blood. Other tissues lack this enzyme and cannot export glucose.</p>`
+                }
+            ]
+        }
+    ];
+
+    /* =====================================================================
+       RENDERING FUNCTIONS
+       ===================================================================== */
+    function renderSectionA() {
+        const container = document.getElementById('container-A');
+        let html = '';
+        sectionA.forEach((q, i) => {
+            const qid = 'A-q' + (i + 1);
+            html += '<div class="question" id="q-' + qid + '">';
+            html += '<p><span class="q-badge">Q' + (i + 1) + '</span> ' + q.q + '</p>';
+            html += '<div class="options">';
+            q.options.forEach((opt, j) => {
+                const L = String.fromCharCode(65 + j);
+                html += '<label><input type="radio" name="' + qid + '" value="' + L + '"> <strong>' + L + ')</strong> ' + opt + '</label>';
+            });
+            html += '</div>';
+            html += '<div class="question-feedback" id="fb-' + qid + '"></div>';
+            html += '</div>';
+        });
+        container.innerHTML = html;
+        document.getElementById('count-A').textContent = sectionA.length;
+    }
+
+    function submitSectionA() {
+        let score = 0;
+        sectionA.forEach((q, i) => {
+            const qid = 'A-q' + (i + 1);
+            const radios = document.getElementsByName(qid);
+            let selected = null;
+            for (let r = 0; r < radios.length; r++) {
+                if (radios[r].checked) { selected = radios[r]; break; }
+            }
+            const correct = q.correct.toUpperCase();
+            if (selected && selected.value === correct) score++;
+
+            let html = '<div class="answer-block"><div class="answer-list">';
+            q.options.forEach((opt, j) => {
+                const L = String.fromCharCode(65 + j);
+                let cls = 'answer-item';
+                if (L === correct) cls += ' answer-correct';
+                if (selected && selected.value === L) {
+                    cls += ' user-choice';
+                    if (L !== correct) cls += ' answer-wrong';
+                }
+                const mark = (selected && selected.value === L) ? ' ◀ your answer' : '';
+                html += '<div class="' + cls + '">' + L + ') ' + opt + mark + '</div>';
+            });
+            html += '</div>';
+
+            const correctIdx = correct.charCodeAt(0) - 65;
+            const correctText = (correctIdx >= 0 && correctIdx < q.options.length) ? q.options[correctIdx] : '';
+
+            if (!selected) {
+                html += '<div class="explanation wrong">No answer selected. Correct answer: <strong>' +
+                        correct + ') ' + correctText + '</strong>.<br>' + q.explanation + '</div>';
+            } else if (selected.value === correct) {
+                html += '<div class="explanation">✅ <strong>Correct.</strong><br>' + q.explanation + '</div>';
+            } else {
+                html += '<div class="explanation wrong">❌ <strong>Incorrect.</strong> Correct answer: <strong>' +
+                        correct + ') ' + correctText + '</strong>.<br>' + q.explanation + '</div>';
+            }
+
+            const fb = document.getElementById('fb-' + qid);
+            if (fb) fb.innerHTML = html;
+        });
+
+        const total = sectionA.length;
+        const pct = Math.round((score / total) * 100);
+        const box = document.getElementById('result-A');
+        box.style.display = 'block';
+        document.getElementById('score-A').innerText = score + ' / ' + total + '  (' + pct + '%)';
+
+        document.querySelectorAll('#panel-A input[type="radio"]').forEach(r => r.disabled = true);
+    }
+
+    function renderSectionB() {
+        const container = document.getElementById('container-B');
+        let html = '';
+        sectionB.forEach((caseItem, i) => {
+            const caseId = 'B-case' + (i + 1);
+            html += '<div class="question" id="q-' + caseId + '">';
+            html += '<p><span class="q-badge">Case ' + (i + 1) + '</span></p>';
+            html += '<div class="case-block">' + caseItem.q + '</div>';
+            caseItem.subquestions.forEach((sub, j) => {
+                const subId = caseId + '-sub' + (j + 1);
+                html += '<div class="subq">';
+                html += '<div class="subq-text">' + sub.q + ' <span class="subq-marks">(' + sub.marks + ')</span></div>';
+                html += '<button type="button" class="btn btn-sm" onclick="toggleAnswer(\'' + subId + '\')"><i class="fas fa-eye"></i> Show Model Answer</button>';
+                html += '<div class="essay-answer" id="ans-' + subId + '">' + sub.answer + '</div>';
+                html += '</div>';
+            });
+            html += '</div>';
+        });
+        container.innerHTML = html;
+        document.getElementById('count-B').textContent = sectionB.length;
+    }
+
+    function toggleAnswer(qid) {
+        const el = document.getElementById('ans-' + qid);
+        if (el) el.classList.toggle('show');
+    }
+
+    /* ─── INIT ─── */
+    renderSectionA();
+    renderSectionB();
+
+    /* ─── TAB SWITCHING ─── */
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            const target = this.dataset.target;
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+            document.getElementById('panel-' + target).classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+    </script>
+
+</body>
+</html>

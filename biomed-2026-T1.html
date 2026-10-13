@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 MBM340 Test 1 – Biochemistry Interactive Exam</title>
+    <style>
+        :root {
+            --primary: #1a6b6b;
+            --accent: #2ea8a0;
+            --dark: #0f2a2a;
+            --light: #f4f8f7;
+            --radius: 12px;
+            --shadow: 0 4px 14px rgba(0, 30, 30, 0.08);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #edf3f2;
+            color: var(--dark);
+            min-height: 100vh;
+            padding-top: 72px;
+        }
+        header {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            background: linear-gradient(145deg, var(--primary), var(--dark));
+            color: #fff; padding: 0.6rem 0;
+            box-shadow: 0 4px 18px rgba(0, 20, 20, 0.25);
+        }
+        .header-inner {
+            max-width: 1000px; margin: 0 auto; padding: 0 1.5rem;
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 0.3rem;
+        }
+        .logo { display: flex; align-items: center; gap: 0.6rem; }
+        .logo i { font-size: 1.5rem; color: #8dd9d4; }
+        .logo h1 { font-size: 1.15rem; font-weight: 700; }
+        .badge {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 0.2rem 1rem; border-radius: 40px;
+            font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+            color: #b3e6e0;
+        }
+        .container { max-width: 920px; margin: 0 auto; padding: 0 1.2rem 2.5rem; }
+        .tab-bar { display: flex; gap: 0.5rem; margin: 0.5rem 0 1.5rem 0; flex-wrap: wrap; }
+        .tab-btn {
+            background: #dce8e8; border: none; padding: 0.5rem 1.8rem;
+            border-radius: 40px; font-weight: 600; font-size: 0.95rem;
+            color: var(--dark); cursor: pointer; transition: 0.2s;
+        }
+        .tab-btn:hover { background: #c0d6d6; }
+        .tab-btn.active {
+            background: var(--primary); color: #fff;
+            box-shadow: 0 2px 10px rgba(26, 107, 107, 0.25);
+        }
+        .tab-panel { display: block; }
+        .tab-panel.hidden { display: none; }
+        .section-title {
+            font-size: 1.25rem; font-weight: 700; color: var(--primary);
+            margin: 0 0 0.8rem 0; padding-bottom: 0.4rem;
+            border-bottom: 3px solid rgba(26, 107, 107, 0.18);
+            display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;
+        }
+        .section-title .count {
+            font-size: 0.7rem; font-weight: 600; background: var(--primary);
+            color: #fff; border-radius: 40px; padding: 0 0.7rem; line-height: 1.7;
+        }
+        .section-subtitle { color: #4f6e6e; font-size: 0.9rem; margin-bottom: 1rem; }
+        .question {
+            background: #ffffff; border-radius: var(--radius);
+            padding: 1.1rem 1.2rem 0.2rem 1.2rem; margin-bottom: 1rem;
+            box-shadow: var(--shadow); border: 1px solid rgba(26, 107, 107, 0.05);
+        }
+        .question .q-badge {
+            display: inline-block; background: var(--primary); color: #fff;
+            border-radius: 40px; padding: 0 0.65rem; font-size: 0.7rem;
+            font-weight: 700; line-height: 1.6; margin-right: 0.4rem;
+        }
+        .question p { font-weight: 600; font-size: 0.97rem; margin-bottom: 0.4rem; color: var(--dark); }
+        .options label {
+            display: block; background: #fafcfc; border: 1px solid #dde8e8;
+            border-radius: 7px; padding: 0.4rem 0.85rem; margin-top: 0.4rem;
+            cursor: pointer; transition: all 0.15s; font-weight: 450; font-size: 0.92rem;
+        }
+        .options label:hover { background: #e8f5f4; border-color: var(--accent); }
+        .options input[type="radio"] { margin-right: 0.5rem; accent-color: var(--primary); }
+        .question-feedback { margin-top: 0.8rem; padding: 0.4rem 0 0.1rem 0; border-top: 1px dashed #dce6e6; }
+        .answer-block strong { display: block; margin-bottom: 3px; color: var(--primary); font-size: 0.78rem; text-transform: uppercase; }
+        .answer-list { display: flex; flex-direction: column; gap: 2px; }
+        .answer-item {
+            padding: 4px 10px; border-radius: 5px; border: 1px solid #e4edec;
+            background: #ffffff; font-weight: 500; font-size: 0.88rem;
+        }
+        .answer-correct { background: #e8f7ef; border-color: #a8d8c0; color: #0a4f3a; }
+        .answer-wrong { background: #fde9ea; border-color: #f5b8b8; color: #8a1f2b; }
+        .user-choice { outline: 2px dashed rgba(0, 0, 0, 0.06); }
+        .explanation {
+            margin-top: 5px; padding: 8px 13px; border-radius: 7px;
+            background: #f0f8f6; color: #065f4a; font-size: 0.88rem;
+            line-height: 1.55; border-left: 4px solid var(--accent);
+        }
+        .explanation.wrong { background: #fdf1f1; color: #7a1f1f; border-left-color: #e68080; }
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            color: #fff; border: none; padding: 0.55rem 1.8rem;
+            border-radius: var(--radius); font-weight: 600; font-size: 0.95rem;
+            cursor: pointer; transition: transform 0.15s, box-shadow 0.2s;
+            box-shadow: 0 4px 14px rgba(26, 107, 107, 0.25);
+        }
+        .btn:hover { transform: scale(1.02); box-shadow: 0 6px 24px rgba(26, 107, 107, 0.32); }
+        .btn:active { transform: scale(0.96); }
+        .btn-sm {
+            padding: 0.35rem 1.1rem; font-size: 0.82rem;
+            border-radius: 8px; margin-top: 0.5rem;
+        }
+        .submit-wrap { text-align: center; margin: 1.5rem 0 1.8rem; }
+        .result {
+            margin-top: 1.5rem; padding: 1.5rem 1.5rem 0.8rem;
+            background: #eaf6f4; border-radius: var(--radius);
+            text-align: center; display: none; border: 1px solid #b8dbd6;
+        }
+        .result h3 { font-size: 1.1rem; font-weight: 600; color: var(--dark); }
+        .score { font-size: 2.4rem; font-weight: 800; color: var(--primary); margin: 0.1rem 0 0.2rem; }
+        .text-muted { color: #4f6e6e; font-size: 0.9rem; }
+        .hidden { display: none !important; }
+        .tf-options { display: flex; gap: 1.5rem; margin-top: 0.4rem; }
+        .tf-options label {
+            display: flex; align-items: center; gap: 0.35rem;
+            background: #fafcfc; border: 1px solid #dde8e8;
+            border-radius: 7px; padding: 0.35rem 1.2rem;
+            cursor: pointer; transition: all 0.15s; font-weight: 500; font-size: 0.92rem;
+        }
+        .tf-options label:hover { background: #e8f5f4; border-color: var(--accent); }
+        .tf-options input[type="radio"] { accent-color: var(--primary); }
+        .tf-statement {
+            padding: 0.5rem 0.7rem; border-bottom: 1px solid #eef4f4;
+            font-size: 0.93rem;
+        }
+        .tf-statement:last-child { border-bottom: none; }
+        .tf-statement .stmt-text { font-weight: 500; }
+        .tf-feedback { margin-top: 0.3rem; padding: 0.4rem 0.7rem; border-radius: 6px; font-size: 0.88rem; }
+        .tf-feedback.correct { background: #e8f7ef; color: #0a4f3a; border-left: 3px solid #1a7a4a; }
+        .tf-feedback.incorrect { background: #fde9ea; color: #8a1f2b; border-left: 3px solid #b33a3a; }
+        .tf-feedback.missed { background: #fff8e6; color: #7a5a00; border-left: 3px solid #e6b800; }
+        .essay-answer {
+            margin-top: 0.8rem; padding: 1rem 1.2rem;
+            background: #f0f8f6; border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            font-size: 0.92rem; line-height: 1.6;
+            display: none;
+        }
+        .essay-answer.show { display: block; }
+        .essay-answer h4 { color: var(--primary); margin-bottom: 0.4rem; font-size: 0.95rem; }
+        .essay-answer ul, .essay-answer ol { margin-left: 1.2rem; margin-bottom: 0.5rem; }
+        .essay-answer li { margin-bottom: 0.2rem; }
+        .case-block {
+            background: #f8fdfc; border-left: 4px solid var(--accent);
+            padding: 0.8rem 1rem; margin: 0.8rem 0; border-radius: 0 8px 8px 0;
+            font-size: 0.93rem; line-height: 1.6;
+        }
+        .subq {
+            background: #ffffff; border-radius: 10px;
+            padding: 0.9rem 1rem 0.2rem 1rem; margin-top: 0.8rem;
+            border: 1px solid #dde8e8;
+        }
+        .subq .subq-text { font-weight: 500; font-size: 0.93rem; margin-bottom: 0.3rem; }
+        .subq .subq-marks { font-size: 0.75rem; color: #6b8a8a; font-weight: 600; }
+        @media (max-width: 700px) {
+            body { padding-top: 68px; }
+            .logo h1 { font-size: 0.95rem; }
+            .header-inner { padding: 0 1rem; flex-direction: column; align-items: stretch; gap: 0.2rem; }
+            .badge { align-self: flex-start; }
+            .question { padding: 0.9rem 0.9rem 0.1rem 0.9rem; }
+            .section-title { font-size: 1.05rem; }
+            .score { font-size: 2rem; }
+            .btn { padding: 0.5rem 1.2rem; font-size: 0.85rem; }
+            .tab-btn { padding: 0.4rem 1.2rem; font-size: 0.85rem; }
+            .tf-options { flex-direction: column; gap: 0.3rem; }
+        }
+        @media (max-width: 420px) {
+            .logo h1 { font-size: 0.8rem; }
+            .options label { font-size: 0.85rem; padding: 0.35rem 0.65rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-inner">
+            <div class="logo">
+                <i class="fas fa-flask"></i>
+                <h1>2026 MBM340 Test 1 – Biochemistry Interactive Exam</h1>
+            </div>
+            <span class="badge"><i class="fas fa-pencil-alt"></i> &nbsp;All Sections</span>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+
+            <div class="tab-bar">
+                <button class="tab-btn active" data-target="A">✅ Section A – MCQs (30)</button>
+                <button class="tab-btn" data-target="B">📝 Section B – Case Questions (6)</button>
+            </div>
+
+            <!-- ==================== SECTION A ==================== -->
+            <div id="panel-A" class="tab-panel">
+                <div class="section-title">
+                    <i class="fas fa-list-ul"></i> Section A – Multiple Choice Questions
+                    <span class="count" id="count-A">0</span>
+                </div>
+                <p class="section-subtitle">Circle the best answer. Select an option for each question, then click <strong>Submit All MCQs</strong> below.</p>
+                <form id="form-A">
+                    <div id="container-A"></div>
+                    <div class="submit-wrap">
+                        <button type="button" class="btn" onclick="submitSectionA()">
+                            <i class="fas fa-check-circle"></i> Submit All MCQs
+                        </button>
+                    </div>
+                </form>
+                <div class="result" id="result-A">
+                    <h3><i class="fas fa-chart-simple"></i> Your Score</h3>
+                    <div class="score" id="score-A">0</div>
+                    <p class="text-muted">Review the feedback below each question.</p>
+                </div>
+            </div>
+
+            <!-- ==================== SECTION B ==================== -->
+            <div id="panel-B" class="tab-panel hidden">
+                <div class="section-title">
+                    <i class="fas fa-book-open"></i> Section B – Case-Based Short Answer Questions
+                    <span class="count" id="count-B">0</span>
+                </div>
+                <p class="section-subtitle">Each question has multiple parts. Type your answer and click <strong>Show Model Answer</strong> for each part to compare.</p>
+                <div id="container-B"></div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+    /* =====================================================================
+       SECTION A — 30 MCQs (2026 MBM340 Test 1)
+       ===================================================================== */
+    const sectionA = [
+        {
+            q: `A newborn child had dyspepsia phenomena (diarrhea, vomiting) detected after feeding with milk. After additional feeding with glucose the morbid symptoms disappeared. The insufficient activity of what enzyme that takes part in the carbohydrates breakdown causes the indicated disorders?`,
+            options: [
+                `Lactase.`,
+                `Isomaltase.`,
+                `Maltase.`,
+                `Saccharase.`,
+                `Amylase.`
+            ],
+            correct: `A`,
+            explanation: `The infant presented with dyspepsia (diarrhea, vomiting) after milk feeding, which resolved upon glucose administration. This is classic for <strong>lactose intolerance</strong> due to <strong>lactase deficiency</strong>. Lactase is the brush-border enzyme that hydrolyzes lactose (milk sugar) into glucose and galactose. In its absence, undigested lactose is fermented by colonic bacteria, causing osmotic diarrhea and gas. Glucose feeding bypasses the need for lactase, directly providing an absorbable monosaccharide, hence symptoms disappear. Isomaltase, maltase, and saccharase are other brush-border disaccharidases but are not specific to milk. Amylase is a pancreatic/salivary enzyme that digests starch, not lactose.`
+        },
+        {
+            q: `People with diabetes mellitus are prone to developing cataracts because their elevated blood glucose concentration:`,
+            options: [
+                `Increases glycogen synthesis within the lens`,
+                `Allows aldose reductase to reduce glucose to sorbitol`,
+                `Increases glycogen storage within the lens`,
+                `Inhibits gluconeogenesis`,
+                `Increases glycosylate hemoglobin`
+            ],
+            correct: `B`,
+            explanation: `In diabetes, hyperglycemia saturates the normal glycolytic pathway in lens epithelial cells. Glucose then enters the <strong>polyol pathway</strong>, where <strong>aldose reductase</strong> reduces glucose to <strong>sorbitol</strong>. Sorbitol is polar and poorly diffuses out of cells, creating osmotic stress that draws water into the lens, causing swelling, protein denaturation, and eventually <strong>cataracts</strong>. This is why aldose reductase inhibitors are studied for diabetic complications. Glycogen synthesis/storage in the lens is not a significant factor. Glycosylated hemoglobin reflects long-term glucose control but does not directly cause cataracts.`
+        },
+        {
+            q: `A patient of chronic alcoholism may present a thiamine deficiency (B1 vitamin), because alcohol inhibits its intestinal absorption. In this case the functioning of which enzyme would be impaired?`,
+            options: [
+                `Isocitrate dehydrogenase`,
+                `Pyruvate dehydrogenase`,
+                `Malate dehydrogenase`,
+                `Glutamate dehydrogenase`,
+                `Succinate dehydrogenase`
+            ],
+            correct: `B`,
+            explanation: `Thiamine (vitamin B1) is a precursor of <strong>thiamine pyrophosphate (TPP)</strong>, a coenzyme required by several enzymes including <strong>pyruvate dehydrogenase</strong> (PDH), α-ketoglutarate dehydrogenase, and transketolase. PDH catalyzes the oxidative decarboxylation of pyruvate to acetyl-CoA, linking glycolysis to the TCA cycle. In thiamine deficiency, PDH activity falls, causing pyruvate accumulation and decreased acetyl-CoA production, leading to lactic acidosis and neurological symptoms (Wernicke-Korsakoff syndrome). Isocitrate dehydrogenase, malate dehydrogenase, glutamate dehydrogenase, and succinate dehydrogenase do not require TPP.`
+        },
+        {
+            q: `Liver glycogen contributes to the maintenance of blood glucose but not muscle glycogen. Which of the following enzymes is absent in muscle?`,
+            options: [
+                `Glucose-6-phosphatase`,
+                `Debranching enzyme`,
+                `Branching enzyme`,
+                `Glycogen phosphorylase`,
+                `Hexokinase`
+            ],
+            correct: `A`,
+            explanation: `The key difference is that the liver possesses <strong>glucose-6-phosphatase</strong>, which hydrolyzes glucose-6-phosphate to free glucose that can be exported into the blood. Muscle lacks this enzyme, so glucose-6-phosphate from muscle glycogenolysis enters glycolysis for local energy production and cannot be released into the bloodstream. Debranching enzyme, branching enzyme, glycogen phosphorylase, and hexokinase are all present in muscle (hexokinase is actually the muscle isoform; liver uses glucokinase).`
+        },
+        {
+            q: `A 45-year-old woman presents with symptoms of polyuria, polydipsia, and weight loss. The physician wants to conduct laboratory investigations to find out whether the patient is diabetic. Which of the following results would lead to a diagnosis of diabetes?`,
+            options: [
+                `A single fasting blood glucose level of 160 mg/dL`,
+                `A 2-hour oral glucose tolerance test with a blood glucose level of 210 mg/dL`,
+                `A single fasting blood glucose level of 120 mg/dL`,
+                `A single random glucose level of 190 mg/dL`,
+                `The presence of a reducing sugar in his urine`
+            ],
+            correct: `A`,
+            explanation: `According to the American Diabetes Association (ADA) criteria, diabetes is diagnosed if: (1) fasting blood glucose ≥126 mg/dL, (2) 2-hour OGTT glucose ≥200 mg/dL, or (3) random glucose ≥200 mg/dL with symptoms. Option A (fasting 160 mg/dL) exceeds the 126 mg/dL threshold and is diagnostic. Option B (OGTT 210 mg/dL) also meets the ≥200 mg/dL criterion—so both A and B are technically correct, but in single-best-answer format, the fasting glucose is a classic diagnostic threshold. However, note that option B is also diagnostic. The question likely expects A because it is a clear-cut fasting value. Option C (120 mg/dL) is impaired fasting glucose (100–125), not diabetes. Option D (random 190 mg/dL) is below the 200 mg/dL threshold. Option E (reducing sugar in urine) is nonspecific and can occur in renal glycosuria.`
+        },
+        {
+            q: `Which of the following pathways is considered as "amphibolic" in nature?`,
+            options: [
+                `Lipolysis`,
+                `Citric acid cycle`,
+                `Glycogenolysis`,
+                `Glycogenesis`,
+                `Glycolytic pathway`
+            ],
+            correct: `B`,
+            explanation: `The <strong>citric acid cycle (TCA cycle)</strong> is amphibolic because it serves both catabolic and anabolic functions. Catabolically, it oxidizes acetyl-CoA to CO₂, generating NADH, FADH₂, and GTP. Anabolically, its intermediates are precursors for biosynthesis: oxaloacetate → gluconeogenesis, α-ketoglutarate → amino acids, succinyl-CoA → heme, citrate → fatty acid synthesis. Lipolysis, glycogenolysis, glycogenesis, and glycolysis are primarily catabolic or anabolic, not amphibolic.`
+        },
+        {
+            q: `Which of the following enzyme is used for the diagnosis of thiamine deficiency?`,
+            options: [
+                `Pyruvate kinase`,
+                `Transketolase`,
+                `Glucose-6-P dehydrogenase`,
+                `Transaldolase`,
+                `Phosphogluconate dehydrogenase`
+            ],
+            correct: `B`,
+            explanation: `<strong>Transketolase</strong> is a thiamine pyrophosphate (TPP)-dependent enzyme in the pentose phosphate pathway. Its activity in erythrocytes is measured to assess thiamine status. A low transketolase activity or an increased activation coefficient upon adding TPP is diagnostic of thiamine deficiency. Pyruvate kinase, G6PD, transaldolase, and phosphogluconate dehydrogenase are not TPP-dependent and are not used for this diagnosis.`
+        },
+        {
+            q: `Which of the following enzymes in glycolytic pathway is inhibited by fluoride?`,
+            options: [
+                `Pyruvate kinase`,
+                `Enolase`,
+                `Aldolase`,
+                `Glyceraldehyde 3-P-dehydrogenase`,
+                `Phosphoglycerate kinase`
+            ],
+            correct: `B`,
+            explanation: `Fluoride inhibits <strong>enolase</strong> (2-phosphoglycerate dehydratase) by binding to its active site, forming a magnesium-fluoride-phosphate complex. This is why fluoride oxalate tubes are used for blood glucose collection—glycolysis is halted, preventing glucose consumption by RBCs. Pyruvate kinase, aldolase, GAPDH, and phosphoglycerate kinase are not inhibited by fluoride.`
+        },
+        {
+            q: `Which of the following can be produced when sorbitol is further oxidized?`,
+            options: [
+                `Galactitol`,
+                `Glucose`,
+                `Fructose`,
+                `Galactose`,
+                `Mannose`
+            ],
+            correct: `C`,
+            explanation: `Sorbitol is oxidized by <strong>sorbitol dehydrogenase</strong> (polyol dehydrogenase) to <strong>fructose</strong>. This reaction occurs in the polyol pathway, particularly in the lens, nerves, and seminal vesicles. In diabetes, aldose reductase converts glucose to sorbitol, which is then slowly oxidized to fructose. Galactitol is formed from galactose by aldose reductase. Glucose, galactose, and mannose are not direct oxidation products of sorbitol.`
+        },
+        {
+            q: `A child presents with lactic acidosis and hypoglycemia. Pyruvate levels are elevated, but acetyl-CoA formation is intact. Which condition is least likely?`,
+            options: [
+                `Pyruvate dehydrogenase deficiency`,
+                `Avidin toxicity`,
+                `Chronic raw egg consumption`,
+                `Pyruvate carboxylase deficiency`,
+                `Biotin deficiency`
+            ],
+            correct: `A`,
+            explanation: `If acetyl-CoA formation is intact, then <strong>pyruvate dehydrogenase (PDH)</strong> is functioning normally, making PDH deficiency <strong>least likely</strong>. PDH deficiency would cause elevated pyruvate and lactate with impaired acetyl-CoA formation. The other conditions—avidin toxicity (binds biotin), chronic raw egg consumption (avidin), pyruvate carboxylase deficiency (biotin-dependent), and biotin deficiency—all impair gluconeogenesis from pyruvate, leading to hypoglycemia and lactic acidosis, but do not directly block acetyl-CoA formation.`
+        },
+        {
+            q: `A chronic alcoholic, while out on a binge, became very confused and forgetful. The police found the man and brought him to the emergency department. Upon examination in the emergency department, he displayed nystagmus, peripheral edema, pulmonary edema and ataxia. The physician orders a test to determine if there is a vitamin deficiency. Which of the following vitamin is most likely deficient?`,
+            options: [
+                `Vitamin B3`,
+                `Vitamin B9`,
+                `Vitamin B12`,
+                `Vitamin B1`,
+                `Vitamin B7`
+            ],
+            correct: `D`,
+            explanation: `The triad of <strong>confusion, ataxia, and nystagmus</strong> in a chronic alcoholic is classic for <strong>Wernicke encephalopathy</strong> due to <strong>thiamine (vitamin B1) deficiency</strong>. Alcohol impairs intestinal thiamine absorption. Additional findings of peripheral edema and pulmonary edema can be part of beriberi (wet beriberi) with high-output cardiac failure. Niacin (B3), folate (B9), cobalamin (B12), and biotin (B7) deficiencies do not produce this specific neurological triad.`
+        },
+        {
+            q: `An enzyme used for such a test can be which of the following?`,
+            options: [
+                `Transketolase`,
+                `β-ketothiolase`,
+                `Acetylcholine synthase`,
+                `Transaldolase`,
+                `Aldolase`
+            ],
+            correct: `A`,
+            explanation: `For thiamine deficiency, the diagnostic enzyme test is erythrocyte <strong>transketolase</strong> activity. Transketolase requires thiamine pyrophosphate (TPP) as a cofactor. Its activity is low in thiamine deficiency, and the activation coefficient increases when TPP is added in vitro. β-ketothiolase is involved in ketogenesis/fatty acid oxidation, acetylcholine synthase in neurotransmission, transaldolase in pentose phosphate pathway (not TPP-dependent), and aldolase in glycolysis/gluconeogenesis.`
+        },
+        {
+            q: `A breast-fed infant begins to vomit frequently and lose weight. Several days later she is jaundiced, her liver is enlarged, and cataracts are noticed in her lenses. The physician initiated a soy-based special diet and advised the parents on dietary restriction and lifelong dietary managements to prevent complications. Which of the following deficiency is most likely cause of the reported symptoms in this case?`,
+            options: [
+                `Glucose-6-phosphatase`,
+                `Galactokinase`,
+                `Aldolase B`,
+                `Galactose 1-P uridyltransferase`,
+                `Lactase`
+            ],
+            correct: `D`,
+            explanation: `The infant is breast-fed (lactose → glucose + galactose) and presents with vomiting, weight loss, jaundice, hepatomegaly, and cataracts. This is classic <strong>classic galactosemia</strong> due to <strong>galactose-1-phosphate uridyltransferase (GALT) deficiency</strong>. Without GALT, galactose-1-phosphate accumulates, causing hepatic damage, jaundice, and cataracts (via galactitol). Treatment is a galactose-free (soy-based) diet. Galactokinase deficiency causes only cataracts (less severe). Aldolase B deficiency is hereditary fructose intolerance. Lactase deficiency causes lactose intolerance but not jaundice/hepatomegaly/cataracts. Glucose-6-phosphatase deficiency is von Gierke disease (glycogen storage disease type I).`
+        },
+        {
+            q: `The accumulation of which of the following in the eye lens fiber cells causes cataract in this case?`,
+            options: [
+                `Galactitol`,
+                `Sorbitol`,
+                `Galactonate`,
+                `Galactose-1-phosphate`,
+                `UDP-galactose`
+            ],
+            correct: `A`,
+            explanation: `In galactosemia, excess galactose is reduced by <strong>aldose reductase</strong> to <strong>galactitol</strong> in the lens. Galactitol is osmotically active and accumulates, drawing water into lens fibers, causing swelling, protein denaturation, and cataracts. Sorbitol accumulates in diabetes (from glucose), but here the substrate is galactose. Galactose-1-phosphate also accumulates in classic galactosemia and is toxic to liver and brain, but the lens cataract is primarily due to galactitol. Galactonate and UDP-galactose are not the primary osmotic agents.`
+        },
+        {
+            q: `A 20-year-old male athlete is treated with a medication that inhibits the enzyme phosphofructokinase. Which of the following effects on glycolysis would you expect?`,
+            options: [
+                `Decreased lactate production`,
+                `Increased ATP production`,
+                `Increased gluconeogenesis`,
+                `Increased glucose uptake`,
+                `Increased fructose-1,6-bisphosphate production`
+            ],
+            correct: `A`,
+            explanation: `Phosphofructokinase-1 (PFK-1) is the rate-limiting enzyme of glycolysis, catalyzing fructose-6-phosphate → fructose-1,6-bisphosphate. Inhibition of PFK-1 slows glycolysis, leading to <strong>decreased lactate production</strong> (since lactate is the end product of anaerobic glycolysis). ATP production would decrease, not increase. Gluconeogenesis might increase as a compensatory response, but the direct effect on glycolysis is reduced flux. Glucose uptake would decrease (not increase) due to reduced glycolytic demand. Fructose-1,6-bisphosphate production would decrease, not increase.`
+        },
+        {
+            q: `What is the most likely diagnosis?`,
+            options: [
+                `Hereditary fructose intolerance`,
+                `Celiac disease`,
+                `Fructosemia`,
+                `Galactosemia`,
+                `Lactose intolerance`
+            ],
+            correct: `A`,
+            explanation: `The case describes an infant with vomiting, weight loss, jaundice, hepatomegaly, and cataracts after breast-feeding (lactose). However, the specific mention of a soy-based diet and lifelong dietary management points toward a disorder of carbohydrate metabolism. Among the options, hereditary fructose intolerance (aldolase B deficiency) presents with vomiting, hepatomegaly, jaundice, and failure to thrive after fructose introduction (e.g., from fruit juice or sucrose). Fructosemia (fructokinase deficiency) is benign. Galactosemia would also cause cataracts, but the question stem for this block (Q21-25) is a separate case. The most likely diagnosis based on the provided options and the classic presentation is hereditary fructose intolerance.`
+        },
+        {
+            q: `What enzyme is deficient in hereditary fructose intolerance?`,
+            options: [
+                `Lactase`,
+                `Sucrase`,
+                `Aldolase A`,
+                `Fructokinase`,
+                `Aldolase B`
+            ],
+            correct: `E`,
+            explanation: `Hereditary fructose intolerance is caused by a deficiency of <strong>aldolase B</strong> (fructose-1-phosphate aldolase), which cleaves fructose-1-phosphate into glyceraldehyde and dihydroxyacetone phosphate. Without it, fructose-1-phosphate accumulates, trapping inorganic phosphate and inhibiting gluconeogenesis and glycogenolysis, leading to hypoglycemia and liver damage. Lactase deficiency is lactose intolerance. Sucrase deficiency is rare. Aldolase A is the muscle isoform. Fructokinase deficiency causes essential fructosuria (benign).`
+        },
+        {
+            q: `What metabolite accumulates causing toxicity?`,
+            options: [
+                `UDP-fructose`,
+                `Fructose`,
+                `Fructose-1,6-bisphosphate`,
+                `Fructose-6-phosphate`,
+                `Fructose-1-phosphate`
+            ],
+            correct: `E`,
+            explanation: `In hereditary fructose intolerance, the deficient aldolase B causes accumulation of <strong>fructose-1-phosphate</strong>. This metabolite is toxic because it sequesters inorganic phosphate, reducing ATP regeneration and inhibiting gluconeogenesis and glycogenolysis. It also causes hepatic and renal tubular damage. UDP-fructose, fructose, fructose-1,6-bisphosphate, and fructose-6-phosphate are not the primary toxic accumulating metabolites.`
+        },
+        {
+            q: `Which complication is prevented by early diagnosis?`,
+            options: [
+                `Pancreatitis`,
+                `Osteoporosis`,
+                `Hemolysis`,
+                `Kidney stones`,
+                `Liver failure`
+            ],
+            correct: `E`,
+            explanation: `Early diagnosis of hereditary fructose intolerance and initiation of a fructose-free diet prevents the progressive liver damage that can lead to <strong>liver failure</strong> and cirrhosis. Pancreatitis, osteoporosis, hemolysis, and kidney stones are not typical complications of this disorder.`
+        },
+        {
+            q: `Why does glucose infusion improve symptoms?`,
+            options: [
+                `It increases fructose breakdown`,
+                `It inhibits insulin secretion`,
+                `It increases glucagon secretion`,
+                `It bypasses glycolysis entirely`,
+                `It restores ATP without requiring fructose metabolism`
+            ],
+            correct: `E`,
+            explanation: `In hereditary fructose intolerance, glucose infusion provides an alternative energy source that <strong>restores ATP</strong> without requiring fructose metabolism. Glucose enters glycolysis directly (bypassing the blocked fructose pathway), replenishing ATP and reversing the phosphate trapping caused by fructose-1-phosphate accumulation. It does not increase fructose breakdown, inhibit insulin, increase glucagon, or bypass glycolysis entirely.`
+        },
+        {
+            q: `A 6-month-old infant was brought to the pediatrician due to fussiness and a tender abdomen. The child seemed to do well until the time between feeding was increased to more than 3 h. The baby always seemed hungry and irritable if not fed frequently. Upon examination, hepatomegaly and enlarged kidneys were noted, and blood work showed fasting hypoglycemia. Subsequent laboratory analysis demonstrated that in response to a glucagon challenge, only about 10% of the normal amount of glucose was released into circulation, which significantly contributed to the fasting hypoglycemia. What is the most likely metabolic disorder in this infant and which enzyme deficiency is responsible for this condition?`,
+            options: [
+                `Von Gierke disease (Glucose-6-phosphatase deficiency)`,
+                `Pompe disease (Acid maltase deficiency)`,
+                `Cori disease (Debranching enzyme deficiency)`,
+                `McArdle disease (Muscle phosphorylase deficiency)`,
+                `Hers disease (Liver phosphorylase deficiency)`
+            ],
+            correct: `A`,
+            explanation: `The infant presents with fasting hypoglycemia, hepatomegaly, enlarged kidneys, and a poor response to glucagon (only 10% glucose release). This is classic <strong>von Gierke disease (Glycogen Storage Disease Type I)</strong>, caused by <strong>glucose-6-phosphatase deficiency</strong>. Without this enzyme, the liver cannot release free glucose from glycogenolysis or gluconeogenesis, leading to severe fasting hypoglycemia. Hepatomegaly and nephromegaly occur due to glycogen and lipid accumulation. Pompe disease (lysosomal acid maltase) causes cardiomegaly and hypotonia. Cori disease (debranching enzyme) causes milder hypoglycemia and hepatomegaly. McArdle disease (muscle phosphorylase) causes exercise intolerance, not hypoglycemia. Hers disease (liver phosphorylase) causes mild hypoglycemia and hepatomegaly.`
+        },
+        {
+            q: `Write the reaction/step of the pathway that the enzyme catalyzes.`,
+            options: [
+                `Glucose-6-phosphate + H₂O → Glucose + Pi`,
+                `Glucose + ATP → Glucose-6-phosphate + ADP`,
+                `Glycogen → Glucose-1-phosphate`,
+                `Fructose-1,6-bisphosphate → Fructose-6-phosphate + Pi`,
+                `Pyruvate → Acetyl-CoA + CO₂`
+            ],
+            correct: `A`,
+            explanation: `Glucose-6-phosphatase catalyzes the hydrolysis of <strong>glucose-6-phosphate to free glucose and inorganic phosphate</strong>:<br><br>Glucose-6-phosphate + H₂O → Glucose + Pi<br><br>This reaction occurs in the endoplasmic reticulum of hepatocytes and renal tubular cells. It is the final step in both glycogenolysis and gluconeogenesis, allowing glucose to be released into the bloodstream.`
+        },
+        {
+            q: `Why does deficiency of the enzyme impair both glycogenolysis and gluconeogenesis?`,
+            options: [
+                `Because it is required for glycogen synthesis`,
+                `Because it is the common final step for glucose release from both pathways`,
+                `Because it activates phosphorylase`,
+                `Because it inhibits glycolysis`,
+                `Because it is required for fructose metabolism`
+            ],
+            correct: `B`,
+            explanation: `Glucose-6-phosphatase is the <strong>common final step</strong> for glucose release from both glycogenolysis and gluconeogenesis. In glycogenolysis, glycogen is broken down to glucose-6-phosphate, which must be dephosphorylated to free glucose for export. In gluconeogenesis, the final step also produces glucose-6-phosphate, which requires the same enzyme to release glucose. Without it, both pathways are blocked at the final step, causing severe fasting hypoglycemia.`
+        },
+        {
+            q: `What is Cori cycle and how does the enzyme deficiency affect this cycle?`,
+            options: [
+                `Cori cycle is lactate → glucose in liver; deficiency impairs lactate clearance and gluconeogenesis`,
+                `Cori cycle is glucose → lactate in muscle; deficiency increases lactate production`,
+                `Cori cycle is alanine → glucose; deficiency impairs alanine transport`,
+                `Cori cycle is glycerol → glucose; deficiency impairs glycerol kinase`,
+                `Cori cycle is fatty acid → ketone bodies; deficiency impairs ketogenesis`
+            ],
+            correct: `A`,
+            explanation: `The <strong>Cori cycle</strong> is the cycle in which lactate produced by anaerobic glycolysis in muscle and RBCs is transported to the liver, converted back to glucose via gluconeogenesis, and returned to the muscle. In glucose-6-phosphatase deficiency, the liver cannot release free glucose from gluconeogenesis, so the Cori cycle is <strong>impaired</strong>—lactate clearance is reduced, leading to lactic acidosis, and glucose recycling is blocked, worsening hypoglycemia.`
+        },
+        {
+            q: `Which enzyme is responsible for release of about 10% of the normal amount of glucose and what is its catalysis?`,
+            options: [
+                `Amylo-1,6-glucosidase (debranching enzyme); releases glucose from branch points`,
+                `Glucose-6-phosphatase; hydrolyzes glucose-6-phosphate`,
+                `Hexokinase; phosphorylates glucose`,
+                `Phosphorylase; cleaves glycogen`,
+                `α-1,4-glucosidase; releases glucose`
+            ],
+            correct: `A`,
+            explanation: `In von Gierke disease, the small amount of glucose (~10%) that can be released comes from the action of <strong>amylo-1,6-glucosidase (debranching enzyme)</strong>, which releases free glucose from the branch points of glycogen. This accounts for the residual glucose response to glucagon. Glucose-6-phosphatase is the deficient enzyme, so it cannot be responsible. Hexokinase, phosphorylase, and α-1,4-glucosidase are not the correct explanation.`
+        },
+        {
+            q: `Why does the infant develop severe fasting hypoglycemia?`,
+            options: [
+                `Because of increased insulin secretion`,
+                `Because the liver cannot release free glucose from glycogen or gluconeogenesis`,
+                `Because of decreased glucagon secretion`,
+                `Because of increased glucose utilization`,
+                `Because of impaired intestinal absorption`
+            ],
+            correct: `B`,
+            explanation: `The infant develops severe fasting hypoglycemia because the liver <strong>cannot release free glucose</strong> from either glycogenolysis or gluconeogenesis due to glucose-6-phosphatase deficiency. During fasting, blood glucose is maintained by hepatic glucose output; without this enzyme, glucose-6-phosphate is trapped inside hepatocytes and cannot be exported. This leads to rapid hypoglycemia when feeding intervals are prolonged.`
+        },
+        {
+            q: `Why does glucagon administration fail to significantly increase blood glucose levels?`,
+            options: [
+                `Because glucagon is degraded rapidly`,
+                `Because the liver lacks glucose-6-phosphatase to release glucose`,
+                `Because glucagon receptors are downregulated`,
+                `Because glycogen stores are depleted`,
+                `Because glucagon stimulates insulin release`
+            ],
+            correct: `B`,
+            explanation: `Glucagon normally stimulates glycogenolysis and gluconeogenesis, but in glucose-6-phosphatase deficiency, the liver cannot convert glucose-6-phosphate to free glucose. Thus, despite glycogen breakdown, <strong>glucose cannot be released</strong> into the blood, and glucagon fails to significantly raise blood glucose.`
+        },
+        {
+            q: `What is the biochemical reason for hepatomegaly and enlarged kidneys in this disorder?`,
+            options: [
+                `Increased glycogen and lipid accumulation`,
+                `Increased protein synthesis`,
+                `Inflammation and edema`,
+                `Tumor infiltration`,
+                `Increased bile production`
+            ],
+            correct: `A`,
+            explanation: `In von Gierke disease, the liver and kidneys become enlarged due to <strong>accumulation of glycogen and lipids</strong>. Glucose-6-phosphate is trapped, shunted into glycogen synthesis and lipid synthesis (via acetyl-CoA and malonyl-CoA), causing organomegaly. Inflammation, protein synthesis, tumors, and bile production are not the primary causes.`
+        },
+        {
+            q: `What is the main dietary management for this disorder?`,
+            options: [
+                `High-protein, low-carbohydrate diet`,
+                `Frequent feeding with glucose or cornstarch`,
+                `Ketogenic diet`,
+                `Fructose-free diet`,
+                `Galactose-free diet`
+            ],
+            correct: `B`,
+            explanation: `The mainstay of dietary management for von Gierke disease is <strong>frequent feeding with glucose or uncooked cornstarch</strong> to maintain blood glucose levels and prevent hypoglycemia. Cornstarch is slowly digested, providing a sustained glucose source. High-protein diets, ketogenic diets, fructose-free, and galactose-free diets are not primary treatments for this disorder (fructose-free is for hereditary fructose intolerance; galactose-free for galactosemia).`
+        },
+        {
+            q: `A 5-month-old infant is brought to the hospital with poor feeding, developmental delay, and rapid breathing. The child has episodes of lethargy, especially during illness or prolonged fasting. Examination shows hypotonia and mild hepatomegaly. Laboratory findings reveal persistent hypoglycemia, elevated blood lactate, metabolic acidosis, and increased alanine levels. Enzyme analysis confirms impairment of a mitochondrial enzyme involved in glucose production from non-carbohydrate sources. Which metabolic pathway is primarily impaired in this disorder and what is the most likely enzymatic deficiency?`,
+            options: [
+                `Gluconeogenesis; Pyruvate carboxylase deficiency`,
+                `Glycolysis; Pyruvate kinase deficiency`,
+                `Glycogenolysis; Glucose-6-phosphatase deficiency`,
+                `TCA cycle; α-ketoglutarate dehydrogenase deficiency`,
+                `Fatty acid oxidation; Acyl-CoA dehydrogenase deficiency`
+            ],
+            correct: `A`,
+            explanation: `The infant presents with hypoglycemia, lactic acidosis, metabolic acidosis, and increased alanine, with a mitochondrial enzyme defect in glucose production from non-carbohydrate sources. This points to <strong>gluconeogenesis</strong> and specifically <strong>pyruvate carboxylase deficiency</strong>. Pyruvate carboxylase converts pyruvate to oxaloacetate, the first step in gluconeogenesis from pyruvate. Deficiency leads to impaired gluconeogenesis, accumulation of pyruvate and lactate, and increased alanine (from transamination of pyruvate).`
+        },
+        {
+            q: `Write the reaction/step of the pathway that the enzyme catalyzes.`,
+            options: [
+                `Pyruvate + CO₂ + ATP → Oxaloacetate + ADP + Pi`,
+                `Pyruvate + NADH → Lactate + NAD⁺`,
+                `Phosphoenolpyruvate + CO₂ → Oxaloacetate`,
+                `Fructose-1,6-bisphosphate → Fructose-6-phosphate`,
+                `Glucose-6-phosphate → Glucose + Pi`
+            ],
+            correct: `A`,
+            explanation: `Pyruvate carboxylase catalyzes the ATP-dependent carboxylation of <strong>pyruvate to oxaloacetate</strong>:<br><br>Pyruvate + CO₂ + ATP → Oxaloacetate + ADP + Pi<br><br>This reaction occurs in the mitochondria and requires biotin as a cofactor. Oxaloacetate is a key intermediate in gluconeogenesis, the TCA cycle, and anaplerosis.`
+        },
+        {
+            q: `What is the main biochemical function of the deficient enzyme and what cofactor is required for the activity of this enzyme?`,
+            options: [
+                `Gluconeogenesis; biotin`,
+                `Glycolysis; NAD⁺`,
+                `Glycogen synthesis; UDP-glucose`,
+                `Fatty acid synthesis; biotin`,
+                `TCA cycle; thiamine`
+            ],
+            correct: `A`,
+            explanation: `The main function of pyruvate carboxylase is to catalyze the first step of <strong>gluconeogenesis</strong> from pyruvate, forming oxaloacetate. It requires <strong>biotin</strong> (vitamin B7) as a covalently bound cofactor. Biotin is attached to a lysine residue and carries activated CO₂.`
+        },
+        {
+            q: `Explain briefly how this enzyme is regulated.`,
+            options: [
+                `Activated by acetyl-CoA; inhibited by ADP`,
+                `Activated by ADP; inhibited by ATP`,
+                `Activated by citrate; inhibited by palmitate`,
+                `Activated by fructose-2,6-bisphosphate; inhibited by AMP`,
+                `Activated by NADH; inhibited by NAD⁺`
+            ],
+            correct: `A`,
+            explanation: `Pyruvate carboxylase is allosterically <strong>activated by acetyl-CoA</strong>, which signals that the TCA cycle needs oxaloacetate to condense with acetyl-CoA. It is <strong>inhibited by ADP</strong> (low energy charge signals that gluconeogenesis is not needed) and also by high concentrations of AMP. This regulation ensures that gluconeogenesis is active when energy is plentiful and biosynthetic precursors are needed.`
+        },
+        {
+            q: `Eating raw eggs is linked to decreased activity of this enzyme. Explain why?`,
+            options: [
+                `Raw eggs contain avidin, which binds biotin and prevents its absorption`,
+                `Raw eggs contain trypsin inhibitor, which degrades the enzyme`,
+                `Raw eggs contain phytic acid, which chelates cofactors`,
+                `Raw eggs contain oxalate, which inhibits the enzyme`,
+                `Raw eggs contain high levels of pyruvate`
+            ],
+            correct: `A`,
+            explanation: `Raw egg whites contain <strong>avidin</strong>, a glycoprotein that binds <strong>biotin</strong> with high affinity, preventing its absorption in the intestine. Chronic consumption of raw eggs can lead to biotin deficiency, impairing the activity of biotin-dependent enzymes like pyruvate carboxylase, acetyl-CoA carboxylase, and propionyl-CoA carboxylase. Cooking denatures avidin, eliminating this effect.`
+        },
+        {
+            q: `Name the key enzymes that catalyse the bypass reactions of this pathway and write the reactions.`,
+            options: [
+                `Pyruvate carboxylase, PEP carboxykinase, fructose-1,6-bisphosphatase, glucose-6-phosphatase`,
+                `Hexokinase, PFK-1, pyruvate kinase`,
+                `Pyruvate dehydrogenase, citrate synthase, aconitase`,
+                `Aldolase, enolase, phosphoglycerate mutase`,
+                `Lactate dehydrogenase, alanine aminotransferase`
+            ],
+            correct: `A`,
+            explanation: `The key enzymes that catalyze the <strong>bypass reactions of gluconeogenesis</strong> (which are irreversible in glycolysis) are:<br><br>1. <strong>Pyruvate carboxylase</strong>: Pyruvate + CO₂ + ATP → Oxaloacetate + ADP + Pi<br>2. <strong>PEP carboxykinase (PEPCK)</strong>: Oxaloacetate + GTP → Phosphoenolpyruvate + GDP + CO₂<br>3. <strong>Fructose-1,6-bisphosphatase</strong>: Fructose-1,6-bisphosphate + H₂O → Fructose-6-phosphate + Pi<br>4. <strong>Glucose-6-phosphatase</strong>: Glucose-6-phosphate + H₂O → Glucose + Pi<br><br>These four enzymes bypass the three irreversible steps of glycolysis.`
+        },
+        {
+            q: `Why does this disorder cause fasting hypoglycemia?`,
+            options: [
+                `Because gluconeogenesis is impaired, so the liver cannot produce glucose during fasting`,
+                `Because glycogen stores are depleted`,
+                `Because insulin secretion is increased`,
+                `Because glucose absorption is impaired`,
+                `Because glucagon secretion is decreased`
+            ],
+            correct: `A`,
+            explanation: `In pyruvate carboxylase deficiency, <strong>gluconeogenesis is impaired</strong>. During fasting, the liver relies on gluconeogenesis to maintain blood glucose. Without pyruvate carboxylase, pyruvate cannot be converted to oxaloacetate, blocking glucose production from lactate, glycerol, and amino acids. This leads to <strong>fasting hypoglycemia</strong>, especially during illness or prolonged fasting.`
+        },
+        {
+            q: `What is the biochemical basis of elevated blood lactate levels?`,
+            options: [
+                `Impaired gluconeogenesis causes pyruvate to be reduced to lactate`,
+                `Increased glycolysis produces excess lactate`,
+                `Lactate dehydrogenase is overactive`,
+                `Mitochondrial dysfunction impairs lactate clearance`,
+                `Both A and D`
+            ],
+            correct: `A`,
+            explanation: `In pyruvate carboxylase deficiency, pyruvate cannot enter gluconeogenesis. The accumulating pyruvate is reduced to <strong>lactate</strong> by lactate dehydrogenase (LDH) to regenerate NAD⁺, leading to <strong>lactic acidosis</strong>. Additionally, mitochondrial dysfunction may contribute to impaired lactate clearance, but the primary mechanism is the shift of pyruvate to lactate due to blocked gluconeogenesis.`
+        },
+        {
+            q: `Why may alanine levels be increased in this condition?`,
+            options: [
+                `Because pyruvate accumulates and is transaminated to alanine`,
+                `Because alanine aminotransferase is deficient`,
+                `Because alanine is not transported into mitochondria`,
+                `Because alanine is overproduced in muscle`,
+                `Because alanine is not excreted by the kidneys`
+            ],
+            correct: `A`,
+            explanation: `Accumulated <strong>pyruvate</strong> is transaminated to <strong>alanine</strong> by alanine aminotransferase (ALT), using glutamate as the amino donor. This leads to increased alanine levels in the blood. Alanine serves as a carrier of pyruvate nitrogen from muscle to liver, but in this disorder, the liver cannot efficiently utilize alanine for gluconeogenesis, causing its accumulation.`
+        },
+        {
+            q: `Outline how this pathway oxidizes a molecule of acetyl CoA for energy in the body.`,
+            options: [
+                `Acetyl-CoA enters the TCA cycle, generating NADH, FADH₂, and GTP; NADH/FADH₂ feed into ETC to produce ATP`,
+                `Acetyl-CoA is directly converted to ATP via substrate-level phosphorylation`,
+                `Acetyl-CoA is converted to glucose via gluconeogenesis`,
+                `Acetyl-CoA is converted to ketone bodies for energy`,
+                `Acetyl-CoA is converted to fatty acids for storage`
+            ],
+            correct: `A`,
+            explanation: `Acetyl-CoA is oxidized in the <strong>TCA cycle</strong>:<br><br>1. Acetyl-CoA + Oxaloacetate → Citrate (citrate synthase)<br>2. Citrate → Isocitrate → α-Ketoglutarate (generating NADH)<br>3. α-Ketoglutarate → Succinyl-CoA (generating NADH)<br>4. Succinyl-CoA → Succinate (generating GTP)<br>5. Succinate → Fumarate → Malate (generating FADH₂)<br>6. Malate → Oxaloacetate (generating NADH)<br><br>The NADH and FADH₂ produced are oxidized by the <strong>electron transport chain (ETC)</strong>, which generates a proton gradient used by ATP synthase to produce ATP via oxidative phosphorylation.`
+        },
+        {
+            q: `Calculate the energetics of the above process.`,
+            options: [
+                `10 ATP per acetyl-CoA`,
+                `12 ATP per acetyl-CoA`,
+                `8 ATP per acetyl-CoA`,
+                `6 ATP per acetyl-CoA`,
+                `4 ATP per acetyl-CoA`
+            ],
+            correct: `A`,
+            explanation: `Complete oxidation of one acetyl-CoA in the TCA cycle produces:<br><br>• 3 NADH → 3 × 2.5 = 7.5 ATP<br>• 1 FADH₂ → 1 × 1.5 = 1.5 ATP<br>• 1 GTP → 1 ATP<br><br>Total = <strong>10 ATP</strong> per acetyl-CoA (using modern P/O ratios of 2.5 for NADH and 1.5 for FADH₂).`
+        },
+        {
+            q: `Explain briefly the amphibolic nature of this pathway with examples.`,
+            options: [
+                `It serves both catabolism (oxidation of acetyl-CoA) and anabolism (providing precursors for biosynthesis)`,
+                `It only functions in the presence of oxygen`,
+                `It only produces ATP`,
+                `It only breaks down fatty acids`,
+                `It only synthesizes glucose`
+            ],
+            correct: `A`,
+            explanation: `The TCA cycle is <strong>amphibolic</strong> because it functions in both catabolism and anabolism. Catabolically, it oxidizes acetyl-CoA to CO₂, generating NADH, FADH₂, and GTP. Anabolically, its intermediates serve as biosynthetic precursors: oxaloacetate → gluconeogenesis; α-ketoglutarate → amino acids (glutamate); succinyl-CoA → heme synthesis; citrate → fatty acid synthesis. This dual role is why it is called amphibolic.`
+        },
+        {
+            q: `Explain briefly the anaplerotic nature of this pathway with an example.`,
+            options: [
+                `Anaplerotic reactions replenish TCA cycle intermediates; e.g., pyruvate carboxylase converts pyruvate to oxaloacetate`,
+                `Anaplerotic reactions deplete TCA intermediates`,
+                `Anaplerotic reactions only occur in the liver`,
+                `Anaplerotic reactions produce ATP directly`,
+                `Anaplerotic reactions are irreversible`
+            ],
+            correct: `A`,
+            explanation: `The TCA cycle is <strong>anaplerotic</strong> because it can replenish its intermediates when they are withdrawn for biosynthesis. The classic example is <strong>pyruvate carboxylase</strong>, which converts pyruvate to oxaloacetate, replenishing oxaloacetate. Other anaplerotic reactions include glutamate dehydrogenase (α-ketoglutarate), methylmalonyl-CoA mutase (succinyl-CoA), and PEP carboxykinase (oxaloacetate). This ensures the cycle continues to function even when intermediates are siphoned off for anabolic pathways.`
+        },
+        {
+            q: `A 4-year-old child is brought to the hospital with progressive muscle weakness, fatigue, and poor growth. The parents report that the child tires easily during physical activity and has delayed developmental milestones. Clinical examination shows hypotonia and neurological impairment. Laboratory investigations reveal elevated blood lactate levels and reduced cellular ATP production. Muscle biopsy demonstrates abnormal mitochondrial structure and impaired activity of the electron transport chain. Which cellular process is primarily impaired in this disorder and in which organelle does the defective process occur?`,
+            options: [
+                `Oxidative phosphorylation; mitochondria`,
+                `Glycolysis; cytoplasm`,
+                `Gluconeogenesis; mitochondria`,
+                `Fatty acid oxidation; peroxisomes`,
+                `Protein synthesis; ribosomes`
+            ],
+            correct: `A`,
+            explanation: `The child has impaired electron transport chain activity, leading to reduced ATP production and elevated lactate. This indicates a defect in <strong>oxidative phosphorylation</strong>, which occurs in the <strong>mitochondria</strong> (inner mitochondrial membrane). Mitochondrial disorders often present with muscle weakness, neurological impairment, and lactic acidosis because tissues with high energy demands (muscle, brain) are most affected.`
+        },
+        {
+            q: `Why does impairment of this process reduce ATP production?`,
+            options: [
+                `Because the electron transport chain cannot generate the proton gradient needed for ATP synthase`,
+                `Because glycolysis is inhibited`,
+                `Because oxygen cannot be utilized`,
+                `Because NADH is not oxidized`,
+                `All of the above`
+            ],
+            correct: `A`,
+            explanation: `Impairment of the electron transport chain reduces ATP production because the ETC cannot pump protons across the inner mitochondrial membrane, <strong>dissipating the proton gradient</strong> that drives ATP synthase. Without the proton motive force, oxidative phosphorylation is halted, and cells must rely on anaerobic glycolysis, which produces far less ATP (2 ATP per glucose vs ~30-32 ATP). This also leads to lactate accumulation.`
+        },
+        {
+            q: `What is the biochemical reason for elevated blood lactate levels?`,
+            options: [
+                `Impaired oxidative phosphorylation forces cells to rely on anaerobic glycolysis, producing lactate`,
+                `Increased lactate dehydrogenase activity`,
+                `Decreased lactate clearance by the liver`,
+                `Increased alanine transamination`,
+                `Both A and C`
+            ],
+            correct: `A`,
+            explanation: `When oxidative phosphorylation is impaired, cells cannot efficiently oxidize pyruvate via the TCA cycle. Pyruvate is instead reduced to <strong>lactate</strong> by lactate dehydrogenase to regenerate NAD⁺ for continued glycolysis. This anaerobic metabolism leads to <strong>lactic acidosis</strong>. Additionally, the liver may have impaired lactate clearance due to mitochondrial dysfunction, but the primary mechanism is increased lactate production.`
+        },
+        {
+            q: `Which enzyme complex directly synthesizes ATP in this pathway and what is the source of energy for the synthesis?`,
+            options: [
+                `ATP synthase (Complex V); proton motive force`,
+                `ATPase; ATP hydrolysis`,
+                `Cytochrome c oxidase; oxygen`,
+                `NADH dehydrogenase; NADH`,
+                `Succinate dehydrogenase; FADH₂`
+            ],
+            correct: `A`,
+            explanation: `The enzyme that directly synthesizes ATP is <strong>ATP synthase (Complex V)</strong> of the electron transport chain. It uses the <strong>proton motive force</strong> (the electrochemical gradient of protons across the inner mitochondrial membrane) generated by complexes I, III, and IV to drive the phosphorylation of ADP to ATP. This process is called chemiosmosis.`
+        },
+        {
+            q: `Why are muscle and nervous tissues particularly affected in this disorder?`,
+            options: [
+                `Because they have high energy demands and are highly dependent on oxidative phosphorylation`,
+                `Because they lack mitochondria`,
+                `Because they rely solely on glycolysis`,
+                `Because they have low metabolic rates`,
+                `Because they cannot use fatty acids for energy`
+            ],
+            correct: `A`,
+            explanation: `Muscle and nervous tissues are particularly affected because they have <strong>high energy demands</strong> and are highly dependent on <strong>oxidative phosphorylation</strong> for ATP production. Unlike liver, they cannot rely on anaerobic glycolysis for sustained energy. When the ETC is impaired, these tissues quickly experience energy failure, leading to weakness, hypotonia, and neurological impairment.`
+        },
+        {
+            q: `How does reduced electron transport chain activity influence the citric acid cycle?`,
+            options: [
+                `It inhibits the TCA cycle because NADH and FADH₂ cannot be reoxidized`,
+                `It stimulates the TCA cycle`,
+                `It has no effect on the TCA cycle`,
+                `It increases TCA cycle flux`,
+                `It only affects glycolysis`
+            ],
+            correct: `A`,
+            explanation: `Reduced ETC activity leads to accumulation of <strong>NADH and FADH₂</strong> because they cannot be reoxidized. High NADH/NAD⁺ and FADH₂/FAD ratios inhibit key TCA cycle enzymes: isocitrate dehydrogenase, α-ketoglutarate dehydrogenase, and citrate synthase. This <strong>inhibits the TCA cycle</strong>, further reducing ATP production and contributing to metabolic acidosis.`
+        },
+        {
+            q: `What would be the effect on the level of mitochondrial NADH in this case and how will it affect the overall cellular metabolism?`,
+            options: [
+                `NADH increases; it inhibits TCA cycle and shifts metabolism to anaerobic glycolysis`,
+                `NADH decreases; it stimulates TCA cycle`,
+                `NADH remains unchanged`,
+                `NADH increases; it stimulates oxidative phosphorylation`,
+                `NADH decreases; it inhibits glycolysis`
+            ],
+            correct: `A`,
+            explanation: `Mitochondrial NADH levels <strong>increase</strong> because the ETC cannot oxidize it to NAD⁺. Elevated NADH inhibits the TCA cycle (via feedback inhibition) and forces the cell to rely on <strong>anaerobic glycolysis</strong>, which regenerates NAD⁺ by converting pyruvate to lactate. This shift leads to lactic acidosis, reduced ATP yield, and further metabolic derangement.`
+        },
+        {
+            q: `What are the mobile components of ETC?`,
+            options: [
+                `Ubiquinone (Coenzyme Q) and cytochrome c`,
+                `NADH and FADH₂`,
+                `ATP synthase and proton pump`,
+                `Oxygen and water`,
+                `Pyruvate and acetyl-CoA`
+            ],
+            correct: `A`,
+            explanation: `The mobile electron carriers of the electron transport chain are <strong>ubiquinone (coenzyme Q)</strong>, which moves within the inner mitochondrial membrane, and <strong>cytochrome c</strong>, which is a peripheral membrane protein in the intermembrane space. These mobile components shuttle electrons between the large membrane-embedded complexes.`
+        },
+        {
+            q: `Name the enzymes in each of the four complexes of ETC?`,
+            options: [
+                `Complex I: NADH dehydrogenase; Complex II: Succinate dehydrogenase; Complex III: Cytochrome bc₁; Complex IV: Cytochrome c oxidase`,
+                `Complex I: ATP synthase; Complex II: NADH dehydrogenase; Complex III: Cytochrome c oxidase; Complex IV: Succinate dehydrogenase`,
+                `Complex I: Cytochrome c oxidase; Complex II: NADH dehydrogenase; Complex III: Succinate dehydrogenase; Complex IV: Cytochrome bc₁`,
+                `Complex I: Succinate dehydrogenase; Complex II: Cytochrome bc₁; Complex III: Cytochrome c oxidase; Complex IV: NADH dehydrogenase`,
+                `Complex I: NADH dehydrogenase; Complex II: Cytochrome c oxidase; Complex III: Succinate dehydrogenase; Complex IV: Cytochrome bc₁`
+            ],
+            correct: `A`,
+            explanation: `The four complexes of the ETC are:<br><br>• <strong>Complex I</strong>: NADH dehydrogenase (NADH:ubiquinone oxidoreductase)<br>• <strong>Complex II</strong>: Succinate dehydrogenase (succinate:ubiquinone oxidoreductase)<br>• <strong>Complex III</strong>: Cytochrome bc₁ (ubiquinol:cytochrome c oxidoreductase)<br>• <strong>Complex IV</strong>: Cytochrome c oxidase<br><br>Complex V is ATP synthase, which is not technically part of the ETC but uses its proton gradient.`
+        },
+        {
+            q: `List any four factors that affect the activity of ETC.`,
+            options: [
+                `Oxygen availability, NADH/NAD⁺ ratio, ADP concentration, inhibitors (e.g., cyanide, rotenone)`,
+                `Temperature, pH, enzyme concentration, substrate concentration`,
+                `Light, sound, pressure, humidity`,
+                `Glucose, fructose, galactose, mannose`,
+                `Insulin, glucagon, cortisol, adrenaline`
+            ],
+            correct: `A`,
+            explanation: `Four factors affecting ETC activity include:<br><br>1. <strong>Oxygen availability</strong> – final electron acceptor; hypoxia inhibits ETC.<br>2. <strong>NADH/NAD⁺ ratio</strong> – high NADH inhibits Complex I.<br>3. <strong>ADP concentration</strong> – ADP stimulates respiration (respiratory control).<br>4. <strong>Inhibitors</strong> – e.g., rotenone (Complex I), antimycin A (Complex III), cyanide/CO (Complex IV).<br><br>Other factors include pH, temperature, and mitochondrial membrane integrity.`
+        },
+        {
+            q: `A 7-year-old child is brought to the clinic with fatigue, yellowish discoloration of the eyes, and poor exercise tolerance. Physical examination shows pallor and mild splenomegaly. Laboratory investigations reveal chronic hemolytic anemia, elevated indirect bilirubin, and increased reticulocyte count. A peripheral blood smear shows abnormal red blood cell shapes. Further biochemical testing demonstrates reduced ATP levels and increased 2,3-bisphosphoglycerate levels in erythrocytes due to impaired glycolytic activity. Which enzyme of glycolytic pathway is most likely defective in this disorder?`,
+            options: [
+                `Pyruvate kinase`,
+                `Hexokinase`,
+                `Phosphofructokinase`,
+                `Aldolase`,
+                `Enolase`
+            ],
+            correct: `A`,
+            explanation: `The child has chronic hemolytic anemia with reduced ATP and increased 2,3-BPG in erythrocytes due to impaired glycolysis. This is classic for <strong>pyruvate kinase deficiency</strong>, the most common glycolytic enzyme defect causing hemolytic anemia. Pyruvate kinase catalyzes the final step of glycolysis, producing ATP. Without it, RBCs cannot maintain ATP levels, leading to membrane damage, dehydration, and hemolysis. Hexokinase, PFK, aldolase, and enolase deficiencies are much rarer.`
+        },
+        {
+            q: `Write the reaction/the step of glycolysis that the enzyme catalyzes.`,
+            options: [
+                `Phosphoenolpyruvate + ADP → Pyruvate + ATP`,
+                `Glucose + ATP → Glucose-6-phosphate + ADP`,
+                `Fructose-6-phosphate + ATP → Fructose-1,6-bisphosphate + ADP`,
+                `Fructose-1,6-bisphosphate → Glyceraldehyde-3-phosphate + Dihydroxyacetone phosphate`,
+                `2-Phosphoglycerate → Phosphoenolpyruvate + H₂O`
+            ],
+            correct: `A`,
+            explanation: `Pyruvate kinase catalyzes the final step of glycolysis:<br><br><strong>Phosphoenolpyruvate (PEP) + ADP → Pyruvate + ATP</strong><br><br>This is a substrate-level phosphorylation reaction that generates one ATP per PEP. It is irreversible under physiological conditions.`
+        },
+        {
+            q: `Outline the special glycolytic shunt reactions that take place in red blood cells.`,
+            options: [
+                `The Rapoport-Luebering shunt produces 2,3-BPG from 1,3-bisphosphoglycerate, bypassing the ATP-generating step`,
+                `The pentose phosphate pathway produces NADPH`,
+                `The Cori cycle produces glucose from lactate`,
+                `The malate-aspartate shuttle transfers NADH`,
+                `The glycerol phosphate shuttle transfers NADH`
+            ],
+            correct: `A`,
+            explanation: `In red blood cells, the <strong>Rapoport-Luebering shunt</strong> converts 1,3-bisphosphoglycerate to <strong>2,3-bisphosphoglycerate (2,3-BPG)</strong> via bisphosphoglycerate mutase, bypassing the phosphoglycerate kinase step (which normally produces ATP). This shunt reduces ATP yield but produces 2,3-BPG, which binds hemoglobin and decreases its oxygen affinity, facilitating oxygen unloading in tissues.`
+        },
+        {
+            q: `Why does enzyme deficiency reduce red blood cell survival?`,
+            options: [
+                `Because RBCs cannot maintain ATP levels, leading to membrane damage and hemolysis`,
+                `Because RBCs cannot produce NADPH`,
+                `Because RBCs cannot synthesize hemoglobin`,
+                `Because RBCs cannot transport oxygen`,
+                `Because RBCs cannot produce 2,3-BPG`
+            ],
+            correct: `A`,
+            explanation: `Pyruvate kinase deficiency reduces ATP production in RBCs. Without sufficient ATP, the Na⁺/K⁺ ATPase and other ion pumps fail, causing osmotic imbalance, cell swelling, membrane damage, and ultimately <strong>hemolysis</strong>. RBCs have no mitochondria and rely solely on glycolysis for ATP, making them especially vulnerable.`
+        },
+        {
+            q: `Why are red blood cells especially dependent on this metabolic pathway for energy?`,
+            options: [
+                `Because they lack mitochondria and cannot perform oxidative phosphorylation`,
+                `Because they have high energy demands`,
+                `Because they cannot use fatty acids`,
+                `Because they cannot store glycogen`,
+                `All of the above`
+            ],
+            correct: `A`,
+            explanation: `Red blood cells are especially dependent on glycolysis because they <strong>lack mitochondria</strong> and therefore cannot perform oxidative phosphorylation or the TCA cycle. They rely exclusively on anaerobic glycolysis for ATP production. They also lack glycogen stores, so glucose is their sole energy source.`
+        },
+        {
+            q: `What is the biochemical reason for splenomegaly in this case?`,
+            options: [
+                `The spleen filters and destroys defective RBCs, leading to hyperplasia and enlargement`,
+                `The spleen produces more RBCs`,
+                `The spleen stores excess iron`,
+                `The spleen is inflamed due to infection`,
+                `The spleen accumulates glycogen`
+            ],
+            correct: `A`,
+            explanation: `In chronic hemolytic anemia, the <strong>spleen</strong> acts as a filter, removing damaged and rigid RBCs from circulation. This leads to <strong>splenic hyperplasia</strong> and enlargement (splenomegaly). The spleen also produces antibodies and removes antibody-coated RBCs, contributing to hemolysis.`
+        },
+        {
+            q: `What is the biochemical basis for increased levels of 2,3-bisphosphoglycerate in affected red blood cells?`,
+            options: [
+                `The Rapoport-Luebering shunt is upregulated to compensate for reduced ATP, increasing 2,3-BPG`,
+                `2,3-BPG is produced by the pentose phosphate pathway`,
+                `2,3-BPG is increased due to high oxygen levels`,
+                `2,3-BPG is increased due to low pH`,
+                `2,3-BPG is increased due to high NADH`
+            ],
+            correct: `A`,
+            explanation: `In pyruvate kinase deficiency, the glycolytic block at the final step causes accumulation of upstream intermediates, including 1,3-bisphosphoglycerate. The <strong>Rapoport-Luebering shunt</strong> converts 1,3-BPG to 2,3-BPG, leading to increased 2,3-BPG levels. This is a compensatory mechanism to enhance oxygen unloading to tissues, but it also reduces ATP yield.`
+        },
+        {
+            q: `What type of anemia commonly develops in this condition and what is the biochemical basis of hemolysis?`,
+            options: [
+                `Chronic hemolytic anemia; reduced ATP causes membrane damage and decreased deformability`,
+                `Aplastic anemia; bone marrow failure`,
+                `Iron deficiency anemia; impaired heme synthesis`,
+                `Megaloblastic anemia; impaired DNA synthesis`,
+                `Sideroblastic anemia; impaired iron utilization`
+            ],
+            correct: `A`,
+            explanation: `The condition causes <strong>chronic hemolytic anemia</strong>. The biochemical basis is that reduced ATP levels impair the Na⁺/K⁺ ATPase pump, causing intracellular sodium and water accumulation, cell swelling, and decreased membrane deformability. These rigid cells are trapped and destroyed in the spleen, leading to hemolysis.`
+        },
+        {
+            q: `As the disease progresses, why does reticulocyte count increase?`,
+            options: [
+                `Because the bone marrow attempts to compensate for hemolysis by producing more RBCs`,
+                `Because the spleen produces more RBCs`,
+                `Because RBCs mature faster`,
+                `Because hemoglobin synthesis increases`,
+                `Because erythropoietin levels decrease`
+            ],
+            correct: `A`,
+            explanation: `As hemolysis progresses, the bone marrow attempts to <strong>compensate</strong> by increasing red blood cell production. This leads to an elevated <strong>reticulocyte count</strong> (immature RBCs) in the peripheral blood. Erythropoietin levels increase in response to anemia and tissue hypoxia, stimulating erythropoiesis.`
+        },
+        {
+            q: `A 3-year-old boy of African descent presents with jaundice, pallor, and dark urine after ingestion of fava beans. Laboratory tests reveal anemia, presence of Heinz bodies, elevated bilirubin levels and increased lactate dehydrogenase (LDH) levels. The emergency room physician started blood transfusion therapy immediately. What is the most likely enzymatic deficiency causing this patient's condition and which metabolic pathway is impaired in this condition?`,
+            options: [
+                `Glucose-6-phosphate dehydrogenase (G6PD) deficiency; Pentose phosphate pathway`,
+                `Pyruvate kinase deficiency; Glycolysis`,
+                `Glucose-6-phosphatase deficiency; Gluconeogenesis`,
+                `Galactokinase deficiency; Galactose metabolism`,
+                `Aldolase B deficiency; Fructose metabolism`
+            ],
+            correct: `A`,
+            explanation: `The child of African descent presents with acute hemolytic anemia after fava bean ingestion, with Heinz bodies and elevated LDH. This is classic <strong>G6PD deficiency</strong>, an X-linked disorder affecting the <strong>pentose phosphate pathway (PPP)</strong>. G6PD is the rate-limiting enzyme that produces NADPH, which maintains reduced glutathione to protect RBCs from oxidative damage. Without NADPH, oxidative stress (from fava beans, infections, drugs) causes hemoglobin denaturation (Heinz bodies) and hemolysis.`
+        },
+        {
+            q: `Write the reaction/step of the pathway that the enzyme catalyzes.`,
+            options: [
+                `Glucose-6-phosphate + NADP⁺ → 6-Phosphogluconolactone + NADPH + H⁺`,
+                `Glucose-6-phosphate + H₂O → Glucose + Pi`,
+                `Glucose + ATP → Glucose-6-phosphate + ADP`,
+                `6-Phosphogluconate + NADP⁺ → Ribulose-5-phosphate + NADPH + CO₂`,
+                `Ribose-5-phosphate → Ribulose-5-phosphate`
+            ],
+            correct: `A`,
+            explanation: `G6PD catalyzes the first step of the pentose phosphate pathway:<br><br><strong>Glucose-6-phosphate + NADP⁺ → 6-Phosphogluconolactone + NADPH + H⁺</strong><br><br>This is the rate-limiting and committed step of the PPP. NADPH produced is essential for reductive biosynthesis and antioxidant defense.`
+        },
+        {
+            q: `Outline the progression of this pathway when there is an equal demand for NADPH and ATP.`,
+            options: [
+                `Glucose-6-phosphate enters the PPP to produce NADPH; glycolytic intermediates are also used to produce ATP, with coordination via fructose-6-phosphate and glyceraldehyde-3-phosphate`,
+                `The pathway shuts down completely`,
+                `Only glycolysis is active`,
+                `Only the PPP is active`,
+                `The pathway produces only ATP`
+            ],
+            correct: `A`,
+            explanation: `When there is an equal demand for NADPH and ATP, glucose-6-phosphate is partitioned between the <strong>pentose phosphate pathway</strong> (for NADPH) and <strong>glycolysis</strong> (for ATP). The PPP produces ribose-5-phosphate and NADPH; excess ribose-5-phosphate can be converted to glycolytic intermediates (fructose-6-phosphate and glyceraldehyde-3-phosphate) via transketolase and transaldolase, feeding back into glycolysis. This coordination ensures balanced production of NADPH and ATP.`
+        },
+        {
+            q: `What is the main function of the deficient enzyme in red blood cells?`,
+            options: [
+                `To produce NADPH, which maintains reduced glutathione and protects against oxidative damage`,
+                `To produce ATP for the RBC`,
+                `To produce 2,3-BPG`,
+                `To transport oxygen`,
+                `To synthesize hemoglobin`
+            ],
+            correct: `A`,
+            explanation: `The main function of G6PD in red blood cells is to produce <strong>NADPH</strong> via the pentose phosphate pathway. NADPH is essential for maintaining <strong>reduced glutathione (GSH)</strong>, which detoxifies reactive oxygen species and protects hemoglobin and membrane proteins from oxidative damage. RBCs are especially vulnerable to oxidative stress because they lack mitochondria and other NADPH-producing pathways.`
+        },
+        {
+            q: `What is the underlying mechanism of red blood cell destruction in this disorder?`,
+            options: [
+                `Oxidative stress causes hemoglobin denaturation (Heinz bodies) and membrane damage, leading to hemolysis`,
+                `RBCs become rigid and are trapped in the spleen`,
+                `RBCs are destroyed by antibodies`,
+                `RBCs are destroyed by complement`,
+                `RBCs are destroyed by mechanical trauma`
+            ],
+            correct: `A`,
+            explanation: `In G6PD deficiency, oxidative stress (e.g., from fava beans, infections, drugs) causes <strong>hemoglobin denaturation</strong>, forming <strong>Heinz bodies</strong> (precipitated hemoglobin). These inclusions damage the RBC membrane, leading to decreased deformability and increased membrane permeability. The spleen removes these damaged cells, causing <strong>hemolysis</strong>.`
+        },
+        {
+            q: `What is the role of NADPH in protecting red blood cells?`,
+            options: [
+                `NADPH maintains reduced glutathione, which neutralizes reactive oxygen species`,
+                `NADPH produces ATP`,
+                `NADPH transports oxygen`,
+                `NADPH synthesizes hemoglobin`,
+                `NADPH produces 2,3-BPG`
+            ],
+            correct: `A`,
+            explanation: `NADPH is essential for the regeneration of <strong>reduced glutathione (GSH)</strong> from oxidized glutathione (GSSG) by glutathione reductase. GSH is a tripeptide antioxidant that neutralizes <strong>reactive oxygen species</strong> (e.g., hydrogen peroxide, superoxide) and protects hemoglobin and RBC membranes from oxidative damage. Without NADPH, GSH levels fall, and RBCs become susceptible to oxidative hemolysis.`
+        }
+    ];
+
+    /* =====================================================================
+       SECTION B — 6 Case-Based Short Answer Questions with Subquestions
+       ===================================================================== */
+    const sectionB = [
+        {
+            q: `Case 1: A 6-month-old infant was brought to the pediatrician due to fussiness and a tender abdomen. The child seemed to do well until the time between feeding was increased to more than 3 h. The baby always seemed hungry and irritable if not fed frequently. Upon examination, hepatomegaly and enlarged kidneys were noted, and blood work showed fasting hypoglycemia. Subsequent laboratory analysis demonstrated that in response to a glucagon challenge, only about 10% of the normal amount of glucose was released into circulation, which significantly contributed to the fasting hypoglycemia.`,
+            subquestions: [
+                {
+                    q: `a. What is the most likely metabolic disorder in this infant and which enzyme deficiency is responsible for this condition?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Most likely disorder:</strong> Von Gierke disease (Glycogen Storage Disease Type I).</p>
+                    <p><strong>Enzyme deficiency:</strong> Glucose-6-phosphatase deficiency.</p>
+                    <p>This enzyme catalyzes the final step in both glycogenolysis and gluconeogenesis in the liver and kidneys. Its absence prevents the release of free glucose into the blood, causing severe fasting hypoglycemia, hepatomegaly, and nephromegaly due to glycogen and lipid accumulation.</p>`
+                },
+                {
+                    q: `b. Write the reaction/step of the pathway that the enzyme catalyzes.`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Reaction:</strong></p>
+                    <p>Glucose-6-phosphate + H₂O → Glucose + Pi</p>
+                    <p>This hydrolysis reaction occurs in the endoplasmic reticulum of hepatocytes and renal tubular cells. It is the common final step for glucose release from both glycogenolysis and gluconeogenesis.</p>`
+                },
+                {
+                    q: `c. Why does deficiency of the enzyme impair both glycogenolysis and gluconeogenesis?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>Glucose-6-phosphatase is the <strong>common final step</strong> for glucose release from both pathways. In glycogenolysis, glycogen is broken down to glucose-6-phosphate, which must be dephosphorylated to free glucose for export. In gluconeogenesis, the final step also produces glucose-6-phosphate, which requires the same enzyme to release glucose. Without it, both pathways are blocked at the final step, causing severe fasting hypoglycemia.</p>`
+                },
+                {
+                    q: `d. What is Cori cycle and how does the enzyme deficiency affect this cycle?`,
+                    marks: `2 marks`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Cori cycle:</strong> The cycle in which lactate produced by anaerobic glycolysis in muscle and RBCs is transported to the liver, converted back to glucose via gluconeogenesis, and returned to the muscle.</p>
+                    <p><strong>Effect of deficiency:</strong> In glucose-6-phosphatase deficiency, the liver cannot release free glucose from gluconeogenesis, so the Cori cycle is impaired. Lactate clearance is reduced, leading to lactic acidosis, and glucose recycling is blocked, worsening hypoglycemia.</p>`
+                },
+                {
+                    q: `e. Which enzyme is responsible for release of about 10% of the normal amount of glucose and what is its catalysis?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Enzyme:</strong> Amylo-1,6-glucosidase (debranching enzyme).</p>
+                    <p><strong>Catalysis:</strong> It releases free glucose from the branch points of glycogen. This accounts for the residual glucose response to glucagon.</p>`
+                },
+                {
+                    q: `f. Why does the infant develop severe fasting hypoglycemia?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>The infant develops severe fasting hypoglycemia because the liver cannot release free glucose from either glycogenolysis or gluconeogenesis due to glucose-6-phosphatase deficiency. During fasting, blood glucose is maintained by hepatic glucose output; without this enzyme, glucose-6-phosphate is trapped inside hepatocytes and cannot be exported. This leads to rapid hypoglycemia when feeding intervals are prolonged.</p>`
+                },
+                {
+                    q: `g. Why does glucagon administration fail to significantly increase blood glucose levels?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>Glucagon normally stimulates glycogenolysis and gluconeogenesis, but in glucose-6-phosphatase deficiency, the liver cannot convert glucose-6-phosphate to free glucose. Thus, despite glycogen breakdown, glucose cannot be released into the blood, and glucagon fails to significantly raise blood glucose.</p>`
+                },
+                {
+                    q: `h. What is the biochemical reason for hepatomegaly and enlarged kidneys in this disorder?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>In von Gierke disease, the liver and kidneys become enlarged due to accumulation of glycogen and lipids. Glucose-6-phosphate is trapped, shunted into glycogen synthesis and lipid synthesis, causing organomegaly.</p>`
+                },
+                {
+                    q: `i. What is the main dietary management for this disorder?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>The mainstay of dietary management is frequent feeding with glucose or uncooked cornstarch to maintain blood glucose levels and prevent hypoglycemia. Cornstarch is slowly digested, providing a sustained glucose source.</p>`
+                }
+            ]
+        },
+        {
+            q: `Case 2: A 5-month-old infant is brought to the hospital with poor feeding, developmental delay, and rapid breathing. The child has episodes of lethargy, especially during illness or prolonged fasting. Examination shows hypotonia and mild hepatomegaly. Laboratory findings reveal persistent hypoglycemia, elevated blood lactate, metabolic acidosis, and increased alanine levels. Enzyme analysis confirms impairment of a mitochondrial enzyme involved in glucose production from non-carbohydrate sources.`,
+            subquestions: [
+                {
+                    q: `a. Which metabolic pathway is primarily impaired in this disorder and what is the most likely enzymatic deficiency?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Pathway:</strong> Gluconeogenesis.</p>
+                    <p><strong>Enzyme deficiency:</strong> Pyruvate carboxylase deficiency.</p>
+                    <p>Pyruvate carboxylase converts pyruvate to oxaloacetate, the first step in gluconeogenesis from pyruvate. Deficiency leads to impaired gluconeogenesis, accumulation of pyruvate and lactate, and increased alanine.</p>`
+                },
+                {
+                    q: `b. Write the reaction/step of the pathway that the enzyme catalyzes.`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Reaction:</strong></p>
+                    <p>Pyruvate + CO₂ + ATP → Oxaloacetate + ADP + Pi</p>
+                    <p>This reaction occurs in the mitochondria and requires biotin as a cofactor.</p>`
+                },
+                {
+                    q: `c. What is the main biochemical function of the deficient enzyme and what cofactor is required for the activity of this enzyme?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Function:</strong> Catalyzes the first step of gluconeogenesis from pyruvate, forming oxaloacetate.</p>
+                    <p><strong>Cofactor:</strong> Biotin (vitamin B7), covalently bound to a lysine residue.</p>`
+                },
+                {
+                    q: `d. Explain briefly how this enzyme is regulated.`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>Pyruvate carboxylase is allosterically activated by acetyl-CoA and inhibited by ADP. This regulation ensures that gluconeogenesis is active when energy is plentiful and biosynthetic precursors are needed.</p>`
+                },
+                {
+                    q: `e. Eating raw eggs is linked to decreased activity of this enzyme. Explain why?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>Raw egg whites contain avidin, a glycoprotein that binds biotin with high affinity, preventing its absorption. Chronic consumption of raw eggs can lead to biotin deficiency, impairing biotin-dependent enzymes like pyruvate carboxylase.</p>`
+                },
+                {
+                    q: `f. Name the key enzymes that catalyse the bypass reactions of this pathway and write the reactions.`,
+                    marks: `2 marks`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>The key enzymes that catalyze the bypass reactions of gluconeogenesis are:</p>
+                    <ol>
+                        <li><strong>Pyruvate carboxylase:</strong> Pyruvate + CO₂ + ATP → Oxaloacetate + ADP + Pi</li>
+                        <li><strong>PEP carboxykinase (PEPCK):</strong> Oxaloacetate + GTP → Phosphoenolpyruvate + GDP + CO₂</li>
+                        <li><strong>Fructose-1,6-bisphosphatase:</strong> Fructose-1,6-bisphosphate + H₂O → Fructose-6-phosphate + Pi</li>
+                        <li><strong>Glucose-6-phosphatase:</strong> Glucose-6-phosphate + H₂O → Glucose + Pi</li>
+                    </ol>
+                    <p>These four enzymes bypass the three irreversible steps of glycolysis.</p>`
+                },
+                {
+                    q: `g. Why does this disorder cause fasting hypoglycemia?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>In pyruvate carboxylase deficiency, gluconeogenesis is impaired. During fasting, the liver relies on gluconeogenesis to maintain blood glucose. Without pyruvate carboxylase, pyruvate cannot be converted to oxaloacetate, blocking glucose production from lactate, glycerol, and amino acids. This leads to fasting hypoglycemia.</p>`
+                },
+                {
+                    q: `h. What is the biochemical basis of elevated blood lactate levels?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>In pyruvate carboxylase deficiency, pyruvate cannot enter gluconeogenesis. The accumulating pyruvate is reduced to lactate by lactate dehydrogenase (LDH) to regenerate NAD⁺, leading to lactic acidosis.</p>`
+                },
+                {
+                    q: `i. Why may alanine levels be increased in this condition?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>Accumulated pyruvate is transaminated to alanine by alanine aminotransferase (ALT), using glutamate as the amino donor. This leads to increased alanine levels in the blood.</p>`
+                }
+            ]
+        },
+        {
+            q: `Case 3: Answer the following questions related to the TCA cycle pathway.`,
+            subquestions: [
+                {
+                    q: `a. Outline how this pathway oxidizes a molecule of acetyl CoA for energy in the body.`,
+                    marks: `5 marks`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>Acetyl-CoA is oxidized in the TCA cycle:</p>
+                    <ol>
+                        <li>Acetyl-CoA + Oxaloacetate → Citrate (citrate synthase)</li>
+                        <li>Citrate → Isocitrate → α-Ketoglutarate (generating NADH)</li>
+                        <li>α-Ketoglutarate → Succinyl-CoA (generating NADH)</li>
+                        <li>Succinyl-CoA → Succinate (generating GTP)</li>
+                        <li>Succinate → Fumarate → Malate (generating FADH₂)</li>
+                        <li>Malate → Oxaloacetate (generating NADH)</li>
+                    </ol>
+                    <p>The NADH and FADH₂ produced are oxidized by the electron transport chain (ETC), which generates a proton gradient used by ATP synthase to produce ATP via oxidative phosphorylation.</p>`
+                },
+                {
+                    q: `b. Calculate the energetics of the above process.`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>Complete oxidation of one acetyl-CoA in the TCA cycle produces:</p>
+                    <ul>
+                        <li>3 NADH → 3 × 2.5 = 7.5 ATP</li>
+                        <li>1 FADH₂ → 1 × 1.5 = 1.5 ATP</li>
+                        <li>1 GTP → 1 ATP</li>
+                    </ul>
+                    <p>Total = <strong>10 ATP</strong> per acetyl-CoA (using modern P/O ratios).</p>`
+                },
+                {
+                    q: `c. Explain briefly the amphibolic nature of this pathway with examples.`,
+                    marks: `2 marks`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>The TCA cycle is <strong>amphibolic</strong> because it functions in both catabolism and anabolism. Catabolically, it oxidizes acetyl-CoA to CO₂, generating NADH, FADH₂, and GTP. Anabolically, its intermediates serve as biosynthetic precursors: oxaloacetate → gluconeogenesis; α-ketoglutarate → amino acids (glutamate); succinyl-CoA → heme synthesis; citrate → fatty acid synthesis.</p>`
+                },
+                {
+                    q: `d. Explain briefly the anaplerotic nature of this pathway with an example.`,
+                    marks: `2 marks`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>The TCA cycle is <strong>anaplerotic</strong> because it can replenish its intermediates when they are withdrawn for biosynthesis. The classic example is <strong>pyruvate carboxylase</strong>, which converts pyruvate to oxaloacetate, replenishing oxaloacetate. Other anaplerotic reactions include glutamate dehydrogenase (α-ketoglutarate), methylmalonyl-CoA mutase (succinyl-CoA), and PEP carboxykinase (oxaloacetate).</p>`
+                }
+            ]
+        },
+        {
+            q: `Case 4: A 4-year-old child is brought to the hospital with progressive muscle weakness, fatigue, and poor growth. The parents report that the child tires easily during physical activity and has delayed developmental milestones. Clinical examination shows hypotonia and neurological impairment. Laboratory investigations reveal elevated blood lactate levels and reduced cellular ATP production. Muscle biopsy demonstrates abnormal mitochondrial structure and impaired activity of the electron transport chain.`,
+            subquestions: [
+                {
+                    q: `a. Which cellular process is primarily impaired in this disorder and in which organelle does the defective process occur?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Process:</strong> Oxidative phosphorylation.</p>
+                    <p><strong>Organelle:</strong> Mitochondria (inner mitochondrial membrane).</p>`
+                },
+                {
+                    q: `b. Why does impairment of this process reduce ATP production?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>Impairment of the electron transport chain reduces ATP production because the ETC cannot pump protons across the inner mitochondrial membrane, dissipating the proton gradient that drives ATP synthase. Without the proton motive force, oxidative phosphorylation is halted.</p>`
+                },
+                {
+                    q: `c. What is the biochemical reason for elevated blood lactate levels?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>When oxidative phosphorylation is impaired, cells cannot efficiently oxidize pyruvate via the TCA cycle. Pyruvate is instead reduced to lactate by lactate dehydrogenase to regenerate NAD⁺ for continued glycolysis. This anaerobic metabolism leads to lactic acidosis.</p>`
+                },
+                {
+                    q: `d. Which enzyme complex directly synthesizes ATP in this pathway and what is the source of energy for the synthesis?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Enzyme:</strong> ATP synthase (Complex V).</p>
+                    <p><strong>Source of energy:</strong> Proton motive force (electrochemical gradient of protons across the inner mitochondrial membrane).</p>`
+                },
+                {
+                    q: `e. Why are muscle and nervous tissues particularly affected in this disorder?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>Muscle and nervous tissues are particularly affected because they have high energy demands and are highly dependent on oxidative phosphorylation for ATP production. When the ETC is impaired, these tissues quickly experience energy failure.</p>`
+                },
+                {
+                    q: `f. How does reduced electron transport chain activity influence the citric acid cycle?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>Reduced ETC activity leads to accumulation of NADH and FADH₂ because they cannot be reoxidized. High NADH/NAD⁺ and FADH₂/FAD ratios inhibit key TCA cycle enzymes: isocitrate dehydrogenase, α-ketoglutarate dehydrogenase, and citrate synthase. This inhibits the TCA cycle.</p>`
+                },
+                {
+                    q: `g. What would be the effect on the level of mitochondrial NADH in this case and how will it affect the overall cellular metabolism?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>Mitochondrial NADH levels increase because the ETC cannot oxidize it to NAD⁺. Elevated NADH inhibits the TCA cycle and forces the cell to rely on anaerobic glycolysis, which regenerates NAD⁺ by converting pyruvate to lactate. This leads to lactic acidosis and reduced ATP yield.</p>`
+                },
+                {
+                    q: `h. What are the mobile components of ETC?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>The mobile electron carriers are <strong>ubiquinone (coenzyme Q)</strong> and <strong>cytochrome c</strong>.</p>`
+                },
+                {
+                    q: `i. Name the enzymes in each of the four complexes of ETC?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <ul>
+                        <li><strong>Complex I:</strong> NADH dehydrogenase</li>
+                        <li><strong>Complex II:</strong> Succinate dehydrogenase</li>
+                        <li><strong>Complex III:</strong> Cytochrome bc₁</li>
+                        <li><strong>Complex IV:</strong> Cytochrome c oxidase</li>
+                    </ul>`
+                },
+                {
+                    q: `j. List any four factors that affect the activity of ETC.`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <ul>
+                        <li>Oxygen availability</li>
+                        <li>NADH/NAD⁺ ratio</li>
+                        <li>ADP concentration</li>
+                        <li>Inhibitors (e.g., cyanide, rotenone, antimycin A)</li>
+                    </ul>`
+                }
+            ]
+        },
+        {
+            q: `Case 5: A 7-year-old child is brought to the clinic with fatigue, yellowish discoloration of the eyes, and poor exercise tolerance. Physical examination shows pallor and mild splenomegaly. Laboratory investigations reveal chronic hemolytic anemia, elevated indirect bilirubin, and increased reticulocyte count. A peripheral blood smear shows abnormal red blood cell shapes. Further biochemical testing demonstrates reduced ATP levels and increased 2,3-bisphosphoglycerate levels in erythrocytes due to impaired glycolytic activity.`,
+            subquestions: [
+                {
+                    q: `a. Which enzyme of glycolytic pathway is most likely defective in this disorder?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Enzyme:</strong> Pyruvate kinase.</p>
+                    <p>This is the most common glycolytic enzyme defect causing hemolytic anemia.</p>`
+                },
+                {
+                    q: `b. Write the reaction/the step of glycolysis that the enzyme catalyzes.`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Reaction:</strong></p>
+                    <p>Phosphoenolpyruvate (PEP) + ADP → Pyruvate + ATP</p>
+                    <p>This is a substrate-level phosphorylation reaction that generates one ATP per PEP.</p>`
+                },
+                {
+                    q: `c. Outline the special glycolytic shunt reactions that take place in red blood cells.`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>The <strong>Rapoport-Luebering shunt</strong> converts 1,3-bisphosphoglycerate to 2,3-bisphosphoglycerate (2,3-BPG) via bisphosphoglycerate mutase, bypassing the phosphoglycerate kinase step. This reduces ATP yield but produces 2,3-BPG, which decreases hemoglobin's oxygen affinity.</p>`
+                },
+                {
+                    q: `d. Why does enzyme deficiency reduce red blood cell survival?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>Pyruvate kinase deficiency reduces ATP production in RBCs. Without sufficient ATP, the Na⁺/K⁺ ATPase fails, causing osmotic imbalance, cell swelling, membrane damage, and hemolysis.</p>`
+                },
+                {
+                    q: `e. Why are red blood cells especially dependent on this metabolic pathway for energy?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>Red blood cells lack mitochondria and therefore cannot perform oxidative phosphorylation. They rely exclusively on anaerobic glycolysis for ATP production.</p>`
+                },
+                {
+                    q: `f. What is the biochemical reason for splenomegaly in this case?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>The spleen filters and destroys defective RBCs, leading to splenic hyperplasia and enlargement (splenomegaly).</p>`
+                },
+                {
+                    q: `g. What is the biochemical basis for increased levels of 2,3-bisphosphoglycerate in affected red blood cells?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>The glycolytic block at pyruvate kinase causes accumulation of upstream intermediates, including 1,3-bisphosphoglycerate. The Rapoport-Luebering shunt converts 1,3-BPG to 2,3-BPG, leading to increased 2,3-BPG levels.</p>`
+                },
+                {
+                    q: `h. What type of anemia commonly develops in this condition and what is the biochemical basis of hemolysis?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Type:</strong> Chronic hemolytic anemia.</p>
+                    <p><strong>Biochemical basis:</strong> Reduced ATP causes membrane damage and decreased deformability, leading to splenic trapping and destruction.</p>`
+                },
+                {
+                    q: `i. As the disease progresses, why does reticulocyte count increase?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>The bone marrow attempts to compensate for hemolysis by increasing red blood cell production, leading to an elevated reticulocyte count in the peripheral blood.</p>`
+                }
+            ]
+        },
+        {
+            q: `Case 6: A 3-year-old boy of African descent presents with jaundice, pallor, and dark urine after ingestion of fava beans. Laboratory tests reveal anemia, presence of Heinz bodies, elevated bilirubin levels and increased lactate dehydrogenase (LDH) levels. The emergency room physician started blood transfusion therapy immediately.`,
+            subquestions: [
+                {
+                    q: `a. What is the most likely enzymatic deficiency causing this patient's condition and which metabolic pathway is impaired in this condition?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Enzyme deficiency:</strong> Glucose-6-phosphate dehydrogenase (G6PD) deficiency.</p>
+                    <p><strong>Pathway:</strong> Pentose phosphate pathway (PPP).</p>`
+                },
+                {
+                    q: `b. Write the reaction/step of the pathway that the enzyme catalyzes.`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Reaction:</strong></p>
+                    <p>Glucose-6-phosphate + NADP⁺ → 6-Phosphogluconolactone + NADPH + H⁺</p>
+                    <p>This is the rate-limiting and committed step of the PPP.</p>`
+                },
+                {
+                    q: `c. Outline the progression of this pathway when there is an equal demand for NADPH and ATP.`,
+                    marks: `2 marks`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>When there is an equal demand for NADPH and ATP, glucose-6-phosphate is partitioned between the pentose phosphate pathway (for NADPH) and glycolysis (for ATP). The PPP produces ribose-5-phosphate and NADPH; excess ribose-5-phosphate can be converted to glycolytic intermediates (fructose-6-phosphate and glyceraldehyde-3-phosphate) via transketolase and transaldolase, feeding back into glycolysis. This coordination ensures balanced production of NADPH and ATP.</p>`
+                },
+                {
+                    q: `d. What is the main function of the deficient enzyme in red blood cells?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>The main function is to produce NADPH, which maintains reduced glutathione (GSH), protecting hemoglobin and RBC membranes from oxidative damage.</p>`
+                },
+                {
+                    q: `e. What is the underlying mechanism of red blood cell destruction in this disorder?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>Oxidative stress causes hemoglobin denaturation (Heinz bodies) and membrane damage, leading to hemolysis. The spleen removes these damaged cells.</p>`
+                },
+                {
+                    q: `f. What is the role of NADPH in protecting red blood cells?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>NADPH maintains reduced glutathione, which neutralizes reactive oxygen species and protects hemoglobin and RBC membranes from oxidative damage.</p>`
+                }
+            ]
+        }
+    ];
+
+    /* =====================================================================
+       RENDERING FUNCTIONS
+       ===================================================================== */
+    function renderSectionA() {
+        const container = document.getElementById('container-A');
+        let html = '';
+        sectionA.forEach((q, i) => {
+            const qid = 'A-q' + (i + 1);
+            html += '<div class="question" id="q-' + qid + '">';
+            html += '<p><span class="q-badge">Q' + (i + 1) + '</span> ' + q.q + '</p>';
+            html += '<div class="options">';
+            q.options.forEach((opt, j) => {
+                const L = String.fromCharCode(65 + j);
+                html += '<label><input type="radio" name="' + qid + '" value="' + L + '"> <strong>' + L + ')</strong> ' + opt + '</label>';
+            });
+            html += '</div>';
+            html += '<div class="question-feedback" id="fb-' + qid + '"></div>';
+            html += '</div>';
+        });
+        container.innerHTML = html;
+        document.getElementById('count-A').textContent = sectionA.length;
+    }
+
+    function submitSectionA() {
+        let score = 0;
+        sectionA.forEach((q, i) => {
+            const qid = 'A-q' + (i + 1);
+            const radios = document.getElementsByName(qid);
+            let selected = null;
+            for (let r = 0; r < radios.length; r++) {
+                if (radios[r].checked) { selected = radios[r]; break; }
+            }
+            const correct = q.correct.toUpperCase();
+            if (selected && selected.value === correct) score++;
+
+            let html = '<div class="answer-block"><div class="answer-list">';
+            q.options.forEach((opt, j) => {
+                const L = String.fromCharCode(65 + j);
+                let cls = 'answer-item';
+                if (L === correct) cls += ' answer-correct';
+                if (selected && selected.value === L) {
+                    cls += ' user-choice';
+                    if (L !== correct) cls += ' answer-wrong';
+                }
+                const mark = (selected && selected.value === L) ? ' ◀ your answer' : '';
+                html += '<div class="' + cls + '">' + L + ') ' + opt + mark + '</div>';
+            });
+            html += '</div>';
+
+            const correctIdx = correct.charCodeAt(0) - 65;
+            const correctText = (correctIdx >= 0 && correctIdx < q.options.length) ? q.options[correctIdx] : '';
+
+            if (!selected) {
+                html += '<div class="explanation wrong">No answer selected. Correct answer: <strong>' +
+                        correct + ') ' + correctText + '</strong>.<br>' + q.explanation + '</div>';
+            } else if (selected.value === correct) {
+                html += '<div class="explanation">✅ <strong>Correct.</strong><br>' + q.explanation + '</div>';
+            } else {
+                html += '<div class="explanation wrong">❌ <strong>Incorrect.</strong> Correct answer: <strong>' +
+                        correct + ') ' + correctText + '</strong>.<br>' + q.explanation + '</div>';
+            }
+
+            const fb = document.getElementById('fb-' + qid);
+            if (fb) fb.innerHTML = html;
+        });
+
+        const total = sectionA.length;
+        const pct = Math.round((score / total) * 100);
+        const box = document.getElementById('result-A');
+        box.style.display = 'block';
+        document.getElementById('score-A').innerText = score + ' / ' + total + '  (' + pct + '%)';
+
+        document.querySelectorAll('#panel-A input[type="radio"]').forEach(r => r.disabled = true);
+    }
+
+    function renderSectionB() {
+        const container = document.getElementById('container-B');
+        let html = '';
+        sectionB.forEach((caseItem, i) => {
+            const caseId = 'B-case' + (i + 1);
+            html += '<div class="question" id="q-' + caseId + '">';
+            html += '<p><span class="q-badge">Case ' + (i + 1) + '</span></p>';
+            html += '<div class="case-block">' + caseItem.q + '</div>';
+            caseItem.subquestions.forEach((sub, j) => {
+                const subId = caseId + '-sub' + (j + 1);
+                html += '<div class="subq">';
+                html += '<div class="subq-text">' + sub.q + ' <span class="subq-marks">(' + sub.marks + ')</span></div>';
+                html += '<button type="button" class="btn btn-sm" onclick="toggleAnswer(\'' + subId + '\')"><i class="fas fa-eye"></i> Show Model Answer</button>';
+                html += '<div class="essay-answer" id="ans-' + subId + '">' + sub.answer + '</div>';
+                html += '</div>';
+            });
+            html += '</div>';
+        });
+        container.innerHTML = html;
+        document.getElementById('count-B').textContent = sectionB.length;
+    }
+
+    function toggleAnswer(qid) {
+        const el = document.getElementById('ans-' + qid);
+        if (el) el.classList.toggle('show');
+    }
+
+    /* ─── INIT ─── */
+    renderSectionA();
+    renderSectionB();
+
+    /* ─── TAB SWITCHING ─── */
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            const target = this.dataset.target;
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+            document.getElementById('panel-' + target).classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anti-Anginal Drugs Pharmacology Flashcards</title>
+  <style>
+    :root {
+      --bg-dark: #090d16;
+      --card-bg: #111827;
+      --card-border: #1f293d;
+      --primary-green: #10b981;
+      --emerald-glow: #059669;
+      --accent-mint: #34d399;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    header {
+      width: 100%;
+      max-width: 1100px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      color: var(--accent-mint);
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .controls-container {
+      width: 100%;
+      max-width: 1100px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: space-between;
+      align-items: center;
+      background: #131c2e;
+      padding: 15px;
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+      margin-bottom: 25px;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 250px;
+      position: relative;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 8px;
+      background: #0d1322;
+      border: 1px solid #2b3952;
+      color: var(--text-main);
+      outline: none;
+      font-size: 0.9rem;
+    }
+
+    .search-box input:focus {
+      border-color: var(--primary-green);
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    button, select {
+      background: #1a263d;
+      color: var(--accent-mint);
+      border: 1px solid #2b3952;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.85rem;
+      transition: all 0.2s ease;
+    }
+
+    button:hover, select:hover {
+      background: var(--primary-green);
+      color: #000;
+      border-color: var(--primary-green);
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      max-width: 1100px;
+      height: 6px;
+      background: #1e293b;
+      border-radius: 3px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--primary-green), var(--accent-mint));
+      transition: width 0.3s ease;
+    }
+
+    .flashcards-wrapper {
+      width: 100%;
+      max-width: 1100px;
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 25px;
+      scroll-behavior: smooth;
+    }
+
+    .flashcards-wrapper::-webkit-scrollbar {
+      height: 10px;
+    }
+
+    .flashcards-wrapper::-webkit-scrollbar-track {
+      background: #0d1322;
+      border-radius: 5px;
+    }
+
+    .flashcards-wrapper::-webkit-scrollbar-thumb {
+      background: #24344d;
+      border-radius: 5px;
+    }
+
+    .card-container {
+      flex: 0 0 100%;
+      max-width: 600px;
+      height: 420px;
+      perspective: 1000px;
+      scroll-snap-align: center;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 768px) {
+      .card-container {
+        flex: 0 0 550px;
+      }
+    }
+
+    .card {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+    }
+
+    .card.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 16px;
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid var(--card-border);
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    }
+
+    .card-front {
+      background: radial-gradient(circle at top left, #1a273e, #111827);
+    }
+
+    .card-back {
+      background: radial-gradient(circle at bottom right, #062c22, #111827);
+      transform: rotateY(180deg);
+      border-color: var(--primary-green);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--accent-mint);
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .card-body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      flex: 1;
+      font-size: 1.15rem;
+      line-height: 1.6;
+      padding: 10px;
+      color: var(--text-main);
+      overflow-y: auto;
+    }
+
+    .card-back .card-body {
+      font-size: 0.95rem;
+      text-align: left;
+      align-items: flex-start;
+    }
+
+    .card-footer {
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 10px;
+    }
+
+    .bullet-list {
+      list-style-type: disc;
+      padding-left: 20px;
+      margin-bottom: 5px;
+    }
+
+    .bullet-list li {
+      margin-bottom: 4px;
+    }
+
+    .no-results {
+      width: 100%;
+      text-align: center;
+      padding: 50px;
+      color: var(--text-muted);
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Anti-Anginal Drugs Pharmacology</h1>
+    <p>Comprehensive Flashcards • Scroll Horizontally or Use Navigation Controls</p>
+  </header>
+
+  <div class="controls-container">
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search concepts, drugs, mechanisms..." oninput="filterCards()">
+    </div>
+    
+    <select id="jumpSelect" onchange="jumpToCard(this.value)">
+      <!-- Options populated via JS -->
+    </select>
+
+    <div class="btn-group">
+      <button onclick="scrollCards(-1)">← Prev</button>
+      <button onclick="scrollCards(1)">Next →</button>
+      <button onclick="shuffleCards()">🔀 Shuffle</button>
+    </div>
+  </div>
+
+  <div class="progress-bar-container">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <div class="flashcards-wrapper" id="cardsWrapper" onscroll="updateProgress()">
+    <!-- Cards will be injected by JavaScript -->
+  </div>
+
+  <script>
+    const flashcardData = [
+      { id: 1, topic: "Angina Pectoris", question: "What is Angina Pectoris?", answer: "Angina pectoris is the chest pain that occurs when the coronary blood flow is <b>insufficient to supply oxygen required by the heart</b>." },
+      { id: 2, topic: "Angina Pathophysiology", question: "What is the pathophysiology of Angina Pectoris?", answer: "Angina results from <b>transient episodes of ischemia</b> due to an imbalance between myocardial oxygen supply and oxygen demand." },
+      { id: 3, topic: "Angina Pathophysiology", question: "What factors increase myocardial oxygen demand?", answer: "Increased demand due to:<br><ul class='bullet-list'><li>Increased heart rate</li><li>Increased ventricular wall tension</li><li>Increased ventricular contractility</li><li>Exertion & Emotional stress</li></ul>" },
+      { id: 4, topic: "Angina Pathophysiology", question: "What factors decrease oxygen supply?", answer: "Decreased oxygen supply due to:<br><ul class='bullet-list'><li>Decreased coronary blood flow</li><li>Fixed Atherosclerotic narrowing</li></ul>" },
+      { id: 5, topic: "Types of Angina", question: "What are the three types of Angina?", answer: "<ol class='bullet-list'><li>Typical Stable Angina (Angina of effort)</li><li>Variant Angina (Vasospastic)</li><li>Unstable Angina</li></ol>" },
+      { id: 6, topic: "Classical Angina", question: "What is Classical (Stable) Angina?", answer: "<ul class='bullet-list'><li>Exertional angina</li><li>Produced by increased demand on the heart (e.g. increased activity, emotional excitement)</li><li>Caused by <b>coronary artery disease</b> (atherosclerosis); there is fixed narrowing of coronary arteries</li></ul>" },
+      { id: 7, topic: "Variant Angina", question: "What is Variant/Prinzmetal's angina?", answer: "<ul class='bullet-list'><li>Occurs at rest</li><li>Caused by <b>spasm</b> of the coronary arteries</li><li>Which may be superimposed on arteriosclerotic coronary artery disease</li></ul>" },
+      { id: 8, topic: "Unstable Angina", question: "What is Unstable Angina?", answer: "<ul class='bullet-list'><li>Pain occurs with <b>less exertion and at rest</b></li><li>Rapid increase in duration and severity of attacks</li><li>Rupture of artheromatous plaque attracting platelet deposition & progressive occlusion with associated coronary vasospasm</li></ul>" },
+      { id: 9, topic: "Drug Classification", question: "How are drugs used in angina pectoris classified?", answer: "<ul class='bullet-list'><li><b>Vasodilators:</b> Nitrates, Calcium channel blockers</li><li><b>Cardiac depressants:</b> Beta-blockers</li><li><b>Other drugs:</b> Metabolism modifiers; rate inhibitors</li></ul>" },
+      { id: 10, topic: "Drug Classification", question: "What are the classifications of Nitrates?", answer: "<ul class='bullet-list'><li><b>Short acting:</b> Glyceryl trinitrate (GTN, Nitroglycerine)</li><li><b>Long acting:</b> Isosorbide dinitrate (short acting by sublingual route), Isosorbide mononitrate</li></ul>" },
+      { id: 11, topic: "Drug Classification", question: "What are the classifications of Beta-blockers and Calcium channel blockers?", answer: "<ul class='bullet-list'><li><b>Beta-blockers:</b> Propranolol, Metoprolol, Atenolol</li><li><b>Calcium channel blockers:</b> Phenyl alkylamine (Verapamil), Benzothiazepine (Diltiazem), Dihydropyridines (Nifedipine, Felodipine, Amlodipine, Nitrendipine, Nimodipine, Lacidipine)</li></ul>" },
+      { id: 12, topic: "Drug Classification", question: "What are the Potassium Channel Openers and Other drugs used in angina?", answer: "<ul class='bullet-list'><li><b>Potassium Channel Opener:</b> Nicorandil</li><li><b>Others:</b> Dipyridamole, Trimetazidine, Ranolazine</li></ul>" },
+      { id: 13, topic: "Drug Classification", question: "Which drugs are used to abort or terminate an attack and which are used for prophylaxis?", answer: "<b>To abort or terminate attack:</b> GTN, Isosorbide dinitrate (sublingual or transdermal)<br><b>For prophylaxis:</b> All others" },
+      { id: 14, topic: "Nitrates MoA", question: "What is the Mechanism of Action of Nitrates?", answer: "Nitrates bind to nitrate receptors in vascular endothelium and smooth muscle cells causing <b>release of Nitric oxide</b>. Nitric oxide stimulates guanylate cyclase (Soluble isoform), increasing levels of cGMP. This in turn causes dephosphorylation of myosin light chains, leading to reduction of Ca++ entry or promoting Ca++ exit and this leads to relaxation of smooth muscles (<b>Vasodilation</b>)." },
+      { id: 15, topic: "Nitrates MoA", question: "What is the mechanism of vascular smooth muscle relaxation by nitroglycerin and calcium channel blockers?", answer: "Nitrates release NO which activates guanylyl cyclase, increasing cGMP, leading to dephosphorylation of myosin light chains and relaxation. Calcium channel blockers inhibit Ca++ entry, preventing the Ca++-Calmodulin complex from activating myosin light chain kinase, thus preventing phosphorylation and contraction." },
+      { id: 16, topic: "Nitrates Actions", question: "What are the Pharmacological actions of Nitrates?", answer: "<ol class='bullet-list'><li><b>Vascular effects:</b> Organic nitrates induce venular dilatation (at low concentration) and arteriolar vasodilatation (at high concentration). The primary effect of nitrates is marked venodilation. This increases venous capacitance leading to decreased preload which: Decreases heart size, Increases Cardiac output in heart failure due to improvement of cardiac performance, Decreased pulmonary congestion.</li><li><b>Cardiac effects:</b> nitrates have no direct effect on cardiac muscle. However, nitrates decrease blood pressure which causes increased sympathetic discharge resulting in reflex tachycardia.</li><li><b>Relaxation of smooth muscle</b> of bronchi, GIT and Genito-urinary tract.</li><li><b>Decrease platelet aggregation.</b></li></ol>" },
+      { id: 17, topic: "Nitrates Anti-Anginal Effects", question: "What are the Anti-Anginal effects of Nitrates?", answer: "<b>I- Increase Myocardial Oxygen supply:</b><br><ul class='bullet-list'><li>Vasoconstriction of large epicardial coronary vessels.</li><li>Redistribution of coronary blood flow to ischemic regions.</li><li>Dilatation of coronary collaterals.</li></ul><b>II- Decrease Myocardial Oxygen demand</b> by decrease work done by the heart through:<br><ul class='bullet-list'><li>Venodilatation which results in decreased venous return and preload.</li><li>Arteriolar dilatation which results in decreased vascular resistance and after load.</li></ul>" },
+      { id: 18, topic: "Nitrates Mechanism", question: "What is the mechanism of action of nitrates in Classical, Variant, and Unstable Angina?", answer: "<ul class='bullet-list'><li><b>Classical Angina:</b> Nitrates reduce cardiac oxygen demand. GTN produces effect within 3 min in most patients.</li><li><b>Variant Angina:</b> Nitrates increase oxygen supply by reducing coronary artery spasm.</li><li><b>Unstable angina:</b> anti-platelet aggregation agents + organic nitrates can be used in this condition (effective).</li></ul>" },
+      { id: 19, topic: "Nitrates Mechanism", question: "What is the fundamental mechanism of action of these drugs in smooth muscle cells?", answer: "Denitration of the drugs in smooth muscle cells releases <b>NO</b>, a vasodilator." },
+      { id: 20, topic: "Nitrates Pharmacokinetics", question: "What are the Pharmacokinetics of Nitrates?", answer: "<ul class='bullet-list'><li>Organic nitrates can be given by oral, sublingual (avoids 1st pass metabolism) and inhalation routes.</li><li>Organic nitrates are rapidly metabolized in the liver.</li><li><b>Nitroglycerine</b> undergoes extensive 1st pass metabolism with low bioavailability (<10%). Thus, sublingual route is preferred.</li><li><b>Isosorbide dinitrate</b> is effectively absorbed sublingually. It has slower onset of action and longer duration of action.</li><li><b>Mononitrates</b> bypass hepatic metabolism and have increased bioavailability.</li><li><b>Inhalation route:</b> very rapid absorption therefore rapidly effective.</li></ul>" },
+      { id: 21, topic: "Nitrates Preparations", question: "What are the Preparations of Nitrates?", answer: "<ol class='bullet-list'><li><b>Nitroglycerine:</b> Short acting: 0.15mg sublingual tablets. Long acting: 2.5 – 9mg 8 hours slow release tablets, Ointment, Transdermal patch.</li><li><b>Isosorbide dinitrate:</b> Short acting: 2.5 – 5mg sublingual tablets. Long acting: 10mg 6 hours oral tablets.</li><li><b>Isosorbide mononitrate:</b> Long acting: 20mg 12hr oral tablets.</li></ol>" },
+      { id: 22, topic: "Nitrates Side Effects", question: "What are the Side effects of Nitrates?", answer: "<ol class='bullet-list'><li>Flushing and throbbing headache.</li><li>Postural hypotension, dizziness and even syncope.</li><li>Tachycardia, palpitation and worsening of Angina.</li><li>Tolerance especially during chronic exposure.</li><li>Methemoglobinemia may occur after chronic high doses.</li></ol>" },
+      { id: 23, topic: "Nitrate Tolerance", question: "What is the mechanism of Tolerance to Nitrates and how is it avoided?", answer: "<b>Mechanism:</b> Chronic use of Nitrates results in oxidation of SH-groups required for nitric oxide formation leading to Tolerance.<br><b>Avoidance:</b> To avoid tolerance, patient should be free of nitrates for 6-8 hours per day." },
+      { id: 24, topic: "Nitrates Uses", question: "What are the Therapeutic uses of Nitrates?", answer: "<ol class='bullet-list'><li><b>Angina pectoris:</b> Prevention and treatment of all types of Angina.</li><li><b>C.H.F.:</b> They reduce preload and relieve pulmonary congestion.</li><li><b>Acute Myocardial infarction:</b> may reduce the area of myocardial damage and preserve viable tissues.</li><li><b>Spasmolytic</b> to relieve pain due to spasm of urinary, biliary and GIT.</li><li><b>Cyanide poisoning:</b> Sodium nitrite I.V may be used. It forms Methemoglobin that can remove cyanide from cytochrome oxidase.</li></ol>" },
+      { id: 25, topic: "Nitrates Precautions", question: "What are the Precautions during Nitrate therapy?", answer: "<ol class='bullet-list'><li>Nitroglycerine tablets should not be put in sunlight, with other drugs or cotton.</li><li>Expiry date should be checked; replenish the drug supply every three months.</li><li>Start with small dose to minimize side effects and increase patient compliance.</li><li>When taking a rapidly acting agent as Nitroglycerine, adjust the dose and instruct the patient to sit or lay down. If syncope occurs, patient should remain supine.</li><li>Transdermal formulations are long acting (24 hours). Nitroglycerine patches should be removed after 10-12 hours to avoid tolerance.</li><li>Nitrates should not be rapidly stopped to avoid withdrawal symptoms.</li></ol>" },
+      { id: 26, topic: "Nitrate Interactions", question: "What is the important Drug Interaction of Nitrates?", answer: "Nitrates increase cGMP. Phosphodiesterase 5 (Sildenafil, vardenafil, tadalafil) decreases cGMP breakdown. Coadministration leads to excessive smooth muscle relaxation (erectile tissue, blood vessels), causing severe hypotension." },
+      { id: 27, topic: "Beta-Blockers MoA", question: "What is the Mechanism of Anti-Anginal effect of Beta-blockers?", answer: "They improve the balance between myocardial oxygen supply and demand. This is achieved through:<br><b>A- Increasing Oxygen supply:</b> thereby increases coronary blood flow. Beta-blockers decrease heart rate leading to increased diastolic period producing coronary filling resulting in increased coronary blood flow and oxygen supply.<br><b>B- Decreasing Oxygen demand:</b> thereby decreasing work done by the heart through:<br><ol class='bullet-list'><li>Decreased heart rate and myocardial contractility.</li><li>Decreased B.P and afterload.</li></ol>" },
+      { id: 28, topic: "Beta-Blockers Indications", question: "What are the Indications for Beta-blockers in Angina?", answer: "<ol class='bullet-list'><li><b>Angina of effort:</b> Beta-blockers decrease the severity and frequency of attacks.</li><li><b>Unstable Angina:</b> Beta-blockers decrease recurrent episodes and decrease progression to acute Myocardial infarction.</li></ol><b>Note:</b> Beta-blockers produce coronary spasm and therefore they are contraindicated in Vasospastic Angina." },
+      { id: 29, topic: "Beta-Blockers Preparations", question: "What are the Preparations of Beta-blockers?", answer: "<ul class='bullet-list'><li>Propranolol</li><li>Timolol</li><li>Metoprolol</li><li>Atenolol</li></ul>" },
+      { id: 30, topic: "Calcium Channel Blockers", question: "What is the Mechanism of Anti-Anginal effect of Calcium Channel Blockers (CCBs)?", answer: "Calcium channel blockers improve the balance between myocardial oxygen supply and demand. This is achieved by:<br><b>A- Increasing Oxygen supply:</b> increases coronary blood flow. CCBs produce coronary vasodilatation.<br><b>B- Decreasing Oxygen demand:</b> Decreases work done by the heart through:<br><ol class='bullet-list'><li>Decreasing heart rate and myocardial contractility.</li><li>Decreasing afterload: CCBs produce arteriolar vasodilatation.</li></ol>" },
+      { id: 31, topic: "CCBs Indications", question: "What are the Indications for Calcium Channel Blockers in Angina?", answer: "CCBs are effective in all types of Angina:<br><ol class='bullet-list'><li><b>Angina of Effort:</b> CCBs are effective in the treatment of exercise-induced Angina.</li><li><b>Variant Angina:</b> CCBs are effective in relieving coronary spasm.</li><li><b>Unstable Angina:</b> CCBs should be added in refractory cases.</li></ol>" },
+      { id: 32, topic: "CCBs Preparations", question: "What are the Preparations of Calcium Channel Blockers?", answer: "Verapamil, Diltiazem, Amlodipine, Nicardipine, Nifedipine." },
+      { id: 33, topic: "CCBs General Effects", question: "What are the general effects of Calcium Channel Blockers?", answer: "<ul class='bullet-list'><li>Negative inotropic effect → Oxygen demand.</li><li>Recovery of channels is blocked by verapamil & diltiazem (Depression of pacemaker activity and conduction).</li></ul>" },
+      { id: 34, topic: "CCBs Selectivity", question: "Which CCBs are more cardio-selective and which are more blood vessel selective?", answer: "Verapamil mainly affects the heart; nifedipine has a greater effect on smooth muscles of vessels than the heart itself, diltiazem is intermediate in its actions." },
+      { id: 35, topic: "Verapamil", question: "What are the characteristics of Verapamil (Phenyl alkylamine)?", answer: "<ul class='bullet-list'><li>It dilates arterioles and decreases total peripheral resistance.</li><li>It slows atrioventricular (AV) conduction directly and decreases heart rate, contractility, blood pressure, and oxygen demand.</li><li>It also has some α adrenergic blocking activity.</li><li>Verapamil has greater negative inotropic effects than amlodipine, but it is a weaker vasodilator.</li><li><b>Verapamil should not be given with β blockers, digoxin, cardiac depressants like quinidine and disopyramide.</b></li></ul>" },
+      { id: 36, topic: "Diltiazem", question: "What are the characteristics of Diltiazem (Benzothiazepine)?", answer: "<ul class='bullet-list'><li>Diltiazem also slows AV conduction, decreases the rate of firing of the sinus node pacemaker, and is also a coronary artery vasodilator.</li><li>Diltiazem can relieve coronary artery spasm and is particularly useful in patients with variant angina.</li><li>It is somewhat less potent vasodilator than nifedipine and verapamil, and has modest direct negative inotropic action, but direct depression of SA node and A-V conduction are equivalent to verapamil.</li></ul>" },
+      { id: 37, topic: "Nifedipine", question: "What are the characteristics of Nifedipine (Dihydropyridine)?", answer: "<ul class='bullet-list'><li>Nifedipine is the prototype DHP with a rapid onset and short duration of action. It causes arteriolar dilatation and decreases total peripheral resistance.</li><li>Nifedipine is usually administered as an extended-release oral formulation.</li><li>It causes direct depressant action on heart in higher dose.</li><li><b>ADR:</b> Frequent side effects are palpitation, flushing, ankle edema, hypotension, headache, drowsiness and nausea. Nifedipine has paradoxically increased the frequency of angina in some patients.</li></ul>" },
+      { id: 38, topic: "CCBs Pharmacokinetics", question: "What are the Pharmacokinetics of CCBs?", answer: "<ul class='bullet-list'><li>Well absorbed orally</li><li>High first pass metabolism</li><li>On chronic use verapamil decreases its own metabolism</li><li>Highly plasma protein bound</li><li>T1/2 ranges from: 2-6hrs, but that of amlodipine is exceptionally long</li></ul>" },
+      { id: 39, topic: "CCBs Adverse Effects", question: "What are the Adverse Effects of CCBs?", answer: "<ul class='bullet-list'><li>Reflex tachycardia (nifedipine)</li><li>Headache (Verapamil, Nifedipine) & flushing (Nifedipine)</li><li>Dizziness, Lethargy</li><li>Palpitations (Mainly nifedipine)</li><li>Bradycardia (Verapamil)</li><li>Ankle oedema with chronic use – due to increased capillary pressure from arteriolar dilatation (nifedipine)</li><li>Constipation (Verapamil)</li><li>Risk of heart failure or heart block with verapamil and diltiazem</li></ul>" },
+      { id: 40, topic: "CCBs Interactions", question: "What are the Drug Interactions of CCBs?", answer: "<ul class='bullet-list'><li>Reduced effect with hepatic enzyme inducers</li><li>Increased effect with hepatic enzyme inhibitors</li><li>Aggravation of AV block with heart failure with β-blockers</li></ul>" },
+      { id: 41, topic: "CCBs Uses", question: "What are the USES of CCBs?", answer: "<ul class='bullet-list'><li>Angina Pectoris</li><li>Cardiac arrhythmias (Verapamil & Diltiazem) highly effective in PSVT and in supraventricular arrhythmias</li><li>Hypertrophic cardiomyopathy (Negative inotropic action of verapamil can be salutary in this condition)</li></ul>" },
+      { id: 42, topic: "CCBs Other Uses", question: "What are the Other Uses of CCBs?", answer: "<ul class='bullet-list'><li>Nifedipine is an alternative drug used in management of premature labour</li><li>Verapamil can also be used to suppress migraine headache and nocturnal leg cramps</li><li>Raynaud's (DHP)</li></ul>" },
+      { id: 43, topic: "Nicorandil", question: "What is the Mechanism of Action of Nicorandil (K+ channel opener)?", answer: "Antianginal action of Nicorandil is mediated through ATP sensitive K channel-causing increased outflow of K+ ion since intracellular concentration is higher, this leads to hyperpolarization of vascular smooth muscles. Prominent action is smooth muscle relaxation. Nicorandil also acts as NO donor." },
+      { id: 44, topic: "Nicorandil", question: "What is the Mechanism of action of Nicorandil in treating Angina?", answer: "It has both arteriolar and venodilator effects." },
+      { id: 45, topic: "Nicorandil", question: "What are the ADRs of Nicorandil?", answer: "Flushing, palpitations, weakness, headache, dizziness, nausea, vomiting, painful aphthous ulcers in mouth." },
+      { id: 46, topic: "Other Anti-Anginals", question: "What is the pharmacological benefit of Dipyridamole?", answer: "Dipyridamole inhibits platelet aggregation. It is a powerful coronary dilator." },
+      { id: 47, topic: "Other Anti-Anginals", question: "What is the MoA of Trimetazidine?", answer: "The mechanism of action of trimetazidine is uncertain, but it may improve cellular tolerance to ischaemia by inhibiting mitochondrial long chain 3-ketoacyl-CoA thiolase." },
+      { id: 48, topic: "Other Anti-Anginals", question: "What is the MoA of Ranolazine?", answer: "This novel antianginal drug primarily acts by inhibiting a late Na+ current (late INa) in the myocardium." },
+      { id: 49, topic: "Other Anti-Anginals", question: "What is the MoA of Ivabradine?", answer: "This 'pure' heart rate lowering antianginal drug has been introduced recently as an alternative to β blockers. It blocks cardiac pacemaker (sino-atrial) cell 'f' channels." },
+      { id: 50, topic: "Other Anti-Anginals", question: "How does Oxyphedrine help in treating angina?", answer: "Improve myocardial metabolism." },
+      { id: 51, topic: "Management of Angina", question: "What are the general management steps for Angina Pectoris?", answer: "<ol class='bullet-list'><li><b>Avoid Risk Factors:</b> Smoking, Diet, Treatment of hypertension, Diabetes, Hyperlipidemia and Thyrotoxicosis.</li><li><b>Reduce risk of Myocardial Infarction by:</b> Anti-platelets e.g. Aspirin, Hypolipidemic agents e.g. Clofibrate.</li><li><b>Anti-Anginal drugs:</b> See specific types below.</li></ol>" },
+      { id: 52, topic: "Management of Angina", question: "How is Angina of Effort managed?", answer: "<ul class='bullet-list'><li><b>Acute attack:</b> Nitroglycerine, Isosorbide dinitrate sublingual tablets.</li><li><b>Prophylaxis:</b> Long acting Nitrates, Beta-blockers, CCBs.</li><li>If response to a single drug is inadequate, a drug from a different class is added to increase beneficial effects and decrease undesirable effects.</li></ul>" },
+      { id: 53, topic: "Management of Angina", question: "How is Vasospastic Angina managed?", answer: "<ul class='bullet-list'><li>Nitrates and CCBs are effective in relieving and preventing ischemic attacks.</li><li>Beta-blockers are contraindicated because they produce coronary spasm.</li></ul>" },
+      { id: 54, topic: "Management of Angina", question: "How is Unstable Angina managed?", answer: "<ul class='bullet-list'><li>Anti-platelets to decrease incidence of thrombosis.</li><li>I.V Heparin.</li><li>Beta-blockers, CCBs and Nitrates.</li><li>Revascularization and Angioplasty.</li></ul>" },
+      { id: 55, topic: "Acute MI Therapy", question: "What is the Drug therapy of Acute Myocardial Infarction (Acute uncomplicated)?", answer: "<ol class='bullet-list'><li><b>Oxygen:</b> Inhalation of O2 increases arterial PO2 and hence increases the diffusion of O2 into the ischemic myocardium.</li><li><b>Relief of pain:</b> Morphine sulphate is given in an initial dose of 2-4mg that can be repeated. It produces potent analgesia and reduces myocardial O2 demand through marked vasodilatation.</li><li><b>Sedation</b> can be achieved by Diazepam (5mg) given 4 times day.</li><li><b>Measures to limit the size of infarction:</b> Beta-blockers, Nitrates or Calcium channel blockers can be used by the intravenous route; these agents reduce myocardial oxygen demand. Hyaluronidase and metabolic support such as Glucose, Insulin, Potassium or free radical scavengers can be used. Reperfusion by fibrinolytic therapy (e.g. Streptokinase).</li></ol>" }
+    ];
+
+    let activeData = [...flashcardData];
+
+    function renderCards(data) {
+      const wrapper = document.getElementById('cardsWrapper');
+      const select = document.getElementById('jumpSelect');
+      
+      wrapper.innerHTML = '';
+      select.innerHTML = '<option value="">Jump to Card...</option>';
+
+      if (data.length === 0) {
+        wrapper.innerHTML = '<div class="no-results">No matching flashcards found.</div>';
+        return;
+      }
+
+      data.forEach((card, index) => {
+        const cardElem = document.createElement('div');
+        cardElem.className = 'card-container';
+        cardElem.id = `card-${index}`;
+        cardElem.innerHTML = `
+          <div class="card" onclick="flipCard(this)">
+            <div class="card-face card-front">
+              <div class="card-header">
+                <span>${card.topic}</span>
+                <span>#${card.id}</span>
+              </div>
+              <div class="card-body">
+                <p>${card.question}</p>
+              </div>
+              <div class="card-footer">
+                Click to Reveal Answer ↷
+              </div>
+            </div>
+            <div class="card-face card-back">
+              <div class="card-header">
+                <span>Answer</span>
+                <span>#${card.id}</span>
+              </div>
+              <div class="card-body">
+                <div>${card.answer}</div>
+              </div>
+              <div class="card-footer">
+                Click to Flip Back ↶
+              </div>
+            </div>
+          </div>
+        `;
+        wrapper.appendChild(cardElem);
+
+        const opt = document.createElement('option');
+        opt.value = index;
+        opt.textContent = `Card ${card.id}: ${card.topic} - ${card.question.substring(0, 30)}...`;
+        select.appendChild(opt);
+      });
+
+      updateProgress();
+    }
+
+    function flipCard(cardElem) {
+      cardElem.classList.toggle('flipped');
+    }
+
+    function scrollCards(direction) {
+      const wrapper = document.getElementById('cardsWrapper');
+      const cardWidth = wrapper.querySelector('.card-container').offsetWidth + 20;
+      wrapper.scrollBy({ left: direction * cardWidth, behavior: 'smooth' });
+    }
+
+    function jumpToCard(index) {
+      if (index === '') return;
+      const targetCard = document.getElementById(`card-${index}`);
+      if (targetCard) {
+        targetCard.scrollIntoView({ behavior: 'smooth', inline: 'center' });
+      }
+    }
+
+    function shuffleCards() {
+      activeData.sort(() => Math.random() - 0.5);
+      renderCards(activeData);
+    }
+
+    function filterCards() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      activeData = flashcardData.filter(c => 
+        c.question.toLowerCase().includes(query) || 
+        c.answer.toLowerCase().includes(query) ||
+        c.topic.toLowerCase().includes(query)
+      );
+      renderCards(activeData);
+    }
+
+    function updateProgress() {
+      const wrapper = document.getElementById('cardsWrapper');
+      const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
+      const currentScroll = wrapper.scrollLeft;
+      const percentage = maxScroll > 0 ? (currentScroll / maxScroll) * 100 : 100;
+      document.getElementById('progressBar').style.width = `${Math.min(100, Math.max(5, percentage))}%`;
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+      if (e.key === 'ArrowRight') scrollCards(1);
+      if (e.key === 'ArrowLeft') scrollCards(-1);
+    });
+
+    renderCards(activeData);
+  </script>
+</body>
+</html>

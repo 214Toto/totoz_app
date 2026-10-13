@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2023 Biochemistry Test 1 – Interactive Exam</title>
+    <style>
+        :root {
+            --primary: #1a6b6b;
+            --accent: #2ea8a0;
+            --dark: #0f2a2a;
+            --light: #f4f8f7;
+            --radius: 12px;
+            --shadow: 0 4px 14px rgba(0, 30, 30, 0.08);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #edf3f2;
+            color: var(--dark);
+            min-height: 100vh;
+            padding-top: 72px;
+        }
+        header {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            background: linear-gradient(145deg, var(--primary), var(--dark));
+            color: #fff; padding: 0.6rem 0;
+            box-shadow: 0 4px 18px rgba(0, 20, 20, 0.25);
+        }
+        .header-inner {
+            max-width: 1000px; margin: 0 auto; padding: 0 1.5rem;
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 0.3rem;
+        }
+        .logo { display: flex; align-items: center; gap: 0.6rem; }
+        .logo i { font-size: 1.5rem; color: #8dd9d4; }
+        .logo h1 { font-size: 1.15rem; font-weight: 700; }
+        .badge {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 0.2rem 1rem; border-radius: 40px;
+            font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+            color: #b3e6e0;
+        }
+        .container { max-width: 920px; margin: 0 auto; padding: 0 1.2rem 2.5rem; }
+        .tab-bar { display: flex; gap: 0.5rem; margin: 0.5rem 0 1.5rem 0; flex-wrap: wrap; }
+        .tab-btn {
+            background: #dce8e8; border: none; padding: 0.5rem 1.8rem;
+            border-radius: 40px; font-weight: 600; font-size: 0.95rem;
+            color: var(--dark); cursor: pointer; transition: 0.2s;
+        }
+        .tab-btn:hover { background: #c0d6d6; }
+        .tab-btn.active {
+            background: var(--primary); color: #fff;
+            box-shadow: 0 2px 10px rgba(26, 107, 107, 0.25);
+        }
+        .tab-panel { display: block; }
+        .tab-panel.hidden { display: none; }
+        .section-title {
+            font-size: 1.25rem; font-weight: 700; color: var(--primary);
+            margin: 0 0 0.8rem 0; padding-bottom: 0.4rem;
+            border-bottom: 3px solid rgba(26, 107, 107, 0.18);
+            display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;
+        }
+        .section-title .count {
+            font-size: 0.7rem; font-weight: 600; background: var(--primary);
+            color: #fff; border-radius: 40px; padding: 0 0.7rem; line-height: 1.7;
+        }
+        .section-subtitle { color: #4f6e6e; font-size: 0.9rem; margin-bottom: 1rem; }
+        .question {
+            background: #ffffff; border-radius: var(--radius);
+            padding: 1.1rem 1.2rem 0.2rem 1.2rem; margin-bottom: 1rem;
+            box-shadow: var(--shadow); border: 1px solid rgba(26, 107, 107, 0.05);
+        }
+        .question .q-badge {
+            display: inline-block; background: var(--primary); color: #fff;
+            border-radius: 40px; padding: 0 0.65rem; font-size: 0.7rem;
+            font-weight: 700; line-height: 1.6; margin-right: 0.4rem;
+        }
+        .question p { font-weight: 600; font-size: 0.97rem; margin-bottom: 0.4rem; color: var(--dark); }
+        .options label {
+            display: block; background: #fafcfc; border: 1px solid #dde8e8;
+            border-radius: 7px; padding: 0.4rem 0.85rem; margin-top: 0.4rem;
+            cursor: pointer; transition: all 0.15s; font-weight: 450; font-size: 0.92rem;
+        }
+        .options label:hover { background: #e8f5f4; border-color: var(--accent); }
+        .options input[type="radio"] { margin-right: 0.5rem; accent-color: var(--primary); }
+        .question-feedback { margin-top: 0.8rem; padding: 0.4rem 0 0.1rem 0; border-top: 1px dashed #dce6e6; }
+        .answer-block strong { display: block; margin-bottom: 3px; color: var(--primary); font-size: 0.78rem; text-transform: uppercase; }
+        .answer-list { display: flex; flex-direction: column; gap: 2px; }
+        .answer-item {
+            padding: 4px 10px; border-radius: 5px; border: 1px solid #e4edec;
+            background: #ffffff; font-weight: 500; font-size: 0.88rem;
+        }
+        .answer-correct { background: #e8f7ef; border-color: #a8d8c0; color: #0a4f3a; }
+        .answer-wrong { background: #fde9ea; border-color: #f5b8b8; color: #8a1f2b; }
+        .user-choice { outline: 2px dashed rgba(0, 0, 0, 0.06); }
+        .explanation {
+            margin-top: 5px; padding: 8px 13px; border-radius: 7px;
+            background: #f0f8f6; color: #065f4a; font-size: 0.88rem;
+            line-height: 1.55; border-left: 4px solid var(--accent);
+        }
+        .explanation.wrong { background: #fdf1f1; color: #7a1f1f; border-left-color: #e68080; }
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            color: #fff; border: none; padding: 0.55rem 1.8rem;
+            border-radius: var(--radius); font-weight: 600; font-size: 0.95rem;
+            cursor: pointer; transition: transform 0.15s, box-shadow 0.2s;
+            box-shadow: 0 4px 14px rgba(26, 107, 107, 0.25);
+        }
+        .btn:hover { transform: scale(1.02); box-shadow: 0 6px 24px rgba(26, 107, 107, 0.32); }
+        .btn:active { transform: scale(0.96); }
+        .btn-sm {
+            padding: 0.35rem 1.1rem; font-size: 0.82rem;
+            border-radius: 8px; margin-top: 0.5rem;
+        }
+        .submit-wrap { text-align: center; margin: 1.5rem 0 1.8rem; }
+        .result {
+            margin-top: 1.5rem; padding: 1.5rem 1.5rem 0.8rem;
+            background: #eaf6f4; border-radius: var(--radius);
+            text-align: center; display: none; border: 1px solid #b8dbd6;
+        }
+        .result h3 { font-size: 1.1rem; font-weight: 600; color: var(--dark); }
+        .score { font-size: 2.4rem; font-weight: 800; color: var(--primary); margin: 0.1rem 0 0.2rem; }
+        .text-muted { color: #4f6e6e; font-size: 0.9rem; }
+        .hidden { display: none !important; }
+        .essay-answer {
+            margin-top: 0.8rem; padding: 1rem 1.2rem;
+            background: #f0f8f6; border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            font-size: 0.92rem; line-height: 1.6;
+            display: none;
+        }
+        .essay-answer.show { display: block; }
+        .essay-answer h4 { color: var(--primary); margin-bottom: 0.4rem; font-size: 0.95rem; }
+        .essay-answer ul, .essay-answer ol { margin-left: 1.2rem; margin-bottom: 0.5rem; }
+        .essay-answer li { margin-bottom: 0.2rem; }
+        .case-block {
+            background: #f8fdfc; border-left: 4px solid var(--accent);
+            padding: 0.8rem 1rem; margin: 0.8rem 0; border-radius: 0 8px 8px 0;
+            font-size: 0.93rem; line-height: 1.6;
+        }
+        .subq {
+            background: #ffffff; border-radius: 10px;
+            padding: 0.9rem 1rem 0.2rem 1rem; margin-top: 0.8rem;
+            border: 1px solid #dde8e8;
+        }
+        .subq .subq-text { font-weight: 500; font-size: 0.93rem; margin-bottom: 0.3rem; }
+        .subq .subq-marks { font-size: 0.75rem; color: #6b8a8a; font-weight: 600; }
+        @media (max-width: 700px) {
+            body { padding-top: 68px; }
+            .logo h1 { font-size: 0.95rem; }
+            .header-inner { padding: 0 1rem; flex-direction: column; align-items: stretch; gap: 0.2rem; }
+            .badge { align-self: flex-start; }
+            .question { padding: 0.9rem 0.9rem 0.1rem 0.9rem; }
+            .section-title { font-size: 1.05rem; }
+            .score { font-size: 2rem; }
+            .btn { padding: 0.5rem 1.2rem; font-size: 0.85rem; }
+            .tab-btn { padding: 0.4rem 1.2rem; font-size: 0.85rem; }
+        }
+        @media (max-width: 420px) {
+            .logo h1 { font-size: 0.8rem; }
+            .options label { font-size: 0.85rem; padding: 0.35rem 0.65rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-inner">
+            <div class="logo">
+                <i class="fas fa-flask"></i>
+                <h1>2023 Biochemistry Test 1 – Interactive Exam</h1>
+            </div>
+            <span class="badge"><i class="fas fa-pencil-alt"></i> &nbsp;All Sections</span>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+
+            <div class="tab-bar">
+                <button class="tab-btn active" data-target="A">✅ Section A – MCQs (30)</button>
+                <button class="tab-btn" data-target="B">📝 Section B – Case Questions (6)</button>
+            </div>
+
+            <!-- ==================== SECTION A ==================== -->
+            <div id="panel-A" class="tab-panel">
+                <div class="section-title">
+                    <i class="fas fa-list-ul"></i> Section A – Multiple Choice Questions
+                    <span class="count" id="count-A">0</span>
+                </div>
+                <p class="section-subtitle">Circle the best answer. Select an option for each question, then click <strong>Submit All MCQs</strong> below.</p>
+                <form id="form-A">
+                    <div id="container-A"></div>
+                    <div class="submit-wrap">
+                        <button type="button" class="btn" onclick="submitSectionA()">
+                            <i class="fas fa-check-circle"></i> Submit All MCQs
+                        </button>
+                    </div>
+                </form>
+                <div class="result" id="result-A">
+                    <h3><i class="fas fa-chart-simple"></i> Your Score</h3>
+                    <div class="score" id="score-A">0</div>
+                    <p class="text-muted">Review the feedback below each question.</p>
+                </div>
+            </div>
+
+            <!-- ==================== SECTION B ==================== -->
+            <div id="panel-B" class="tab-panel hidden">
+                <div class="section-title">
+                    <i class="fas fa-book-open"></i> Section B – Case-Based Short Answer Questions
+                    <span class="count" id="count-B">0</span>
+                </div>
+                <p class="section-subtitle">Each question has multiple parts. Click <strong>Show Model Answer</strong> for each part to compare.</p>
+                <div id="container-B"></div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+    /* =====================================================================
+       SECTION A — 30 MCQs (2023 Biochemistry Test 1)
+       ===================================================================== */
+    const sectionA = [
+        {
+            q: `A newborn child had dyspepsia phenomena (diarrhea, vomiting) after feeding with milk. After additional feeding with glucose the morbid symptoms disappeared. The insufficient activity of what enzyme that takes part in carbohydrate breakdown causes the indicated disorders?`,
+            options: [
+                `Isomaltase.`,
+                `Maltase.`,
+                `Saccharase.`,
+                `Amylase.`,
+                `Lactase.`
+            ],
+            correct: `E`,
+            explanation: `The infant presented with dyspepsia after milk feeding, which resolved upon glucose administration. This is classic for <strong>lactose intolerance</strong> due to <strong>lactase deficiency</strong>. Lactase is the brush-border enzyme that hydrolyzes lactose (milk sugar) into glucose and galactose. In its absence, undigested lactose is fermented by colonic bacteria, causing osmotic diarrhea and gas. Glucose feeding bypasses the need for lactase, directly providing an absorbable monosaccharide. Isomaltase, maltase, and saccharase are other brush-border disaccharidases but not specific to milk. Amylase digests starch, not lactose.`
+        },
+        {
+            q: `Post-translational covalent modification is an important factor in the regulation of the enzymes' activity. Choose the mechanism of regulation of glycogen phosphorylase and glycogen synthetase activities from the following:`,
+            options: [
+                `Restricted proteolysis`,
+                `Phosphorylation-dephosphorylation`,
+                `ADP-ribosylation`,
+                `Methylation`,
+                `Adenylation`
+            ],
+            correct: `B`,
+            explanation: `Glycogen phosphorylase and glycogen synthase are regulated by <strong>phosphorylation-dephosphorylation</strong>. Phosphorylation by kinases (e.g., phosphorylase kinase) activates glycogen phosphorylase (promoting glycogen breakdown) and inhibits glycogen synthase (preventing glycogen synthesis). Dephosphorylation by phosphatases reverses these effects. This covalent modification is controlled by hormones like glucagon and insulin. Restricted proteolysis, ADP-ribosylation, methylation, and adenylation are other regulatory mechanisms but not the primary ones for these enzymes.`
+        },
+        {
+            q: `A patient with methanol poisoning was prescribed oral or intravenous ethanol administration at high doses. What is biochemical mechanism of such treatment?`,
+            options: [
+                `Uncompetitive inhibition of alcohol dehydrogenase`,
+                `Allosteric activation of alcohol dehydrogenase`,
+                `Acceleration of methanol excretion by gastrointestinal tract`,
+                `Increase of methanol detoxication by liver`,
+                `Competitive inhibition of alcohol dehydrogenase`
+            ],
+            correct: `E`,
+            explanation: `Ethanol is administered as a <strong>competitive inhibitor of alcohol dehydrogenase (ADH)</strong>. ADH has a higher affinity for ethanol than for methanol. By saturating ADH with ethanol, the metabolism of methanol to toxic formaldehyde and formic acid is delayed, allowing methanol to be excreted unchanged by the kidneys or dialyzed. This prevents metabolic acidosis and optic nerve damage. Uncompetitive inhibition, allosteric activation, and increased detoxication are not the mechanisms.`
+        },
+        {
+            q: `A 16-month-old girl was found to have ingested approximately 30 mL of an acetonitrile based cosmetic nail polish remover when she vomited 15 minutes post-ingestion. No treatment was recommended because it was confused with an acetone based nail polish remover. Respiratory distress developed sometime after the child was put to bed, and she was found dead the following day. Inhibition of which of the ETC enzymes was the most likely cause of this child's death?`,
+            options: [
+                `Cytochrome oxidase`,
+                `ATP synthase`,
+                `NADH-CoQ Reductase`,
+                `Succinate-CoQ Reductase`,
+                `CoQ-Cyt c Reductase`
+            ],
+            correct: `A`,
+            explanation: `Acetonitrile is metabolized to <strong>cyanide</strong>, which is a potent inhibitor of <strong>cytochrome oxidase (Complex IV)</strong> of the electron transport chain. Cyanide binds to the ferric (Fe³⁺) form of cytochrome a₃, preventing electron transfer to oxygen. This halts oxidative phosphorylation, causing rapid ATP depletion, histotoxic hypoxia, and death. ATP synthase, NADH-CoQ reductase, succinate-CoQ reductase, and CoQ-Cyt c reductase are not inhibited by cyanide.`
+        },
+        {
+            q: `In some individuals, ingesting fava beans leads to hemolytic anemia. Which of the following enzymes may be deficient in these individuals?`,
+            options: [
+                `Glycogen phosphorylase`,
+                `Glycogen synthase`,
+                `Glucose-6-P-dehydrogenase`,
+                `Glucose-6-Phosphate Isomerase`,
+                `Glucose-6-Phosphate Isomerase`
+            ],
+            correct: `C`,
+            explanation: `Fava bean ingestion causing hemolytic anemia is classic for <strong>G6PD (glucose-6-phosphate dehydrogenase) deficiency</strong>. G6PD is the rate-limiting enzyme of the pentose phosphate pathway, producing NADPH to maintain reduced glutathione. Without NADPH, oxidative stress from fava beans (containing divicine and isouramil) causes hemoglobin denaturation (Heinz bodies) and RBC membrane damage, leading to hemolysis. Glycogen phosphorylase, glycogen synthase, and glucose-6-phosphate isomerase deficiencies do not cause fava bean-induced hemolysis.`
+        },
+        {
+            q: `A 55-year-old chronic alcoholic was brought to the emergency by his friends after he fell unconscious during their night gathering in the local bar and they could not revive him. The attending physician ordered IV glucose and an injection of thiamine. The patient was well oriented and alert the following day; his vital signs were stable, his blood glucose was normal, and he was discharged from the hospital. Which enzyme is thiamine dependent and vital for glucose oxidation in the brain?`,
+            options: [
+                `Alpha-ketoglutarate dehydrogenase`,
+                `Transaldolase`,
+                `Pyruvate kinase`,
+                `Pyruvate dehydrogenase complex`,
+                `Pyruvate carboxylase`
+            ],
+            correct: `D`,
+            explanation: `Thiamine (vitamin B1) is a precursor of thiamine pyrophosphate (TPP), a coenzyme required by <strong>pyruvate dehydrogenase complex (PDH)</strong>, α-ketoglutarate dehydrogenase, and transketolase. PDH catalyzes the oxidative decarboxylation of pyruvate to acetyl-CoA, linking glycolysis to the TCA cycle. In thiamine deficiency, PDH activity falls, causing pyruvate accumulation and decreased acetyl-CoA production, leading to lactic acidosis and neurological symptoms (Wernicke-Korsakoff syndrome). The brain is highly dependent on glucose oxidation, making PDH vital. Transaldolase, pyruvate kinase, and pyruvate carboxylase are not TPP-dependent.`
+        },
+        {
+            q: `A decrease in ATP/ADP+AMP ratio may increase the Krebs cycle speed because allosterically it activates:`,
+            options: [
+                `malate dehydrogenase`,
+                `citrate synthase`,
+                `α-ketoglutarate dehydrogenase`,
+                `isocitrate dehydrogenase`,
+                `succinate dehydrogenase`
+            ],
+            correct: `D`,
+            explanation: `A decrease in ATP/ADP+AMP ratio indicates low energy charge. <strong>Isocitrate dehydrogenase</strong> is allosterically activated by ADP and AMP, and inhibited by ATP and NADH. This ensures that the TCA cycle speeds up when energy is needed. Citrate synthase is inhibited by ATP, NADH, and succinyl-CoA. α-Ketoglutarate dehydrogenase is inhibited by ATP, NADH, and succinyl-CoA. Malate dehydrogenase and succinate dehydrogenase are not the primary allosteric regulators of TCA cycle flux.`
+        },
+        {
+            q: `A 3-month-old infant presents with hepatosplenomegaly and failure to thrive. A liver biopsy reveals glycogen with an abnormal, amylopectin like structure with long outer chains and missing branches. Which enzyme would most likely be deficient?`,
+            options: [
+                `Glycogen phosphorylase`,
+                `Glycogen synthase`,
+                `Glucose-6-Phosphatase`,
+                `Phosphofructokinase`,
+                `Branching enzyme`
+            ],
+            correct: `E`,
+            explanation: `The liver biopsy shows glycogen with an <strong>amylopectin-like structure</strong> (long outer chains, missing branches), which is classic for <strong>branching enzyme deficiency (Glycogen Storage Disease Type IV, Andersen disease)</strong>. Without branching enzyme, glycogen cannot form normal branches, leading to accumulation of abnormal glycogen that is poorly soluble and causes liver damage, hepatosplenomegaly, and failure to thrive. Glycogen phosphorylase deficiency (GSD V, McArdle) affects muscle. Glycogen synthase deficiency (GSD 0) causes fasting hypoglycemia. Glucose-6-phosphatase deficiency (GSD I, von Gierke) causes hepatomegaly and hypoglycemia but glycogen structure is normal. Phosphofructokinase deficiency (GSD VII, Tarui) affects muscle.`
+        },
+        {
+            q: `A 30-year-old man has been fasting for religious reasons for several days. His brain has reduced its need for glucose by using which of the following substances as an alternative source of energy?`,
+            options: [
+                `Lactate`,
+                `Pyruvate`,
+                `Fructose`,
+                `Galactose`,
+                `Beta-hydroxybutarate`
+            ],
+            correct: `E`,
+            explanation: `During prolonged fasting, the brain adapts to use <strong>ketone bodies</strong>, primarily <strong>β-hydroxybutyrate</strong> and acetoacetate, as alternative fuels. This spares glucose for tissues that absolutely require it (e.g., RBCs, renal medulla). After several days of fasting, ketone bodies can supply up to 70% of the brain's energy needs. Lactate, pyruvate, fructose, and galactose are not the primary alternative fuels for the brain during fasting.`
+        },
+        {
+            q: `A 4-year-old boy presented with seizures, progressive muscle weakness, and encephalopathy. Accumulation of lactate, a product of anaerobic metabolism of glucose, in the cerebrospinal fluid (CSF) suggested a defect in mitochondrial oxidative metabolism. Muscle mitochondria were isolated for study. The activities of the individual Complexes I, II, III, and IV were normal, but the combined activities of I + III and II + III were significantly decreased. Treatment with which coenzyme will improve the muscle weakness.`,
+            options: [
+                `TPP`,
+                `PALP`,
+                `Coenzyme Q10`,
+                `FMN, FAD`,
+                `NAD, NADP`
+            ],
+            correct: `C`,
+            explanation: `The combined activities of Complexes I + III and II + III are decreased while individual complexes are normal, indicating a defect in the mobile electron carrier <strong>ubiquinone (Coenzyme Q10)</strong> that shuttles electrons from Complexes I and II to Complex III. Coenzyme Q10 supplementation can improve muscle weakness in such patients. TPP (thiamine pyrophosphate), PALP (pyridoxal phosphate), FMN/FAD, and NAD/NADP are cofactors for other enzymes but not the mobile carrier between these complexes.`
+        },
+        {
+            q: `Chronic alcoholism may produce fatty liver because of:`,
+            options: [
+                `increase in the synthesis of TAG`,
+                `increase in the ratio NADH/NAD+`,
+                `decrease in beta oxidation`,
+                `increase in availability of glycerol P`,
+                `all of the above`
+            ],
+            correct: `E`,
+            explanation: `Chronic alcoholism causes fatty liver through multiple mechanisms: (1) <strong>Increased TAG synthesis</strong> because excess acetyl-CoA and NADH promote lipogenesis. (2) <strong>Increased NADH/NAD⁺ ratio</strong> from alcohol oxidation inhibits β-oxidation and TCA cycle, shunting fatty acids to esterification. (3) <strong>Decreased β-oxidation</strong> due to high NADH and impaired mitochondrial function. (4) <strong>Increased glycerol-3-phosphate</strong> from enhanced glycolysis and glyceroneogenesis, providing the backbone for TAG synthesis. All of these contribute to hepatic steatosis.`
+        },
+        {
+            q: `A person has been exposed to a toxic compound that increases the mitochondrial membrane permeability for protons. Activity of which of the following complexes of ETC or oxidation, phosphorylation is decreased in this person's liver cells?`,
+            options: [
+                `Cytochrome Oxidase complex`,
+                `ATP synthase complex.`,
+                `NADH-CoQ Reductase complex`,
+                `Succinate-CoQ Reductase complex`,
+                `CoQ-Cyt c Reductase complex`
+            ],
+            correct: `B`,
+            explanation: `A compound that increases mitochondrial membrane permeability for protons is an <strong>uncoupler</strong> (e.g., 2,4-dinitrophenol). Uncouplers dissipate the proton gradient across the inner mitochondrial membrane, so <strong>ATP synthase (Complex V)</strong> cannot use the proton motive force to synthesize ATP. The electron transport complexes (I, II, III, IV) may still function (or even accelerate) but ATP synthesis is decreased. Therefore, ATP synthase activity is decreased.`
+        },
+        {
+            q: `A patient of chronic alcoholism may present with thiamine deficiency (B1 vitamin), because alcohol inhibits its intestinal absorption. In this case the functioning of which enzyme would be impaired?`,
+            options: [
+                `pyruvate dehydrogenase`,
+                `malate dehydrogenase`,
+                `glutamate dehydrogenase`,
+                `succinate dehydrogenase`,
+                `isocitrate dehydrogenase`
+            ],
+            correct: `A`,
+            explanation: `Thiamine (vitamin B1) is a precursor of thiamine pyrophosphate (TPP), a coenzyme required by <strong>pyruvate dehydrogenase (PDH)</strong>, α-ketoglutarate dehydrogenase, and transketolase. PDH catalyzes the oxidative decarboxylation of pyruvate to acetyl-CoA. In thiamine deficiency, PDH activity falls, causing pyruvate accumulation and lactic acidosis, as well as neurological symptoms (Wernicke-Korsakoff syndrome). Malate dehydrogenase, glutamate dehydrogenase, succinate dehydrogenase, and isocitrate dehydrogenase do not require TPP.`
+        },
+        {
+            q: `At the pre-diabetic stages and in type 2 diabetes, there may be hyperinsulinemia jointly with a paradoxical increase in glucagonemia. This may be due to a:`,
+            options: [
+                `decrease in activity of enzymes that degrade glucagon's second messengers`,
+                `associated state of resistance to glucagon`,
+                `alfa cells resistance to insulin`,
+                `physiological response trying to compensate for the lack of insulin`,
+                `inhibition in enzymatic response to insulin action`
+            ],
+            correct: `C`,
+            explanation: `In type 2 diabetes and pre-diabetes, there is <strong>alpha cell resistance to insulin</strong>. Normally, insulin inhibits glucagon secretion from pancreatic alpha cells. When alpha cells become resistant to insulin's suppressive effect, glucagon secretion increases despite hyperinsulinemia. This contributes to hyperglycemia by stimulating hepatic glucose production. The other options do not correctly explain the paradoxical hyperglucagonemia.`
+        },
+        {
+            q: `The production of thyroid hormones T3 and T4 is stimulated under thyrotoxicosis. It leads to body weight loss, tachycardia, rise of psychic irritability etc. Choose the biochemical mechanism by which thyroid hormones affect the tissue bioenergetics from the listed below.`,
+            options: [
+                `Uncoupling of oxidation and oxidative phosphorylation`,
+                `Activation of oxidative phosphorylation`,
+                `Blockage of mitochondrial respiratory chain`,
+                `Activation of substrate level phosphorylation`,
+                `Blockage of substrate level phosphorylation`
+            ],
+            correct: `A`,
+            explanation: `Thyroid hormones (T3 and T4) increase basal metabolic rate and heat production by <strong>uncoupling oxidation and oxidative phosphorylation</strong> in mitochondria. They increase the permeability of the inner mitochondrial membrane to protons, dissipating the proton gradient and reducing ATP synthesis while increasing oxygen consumption and heat production. This explains weight loss, tachycardia, and heat intolerance in thyrotoxicosis. They do not block the respiratory chain or activate substrate-level phosphorylation.`
+        },
+        {
+            q: `High resistance of "winter-swimmers" (so-called "walruses") to low temperatures is explained by the increased production of certain hormones that stimulate the processes of biological oxidation and heat formation in the cells through the uncoupling of mitochondrial electron transfer and the oxidative phosphorylation. Choose the name of these hormones from the following list:`,
+            options: [
+                `Insulin`,
+                `Corticosteroids`,
+                `Glucagon`,
+                `Adrenaline and noradrenaline`,
+                `Thyroid Hormones`
+            ],
+            correct: `E`,
+            explanation: `Thyroid hormones (T3 and T4) are the primary hormones that stimulate biological oxidation and heat formation through uncoupling of mitochondrial electron transfer and oxidative phosphorylation. They increase the permeability of the inner mitochondrial membrane to protons, dissipating the proton gradient and generating heat (thermogenesis). While adrenaline and noradrenaline also increase heat production, thyroid hormones are more classically associated with long-term cold adaptation and uncoupling. Insulin, corticosteroids, and glucagon do not primarily act via uncoupling.`
+        },
+        {
+            q: `Which of the following enzymes causes congenital lactic acidosis?`,
+            options: [
+                `Malate dehydrogenase`,
+                `Lactate dehydrogenase`,
+                `Isocitrate dehydrogenase`,
+                `Alpha-ketoglutarate dehydrogenase`,
+                `Pyruvate dehydrogenase`
+            ],
+            correct: `E`,
+            explanation: `Congenital lactic acidosis is most commonly caused by <strong>pyruvate dehydrogenase (PDH) deficiency</strong>. PDH converts pyruvate to acetyl-CoA; without it, pyruvate accumulates and is reduced to lactate, causing lactic acidosis. It also leads to neurological impairment because the brain depends on PDH for glucose oxidation. Malate dehydrogenase, lactate dehydrogenase, isocitrate dehydrogenase, and α-ketoglutarate dehydrogenase deficiencies are not classic causes of congenital lactic acidosis (though some can contribute to lactic acidosis in specific contexts).`
+        },
+        {
+            q: `How much is the P/O ratio when the FAD-containing dehydrogenase catalyzes the oxidation of succinate?`,
+            options: [
+                `1`,
+                `2`,
+                `3`,
+                `4`,
+                `5`
+            ],
+            correct: `B`,
+            explanation: `When succinate is oxidized by succinate dehydrogenase (Complex II), it uses FAD as the electron acceptor. FADH₂ donates electrons to Coenzyme Q, bypassing Complex I. The electrons then pass through Complexes III and IV, pumping protons at two sites (Complex III and IV). The P/O ratio for FADH₂ is therefore <strong>2</strong> (using modern P/O ratios: 1 FADH₂ → 1.5 ATP, but the classic value often taught is 2). The answer is 2.`
+        },
+        {
+            q: `Instant death occurs due to cyanide poisoning. What is the biochemical mechanism of cyanides' unfavorable action at the molecular level?`,
+            options: [
+                `Inactivation of oxygen molecule`,
+                `Inhibition of cytochrome b`,
+                `Inhibition of cytochrome oxidase`,
+                `Chemical bonding to the substrates of citric acid cycle`,
+                `Blockage of succinate dehydrogenase`
+            ],
+            correct: `C`,
+            explanation: `Cyanide binds tightly to the ferric (Fe³⁺) form of <strong>cytochrome oxidase (Complex IV)</strong>, specifically the cytochrome a₃ component, preventing electron transfer to oxygen. This halts oxidative phosphorylation, causing rapid ATP depletion and histotoxic hypoxia. Cyanide does not inactivate oxygen, inhibit cytochrome b, bond to TCA substrates, or block succinate dehydrogenase.`
+        },
+        {
+            q: `During the necropsy of a 20-year-old girl a pathologist discovered that her death had resulted from poisoning by cyanides. The disturbance of what process became the most credible cause of the girl's death?`,
+            options: [
+                `Urea synthesis`,
+                `Transport of hydrogen with malate-aspartate shunt`,
+                `Tissue respiration`,
+                `Synthesis of hemoglobin`,
+                `Transport of oxygen by hemoglobin`
+            ],
+            correct: `C`,
+            explanation: `Cyanide poisoning inhibits cytochrome oxidase, blocking the electron transport chain and <strong>tissue respiration</strong> (oxidative phosphorylation). Cells cannot use oxygen to produce ATP, leading to rapid energy failure and death. Urea synthesis, malate-aspartate shuttle, hemoglobin synthesis, and oxygen transport by hemoglobin are not directly impaired by cyanide (though oxygen transport is normal, tissues cannot utilize the oxygen).`
+        },
+        {
+            q: `An uncoupling molecule might be used to bring about weight loss because:`,
+            options: [
+                `part of the energy coming from food oxidation would be dissipated as heat`,
+                `there would be heat liberation due to dehydration`,
+                `heat would be liberated, accelerating metabolism`,
+                `there would be heat liberation, favoring fatty acid mobilization through the mitochondrial membrane`,
+                `all of the above`
+            ],
+            correct: `A`,
+            explanation: `Uncoupling molecules (e.g., 2,4-dinitrophenol) dissipate the proton gradient across the inner mitochondrial membrane, so <strong>part of the energy from food oxidation is dissipated as heat</strong> instead of being stored as ATP. This increases metabolic rate and energy expenditure, promoting weight loss. The other options are not accurate descriptions of the mechanism.`
+        },
+        {
+            q: `During gluconeogenesis, the three irreversible steps of glycolysis have to be bypassed. The final step is the conversion of glucose-6-P to glucose, which is catalyzed by glucose-6-phosphatase. Which of the following statement is true about the reaction step?`,
+            options: [
+                `Defect in glucose-6-phosphate leads to abnormal accumulation of glycogen in the liver`,
+                `The reaction occurs in mitochondria`,
+                `Conversion of glucose-6-phosphate to glucose releases one ATP molecule`,
+                `It is a highly active enzyme in skeletal muscle`,
+                `None of these`
+            ],
+            correct: `A`,
+            explanation: `A defect in <strong>glucose-6-phosphatase</strong> (von Gierke disease, GSD I) leads to <strong>abnormal accumulation of glycogen in the liver</strong> (hepatomegaly) because glucose-6-phosphate cannot be dephosphorylated to free glucose; instead, it is shunted into glycogen synthesis. The reaction occurs in the endoplasmic reticulum, not mitochondria. It does not release ATP (it hydrolyzes glucose-6-phosphate to glucose and Pi). The enzyme is not active in skeletal muscle (muscle lacks glucose-6-phosphatase). Therefore, the only true statement is A.`
+        },
+        {
+            q: `Mutation in which of the following enzymes leads to a glycogen storage disease like Tarui's disease?`,
+            options: [
+                `Pyruvate Kinase`,
+                `Hexokinase`,
+                `Glucokinase`,
+                `Phosphofructokinase`,
+                `Phosphoglucomutase`
+            ],
+            correct: `D`,
+            explanation: `Tarui's disease (Glycogen Storage Disease Type VII) is caused by a deficiency of <strong>phosphofructokinase-1 (PFK-1)</strong> in muscle. It presents with exercise intolerance, muscle cramps, and myoglobinuria, along with mild hemolytic anemia. Pyruvate kinase deficiency causes hemolytic anemia (not Tarui's). Hexokinase, glucokinase, and phosphoglucomutase deficiencies are not associated with Tarui's disease.`
+        },
+        {
+            q: `Cancer cells have high-energy demands for replication and division. Increased flux a glucose into glycolysis replenishes the energy demand. Which of the following enzyme plan an important role in tumor metabolism?`,
+            options: [
+                `Pyruvate Kinase M2`,
+                `Hexokinase`,
+                `Glucokinase`,
+                `Phosphofructokinase`,
+                `Phosphoglucomutase`
+            ],
+            correct: `A`,
+            explanation: `The <strong>M2 isoform of pyruvate kinase (PKM2)</strong> plays an important role in tumor metabolism (the Warburg effect). Unlike the constitutively active M1 isoform, PKM2 is allosterically regulated and has lower catalytic activity, allowing glycolytic intermediates to be shunted into biosynthetic pathways (e.g., pentose phosphate pathway, serine synthesis) needed for rapid cancer cell proliferation. Hexokinase, glucokinase, phosphofructokinase, and phosphoglucomutase are also involved in glycolysis but PKM2 is specifically implicated in tumor metabolism.`
+        },
+        {
+            q: `Atractyloside interferes with the synthesis of ATP in the mitochondrion because it:`,
+            options: [
+                `impairs the formation of high-energy intermediates`,
+                `destroying the H gradient through the membrane`,
+                `inhibits the transference of electrons between cytochromes b and c1`,
+                `inhibits the ADP/ATP transport system`,
+                `blocks the transference of electrons at the complex IV level of the respiratory chain is a protonophore and dissipates the proton gradient`
+            ],
+            correct: `D`,
+            explanation: `Atractyloside inhibits the <strong>ADP/ATP translocase (adenine nucleotide translocator)</strong> in the inner mitochondrial membrane, preventing the exchange of ADP (entering) and ATP (leaving) the mitochondria. Without ADP entry, ATP synthase cannot synthesize ATP, and without ATP export, cellular energy fails. It does not impair high-energy intermediate formation, destroy the proton gradient, inhibit electron transfer between cytochromes b and c1, or block Complex IV.`
+        },
+        {
+            q: `Which of the following glucose transporter (GLUT) is important in fructose transport in the intestine?`,
+            options: [
+                `GLUT7`,
+                `GLUT2`,
+                `GLUT1`,
+                `GLUT3`,
+                `GLUT5`
+            ],
+            correct: `E`,
+            explanation: `<strong>GLUT5</strong> is the primary fructose transporter in the small intestine (apical membrane of enterocytes). It facilitates fructose absorption. GLUT2 is involved in glucose and fructose transport across the basolateral membrane. GLUT1 and GLUT3 are primarily glucose transporters in other tissues (e.g., brain, RBCs). GLUT7 is found in the small intestine and colon but is not the primary fructose transporter.`
+        },
+        {
+            q: `Which of the following statement about Phosphofructokinase-2 (PFK-2) is false?`,
+            options: [
+                `PFK-2 catalyzes the conversion of fructose-6-phosphate to fructose 2,6 bisphosphate`,
+                `PFK-2 phosphatase activity is activated by the insulin-signaling pathway.`,
+                `PFK-2 is a bifunctional enzyme having a kinase domain, phosphatase domain, and a regulatory domain`,
+                `Activated protein kinase A phosphorylates PFK-2 and activates the phosphatase domain`,
+                `None of these`
+            ],
+            correct: `B`,
+            explanation: `The <strong>false</strong> statement is that PFK-2 phosphatase activity is activated by the insulin-signaling pathway. In fact, <strong>insulin activates the kinase domain</strong> of PFK-2 (via dephosphorylation), increasing fructose-2,6-bisphosphate levels, which stimulates glycolysis. Glucagon (via protein kinase A) activates the phosphatase domain, decreasing fructose-2,6-bisphosphate and inhibiting glycolysis. PFK-2 is indeed bifunctional with kinase and phosphatase domains, and PKA phosphorylates and activates the phosphatase domain. Therefore, B is false.`
+        },
+        {
+            q: `During prolonged starvation, which of the following hormones is responsible for increasing gluconeogenesis in the liver?`,
+            options: [
+                `TSH`,
+                `Thyroxine`,
+                `Insulin`,
+                `Glucagon`,
+                `None of these`
+            ],
+            correct: `D`,
+            explanation: `During prolonged starvation, <strong>glucagon</strong> is the primary hormone responsible for increasing gluconeogenesis in the liver. Glucagon stimulates glycogenolysis (initially) and gluconeogenesis by inducing PEP carboxykinase, fructose-1,6-bisphosphatase, and glucose-6-phosphatase. It also promotes lipolysis and ketogenesis. Insulin inhibits gluconeogenesis. TSH and thyroxine are not the primary regulators of hepatic gluconeogenesis during starvation.`
+        },
+        {
+            q: `Which of the following metabolite negatively regulates pyruvate kinase?`,
+            options: [
+                `Alanine`,
+                `Glucose-6-phosphate`,
+                `Fructose-1,6-Bisphosphate`,
+                `Citrate`,
+                `Acetyl CoA`
+            ],
+            correct: `A`,
+            explanation: `<strong>Alanine</strong> negatively regulates pyruvate kinase. In the liver, alanine is a major gluconeogenic amino acid; high alanine levels signal that pyruvate is needed for gluconeogenesis, so pyruvate kinase (which would convert PEP to pyruvate) is inhibited. Fructose-1,6-bisphosphate activates pyruvate kinase (feed-forward activation). Glucose-6-phosphate, citrate, and acetyl-CoA are not the primary negative regulators of pyruvate kinase.`
+        },
+        {
+            q: `In the Krebs cycle, anaplerotic reactions are those catalyzed by the enzymes:`,
+            options: [
+                `glutamate dehydrogenase and pyruvate carboxylase`,
+                `glutamate dehydrogenase and pyruvate dehydrogenase`,
+                `citrate synthase and glutamate dehydrogenase`,
+                `pyruvate dehydrogenase and malate dehydrogenase`,
+                `pyruvate dehydrogenase and pyruvate carboxylase`
+            ],
+            correct: `A`,
+            explanation: `Anaplerotic reactions replenish TCA cycle intermediates. The key anaplerotic enzymes are <strong>pyruvate carboxylase</strong> (pyruvate → oxaloacetate) and <strong>glutamate dehydrogenase</strong> (glutamate → α-ketoglutarate). Other anaplerotic enzymes include methylmalonyl-CoA mutase (succinyl-CoA) and PEP carboxykinase (oxaloacetate). Pyruvate dehydrogenase, citrate synthase, and malate dehydrogenase are not anaplerotic.`
+        }
+    ];
+
+    /* =====================================================================
+       SECTION B — 6 Case-Based Short Answer Questions with Subquestions
+       ===================================================================== */
+    const sectionB = [
+        {
+            q: `Case 1: A 6-month-old infant was brought to the pediatrician due to fussiness and a tender abdomen. The child seemed to do well until the time between feeding was increased to more than 3 h. The baby always seemed hungry and irritable if not fed frequently. Upon examination, hepatomegaly and enlarged kidneys were noted, and blood work showed fasting hypoglycemia. Subsequent laboratory analysis demonstrated that in response to a glucagon challenge, only about 10% of the normal amount of glucose was released into circulation, which significantly contributed to the fasting hypoglycemia.`,
+            subquestions: [
+                {
+                    q: `a. Which enzyme defect in the patient is the most likely?`,
+                    marks: `0.5 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Enzyme defect:</strong> Glucose-6-phosphatase deficiency (Von Gierke disease, Glycogen Storage Disease Type I).</p>`
+                },
+                {
+                    q: `b. Describe the reaction, in details with structures, catalyzed by this enzyme.`,
+                    marks: `2 marks`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Reaction:</strong></p>
+                    <p>Glucose-6-phosphate + H₂O → Glucose + Pi</p>
+                    <p><strong>Structures:</strong> Glucose-6-phosphate is a six-carbon sugar with a phosphate group at carbon 6. The enzyme hydrolyzes the phosphate ester bond, releasing free glucose (with a hydroxyl group at carbon 6) and inorganic phosphate (Pi). This reaction occurs in the lumen of the endoplasmic reticulum of hepatocytes and renal tubular cells. It is the final common step for glucose release from both glycogenolysis and gluconeogenesis.</p>`
+                },
+                {
+                    q: `c. Why does deficiency of the enzyme impair both glycogenolysis and gluconeogenesis?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>Glucose-6-phosphatase is the <strong>common final step</strong> for glucose release from both pathways. In glycogenolysis, glycogen is broken down to glucose-6-phosphate, which must be dephosphorylated to free glucose for export. In gluconeogenesis, the final step also produces glucose-6-phosphate, which requires the same enzyme to release glucose. Without it, both pathways are blocked at the final step, causing severe fasting hypoglycemia.</p>`
+                },
+                {
+                    q: `d. What is Cori cycle and how does the enzyme deficiency affect this cycle?`,
+                    marks: `2 marks`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Cori cycle:</strong> The cycle in which lactate produced by anaerobic glycolysis in muscle and RBCs is transported to the liver, converted back to glucose via gluconeogenesis, and returned to the muscle.</p>
+                    <p><strong>Effect of deficiency:</strong> In glucose-6-phosphatase deficiency, the liver cannot release free glucose from gluconeogenesis, so the Cori cycle is impaired. Lactate clearance is reduced, leading to lactic acidosis, and glucose recycling is blocked, worsening hypoglycemia.</p>`
+                },
+                {
+                    q: `e. Which enzyme is responsible for release of about 10% of the normal amount of glucose and what is its catalysis?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Enzyme:</strong> Amylo-1,6-glucosidase (debranching enzyme).</p>
+                    <p><strong>Catalysis:</strong> It releases free glucose from the branch points of glycogen. This accounts for the residual glucose response to glucagon.</p>`
+                },
+                {
+                    q: `f. Why does the infant develop severe fasting hypoglycemia?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>The infant develops severe fasting hypoglycemia because the liver cannot release free glucose from either glycogenolysis or gluconeogenesis due to glucose-6-phosphatase deficiency. During fasting, blood glucose is maintained by hepatic glucose output; without this enzyme, glucose-6-phosphate is trapped inside hepatocytes and cannot be exported. This leads to rapid hypoglycemia when feeding intervals are prolonged.</p>`
+                },
+                {
+                    q: `g. Why does glucagon administration fail to significantly increase blood glucose levels?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>Glucagon normally stimulates glycogenolysis and gluconeogenesis, but in glucose-6-phosphatase deficiency, the liver cannot convert glucose-6-phosphate to free glucose. Thus, despite glycogen breakdown, glucose cannot be released into the blood, and glucagon fails to significantly raise blood glucose.</p>`
+                },
+                {
+                    q: `h. What is the biochemical reason for hepatomegaly and enlarged kidneys in this disorder?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>In von Gierke disease, the liver and kidneys become enlarged due to accumulation of glycogen and lipids. Glucose-6-phosphate is trapped, shunted into glycogen synthesis and lipid synthesis, causing organomegaly.</p>`
+                },
+                {
+                    q: `i. What is the main dietary management for this disorder?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>The mainstay of dietary management is frequent feeding with glucose or uncooked cornstarch to maintain blood glucose levels and prevent hypoglycemia. Cornstarch is slowly digested, providing a sustained glucose source.</p>`
+                }
+            ]
+        },
+        {
+            q: `Case 2: A 62-year-old white female, who was in pretreatment diet therapy for liver regeneration following a diagnosis of Laennec's cirrhosis, developed anorexia, nausea, vomiting, pallor, depression, lassitude, substernal pain, scaly dermatitis, and desquamation of the lips consuming a diet containing six raw eggs daily for 18 months. All symptoms cleared or improved markedly after 2-5 days of parental vitamin therapy.`,
+            subquestions: [
+                {
+                    q: `a. Which vitamin deficiency is the most likely in the patient?`,
+                    marks: `0.5 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Vitamin deficiency:</strong> Biotin (Vitamin B7) deficiency.</p>`
+                },
+                {
+                    q: `b. Name the protein found in raw eggs that is responsible for the development of this vitamin deficiency.`,
+                    marks: `0.5 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Protein:</strong> Avidin.</p>
+                    <p>Avidin binds biotin with high affinity, preventing its absorption.</p>`
+                },
+                {
+                    q: `c. Which major carbohydrate metabolizing enzyme activity is likely defective in this patient?`,
+                    marks: `0.5 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Enzyme:</strong> Pyruvate carboxylase.</p>
+                    <p>This is a biotin-dependent enzyme involved in gluconeogenesis.</p>`
+                },
+                {
+                    q: `d. Which pathway does this enzyme catalyze?`,
+                    marks: `0.5 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Pathway:</strong> Gluconeogenesis.</p>
+                    <p>Pyruvate carboxylase converts pyruvate to oxaloacetate, the first step in gluconeogenesis from pyruvate.</p>`
+                },
+                {
+                    q: `e. Describe the reaction, in details with structures, catalyzed by this enzyme.`,
+                    marks: `2 marks`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Reaction:</strong></p>
+                    <p>Pyruvate + CO₂ + ATP → Oxaloacetate + ADP + Pi</p>
+                    <p><strong>Structures:</strong> Pyruvate (CH₃-CO-COO⁻) is carboxylated at the C3 position to form oxaloacetate (⁻OOC-CO-CH₂-COO⁻). The reaction requires biotin as a covalently bound cofactor, which carries activated CO₂. ATP provides energy for the carboxylation. This reaction occurs in the mitochondria.</p>`
+                },
+                {
+                    q: `f. Explain how this enzyme is normally regulated.`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>Pyruvate carboxylase is allosterically <strong>activated by acetyl-CoA</strong> and <strong>inhibited by ADP</strong>. This regulation ensures that gluconeogenesis is active when energy is plentiful and biosynthetic precursors are needed.</p>`
+                },
+                {
+                    q: `g. Explain how this enzyme is normally regulated.`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>Pyruvate carboxylase is also regulated by <strong>hormonal signals</strong>. Glucagon and glucocorticoids induce its expression, while insulin represses it. This ensures that gluconeogenesis is stimulated during fasting and inhibited in the fed state.</p>`
+                },
+                {
+                    q: `h. Explain how this enzyme is normally regulated.`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>Additionally, pyruvate carboxylase is regulated by <strong>substrate availability</strong>. High pyruvate levels increase flux through the enzyme, while low pyruvate limits it. The enzyme also requires biotin, so biotin deficiency reduces its activity.</p>`
+                },
+                {
+                    q: `i. Explain how this enzyme is normally regulated.`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>Pyruvate carboxylase is further regulated by <strong>mitochondrial energy status</strong>. High ATP/ADP ratio favors gluconeogenesis, while low energy charge (high ADP) inhibits the enzyme to conserve energy.</p>`
+                },
+                {
+                    q: `j. Explain how this enzyme is normally regulated.`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>Finally, pyruvate carboxylase is regulated by <strong>acetyl-CoA/CoA ratio</strong>. High acetyl-CoA signals that the TCA cycle needs oxaloacetate, activating the enzyme. Low acetyl-CoA reduces its activity.</p>`
+                },
+                {
+                    q: `k. Explain how this enzyme is normally regulated.`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>Pyruvate carboxylase is also subject to <strong>long-term regulation</strong> by changes in gene expression. Prolonged fasting increases its synthesis, while refeeding decreases it.</p>`
+                },
+                {
+                    q: `l. Explain how this enzyme is normally regulated.`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>In summary, pyruvate carboxylase is regulated by allosteric effectors (acetyl-CoA, ADP), hormones (glucagon, insulin), substrate availability, energy status, and gene expression to maintain blood glucose homeostasis.</p>`
+                }
+            ]
+        },
+        {
+            q: `Case 3: A 43-year-old man presented with symptoms of weakness, fatigue, shortness of breath, and dizziness. His hemoglobin level was less than 7 g/dL (normal for a male being greater than 13.5 g/dL). Red blood cells isolated from the patient showed abnormally low level of lactate production.`,
+            subquestions: [
+                {
+                    q: `a) What is the most likely enzyme deficiency in this case?`,
+                    marks: `0.5 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Enzyme deficiency:</strong> Pyruvate kinase deficiency.</p>`
+                },
+                {
+                    q: `b) Which pathway does this enzyme catalyze?`,
+                    marks: `0.5 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Pathway:</strong> Glycolysis (anaerobic glycolysis in RBCs).</p>`
+                },
+                {
+                    q: `c) Describe the reaction in details with structures catalyzed by this enzyme.`,
+                    marks: `2 marks`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Reaction:</strong></p>
+                    <p>Phosphoenolpyruvate (PEP) + ADP → Pyruvate + ATP</p>
+                    <p><strong>Structures:</strong> PEP (CH₂=C(OPO₃²⁻)-COO⁻) is converted to pyruvate (CH₃-CO-COO⁻) by transfer of a phosphate group to ADP, forming ATP. This is a substrate-level phosphorylation reaction. The enzyme requires Mg²⁺ and K⁺ ions.</p>`
+                },
+                {
+                    q: `d) Describe the reaction in details with structures catalyzed by this enzyme.`,
+                    marks: `2 marks`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>The reaction is irreversible under physiological conditions. It is the final step of glycolysis and generates one of the two ATP molecules produced per glucose in anaerobic glycolysis. In RBCs, this is the only source of ATP.</p>`
+                },
+                {
+                    q: `e) Describe biochemically how this enzyme deficiency results in hemolysis.`,
+                    marks: `2 marks`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>Pyruvate kinase deficiency reduces ATP production in RBCs. Without sufficient ATP, the Na⁺/K⁺ ATPase and other ion pumps fail, causing osmotic imbalance, cell swelling, membrane damage, and decreased deformability. These rigid cells are trapped and destroyed in the spleen, leading to hemolysis.</p>`
+                },
+                {
+                    q: `f) Explain biochemically why is the level of lactate production abnormally low in this patient.`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>Lactate production is low because the glycolytic block at pyruvate kinase prevents the conversion of PEP to pyruvate. Without pyruvate, lactate dehydrogenase cannot produce lactate. Thus, lactate levels are abnormally low.</p>`
+                },
+                {
+                    q: `g) Name the other regulatory enzymes of this pathway.`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>The other regulatory enzymes of glycolysis are:</p>
+                    <ul>
+                        <li>Hexokinase (glucokinase in liver)</li>
+                        <li>Phosphofructokinase-1 (PFK-1)</li>
+                        <li>Pyruvate kinase</li>
+                    </ul>`
+                },
+                {
+                    q: `h) Outline the special reactions of this pathway in RBCs.`,
+                    marks: `2 marks`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>In RBCs, the <strong>Rapoport-Luebering shunt</strong> converts 1,3-bisphosphoglycerate to 2,3-bisphosphoglycerate (2,3-BPG) via bisphosphoglycerate mutase, bypassing the phosphoglycerate kinase step. This reduces ATP yield but produces 2,3-BPG, which decreases hemoglobin's oxygen affinity, facilitating oxygen unloading in tissues.</p>`
+                }
+            ]
+        },
+        {
+            q: `Case 4: In preparation for a trip to an area of India where malaria is endemic, a young man is given primaquine prophylactically. Soon thereafter, he develops a self-limiting episode of hemolysis, back pain, and jaundice. The peripheral blood smear reveals a nonspherocytic, normocytic anemia, and Heinz bodies are seen in some of his erythrocytes.`,
+            subquestions: [
+                {
+                    q: `a. What is the most likely enzyme deficiency responsible for his hemolytic episode?`,
+                    marks: `0.5 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Enzyme deficiency:</strong> Glucose-6-phosphate dehydrogenase (G6PD) deficiency.</p>`
+                },
+                {
+                    q: `b. In which pathway is this enzyme involved?`,
+                    marks: `0.5 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Pathway:</strong> Pentose phosphate pathway (HMP shunt).</p>`
+                },
+                {
+                    q: `c. Describe the reaction, in details with structures, catalyzed by this enzyme.`,
+                    marks: `2 marks`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Reaction:</strong></p>
+                    <p>Glucose-6-phosphate + NADP⁺ → 6-Phosphogluconolactone + NADPH + H⁺</p>
+                    <p><strong>Structures:</strong> Glucose-6-phosphate is oxidized at carbon 1 to form 6-phosphogluconolactone, a cyclic ester (lactone). NADP⁺ is reduced to NADPH. This is the rate-limiting and committed step of the pentose phosphate pathway.</p>`
+                },
+                {
+                    q: `d. What is the main function of the deficient enzyme in red blood cells?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>The main function is to produce <strong>NADPH</strong>, which maintains reduced glutathione (GSH), protecting hemoglobin and RBC membranes from oxidative damage.</p>`
+                },
+                {
+                    q: `e. What is the underlying mechanism of red blood cell destruction in this disorder?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>Oxidative stress causes hemoglobin denaturation (Heinz bodies) and membrane damage, leading to hemolysis. The spleen removes these damaged cells.</p>`
+                },
+                {
+                    q: `f. What is the role of NADPH in protecting red blood cells?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>NADPH maintains reduced glutathione, which neutralizes reactive oxygen species and protects hemoglobin and RBC membranes from oxidative damage.</p>`
+                }
+            ]
+        },
+        {
+            q: `Case 5: A 7-year-old obese Hispanic girl presents with dehydration after 3 days of vomiting and diarrhea. Her parents mention that a sibling was diagnosed with a type of diabetes that spilled sugar into the urine but did not need treatment. Urine reagent strip test for reducing sugars is strongly positive. The physician obtains a blood glucose level that is normal and a urine glucose oxidase test on the urine is also negative for glucose. Further analysis of the urine reveals the presence of a large amount of an unidentified pentose.`,
+            subquestions: [
+                {
+                    q: `a. What is the most likely diagnosis?`,
+                    marks: `0.5 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Diagnosis:</strong> Essential pentosuria (L-xylulose reductase deficiency).</p>`
+                },
+                {
+                    q: `b. Which pentose presence is most likely in the patient's urine?`,
+                    marks: `0.5 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Pentose:</strong> L-Xylulose.</p>`
+                },
+                {
+                    q: `c. Which enzyme defect is most likely in this patient?`,
+                    marks: `0.5 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Enzyme defect:</strong> L-Xylulose reductase deficiency.</p>`
+                },
+                {
+                    q: `d. In which pathway is this enzyme involved?`,
+                    marks: `0.5 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Pathway:</strong> Uronic acid pathway (glucuronic acid pathway).</p>`
+                },
+                {
+                    q: `e. Describe the reaction, in details with structures, catalyzed by this enzyme.`,
+                    marks: `2 marks`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Reaction:</strong></p>
+                    <p>L-Xylulose + NADPH + H⁺ → Xylitol + NADP⁺</p>
+                    <p><strong>Structures:</strong> L-Xylulose is a pentose (ketose) that is reduced at its carbonyl group to form xylitol (a sugar alcohol). NADPH serves as the reducing agent. This reaction occurs in the uronic acid pathway, which metabolizes glucuronic acid from proteoglycans and glycoproteins.</p>`
+                },
+                {
+                    q: `f. List any two of the biomedical importance of this pathway.`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <ul>
+                        <li>Produces UDP-glucuronic acid, which is used for conjugation and detoxification of drugs, steroids, and bilirubin (glucuronidation).</li>
+                        <li>Provides a source of glucuronic acid for the synthesis of glycosaminoglycans (GAGs) and proteoglycans.</li>
+                    </ul>`
+                },
+                {
+                    q: `g. Describe how this pentose formed in this pathway is further metabolized.`,
+                    marks: `2 marks`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>L-Xylulose is normally reduced to xylitol by L-xylulose reductase. Xylitol is then converted to D-xylulose by xylitol dehydrogenase, and D-xylulose enters the pentose phosphate pathway by phosphorylation to xylulose-5-phosphate, which is metabolized via transketolase and transaldolase reactions.</p>`
+                },
+                {
+                    q: `h. Name the biochemical test used to detect the presence of pentoses in the urine.`,
+                    marks: `0.5 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Test:</strong> Bial's test (orcinol test).</p>`
+                },
+                {
+                    q: `i. What would be the result of benedict test on the patient's urine as urine glucose oxidase test on the urine is negative for glucose?`,
+                    marks: `0.5 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>Benedict's test would be <strong>positive</strong> (reducing sugar present) because pentoses like L-xylulose reduce cupric ions. The glucose oxidase test is negative because it is specific for glucose, and the reducing sugar is a pentose, not glucose.</p>`
+                },
+                {
+                    q: `j. State the principle of glucose oxidase test used in estimation of blood glucose.`,
+                    marks: `2 marks`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>The glucose oxidase test uses the enzyme glucose oxidase, which oxidizes glucose to gluconic acid and hydrogen peroxide. The hydrogen peroxide then reacts with a chromogen (e.g., o-dianisidine) in the presence of peroxidase to produce a colored product. The intensity of color is proportional to the glucose concentration. This method is specific for glucose (does not detect other reducing sugars).</p>`
+                }
+            ]
+        },
+        {
+            q: `Case 6: A 3-year-old boy with retarded growth was brought to the Hospital with a complaint of diarrhea. On examination he was found to have cataract and mild mental retardation. Biochemical investigations show high blood concentrations of a sugar alcohol. Urine examination showed reduction with Benedict's reagent but not with glucose oxidase method.`,
+            subquestions: [
+                {
+                    q: `a. What is the most likely diagnosis?`,
+                    marks: `0.5 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Diagnosis:</strong> Galactosemia (classic galactosemia, GALT deficiency).</p>`
+                },
+                {
+                    q: `b. Which sugar presence is most likely in the patient's urine?`,
+                    marks: `0.5 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Sugar:</strong> Galactose.</p>`
+                },
+                {
+                    q: `c. Name a biochemical test used to detect the presence of this sugar in the urine.`,
+                    marks: `0.5 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Test:</strong> Benedict's test (positive for reducing sugars) or a specific galactose dehydrogenase test.</p>`
+                },
+                {
+                    q: `d. Which enzyme is most likely to be defective in this case?`,
+                    marks: `0.5 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Enzyme:</strong> Galactose-1-phosphate uridyltransferase (GALT).</p>`
+                },
+                {
+                    q: `e. Which metabolic pathway is defective in this case?`,
+                    marks: `0.5 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Pathway:</strong> Galactose metabolism (Leloir pathway).</p>`
+                },
+                {
+                    q: `f. Outline the reactions of this metabolic pathway.`,
+                    marks: `1.5 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>The Leloir pathway for galactose metabolism:</p>
+                    <ol>
+                        <li>Galactose + ATP → Galactose-1-phosphate + ADP (galactokinase)</li>
+                        <li>Galactose-1-phosphate + UDP-glucose → UDP-galactose + Glucose-1-phosphate (GALT)</li>
+                        <li>UDP-galactose → UDP-glucose (UDP-galactose 4-epimerase)</li>
+                    </ol>
+                    <p>Glucose-1-phosphate is then converted to glucose-6-phosphate and enters glycolysis.</p>`
+                },
+                {
+                    q: `g. Explain the biochemical basis for the reported high blood sugar alcohol?`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>In galactosemia, excess galactose is reduced by <strong>aldose reductase</strong> to <strong>galactitol</strong> (a sugar alcohol). Galactitol cannot be further metabolized and accumulates in tissues, including the lens, liver, and brain, causing osmotic damage.</p>`
+                },
+                {
+                    q: `h. What is the name of sugar alcohol found in patient's blood?`,
+                    marks: `0.5 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Sugar alcohol:</strong> Galactitol.</p>`
+                },
+                {
+                    q: `i. Describe in details the reaction of sugar alcohol formation in this case.`,
+                    marks: `2 marks`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Reaction:</strong></p>
+                    <p>Galactose + NADPH + H⁺ → Galactitol + NADP⁺</p>
+                    <p><strong>Structures:</strong> Galactose (an aldohexose) is reduced at its C1 aldehyde group to form galactitol (a hexitol). The enzyme aldose reductase uses NADPH as the reducing agent. This reaction occurs in the lens, nerves, and other tissues.</p>`
+                },
+                {
+                    q: `j. Which enzyme is responsible for causing premature cataract in this case?`,
+                    marks: `0.5 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p><strong>Enzyme:</strong> Aldose reductase.</p>`
+                },
+                {
+                    q: `k. Describe how cataracts developed in this case.`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>Galactitol accumulates in the lens due to aldose reductase activity. Galactitol is osmotically active and draws water into lens fibers, causing swelling, protein denaturation, and eventually cataracts.</p>`
+                },
+                {
+                    q: `l. Explain how mental retardation develops in this case.`,
+                    marks: `1 mark`,
+                    answer: `<h4>Model Answer</h4>
+                    <p>Mental retardation develops due to the toxic effects of galactose-1-phosphate and galactitol on the developing brain. Galactose-1-phosphate inhibits enzymes of glycolysis and gluconeogenesis, causing energy failure, and galactitol causes osmotic damage to neurons. Additionally, untreated galactosemia leads to hypoglycemia and liver damage, further contributing to neurological impairment.</p>`
+                }
+            ]
+        }
+    ];
+
+    /* =====================================================================
+       RENDERING FUNCTIONS
+       ===================================================================== */
+    function renderSectionA() {
+        const container = document.getElementById('container-A');
+        let html = '';
+        sectionA.forEach((q, i) => {
+            const qid = 'A-q' + (i + 1);
+            html += '<div class="question" id="q-' + qid + '">';
+            html += '<p><span class="q-badge">Q' + (i + 1) + '</span> ' + q.q + '</p>';
+            html += '<div class="options">';
+            q.options.forEach((opt, j) => {
+                const L = String.fromCharCode(65 + j);
+                html += '<label><input type="radio" name="' + qid + '" value="' + L + '"> <strong>' + L + ')</strong> ' + opt + '</label>';
+            });
+            html += '</div>';
+            html += '<div class="question-feedback" id="fb-' + qid + '"></div>';
+            html += '</div>';
+        });
+        container.innerHTML = html;
+        document.getElementById('count-A').textContent = sectionA.length;
+    }
+
+    function submitSectionA() {
+        let score = 0;
+        sectionA.forEach((q, i) => {
+            const qid = 'A-q' + (i + 1);
+            const radios = document.getElementsByName(qid);
+            let selected = null;
+            for (let r = 0; r < radios.length; r++) {
+                if (radios[r].checked) { selected = radios[r]; break; }
+            }
+            const correct = q.correct.toUpperCase();
+            if (selected && selected.value === correct) score++;
+
+            let html = '<div class="answer-block"><div class="answer-list">';
+            q.options.forEach((opt, j) => {
+                const L = String.fromCharCode(65 + j);
+                let cls = 'answer-item';
+                if (L === correct) cls += ' answer-correct';
+                if (selected && selected.value === L) {
+                    cls += ' user-choice';
+                    if (L !== correct) cls += ' answer-wrong';
+                }
+                const mark = (selected && selected.value === L) ? ' ◀ your answer' : '';
+                html += '<div class="' + cls + '">' + L + ') ' + opt + mark + '</div>';
+            });
+            html += '</div>';
+
+            const correctIdx = correct.charCodeAt(0) - 65;
+            const correctText = (correctIdx >= 0 && correctIdx < q.options.length) ? q.options[correctIdx] : '';
+
+            if (!selected) {
+                html += '<div class="explanation wrong">No answer selected. Correct answer: <strong>' +
+                        correct + ') ' + correctText + '</strong>.<br>' + q.explanation + '</div>';
+            } else if (selected.value === correct) {
+                html += '<div class="explanation">✅ <strong>Correct.</strong><br>' + q.explanation + '</div>';
+            } else {
+                html += '<div class="explanation wrong">❌ <strong>Incorrect.</strong> Correct answer: <strong>' +
+                        correct + ') ' + correctText + '</strong>.<br>' + q.explanation + '</div>';
+            }
+
+            const fb = document.getElementById('fb-' + qid);
+            if (fb) fb.innerHTML = html;
+        });
+
+        const total = sectionA.length;
+        const pct = Math.round((score / total) * 100);
+        const box = document.getElementById('result-A');
+        box.style.display = 'block';
+        document.getElementById('score-A').innerText = score + ' / ' + total + '  (' + pct + '%)';
+
+        document.querySelectorAll('#panel-A input[type="radio"]').forEach(r => r.disabled = true);
+    }
+
+    function renderSectionB() {
+        const container = document.getElementById('container-B');
+        let html = '';
+        sectionB.forEach((caseItem, i) => {
+            const caseId = 'B-case' + (i + 1);
+            html += '<div class="question" id="q-' + caseId + '">';
+            html += '<p><span class="q-badge">Case ' + (i + 1) + '</span></p>';
+            html += '<div class="case-block">' + caseItem.q + '</div>';
+            caseItem.subquestions.forEach((sub, j) => {
+                const subId = caseId + '-sub' + (j + 1);
+                html += '<div class="subq">';
+                html += '<div class="subq-text">' + sub.q + ' <span class="subq-marks">(' + sub.marks + ')</span></div>';
+                html += '<button type="button" class="btn btn-sm" onclick="toggleAnswer(\'' + subId + '\')"><i class="fas fa-eye"></i> Show Model Answer</button>';
+                html += '<div class="essay-answer" id="ans-' + subId + '">' + sub.answer + '</div>';
+                html += '</div>';
+            });
+            html += '</div>';
+        });
+        container.innerHTML = html;
+        document.getElementById('count-B').textContent = sectionB.length;
+    }
+
+    function toggleAnswer(qid) {
+        const el = document.getElementById('ans-' + qid);
+        if (el) el.classList.toggle('show');
+    }
+
+    /* ─── INIT ─── */
+    renderSectionA();
+    renderSectionB();
+
+    /* ─── TAB SWITCHING ─── */
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            const target = this.dataset.target;
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+            document.getElementById('panel-' + target).classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anti-Emetic Pharmacology Interactive Flashcards</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            200: '#a7f3d0',
+                            300: '#6ee7b7',
+                            400: '#34d399',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                            950: '#022c22',
+                        },
+                        darkBg: '#0b0f19',
+                        darkCard: '#151d30',
+                        darkBorder: '#1e293b'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom scrollbar styling */
+        ::-webkit-scrollbar {
+            height: 8px;
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #059669;
+        }
+
+        /* 3D Card Flip CSS */
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        .transform-style-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .backface-hidden {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+        .rotate-y-180 {
+            transform: rotateY(180deg);
+        }
+
+        /* Hide scrollbars for slick look but keep functionality */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Snap scrolling mechanics */
+        .snap-x-mandatory {
+            scroll-snap-type: x mandatory;
+        }
+        .snap-center {
+            scroll-snap-align: center;
+        }
+
+        /* Glowing text effects */
+        .text-glow {
+            text-shadow: 0 0 12px rgba(52, 211, 153, 0.4);
+        }
+    </style>
+</head>
+<body class="bg-darkBg text-slate-100 font-sans min-h-screen flex flex-col justify-between overflow-x-hidden antialiased selection:bg-brand-500 selection:text-white">
+
+    <!-- Top Header & Navigation -->
+    <header class="sticky top-0 z-40 bg-darkBg/80 backdrop-blur-md border-b border-slate-800/80 px-4 lg:px-8 py-3 transition-all duration-300">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            
+            <!-- Logo & Title -->
+            <div class="flex items-center gap-3 w-full md:w-auto justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-400 to-brand-700 flex items-center justify-center text-darkBg font-bold text-xl shadow-lg shadow-brand-500/20">
+                        <i class="ph-bold ph-pill text-2xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-bold text-lg leading-tight tracking-wide text-white flex items-center gap-2">
+                            PharmaCards <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-brand-500/20 text-brand-300 border border-brand-500/30">Anti-Emetics</span>
+                        </h1>
+                        <p class="text-xs text-slate-400">Medical Student Rapid Pharmacology Mastery</p>
+                    </div>
+                </div>
+
+                <!-- Mobile card count badge -->
+                <div class="md:hidden text-xs font-mono bg-slate-800/80 px-2.5 py-1 rounded-lg border border-slate-700/50 text-slate-300">
+                    <span id="reviewed-count-mobile">0</span>/22 Reviewed
+                </div>
+            </div>
+
+            <!-- Controls, Search, Progress -->
+            <div class="flex items-center gap-3 w-full md:w-auto flex-wrap md:flex-nowrap justify-between">
+                <!-- Search Bar -->
+                <div class="relative flex-1 md:w-64">
+                    <i class="ph-bold ph-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                    <input type="text" id="search-input" placeholder="Search drugs, mechanisms..." 
+                           class="w-full bg-slate-900/90 text-sm text-slate-200 placeholder-slate-500 rounded-xl pl-9 pr-8 py-2 border border-slate-800 focus:outline-none focus:border-brand-500/60 focus:ring-1 focus:ring-brand-500/60 transition-all">
+                    <button id="clear-search" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300">
+                        <i class="ph-bold ph-x-circle text-base"></i>
+                    </button>
+                </div>
+
+                <!-- Jump To Select Dropdown -->
+                <div class="relative">
+                    <select id="jump-select" class="bg-slate-900/90 text-sm text-slate-200 rounded-xl px-3 py-2 border border-slate-800 focus:outline-none focus:border-brand-500/60 focus:ring-1 focus:ring-brand-500/60 transition-all cursor-pointer">
+                        <!-- Populated by JS -->
+                    </select>
+                </div>
+
+                <!-- Desktop Progress Tracker -->
+                <div class="hidden lg:flex flex-col items-end pl-2 border-l border-slate-800">
+                    <div class="text-xs font-mono text-slate-400">
+                        Reviewed: <span id="reviewed-count-desktop" class="text-brand-400 font-bold">0</span> / 22
+                    </div>
+                    <div class="w-28 h-1.5 bg-slate-800 rounded-full mt-1 overflow-hidden">
+                        <div id="progress-bar-fill" class="h-full bg-gradient-to-r from-brand-500 to-brand-300 w-0 transition-all duration-300"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 flex flex-col justify-center my-4 relative max-w-full">
+        
+        <!-- Action Toolbar -->
+        <div class="max-w-7xl mx-auto px-4 w-full flex items-center justify-between mb-4 text-xs text-slate-400">
+            <div class="flex items-center gap-2">
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-900/80 border border-slate-800 text-slate-300">
+                    <i class="ph-bold ph-hand-swipe-left text-brand-400"></i> Scroll or drag to browse
+                </span>
+                <span class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-900/80 border border-slate-800 text-slate-300">
+                    <i class="ph-bold ph-keyboard text-brand-400"></i> Use ← → to Navigate | Space to Flip
+                </span>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <button id="shuffle-btn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white transition-all">
+                    <i class="ph-bold ph-shuffle text-brand-400"></i> Shuffle
+                </button>
+                <button id="reset-btn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white transition-all">
+                    <i class="ph-bold ph-arrows-counter-clockwise text-brand-400"></i> Reset
+                </button>
+            </div>
+        </div>
+
+        <!-- Horizontal Flashcards Container -->
+        <div class="relative w-full overflow-hidden py-4">
+            
+            <!-- Left Gradient Mask -->
+            <div class="absolute left-0 top-0 bottom-0 w-8 md:w-20 bg-gradient-to-r from-darkBg to-transparent z-10 pointer-events-none"></div>
+            
+            <!-- Cards Scroll Track -->
+            <div id="cards-container" class="flex items-center gap-6 px-6 md:px-[calc(50vw-280px)] overflow-x-auto snap-x-mandatory scroll-smooth no-scrollbar py-4 min-h-[460px]">
+                <!-- Flashcards injected dynamically by JavaScript -->
+            </div>
+
+            <!-- Right Gradient Mask -->
+            <div class="absolute right-0 top-0 bottom-0 w-8 md:w-20 bg-gradient-to-l from-darkBg to-transparent z-10 pointer-events-none"></div>
+        </div>
+
+        <!-- Pagination / Active Indicator -->
+        <div class="flex flex-col items-center gap-2 mt-2">
+            <div id="dots-indicator" class="flex items-center gap-1.5 max-w-full overflow-x-auto px-4 py-1 no-scrollbar">
+                <!-- Dots populated by JS -->
+            </div>
+            <div id="active-card-label" class="text-xs font-mono text-slate-400 tracking-wider">
+                Card 1 of 22
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Bottom Floating Navigation Bar -->
+    <footer class="sticky bottom-4 z-30 px-4 pointer-events-none mb-2">
+        <div class="max-w-md mx-auto bg-darkCard/90 backdrop-blur-lg border border-slate-700/60 rounded-2xl p-2 flex items-center justify-between shadow-2xl shadow-black/80 pointer-events-auto">
+            <button id="prev-btn" class="flex items-center justify-center w-12 h-12 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-brand-300 border border-slate-700 active:scale-95 transition-all">
+                <i class="ph-bold ph-caret-left text-2xl"></i>
+            </button>
+
+            <button id="flip-active-btn" class="flex-1 mx-3 h-12 rounded-xl bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-500 hover:to-brand-400 text-darkBg font-bold text-sm tracking-wide shadow-lg shadow-brand-500/20 active:scale-98 transition-all flex items-center justify-center gap-2">
+                <i class="ph-bold ph-arrows-down-up text-lg"></i>
+                <span>Flip Card (Space)</span>
+            </button>
+
+            <button id="next-btn" class="flex items-center justify-center w-12 h-12 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-brand-300 border border-slate-700 active:scale-95 transition-all">
+                <i class="ph-bold ph-caret-right text-2xl"></i>
+            </button>
+        </div>
+    </footer>
+
+    <script>
+        // Data Set: 22 Anti-Emetic Pharmacology Questions
+        const rawFlashcardData = [
+            {
+                id: 1,
+                category: "Pathophysiology",
+                badge: "Core Concept",
+                question: "What is the pathophysiology of emesis, and how do sensory pathways, the Chemoreceptor Trigger Zone (CTZ), and the Vomiting Centre interact to produce vomiting?",
+                answer: `Emesis is a reflex mediated by the <strong>Vomiting Centre</strong> in the medulla oblongata. It receives inputs from:
+                <ul class="list-disc pl-5 space-y-1.5 mt-2">
+                    <li><strong class="text-brand-300">CTZ (Area Postrema):</strong> Located outside the blood-brain barrier (BBB); senses emetogenic toxins, drugs (chemotherapy, opioids), and metabolic waste (uremia, DKA).</li>
+                    <li><strong class="text-brand-300">Vestibular Apparatus:</strong> Detects motion and spatial orientation via H<sub>1</sub> & mACh receptors.</li>
+                    <li><strong class="text-brand-300">GIT & Pharynx:</strong> Vagal afferents triggered by serotonin (5-HT<sub>3</sub>) release from enterochromaffin cells due to irritation/cytotoxics.</li>
+                    <li><strong class="text-brand-300">Cerebral Cortex:</strong> Higher sensory inputs (sight, smell, memory, anxiety, anticipatory emesis).</li>
+                </ul>`
+            },
+            {
+                id: 2,
+                category: "Neuroanatomy",
+                badge: "Receptors & Input",
+                question: "Describe the main sources of afferent input to the vomiting centre, stating their anatomical triggers, neurotransmitters, and receptor types.",
+                answer: `<div class="space-y-2">
+                    <div><strong class="text-brand-300">1. CTZ:</strong> Dopamine (D<sub>2</sub>), Serotonin (5-HT<sub>3</sub>), Substance P (NK<sub>1</sub>), and Opioid receptors.</div>
+                    <div><strong class="text-brand-300">2. Vestibular System:</strong> Histamine (H<sub>1</sub>) and Muscarinic Acetylcholine (mACh).</div>
+                    <div><strong class="text-brand-300">3. GIT Visceral Afferents:</strong> Serotonin (5-HT<sub>3</sub>) and Mechanoreceptors.</div>
+                    <div><strong class="text-brand-300">4. Higher Cortex:</strong> GABA, H<sub>1</sub>, and cortical pathways.</div>
+                    <div><strong class="text-brand-300">5. Vomiting Centre (Medulla):</strong> Integrates central signals via mACh, H<sub>1</sub>, and 5-HT<sub>3</sub>.</div>
+                </div>`
+            },
+            {
+                id: 3,
+                category: "Classification",
+                badge: "Drug Classes",
+                question: "List the 4 primary major classes of anti-emetic drugs and give at least 2 examples for each group.",
+                answer: `<ol class="list-decimal pl-5 space-y-2">
+                    <li><strong class="text-brand-300">Histamine H<sub>1</sub> Antagonists:</strong> Promethazine, Cyclizine, Cinnarizine, Diphenhydramine.</li>
+                    <li><strong class="text-brand-300">Muscarinic Antagonists:</strong> Hyoscine (Scopolamine), Dicyclomine.</li>
+                    <li><strong class="text-brand-300">Dopamine D<sub>2</sub> Antagonists:</strong> Metoclopramide, Domperidone, Chlorpromazine, Haloperidol.</li>
+                    <li><strong class="text-brand-300">Serotonin 5-HT<sub>3</sub> Antagonists:</strong> Ondansetron, Granisetron.</li>
+                </ol>`
+            },
+            {
+                id: 4,
+                category: "H1 Antagonists",
+                badge: "Mechanism & Drugs",
+                question: "Describe the Mechanism of Action (MoA) of Histamine H1-receptor antagonists and give 4 examples.",
+                answer: `<ul class="list-disc pl-5 space-y-2">
+                    <li><strong class="text-brand-300">MoA:</strong> Block H<sub>1</sub> histamine receptors in the vestibular nuclei and solitary tract nucleus; also possess significant anti-muscarinic activity.</li>
+                    <li><strong class="text-brand-300">Primary Action:</strong> Interrupts vestibulocerebellar signaling pathways to the emetic centre.</li>
+                    <li><strong class="text-brand-300">Examples:</strong> Cyclizine, Cinnarizine, Promethazine, Diphenhydramine.</li>
+                </ul>`
+            },
+            {
+                id: 5,
+                category: "H1 & Anticholinergics",
+                badge: "Clinical Indication",
+                question: "What is the primary clinical indication for Histamine H1-receptor antagonists and Muscarinic receptor antagonists?",
+                answer: `<div class="p-3 bg-brand-950/60 rounded-xl border border-brand-500/30 text-brand-100">
+                    The primary indications are <strong class="text-brand-300">Motion Sickness</strong>, <strong class="text-brand-300">Vestibular Disorders</strong> (e.g., Meniere's disease, labyrinthitis), and <strong class="text-brand-300">Vertigo</strong>.
+                </div>
+                <p class="mt-2 text-xs text-slate-400">They work by suppressing hyperactive labyrinthine/vestibular signaling before reaching the emetic centre.</p>`
+            },
+            {
+                id: 6,
+                category: "Muscarinic Antagonists",
+                badge: "Motion Sickness",
+                question: "What is the MoA of Hyoscine (Scopolamine), and why is it considered the drug of choice in motion sickness?",
+                answer: `<ul class="list-disc pl-5 space-y-2">
+                    <li><strong class="text-brand-300">MoA:</strong> Potent muscarinic (mACh) receptor antagonist acting directly on vestibular pathways and the vomiting centre.</li>
+                    <li><strong class="text-brand-300">Drug of Choice:</strong> Highly effective at preventing motion sickness caused by overstimulation of the vestibular apparatus during travel when administered prophylactically.</li>
+                </ul>`
+            },
+            {
+                id: 7,
+                category: "Obstetric Pharm",
+                badge: "Pregnancy Emesis",
+                question: "Which drug is specifically used to control vomiting in pregnancy as a muscarinic/anticholinergic option?",
+                answer: `<p><strong class="text-brand-300">Dicyclomine</strong> (and Pyridoxine / Doxylamine combination therapies) is used to safely control nausea and vomiting of pregnancy (morning sickness).</p>`
+            },
+            {
+                id: 8,
+                category: "D2 Antagonists",
+                badge: "Metoclopramide MoA",
+                question: "Describe the dual Mechanism of Action (MoA) of Metoclopramide as both an anti-emetic and a prokinetic agent.",
+                answer: `<div class="space-y-3">
+                    <div class="p-2.5 rounded-lg bg-slate-800/80 border border-slate-700">
+                        <strong class="text-brand-300 block mb-1">1. Anti-Emetic MoA:</strong>
+                        Blocks central Dopamine D<sub>2</sub> receptors in the CTZ (area postrema) and vomiting centre.
+                    </div>
+                    <div class="p-2.5 rounded-lg bg-slate-800/80 border border-slate-700">
+                        <strong class="text-brand-300 block mb-1">2. Prokinetic MoA:</strong>
+                        Blocks enteric D<sub>2</sub> receptors in the GIT, removing dopamine-mediated inhibition of enteric cholinergic motor output &rarr; increases lower esophageal sphincter tone and accelerates gastric emptying.
+                    </div>
+                </div>`
+            },
+            {
+                id: 9,
+                category: "D2 Antagonists",
+                badge: "Clinical Uses",
+                question: "List 6 clinical uses/indications for Metoclopramide.",
+                answer: `<ul class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                    <li class="p-2 rounded bg-slate-800/60 border border-slate-700/60"><span class="text-brand-400 font-bold">1.</span> Chemotherapy emesis</li>
+                    <li class="p-2 rounded bg-slate-800/60 border border-slate-700/60"><span class="text-brand-400 font-bold">2.</span> Radiotherapy emesis</li>
+                    <li class="p-2 rounded bg-slate-800/60 border border-slate-700/60"><span class="text-brand-400 font-bold">3.</span> Uremia & toxins</li>
+                    <li class="p-2 rounded bg-slate-800/60 border border-slate-700/60"><span class="text-brand-400 font-bold">4.</span> Viral gastroenteritis</li>
+                    <li class="p-2 rounded bg-slate-800/60 border border-slate-700/60"><span class="text-brand-400 font-bold">5.</span> Migraine nausea</li>
+                    <li class="p-2 rounded bg-slate-800/60 border border-slate-700/60"><span class="text-brand-400 font-bold">6.</span> Post-op/Pre-op emesis</li>
+                    <li class="p-2 rounded bg-slate-800/60 border border-slate-700/60 col-span-1 sm:col-span-2"><span class="text-brand-400 font-bold">7.</span> Gastric stasis & GERD</li>
+                </ul>`
+            },
+            {
+                id: 10,
+                category: "Pharmacokinetics",
+                badge: "Metoclopramide PK",
+                question: "Explain the pharmacokinetics of Metoclopramide (absorption, metabolism, excretion, and dose).",
+                answer: `<ul class="list-disc pl-5 space-y-1.5">
+                    <li><strong class="text-brand-300">Absorption:</strong> Rapidly absorbed from GIT after oral administration.</li>
+                    <li><strong class="text-brand-300">Metabolism:</strong> Undergoes significant first-pass hepatic metabolism.</li>
+                    <li><strong class="text-brand-300">Excretion:</strong> Excreted in urine (free drug & metabolites) and breast milk.</li>
+                    <li><strong class="text-brand-300">Dosing:</strong> 10–20 mg orally or IV every 6 hours.</li>
+                </ul>`
+            },
+            {
+                id: 11,
+                category: "Adverse Effects",
+                badge: "Side Effects",
+                question: "List the adverse effects associated with Metoclopramide administration.",
+                answer: `<ul class="list-disc pl-5 space-y-1.5">
+                    <li><strong class="text-red-400">Extrapyramidal Reactions (EPS):</strong> Dystonias, facial/skeletal muscle spasms, restlessness, parkinsonian symptoms.</li>
+                    <li><strong class="text-yellow-400">Endocrine/Hyperprolactinaemia:</strong> Galactorrhoea, gynaecomastia, impotence, menstrual disorders.</li>
+                    <li><strong class="text-brand-300">Gastrointestinal:</strong> Bowel upsets, diarrhoea.</li>
+                    <li><strong class="text-brand-300">CNS:</strong> Drowsiness, fatigue, dizziness, anxiety.</li>
+                </ul>`
+            },
+            {
+                id: 12,
+                category: "Endocrinology",
+                badge: "Hyperprolactinaemia",
+                question: "What is the mechanism by which Metoclopramide causes galactorrhoea, gynaecomastia, impotence, and menstrual disorders?",
+                answer: `<p>Metoclopramide blocks dopamine D<sub>2</sub> receptors in the <strong class="text-brand-300">tuberoinfundibular pathway</strong> of the anterior pituitary.</p>
+                <div class="mt-2 p-2.5 bg-slate-800/90 rounded-lg border border-slate-700 text-xs">
+                    Since dopamine normally exerts tonic inhibition on prolactin release, D<sub>2</sub> blockade causes unrestrained release of prolactin &rarr; <strong class="text-brand-400">Hyperprolactinaemia</strong>.
+                </div>`
+            },
+            {
+                id: 13,
+                category: "Toxicology / EPS",
+                badge: "Age Susceptibility",
+                question: "In what age groups are extrapyramidal reactions to Metoclopramide most common, and when do they subside?",
+                answer: `<ul class="list-disc pl-5 space-y-2">
+                    <li><strong class="text-brand-300">Demographics:</strong> Most common in <strong class="text-amber-300">children / young adults</strong> and the <strong class="text-amber-300">elderly</strong>.</li>
+                    <li><strong class="text-brand-300">Duration & Onset:</strong> Usually occur shortly after starting treatment and subside within <strong class="text-brand-400">24 hours</strong> of drug withdrawal.</li>
+                </ul>`
+            },
+            {
+                id: 14,
+                category: "Comparative Pharm",
+                badge: "Domperidone vs Metoclopramide",
+                question: "How does Domperidone differ from Metoclopramide regarding BBB penetration and central EPS side effects?",
+                answer: `<div class="grid grid-cols-2 gap-2 text-xs my-1">
+                    <div class="p-2 bg-slate-800 rounded border border-slate-700">
+                        <strong class="text-brand-400 block border-b border-slate-700 pb-1 mb-1">Domperidone</strong>
+                        Does <strong>NOT</strong> readily cross the Blood-Brain Barrier (BBB).
+                    </div>
+                    <div class="p-2 bg-slate-800 rounded border border-slate-700">
+                        <strong class="text-brand-400 block border-b border-slate-700 pb-1 mb-1">Metoclopramide</strong>
+                        Readily crosses the Blood-Brain Barrier (BBB).
+                    </div>
+                </div>
+                <p class="mt-2 text-xs text-slate-300"><strong>Clinical Result:</strong> Domperidone retains full anti-emetic activity (because CTZ is outside BBB) without causing central extrapyramidal side effects (EPS).</p>`
+            },
+            {
+                id: 15,
+                category: "5-HT3 Antagonists",
+                badge: "Mechanism & Examples",
+                question: "Describe the Mechanism of Action (MoA) of Serotonin 5-HT3 receptor antagonists and list 2 examples.",
+                answer: `<ul class="list-disc pl-5 space-y-2">
+                    <li><strong class="text-brand-300">MoA:</strong> Block peripheral 5-HT<sub>3</sub> receptors on GI vagal afferents and central 5-HT<sub>3</sub> receptors in the CTZ and vomiting centre.</li>
+                    <li><strong class="text-brand-300">Key Examples:</strong> Ondansetron, Granisetron, Palonosetron.</li>
+                </ul>`
+            },
+            {
+                id: 16,
+                category: "5-HT3 Antagonists",
+                badge: "First-Line Indications",
+                question: "In what specific clinical circumstances are 5-HT3 receptor antagonists considered the drugs of choice?",
+                answer: `<ol class="list-decimal pl-5 space-y-1.5">
+                    <li><strong class="text-brand-300">Chemotherapy-Induced Nausea & Vomiting (CINV):</strong> Cytotoxic drugs trigger massive serotonin release from mucosal enterochromaffin cells.</li>
+                    <li><strong class="text-brand-300">Radiotherapy-Induced Emesis.</strong></li>
+                    <li><strong class="text-brand-300">Post-Operative Nausea & Vomiting (PONV).</strong></li>
+                </ol>`
+            },
+            {
+                id: 17,
+                category: "5-HT3 Adverse Effects",
+                badge: "Safety Profile",
+                question: "List the main adverse effects of 5-HT3 receptor antagonists like Ondansetron and Granisetron.",
+                answer: `<ul class="list-disc pl-5 space-y-1.5">
+                    <li><strong class="text-brand-300">Constipation</strong> (due to decreased GI motility)</li>
+                    <li><strong class="text-brand-300">Headache</strong></li>
+                    <li><strong class="text-brand-300">Lightheadedness & flushing</strong></li>
+                    <li><strong class="text-amber-400">QT Interval Prolongation</strong> (at higher intravenous doses)</li>
+                </ul>`
+            },
+            {
+                id: 18,
+                category: "NK1 Antagonists",
+                badge: "Aprepitant MoA",
+                question: "What is the Mechanism of Action of Aprepitant, and what is its primary clinical indication?",
+                answer: `<ul class="list-disc pl-5 space-y-2">
+                    <li><strong class="text-brand-300">MoA:</strong> Selective antagonist of Neurokinin-1 (NK<sub>1</sub>) receptors in the CTZ and vomiting centre, blocking the binding of <strong class="text-brand-400">Substance P</strong>.</li>
+                    <li><strong class="text-brand-300">Indication:</strong> Used in combination with 5-HT<sub>3</sub> antagonists and dexamethasone for highly emetogenic cytotoxic chemotherapy (specifically effective for delayed CINV).</li>
+                </ul>`
+            },
+            {
+                id: 19,
+                category: "Adjuvant Therapy",
+                badge: "Corticosteroids",
+                question: "How are Corticosteroids (e.g., Dexamethasone) utilized as anti-emetic therapy?",
+                answer: `<p>Used as <strong class="text-brand-300">adjunctive therapy</strong> in combination with 5-HT<sub>3</sub> antagonists or Metoclopramide to synergistically enhance control of chemotherapy-induced emesis through anti-inflammatory and central gene expression mechanisms.</p>`
+            },
+            {
+                id: 20,
+                category: "Vitamins / Obstetrics",
+                badge: "Pyridoxine",
+                question: "What is the role of Pyridoxine (Vitamin B6) in the management of nausea and vomiting?",
+                answer: `<p>Pyridoxine (Vitamin B<sub>6</sub>) is a first-line agent used in the prevention and treatment of <strong class="text-brand-300">Nausea and Vomiting of Pregnancy (NVP / morning sickness)</strong>, often prescribed in combination with an antihistamine like Doxylamine.</p>`
+            },
+            {
+                id: 21,
+                category: "Adjuvant Therapy",
+                badge: "Benzodiazepines",
+                question: "What is the mechanism and role of Benzodiazepines as adjuvant anti-emetics?",
+                answer: `<ul class="list-disc pl-5 space-y-2">
+                    <li><strong class="text-brand-300">MoA:</strong> Depress central nervous system activity and raise the vomiting threshold via GABA<sub>A</sub> receptor potentiation.</li>
+                    <li><strong class="text-brand-300">Clinical Role:</strong> Used as adjuvants (e.g., Lorazepam) to reduce anxiety and prevent <strong class="text-brand-400">anticipatory emesis</strong> in patients undergoing chemotherapy.</li>
+                </ul>`
+            },
+            {
+                id: 22,
+                category: "Cannabinoids",
+                badge: "Refractory Emesis",
+                question: "What is the Mechanism of Action of Cannabinoids (Nabilone, Dronabinol), and in what scenario are they prescribed?",
+                answer: `<ul class="list-disc pl-5 space-y-2">
+                    <li><strong class="text-brand-300">MoA:</strong> Stimulate CB<sub>1</sub> cannabinoid receptors in the vomiting centre and CTZ; also stimulates appetite.</li>
+                    <li><strong class="text-brand-300">Clinical Scenario:</strong> Prescribed for <strong class="text-amber-400">refractory chemotherapy-induced emesis</strong> when standard anti-emetics are ineffective or contraindicated.</li>
+                </ul>`
+            }
+        ];
+
+        // App State
+        let cardsData = [...rawFlashcardData];
+        let flippedCardIds = new Set();
+        let activeCardIndex = 0;
+
+        // DOM Elements
+        const cardsContainer = document.getElementById('cards-container');
+        const dotsIndicator = document.getElementById('dots-indicator');
+        const jumpSelect = document.getElementById('jump-select');
+        const activeCardLabel = document.getElementById('active-card-label');
+        const reviewedCountDesktop = document.getElementById('reviewed-count-desktop');
+        const reviewedCountMobile = document.getElementById('reviewed-count-mobile');
+        const progressBarFill = document.getElementById('progress-bar-fill');
+        const searchInput = document.getElementById('search-input');
+        const clearSearchBtn = document.getElementById('clear-search');
+        
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const flipActiveBtn = document.getElementById('flip-active-btn');
+        const shuffleBtn = document.getElementById('shuffle-btn');
+        const resetBtn = document.getElementById('reset-btn');
+
+        // Initialize & Render Cards
+        function renderCards() {
+            cardsContainer.innerHTML = '';
+            
+            if (cardsData.length === 0) {
+                cardsContainer.innerHTML = `
+                    <div class="w-full text-center py-16 text-slate-400">
+                        <i class="ph-bold ph-magnifying-glass-x text-4xl mb-2 text-slate-500"></i>
+                        <p class="text-base">No flashcards match your search criteria.</p>
+                        <button onclick="resetSearch()" class="mt-3 px-4 py-1.5 rounded-lg bg-brand-600 text-white text-xs font-semibold">Clear Search Filter</button>
+                    </div>
+                `;
+                updateActiveCardLabel();
+                return;
+            }
+
+            cardsData.forEach((item, index) => {
+                const isFlipped = flippedCardIds.has(item.id);
+                
+                const cardEl = document.createElement('div');
+                cardEl.className = 'snap-center shrink-0 w-[320px] sm:w-[420px] md:w-[520px] h-[380px] perspective-1000 cursor-pointer group';
+                cardEl.setAttribute('data-id', item.id);
+                cardEl.setAttribute('data-index', index);
+
+                cardEl.innerHTML = `
+                    <div class="card-inner relative w-full h-full transform-style-3d ${isFlipped ? 'rotate-y-180' : ''}">
+                        
+                        <!-- CARD FRONT -->
+                        <div class="card-front absolute inset-0 w-full h-full bg-darkCard border border-slate-800 hover:border-brand-500/50 rounded-2xl p-6 flex flex-col justify-between shadow-xl backface-hidden transition-all duration-300">
+                            <!-- Top Card Header -->
+                            <div class="flex items-center justify-between">
+                                <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-brand-500/10 text-brand-300 border border-brand-500/20">
+                                    ${item.badge}
+                                </span>
+                                <span class="text-xs font-mono text-slate-400">
+                                    Card <span class="text-brand-400 font-bold">${index + 1}</span> of ${cardsData.length}
+                                </span>
+                            </div>
+
+                            <!-- Question Content -->
+                            <div class="my-auto py-2">
+                                <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1">QUESTION</span>
+                                <h3 class="text-base sm:text-lg font-semibold text-slate-100 leading-snug">
+                                    ${item.question}
+                                </h3>
+                            </div>
+
+                            <!-- Card Bottom Hint -->
+                            <div class="flex items-center justify-between border-t border-slate-800/80 pt-3 text-xs text-slate-400">
+                                <span class="flex items-center gap-1.5 text-slate-400">
+                                    <i class="ph-bold ph-tag text-brand-400"></i> ${item.category}
+                                </span>
+                                <span class="text-brand-400 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                                    Click or press space to flip <i class="ph-bold ph-arrow-right"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- CARD BACK -->
+                        <div class="card-back absolute inset-0 w-full h-full bg-slate-900 border border-brand-500/40 rounded-2xl p-6 flex flex-col justify-between shadow-2xl shadow-brand-500/10 rotate-y-180 backface-hidden overflow-hidden">
+                            <!-- Back Header -->
+                            <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-brand-500/20 text-brand-300">
+                                    ANSWER EXPLANATION
+                                </span>
+                                <span class="text-xs font-mono text-slate-400">
+                                    Card #${index + 1}
+                                </span>
+                            </div>
+
+                            <!-- Answer Explanation Scrollable Content -->
+                            <div class="my-auto py-3 overflow-y-auto max-h-[260px] pr-1 text-sm text-slate-200 leading-relaxed font-sans">
+                                ${item.answer}
+                            </div>
+
+                            <!-- Back Footer -->
+                            <div class="flex items-center justify-between border-t border-slate-800/80 pt-2 text-xs text-slate-400">
+                                <span class="text-emerald-400 font-medium flex items-center gap-1">
+                                    <i class="ph-bold ph-check-circle"></i> Mark Reviewed
+                                </span>
+                                <span class="text-slate-400 flex items-center gap-1">
+                                    Click to flip back <i class="ph-bold ph-arrows-counter-clockwise"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                `;
+
+                // Flip event on card click
+                cardEl.addEventListener('click', () => {
+                    toggleFlip(item.id, cardEl);
+                });
+
+                cardsContainer.appendChild(cardEl);
+            });
+
+            updateDropdownAndDots();
+            updateActiveCardLabel();
+            updateProgress();
+        }
+
+        // Toggle card flip animation
+        function toggleFlip(id, cardEl) {
+            const inner = cardEl.querySelector('.card-inner');
+            if (flippedCardIds.has(id)) {
+                flippedCardIds.delete(id);
+                inner.classList.remove('rotate-y-180');
+            } else {
+                flippedCardIds.add(id);
+                inner.classList.add('rotate-y-180');
+            }
+            updateProgress();
+        }
+
+        // Update Reviewed Progress Bar & Indicators
+        function updateProgress() {
+            const total = cardsData.length;
+            const reviewed = flippedCardIds.size;
+            
+            reviewedCountDesktop.textContent = reviewed;
+            reviewedCountMobile.textContent = reviewed;
+            
+            const pct = total > 0 ? (reviewed / total) * 100 : 0;
+            progressBarFill.style.width = `${pct}%`;
+        }
+
+        // Dropdown Jump & Indicator Dots Update
+        function updateDropdownAndDots() {
+            jumpSelect.innerHTML = '';
+            dotsIndicator.innerHTML = '';
+
+            cardsData.forEach((item, index) => {
+                // Dropdown item
+                const option = document.createElement('option');
+                option.value = index;
+                option.textContent = `Card ${index + 1}: ${item.question.substring(0, 32)}...`;
+                jumpSelect.appendChild(option);
+
+                // Indicator dot
+                const dot = document.createElement('button');
+                dot.className = `w-2.5 h-2.5 rounded-full transition-all shrink-0 ${index === activeCardIndex ? 'bg-brand-400 w-6' : 'bg-slate-700 hover:bg-slate-500'}`;
+                dot.addEventListener('click', () => scrollToCard(index));
+                dotsIndicator.appendChild(dot);
+            });
+
+            if (cardsData.length > 0) {
+                jumpSelect.value = activeCardIndex;
+            }
+        }
+
+        // Scroll smooth to specified card index
+        function scrollToCard(index) {
+            if (index < 0 || index >= cardsData.length) return;
+            activeCardIndex = index;
+            const targetCard = cardsContainer.children[index];
+            if (targetCard) {
+                targetCard.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            }
+            updateActiveCardLabel();
+            updateDropdownAndDots();
+        }
+
+        // Update active index label
+        function updateActiveCardLabel() {
+            if (cardsData.length === 0) {
+                activeCardLabel.textContent = "0 Cards";
+                return;
+            }
+            activeCardLabel.textContent = `Card ${activeCardIndex + 1} of ${cardsData.length}`;
+            if (jumpSelect.children.length > activeCardIndex) {
+                jumpSelect.value = activeCardIndex;
+            }
+        }
+
+        // Detect current card on horizontal scroll end
+        cardsContainer.addEventListener('scroll', () => {
+            clearTimeout(cardsContainer.scrollTimeout);
+            cardsContainer.scrollTimeout = setTimeout(() => {
+                const containerRect = cardsContainer.getBoundingClientRect();
+                const containerCenter = containerRect.left + containerRect.width / 2;
+
+                let closestIndex = 0;
+                let minDistance = Infinity;
+
+                Array.from(cardsContainer.children).forEach((card, index) => {
+                    const cardRect = card.getBoundingClientRect();
+                    const cardCenter = cardRect.left + cardRect.width / 2;
+                    const distance = Math.abs(containerCenter - cardCenter);
+
+                    if (distance < minDistance) {
+                        minDistance = distance;
+                        closestIndex = index;
+                    }
+                });
+
+                if (activeCardIndex !== closestIndex) {
+                    activeCardIndex = closestIndex;
+                    updateActiveCardLabel();
+                    updateDropdownAndDots();
+                }
+            }, 50);
+        });
+
+        // Navigation Button Listeners
+        prevBtn.addEventListener('click', () => {
+            if (activeCardIndex > 0) scrollToCard(activeCardIndex - 1);
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (activeCardIndex < cardsData.length - 1) scrollToCard(activeCardIndex + 1);
+        });
+
+        flipActiveBtn.addEventListener('click', () => {
+            const currentCard = cardsContainer.children[activeCardIndex];
+            if (currentCard) {
+                const id = parseInt(currentCard.getAttribute('data-id'));
+                toggleFlip(id, currentCard);
+            }
+        });
+
+        jumpSelect.addEventListener('change', (e) => {
+            scrollToCard(parseInt(e.target.value));
+        });
+
+        // Shuffle Cards Function
+        shuffleBtn.addEventListener('click', () => {
+            for (let i = cardsData.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [cardsData[i], cardsData[j]] = [cardsData[j], cardsData[i]];
+            }
+            activeCardIndex = 0;
+            renderCards();
+            scrollToCard(0);
+        });
+
+        // Reset All Flashcards
+        resetBtn.addEventListener('click', () => {
+            cardsData = [...rawFlashcardData];
+            flippedCardIds.clear();
+            activeCardIndex = 0;
+            searchInput.value = '';
+            clearSearchBtn.classList.add('hidden');
+            renderCards();
+            scrollToCard(0);
+        });
+
+        // Search & Filter Logic
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            if (query.length > 0) {
+                clearSearchBtn.classList.remove('hidden');
+            } else {
+                clearSearchBtn.classList.add('hidden');
+            }
+
+            cardsData = rawFlashcardData.filter(item => 
+                item.question.toLowerCase().includes(query) || 
+                item.answer.toLowerCase().includes(query) ||
+                item.category.toLowerCase().includes(query)
+            );
+
+            activeCardIndex = 0;
+            renderCards();
+            if (cardsData.length > 0) scrollToCard(0);
+        });
+
+        function resetSearch() {
+            searchInput.value = '';
+            clearSearchBtn.classList.add('hidden');
+            cardsData = [...rawFlashcardData];
+            activeCardIndex = 0;
+            renderCards();
+            scrollToCard(0);
+        }
+
+        clearSearchBtn.addEventListener('click', resetSearch);
+
+        // Global Keyboard Shortcut Support
+        document.addEventListener('keydown', (e) => {
+            if (document.activeElement === searchInput) return;
+
+            if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                if (activeCardIndex < cardsData.length - 1) scrollToCard(activeCardIndex + 1);
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                if (activeCardIndex > 0) scrollToCard(activeCardIndex - 1);
+            } else if (e.key === ' ' || e.key === 'Spacebar' || e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+                e.preventDefault();
+                const currentCard = cardsContainer.children[activeCardIndex];
+                if (currentCard) {
+                    const id = parseInt(currentCard.getAttribute('data-id'));
+                    toggleFlip(id, currentCard);
+                }
+            }
+        });
+
+        // Initial Initialization on DOM load
+        window.onload = function () {
+            renderCards();
+            setTimeout(() => {
+                scrollToCard(0);
+            }, 100);
+        };
+    </script>
+</body>
+</html>

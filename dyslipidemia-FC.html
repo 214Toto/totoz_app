@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dyslipidaemia Pharmacology Flashcards</title>
+  <style>
+    :root {
+      --bg-dark: #090d16;
+      --card-bg: #111827;
+      --card-border: #1f293d;
+      --primary-green: #10b981;
+      --emerald-glow: #059669;
+      --accent-mint: #34d399;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    header {
+      width: 100%;
+      max-width: 1100px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      color: var(--accent-mint);
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .controls-container {
+      width: 100%;
+      max-width: 1100px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: space-between;
+      align-items: center;
+      background: #131c2e;
+      padding: 15px;
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+      margin-bottom: 25px;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 250px;
+      position: relative;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 8px;
+      background: #0d1322;
+      border: 1px solid #2b3952;
+      color: var(--text-main);
+      outline: none;
+      font-size: 0.9rem;
+    }
+
+    .search-box input:focus {
+      border-color: var(--primary-green);
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    button, select {
+      background: #1a263d;
+      color: var(--accent-mint);
+      border: 1px solid #2b3952;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.85rem;
+      transition: all 0.2s ease;
+    }
+
+    button:hover, select:hover {
+      background: var(--primary-green);
+      color: #000;
+      border-color: var(--primary-green);
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      max-width: 1100px;
+      height: 6px;
+      background: #1e293b;
+      border-radius: 3px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--primary-green), var(--accent-mint));
+      transition: width 0.3s ease;
+    }
+
+    .flashcards-wrapper {
+      width: 100%;
+      max-width: 1100px;
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 25px;
+      scroll-behavior: smooth;
+    }
+
+    .flashcards-wrapper::-webkit-scrollbar {
+      height: 10px;
+    }
+
+    .flashcards-wrapper::-webkit-scrollbar-track {
+      background: #0d1322;
+      border-radius: 5px;
+    }
+
+    .flashcards-wrapper::-webkit-scrollbar-thumb {
+      background: #24344d;
+      border-radius: 5px;
+    }
+
+    .card-container {
+      flex: 0 0 100%;
+      max-width: 600px;
+      height: 380px;
+      perspective: 1000px;
+      scroll-snap-align: center;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 768px) {
+      .card-container {
+        flex: 0 0 550px;
+      }
+    }
+
+    .card {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+    }
+
+    .card.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 16px;
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid var(--card-border);
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    }
+
+    .card-front {
+      background: radial-gradient(circle at top left, #1a273e, #111827);
+    }
+
+    .card-back {
+      background: radial-gradient(circle at bottom right, #062c22, #111827);
+      transform: rotateY(180deg);
+      border-color: var(--primary-green);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--accent-mint);
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .card-body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      flex: 1;
+      font-size: 1.15rem;
+      line-height: 1.6;
+      padding: 10px;
+      color: var(--text-main);
+      overflow-y: auto;
+    }
+
+    .card-back .card-body {
+      font-size: 1rem;
+      text-align: left;
+      align-items: flex-start;
+    }
+
+    .card-footer {
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 10px;
+    }
+
+    .bullet-list {
+      list-style-type: disc;
+      padding-left: 20px;
+    }
+
+    .bullet-list li {
+      margin-bottom: 6px;
+    }
+
+    .no-results {
+      width: 100%;
+      text-align: center;
+      padding: 50px;
+      color: var(--text-muted);
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Dyslipidaemia & Anti-Hyperlipidaemic Pharmacology</h1>
+    <p>Comprehensive Flashcards • Scroll Horizontally or Use Navigation Controls</p>
+  </header>
+
+  <div class="controls-container">
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search concepts, drugs, mechanisms..." oninput="filterCards()">
+    </div>
+    
+    <select id="jumpSelect" onchange="jumpToCard(this.value)">
+      <!-- Options populated via JS -->
+    </select>
+
+    <div class="btn-group">
+      <button onclick="scrollCards(-1)">← Prev</button>
+      <button onclick="scrollCards(1)">Next →</button>
+      <button onclick="shuffleCards()">🔀 Shuffle</button>
+    </div>
+  </div>
+
+  <div class="progress-bar-container">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <div class="flashcards-wrapper" id="cardsWrapper" onscroll="updateProgress()">
+    <!-- Cards will be injected by JavaScript -->
+  </div>
+
+  <script>
+    const flashcardData = [
+      { id: 1, topic: "Definitions", question: "What is the definition of Dyslipidaemia?", answer: "An abnormal concentration of plasma lipids." },
+      { id: 2, topic: "Definitions", question: "What are the four types of Dyslipidaemia defined in the slides?", answer: "<ul class='bullet-list'><li><b>Hypercholesterolaemia:</b> Elevated LDL cholesterol.</li><li><b>Hypertriglyceridaemia:</b> Elevated triglycerides.</li><li><b>Mixed Dyslipidaemia:</b> Elevated cholesterol and triglycerides simultaneously.</li><li><b>Low HDL Cholesterol:</b> Associated with increased cardiovascular risk.</li></ul>" },
+      { id: 3, topic: "Definitions", question: "What is Primary Dyslipidaemia and what is an example of it?", answer: "Primary Dyslipidaemia is caused by <b>genetic causes</b>.<br><br><b>Example:</b> Familial Hypercholesterolaemia." },
+      { id: 4, topic: "Definitions", question: "What are the 5 secondary causes of Dyslipidaemia listed?", answer: "<ol class='bullet-list'><li>Diabetes mellitus</li><li>Hypothyroidism</li><li>Nephrotic syndrome</li><li>Obesity</li><li>Alcohol consumption</li></ol>" },
+      { id: 5, topic: "Lipid Physiology", question: "What are the biological functions of Cholesterol?", answer: "Cholesterol is used for the synthesis of:<br><ul class='bullet-list'><li>Cell membranes</li><li>Steroid hormones</li><li>Vitamin D</li><li>Bile acids</li></ul>" },
+      { id: 6, topic: "Lipid Physiology", question: "What are the biological functions of Triglycerides and Phospholipids?", answer: "<ul class='bullet-list'><li><b>Triglycerides:</b> Major storage form of energy.</li><li><b>Phospholipids:</b> Essential components of cell membranes.</li></ul>" },
+      { id: 7, topic: "Lipid Physiology", question: "What is the clinical relevance of excessive LDL cholesterol?", answer: "Although cholesterol is essential for life, <b>excessive LDL cholesterol promotes atherosclerosis</b>." },
+      { id: 8, topic: "Lipoproteins", question: "What is the structural composition of a Lipoprotein (Core and Surface)?", answer: "<ul class='bullet-list'><li><b>Core:</b> Triglycerides, Cholesterol esters</li><li><b>Surface:</b> Phospholipids, Free cholesterol, Apolipoproteins</li></ul>" },
+      { id: 9, topic: "Lipoproteins", question: "List the 5 major Lipoproteins in order.", answer: "<ol class='bullet-list'><li>Chylomicrons</li><li>VLDL (Very Low-Density Lipoprotein)</li><li>IDL (Intermediate-Density Lipoprotein)</li><li>LDL (Low-Density Lipoprotein)</li><li>HDL (High-Density Lipoprotein)</li></ol>" },
+      { id: 10, topic: "Apolipoproteins", question: "What are the specific functions and locations of Apo A-I, Apo B-100, Apo B-48, Apo C-II, and Apo E?", answer: "<ul class='bullet-list'><li><b>Apo A-I:</b> Major HDL protein; activates LCAT.</li><li><b>Apo B-100:</b> Found in LDL; binds LDL receptor.</li><li><b>Apo B-48:</b> Found in chylomicrons.</li><li><b>Apo C-II:</b> Activates lipoprotein lipase (LPL).</li><li><b>Apo E:</b> Mediates hepatic uptake of remnants.</li></ul>" },
+      { id: 11, topic: "Exogenous Pathway", question: "What are the steps involved in the Exogenous Pathway of lipid transport?", answer: "<ol class='bullet-list'><li>Dietary fat is absorbed in the intestine.</li><li>Chylomicrons are formed.</li><li>Enter the lymphatic system.</li><li>Enter the bloodstream.</li><li>Lipoprotein lipase removes triglycerides.</li><li>Chylomicron remnants are taken up by the liver.</li></ol>" },
+      { id: 12, topic: "Exogenous Pathway", question: "What is the key enzyme in the Exogenous Pathway and what activates it?", answer: "<b>Key Enzyme:</b> Lipoprotein Lipase (LPL)<br><b>Activated by:</b> Apo C-II" },
+      { id: 13, topic: "Endogenous Pathway", question: "Describe the sequence of the Endogenous Pathway.", answer: "The liver synthesizes triglycerides and cholesterol, which are packaged into VLDL.<br><br><b>Sequence:</b> VLDL → IDL → LDL.<br><br>LDL becomes the major cholesterol carrier in plasma." },
+      { id: 14, topic: "Endogenous Pathway", question: "What percentage of circulating cholesterol is contained in LDL, and what is its clinical importance?", answer: "Approximately <b>70%</b> of circulating cholesterol is contained in LDL.<br><br><b>Clinical Importance:</b> Elevated LDL is strongly associated with ASCVD." },
+      { id: 15, topic: "Reverse Cholesterol Transport", question: "Explain the mechanism of Reverse Cholesterol Transport.", answer: "<ol class='bullet-list'><li>HDL collects cholesterol from tissues and arteries.</li><li>LCAT (Lecithin–Cholesterol Acyltransferase) esterifies cholesterol.</li><li>HDL transports cholesterol to the liver.</li><li>Cholesterol is excreted as bile acids.</li></ol>Higher HDL levels are associated with reduced CV risk." },
+      { id: 16, topic: "Atherosclerosis", question: "What is Atherosclerosis?", answer: "A <b>chronic inflammatory disease</b> of medium and large arteries characterized by accumulation of lipids, inflammatory cells, and fibrous tissue within the arterial wall." },
+      { id: 17, topic: "Atherosclerosis", question: "What factors cause Endothelial Injury (Stage 1 of Atherosclerosis)?", answer: "<ul class='bullet-list'><li>Hypertension</li><li>Smoking</li><li>Diabetes mellitus</li><li>Hyperlipidaemia</li><li>Oxidative stress</li></ul>" },
+      { id: 18, topic: "Atherosclerosis", question: "List Non-Modifiable and Modifiable Risk Factors for ASCVD.", answer: "<b>Non-Modifiable:</b> Age, Male sex, Family history, Genetic disorders.<br><br><b>Modifiable:</b> Elevated LDL, Hypertension, Smoking, Diabetes, Obesity, Physical inactivity." },
+      { id: 19, topic: "Lifestyle Modification", question: "What dietary adjustments are recommended under lifestyle modification?", answer: "<b>Reduce:</b> Saturated fats, Trans fats, Refined carbohydrates.<br><br><b>Increase:</b> Fruits, Vegetables, Whole grains, Fish." },
+      { id: 20, topic: "Lifestyle Modification", question: "What are exercise, weight loss, and smoking recommendations?", answer: "<ul class='bullet-list'><li><b>Exercise:</b> Minimum 150 minutes/week of moderate exercise.</li><li><b>Weight Loss:</b> 5–10% reduction significantly improves lipid profiles.</li><li><b>Smoking:</b> Complete cessation.</li></ul>" },
+      { id: 21, topic: "Statins", question: "Name 7 examples of Statins.", answer: "Atorvastatin, simvastatin, fluvastatin, cerivastatin, lovastatin, rosuvastatin, and pravastatin." },
+      { id: 22, topic: "Statins", question: "What is the Mechanism of Action of Statins?", answer: "Statins are <b>selective, reversible, and competitive inhibitors</b> of HMG-CoA reductase (3-hydroxy-3-Methyl Glutaryl-CoA Reductase), the rate-limiting enzyme in cholesterol synthesis, thus reducing hepatic cholesterol synthesis." },
+      { id: 23, topic: "Statins", question: "How does HMG-CoA inhibition lead to an increase in LDL receptor gene expression?", answer: "By inhibiting HMG-CoA conversion to <b>mevalonate</b>, statins inhibit hepatic cholesterol synthesis, which leads to an increase in the LDL receptor gene." },
+      { id: 24, topic: "Statins ADME", question: "Which statins are administered as inactive lactones?", answer: "<b>Simvastatin</b> and <b>Lovastatin</b> (administered as inactive lactones transformed in liver to Beta-hydroxy acids). All other statins are administered directly in Beta-hydroxy acid form." },
+      { id: 25, topic: "Statins ADME", question: "When is hepatic cholesterol synthesis maximal, and when should short-acting statins be taken?", answer: "Maximal between <b>midnight and 2:00 am</b>.<br><br>Statins with t-1/2 of 4 hours or less should be taken in the <b>evening</b>." },
+      { id: 26, topic: "Statins ADME", question: "Which statins have a half-life of 20 hours and can be taken at any time of day?", answer: "<b>Atorvastatin</b> and <b>Rosuvastatin</b> (longer t-1/2 of 20 hrs contributes to greater cholesterol-lowering effect)." },
+      { id: 27, topic: "Statins ADME", question: "What are the absorption, peak plasma concentration time, and excretion routes for statins?", answer: "<ul class='bullet-list'><li><b>Absorption:</b> Variable (30%–85%)</li><li><b>Peak concentration:</b> 1–4 hours (except atorvastatin/rosuvastatin)</li><li><b>Excretion:</b> ~70% of statins' metabolites are excreted by the liver.</li></ul>" },
+      { id: 28, topic: "Statins Effects", question: "What are the therapeutic effects of Statins on LDL, Total Cholesterol, Triglycerides, and HDL?", answer: "<ul class='bullet-list'><li>Total cholesterol reduced by 30–50%</li><li>LDL-cholesterol reduced by as much as 60% (18–55%)</li><li>Plasma triglycerides reduced (7–30%)</li><li>HDL-cholesterol increased (5–15%)</li></ul>" },
+      { id: 29, topic: "Statins Indications", question: "What are the 3 main clinical indications for Statins?", answer: "<ol class='bullet-list'><li><b>Secondary prevention:</b> MI & stroke in patients with symptomatic ASCVD (angina, TIA, stroke, post-MI).</li><li><b>Primary prevention:</b> Arterial disease in high-risk patients with elevated serum cholesterol.</li><li><b>Mixed hyperlipidemia:</b> Unresponsive to diet/lifestyle.</li></ol>" },
+      { id: 30, topic: "Statins Side Effects", question: "What are the major adverse effects of Statins?", answer: "<ul class='bullet-list'><li><b>Myositis:</b> Muscle complaints, myalgia, muscular aches</li><li><b>Rhabdomyolysis:</b> Life-threatening condition</li><li><b>Hepatotoxicity:</b> Increased ALT/liver transaminases (requires routine monitoring)</li></ul>" },
+      { id: 31, topic: "Fibrates", question: "What drugs belong to the Fibrate class?", answer: "Clofibrate, benzafibrate, gemfibrozil, fenofibrate, and ciprofibrate." },
+      { id: 32, topic: "Fibrates MoA", question: "What is the Mechanism of Action of Fibrates?", answer: "Activate <b>Peroxisome Proliferator Activated Receptor alpha (PPARα)</b>, a class of nuclear receptors regulating gene transcription. Alters transcription of genes involved in lipid metabolism (e.g., apo C-III, apo A-I, apo A-II)." },
+      { id: 33, topic: "Fibrates ADME", question: "Describe the ADME of Fibrates.", answer: "<ul class='bullet-list'><li><b>Absorption:</b> >90% with meals (less on empty stomach).</li><li><b>Peak:</b> 1–4 hrs. 90% plasma protein bound.</li><li><b>Half-life:</b> 1.1 hrs (gemfibrozil) to 20 hrs (fenofibrate).</li><li><b>Excretion:</b> Glucuronide conjugates (60–90%) in urine. Impaired in renal failure.</li></ul>" },
+      { id: 34, topic: "Fibrates Uses & Effects", question: "What are therapeutic effects, clinical uses, and adverse effects of Fibrates?", answer: "<b>Effects:</b> Reduces VLDL & TG (20–50%), modest LDL reduction (5–20%), increases HDL (10–20%).<br><b>Uses:</b> Mixed dyslipidemia, severe treatment-resistant cases.<br><b>Adverse Effects:</b> Myositis, hepatitis, dyspepsia, gallstones." },
+      { id: 35, topic: "Bile Acid Sequestrants", question: "Name 3 Bile Acid Sequestrants.", answer: "Cholestyramine, colestipol, and colesevelam." },
+      { id: 36, topic: "Bile Acid Sequestrants MoA", question: "What is the Mechanism of Action of Bile Acid Sequestrants?", answer: "Positively charged ion exchange resins that bind negatively charged bile acids in intestine to form insoluble compounds excreted in stool. Forces liver to use cholesterol to synthesize more bile acids, increasing hepatic LDL receptors and reducing plasma LDL." },
+      { id: 37, topic: "Bile Acid Sequestrants Uses", question: "What are clinical uses, adverse effects, and drug interactions of Bile Acid Sequestrants?", answer: "<b>Uses:</b> Addition to statin or when statin is contraindicated.<br><b>Side Effects:</b> GI discomfort, nausea, vomiting, constipation/diarrhoea.<br><b>Interactions:</b> Interfere with fat-soluble vitamins (A, D, E, K), chlorothiazide, digoxin, warfarin." },
+      { id: 38, topic: "Nicotinic Acid", question: "What is the Mechanism of Action of Nicotinic Acid (Niacin)?", answer: "Inhibits lipolysis of triglycerides in adipose tissue by <b>HSL (hormone sensitive lipase)</b>, reducing FFA transport to liver and decreasing TG synthesis. Reduces plasma VLDL." },
+      { id: 39, topic: "Nicotinic Acid", question: "What is unique about Nicotinic Acid regarding HDL cholesterol?", answer: "Nicotinic acid is the <b>most effective drug for increasing HDL-cholesterol</b> (increases HDL by 15–35%)." },
+      { id: 40, topic: "Nicotinic Acid ADME & Side Effects", question: "What are ADME and adverse effects of Nicotinic Acid?", answer: "<b>ADME:</b> Completely absorbed, peak 30–60 min, t-1/2 ~60 min (2–3x/day).<br><b>Side Effects:</b> Flushing/itching (mediated by PG D2 & histamine; reduced by taking NSAID 30 min before), hepatitis, hyperglycaemia, GI distress, peptic ulcer, hyperuricaemia, macular oedema." },
+      { id: 41, topic: "Ezetimibe MoA", question: "What is the Mechanism of Action of Ezetimibe?", answer: "Inhibits intestinal absorption of cholesterol by jejunal enterocytes by inhibiting transport protein <b>NPC1L1</b>. Reduces absorption by 54%, stimulating hepatic LDL receptor expression." },
+      { id: 42, topic: "Ezetimibe Uses", question: "What are the clinical uses and effects of Ezetimibe?", answer: "<b>Uses:</b> Monotherapy in statin-intolerant patients, or added to statins (increases statin effect by 10–15%).<br><b>Effects:</b> Reduces LDL (14–18%), reduces TG (2%), increases HDL (1–3%). Very well tolerated." },
+      { id: 43, topic: "Omega-3 Fatty Acids", question: "What are Omega-3 Fatty Acids Ethyl Esters (EPA/DHA), dose, ADME, and side effects?", answer: "<b>Function:</b> Reduces VLDL triglycerides in severe hypertriglyceridemia. Daily dose: 3–4g/d with food.<br><b>ADME:</b> t-1/2 is 50 to 80 hrs.<br><b>Side Effects:</b> Arthralgia, nausea, fish burps, dyspepsia, increased LDL, prolonged bleeding time." },
+      { id: 44, topic: "PCSK9 Inhibitors MoA", question: "What is the Mechanism of Action of PCSK9 Inhibitors?", answer: "PCSK9 is a protease that binds to LDL receptors on hepatocytes and enhances lysosomal degradation. PCSK9 inhibitors block this protease, resulting in <b>more LDL receptors</b> on the liver surface and lower plasma LDL." },
+      { id: 45, topic: "PCSK9 Inhibitors Details", question: "Name examples, dosing, efficacy, indications, and side effects of PCSK9 Inhibitors.", answer: "<b>Examples:</b> Alirocumab, Evolocumab.<br><b>Dosing:</b> Subcutaneous every 2 wks or monthly. t-1/2: 11–20 days.<br><b>Efficacy:</b> Reduces LDL by up to 70% (monotherapy) or 60% (with statin).<br><b>Indications:</b> Known ASCVD.<br><b>Side Effects:</b> Neurocognitive effects, UTI/URTI infections." }
+    ];
+
+    let activeData = [...flashcardData];
+
+    function renderCards(data) {
+      const wrapper = document.getElementById('cardsWrapper');
+      const select = document.getElementById('jumpSelect');
+      
+      wrapper.innerHTML = '';
+      select.innerHTML = '<option value="">Jump to Card...</option>';
+
+      if (data.length === 0) {
+        wrapper.innerHTML = '<div class="no-results">No matching flashcards found.</div>';
+        return;
+      }
+
+      data.forEach((card, index) => {
+        // Build card HTML
+        const cardElem = document.createElement('div');
+        cardElem.className = 'card-container';
+        cardElem.id = `card-${index}`;
+        cardElem.innerHTML = `
+          <div class="card" onclick="flipCard(this)">
+            <div class="card-face card-front">
+              <div class="card-header">
+                <span>${card.topic}</span>
+                <span>#${card.id}</span>
+              </div>
+              <div class="card-body">
+                <p>${card.question}</p>
+              </div>
+              <div class="card-footer">
+                Click to Reveal Answer ↷
+              </div>
+            </div>
+            <div class="card-face card-back">
+              <div class="card-header">
+                <span>Answer</span>
+                <span>#${card.id}</span>
+              </div>
+              <div class="card-body">
+                <div>${card.answer}</div>
+              </div>
+              <div class="card-footer">
+                Click to Flip Back ↶
+              </div>
+            </div>
+          </div>
+        `;
+        wrapper.appendChild(cardElem);
+
+        // Populate dropdown
+        const opt = document.createElement('option');
+        opt.value = index;
+        opt.textContent = `Card ${card.id}: ${card.question.substring(0, 35)}...`;
+        select.appendChild(opt);
+      });
+
+      updateProgress();
+    }
+
+    function flipCard(cardElem) {
+      cardElem.classList.toggle('flipped');
+    }
+
+    function scrollCards(direction) {
+      const wrapper = document.getElementById('cardsWrapper');
+      const cardWidth = wrapper.querySelector('.card-container').offsetWidth + 20;
+      wrapper.scrollBy({ left: direction * cardWidth, behavior: 'smooth' });
+    }
+
+    function jumpToCard(index) {
+      if (index === '') return;
+      const targetCard = document.getElementById(`card-${index}`);
+      if (targetCard) {
+        targetCard.scrollIntoView({ behavior: 'smooth', inline: 'center' });
+      }
+    }
+
+    function shuffleCards() {
+      activeData.sort(() => Math.random() - 0.5);
+      renderCards(activeData);
+    }
+
+    function filterCards() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      activeData = flashcardData.filter(c => 
+        c.question.toLowerCase().includes(query) || 
+        c.answer.toLowerCase().includes(query) ||
+        c.topic.toLowerCase().includes(query)
+      );
+      renderCards(activeData);
+    }
+
+    function updateProgress() {
+      const wrapper = document.getElementById('cardsWrapper');
+      const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
+      const currentScroll = wrapper.scrollLeft;
+      const percentage = maxScroll > 0 ? (currentScroll / maxScroll) * 100 : 100;
+      document.getElementById('progressBar').style.width = `${Math.min(100, Math.max(5, percentage))}%`;
+    }
+
+    // Keyboard Navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+      if (e.key === 'ArrowRight') scrollCards(1);
+      if (e.key === 'ArrowLeft') scrollCards(-1);
+    });
+
+    // Initialize
+    renderCards(activeData);
+  </script>
+</body>
+</html>
