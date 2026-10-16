@@ -5021,6 +5021,17 @@ function applyYearTheme(year) {
         // ---- VIDEO DATA: maps topic names to an array of video objects with YouTube URLs ----
         const videoData = {
 
+
+            'Male Histology': [
+                { title: 'ToToZ Online Lesson', url: '' },
+                { title: 'Full Online Lesson', url: '' },
+            ],
+
+            'Female Histology': [
+                { title: 'Online Lesson', url: '' },
+            ],
+
+
             'Introduction to Pharmacokinetics and Pharmacodynamics': [
                 { title: 'Part 1', url: 'https://drive.google.com/file/d/1SD5a-0IUPYeC_MWhUIsTo3jnFqFm7V4j/view?usp=drive_link' },
                 { title: 'Part 2', url: 'https://drive.google.com/file/d/1j_zcrtWEU8JuJsvG3eqpjTbZbctf6ESH/view?usp=drive_link' },
@@ -5035,7 +5046,7 @@ function applyYearTheme(year) {
             ],
 
             'Pelvic Neurovasculature': [
-                { title: 'Pelvic Muscles', url: 'video.html?topic=pelvis-supply' },
+                { title: 'Pelvic Blood Supply', url: 'video.html?topic=pelvis-supply' },
             ],
 
             'Neck Musculature': [
@@ -5993,10 +6004,11 @@ function applyYearTheme(year) {
             'Lower Limb Osteology': [
                 { title: 'Bones of the Foot', url: 'video.html?topic=bones_foot' },
                 { title: 'Bones of the Leg', url: 'video.html?topic=bones_leg' },
-                { title: 'Femur', url: 'video.html?topic=femur' },
+                { title: 'Femur & Hip', url: 'video.html?topic=femur' },
                 { title: 'Osteology Overview', url: 'video.html?topic=osteology_overview_lowerlimb' },
             ],
             'Lower Limb Neurovasculature': [
+                { title: 'Femoral Artery', url: 'video.html?topic=femoral_arteries' },
                 { title: 'Lower Extremity Arteries', url: 'video.html?topic=lower_extremity_arteries' },
                 { title: 'Foot Supply', url: 'video.html?topic=foot_supply' },
                 { title: 'Iliohypogastric Nerve', url: 'video.html?topic=iliohypogastric_nerve' },
@@ -6443,19 +6455,20 @@ const docData = {
                 { title: 'Anterior and lateral Leg',  url: 'https://drive.google.com/file/d/1pZ4_sK04R2_GK7ZWC3fiyekUWntcMgM5/view?usp=drivesdk' },
                  { title: 'Posterior Leg', url: 'https://drive.google.com/file/d/13Eda9BQl0YQG6SZNvVGJrMXWZlznfqdC/view?usp=drivesdk' }
             ],
-            'Foot': [
-                { title: 'Class Notes', url: '' }
-            ],
             'Lower Limb Neurovasculature': [
                 { title: 'Arteries and Veins of the lower limb', url: 'https://drive.google.com/file/d/1nOHQGvqlv9tzliNCnTIOO7yoZKVdi7rQ/view?usp=drivesdk' },
-                 { title: 'Sciatic Nerve', url: 'https://drive.google.com/file/d/1jg9BNlmcobSQ5zbuI6csy8u4DQX4woMq/view?usp=drivesdk' }
+                 { title: 'Sciatic Nerve', url: 'https://drive.google.com/file/d/1jg9BNlmcobSQ5zbuI6csy8u4DQX4woMq/view?usp=drivesdk' },
+                 { title: 'Nerves of the Lower Limb', url: 'https://drive.google.com/file/d/1xiJ0terIWAcyGJelwWVxxKMs_QpElDsY/view?usp=drive_link' }
             ],
             'Upper limb Osteology': [
-                { title: 'Class Notes', url: '' }
+                { title: 'Upper LImb Bones', url: 'https://drive.google.com/file/d/1DMWVBcQRsz5IjWIcrOCQSLMLUmT0RP9m/view?usp=drive_link' },
+                { title: 'Upper Limb Radiology', url: 'https://drive.google.com/file/d/1VU1zeW6rgzoKabuqJ84zS9fn0bspuVbi/view?usp=drive_link' },
+                { title: 'Surface Anatomy', url: 'https://drive.google.com/file/d/1ZcrMtAZSSvZeitUkzqFlGU0HpLUN3wES/view?usp=drive_link' },
             ],
             'Arm and Shoulder': [
                 { title: 'Class Notes 1', url: 'https://drive.google.com/file/d/1papPfHlSIYsw_024a1834dXsPOaqUM8l/view?usp=drivesdk' },
-                 { title: 'Class Notes 2', url: 'https://drive.google.com/file/d/1yhh6oW_DfxmeAXvHof-Kke16ix836JoM/view?usp=drivesdk' }
+                 { title: 'Axila', url: 'https://drive.google.com/file/d/1yhh6oW_DfxmeAXvHof-Kke16ix836JoM/view?usp=drivesdk' },
+                 { title: 'Shoulder', url: 'https://drive.google.com/file/d/1jjwuByop_dq6xvtTs5upYrbRlWiR1RmP/view?usp=drive_link' },
             ],
             'Forearm': [
                 { title: 'Class Notes', url: 'https://drive.google.com/file/d/1fMuE-ZAshLeflnvPIQV_Gs28VLSMa-lE/view?usp=drivesdk' }
@@ -7679,7 +7692,7 @@ const docData = {
             'BrainStem':                 'brainstem',
             'Pelvic Osteology': 'pelvis-bones',
             'Pelvic Musculature': 'pelvis-muscles',
-            'Pelvic Neurovasculature': 'pelvis-supply',
+            'Pelvic Blood Supply': 'pelvis-supply',
             'Male Gross': 'male-gross',
             'Female Gross': 'female-gross',
             'Male Histology': 'male-histology',
@@ -7782,13 +7795,15 @@ const docData = {
             'Veins': 'veins_lowerlimb',
             'Bones of the Foot': 'bones_foot',
             'Bones of the Leg': 'bones_leg',
-            'Femur': 'femur',
+            'Femur & Hip': 'femur',
             'Osteology Overview': 'osteology_overview_lowerlimb',
             'Adductor Canal': 'adductor_canal',
             'Anterior Thigh': 'anterior_thigh',
             'Medial Thigh': 'medial_thigh',
             'Overall Thigh Muscles': 'overall_thigh_muscles',
             'Posterior Thigh': 'posterior_thigh',
+            'Femoral Artery': 'femoral_arteries',
+
 
 
         };
