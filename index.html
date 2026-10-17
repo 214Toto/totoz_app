@@ -37,15 +37,15 @@
     --theme-bg-gradient-end: #d2e1f0;
 }
 
-/* 2nd Year — Royal Blue */
+/* 2nd Year — Warm Brown */
 body.theme-year-2 {
-    --theme-primary: #2563eb; --theme-primary-dark: #1d4ed8;
-    --theme-primary-deep: #172554; --theme-primary-light: rgba(37, 99, 235, 0.12);
-    --theme-primary-glow: rgba(37, 99, 235, 0.3); --theme-primary-soft: rgba(37, 99, 235, 0.08);
-    --theme-gradient-start: #172554; --theme-gradient-end: #2563eb;
-    --theme-card-border: #b8cdfd; --theme-chip-bg: #eaf1fe; --theme-chip-border: #d3e0fc;
-    --theme-btn-bg: #2563eb; --theme-btn-hover: #1d4ed8; --theme-btn-shadow: rgba(37, 99, 235, 0.3);
-    --theme-bg-gradient-start: #e6eefe; --theme-bg-gradient-end: #c9d9fc;
+    --theme-primary: #8b5e3c; --theme-primary-dark: #6f4a2f;
+    --theme-primary-deep: #4a2f1d; --theme-primary-light: rgba(139, 94, 60, 0.12);
+    --theme-primary-glow: rgba(139, 94, 60, 0.3); --theme-primary-soft: rgba(139, 94, 60, 0.08);
+    --theme-gradient-start: #4a2f1d; --theme-gradient-end: #8b5e3c;
+    --theme-card-border: #e2cdb8; --theme-chip-bg: #f7efe6; --theme-chip-border: #ecdcc8;
+    --theme-btn-bg: #8b5e3c; --theme-btn-hover: #6f4a2f; --theme-btn-shadow: rgba(139, 94, 60, 0.3);
+    --theme-bg-gradient-start: #f7efe6; --theme-bg-gradient-end: #e8d5bf;
 }
 /* 3rd Year — Emerald */
 body.theme-year-3 {
@@ -2826,6 +2826,48 @@ function applyYearTheme(year) {
                 ]
             },
             {
+                id: 'public_health2',
+                name: 'Public Health',
+                icon: 'fa-dna',
+                year: 2,
+                type: 'preclinical',
+                desc: 'Explore cell biology, genetics, and physiology.',
+                terms: [
+                    { name: 'Term 1',
+                        topics: [
+                            'Introduction to PH',
+                            'Demography',
+                            'Primary Health Care',
+                            'Health Promotion',
+                            'History of Public Health - Chapter 1',
+                            'MCS210 Term 1'
+                        ]
+                    },
+                    { name: 'Term 2',
+                        topics: [
+                            'Introduction to Food and Nutrition',
+                            'Introduction to Environmental Health',
+                            'Water Sources',
+                            'Water Purification',
+                            'Onsite Sanitation',
+                            'Conventional Sewage Treatment'
+                        ]
+                    },
+                    { name: 'Term 3',
+                        topics: [
+                            '2nd Year Public Health',
+                            'Human Resources for Health (hbr-zmb-2011)',
+                            'HIV/AIDS Programming',
+                            'Malaria',
+                            'TB Programming',
+                            'Zambia Comprehensive Multi-Year Plan',
+                            'Zambia NMESP 2022 to 2026',
+                            'Zambia Demographic and Health Survey (ZDHS) 2024'
+                        ]
+                    }
+                ]
+            },
+            {
                 id: 'gross2',
                 name: 'Gross Anatomy',
                 icon: 'fa-bone',
@@ -3639,6 +3681,7 @@ function applyYearTheme(year) {
             'Tee': { name: 'Ms Tee', password: '13', year: 2 },
             'Cheelo': { name: 'Ms. Cheelo', password: 'p14', year: 2 },
             'Teresa': { name: 'Theresa', password: 'p16', year: 2 },
+            'Michelle': { name: 'Dr. Michelle 🦋', password: 'p6', year: 2, courses: ['embryology2', 'gross2', 'histology2', 'public_health2' ] },
 
             // 3rd year 
             '3': { name: 'Doc Toto', password: 'pp', year: 3 },
@@ -5011,6 +5054,26 @@ function applyYearTheme(year) {
         // ---- VIDEO DATA: maps topic names to an array of video objects with YouTube URLs ----
         const videoData = {
 
+            'Liver and Gall Bladder': [
+                { title: 'ToToZ Online Lesson', url: 'https://drive.google.com/file/d/1HWJxbV03f_krcuKKgsakjVnuKh5QfKd-/view?usp=drivesdk' },
+            ],
+
+            'Large Intestines': [
+                { title: 'ToToZ Online Lesson', url: 'https://drive.google.com/file/d/1_sUT1iOnwqMD5fCPFcwDaBF86Yjgj73d/view?usp=drivesdk' },
+            ],
+
+            'Anterior Abdominal Wall': [
+                { title: 'ToToZ Online Lesson', url: 'https://drive.google.com/file/d/1WFQGVWzJIVItl5uDhg6xbrThivHRsrPT/view?usp=drivesdk' },
+            ],
+
+            'Oral Cavity': [
+                { title: 'ToToZ Online Lesson', url: 'https://drive.google.com/file/d/1T9YV0sGr_CJjcNPLiqMiGdvsPgcQetox/view?usp=drivesdk' },
+            ],
+
+            'GIT Histology': [
+                { title: 'ToToZ Online Lesson', url: 'https://drive.google.com/file/d/1C0rru5iNdPyjrgoX9NwiDFtg6nMWpbvr/view?usp=drivesdk' },
+            ],
+
 
             'Male Histology': [
                 { title: 'ToToZ Online Lesson', url: 'https://drive.google.com/file/d/1rGgQT_iuTgyfPLyaH6lDnBItLHryjkj5/view?usp=drivesdk' },
@@ -6162,8 +6225,133 @@ function applyYearTheme(year) {
             ],
         };
 
-        // ---- DOCUMENT DATA: maps topic names to an array of document objects ----
-const docData = {
+        // ---- DOCUME,NT DATA: maps topic names to an array of document objects ----
+const docData = { 
+    'GIT Part 1': [
+        { title: 'Class Notes', url: 'https://drive.google.com/file/d/1Oj43J78neKz_gy1l_5Er_xNvaLm02hIs/view?usp=drive_link' },
+    ],
+
+    'GIT Part 2': [
+        { title: 'Class Notes', url: 'https://drive.google.com/file/d/1mZ_xgeoAeL4i_kAceM3KgoTkPwsjJ1LH/view?usp=drive_link' },
+    ],
+
+    'GIT Histology': [
+        { title: 'GIT Histology', url: 'https://drive.google.com/file/d/1E-c62AqK6Qfo0QeQFxS1IluCZa3MQgf0/view?usp=drive_link' },
+        { title: 'Acesory Organs Histology', url: 'https://drive.google.com/file/d/1LRA54aHxhCsNVe2BkTPhEdFfZcAAd0J3/view?usp=drive_link' },
+        { title: 'Liver Histology', url: 'https://drive.google.com/file/d/11ftEnusMryqw1Mco0pg3YcFNGWzmdUr8/view?usp=drive_link' },
+        { title: 'Large Intestines Histology', url: 'https://drive.google.com/file/d/1FKzSDn_fw_s5nbKahzwFSx7LTaZ_e9zU/view?usp=drive_link' },
+        { title: 'Small Intestines Histology', url: 'https://drive.google.com/file/d/1y2BLhb3gkYF7GB4uhbNbabBY5cXKpcLa/view?usp=drive_link' },
+        { title: 'Stomach Histology', url: 'https://drive.google.com/file/d/1nJL6tq1qxskBJekciAFGaQl9Qy2JlqP5/view?usp=drive_link' },
+        { title: 'Billiary Passages Histology', url: 'https://drive.google.com/file/d/1hB-sMYnDr44i3Lff69JZX6BV4rfxTOBq/view?usp=drive_link' },
+    ],
+
+
+    'Spleen': [
+        { title: 'Class Notes', url: 'https://drive.google.com/file/d/1hC0f9d25BjQEnHXOnWHZkkc0f2PEEldr/view?usp=drivesdk' },
+    ],
+    'Stomach': [
+        { title: 'Class Notes', url: 'https://drive.google.com/file/d/1XxBKrH6aHczSyID1zmRr2XjuABVP2hPf/view?usp=drivesdk' },
+        { title: 'Extra Class Notes', url: 'https://drive.google.com/file/d/1Mv9R8rNTVGL0BkiCGbNyoha1bFmCfDP9/view?usp=drivesdk' },
+    ],
+    'Oral Cavity': [
+        { title: 'Class Notes', url: 'https://drive.google.com/file/d/1LRfCM9CyZUUl6mPC7UV-rPTjSf88FWqG/view?usp=drivesdk' },
+    ],
+    'Anterior Abdominal Wall': [
+        { title: 'Class Notes', url: 'https://drive.google.com/file/d/19oyCukgRXeW4IY_LYVvOL7jIyIo6r4o2/view?usp=drivesdk' },
+        { title: 'Extra Class Notes', url: 'https://drive.google.com/file/d/1uxC-lzJhBdFQgD3iN0DA3dJ_HVZyTNxw/view?usp=drivesdk' },
+    ], 
+    'Inguinal Canal': [
+        { title: 'Class Notes', url: 'https://drive.google.com/file/d/10so2tcw9wuEMnhTUpptNfP_XKM4K9QLF/view?usp=drivesdk' },
+    ],
+    'Pancreas': [
+        { title: 'Class Notes', url: 'https://drive.google.com/file/d/1PzJ6pH82yVK2XAasdxC6VLX9dKU2WE0Y/view?usp=drivesdk' },
+        { title: 'Extra Class Notes', url: 'https://drive.google.com/file/d/1c1Al4bzuwAE93RfkFUFy4AmS2VET1FYo/view?usp=drivesdk' },
+        { title: 'Extra Class Notes', url: 'https://drive.google.com/file/d/1hjVAiTibMWoHcmaRqB9EgFHA-hx5vfam/view?usp=drivesdk' },
+    ],
+
+    'Small Intestines': [
+        { title: 'Class Notes', url: 'https://drive.google.com/file/d/18u9S9_GOMz44Joxhtlysze1NvEy2Q6DH/view?usp=drivesdk' },
+        { title: 'Extra Class Notes', url: 'https://drive.google.com/file/d/1mczuGcRZUJ-2OSAp58QzyTJbOqtt7I5m/view?usp=drivesdk' },
+    ],
+
+    'Large Intestines': [
+        { title: 'Class Notes', url: 'https://drive.google.com/file/d/1t7ubj0t2f6-1GjkuYi6t_Y5JNtO-YpVQ/view?usp=drivesdk' },
+        { title: 'Extra Class Notes', url: 'https://drive.google.com/file/d/1Sds_X69xB9acfGqhM-OPhsQR16hI1X6P/view?usp=drivesdk' },
+    ],
+    'Rectum and Anal Canal': [
+        { title: 'Class Notes', url: 'https://drive.google.com/file/d/1rA2EI_7jGDX6R5LDdfGCTTx8IUMZm5r1/view?usp=drivesdk' },
+    ], 
+    'Liver and Gall Bladder': [
+        { title: 'Class Notes', url: 'https://drive.google.com/file/d/1ewV8a-ztAF9DjrMLjopCcHHyjtN16I3a/view?usp=drivesdk' },
+        { title: 'Extra Class Notes', url: 'https://drive.google.com/file/d/1qfwWGbk1iuYOaueV18q_IME3p1QCPPOq/view?usp=drivesdk' },
+    ],
+    'Abdominal Esophagus': [
+        { title: 'Class Notes', url: 'https://drive.google.com/file/d/1D9FOL0vkVMzpLGxGpOSN2Fyu5256BAfP/view?usp=drivesdk' },
+    ],
+    'Peritoneum': [
+        { title: 'Class Notes', url: 'https://drive.google.com/file/d/1aQNJfPjspQfBpq5NsCzf-u9ZRAlD8H1z/view?usp=drivesdk' },
+    ],
+
+    'Introduction to PH': [
+        { title: 'Class Notes', url: 'https://drive.google.com/file/d/1KlMpHlWjvng5J7-jD5YqAGMJCdwJIDWs/view?usp=drivesdk' },
+    ],
+    'Demography': [
+        { title: 'Class Notes', url: 'https://drive.google.com/file/d/1yA8tJLNvKnTzmEgviJuK5rRiP0yYplfD/view?usp=drivesdk' },
+    ],
+    'Primary Health Care': [
+        { title: 'Class Notes', url: 'https://drive.google.com/file/d/1wWZTXbhg7C04e7izrrhqlGucgJDPcTxP/view?usp=drivesdk' },
+    ],
+    'Health Promotion': [
+        { title: 'Class Notes', url: 'https://drive.google.com/file/d/1gfrTaDzNPDy7HXJOLqho6GD8IklIARjI/view?usp=drivesdk' },
+    ],
+    'History of Public Health - Chapter 1': [
+        { title: 'Class Notes', url: 'https://drive.google.com/file/d/1GquqZRiq1bgz7simGyfbVqi00qIJ0R2C/view?usp=drivesdk' },
+    ],
+    'MCS210 Term 1': [
+        { title: 'Class Notes', url: 'https://drive.google.com/file/d/1KPSslGoOPIhZ1N5BE7P22MEwoMYbiGAJ/view?usp=drivesdk' },
+    ],
+    'Introduction to Food and Nutrition': [
+        { title: 'Class Notes', url: 'https://drive.google.com/file/d/1Klq2rxqR8sRUMiJIcZEerBG0M5_XOKNZ/view?usp=drivesdk' },
+    ],
+    'Introduction to Environmental Health': [
+        { title: 'Class Notes', url: 'https://drive.google.com/file/d/1IN-Q5vbK8bWVQ6XK4JVtyDyVXs2Fuk-m/view?usp=drivesdk' },
+    ],
+    'Water Sources': [
+        { title: 'Class Notes', url: 'https://drive.google.com/file/d/1yBhE5CbdbyFK5Xq3HZom4UrkJ7hYPFcJ/view?usp=drivesdk' },
+    ],
+    'Water Purification': [
+        { title: 'Class Notes', url: 'https://drive.google.com/file/d/1OlWI1cB_uZYb-23FP16Xu0wBh352lbtg/view?usp=drivesdk' },
+    ],
+    'Onsite Sanitation': [
+        { title: 'Class Notes', url: 'https://drive.google.com/file/d/1ATnEcN21KPH7fJ4Cm80OWU1WyHz0G195/view?usp=drivesdk' },
+    ],
+    'Conventional Sewage Treatment': [
+        { title: 'Class Notes', url: 'https://drive.google.com/file/d/1tQur3J1F2aUy-BtZe1oGupC0V8zpGiCp/view?usp=drivesdk' },
+    ],
+    '2nd Year Public Health': [
+        { title: 'Class Notes', url: 'https://drive.google.com/file/d/1_hSvEW1NOV3F88py3C29uGdM2d2R51EM/view?usp=drivesdk' },
+    ],
+    'Human Resources for Health (hbr-zmb-2011)': [
+        { title: 'Class Notes', url: 'https://drive.google.com/file/d/1t6cR1sBQzd92Msi4034iHS1AHnJ3Upl4/view?usp=drivesdk' },
+    ],
+    'HIV/AIDS Programming': [
+        { title: 'Class Notes', url: 'https://drive.google.com/file/d/1UVOnApBUoNBHKn_1rRuC5i7NWDu3xt4c/view?usp=drivesdk' },
+    ],
+    'Malaria': [
+        { title: 'Class Notes', url: 'https://drive.google.com/file/d/1oOnB4ZbRJ7OZ-Ti_pelKozCwxN89-VUb/view?usp=drivesdk' },
+    ],
+    'TB Programming': [
+        { title: 'Class Notes', url: 'https://drive.google.com/file/d/1sSDZLbNQIiTSkDyaZmf1ioxFvPibomiL/view?usp=drivesdk' },
+    ],
+    'Zambia Comprehensive Multi-Year Plan': [
+        { title: 'Class Notes', url: 'https://drive.google.com/file/d/1nEPr77u--hH-mt1nXZGDqt5wFeE5l3Lb/view?usp=drivesdk' },
+    ],
+    'Zambia NMESP 2022 to 2026': [
+        { title: 'Class Notes', url: 'https://drive.google.com/file/d/1M92tbSv7S_yFiXHNXg5LBa5xOuzWBYDC/view?usp=drivesdk' },
+    ],
+    'Zambia Demographic and Health Survey (ZDHS) 2024': [
+        { title: 'Class Notes', url: 'https://drive.google.com/file/d/11KKWcBlPNGLFiVXHx5IzpChTDLCmTp1i/view?usp=drivesdk' },
+    ],
             
                 'COPD': [
         { title: 'Class Notes', url: 'https://drive.google.com/file/d/1TRXeylsfQOwdsdTE4nGODYg0_IwStxIq/view?usp=drivesdk' },
