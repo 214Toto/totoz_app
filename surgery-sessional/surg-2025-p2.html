@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025 Surgery Exam – Interactive Model Answers</title>
+    <style>
+        :root {
+            --primary: #1a6b6b;
+            --accent: #2ea8a0;
+            --dark: #0f2a2a;
+            --light: #f4f8f7;
+            --radius: 12px;
+            --shadow: 0 4px 14px rgba(0, 30, 30, 0.08);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #edf3f2;
+            color: var(--dark);
+            min-height: 100vh;
+            padding-top: 72px;
+        }
+        header {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            background: linear-gradient(145deg, var(--primary), var(--dark));
+            color: #fff; padding: 0.6rem 0;
+            box-shadow: 0 4px 18px rgba(0, 20, 20, 0.25);
+        }
+        .header-inner {
+            max-width: 1000px; margin: 0 auto; padding: 0 1.5rem;
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 0.3rem;
+        }
+        .logo { display: flex; align-items: center; gap: 0.6rem; }
+        .logo i { font-size: 1.5rem; color: #8dd9d4; }
+        .logo h1 { font-size: 1.15rem; font-weight: 700; }
+        .badge {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 0.2rem 1rem; border-radius: 40px;
+            font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+            color: #b3e6e0;
+        }
+        .container { max-width: 920px; margin: 0 auto; padding: 0 1.2rem 2.5rem; }
+        .tab-bar { display: flex; gap: 0.5rem; margin: 0.5rem 0 1.5rem 0; flex-wrap: wrap; }
+        .tab-btn {
+            background: #dce8e8; border: none; padding: 0.5rem 1.8rem;
+            border-radius: 40px; font-weight: 600; font-size: 0.95rem;
+            color: var(--dark); cursor: pointer; transition: 0.2s;
+        }
+        .tab-btn:hover { background: #c0d6d6; }
+        .tab-btn.active {
+            background: var(--primary); color: #fff;
+            box-shadow: 0 2px 10px rgba(26, 107, 107, 0.25);
+        }
+        .tab-panel { display: block; }
+        .tab-panel.hidden { display: none; }
+        .section-title {
+            font-size: 1.25rem; font-weight: 700; color: var(--primary);
+            margin: 0 0 0.8rem 0; padding-bottom: 0.4rem;
+            border-bottom: 3px solid rgba(26, 107, 107, 0.18);
+            display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;
+        }
+        .section-title .count {
+            font-size: 0.7rem; font-weight: 600; background: var(--primary);
+            color: #fff; border-radius: 40px; padding: 0 0.7rem; line-height: 1.7;
+        }
+        .section-subtitle { color: #4f6e6e; font-size: 0.9rem; margin-bottom: 1rem; }
+        .question {
+            background: #ffffff; border-radius: var(--radius);
+            padding: 1.1rem 1.2rem 0.8rem 1.2rem; margin-bottom: 1rem;
+            box-shadow: var(--shadow); border: 1px solid rgba(26, 107, 107, 0.05);
+        }
+        .question .q-badge {
+            display: inline-block; background: var(--primary); color: #fff;
+            border-radius: 40px; padding: 0 0.65rem; font-size: 0.7rem;
+            font-weight: 700; line-height: 1.6; margin-right: 0.4rem;
+        }
+        .question p { font-weight: 600; font-size: 0.97rem; margin-bottom: 0.4rem; color: var(--dark); }
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            color: #fff; border: none; padding: 0.55rem 1.8rem;
+            border-radius: var(--radius); font-weight: 600; font-size: 0.95rem;
+            cursor: pointer; transition: transform 0.15s, box-shadow 0.2s;
+            box-shadow: 0 4px 14px rgba(26, 107, 107, 0.25);
+        }
+        .btn:hover { transform: scale(1.02); box-shadow: 0 6px 24px rgba(26, 107, 107, 0.32); }
+        .btn:active { transform: scale(0.96); }
+        .btn-sm {
+            padding: 0.35rem 1.1rem; font-size: 0.82rem;
+            border-radius: 8px; margin-top: 0.5rem;
+        }
+        .essay-answer {
+            margin-top: 0.8rem; padding: 1rem 1.2rem;
+            background: #f0f8f6; border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            font-size: 0.92rem; line-height: 1.6;
+            display: none;
+        }
+        .essay-answer.show { display: block; }
+        .essay-answer h4 { color: var(--primary); margin-bottom: 0.4rem; font-size: 0.95rem; }
+        .essay-answer ul, .essay-answer ol { margin-left: 1.2rem; margin-bottom: 0.5rem; }
+        .essay-answer li { margin-bottom: 0.2rem; }
+        .case-block {
+            background: #f8fdfc; border-left: 4px solid var(--accent);
+            padding: 0.8rem 1rem; margin: 0.8rem 0; border-radius: 0 8px 8px 0;
+            font-size: 0.93rem; line-height: 1.6;
+        }
+        .subq {
+            background: #ffffff; border-radius: 10px;
+            padding: 0.9rem 1rem 0.8rem 1rem; margin-top: 0.8rem;
+            border: 1px solid #dde8e8;
+        }
+        .subq .subq-text { font-weight: 500; font-size: 0.93rem; margin-bottom: 0.3rem; }
+        .subq .subq-marks { font-size: 0.75rem; color: #6b8a8a; font-weight: 600; }
+        .direct-answer {
+            background: #e8f7ef; border: 1px solid #a8d8c0; color: #0a4f3a;
+            padding: 0.6rem 0.9rem; border-radius: 6px; margin-bottom: 0.6rem;
+            font-weight: 500;
+        }
+        .extra-answers {
+            background: #fff8e6; border: 1px solid #e6b800; color: #7a5a00;
+            padding: 0.6rem 0.9rem; border-radius: 6px; margin-top: 0.6rem;
+            font-size: 0.88rem;
+        }
+        @media (max-width: 700px) {
+            body { padding-top: 68px; }
+            .logo h1 { font-size: 0.95rem; }
+            .header-inner { padding: 0 1rem; flex-direction: column; align-items: stretch; gap: 0.2rem; }
+            .badge { align-self: flex-start; }
+            .question { padding: 0.9rem 0.9rem 0.1rem 0.9rem; }
+            .section-title { font-size: 1.05rem; }
+            .btn { padding: 0.5rem 1.2rem; font-size: 0.85rem; }
+            .tab-btn { padding: 0.4rem 1.2rem; font-size: 0.85rem; }
+        }
+        @media (max-width: 420px) {
+            .logo h1 { font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-inner">
+            <div class="logo">
+                <i class="fas fa-stethoscope"></i>
+                <h1>2025 Surgery Exam – Interactive Model Answers</h1>
+            </div>
+            <span class="badge"><i class="fas fa-pencil-alt"></i> &nbsp;All Cases</span>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+
+            <div class="tab-bar">
+                <button class="tab-btn active" data-target="A">🩺 Section A – Case Questions (8)</button>
+                <button class="tab-btn" data-target="B">📖 About</button>
+            </div>
+
+            <!-- ==================== SECTION A ==================== -->
+            <div id="panel-A" class="tab-panel">
+                <div class="section-title">
+                    <i class="fas fa-list-ul"></i> Section A – Short Answer Clinical Scenarios
+                    <span class="count" id="count-A">0</span>
+                </div>
+                <p class="section-subtitle">Read each scenario and click <strong>Show Model Answer</strong> for each part. Direct answers are given first, followed by detailed explanations and extra answers.</p>
+                <div id="container-A"></div>
+            </div>
+
+            <!-- ==================== SECTION B ==================== -->
+            <div id="panel-B" class="tab-panel hidden">
+                <div class="section-title">
+                    <i class="fas fa-info-circle"></i> About This Interactive Exam
+                    <span class="count">v1.0</span>
+                </div>
+                <div class="question" style="padding: 1.5rem;">
+                    <p style="font-weight: 600; margin-bottom: 0.8rem;">How to use this tool:</p>
+                    <ul style="margin-left: 1.2rem; line-height: 1.8;">
+                        <li>Each clinical scenario is presented in a <strong>case block</strong>.</li>
+                        <li>Sub-questions are listed below each case with their mark allocation.</li>
+                        <li>Click <strong>Show Model Answer</strong> to reveal the direct answer, detailed explanation, and extra answers.</li>
+                        <li>Use the <strong>Extra Answers</strong> section to pick additional points for your own study notes.</li>
+                    </ul>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: #4f6e6e;">This content is based on the Copperbelt University Michael Chilufya Sata School of Medicine – General Surgery MCS 410 End of Year Theory Examination (Paper 11, 2025).</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+    /* =====================================================================
+       SECTION A — 8 Case-Based Short Answer Questions with Subquestions
+       ===================================================================== */
+    const sectionA = [
+        {
+            q: `Chipantepante Football club is based in the Copperbelt town of Kitwe. Established in 1983, the club has been an icon of Zambian football giving rise to the majority of Zambian football legends. Playing for this Football Club remains every boy's childhood dream.`,
+            caseDetail: `Chifundo Mphasi on one of the youngest members of the team at only 18 years of age. He presents to the Emergency room with 12 hours history of abdominal pain that began around the umbilicus and migrated to the right iliac fossa. He has anorexia, nausea, and a low-grade fever. On examination, there is localized tenderness at McBurney's point with rebound tenderness. WBC count: 14,000/μL.`,
+            subquestions: [
+                {
+                    q: `a. What is the most likely diagnosis?`,
+                    marks: `2 marks`,
+                    direct: `Acute Appendicitis.`,
+                    explanation: `The migration of pain from the umbilicus to the right iliac fossa, coupled with anorexia, nausea, fever, and localized tenderness at McBurney's point, is the classic textbook presentation of acute appendicitis.`,
+                    extra: `None.`
+                },
+                {
+                    q: `b. List three key clinical signs you would expect.`,
+                    marks: `3 marks`,
+                    direct: `1. Localized tenderness at McBurney's point. 2. Rebound tenderness (Blumberg's sign). 3. Low-grade fever.`,
+                    explanation: `Rebound tenderness indicates peritoneal irritation. McBurney's point tenderness is the anatomical location of the appendix. Fever suggests an inflammatory or infectious process.`,
+                    extra: `Rovsing's sign (pain in the right iliac fossa when the left iliac fossa is palpated), Psoas sign (pain on passive extension of the right hip), Obturator sign (pain on internal rotation of the flexed right hip), Guarding (involuntary muscle spasms over the area).`
+                },
+                {
+                    q: `c. What imaging modalities maybe useful in confirming your diagnosis?`,
+                    marks: `3 marks`,
+                    direct: `1. Ultrasound (USG) to rule out Gyn Problems. 2. Contrast Enhanced Computed Tomography (CT) scan. 3. Magnetic Resonance Imaging (MRI).`,
+                    explanation: `USG is often the first-line choice (especially in younger patients/children) as it is radiation-free and can visualize an enlarged, non-compressible appendix. CT is the gold standard with high sensitivity and specificity, though it exposes the patient to radiation. MRI is used in pregnant patients.`,
+                    extra: `Plain abdominal X-ray (in erect position, to rule out peforation).`
+                },
+                {
+                    q: `d. When are you going to "inform Senior" about this patient and why?`,
+                    marks: `2 marks`,
+                    direct: `Inform the Senior immediately after clinical assessment and diagnosis, because the patient requires an emergency appendectomy (surgery).`,
+                    explanation: `This is a surgical emergency. Delaying surgical intervention risks perforation, leading to peritonitis and sepsis. A senior surgeon must be involved to schedule and perform the appendectomy.`,
+                    extra: `None.`
+                }
+            ]
+        },
+        {
+            q: `The above mentioned player is originally from a village in Blantyre. At the same time, his grandmother, a 65-year-old woman underwent subtotal thyroidectomy for a multinodular goiter at Queen Elizabeth Hospital.`,
+            caseDetail: `Two hours post operatively, she developed neck swelling, restlessness, and stridor. Pulse: 120/min, SpO2: 85%. She fortunately survived this episode. Day 1 postoperatively, it is also observed that she has hoarseness of voice and difficulty projecting speech. Laryngoscopy shows unilateral vocal cord paralysis.`,
+            subquestions: [
+                {
+                    q: `a. What complication had occurred?`,
+                    marks: `2 marks`,
+                    direct: `Post-thyroidectomy hematoma (causing acute airway obstruction).`,
+                    explanation: `The neck swelling, stridor, and dropping SpO2 indicate a rapidly expanding hematoma in the neck. Because the deep cervical fascia is tight, the blood compresses the trachea, causing airway obstruction.`,
+                    extra: `None.`
+                },
+                {
+                    q: `b. Outline the immediate management.`,
+                    marks: `3 marks`,
+                    direct: `1. Open the surgical wound immediately (remove clips/sutures). 2. Secure the airway (intubation/tracheostomy if needed). 3. Call for senior help/Anesthesia immediately.`,
+                    explanation: `This is a "CABC" (Catastrophic hemorrhage/Airway/Breathing/Circulation) emergency. Opening the wound at the bedside releases the pressure and allows the hematoma to decompress, potentially saving the airway. Airway management is the ultimate priority.`,
+                    extra: `Administer supplemental oxygen, Establish IV access and prepare for emergency blood transfusion if bleeding is severe, Keep the patient calm and upright to aid breathing.`
+                },
+                {
+                    q: `c. In which ward or part of the ward should this patient be kept after this episode and why?`,
+                    marks: `3 marks`,
+                    direct: `High Dependency Unit (HDU) or Intensive Care Unit (ICU).`,
+                    explanation: `She needs continuous monitoring of vitals, SpO2, and airway patency. HDU/ICU provides the necessary 1:1 or 1:2 nursing care and immediate access to emergency equipment for re-intubation.`,
+                    extra: `None.`
+                },
+                {
+                    q: `d. When can this patient commence feeds?`,
+                    marks: `2 marks`,
+                    direct: `Once her airway is secure, she is fully awake, and there are no signs of recurrent bleeding or vocal cord edema (usually after 24-48 hours or once the drain is removed and she is stable).`,
+                    explanation: `Feeding is delayed to prevent aspiration in case of vocal cord dysfunction or swallowing difficulties (dysphagia) resulting from laryngeal edema.`,
+                    extra: `None.`
+                },
+                {
+                    q: `e. Which nerve is most likely injured?`,
+                    marks: `3 marks`,
+                    direct: `Recurrent Laryngeal Nerve.`,
+                    explanation: `The hoarseness and difficulty projecting speech (unilateral vocal cord paralysis) is classic for Recurrent Laryngeal Nerve (RLN) injury.`,
+                    extra: `None.`
+                },
+                {
+                    q: `f. What is the function of this nerve?`,
+                    marks: `2 marks`,
+                    direct: `It supplies motor innervation to all the intrinsic muscles of the larynx (except the cricothyroid) and provides sensory innervation to the vocal cords and subglottic area.`,
+                    explanation: `The RLN is a branch of the Vagus nerve (CN X). It controls vocal cord tension and movement, which is essential for phonation and protecting the airway during swallowing.`,
+                    extra: `None.`
+                }
+            ]
+        },
+        {
+            q: `Brian Masanyinga is a dependable Winger. Having scored 16 goals last season, he was awarded the "Golden Boot" and K20 million prize money.`,
+            caseDetail: `This 24-year-old is brought in after a road traffic accident. He is pale, sweaty, and confused. BP: 80/50 mmHg, HR: 140/min. He has an obviously deformed right lower limb and you decide to do an X-ray.`,
+            subquestions: [
+                {
+                    q: `a. What type of shock is most likely?`,
+                    marks: `2 marks`,
+                    direct: `Hypovolemic Shock (due to blood loss).`,
+                    explanation: `The patient is pale, sweaty, confused, and hypotensive (80/50) with tachycardia (140). This is classic hemorrhagic/hypovolemic shock.`,
+                    extra: `None.`
+                },
+                {
+                    q: `b. Outline the initial steps in management.`,
+                    marks: `5 marks`,
+                    direct: `1. Primary survey (ABCs). 2. Administer high-flow oxygen. 3. Establish two large-bore IV lines. 4. Initiate rapid fluid resuscitation (crystalloids/blood). 5. Control external bleeding if any. 6. Splint the fracture.`,
+                    explanation: `ATLS protocol is paramount. The patient is bleeding into the thigh (femur fractures can lose 1-2 liters of blood). Fluid resuscitation is critical to prevent irreversible shock.`,
+                    extra: `Administer analgesia (pain relief), Keep the patient warm (prevent the lethal triad of hypothermia, acidosis, and coagulopathy), Insert a urinary catheter to monitor urine output (resuscitation endpoint).`
+                },
+                {
+                    q: `c. He has an obviously deformed right lower limb and you decide to do an X-ray - what instructions will you give the radiographer?`,
+                    marks: `1 mark`,
+                    direct: `"I would instruct him/her to follow take 2 views, AP and Lateral, and also make sure 2 adjacent joints are visible."`,
+                    explanation: `For a long bone fracture, you must always image the joint above and the joint below the fracture to rule out associated dislocations or intra-articular extensions.`,
+                    extra: `None.`
+                },
+                {
+                    q: `d. Describe what you see on the X-ray.`,
+                    marks: `3 marks`,
+                    direct: `A Complete displaced Oblique fracture of the right femoral shaft in AP and Lateral View.`,
+                    explanation: `The image shows a complete break in the femur with displacement of the fragments (the distal fragment is displaced relative to the proximal one). It is comminuted (multiple pieces).`,
+                    extra: `None.`
+                },
+                {
+                    q: `e. What bedside examination would be cardinal in this patient who is a professional football player?`,
+                    marks: `3 marks`,
+                    direct: `Distal neurovascular examination (checking pulses, capillary refill, sensation, and motor function of the foot).`,
+                    explanation: `For a professional footballer, it is crucial to know if the sciatic nerve or popliteal vessels are damaged. If the foot is ischemic or the patient has foot drop (nerve injury), the surgical approach and urgency change drastically.`,
+                    extra: `None.`
+                },
+                {
+                    q: `f. What are his treatment options of this fracture?`,
+                    marks: `1 mark`,
+                    direct: `1. Intramedullary (IM) Nailing. 2. Plate and Screw fixation (ORIF). 3. External Fixation. 4. Traction (conservative).`,
+                    explanation: `IM nailing is the gold standard for femoral shaft fractures in adults as it allows early mobilization. Plates are an alternative.`,
+                    extra: `None.`
+                }
+            ]
+        },
+        {
+            q: `Brian Masanyinga's girlfriend is 25 years of age.`,
+            caseDetail: `She complains of a reducible swelling in the right groin that increases on coughing. Examination shows a cough impulse and the swelling is controlled by pressure over the deep inguinal ring.`,
+            subquestions: [
+                {
+                    q: `a. What is the most likely diagnosis?`,
+                    marks: `3 marks`,
+                    direct: `Indirect Inguinal Hernia.`,
+                    explanation: `The swelling is in the right groin, increases on coughing (cough impulse), and is controlled by pressure over the deep inguinal ring. This means the hernia originates from the deep ring, which is the hallmark of an indirect hernia.`,
+                    extra: `None.`
+                },
+                {
+                    q: `b. Explain briefly the pathophysiology.`,
+                    marks: `6 marks`,
+                    direct: `The deep inguinal ring fails to obliterate (patent processus vaginalis), allowing abdominal contents to protrude through the deep ring, down the inguinal canal, and potentially into the scrotum.`,
+                    explanation: `During fetal development, the peritoneum extends into the scrotum as the processus vaginalis. It usually closes before birth. If it remains patent, it creates a sac through which bowel or omentum can herniate.`,
+                    extra: `None.`
+                },
+                {
+                    q: `c. What name is given to the Surgical repair of this abnormality?`,
+                    marks: `2 marks`,
+                    direct: `Herniorrhaphy or Hernioplasty (specifically, Lichtenstein tension-free repair).`,
+                    explanation: `Herniorrhaphy is the closure of the defect. Hernioplasty involves reinforcing the posterior wall of the inguinal canal with mesh.`,
+                    extra: `None.`
+                },
+                {
+                    q: `d. What are the possible complications of this surgical procedure?`,
+                    marks: `4 marks`,
+                    direct: `1. Recurrence. 2. Chronic groin pain (inguinodynia). 3. Hematoma/Seroma. 4. Infection. 5. Nerve injury (ilioinguinal, genitofemoral). 6. Ischemic orchitis.`,
+                    explanation: `Since the patient is young and the hernia is indirect, nerve injury and chronic pain are major risks. Recurrence is also a risk if the mesh is not placed properly or if the patient increases intra-abdominal pressure too early post-op.`,
+                    extra: `Wound dehiscence (surgical wound opening), Testicular atrophy (due to damage to the testicular artery), Thromboembolism (DVT/PE).`
+                }
+            ]
+        },
+        {
+            q: `Salulani Phiri who is also Team Captain is driving home one day after a training session. He comes across a 70-year-old woman who slipped and fell into a drain newly constructed using Constituency Development Funds.`,
+            caseDetail: `Her right leg is shortened and externally rotated. She is also unconscious. X-ray pelvis shows a displaced fracture of the neck of femur. Hb: 10 g/dL. She remains unconscious for the next 12 hours and you decide to take her for a CT scan.`,
+            subquestions: [
+                {
+                    q: `a. List three immediate priorities in her management.`,
+                    marks: `3 marks`,
+                    direct: `1. Airway protection (since she is unconscious). 2. Hemodynamic stabilization (IV fluids/blood). 3. Immobilization/splinting of the right leg.`,
+                    explanation: `She is unconscious, meaning her airway is at risk (GCS likely low). The fractured femur is bleeding, and her Hb is 10 g/dL (low, suggesting acute blood loss). She needs resuscitation and immobilization to prevent fat embolism.`,
+                    extra: `None.`
+                },
+                {
+                    q: `b. Name two possible complications of her fracture if untreated.`,
+                    marks: `2 marks`,
+                    direct: `1. Avascular Necrosis (AVN) of the femoral head. 2. Non-union of the fracture. 3. Osteoarthritis (post-traumatic).`,
+                    explanation: `The blood supply to the femoral head (medial circumflex femoral artery) can be disrupted by the neck fracture, leading to AVN. If not fixed, the bone will not heal (non-union).`,
+                    extra: `Fat Embolism Syndrome (common in long bone fractures), Deep Vein Thrombosis (DVT) due to immobility, Pressure sores (bedsores).`
+                },
+                {
+                    q: `c. What treatment option is available for her for this fracture?`,
+                    marks: `2 marks`,
+                    direct: `Hemiarthroplasty or Total Hip Replacement (THR).`,
+                    explanation: `In an elderly patient (70 years old) with a displaced femoral neck fracture, internal fixation often fails due to poor bone healing. Hemiarthroplasty (replacing the femoral head) or Total Hip Replacement (replacing both the head and the acetabulum) is the standard of care to allow early mobilization.`,
+                    extra: `None.`
+                },
+                {
+                    q: `d. Taking into consideration her age and the history prior to presentation, what finding is this on the CT scan?`,
+                    marks: `3 marks`,
+                    direct: `Subdural hematoma (or epidural hematoma).`,
+                    explanation: `The CT scan shows a crescent-shaped hyperdense (white) collection along the inner table of the skull, causing midline shift and compressing the brain.`,
+                    extra: `None.`
+                }
+            ]
+        },
+        {
+            q: `Chipantepante Club President is a 50-year-old Namwanga man known for his generosity and gentle spirit.`,
+            caseDetail: `Following a trip to Kabwe for the wedding ceremony of his niece, he developed a sudden severe abdominal pain mainly in the epigastric region, this progressed to a rigid abdomen, and absent bowel sounds. Erect chest X-ray shows free air under the diaphragm. WBC count: 18,000/μL.`,
+            subquestions: [
+                {
+                    q: `a. What is the most likely diagnosis?`,
+                    marks: `1 mark`,
+                    direct: `Perforated Peptic Ulcer (likely perforated duodenal ulcer).`,
+                    explanation: `Sudden severe epigastric pain, rigid abdomen (peritonitis), absent bowel sounds, and free air under the diaphragm on an erect chest X-ray are the classic signs of a perforated viscus, most commonly a peptic ulcer.`,
+                    extra: `None.`
+                },
+                {
+                    q: `b. List two investigations to confirm this diagnosis.`,
+                    marks: `2 marks`,
+                    direct: `1. Erect Chest X-ray. 2. CT Abdomen with contrast (or Water-soluble contrast study).`,
+                    explanation: `The erect CXR is the most specific for pneumoperitoneum (free air). If the CXR is inconclusive, a CT scan is highly sensitive.`,
+                    extra: `Serum Amylase/Lipase (to rule out pancreatitis), Erect Abdominal X-ray (though less sensitive than chest X-ray), FBC and U&E (to check infection and electrolyte imbalance).`
+                },
+                {
+                    q: `c. Outline initial management.`,
+                    marks: `4 marks`,
+                    direct: `1. Resuscitation (IV fluids, ABCs). 2. Administer broad-spectrum IV antibiotics. 3. Insert a Nasogastric (NG) tube. 4. Emergency exploratory laparotomy (surgical repair).`,
+                    explanation: `The patient is peritonitic and likely septic (WBC 18,000). They need resuscitation, antibiotics to cover gut flora, and immediate surgery to wash out the abdomen and repair the perforation (e.g., Graham patch).`,
+                    extra: `None.`
+                },
+                {
+                    q: `d. What "3 Tubes" are you going to insert in this patient?`,
+                    marks: `3 marks`,
+                    direct: `1. Nasogastric (NG) Tube. 2. Urinary Catheter. 3. Intravenous (IV) Line (or Chest tube/Abdominal drain).`,
+                    explanation: `In surgical emergencies, the "3 tubes" are the NG tube (decompresses the stomach), Foley catheter (monitors urine output), and a large-bore IV cannula (for fluids). Sometimes an abdominal drain is also placed during surgery.`,
+                    extra: `None.`
+                }
+            ]
+        },
+        {
+            q: `Brighton Kuwunda is a 65-year-old retired Coach of this team. Having won various championships and invested his money well, he has since settled on his farm in the outskirts of Kitwe.`,
+            caseDetail: `He has a beautiful young wife through a second marriage after the death of his first wife. His children have all successfully completed school and have since migrated to other places in Zambia. However, one small thing has been bogging his mind the last few months. He has a lot of trouble passing urine. He finally decides to come to the hospital to seek help. The Clinical officer on duty suspects he has BPH. A year later, Mr Kuwunda presents with a history of two episodes of UTI in the last six months and moderate LUTS. His IPSS is 15. He is currently on alpha blockers. The vitals on examination are BP: 128/64mmHg, pulse 69 beats per minute, temp: 36.7C. Urinalysis: leucocytes 2+, Nitrites: Positive, PH: 7.5, Specific gravity: 1.02.`,
+            subquestions: [
+                {
+                    q: `a. What pertinent questions are you going to ask Mr Kuwunda to confirm or rule out this provisional diagnosis?`,
+                    marks: `5 marks`,
+                    direct: `1. Nature of stream (hesitancy, straining). 2. Frequency/Nocturia. 3. Urgency/Incontinence. 4. Terminal dribbling. 5. Sensation of incomplete emptying.`,
+                    explanation: `The questions are based on the International Prostate Symptom Score (IPSS). You are asking about obstructive and irritative LUTS (Lower Urinary Tract Symptoms).`,
+                    extra: `History of urinary tract infections (UTIs), Presence of hematuria (blood in urine), Previous surgeries (e.g., urethral stricture repair).`
+                },
+                {
+                    q: `b. During history taking, he confesses to you that he has had trouble sustaining an erection and he is worried that his young wife may leave him. To alleviate the above symptoms, Mr Kuwunda explains to you that one of his former school mates suggested that he takes either Congo Dust, Blue Diamond or Mutototo, all well known sexual performance enhancers. What is your advice to him?`,
+                    marks: `5 marks`,
+                    direct: `I would advise him to stop taking these unregulated substances immediately, as they are dangerous, lack scientific evidence, can cause severe cardiovascular side effects, and may interact with his heart/BP medications. I would recommend he sees a doctor for a proper evaluation and treatment of both his BPH and erectile dysfunction.`,
+                    explanation: `"Congo Dust", "Blue Diamond", etc., are usually herbal/street mixtures. They can cause priapism (prolonged painful erection), severe hypertension, or liver/kidney damage. As a medical professional, you must emphasize safety and refer him to urology.`,
+                    extra: `None.`
+                },
+                {
+                    q: `c. Considering his age, you have in mind a possible diagnosis of prostate cancer. What 3 modalities will you use to conclude the diagnosis?`,
+                    marks: `3 marks`,
+                    direct: `1. Digital Rectal Examination (DRE). 2. Prostate-Specific Antigen (PSA) blood test. 3. Transrectal Ultrasound (TRUS) guided biopsy.`,
+                    explanation: `The triad is DRE (feeling for hard nodules), PSA (blood marker), and Biopsy (confirming malignancy via histology).`,
+                    extra: `None.`
+                },
+                {
+                    q: `d. What imaging modalities will play an important role in this patient?`,
+                    marks: `2 marks`,
+                    direct: `1. Transrectal Ultrasound (TRUS). 2. MRI of the prostate (for staging). 3. CT scan or Bone scan (for metastasis).`,
+                    explanation: `MRI is the best imaging for local staging (seeing if the cancer has breached the capsule). Bone scans are used to check for bone metastases, which are common in prostate cancer.`,
+                    extra: `None.`
+                },
+                {
+                    q: `e. What is your comprehensive diagnosis?`,
+                    marks: `2 marks`,
+                    direct: `BPH (Benign Prostatic Hyperplasia) with recurrent Urinary Tract Infections (UTIs) and moderate Lower Urinary Tract Symptoms (IPSS 15).`,
+                    explanation: `The patient has moderate LUTS (IPSS 15) and has had two UTIs in 6 months. The urinalysis shows leucocytes and nitrites (positive for infection). This is BPH with recurrent infections.`,
+                    extra: `None.`
+                },
+                {
+                    q: `f. What would be the indication for prostatectomy?`,
+                    marks: `4 marks`,
+                    direct: `1. Refractory urinary retention. 2. Recurrent UTIs. 3. Bladder stones. 4. Renal impairment due to backpressure. 5. Failure of medical therapy.`,
+                    explanation: `Surgery is not just for severe symptoms. If the patient has complications like recurrent UTIs, retention, stones, or kidney damage, surgery (TURP or open prostatectomy) is indicated.`,
+                    extra: `Recurrent hematuria (due to enlarged veins on the prostate), Neurological dysfunction causing bladder issues.`
+                },
+                {
+                    q: `g. What is the blood supply to the prostate?`,
+                    marks: `4 marks`,
+                    direct: `1. Inferior vesical artery. 2. Middle rectal artery. 3. Internal pudendal artery.`,
+                    explanation: `The prostate receives blood from the inferior vesical artery (a branch of the internal iliac), the middle rectal artery, and the internal pudendal artery.`,
+                    extra: `Superior vesical artery (sometimes contributes), Obturator artery (branches sometimes supply the prostate).`
+                }
+            ]
+        }
+    ];
+
+    /* =====================================================================
+       RENDERING FUNCTIONS
+       ===================================================================== */
+    function renderSectionA() {
+        const container = document.getElementById('container-A');
+        let html = '';
+        sectionA.forEach((caseItem, i) => {
+            const caseId = 'A-case' + (i + 1);
+            html += '<div class="question" id="q-' + caseId + '">';
+            html += '<p><span class="q-badge">Case ' + (i + 1) + '</span> ' + caseItem.q + '</p>';
+            if (caseItem.caseDetail) {
+                html += '<div class="case-block">' + caseItem.caseDetail + '</div>';
+            }
+            caseItem.subquestions.forEach((sub, j) => {
+                const subId = caseId + '-sub' + (j + 1);
+                html += '<div class="subq">';
+                html += '<div class="subq-text">' + sub.q + ' <span class="subq-marks">(' + sub.marks + ')</span></div>';
+                html += '<button type="button" class="btn btn-sm" onclick="toggleAnswer(\'' + subId + '\')"><i class="fas fa-eye"></i> Show Model Answer</button>';
+                html += '<div class="essay-answer" id="ans-' + subId + '">';
+                html += '<h4>Direct Answer</h4>';
+                html += '<div class="direct-answer">' + sub.direct + '</div>';
+                html += '<h4>Detailed Explanation</h4>';
+                html += '<p>' + sub.explanation + '</p>';
+                if (sub.extra && sub.extra !== 'None.') {
+                    html += '<div class="extra-answers"><strong>Extra Answers (you can pick from these):</strong><br>' + sub.extra + '</div>';
+                }
+                html += '</div>';
+                html += '</div>';
+            });
+            html += '</div>';
+        });
+        container.innerHTML = html;
+        document.getElementById('count-A').textContent = sectionA.length;
+    }
+
+    function toggleAnswer(qid) {
+        const el = document.getElementById('ans-' + qid);
+        if (el) el.classList.toggle('show');
+    }
+
+    /* ─── INIT ─── */
+    renderSectionA();
+
+    /* ─── TAB SWITCHING ─── */
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            const target = this.dataset.target;
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+            document.getElementById('panel-' + target).classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+    </script>
+
+</body>
+</html>

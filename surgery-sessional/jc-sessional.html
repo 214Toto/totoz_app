@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ToToZ · 4th Year Surgery Scenarios – Answered</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f4f7fc;
+      color: #1f2a41;
+      padding: 1rem 0.4rem; 
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+    .container {
+      width: 100%;
+      max-width: 100%;
+      margin: 0 auto;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(6px);
+      border-radius: 20px;
+      padding: 1.5rem 0.8rem;
+      box-shadow: 0 20px 50px rgba(0,30,60,0.08);
+      border: 1px solid rgba(255,255,255,0.6);
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: #0a2b4a;
+    }
+    .logo i {
+      color: #2d7b9e;
+      font-size: 1.8rem;
+    }
+    .badge {
+      background: #2d7b9e;
+      color: white;
+      padding: 0.3rem 1rem;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #0a2b4a;
+      margin-bottom: 0.2rem;
+    }
+    .subtitle {
+      color: #5a6e87;
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      border-left: 4px solid #2d7b9e;
+      padding-left: 0.8rem;
+    }
+    .question-card {
+      background: white;
+      border-radius: 16px;
+      padding: 1.2rem 0.8rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 8px 24px rgba(0,40,80,0.06);
+      border: 1px solid #e2ecf5;
+      transition: 0.2s;
+    }
+    .question-card:hover {
+      border-color: #b4d2e8;
+      box-shadow: 0 12px 32px rgba(45,123,158,0.1);
+    }
+    .q-num {
+      display: inline-block;
+      background: #eef4fa;
+      color: #2d7b9e;
+      font-weight: 800;
+      font-size: 0.85rem;
+      padding: 0.2rem 0.8rem;
+      border-radius: 30px;
+      margin-bottom: 0.6rem;
+    }
+    .q-text {
+      font-weight: 600;
+      font-size: 1.05rem;
+      margin-bottom: 0.8rem;
+      color: #0a2b4a;
+    }
+    .scenario-box {
+      background: #f8fafc;
+      border-left: 4px solid #2d7b9e;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1.2rem;
+      font-style: italic;
+      color: #334155;
+      font-size: 0.95rem;
+    }
+    .answer-section {
+      margin-top: 1rem;
+    }
+    .answer-section h4 {
+      color: #0a2b4a;
+      margin-top: 1rem;
+      margin-bottom: 0.4rem;
+      font-size: 1rem;
+    }
+    .answer {
+      background: #f0f9f0;
+      border-left: 6px solid #1e7e34;
+      padding: 1rem 1.2rem;
+      border-radius: 12px;
+      margin: 0.8rem 0 0.4rem;
+      font-weight: 500;
+      color: #0b3d1e;
+      font-size: 0.95rem;
+    }
+    .answer strong {
+      color: #1e7e34;
+    }
+    .answer ul {
+      margin-top: 0.5rem;
+      margin-left: 1.2rem;
+    }
+    .answer li {
+      margin-bottom: 0.3rem;
+    }
+    .high-yield {
+      background: #fff8e7;
+      border-left: 6px solid #d97706;
+      padding: 1rem 1.2rem;
+      border-radius: 12px;
+      margin-top: 1rem;
+      font-size: 0.95rem;
+    }
+    .high-yield i {
+      color: #d97706;
+      margin-right: 0.4rem;
+    }
+    .high-yield strong {
+      color: #7a4a00;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 3rem;
+      color: #7a8ca0;
+      font-size: 0.9rem;
+      border-top: 1px solid #dbe7f0;
+      padding-top: 1.5rem;
+    }
+    
+    @media (min-width: 768px) {
+      body { padding: 2rem 1rem; }
+      .container { padding: 2.5rem 2rem; border-radius: 40px; }
+      .question-card { padding: 1.8rem 2rem; border-radius: 24px; }
+      h1 { font-size: 2.2rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo"><i class="fas fa-heartbeat"></i> ToToZ</div>
+      <div class="badge"><i class="fas fa-graduation-cap"></i> 4th Year Surgery Scenarios</div>
+    </div>
+    <h1>📋 4th Year Examination — Surgery Scenarios</h1>
+    <div class="subtitle">Answer ALL questions · Each question to be answered on a separate answer sheet</div>
+
+    <!-- ===================== QUESTION 1 ===================== -->
+    <div class="question-card">
+      <div class="q-num">Q1</div>
+      <div class="scenario-box">
+        A 70-year-old male presents with 3-month history of right groin swelling. The swelling is described as painless and disappears once he lies down. He gives history of working in the mines for more than 15 years, was discharged 10 years ago on medical grounds as he suffered from a respiratory condition for more than a year. He has no constitutional symptoms, just complaining of having difficulties in passing urine.
+      </div>
+      
+      <div class="answer-section">
+        <h4>A) Identify three risk factors highlighted in the scenario associated with his condition (3 marks)</h4>
+        <div class="answer">
+          1. <strong>Age (70 years)</strong> – Increased risk of abdominal wall weakness and BPH (which increases intra-abdominal pressure).<br>
+          2. <strong>Occupational history (Mining for >15 years)</strong> – Chronic heavy lifting increases intra-abdominal pressure.<br>
+          3. <strong>Chronic respiratory condition</strong> – Chronic cough increases intra-abdominal pressure.
+        </div>
+
+        <h4>B) What is the likely diagnosis and state two differentials (3 marks)</h4>
+        <div class="answer">
+          <strong>Likely Diagnosis:</strong> Right Inguinal Hernia (likely direct, given his age and history of increased intra-abdominal pressure).<br>
+          <strong>Differentials:</strong><br>
+          1. Femoral Hernia<br>
+          2. Saphena Varix<br>
+          3. Lymphadenopathy (though less likely to disappear on lying down)<br>
+          4. Hydrocele of the cord.
+        </div>
+
+        <h4>C) State the boundaries of the inguinal canal and structures that pass through it in females (4 marks)</h4>
+        <div class="answer">
+          <strong>Boundaries of the Inguinal Canal:</strong><br>
+          <em>Anterior wall:</em> External oblique aponeurosis (reinforced laterally by internal oblique).<br>
+          <em>Posterior wall:</em> Transversalis fascia (reinforced medially by conjoint tendon).<br>
+          <em>Superior wall (Roof):</em> Internal oblique and transversus abdominis muscles (conjoint tendon).<br>
+          <em>Inferior wall (Floor):</em> Inguinal ligament (Poupart's ligament).<br><br>
+          <strong>Structures passing through in females:</strong><br>
+          1. Round ligament of the uterus.<br>
+          2. Ilioinguinal nerve.
+        </div>
+
+        <h4>D) State the boundaries of the inguinal triangle and its significance (4 marks)</h4>
+        <div class="answer">
+          <strong>Inguinal Triangle (Hesselbach's Triangle) Boundaries:</strong><br>
+          <em>Medial:</em> Lateral border of the rectus abdominis muscle.<br>
+          <em>Lateral:</em> Inferior epigastric artery.<br>
+          <em>Inferior:</em> Inguinal ligament.<br><br>
+          <strong>Significance:</strong> It is the site where direct inguinal hernias protrude through the posterior wall of the inguinal canal.
+        </div>
+
+        <h4>E) Describe the Deep ring occlusion test and state its significance (2 marks)</h4>
+        <div class="answer">
+          <strong>Description:</strong> The deep inguinal ring is occluded by pressing a finger into the ring (located about 1.25 cm above the midpoint of the inguinal ligament). The patient is then asked to cough.<br>
+          <strong>Significance:</strong> If the hernia does not reappear, it is an <strong>indirect inguinal hernia</strong> (because the impulse is blocked at the deep ring). If the hernia does reappear, it is a <strong>direct inguinal hernia</strong> (because the impulse comes through Hesselbach's triangle, medial to the ring).
+        </div>
+
+        <h4>F) Describe the Midpoint of inguinal canal and Midpoint of inguinal ligament, their Significance (4 marks)</h4>
+        <div class="answer">
+          <strong>Midpoint of Inguinal Ligament:</strong> The midpoint between the Anterior Superior Iliac Spine (ASIS) and the pubic tubercle.<br>
+          <em>Significance:</em> The femoral artery lies exactly at this midpoint.<br><br>
+          <strong>Midpoint of Inguinal Canal (Mid-Inguinal Point):</strong> The midpoint between the ASIS and the pubic symphysis.<br>
+          <em>Significance:</em> The deep inguinal ring lies about 1.25 cm above this point. It is a key surface landmark for identifying the deep ring and femoral artery.
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== QUESTION 2 ===================== -->
+    <div class="question-card">
+      <div class="q-num">Q2</div>
+      <div class="scenario-box">
+        A 56-year-old male presents with a three (3) day history of not opening bowels. He vomited greenish stuff about five (5) times today. On examination, the patient is dehydrated but conscious, the abdomen has an old midline scar, slightly distended, tender with visible peristaltic movement. Digital rectal exam unremarkable.
+      </div>
+
+      <div class="answer-section">
+        <h4>A) What is the comprehensive diagnosis? (2 marks)</h4>
+        <div class="answer">
+          <strong>Small Bowel Obstruction (SBO) secondary to adhesions</strong> (indicated by the old midline scar), with associated dehydration and bilious vomiting.
+        </div>
+
+        <h4>B) State three (3) causes of this condition? (3 marks)</h4>
+        <div class="answer">
+          1. <strong>Post-operative adhesions</strong> (most common cause).<br>
+          2. <strong>Hernias</strong> (e.g., inguinal, femoral).<br>
+          3. <strong>Malignancy/Tumours</strong> (e.g., colorectal cancer, small bowel tumours).<br>
+          4. Volvulus, intussusception, or inflammatory strictures (e.g., Crohn's disease).
+        </div>
+
+        <h4>C) State two (2) views of Abdominal X-rays and what is seen on each view, give three differences between large and small bowels on abdominal x-ray (5 marks)</h4>
+        <div class="answer">
+          <strong>Two views:</strong><br>
+          1. <strong>Supine view:</strong> Shows the distribution of bowel gas and dilated loops. Air-fluid levels are generally not seen.<br>
+          2. <strong>Erect view:</strong> Shows multiple air-fluid levels (stepladder pattern) and free air under the diaphragm if perforated.<br><br>
+          <strong>Three differences between large and small bowel on AXR:</strong><br>
+          1. <strong>Position:</strong> Small bowel is centrally located; large bowel is peripheral.<br>
+          2. <strong>Valvulae/Haustra:</strong> Small bowel has valvulae conniventes (plicae circulares) that cross the entire width; large bowel has haustra that do not cross the entire width.<br>
+          3. <strong>Diameter:</strong> Small bowel is normally <3 cm; large bowel is normally <6 cm (caecum <9 cm).
+        </div>
+
+        <h4>D) If bowel was gangrenous and perforated, what would you see on Chest X-ray? State two (2) other conditions that would give the same picture on Chest X-ray. (3 marks)</h4>
+        <div class="answer">
+          <strong>Finding on CXR:</strong> Free air under the diaphragm (pneumoperitoneum).<br>
+          <strong>Two other conditions causing this:</strong><br>
+          1. Perforated peptic ulcer.<br>
+          2. Recent abdominal surgery (post-operative pneumoperitoneum).<br>
+          3. Perforated appendix or diverticulum.
+        </div>
+
+        <h4>E) State some laboratory investigations you would request to help manage this patient (2 marks)</h4>
+        <div class="answer">
+          1. Full Blood Count (FBC) – to assess for leukocytosis (infection/ischemia) and anemia.<br>
+          2. Urea, Electrolytes, and Creatinine (U&E) – to assess dehydration and electrolyte imbalance (e.g., hypokalemia).<br>
+          3. Group and Save / Crossmatch – in case surgery is needed.<br>
+          4. Lactate – if ischemia/strangulation is suspected.
+        </div>
+
+        <h4>F) What is Sigmoid Volvulus? State four (4) risk factors and its pathognomonic radiological sign. (5 marks)</h4>
+        <div class="answer">
+          <strong>Definition:</strong> Sigmoid volvulus is a twisting of the sigmoid colon on its mesentery, leading to a closed-loop obstruction and risk of ischemia.<br>
+          <strong>Risk factors:</strong><br>
+          1. Chronic constipation.<br>
+          2. Elderly age.<br>
+          3. High-fiber diet (in some populations).<br>
+          4. Neurological/psychiatric conditions (e.g., Parkinson's, institutionalized patients).<br>
+          5. Previous abdominal surgery.<br><br>
+          <strong>Pathognomonic Radiological Sign:</strong> The <strong>"Coffee Bean" sign</strong> on plain abdominal X-ray (a large, U-shaped, distended loop of bowel arising from the pelvis).
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== QUESTION 3 ===================== -->
+    <div class="question-card">
+      <div class="q-num">Q3</div>
+      <div class="q-text">Describe the Salter Harris classification for physeal fractures and state the most common type and highlight the similarity between type II and type IV.</div>
+      <div class="answer-section">
+        <div class="answer">
+          <strong>Salter-Harris Classification:</strong><br>
+          <strong>Type I:</strong> Fracture through the physis (growth plate) only. Often difficult to see on X-ray; may need MRI.<br>
+          <strong>Type II:</strong> Fracture through the physis and metaphysis. <em>Most common type (approx. 75%)</em>.<br>
+          <strong>Type III:</strong> Fracture through the physis and epiphysis (intra-articular).<br>
+          <strong>Type IV:</strong> Fracture through the metaphysis, physis, and epiphysis.<br>
+          <strong>Type V:</strong> Crush injury to the physis (often diagnosed retrospectively due to growth arrest).<br><br>
+          <strong>Most Common Type:</strong> Type II.<br><br>
+          <strong>Similarity between Type II and Type IV:</strong> Both involve a fracture through the metaphysis and the physis. However, Type IV also involves the epiphysis, making it an intra-articular fracture and more prone to complications (e.g., growth arrest, joint incongruity).
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== QUESTION 4 ===================== -->
+    <div class="question-card">
+      <div class="q-num">Q4</div>
+      <div class="q-text">Describe in detail the various "general" classifications of fractures.</div>
+      <div class="answer-section">
+        <div class="answer">
+          Fractures can be classified generally based on several parameters:<br><br>
+          <strong>1. Based on Etiology:</strong><br>
+          • <em>Traumatic:</em> Due to direct or indirect force.<br>
+          • <em>Pathological:</em> Occurs through abnormal bone (e.g., tumor, osteoporosis, Paget's).<br>
+          • <em>Stress/Fatigue:</em> Due to repetitive microtrauma.<br><br>
+          <strong>2. Based on Communication with External Environment:</strong><br>
+          • <em>Closed (Simple):</em> Skin is intact.<br>
+          • <em>Open (Compound):</em> Skin is broken, exposing the fracture site to the environment (classified by Gustilo-Anderson).<br><br>
+          <strong>3. Based on the Extent of Fracture:</strong><br>
+          • <em>Complete:</em> Bone is completely broken into two or more pieces.<br>
+          • <em>Incomplete:</em> Bone is partially broken (e.g., Greenstick, Torus/buckle, stress fractures).<br><br>
+          <strong>4. Based on Morphology (Pattern):</strong><br>
+          • <em>Transverse:</em> Perpendicular to the long axis.<br>
+          • <em>Oblique:</em> Angled across the bone.<br>
+          • <em>Spiral:</em> Twisting force.<br>
+          • <em>Comminuted:</em> More than two fragments.<br>
+          • <em>Segmental:</em> Two separate fracture lines with an isolated segment.<br>
+          • <em>Avulsion:</em> Tendon/ligament pulls off a piece of bone.<br>
+          • <em>Impacted:</em> One bone fragment is driven into another.<br><br>
+          <strong>5. Based on Stability:</strong><br>
+          • <em>Stable:</em> Fracture ends remain aligned and resist displacement.<br>
+          • <em>Unstable:</em> Fracture tends to displace due to muscle forces or lack of bony contact.
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== QUESTION 5 ===================== -->
+    <div class="question-card">
+      <div class="q-num">Q5</div>
+      <div class="scenario-box">
+        A 2-month-old male child is brought to the emergency room by a distraught young couple with complaints of the child not having passed urine for 3 days accompanied by loss of appetite, abdominal swelling, and irritability. The child has not been vomiting and is passing stool and flatus, with no unusual change in the color of the stool. He has no fever and the antenatal history is generally unremarkable albeit for a scan done at 32 weeks gestation which was suggestive of oligohydramnios.
+      </div>
+
+      <div class="answer-section">
+        <h4>a. What are the differentials (in order of the most to least likely)? (4 marks)</h4>
+        <div class="answer">
+          1. <strong>Posterior Urethral Valves (PUV)</strong> – Most likely, given the male sex, oligohydramnios, and progressive bladder outlet obstruction leading to urinary retention.<br>
+          2. <strong>Urethral Stricture</strong> (e.g., from trauma or congenital).<br>
+          3. <strong>Neurogenic Bladder</strong> (e.g., spinal cord anomaly).<br>
+          4. <strong>Bladder Rupture</strong> (less likely without trauma or fever).<br>
+          5. <strong>Severe Phimosis</strong> (rare cause of complete retention in a 2-month-old).
+        </div>
+
+        <h4>b. What further history would you want to elicit from the parents? (3 marks)</h4>
+        <div class="answer">
+          1. <strong>Micturition history:</strong> Has the child ever had a good urinary stream? Any straining, dribbling, or weak stream before this episode?<br>
+          2. <strong>Antenatal history:</strong> Detailed details of the 32-week ultrasound – were the kidneys visualized? Was there any mention of hydronephrosis or a thick-walled bladder?<br>
+          3. <strong>Bowel habits and growth:</strong> Is the child feeding well? Any failure to thrive? Any history of constipation (can cause urinary retention).<br>
+          4. <strong>Neurological:</strong> Any weakness in the lower limbs or deformities (e.g., clubfoot) suggesting spinal dysraphism?
+        </div>
+
+        <h4>c. List the investigations you would do for this patient stating their clinical significance. (6 marks)</h4>
+        <div class="answer">
+          1. <strong>Urinalysis and Urine Culture:</strong> To rule out UTI, which could cause or complicate retention.<br>
+          2. <strong>Urea, Electrolytes, and Creatinine (U&E):</strong> To assess for acute kidney injury/post-renal failure due to backpressure.<br>
+          3. <strong>Abdominal Ultrasound (with pre- and post-void views):</strong> To assess for hydronephrosis, bladder wall thickness, and post-void residual volume. Can also visualize the kidneys.<br>
+          4. <strong>Micturating Cystourethrogram (MCUG):</strong> The gold standard for diagnosing PUV. It will show a dilated posterior urethra, trabeculated bladder, and possible vesicoureteral reflux.<br>
+          5. <strong>Full Blood Count (FBC):</strong> To check for leukocytosis (infection).<br>
+          6. <strong>Serum Electrolytes (specifically Potassium):</strong> To check for hyperkalemia, which can occur in renal failure.
+        </div>
+
+        <h4>d. What is the classical sign noted on abdominal ultrasound on the above patient? (2 marks)</h4>
+        <div class="answer">
+          The <strong>"Keyhole sign"</strong> (or "Echogenic bladder neck") – representing the dilated posterior urethra proximal to the obstruction, with a thick-walled, trabeculated bladder.
+        </div>
+
+        <h4>e. What is the classification for the most likely pathology in this client (state the name and types)? (5 marks)</h4>
+        <div class="answer">
+          <strong>Posterior Urethral Valves (PUV)</strong> are classified by the <strong>Young's Classification</strong>:<br><br>
+          <strong>Type I:</strong> Most common. The valves are mucosal folds that radiate distally from the verumontanum, causing obstruction during micturition.<br>
+          <strong>Type II:</strong> Mucosal folds that radiate proximally from the verumontanum to the bladder neck. Generally considered non-obstructive.<br>
+          <strong>Type III:</strong> A diaphragm with a central hole located at or distal to the verumontanum (often referred to as a "windsock" deformity).
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== QUESTION 1 (SECOND PART - PAGE 3) ===================== -->
+    <div class="question-card">
+      <div class="q-num">Scenario (Page 3)</div>
+      <div class="scenario-box">
+        <em>(Note: The clinical scenario text for this section is missing from the source document. However, based on the questions asked, the scenario likely describes a patient with a head injury, scalp laceration, and a lucid interval, possibly with signs of an epidural hematoma or traumatic brain injury.)</em>
+      </div>
+
+      <div class="answer-section">
+        <h4>1. What is your full diagnosis? (2 marks)</h4>
+        <div class="answer">
+          Likely <strong>Traumatic Brain Injury (TBI) with an Extradural (Epidural) Hematoma</strong> and an associated <strong>scalp laceration</strong>.
+        </div>
+
+        <h4>2. What is the GCS of the patient? (3 marks)</h4>
+        <div class="answer">
+          <em>(Assuming a standard scenario with a patient who is confused but opens eyes to voice and localizes pain:)</em><br>
+          A typical GCS for this type of scenario would be around <strong>13/15</strong> (E3 V4 M6) or <strong>14/15</strong> (E3 V4 M5).<br>
+          <em>If the patient is fully conscious but has a headache:</em> 15/15.<br>
+          <em>Without the exact clinical description, we cannot give a specific number, but the examiner is testing your ability to calculate E+V+M.</em>
+        </div>
+
+        <h4>3. Which side is the lesion in the patient above? (1 mark)</h4>
+        <div class="answer">
+          <em>(Typically, the lesion is on the side of the trauma/laceration, or the side of the blown pupil.)</em> Based on standard textbook scenarios, if the right pupil is blown and the patient has left-sided weakness, the lesion is on the <strong>Right side</strong>.
+        </div>
+
+        <h4>4. What triad is described in the scenario? Give the three parameters involved. (4 marks)</h4>
+        <div class="answer">
+          The triad is <strong>Beck's Triad</strong> (if cardiac tamponade is described) OR <strong>Cushing's Triad</strong> (if raised intracranial pressure is described). Given the head injury context, it is likely <strong>Cushing's Triad</strong>:<br>
+          1. Hypertension (with widened pulse pressure).<br>
+          2. Bradycardia.<br>
+          3. Irregular respiration (or respiratory depression).
+        </div>
+
+        <h4>5. What is lucid interval? What does it signify? (2 marks)</h4>
+        <div class="answer">
+          <strong>Lucid interval:</strong> A period of temporary recovery of consciousness after a head injury, followed by a rapid decline in neurological status.<br>
+          <strong>Significance:</strong> It is classically associated with an <strong>extradural (epidural) hematoma</strong> (typically from a middle meningeal artery tear). The initial impact causes a brief concussion, followed by a lucid period, and then rapid deterioration as the hematoma expands and compresses the brain.
+        </div>
+
+        <h4>6. Why does the scalp bleed excessively? Which layer of the scalp is involved? (3 marks)</h4>
+        <div class="answer">
+          <strong>Why:</strong> The scalp has a very rich blood supply, and the blood vessels are tethered within the dense connective tissue layer, preventing them from retracting and constricting when cut.<br>
+          <strong>Layer involved:</strong> The <strong>dense connective tissue layer</strong> (the second layer of the scalp, also known as the galea aponeurotica or epicranial aponeurosis).
+        </div>
+
+        <h4>7. Which layer of the scalp is considered "the dangerous layer of the scalp"? Give the reason to your answer. (2 marks)</h4>
+        <div class="answer">
+          <strong>Loose areolar tissue layer</strong> (the fourth layer).<br>
+          <strong>Reason:</strong> It is a potential space that allows infections to spread easily. Emissary veins pass through this layer, connecting the scalp to the intracranial dural venous sinuses, allowing infection to spread from the scalp to the brain (e.g., meningitis, cavernous sinus thrombosis).
+        </div>
+
+        <h4>8. What one investigation will you order to help you with the diagnosis above?</h4>
+        <div class="answer">
+          <strong>Non-contrast CT scan of the head</strong> (urgent). It is the gold standard for diagnosing intracranial hemorrhage (e.g., extradural hematoma) and skull fractures.
+        </div>
+
+        <h4>9. How will you manage the bleeding from the laceration? (2 marks)</h4>
+        <div class="answer">
+          <strong>Direct pressure</strong> with a sterile dressing (or using a running suture if the wound is large and clean) is the first step. In severe cases, a temporary scalp clip or Raney clips can be applied. Ensure the patient's ABCs are managed first.
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== QUESTION 2 (PAGE 4) ===================== -->
+    <div class="question-card">
+      <div class="q-num">Scenario 2 (Page 4)</div>
+      <div class="scenario-box">
+        Male 19 years old came to OPD1 complaining of pain that started around the umbilicus but migrated to the right iliac fossa accompanied with anorexia and vomiting. On conducting the abdominal exam, the Doctor found rebound tenderness in the right iliac fossa.
+      </div>
+
+      <div class="answer-section">
+        <h4>1. Diagnosis</h4>
+        <div class="answer">
+          <strong>Acute Appendicitis</strong> (classic migratory pain, anorexia, vomiting, and RIF rebound tenderness).
+        </div>
+
+        <h4>2. Select the best investigation for supporting the diagnosis; a) abdominal X-ray b) full blood count c) ERS</h4>
+        <div class="answer">
+          <strong>b) Full Blood Count (FBC)</strong> – It will typically show a leukocytosis with neutrophilia, supporting the clinical diagnosis of acute inflammation. (Note: Ultrasound or CT would be the best <em>imaging</em> investigations, but among the choices, FBC is the best to support the clinical picture).
+        </div>
+
+        <h4>3. Which treatment do you recommend for the above disease?</h4>
+        <div class="answer">
+          <strong>Appendectomy</strong> (surgical removal of the appendix), either laparoscopic or open. Pre-operatively, the patient should be kept nil per os (NPO), given IV fluids, analgesia, and prophylactic antibiotics.
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== QUESTION 3 (PAGE 4) ===================== -->
+    <div class="question-card">
+      <div class="q-num">Scenario 3 (Page 4)</div>
+      <div class="scenario-box">
+        A 16-year-old male is seen in Orthopaedic clinic complaining of recently worsening knee pain and swelling. He is found to have a bone sarcoma of the right distal femur as shown in Figure A. After appropriate workup and biopsy (Figure B), it is declared an osteosarcoma without any areas of identified metastasis.
+      </div>
+
+      <div class="answer-section">
+        <h4>1. Describe the Enneking classification of bone tumours? (5 marks)</h4>
+        <div class="answer">
+          The Enneking staging system (surgical staging for musculoskeletal tumors) is based on three factors: <strong>Grade (G)</strong>, <strong>Site (T)</strong>, and <strong>Metastasis (M)</strong>.<br><br>
+          <strong>Grade:</strong> G1 (low grade), G2 (high grade).<br>
+          <strong>Site:</strong> T1 (intracompartmental), T2 (extracompartmental).<br>
+          <strong>Metastasis:</strong> M0 (no metastasis), M1 (metastasis present).<br><br>
+          <strong>Stages:</strong><br>
+          <strong>Stage IA:</strong> G1, T1, M0 (Low grade, intracompartmental).<br>
+          <strong>Stage IB:</strong> G1, T2, M0 (Low grade, extracompartmental).<br>
+          <strong>Stage IIA:</strong> G2, T1, M0 (High grade, intracompartmental).<br>
+          <strong>Stage IIB:</strong> G2, T2, M0 (High grade, extracompartmental).<br>
+          <strong>Stage III:</strong> Any G, Any T, M1 (Metastatic disease).
+        </div>
+
+        <h4>2. List seven (7) X-ray findings of osteosarcoma? (7 marks)</h4>
+        <div class="answer">
+          1. <strong>Codman's triangle</strong> (elevation of the periosteum).<br>
+          2. <strong>Sunburst appearance</strong> (perpendicular periosteal reaction).<br>
+          3. <strong>Bone destruction/osteolysis</strong> (moth-eaten appearance).<br>
+          4. <strong>Osteoid matrix/cloudy opacities</strong> (tumor bone formation).<br>
+          5. <strong>Soft tissue mass</strong>.<br>
+          6. <strong>Pathological fracture</strong>.<br>
+          7. <strong>Widening of the joint space</strong> (if it extends into the joint).
+        </div>
+
+        <h4>3. List three (3) histological findings of conventional osteosarcoma? (3 marks)</h4>
+        <div class="answer">
+          1. <strong>Pleomorphic, malignant osteoblasts</strong> (spindle-shaped cells).<br>
+          2. <strong>Osteoid production</strong> by the malignant cells (the hallmark).<br>
+          3. <strong>Atypical mitoses</strong> and areas of necrosis.
+        </div>
+
+        <h4>4. List five (5) operative treatment options for conventional osteosarcoma? (5 marks)</h4>
+        <div class="answer">
+          1. <strong>Limb salvage surgery</strong> (resection of the tumor with safe margins) + <strong>Endoprosthetic replacement</strong> (custom joint replacement).<br>
+          2. <strong>Limb salvage surgery + allograft reconstruction</strong>.<br>
+          3. <strong>Rotationplasty</strong> (for distal femur/proximal tibia tumors, especially in children).<br>
+          4. <strong>Amputation</strong> (if limb salvage is not possible or if there is extensive neurovascular involvement).<br>
+          5. <strong>Excision and reconstruction with vascularized fibular graft</strong>.
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== QUESTION 4 (PAGE 5) ===================== -->
+    <div class="question-card">
+      <div class="q-num">Scenario 4 (Page 5)</div>
+      <div class="answer-section">
+        <h4>1. Define osteoarthritis (2 marks)</h4>
+        <div class="answer">
+          Osteoarthritis (OA) is a chronic, progressive, degenerative joint disease characterized by the breakdown of articular cartilage, subchondral bone remodeling, and the formation of osteophytes (bone spurs), leading to joint pain, stiffness, and loss of function.
+        </div>
+
+        <h4>2. List the risk factors for osteoarthritis (6 marks)</h4>
+        <div class="answer">
+          1. <strong>Age</strong> (advanced age is the strongest risk factor).<br>
+          2. <strong>Obesity</strong> (increases mechanical stress on weight-bearing joints).<br>
+          3. <strong>Previous joint injury</strong> (e.g., fractures, ligament tears, meniscal tears).<br>
+          4. <strong>Genetics</strong> (family history, especially for hand OA).<br>
+          5. <strong>Occupational/repetitive stress</strong> (e.g., heavy lifting, repetitive kneeling).<br>
+          6. <strong>Female sex</strong> (especially post-menopausal).
+        </div>
+
+        <h4>3. Briefly describe the Pathophysiology (6 marks)</h4>
+        <div class="answer">
+          OA is no longer considered purely "wear and tear" but an active disease process involving all joint tissues:<br>
+          1. <strong>Cartilage degradation:</strong> An imbalance between anabolic and catabolic processes leads to the loss of proteoglycans and collagen, causing cartilage thinning and fissuring.<br>
+          2. <strong>Subchondral bone changes:</strong> Increased bone turnover leads to subchondral sclerosis (hardening) and the formation of subchondral cysts.<br>
+          3. <strong>Osteophyte formation:</strong> New bone formation at the joint margins as a compensatory mechanism to stabilize the joint.<br>
+          4. <strong>Synovial inflammation:</strong> Mild chronic inflammation of the synovium (synovitis) can occur due to cartilage breakdown products.<br>
+          5. <strong>Muscle weakness:</strong> Periarticular muscle atrophy exacerbates joint instability.
+        </div>
+
+        <h4>4. List the classical features of osteoarthritis seen on x-ray (2 marks)</h4>
+        <div class="answer">
+          1. <strong>Joint space narrowing</strong> (asymmetric, usually in the weight-bearing compartment).<br>
+          2. <strong>Osteophyte formation</strong> (bone spurs at joint margins).<br>
+          3. <strong>Subchondral sclerosis</strong> (increased density of bone beneath the cartilage).<br>
+          4. <strong>Subchondral cysts</strong> (geodes).
+        </div>
+
+        <h4>5. List the possible treatment options for osteoarthritis (4 marks)</h4>
+        <div class="answer">
+          1. <strong>Non-pharmacological:</strong> Weight loss, exercise (strengthening and aerobic), physiotherapy, walking aids, bracing.<br>
+          2. <strong>Pharmacological:</strong> Analgesics (paracetamol), NSAIDs (topical or oral), intra-articular corticosteroid injections, hyaluronic acid injections.<br>
+          3. <strong>Surgical:</strong> Arthroscopic debridement (limited role), osteotomy (e.g., high tibial osteotomy), joint replacement (total or partial arthroplasty).<br>
+          4. <strong>Alternative/Adjunctive:</strong> Acupuncture, TENS, topical capsaicin.
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== QUESTION 5 (PAGE 5) ===================== -->
+    <div class="question-card">
+      <div class="q-num">Scenario 5 (Page 5)</div>
+      <div class="scenario-box">
+        A 33-year-old male presents to your KTH men's clinic with a 3-year history of being unable to conceive despite having regular unprotected sexual intercourse. He is a non-smoker and has no significant past medical history. On your objective assessment, you notice that he has a clinically grade 3 left varicocele. Semen analysis performed thrice in the last six months shows the following: Volume: 2.5mls, Liquefaction: Within 30 mins, pH: 8.0, Non-viable: 70%, Viable: 30%, Actively progressive: 20%, Sluggish: 10%, Morphology: 1% normal, Head: tapered.
+      </div>
+
+      <div class="answer-section">
+        <h4>1. What is your comprehensive diagnosis? (2 marks)</h4>
+        <div class="answer">
+          <strong>Male Factor Infertility secondary to a Grade 3 Left Varicocele</strong>, with severe oligoasthenoteratozoospermia (OAT syndrome).
+        </div>
+
+        <h4>2. What abnormalities can you note from the semen analysis? (3 marks)</h4>
+        <div class="answer">
+          According to WHO criteria:<br>
+          1. <strong>Oligozoospermia:</strong> Viable sperm count is low (only 30% viable).<br>
+          2. <strong>Asthenozoospermia:</strong> Reduced motility (only 20% actively progressive, whereas >32% is normal).<br>
+          3. <strong>Teratozoospermia:</strong> Abnormal morphology (only 1% normal forms, whereas >4% is normal; head is tapered).
+        </div>
+
+        <h4>3. Apart from a semen analysis, what other relevant investigations would you love to order for your patient? (4 marks)</h4>
+        <div class="answer">
+          1. <strong>Hormonal Profile:</strong> FSH, LH, Testosterone, and Prolactin (to assess the hypothalamic-pituitary-gonadal axis).<br>
+          2. <strong>Scrotal Doppler Ultrasound:</strong> To confirm the varicocele, assess testicular volume, and rule out other pathology (e.g., testicular tumors).<br>
+          3. <strong>Karyotyping/Genetic testing:</strong> If severe oligospermia or azoospermia is present (to rule out Klinefelter syndrome, Y-chromosome microdeletions).<br>
+          4. <strong>Urinalysis (post-ejaculation):</strong> To rule out retrograde ejaculation (though volume is normal here).<br>
+          5. <strong>Partner evaluation:</strong> A full fertility workup for his partner is essential.
+        </div>
+
+        <h4>4. On examination of your patient, what are you specifically looking for? (4 marks)</h4>
+        <div class="answer">
+          1. <strong>Testicular size and consistency:</strong> Varicoceles can cause testicular atrophy on the affected side.<br>
+          2. <strong>Secondary sexual characteristics:</strong> Assess for signs of androgen deficiency (e.g., reduced body hair, gynecomastia).<br>
+          3. <strong>Varicocele assessment:</strong> "Bag of worms" palpable in the scrotum, especially when the patient is standing and performing a Valsalva maneuver. Check if it decompresses when lying down.<br>
+          4. <strong>Other scrotal masses:</strong> Rule out hydrocele, epididymal cysts, or testicular tumors.
+        </div>
+
+        <h4>5. What is a varicocele and how are they graded? (5 marks)</h4>
+        <div class="answer">
+          <strong>Definition:</strong> A varicocele is an abnormal dilation and tortuosity of the pampiniform venous plexus within the spermatic cord, usually due to incompetent venous valves.<br><br>
+          <strong>Grading (Clinical):</strong><br>
+          <strong>Grade 1:</strong> Palpable only with Valsalva maneuver.<br>
+          <strong>Grade 2:</strong> Palpable at rest, but not visible.<br>
+          <strong>Grade 3:</strong> Visible and palpable at rest.<br><br>
+          <strong>Grading (Ultrasound):</strong><br>
+          <strong>Grade 1:</strong> Reflux only with Valsalva.<br>
+          <strong>Grade 2:</strong> Reflux at rest, exacerbated by Valsalva.<br>
+          <strong>Grade 3:</strong> Spontaneous reflux at rest.
+        </div>
+
+        <h4>6. Why are varicoceles more common on the left than the right side? (2 marks)</h4>
+        <div class="answer">
+          Because the <strong>left testicular vein drains into the left renal vein at a right angle</strong>, whereas the right testicular vein drains directly into the inferior vena cava at an acute angle. The left renal vein can be compressed between the superior mesenteric artery and the aorta (Nutcracker phenomenon), increasing pressure in the left testicular vein. Additionally, the left testicular vein is longer and lacks a valve in many individuals.
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <i class="fas fa-graduation-cap"></i> ToToZ — Learn with confidence · 4th Year Surgery Scenarios · All questions answered
+    </div>
+  </div>
+</body>
+</html>
