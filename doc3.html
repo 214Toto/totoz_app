@@ -469,6 +469,20 @@ const DOCUMENTS = [
       "https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=800&q=80"
     ]
   },
+
+  // 2nd year biochem
+  {
+    id: 'Amino-Acids',
+    name: "Amino Acid Class Notes",
+    driveUrl: "",
+    pages: Array.from({length: 66}, (_, i) => `notes/biochem2/Term1/AminoAcids-C/1AMINO-ACIDS_${i+1}.jpg`)
+  },
+  {
+    id: 'Amino-Acids2',
+    name: "Amino Acid ToToZ Notes",
+    driveUrl: "",
+    pages: Array.from({length: 66}, (_, i) => `notes/biochem2/Term1/AminoAcids-C/notes/biochem2/term1/1AMINO-ACIDS_${i+1}.jpg`)
+  },
   
   /* ---------- PLACEHOLDER DOCS ---------- */
   { id: 'thigh',           name: "Thigh",                      driveUrl: "", pages: [] },
@@ -632,6 +646,8 @@ const DOCUMENTS = [
    1b) TOPIC GROUPS
    ============================================================ */
 const TOPIC_GROUPS = {
+
+  'Amino-Acids':        ['Amino-Acids', 'Amino-Acids2'],
   'pelvis-bones':        ['pelvis-bones1', 'pelvis-bones2'],
   'pelvis-muscles':      ['pelvis-muscles', 'pelvis-muscles2'],
   'pelvis-supply':       ['pelvis-nerves1', 'pelvis-nerves2', 'pelvis-nerves3', 'pelvis-nerves'],

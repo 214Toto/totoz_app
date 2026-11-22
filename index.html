@@ -2379,7 +2379,7 @@ body, #particles-canvas, .hero h1,
             <div class="doc-topic-badge" id="docPopupTopic">Topic</div>
             <div class="doc-list" id="docListContainer"></div>
             <div class="doc-footer">
-                <i class="fas fa-file-pdf"></i> Click any document to open the Google Drive link
+                <i class="fas fa-file-pdf"></i> Tap any document to read it here in the app
             </div>
         </div>
     </div>
@@ -8110,6 +8110,14 @@ const docData = {
     'Genetic Recombination & Medicine': 'bio3-recombination',
     'Genetic Techniques & Its Uses in Medicine': 'bio3-genetic-tech',
 
+    // 2nd year biochemistry 
+    'Amino Acids': 'Amino-Acids',
+    '': '',
+    '': '',
+    '': '',
+    '': '',
+    '': '',
+
     // ============ PHYSIOLOGY 3 ============
     'Pituitary Gland': 'physio3-pituitary',
     'Thyroid Gland': 'physio3-thyroid',
@@ -8891,15 +8899,15 @@ const docData = {
                 html +=
                     `<a href="${viewerUrl}" target="_blank" rel="noopener"
                         class="btn-sm doc-btn"
-                        style="background:#163b59;color:#fff;border-color:#163b59;">
-                        <i class="fas fa-book-open"></i> Read Notes (In-App)
+                        style="background:#black;color:#black;border-color:#163b59;">
+                        <i class="fas fa-book-open"></i> Read Notes
                     </a>`;
                 }
 
                 // --- Google Drive documents button (always available) ---
-                const docClickHandler = `openDocumentPopup('${topic.replace(/'/g, "\\'")}')`;
-                html +=
-                    `<button class="btn-sm doc-btn" onclick="${docClickHandler}"><i class="fas fa-file-alt"></i> Documents ${hasDocs ? '(' + docData[topic].length + ')' : ''}</button>`;
+                // const docClickHandler = `openDocumentPopup('${topic.replace(/'/g, "\\'")}')`;
+                // html +=
+                //     `<button class="btn-sm doc-btn" onclick="${docClickHandler}"><i class="fas fa-file-alt"></i> Documents ${hasDocs ? '(' + docData[topic].length + ')' : ''}</button>`;
 
                 // Video button
                 const videoClickHandler = `openVideoPopup('${topic.replace(/'/g, "\\'")}')`;
