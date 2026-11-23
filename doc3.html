@@ -365,12 +365,6 @@ const DOCUMENTS = [
     ]
   },
   {
-    id: 'AP',
-    name: "Action Potential",
-    driveUrl: "",
-    pages: Array.from({length: 13}, (_, i) => `notes/AP/action-potential_${i+1}.jpg`)
-  },
-  {
     id: 'male-gross',
     name: "Male Gross Anatomy",
     driveUrl: "",
@@ -474,7 +468,7 @@ const DOCUMENTS = [
   {
     id: 'Amino-Acids',
     name: "Amino Acid Class Notes",
-    driveUrl: "",
+    driveUrl: "https://drive.google.com/file/d/1SGEVprdXx_fMHMMI6sH-FvS2xI3eyBi2/view?usp=drivesdk",
     pages: Array.from({length: 66}, (_, i) => `notes/biochem2/Term1/AminoAcids-C/1AMINO-ACIDS_${i+1}.jpg`)
   },
   {
@@ -482,7 +476,274 @@ const DOCUMENTS = [
     name: "Amino Acid ToToZ Notes",
     driveUrl: "",
     pages: Array.from({length: 66}, (_, i) => `notes/biochem2/Term1/AminoAcids-C/notes/biochem2/term1/1AMINO-ACIDS_${i+1}.jpg`)
+  }, 
+  {
+    id: 'peptides',
+    name: "Peptides Class Notes",
+    driveUrl: "",
+    pages: Array.from({length: 1}, (_, i) => `notes/biochem2/Term1/Peptides-C/Peptides-C_${i+1}.jpg`)
   },
+  {
+    id: 'peptides2',
+    name: "Peptides ToToZ Notes",
+    driveUrl: "",
+    pages: Array.from({length: 1}, (_, i) => `notes/biochem2/Term1/Peptides-C/Peptides-C_${i+1}.jpg`)
+  },
+  {
+    id: 'Plasma-Proteins',
+    name: "Plasma Proteins Class Notes",
+    driveUrl: "",
+    pages: Array.from({length: 1}, (_, i) => `notes/biochem2/Term1/PlasmaProteins-C/PlasmaProteins-C_${i+1}.jpg`)
+  },
+  {
+    id: 'Plasma-Proteins2',
+    name: "Plasma Proteins ToToZ Notes",
+    driveUrl: "",
+    pages: Array.from({length: 1}, (_, i) => `notes/biochem2/Term1/PlasmaProteins-C/PlasmaProteins-C_${i+1}.jpg`)
+  },
+  {
+    id: 'enzymes',
+    name: "Enzymes Class Notes",
+    driveUrl: "",
+    pages: Array.from({length: 1}, (_, i) => `notes/biochem2/Term1/Enzymes-C/Enzymes-C_${i+1}.jpg`)
+  },
+  {
+    id: 'enzymes2',
+    name: "Enzymes ToToZ Notes",
+    driveUrl: "",
+    pages: Array.from({length: 1}, (_, i) => `notes/biochem2/Term1/Enzymes-C/Enzymes-C_${i+1}.jpg`)
+  },
+  {
+    id: 'Hb',
+    name: "Heamoglobin Class Notes",
+    driveUrl: "",
+    pages: Array.from({length: 1}, (_, i) => `notes/biochem2/Term1/Heamoglobin-C/Heamoglobin-C_${i+1}.jpg`)
+  },
+  {
+    id: 'Hb2',
+    name: "Heamoglobin ToToZ Notes",
+    driveUrl: "",
+    pages: Array.from({length: 1}, (_, i) => `notes/biochem2/Term1/Heamoglobin-C/Heamoglobin-C_${i+1}.jpg`)
+  },
+  {
+    id: 'carbohydrates1',
+    name: "Carbohydrates",
+    driveUrl: "",
+    pages: Array.from({length: 1}, (_, i) => `notes/biochem2/Term2/Carbohydrates-C/Carbohydrates-C_${i+1}.jpg`)
+  },
+  {
+    id: 'carbohydrates2',
+    name: "Complex Carbohydrates",
+    driveUrl: "",
+    pages: Array.from({length: 1}, (_, i) => `notes/biochem2/Term2/Carbohydrates-C/Carbohydrates-C_${i+1}.jpg`)
+  },
+  {
+    id: 'carbohydrates3',
+    name: "Carbohydrates ToToz Notes",
+    driveUrl: "",
+    pages: Array.from({length: 1}, (_, i) => `notes/biochem2/Term2/Carbohydrates-C/Carbohydrates-C_${i+1}.jpg`)
+  },
+  {
+    id: 'lipids',
+    name: "Lipids Class Notes",
+    driveUrl: "",
+    pages: Array.from({length: 1}, (_, i) => `notes/biochem2/Term2/Lipids-C/Lipids-C_${i+1}.jpg`)
+  },
+  {
+    id: 'lipids2',
+    name: "Lipids ToToZ Notes",
+    driveUrl: "",
+    pages: Array.from({length: 1}, (_, i) => `notes/biochem2/Term2/Lipids-C/Lipids-C_${i+1}.jpg`)
+  },
+  {
+    id: 'nucleic-acids1',
+    name: "Nucleosides",
+    driveUrl: "",
+    pages: Array.from({length: 1}, (_, i) => `notes/biochem2/Term2/NucleicAcids-C/NucleicAcids-C_${i+1}.jpg`)
+  },
+  {
+    id: 'nucleic-acids2',
+    name: "Nucleotides",
+    driveUrl: "",
+    pages: Array.from({length: 1}, (_, i) => `notes/biochem2/Term2/NucleicAcids-C/NucleicAcids-C_${i+1}.jpg`)
+  },
+  {
+    id: 'nucleic-acids3',
+    name: "RNA",
+    driveUrl: "",
+    pages: Array.from({length: 1}, (_, i) => `notes/biochem2/Term2/NucleicAcids-C/NucleicAcids-C_${i+1}.jpg`)
+  },
+  {
+    id: 'nucleic-acids4',
+    name: "DNA Replication",
+    driveUrl: "",
+    pages: Array.from({length: 1}, (_, i) => `notes/biochem2/Term2/NucleicAcids-C/NucleicAcids-C_${i+1}.jpg`)
+  },
+  {
+    id: 'nucleic-acids5',
+    name: "DNA Trancription",
+    driveUrl: "",
+    pages: Array.from({length: 1}, (_, i) => `notes/biochem2/Term2/NucleicAcids-C/NucleicAcids-C_${i+1}.jpg`)
+  },
+  {
+    id: 'nucleic-acids6',
+    name: "RNA Translation",
+    driveUrl: "",
+    pages: Array.from({length: 1}, (_, i) => `notes/biochem2/Term2/NucleicAcids-C/NucleicAcids-C_${i+1}.jpg`)
+  },
+
+  
+
+
+  // 3rd year biochemistry
+  {
+    id: 'bio3-metab-overview',
+    name: "Overview of metabolism (metabolic pathways)",
+    driveUrl: "",
+    pages: Array.from({length: 1}, (_, i) => `notes/biochem3/Term1/metabolism-C/metabolism-C_${i+1}.jpg`)
+  },
+  {
+    id: 'bio3-etc',
+    name: "Biological Oxidation: ETC & oxidative phosphorylation",
+    driveUrl: "",
+    pages: Array.from({length: 1}, (_, i) => `notes/biochem3/Term1/etc-C/etc-C_${i+1}.jpg`)
+  },
+  {
+    id: 'bio3-glycolysis',
+    name: "Carbohydrate metabolism: Glycolysis",
+    driveUrl: "",
+    pages: Array.from({length: 1}, (_, i) => `notes/biochem3/Term1/glycolysis-C/glycolysis-C_${i+1}.jpg`)
+  },
+  {
+    id: 'bio3-ppp',
+    name: "Pentose phosphate pathway",
+    driveUrl: "",
+    pages: Array.from({length: 1}, (_, i) => `notes/biochem3/Term1/ppp-C/ppp-C_${i+1}.jpg`)
+  },
+  {
+    id: 'bio3-tca',
+    name: "TCA cycle (krebs cycle)",
+    driveUrl: "",
+    pages: Array.from({length: 1}, (_, i) => `notes/biochem3/Term1/tca-C/tca-C_${i+1}.jpg`)
+  },
+  {
+    id: 'bio3-gal-fru',
+    name: "Carbohydrate metabolism: Galactose and Fructose",
+    driveUrl: "",
+    pages: Array.from({length: 1}, (_, i) => `notes/biochem3/Term1/fructose-C/fructose-C_${i+1}.jpg`)
+  },
+  {
+    id: 'bio3-gluconeo',
+    name: "Gluconeogenesis",
+    driveUrl: "",
+    pages: Array.from({length: 1}, (_, i) => `notes/biochem3/Term1/gluconeogenesis-C/gluconeogenesis-C_${i+1}.jpg`)
+  },
+  {
+    id: 'bio3-glucose',
+    name: "Blood glucose homeostasis",
+    driveUrl: "",
+    pages: Array.from({length: 1}, (_, i) => `notes/biochem3/Term1/glucose-C/glucose-C_${i+1}.jpg`)
+  },
+  {
+    id: 'bio3-alcohol',
+    name: "Alcohol metabolism",
+    driveUrl: "",
+    pages: Array.from({length: 1}, (_, i) => `notes/biochem3/Term1/alcohol-C/alcohol-C_${i+1}.jpg`)
+  },
+  {
+    id: 'bio3-uronic',
+    name: "Uronic acid pathway",
+    driveUrl: "",
+    pages: Array.from({length: 1}, (_, i) => `notes/biochem3/Term1/uronic-C/uronic-C_${i+1}.jpg`)
+  },
+  {
+    id: 'bio3-glycogen',
+    name: "Glycogen metabolism",
+    driveUrl: "",
+    pages: Array.from({length: 1}, (_, i) => `notes/biochem3/Term1/glycogen-C/glycogen-C_${i+1}.jpg`)
+  },
+
+
+  // 2nd year physiology
+// Term 1 Document Sections
+{
+  id: 'introduction-to-physiology1',
+  name: "Introduction to Physiology",
+  driveUrl: "",
+  pages: Array.from({length: 1}, (_, i) => `notes/Introduction-to-Physiology/Introduction-to-Physiology_${i+1}.jpg`)
+},
+{
+  id: 'cells-and-its-components1',
+  name: "Cells and its Components",
+  driveUrl: "",
+  pages: Array.from({length: 37}, (_, i) => `notes/Cells-components/cells-components_${i+1}.jpg`)
+},
+{
+  id: 'cells-and-tissues1',
+  name: "Cells and Tissues",
+  driveUrl: "",
+  pages: Array.from({length: 59}, (_, i) => `notes/Cells-tissues/03.cells-and-tissues_${i+1}.jpg`)
+},
+{
+  id: 'membrane-transport1',
+  name: "Membrane Transport",
+  driveUrl: "",
+  pages: Array.from({length: 50}, (_, i) => `notes/Membrane-transport/membrane-transport_${i+1}.jpg`)
+},
+{
+  id: 'smooth-muscle1',
+  name: "Smooth Muscle",
+  driveUrl: "",
+  pages: Array.from({length: 39}, (_, i) => `notes/Smooth-muscle/smooth-musc_${i+1}.jpg`)
+},
+{
+  id: 'skeletal-muscle-tissue1',
+  name: "Skeletal Muscle Tissue",
+  driveUrl: "",
+  pages: Array.from({length: 56}, (_, i) => `notes/Skeletal-muscle-class/05.Muscular-Tissue_${i+1}.jpg`)
+},
+{
+  id: 'cardiac-muscle1',
+  name: "Cardiac Muscle",
+  driveUrl: "",
+  pages: Array.from({length: 37}, (_, i) => `notes/Cardiac-muscle/cardiac-muscle_${i+1}.jpg`)
+},
+{
+  id: 'nerve-tissue1',
+  name: "Nerve Tissue",
+  driveUrl: "",
+  pages: Array.from({length: 41}, (_, i) => `notes/Nerve-tissue/nerves_${i+1}.jpg`)
+},
+{
+  id: 'synapse1',
+  name: "Synapse",
+  driveUrl: "",
+  pages: Array.from({length: 27}, (_, i) => `notes/Synapse/Synapses_${i+1}.jpg`)
+},
+{
+  id: 'action-potential1',
+  name: "Action Potential",
+  driveUrl: "",
+  pages: Array.from({length: 13}, (_, i) => `notes/AP/action-potential_${i+1}.jpg`)
+},
+{
+  id: 'muscle-tissue-disorders1',
+  name: "Muscle Tissue Disorders",
+  driveUrl: "",
+  pages: Array.from({length: 36}, (_, i) => `notes/Muscle-disorders/08.muscular-system-disorders_${i+1}.jpg`)
+},
+{
+  id: 'body-fluids1',
+  name: "Body Fluids",
+  driveUrl: "",
+  pages: Array.from({length: 45}, (_, i) => `notes/Fluids/Body-Fluids_${i+1}.jpg`)
+},
+{
+  id: 'pathophysiology-of-diarrhoea1',
+  name: "Pathophysiology of Diarrhoea",
+  driveUrl: "",
+  pages: Array.from({length: 3}, (_, i) => `notes/Diarrhoea/Diarrhoea_${i+1}.jpg`)
+},
   
   /* ---------- PLACEHOLDER DOCS ---------- */
   { id: 'thigh',           name: "Thigh",                      driveUrl: "", pages: [] },
@@ -646,6 +907,21 @@ const DOCUMENTS = [
    1b) TOPIC GROUPS
    ============================================================ */
 const TOPIC_GROUPS = {
+  'introduction-to-physiology1': ['introduction-to-physiology1'],
+  'cells-and-its-components1':   ['cells-and-its-components1'],
+  'cells-and-tissues1':          ['cells-and-tissues1'],
+  'membrane-transport1':         ['membrane-transport1'],
+  'smooth-muscle1':              ['smooth-muscle1'],
+  'skeletal-muscle-tissue1':     ['skeletal-muscle-tissue1'],
+  'cardiac-muscle1':             ['cardiac-muscle1'],
+  'nerve-tissue1':               ['nerve-tissue1'],
+  'synapse1':                    ['synapse1'],
+  'action-potential1':           ['action-potential1'],
+  'muscle-tissue-disorders1':    ['muscle-tissue-disorders1'],
+  'body-fluids1':                ['body-fluids1'],
+  'pathophysiology-of-diarrhoea1': ['pathophysiology-of-diarrhoea1'],
+
+
 
   'Amino-Acids':        ['Amino-Acids', 'Amino-Acids2'],
   'pelvis-bones':        ['pelvis-bones1', 'pelvis-bones2'],
