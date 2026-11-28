@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histology Introduction – ToToZ Quiz</title>
+    <style>
+        :root {
+            --primary: #1a6b6b;
+            --accent: #2ea8a0;
+            --dark: #0f2a2a;
+            --light: #f4f8f7;
+            --radius: 12px;
+            --shadow: 0 4px 14px rgba(0, 30, 30, 0.08);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #edf3f2;
+            color: var(--dark);
+            min-height: 100vh;
+            padding-top: 72px;
+        }
+        header {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            background: linear-gradient(145deg, var(--primary), var(--dark));
+            color: #fff; padding: 0.6rem 0;
+            box-shadow: 0 4px 18px rgba(0, 20, 20, 0.25);
+        }
+        .header-inner {
+            max-width: 1000px; margin: 0 auto; padding: 0 1.5rem;
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 0.3rem;
+        }
+        .logo { display: flex; align-items: center; gap: 0.6rem; }
+        .logo i { font-size: 1.5rem; color: #8dd9d4; }
+        .logo h1 { font-size: 1.15rem; font-weight: 700; }
+        .badge {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 0.2rem 1rem; border-radius: 40px;
+            font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+            color: #b3e6e0;
+        }
+        .container { max-width: 920px; margin: 0 auto; padding: 0 1.2rem 2.5rem; }
+        .tab-bar { display: flex; gap: 0.5rem; margin: 0.5rem 0 1.5rem 0; flex-wrap: wrap; }
+        .tab-btn {
+            background: #dce8e8; border: none; padding: 0.5rem 1.8rem;
+            border-radius: 40px; font-weight: 600; font-size: 0.95rem;
+            color: var(--dark); cursor: pointer; transition: 0.2s;
+        }
+        .tab-btn:hover { background: #c0d6d6; }
+        .tab-btn.active {
+            background: var(--primary); color: #fff;
+            box-shadow: 0 2px 10px rgba(26, 107, 107, 0.25);
+        }
+        .tab-panel { display: block; }
+        .tab-panel.hidden { display: none; }
+        .section-title {
+            font-size: 1.25rem; font-weight: 700; color: var(--primary);
+            margin: 0 0 0.8rem 0; padding-bottom: 0.4rem;
+            border-bottom: 3px solid rgba(26, 107, 107, 0.18);
+            display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;
+        }
+        .section-title .count {
+            font-size: 0.7rem; font-weight: 600; background: var(--primary);
+            color: #fff; border-radius: 40px; padding: 0 0.7rem; line-height: 1.7;
+        }
+        .section-subtitle { color: #4f6e6e; font-size: 0.9rem; margin-bottom: 1rem; }
+        .refresh-note {
+            background: #e2f0ed; border-radius: 8px; padding: 0.5rem 1rem;
+            font-size: 0.85rem; color: #1a6b6b; margin-bottom: 1rem;
+            border-left: 4px solid var(--accent); display: flex; align-items: center; gap: 0.6rem;
+        }
+        .question {
+            background: #ffffff; border-radius: var(--radius);
+            padding: 1.1rem 1.2rem 0.2rem 1.2rem; margin-bottom: 1rem;
+            box-shadow: var(--shadow); border: 1px solid rgba(26, 107, 107, 0.05);
+        }
+        .question .q-badge {
+            display: inline-block; background: var(--primary); color: #fff;
+            border-radius: 40px; padding: 0 0.65rem; font-size: 0.7rem;
+            font-weight: 700; line-height: 1.6; margin-right: 0.4rem;
+        }
+        .question p { font-weight: 600; font-size: 0.97rem; margin-bottom: 0.4rem; color: var(--dark); }
+        .options label {
+            display: block; background: #fafcfc; border: 1px solid #dde8e8;
+            border-radius: 7px; padding: 0.4rem 0.85rem; margin-top: 0.4rem;
+            cursor: pointer; transition: all 0.15s; font-weight: 450; font-size: 0.92rem;
+        }
+        .options label:hover { background: #e8f5f4; border-color: var(--accent); }
+        .options input[type="radio"] { margin-right: 0.5rem; accent-color: var(--primary); }
+        .question-feedback { margin-top: 0.8rem; padding: 0.4rem 0 0.1rem 0; border-top: 1px dashed #dce6e6; }
+        .answer-block strong { display: block; margin-bottom: 3px; color: var(--primary); font-size: 0.78rem; text-transform: uppercase; }
+        .answer-list { display: flex; flex-direction: column; gap: 2px; }
+        .answer-item {
+            padding: 4px 10px; border-radius: 5px; border: 1px solid #e4edec;
+            background: #ffffff; font-weight: 500; font-size: 0.88rem;
+        }
+        .answer-correct { background: #e8f7ef; border-color: #a8d8c0; color: #0a4f3a; }
+        .answer-wrong { background: #fde9ea; border-color: #f5b8b8; color: #8a1f2b; }
+        .user-choice { outline: 2px dashed rgba(0, 0, 0, 0.06); }
+        .explanation {
+            margin-top: 5px; padding: 8px 13px; border-radius: 7px;
+            background: #f0f8f6; color: #065f4a; font-size: 0.88rem;
+            line-height: 1.55; border-left: 4px solid var(--accent);
+        }
+        .explanation.wrong { background: #fdf1f1; color: #7a1f1f; border-left-color: #e68080; }
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            color: #fff; border: none; padding: 0.55rem 1.8rem;
+            border-radius: var(--radius); font-weight: 600; font-size: 0.95rem;
+            cursor: pointer; transition: transform 0.15s, box-shadow 0.2s;
+            box-shadow: 0 4px 14px rgba(26, 107, 107, 0.25);
+        }
+        .btn:hover { transform: scale(1.02); box-shadow: 0 6px 24px rgba(26, 107, 107, 0.32); }
+        .btn:active { transform: scale(0.96); }
+        .btn-sm {
+            padding: 0.35rem 1.1rem; font-size: 0.82rem;
+            border-radius: 8px; margin-top: 0.5rem;
+        }
+        .submit-wrap { text-align: center; margin: 1.5rem 0 1.8rem; }
+        .result {
+            margin-top: 1.5rem; padding: 1.5rem 1.5rem 0.8rem;
+            background: #eaf6f4; border-radius: var(--radius);
+            text-align: center; display: none; border: 1px solid #b8dbd6;
+        }
+        .result h3 { font-size: 1.1rem; font-weight: 600; color: var(--dark); }
+        .score { font-size: 2.4rem; font-weight: 800; color: var(--primary); margin: 0.1rem 0 0.2rem; }
+        .text-muted { color: #4f6e6e; font-size: 0.9rem; }
+        .hidden { display: none !important; }
+        .essay-answer {
+            margin-top: 0.8rem; padding: 1rem 1.2rem;
+            background: #f0f8f6; border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            font-size: 0.92rem; line-height: 1.6;
+            display: none;
+        }
+        .essay-answer.show { display: block; }
+        .essay-answer h4 { color: var(--primary); margin-bottom: 0.4rem; font-size: 0.95rem; }
+        .essay-answer ul, .essay-answer ol { margin-left: 1.2rem; margin-bottom: 0.5rem; }
+        .essay-answer li { margin-bottom: 0.2rem; }
+        .saq-block {
+            background: #f7fbfa; border-radius: 10px; padding: 1rem 1.2rem;
+            margin-bottom: 1.5rem; border-left: 6px solid var(--primary);
+        }
+        .saq-block .saq-title {
+            font-size: 1.05rem; font-weight: 700; color: var(--primary);
+            margin-bottom: 0.6rem;
+        }
+        .saq-block .saq-text {
+            font-size: 0.93rem; line-height: 1.6; margin-bottom: 0.8rem;
+        }
+        @media (max-width: 700px) {
+            body { padding-top: 68px; }
+            .logo h1 { font-size: 0.95rem; }
+            .header-inner { padding: 0 1rem; flex-direction: column; align-items: stretch; gap: 0.2rem; }
+            .badge { align-self: flex-start; }
+            .question { padding: 0.9rem 0.9rem 0.1rem 0.9rem; }
+            .section-title { font-size: 1.05rem; }
+            .score { font-size: 2rem; }
+            .btn { padding: 0.5rem 1.2rem; font-size: 0.85rem; }
+            .tab-btn { padding: 0.4rem 1.2rem; font-size: 0.85rem; }
+        }
+        @media (max-width: 420px) {
+            .logo h1 { font-size: 0.8rem; }
+            .options label { font-size: 0.85rem; padding: 0.35rem 0.65rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-inner">
+            <div class="logo">
+                <i class="fas fa-microscope"></i>
+                <h1>Histology Introduction –  ToToZ Quiz</h1>
+            </div>
+            <span class="badge"><i class="fas fa-pencil-alt"></i> &nbsp;All Sections</span>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+
+            <div class="refresh-note">
+                <i class="fas fa-sync-alt"></i>
+                <span><strong>Random selection:</strong> Each refresh picks <strong>15 MCQs</strong> and <strong>5 SAQs</strong> from the full reservoir. Reload the page to get a new set.</span>
+            </div>
+
+            <div class="tab-bar">
+                <button class="tab-btn active" data-target="A">✅ Section A – MCQs</button>
+                <button class="tab-btn" data-target="B">📝 Section B – SAQs</button>
+            </div>
+
+            <!-- ==================== SECTION A ==================== -->
+            <div id="panel-A" class="tab-panel">
+                <div class="section-title">
+                    <i class="fas fa-list-ul"></i> Section A – Multiple Choice Questions
+                    <span class="count" id="count-A">0</span>
+                </div>
+                <p class="section-subtitle">Circle the most appropriate answer. Select an option for each question, then click <strong>Submit All MCQs</strong> below.</p>
+                <form id="form-A">
+                    <div id="container-A"></div>
+                    <div class="submit-wrap">
+                        <button type="button" class="btn" onclick="submitSectionA()">
+                            <i class="fas fa-check-circle"></i> Submit All MCQs
+                        </button>
+                    </div>
+                </form>
+                <div class="result" id="result-A">
+                    <h3><i class="fas fa-chart-simple"></i> Your Score</h3>
+                    <div class="score" id="score-A">0</div>
+                    <p class="text-muted">Review the feedback below each question.</p>
+                </div>
+            </div>
+
+            <!-- ==================== SECTION B ==================== -->
+            <div id="panel-B" class="tab-panel hidden">
+                <div class="section-title">
+                    <i class="fas fa-pen-fancy"></i> Section B – Short Answer Questions
+                    <span class="count" id="count-B">0</span>
+                </div>
+                <p class="section-subtitle">Answer ALL questions. Click <strong>Show Answer</strong> to reveal the model answer for each question.</p>
+                <div id="container-B"></div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+    /* =====================================================================
+       FULL RESERVOIR — SECTION A (50 MCQs, each with 5 options & paragraph explanations)
+       ===================================================================== */
+    const sectionAPool = [
+        {
+            q: `Histology is best defined as the study of:`,
+            options: [
+                `The chemical reactions within cells`,
+                `The tissues of the body and how they are arranged to constitute organs`,
+                `The electrical activity of the nervous system`,
+                `The structure and function of individual organelles`,
+                `The classification of living organisms`
+            ],
+            correct: `B`,
+            explanation: `Histology (from Greek "histos" = tissue, "logos" = study) is the branch of biology concerned with the microscopic study of the tissues of the body and how they are arranged to constitute organs. It focuses on the structure and function of tissues at the microscopic level, using techniques such as light and electron microscopy, staining, and sectioning. Option A describes biochemistry, option C neurophysiology, option D cell biology (cytology), and option E taxonomy. Histology specifically examines how cells and extracellular matrix are organized into tissues and organs.`
+        },
+        {
+            q: `Which of the following correctly describes the two interacting components of tissues?`,
+            options: [
+                `Organs and organ systems`,
+                `Cells and extracellular matrix (ECM)`,
+                `Collagen fibrils and elastin fibers`,
+                `Nuclei and cytoplasm`,
+                `Epithelial and connective tissues`
+            ],
+            correct: `B`,
+            explanation: `Tissues are composed of two interacting components: cells and the extracellular matrix (ECM). The cells are the functional units, while the ECM is the non-cellular material that surrounds the cells, providing structural support, facilitating nutrient transport, and influencing cell behavior. The interaction between cells and ECM is essential for tissue organization and function. Organs and organ systems (option A) are higher levels of organization; collagen and elastin (option C) are components of the ECM; nuclei and cytoplasm (option D) are parts of individual cells; and epithelial and connective tissues (option E) are types of tissues, not the two components of a tissue.`
+        },
+        {
+            q: `What is the primary role of the extracellular matrix (ECM) in tissues?`,
+            options: [
+                `It generates ATP for cellular processes`,
+                `It supports the cells and contains fluid that transports nutrients and carries away wastes`,
+                `It initiates cell division`,
+                `It produces enzymes for digestion`,
+                `It forms the plasma membrane of cells`
+            ],
+            correct: `B`,
+            explanation: `The extracellular matrix (ECM) is the non-cellular component of tissues. Its primary roles include providing structural support for cells (via protein fibers like collagen and elastin), containing fluid that transports nutrients to and carries wastes away from cells, and regulating cell behavior through signaling molecules. The ECM is essential for tissue organization and function. ATP generation (option A) occurs in mitochondria, cell division (option C) is regulated by intracellular signals, enzyme production for digestion (option D) is a function of glandular cells, and the plasma membrane (option E) is a cellular structure, not part of the ECM.`
+        },
+        {
+            q: `Which of the following is NOT one of the four major tissue types found in the adult body?`,
+            options: [
+                `Epithelial tissue`,
+                `Connective tissue`,
+                `Muscle tissue`,
+                `Nervous tissue`,
+                `Adipose tissue`
+            ],
+            correct: `E`,
+            explanation: `The four major tissue types found in the adult body are epithelial tissue, connective tissue, muscle tissue, and nervous tissue. Adipose tissue (fat tissue) is a specialized type of connective tissue, not a separate major tissue type. It is classified as connective tissue proper (loose connective tissue). The four major types are distinguished by their structure, function, and embryonic origin. Epithelial tissue covers and lines, connective tissue supports and connects, muscle tissue contracts, and nervous tissue conducts impulses.`
+        },
+        {
+            q: `Why is histology described as the "bridge between structure and function"?`,
+            options: [
+                `Because histological techniques are used in both anatomy and physiology`,
+                `Because it is at the microscopic level that we begin to see how an organ actually performs its functions`,
+                `Because it connects the study of cells to the study of organ systems`,
+                `Because it requires knowledge of both chemistry and biology`,
+                `Because it uses both light and electron microscopy`
+            ],
+            correct: `B`,
+            explanation: `Histology is described as the "bridge between structure and function" because it is at the microscopic level that we begin to see how an organ actually performs its functions. The arrangement of cells, the types of tissues present, and the organization of the ECM directly relate to the organ's physiological role. For example, the microscopic structure of the lung (thin alveolar walls, extensive capillary network) reveals how gas exchange occurs. Option A is too broad, option C refers to the hierarchy of organization, option D is a general statement, and option E describes techniques rather than the conceptual bridge.`
+        },
+        {
+            q: `A blood smear is an example of a specimen that may be examined with what as the only form of preparation?`,
+            options: [
+                `Fixation`,
+                `Dehydration`,
+                `Clearing`,
+                `Staining`,
+                `Embedding`
+            ],
+            correct: `D`,
+            explanation: `A blood smear is a special case in histology. Because blood is a fluid suspension of cells, it can be spread directly onto a glass slide, air-dried, and stained—without the need for fixation, dehydration, clearing, embedding, or sectioning. Staining is the only preparation step required (e.g., with Giemsa-Wright stain). This simplicity makes blood smears a rapid and valuable diagnostic tool. Solid tissue specimens, in contrast, require the full sequence of preparation (fixation, dehydration, clearing, embedding, sectioning, and staining) to be examined microscopically.`
+        },
+        {
+            q: `Which of the following is the correct order of the steps involved in preparing most histological specimens?`,
+            options: [
+                `Fixation → Dehydration → Clearing → Infiltration & Embedding → Sectioning → Mounting → Staining`,
+                `Fixation → Clearing → Dehydration → Embedding → Sectioning → Staining → Mounting`,
+                `Dehydration → Fixation → Clearing → Sectioning → Embedding → Mounting → Staining`,
+                `Fixation → Embedding → Dehydration → Clearing → Sectioning → Staining → Mounting`,
+                `Staining → Fixation → Dehydration → Clearing → Embedding → Sectioning → Mounting`
+            ],
+            correct: `A`,
+            explanation: `The correct sequence for preparing most histological specimens is: (1) Fixation—preserve tissue structure; (2) Dehydration—remove water using increasing alcohol concentrations; (3) Clearing—replace alcohol with a solvent miscible with paraffin (e.g., xylene); (4) Infiltration & Embedding—infiltrate with liquid paraffin and harden into a block; (5) Sectioning—cut thin slices with a microtome; (6) Mounting—attach sections to a glass slide; (7) Staining—colorize the tissue for microscopic examination. Option A is the only sequence that correctly follows this logical progression.`
+        },
+        {
+            q: `What is the primary purpose of fixation in tissue preparation?`,
+            options: [
+                `To make the specimen transparent`,
+                `To preserve tissue structure and prevent degradation by enzymes`,
+                `To remove water from the specimen`,
+                `To colorize the tissue for microscopic examination`,
+                `To harden the specimen for sectioning`
+            ],
+            correct: `B`,
+            explanation: `Fixation is the first and critical step in tissue preparation. Its primary purpose is to preserve tissue structure and prevent degradation by enzymes (autolysis) and microorganisms. Fixatives chemically cross-link proteins, stabilizing cellular architecture and making it resistant to subsequent processing steps. Making the specimen transparent (option A) is the purpose of clearing; removing water (option C) is dehydration; colorizing (option D) is staining; and hardening for sectioning (option E) is achieved by embedding. Fixation preserves the tissue's in vivo structure as closely as possible.`
+        },
+        {
+            q: `Which of the following is a widely used fixative for light microscopy?`,
+            options: [
+                `Xylene`,
+                `Paraffin`,
+                `Formalin`,
+                `Ethanol`,
+                `Eosin`
+            ],
+            correct: `C`,
+            explanation: `Formalin is a widely used fixative for light microscopy. It is a buffered isotonic solution of formaldehyde (typically 10% formalin, which is 4% formaldehyde). Formalin penetrates tissues rapidly and cross-links proteins via their amine groups, preserving tissue structure. Xylene (option A) is a clearing agent; paraffin (option B) is an embedding medium; ethanol (option D) is used for dehydration; and eosin (option E) is a stain. Formalin's popularity stems from its effectiveness, low cost, and compatibility with most staining procedures.`
+        },
+        {
+            q: `Formalin is a buffered isotonic solution of what concentration of formaldehyde?`,
+            options: [
+                `10%`,
+                `25%`,
+                `37%`,
+                `50%`,
+                `70%`
+            ],
+            correct: `C`,
+            explanation: `Formalin is a buffered isotonic solution of 37% formaldehyde (the saturated aqueous solution of formaldehyde gas, known as formalin). However, it is typically used as a 10% solution, which means 10% of the 37% stock solution, resulting in approximately 4% formaldehyde in the final working solution. The question asks for the concentration of formaldehyde in the stock solution used to make formalin, which is 37%. This 37% stock is diluted to 10% for routine use. The other percentages are incorrect.`
+        },
+        {
+            q: `How do fixatives such as formalin and glutaraldehyde prevent protein degradation?`,
+            options: [
+                `By dissolving proteins completely`,
+                `By reacting with the amine groups (NH₂) of proteins`,
+                `By freezing the proteins in place`,
+                `By removing all water from the tissue`,
+                `By coating the proteins with a protective layer`
+            ],
+            correct: `B`,
+            explanation: `Fixatives such as formalin and glutaraldehyde work by reacting with the amine groups (NH₂) of proteins, forming cross-links between protein molecules. This chemical cross-linking stabilizes the proteins and prevents them from being degraded by enzymes (autolysis) or microorganisms. Formalin forms methylene bridges, while glutaraldehyde forms longer cross-links. This preserves the tissue's structural integrity. Dissolving proteins (option A) would destroy structure; freezing (option C) is a physical preservation method, not chemical fixation; removing water (option D) is dehydration; and coating (option E) is not how fixatives work.`
+        },
+        {
+            q: `What is the purpose of dehydration in tissue preparation?`,
+            options: [
+                `To preserve tissue structure`,
+                `To make the specimen transparent`,
+                `To remove water from the specimen using successively more concentrated alcohol solutions`,
+                `To infiltrate the tissue with paraffin`,
+                `To colorize the tissue`
+            ],
+            correct: `C`,
+            explanation: `Dehydration is the process of removing water from the tissue specimen. This is achieved by passing the specimen through a graded series of alcohol solutions (e.g., 50%, 70%, 90%, 100% ethanol), with each step gradually replacing water with alcohol. Dehydration is necessary because the subsequent clearing agent (e.g., xylene) is not miscible with water, and the embedding medium (paraffin) is not miscible with alcohol or water. Preserving tissue structure (option A) is fixation; making transparent (option B) is clearing; infiltrating with paraffin (option D) is embedding; and colorizing (option E) is staining.`
+        },
+        {
+            q: `Why is dehydration necessary before clearing with xylene?`,
+            options: [
+                `Because xylene is miscible with alcohol but not with water`,
+                `Because xylene reacts chemically with water to form crystals`,
+                `Because water prevents the tissue from being sectioned`,
+                `Because alcohol is needed to stain the tissue`,
+                `Because water would dissolve the paraffin`
+            ],
+            correct: `A`,
+            explanation: `Dehydration is necessary before clearing because xylene (the clearing agent) is miscible with alcohol but not with water. If water were present, xylene would not penetrate the tissue effectively, and the subsequent paraffin embedding would fail. By first replacing water with alcohol (dehydration) and then replacing alcohol with xylene (clearing), the tissue becomes fully infiltrated with a solvent that is miscible with paraffin. This ensures proper embedding and sectioning. Xylene does not react chemically with water (option B), water does not prevent sectioning in the way described (option C), alcohol is not needed for staining (option D), and water does not dissolve paraffin (option E—paraffin is hydrophobic).`
+        },
+        {
+            q: `What is the purpose of clearing in tissue preparation?`,
+            options: [
+                `To remove alcohol from the specimen`,
+                `To make the specimen transparent by replacing ethanol with an organic solvent`,
+                `To fix the tissue`,
+                `To stain the tissue`,
+                `To embed the tissue in paraffin`
+            ],
+            correct: `B`,
+            explanation: `Clearing is the process of replacing the dehydrating agent (alcohol) with an organic solvent that is miscible with both alcohol and the embedding medium (paraffin). This makes the specimen transparent (hence "clearing") because the refractive index of the solvent is closer to that of the tissue. Common clearing agents include xylene, toluene, and chloroform. Removing alcohol (option A) is part of the process but not the primary purpose; fixing (option C) is a prior step; staining (option D) is a later step; and embedding (option E) follows clearing. The transparency achieved also aids in verifying that infiltration is complete.`
+        },
+        {
+            q: `Which reagent is commonly used for clearing in tissue preparation?`,
+            options: [
+                `Formalin`,
+                `Ethanol`,
+                `Xylene`,
+                `Paraffin`,
+                `Hematoxylin`
+            ],
+            correct: `C`,
+            explanation: `Xylene is a commonly used clearing agent in tissue preparation. It is miscible with both alcohol and paraffin, making it ideal for transitioning the tissue from the dehydration step to the embedding step. Xylene replaces the alcohol in the tissue, making the specimen transparent. Formalin (option A) is a fixative; ethanol (option B) is a dehydrating agent; paraffin (option D) is an embedding medium; and hematoxylin (option E) is a stain. Other clearing agents include toluene and chloroform, but xylene is the most widely used.`
+        },
+        {
+            q: `Why is paraffin insoluble in water and alcohol but soluble in xylene?`,
+            options: [
+                `This property makes dehydration and clearing steps necessary before embedding`,
+                `This property allows paraffin to stain the tissue`,
+                `This property prevents the tissue from degrading`,
+                `This property makes paraffin a good fixative`,
+                `This property allows paraffin to be used as a clearing agent`
+            ],
+            correct: `A`,
+            explanation: `Paraffin is a hydrophobic (nonpolar) substance that is insoluble in water and alcohol but soluble in organic solvents like xylene. This property is precisely why dehydration (removing water with alcohol) and clearing (replacing alcohol with xylene) are necessary before embedding—so that the paraffin can infiltrate the tissue completely. If water or alcohol remained, paraffin would not penetrate, and embedding would be unsuccessful. Paraffin is not a stain (option B), does not prevent degradation (option C—fixation does that), is not a fixative (option D), and is not a clearing agent (option E—it is the embedding medium).`
+        },
+        {
+            q: `At what temperature is the specimen infiltrated with liquid paraffin during embedding?`,
+            options: [
+                `37°–40°C`,
+                `42°–48°C`,
+                `52°–60°C`,
+                `62°–70°C`,
+                `72°–80°C`
+            ],
+            correct: `C`,
+            explanation: `During embedding, the specimen is infiltrated with liquid paraffin at a temperature of approximately 52°–60°C. At this temperature, paraffin melts and becomes liquid, allowing it to penetrate the tissue. The temperature must be carefully controlled: too low, and the paraffin is too viscous to infiltrate properly; too high, and it may damage the tissue. After infiltration, the paraffin is allowed to cool and harden, forming a solid block that can be sectioned. The other temperature ranges are either too low for proper infiltration or too high for tissue preservation.`
+        },
+        {
+            q: `What is a microtome used for?`,
+            options: [
+                `Staining tissue sections`,
+                `Fixing tissue specimens`,
+                `Sectioning hardened tissue blocks into thin slices`,
+                `Embedding tissue in paraffin`,
+                `Dehydrating tissue specimens`
+            ],
+            correct: `C`,
+            explanation: `A microtome is a precision instrument used to cut hardened tissue blocks (typically embedded in paraffin) into extremely thin, uniform slices called sections. These sections are usually 5–10 µm thick and are mounted on glass slides for microscopic examination. The microtome allows for reproducible, serial sectioning, which is essential for detailed histological analysis. Staining (option A) is done after sectioning; fixation (option B) is a prior step; embedding (option D) precedes sectioning; and dehydration (option E) is also a prior step. The microtome is the key tool for producing sections.`
+        },
+        {
+            q: `What is the usual thickness of tissue sections cut by a microtome?`,
+            options: [
+                `1–2 µm`,
+                `5–10 µm`,
+                `15–20 µm`,
+                `25–30 µm`,
+                `50–100 µm`
+            ],
+            correct: `B`,
+            explanation: `The usual thickness of tissue sections cut by a microtome for light microscopy is 5–10 µm. This thickness allows sufficient light to pass through for microscopic examination while preserving the tissue's structural integrity. Sections thinner than 1–2 µm are typically used for electron microscopy (ultrathin sections). Sections thicker than 10 µm may be too thick for optimal light penetration and resolution. The 5–10 µm range is the standard for routine histological preparations, balancing clarity and structural preservation.`
+        },
+        {
+            q: `Why must most tissue sections be stained before microscopic examination?`,
+            options: [
+                `Because staining preserves the tissue structure`,
+                `Because most cells and extracellular material are completely colorless`,
+                `Because staining hardens the tissue for sectioning`,
+                `Because staining removes the paraffin`,
+                `Because staining prevents degradation by enzymes`
+            ],
+            correct: `B`,
+            explanation: `Most tissue sections must be stained before microscopic examination because cells and extracellular material are naturally colorless and transparent. Without staining, there is insufficient contrast to distinguish different tissue components under the microscope. Stains selectively bind to specific cellular structures (e.g., nuclei, cytoplasm, collagen), imparting color and making them visible. Staining does not preserve structure (option A—fixation does), harden tissue (option C—embedding does), remove paraffin (option D—deparaffinization does), or prevent degradation (option E—fixation does). Staining is purely for visualization and contrast enhancement.`
+        },
+        {
+            q: `Acidic stains colorize which type of cellular structures?`,
+            options: [
+                `Acidic structures`,
+                `Basic (alkaline; positively-charged) structures`,
+                `Neutral structures`,
+                `Lipid-rich structures`,
+                `Carbohydrate-rich structures`
+            ],
+            correct: `B`,
+            explanation: `Acidic stains (anionic dyes) carry a net negative charge and therefore bind to positively charged (basic/alkaline) structures in the cell. These positively charged structures are called acidophilic (acid-loving) because they have an affinity for acidic dyes. Examples of acidophilic structures include the cytoplasm (rich in proteins with ionized amino groups), collagen fibers, and red blood cells. Acidic stains include eosin, orange G, and acid fuchsin. Acidic structures (option A) would repel acidic stains; neutral structures (option C) have no net charge; and lipid-rich (option D) and carbohydrate-rich (option E) structures are not defined by their staining with acidic dyes.`
+        },
+        {
+            q: `Basic stains are used to colorize which type of cellular structures?`,
+            options: [
+                `Basic structures`,
+                `Acidic cellular structures`,
+                `Neutral structures`,
+                `Lipid-rich structures`,
+                `Protein-rich structures`
+            ],
+            correct: `B`,
+            explanation: `Basic stains (cationic dyes) carry a net positive charge and therefore bind to negatively charged (acidic) structures in the cell. These negatively charged structures are called basophilic (base-loving) because they have an affinity for basic dyes. Examples of basophilic structures include nucleic acids (DNA and RNA), which are rich in phosphate groups, and the rough endoplasmic reticulum (rich in RNA). Basic stains include hematoxylin, toluidine blue, and methylene blue. Basic structures (option A) would repel basic stains; neutral structures (option C) have no net charge; and lipid-rich (option D) and protein-rich (option E—though some proteins are acidic) are not the defining categories.`
+        },
+        {
+            q: `Cell components such as nucleic acids with a net negative charge (anionic) have an affinity for which type of dye?`,
+            options: [
+                `Acidic dyes`,
+                `Basic dyes`,
+                `Neutral dyes`,
+                `Lipid-soluble dyes`,
+                `Fluorescent dyes`
+            ],
+            correct: `B`,
+            explanation: `Nucleic acids (DNA and RNA) are anionic (negatively charged) due to their phosphate groups. Because they carry a net negative charge, they have an affinity for positively charged (cationic) basic dyes. This is why nucleic acids are basophilic—they stain with basic dyes such as hematoxylin, toluidine blue, and methylene blue. Acidic dyes (option A) would repel the negatively charged nucleic acids. Neutral dyes (option C) have no net charge; lipid-soluble dyes (option D) dissolve in lipids; and fluorescent dyes (option E) emit light upon excitation. The charge-based interaction is the key principle: opposites attract.`
+        },
+        {
+            q: `Cationic components, such as proteins with many ionized amino groups, stain more readily with which type of dye?`,
+            options: [
+                `Basic dyes`,
+                `Acidic dyes`,
+                `Neutral dyes`,
+                `Fluorescent dyes`,
+                `Radioactive dyes`
+            ],
+            correct: `B`,
+            explanation: `Cationic components (positively charged) are acidophilic—they have an affinity for acidic (anionic) dyes. Proteins with many ionized amino groups (e.g., lysine and arginine residues) carry a net positive charge and therefore stain readily with acidic dyes such as eosin, orange G, and acid fuchsin. Basic dyes (option A) would repel these positively charged structures. Neutral dyes (option C) have no net charge; fluorescent dyes (option D) are used for fluorescence microscopy; and radioactive dyes (option E) are not used for routine histology. The rule is: cationic structures stain with anionic (acidic) dyes.`
+        },
+        {
+            q: `Which of the following is an example of a basic dye?`,
+            options: [
+                `Eosin`,
+                `Orange G`,
+                `Acid fuchsin`,
+                `Toluidine blue`,
+                `Sudan black B`
+            ],
+            correct: `D`,
+            explanation: `Toluidine blue is a basic (cationic) dye, meaning it carries a positive charge and binds to negatively charged (basophilic) structures such as nucleic acids. Eosin (option A), orange G (option B), and acid fuchsin (option C) are all acidic (anionic) dyes that bind to positively charged (acidophilic) structures. Sudan black B (option E) is a lipid-soluble dye used to stain lipids. Basic dyes include hematoxylin (behaves as a basic dye), methylene blue, toluidine blue, and azure B.`
+        },
+        {
+            q: `Which of the following is an example of an acidic dye?`,
+            options: [
+                `Toluidine blue`,
+                `Alcian blue`,
+                `Methylene blue`,
+                `Hematoxylin`,
+                `Eosin`
+            ],
+            correct: `E`,
+            explanation: `Eosin is a classic acidic (anionic) dye that carries a negative charge and binds to positively charged (acidophilic) structures such as proteins in the cytoplasm, collagen, and red blood cells, staining them pink. Toluidine blue (option A), alcian blue (option B), methylene blue (option C), and hematoxylin (option D) are all basic (cationic) dyes that bind to negatively charged (basophilic) structures such as nucleic acids. Eosin is one of the most widely used acidic dyes, commonly paired with hematoxylin in the H&E stain.`
+        },
+        {
+            q: `Why do nucleic acids (DNA and RNA) stain with basic dyes?`,
+            options: [
+                `Because they contain acids in their composition that ionize and react with basic dyes`,
+                `Because they are positively charged`,
+                `Because they are lipids`,
+                `Because they contain large amounts of protein`,
+                `Because they are located in the cytoplasm`
+            ],
+            correct: `A`,
+            explanation: `Nucleic acids (DNA and RNA) contain phosphate groups in their sugar-phosphate backbone. These phosphate groups are acidic and ionize to carry a net negative charge (anionic). This negative charge gives nucleic acids an affinity for positively charged basic dyes (cationic dyes), making them basophilic. This is why DNA in the nucleus stains dark purple with hematoxylin (a basic dye). Nucleic acids are not positively charged (option B—they are negatively charged), are not lipids (option C), do not primarily stain because of protein content (option D—though some proteins are associated with nucleic acids), and are found in both the nucleus and cytoplasm (option E—DNA in nucleus, RNA in both).`
+        },
+        {
+            q: `Hematoxylin behaves like a basic dye and stains which tissue components?`,
+            options: [
+                `Acidophilic components`,
+                `Basophilic tissue components`,
+                `Lipid components`,
+                `Carbohydrate components`,
+                `Collagen fibers`
+            ],
+            correct: `B`,
+            explanation: `Hematoxylin behaves like a basic dye (though technically it is a natural dye that requires a mordant, typically aluminum salts, to become cationic). It stains basophilic tissue components—those that are negatively charged and have an affinity for basic dyes. These include nucleic acids (DNA and RNA) in the nucleus and ribosomes, which appear purplish-blue. Acidophilic components (option A) would be stained by acidic dyes like eosin. Lipid components (option C) are stained by lipid-soluble dyes like Sudan black or osmium tetroxide. Carbohydrate components (option D) are stained by PAS. Collagen fibers (option E) are acidophilic and stain pink with eosin.`
+        },
+        {
+            q: `What is the color of the staining produced by hematoxylin on acidic structures?`,
+            options: [
+                `Pink`,
+                `Red`,
+                `Purplish blue`,
+                `Green`,
+                `Yellow`
+            ],
+            correct: `C`,
+            explanation: `Hematoxylin stains acidic (basophilic) structures such as nucleic acids a purplish-blue color. This is why nuclei, which are rich in DNA, appear purplish-blue in H&E-stained sections. The color results from the binding of the hematoxylin-mordant complex to the negatively charged phosphate groups of nucleic acids. Pink (option A) and red (option B) are colors produced by acidic dyes like eosin on acidophilic structures. Green (option D) and yellow (option E) are not typical colors produced by hematoxylin. The purplish-blue color of hematoxylin is a hallmark of basophilic structures.`
+        },
+        {
+            q: `Eosin is an acidic stain that makes which regions of the cell pink?`,
+            options: [
+                `Acidic regions`,
+                `Basic regions`,
+                `Neutral regions`,
+                `Lipid regions`,
+                `Carbohydrate regions`
+            ],
+            correct: `B`,
+            explanation: `Eosin is an acidic (anionic) dye that carries a negative charge and binds to positively charged (basic/acidophilic) regions of the cell, staining them pink. These regions include the cytoplasm (rich in proteins with ionized amino groups), collagen fibers, and red blood cells. Basic regions (option B) is the correct answer because these regions are positively charged and attract the negatively charged eosin. Acidic regions (option A) would repel eosin. Neutral (option C), lipid (option D), and carbohydrate (option E) regions are not the primary targets of eosin staining. The pink color of eosin on basic (acidophilic) structures complements the purplish-blue of hematoxylin on acidic (basophilic) structures.`
+        },
+        {
+            q: `In the H&E stain, what color do collagen fibers appear?`,
+            options: [
+                `Purplish blue`,
+                `Pink`,
+                `Green`,
+                `Yellow`,
+                `Black`
+            ],
+            correct: `B`,
+            explanation: `In the H&E (hematoxylin and eosin) stain, collagen fibers appear pink. Collagen is an acidophilic (positively charged) protein that binds the acidic dye eosin, which stains it pink. Hematoxylin stains basophilic structures (nuclei) purplish-blue, while eosin stains acidophilic structures (cytoplasm, collagen, red blood cells) pink. This contrast between purplish-blue nuclei and pink cytoplasm/collagen is the basis of the H&E stain's widespread use. Purplish blue (option A) is the color of nuclei stained by hematoxylin; green (option C) is seen with Masson's trichrome; yellow (option D) and black (option E) are not typical H&E colors for collagen.`
+        },
+        {
+            q: `Which stain is used for staining blood and bone marrow smears?`,
+            options: [
+                `H&E`,
+                `PAS`,
+                `Giemsa-Wright stain`,
+                `Masson's trichrome`,
+                `Silver stain`
+            ],
+            correct: `C`,
+            explanation: `The Giemsa-Wright stain is specifically used for staining blood and bone marrow smears. It is a Romanowsky-type stain that combines Giemsa and Wright stains, allowing differentiation of various blood cell types. Nuclei stain dark purple, cytoplasm stains light blue, and cytoplasmic granules stain specific colors depending on the cell type (e.g., eosinophilic granules stain orange-red, basophilic granules stain dark blue). H&E (option A) is for general tissue sections; PAS (option B) stains carbohydrates; Masson's trichrome (option D) distinguishes collagen from muscle; and silver stain (option E) highlights reticular fibers and neuronal processes.`
+        },
+        {
+            q: `In the Giemsa-Wright stain, what color are nuclei stained?`,
+            options: [
+                `Light blue`,
+                `Pink`,
+                `Dark purple`,
+                `Green`,
+                `Black`
+            ],
+            correct: `C`,
+            explanation: `In the Giemsa-Wright stain, nuclei are stained dark purple. This is because the stain contains basic dyes (like methylene blue and azure B) that bind to the negatively charged nucleic acids (DNA and RNA) in the nucleus, producing a dark purple color. The cytoplasm typically stains light blue, and specific granules stain characteristic colors (e.g., orange-red for eosinophils, dark blue for basophils). Light blue (option A) is the typical cytoplasmic color; pink (option B) is not the nuclear color in this stain; green (option D) and black (option E) are not typical nuclear colors.`
+        },
+        {
+            q: `Which stain colors complex carbohydrates red (magenta)?`,
+            options: [
+                `Hematoxylin`,
+                `Eosin`,
+                `Periodic acid-Schiff (PAS)`,
+                `Masson's trichrome`,
+                `Silver stain`
+            ],
+            correct: `C`,
+            explanation: `The Periodic acid-Schiff (PAS) stain colors complex carbohydrates (glycogen, mucin, glycoproteins, and glycolipids) red or magenta. The periodic acid oxidizes vicinal diols in carbohydrates to aldehydes, which then react with Schiff reagent to produce the magenta color. This stain is widely used to demonstrate glycogen, brush borders, mucin in goblet cells, and basement membranes. Hematoxylin (option A) stains nuclei purplish-blue; eosin (option B) stains cytoplasm pink; Masson's trichrome (option D) stains collagen green or blue and cytoplasm red; and silver stain (option E) stains reticular fibers black.`
+        },
+        {
+            q: `What does a PAS-positive result indicate?`,
+            options: [
+                `The presence of lipids`,
+                `The presence of complex carbohydrates`,
+                `The presence of proteins`,
+                `The presence of nucleic acids`,
+                `The presence of collagen`
+            ],
+            correct: `B`,
+            explanation: `A PAS-positive (Periodic acid-Schiff positive) result indicates the presence of complex carbohydrates—specifically glycogen, mucins, glycoproteins, and glycolipids. The periodic acid oxidizes carbohydrate residues to aldehydes, which react with Schiff reagent to produce a magenta color. Tissues or structures that stain magenta are described as PAS-positive. Lipids (option A) are stained by lipid-soluble dyes like Sudan black or osmium; proteins (option C) are stained by acidic dyes like eosin; nucleic acids (option D) are stained by basic dyes like hematoxylin; and collagen (option E) is stained by Masson's trichrome (green/blue) or eosin (pink).`
+        },
+        {
+            q: `Which of the following structures is PAS-positive?`,
+            options: [
+                `Collagen fibers`,
+                `Nuclei`,
+                `Glycogen, brush borders, and mucin in goblet cells`,
+                `Mitochondria`,
+                `Erythrocytes`
+            ],
+            correct: `C`,
+            explanation: `Glycogen, brush borders (rich in glycoproteins), and mucin in goblet cells are all PAS-positive structures because they contain complex carbohydrates. The PAS stain specifically detects carbohydrate-rich substances, coloring them magenta. Collagen fibers (option A) are primarily protein and are not PAS-positive (they stain with eosin or Masson's trichrome). Nuclei (option B) are rich in nucleic acids and stain with basic dyes like hematoxylin, not PAS. Mitochondria (option D) contain proteins and lipids, not significant carbohydrates. Erythrocytes (option E) contain hemoglobin (protein) and are not PAS-positive.`
+        },
+        {
+            q: `Which stain is used for staining delicate structures such as reticular fibers and neuronal processes?`,
+            options: [
+                `PAS`,
+                `Silver stain`,
+                `Masson's trichrome`,
+                `H&E`,
+                `Congo red`
+            ],
+            correct: `B`,
+            explanation: `Silver stains (e.g., the Dafano silver method) are used to demonstrate delicate structures such as reticular fibers and neuronal processes. Reticular fibers are argyrophilic (silver-loving) and reduce silver ions to metallic silver, appearing black. Neuronal processes (axons and dendrites) can also be visualized with silver stains. PAS (option A) stains carbohydrates; Masson's trichrome (option C) distinguishes collagen from muscle; H&E (option D) is a general stain; and Congo red (option E) stains amyloid. Silver staining is particularly valuable for highlighting fine, delicate structures that are not well-visualized with routine stains.`
+        },
+        {
+            q: `Trypan blue stains which type of cells blue when they engulf the dye?`,
+            options: [
+                `Red blood cells`,
+                `Phagocytic cells`,
+                `Neurons`,
+                `Muscle cells`,
+                `Epithelial cells`
+            ],
+            correct: `B`,
+            explanation: `Trypan blue is a vital dye that is taken up by phagocytic cells (such as macrophages) that engulf the dye by phagocytosis, staining them blue. Live cells with intact membranes exclude the dye, while dead cells take it up. This property makes trypan blue useful for assessing cell viability (dead cells stain blue) and for identifying phagocytic cells. Red blood cells (option A), neurons (option C), muscle cells (option D), and epithelial cells (option E) are not typically stained by trypan blue unless they are dead or have compromised membranes.`
+        },
+        {
+            q: `Which stain results in three colors: basophilic structures dark blue, collagen green or light blue, and cytoplasm, keratin, muscle, and erythrocytes red?`,
+            options: [
+                `H&E`,
+                `Masson's trichrome`,
+                `PAS`,
+                `Giemsa-Wright`,
+                `Azan`
+            ],
+            correct: `B`,
+            explanation: `Masson's trichrome stain is a three-color staining technique that produces: basophilic structures (nuclei) dark blue (or black), collagen fibers green or light blue, and cytoplasm, keratin, muscle, and erythrocytes red. This stain is particularly useful for distinguishing collagen from smooth muscle (e.g., in liver cirrhosis, where collagen appears blue/green and hepatocytes red). H&E (option A) gives only two main colors (purplish-blue nuclei, pink cytoplasm); PAS (option C) stains carbohydrates magenta; Giemsa-Wright (option D) is for blood smears; and Azan (option E) also gives three colors but with different color assignments (nuclei red, collagen blue, muscle red).`
+        },
+        {
+            q: `What color does osmium stain lipids?`,
+            options: [
+                `Red`,
+                `Blue`,
+                `Dark brown`,
+                `Green`,
+                `Yellow`
+            ],
+            correct: `C`,
+            explanation: `Osmium tetroxide (osmium) is a lipid-soluble stain that specifically stains lipids dark brown (or black). It works by binding to the double bonds of unsaturated fatty acids in lipids. Osmium is particularly useful in electron microscopy as a fixative and stain for membranes (which are lipid-rich). In light microscopy, osmium staining appears dark brown/black in lipid droplets and myelin. Red (option A), blue (option B), green (option D), and yellow (option E) are not the colors produced by osmium on lipids.`
+        },
+        {
+            q: `Which stain is typically used as a bacterial stain and can also stain neuronal Nissl bodies purple?`,
+            options: [
+                `Cresyl violet`,
+                `Azure B`,
+                `Feulgen stain`,
+                `Dafano silver method`,
+                `Iron hematoxylin`
+            ],
+            correct: `B`,
+            explanation: `Azure B is a basic dye that is typically used as a bacterial stain (staining bacteria blue/purple) and can also stain neuronal Nissl bodies purple. Nissl bodies are rough endoplasmic reticulum rich in RNA, which is basophilic and binds basic dyes. Azure B is a component of the Giemsa stain and is also used in histology for staining RNA and bacteria. Cresyl violet (option A) also stains Nissl bodies but is more commonly used for that purpose; Feulgen (option C) is specific for DNA; Dafano silver (option D) stains reticular fibers and neuronal processes; and iron hematoxylin (option E) is a general nuclear stain.`
+        },
+        {
+            q: `In the Feulgen stain, what color is DNA stained?`,
+            options: [
+                `Blue-green`,
+                `Reddish violet`,
+                `Dark brown`,
+                `Black`,
+                `Yellow`
+            ],
+            correct: `B`,
+            explanation: `In the Feulgen stain, DNA is stained reddish violet (magenta). The Feulgen reaction involves acid hydrolysis of DNA, which exposes aldehyde groups on the deoxyribose sugar. These aldehydes then react with Schiff reagent to produce a reddish-violet color specifically at sites of DNA. This stain is highly specific for DNA and is used for quantitative DNA analysis (e.g., in breast carcinoma tissue, where DNA appears reddish violet and the background is light green). Blue-green (option A), dark brown (option C), black (option D), and yellow (option E) are not the colors of DNA in the Feulgen stain.`
+        },
+        {
+            q: `Which stain is used to demonstrate amyloid in lymph node tissue, where amyloid appears red and nuclei appear blue?`,
+            options: [
+                `Congo red`,
+                `PAS`,
+                `Masson's trichrome`,
+                `Silver stain`,
+                `Ziehl-Neelsen stain`
+            ],
+            correct: `A`,
+            explanation: `Congo red is the stain used to demonstrate amyloid in tissue sections. Amyloid is a abnormal proteinaceous material that binds Congo red and appears red (or pinkish-red) under light microscopy. When viewed under polarized light, amyloid stained with Congo red exhibits apple-green birefringence, which is diagnostic. Nuclei typically appear blue (counterstained with hematoxylin). PAS (option B) stains carbohydrates; Masson's trichrome (option C) stains collagen; silver stain (option D) stains reticular fibers; and Ziehl-Neelsen (option E) stains mycobacteria. Congo red is the specific stain for amyloid.`
+        },
+        {
+            q: `In the Ziehl-Neelsen stain, what color do mycobacteria appear?`,
+            options: [
+                `Blue`,
+                `Red`,
+                `Green`,
+                `Black`,
+                `Yellow`
+            ],
+            correct: `B`,
+            explanation: `In the Ziehl-Neelsen (acid-fast) stain, mycobacteria (such as Mycobacterium tuberculosis) appear red. The stain uses carbolfuchsin (a red dye) to stain the waxy mycolic acid-rich cell walls of mycobacteria. The acid-fast bacteria resist decolorization by acid-alcohol and retain the red color, while non-acid-fast bacteria are decolorized and counterstained blue. This makes mycobacteria appear as red rods against a blue background. Blue (option A) is the color of non-acid-fast bacteria/background; green (option C), black (option D), and yellow (option E) are not the colors of mycobacteria in this stain.`
+        },
+        {
+            q: `In the Masson trichrome technique applied to cirrhosis of the liver, what color does collagen appear?`,
+            options: [
+                `Red`,
+                `Blue`,
+                `Black`,
+                `Green`,
+                `Yellow`
+            ],
+            correct: `B`,
+            explanation: `In the Masson trichrome technique applied to cirrhosis of the liver, collagen appears blue (or green, depending on the specific variant of the stain). In cirrhosis, excessive collagen deposition (fibrosis) forms bands that stain blue/green with Masson's trichrome, while hepatocytes stain red. This makes the stain valuable for assessing the extent of fibrosis in liver disease. Red (option A) is the color of cytoplasm/muscle in this stain; black (option C) is not the typical collagen color; green (option D) is an alternative collagen color in some variants; and yellow (option E) is not a typical Masson's trichrome color.`
+        },
+        {
+            q: `Which stain is used to visualize Nissl substance in neurons, appearing purple-dark blue?`,
+            options: [
+                `Cresyl fast violet (Nissl) stain`,
+                `Feulgen stain`,
+                `Silver stain`,
+                `Congo red`,
+                `PAS`
+            ],
+            correct: `A`,
+            explanation: `The Cresyl fast violet (Nissl) stain is used to visualize Nissl substance in neurons. Nissl bodies are clusters of rough endoplasmic reticulum rich in RNA, which are basophilic and stain purple-dark blue with basic dyes like cresyl violet. This stain is widely used in neurohistology to identify neurons and assess their health (Nissl substance diminishes in certain neurodegenerative conditions). Feulgen (option B) is specific for DNA; silver stain (option C) is for reticular fibers and neuronal processes; Congo red (option D) is for amyloid; and PAS (option E) is for carbohydrates.`
+        },
+        {
+            q: `In the Feulgen stain demonstrating DNA in breast carcinoma tissue, what color is the background?`,
+            options: [
+                `Magenta`,
+                `Light green`,
+                `Dark blue`,
+                `Black`,
+                `Red`
+            ],
+            correct: `B`,
+            explanation: `In the Feulgen stain demonstrating DNA in breast carcinoma tissue, the background is light green. The Feulgen reaction stains DNA reddish-violet (magenta), while a counterstain (such as light green) is used to provide contrast, coloring the cytoplasm and other non-DNA structures light green. This allows clear visualization of the magenta-stained DNA against a light green background. Magenta (option A) is the color of DNA; dark blue (option C), black (option D), and red (option E) are not the background colors in this specific application.`
+        },
+        {
+            q: `Which of the following is NOT a commonly used histological stain?`,
+            options: [
+                `Azan`,
+                `Azure B`,
+                `Hematoxylin and eosin`,
+                `Xylene`,
+                `Periodic acid-Schiff`
+            ],
+            correct: `D`,
+            explanation: `Xylene is NOT a histological stain—it is a clearing agent used in tissue preparation to replace alcohol and make the tissue transparent before embedding in paraffin. Azan (option A), Azure B (option B), hematoxylin and eosin (option C), and Periodic acid-Schiff (option E) are all stains used to colorize tissue components for microscopic examination. Azan is a trichrome stain, Azure B is a basic dye for bacteria and Nissl bodies, H&E is the most common general stain, and PAS stains carbohydrates. Xylene is a processing reagent, not a stain.`
+        },
+        {
+            q: `What is the purpose of mounting in tissue preparation?`,
+            options: [
+                `To fix the tissue`,
+                `To dehydrate the tissue`,
+                `To attach the stained section to a glass slide for microscopic examination`,
+                `To embed the tissue in paraffin`,
+                `To clear the tissue`
+            ],
+            correct: `C`,
+            explanation: `Mounting is the step in tissue preparation where the stained tissue section is attached to a glass slide and covered with a coverslip (using a mounting medium) for microscopic examination. This preserves the section, provides optical clarity, and protects it from damage. Fixation (option A) is a prior step; dehydration (option B) is a prior step; embedding (option D) is a prior step; and clearing (option E) is a prior step. Mounting is the final step that prepares the stained section for observation under the microscope.`
+        },
+        {
+            q: `Which of the following correctly pairs a stain with the structure it highlights?`,
+            options: [
+                `Osmium – complex carbohydrates`,
+                `PAS – lipids`,
+                `Silver stain – reticular fibers and neuronal processes`,
+                `Trypan blue – collagen fibers`,
+                `Congo red – DNA`
+            ],
+            correct: `C`,
+            explanation: `Silver stain is correctly paired with reticular fibers and neuronal processes—it highlights these delicate structures by reducing silver ions to metallic silver, appearing black. Osmium (option A) stains lipids, not complex carbohydrates (PAS stains carbohydrates). PAS (option B) stains complex carbohydrates, not lipids (osmium stains lipids). Trypan blue (option D) stains phagocytic cells and dead cells, not collagen fibers (collagen is stained by Masson's trichrome or eosin). Congo red (option E) stains amyloid, not DNA (Feulgen stains DNA). Only option C is a correct pairing.`
+        }
+    ];
+
+    /* =====================================================================
+       FULL RESERVOIR — SECTION B (25 SAQs)
+       ===================================================================== */
+    const sectionBPool = [
+        {
+            question: `Explain why histology is considered the "bridge between structure and function." Why is it virtually impossible to discuss organ function without first considering its microscopic structure?`,
+            answer: `<h4>Model Answer</h4>
+            <p>Histology is considered the bridge between structure and function because it is at the microscopic level that we begin to see how an organ actually performs its functions. The arrangement of cells, the types of tissues present, and the organization of the extracellular matrix directly relate to the organ's physiological role.</p>
+            <p>For example, the microscopic structure of the lung—thin alveolar walls, extensive capillary network, and surfactant-producing cells—reveals how gas exchange occurs. Similarly, the structure of the kidney tubules (with their specific epithelial cell types and membrane specializations) explains how filtration and reabsorption happen. Without understanding the microscopic structure, it is impossible to fully explain how an organ works—structure determines function at every level, from molecules to cells to tissues to organs.</p>`
+        },
+        {
+            question: `Describe the two interacting components of tissues and explain how they influence each other. Include the role of the ECM in supporting cells and transporting materials.`,
+            answer: `<h4>Model Answer</h4>
+            <p>The two interacting components of tissues are <strong>cells</strong> and the <strong>extracellular matrix (ECM)</strong>.</p>
+            <p><strong>Cells</strong> are the functional units of tissues—they carry out specialized activities (e.g., secretion, contraction, conduction). <strong>The ECM</strong> is the non-cellular material that surrounds cells, composed of protein fibers (collagen, elastin, reticular fibers) and ground substance (glycoproteins, proteoglycans, fluid).</p>
+            <p><strong>Influence on each other:</strong> Cells synthesize and secrete the ECM, and the ECM in turn influences cell behavior—providing structural support, regulating cell proliferation, differentiation, migration, and signaling. The ECM also contains fluid that transports nutrients to cells and carries away wastes, facilitating cellular metabolism and communication.</p>`
+        },
+        {
+            question: `List the four major tissue types found in the adult body and briefly describe a general function of each.`,
+            answer: `<h4>Model Answer</h4>
+            <ul>
+                <li><strong>Epithelial tissue:</strong> Covers body surfaces, lines cavities and ducts, and forms glands. Functions include protection, absorption, secretion, and filtration.</li>
+                <li><strong>Connective tissue:</strong> Supports, connects, and binds other tissues. Functions include structural support, protection, insulation, and transport (e.g., blood).</li>
+                <li><strong>Muscle tissue:</strong> Specialized for contraction. Functions include movement of body parts, movement of substances within the body, and heat generation.</li>
+                <li><strong>Nervous tissue:</strong> Specialized for conduction of electrical impulses. Functions include communication, integration, and control of body activities.</li>
+            </ul>`
+        },
+        {
+            question: `Explain why most tissue specimens require preparation beyond simple staining before they can be observed microscopically. What would happen if a tissue specimen were examined without proper preparation?`,
+            answer: `<h4>Model Answer</h4>
+            <p>Most tissue specimens require preparation because solid tissues are too thick and opaque to be examined directly under a microscope. Proper preparation involves fixation (to preserve structure), dehydration (to remove water), clearing (to replace alcohol with a paraffin-miscible solvent), embedding (to support the tissue for sectioning), sectioning (to cut thin slices), and staining (to provide contrast).</p>
+            <p>Without proper preparation, the tissue would degrade (autolysis and putrefaction), be too thick for light to penetrate, and lack contrast to distinguish different components. The microscopic structure would be destroyed or unobservable. Preparation preserves the tissue's in vivo structure, allows thin sectioning, and provides color contrast for identification of cells and ECM components.</p>`
+        },
+        {
+            question: `Describe the process of fixation in detail, including the purpose of fixatives, how they work chemically, and why formalin and glutaraldehyde are commonly used.`,
+            answer: `<h4>Model Answer</h4>
+            <p><strong>Purpose:</strong> Fixation preserves tissue structure and prevents degradation by enzymes (autolysis) and microorganisms. It stabilizes cellular architecture, making it resistant to subsequent processing.</p>
+            <p><strong>Chemical mechanism:</strong> Fixatives such as formalin and glutaraldehyde react with the amine groups (NH₂) of proteins, forming cross-links between protein molecules. This cross-linking stabilizes proteins and prevents their degradation. Formalin forms methylene bridges, while glutaraldehyde forms longer cross-links.</p>
+            <p><strong>Why formalin and glutaraldehyde are commonly used:</strong> Formalin (buffered isotonic solution of 37% formaldehyde, used at 10% dilution) penetrates tissues rapidly, is inexpensive, and is compatible with most staining procedures. Glutaraldehyde penetrates more slowly but provides better preservation of fine structure, making it valuable for electron microscopy. Both are effective, widely available, and well-established in histology.</p>`
+        },
+        {
+            question: `Explain the sequential steps of dehydration and clearing in tissue preparation. Why is it necessary to remove water before clearing, and why is xylene used for clearing?`,
+            answer: `<h4>Model Answer</h4>
+            <p><strong>Dehydration:</strong> The specimen is passed through a graded series of alcohol solutions (e.g., 50%, 70%, 90%, 100% ethanol) to remove water. Each step gradually replaces water with alcohol.</p>
+            <p><strong>Clearing:</strong> The alcohol is then replaced with an organic solvent (e.g., xylene) that is miscible with both alcohol and paraffin. This makes the specimen transparent.</p>
+            <p><strong>Why remove water before clearing:</strong> Xylene is miscible with alcohol but not with water. If water were present, xylene would not penetrate the tissue effectively, and subsequent paraffin embedding would fail.</p>
+            <p><strong>Why xylene is used:</strong> Xylene is miscible with both alcohol and paraffin, making it an ideal intermediate solvent. It replaces alcohol in the tissue and is then replaced by paraffin during embedding, ensuring complete infiltration.</p>`
+        },
+        {
+            question: `Describe the process of embedding tissue in paraffin. Why is paraffin used as a supporting medium, and why must the specimen be dehydrated and cleared before embedding?`,
+            answer: `<h4>Model Answer</h4>
+            <p><strong>Process:</strong> After clearing, the specimen is infiltrated with liquid paraffin at 52°–60°C. The paraffin penetrates the tissue, and then the specimen is allowed to cool and harden into a solid block. This block is then sectioned with a microtome.</p>
+            <p><strong>Why paraffin is used:</strong> Paraffin is a hydrophobic, waxy solid that provides firm support for sectioning. It is inexpensive, easy to handle, and compatible with most staining procedures. It melts at a relatively low temperature (52°–60°C), which is not harmful to tissue structure.</p>
+            <p><strong>Why dehydration and clearing are necessary:</strong> Paraffin is insoluble in water and alcohol but soluble in xylene. Therefore, water must be removed (dehydration) and replaced with xylene (clearing) so that paraffin can infiltrate the tissue completely. If water or alcohol remained, paraffin would not penetrate, and embedding would be unsuccessful.</p>`
+        },
+        {
+            question: `Explain how a microtome works to produce uniform tissue sections. Why is it important to have sections of uniform thickness for microscopic examination?`,
+            answer: `<h4>Model Answer</h4>
+            <p>A microtome is a precision instrument that holds the embedded tissue block and advances it by a precise, adjustable amount toward a fixed blade. As the block advances, the blade cuts a thin slice (section) of uniform thickness—typically 5–10 µm for light microscopy. The thickness can be adjusted by the operator.</p>
+            <p><strong>Importance of uniform thickness:</strong> Uniform sections are essential for consistent staining, clear microscopic visualization, and accurate interpretation. Variations in thickness would cause uneven staining (thicker areas absorb more dye) and optical inconsistencies (different light penetration), making it difficult to compare structures and identify pathology. Uniform thickness also ensures reproducibility across serial sections, which is important for research and diagnosis.</p>`
+        },
+        {
+            question: `Explain the difference between acidophilic and basophilic cellular structures. Include the charges involved and provide examples of each.`,
+            answer: `<h4>Model Answer</h4>
+            <p><strong>Acidophilic structures</strong> are positively charged (cationic) and have an affinity for acidic (anionic) dyes. They are called "acid-loving" because they bind acidic dyes. Examples include cytoplasm (rich in proteins with ionized amino groups), collagen fibers, and red blood cells. They stain pink with eosin.</p>
+            <p><strong>Basophilic structures</strong> are negatively charged (anionic) and have an affinity for basic (cationic) dyes. They are called "base-loving" because they bind basic dyes. Examples include nucleic acids (DNA and RNA) in the nucleus and ribosomes. They stain purplish-blue with hematoxylin.</p>
+            <p>The principle is charge-based: opposite charges attract. Acidophilic structures (+) bind acidic dyes (−); basophilic structures (−) bind basic dyes (+).</p>`
+        },
+        {
+            question: `Describe how acidic and basic dyes interact with cellular components based on charge. Why do nucleic acids stain with basic dyes while proteins with many ionized amino groups stain with acidic dyes?`,
+            answer: `<h4>Model Answer</h4>
+            <p><strong>Acidic dyes</strong> (anionic) carry a net negative charge and bind to positively charged (acidophilic) cellular components. <strong>Basic dyes</strong> (cationic) carry a net positive charge and bind to negatively charged (basophilic) cellular components.</p>
+            <p><strong>Nucleic acids</strong> (DNA and RNA) contain phosphate groups that ionize to carry a net negative charge. This negative charge gives them an affinity for positively charged basic dyes (e.g., hematoxylin, toluidine blue), making them basophilic.</p>
+            <p><strong>Proteins with many ionized amino groups</strong> (e.g., lysine, arginine) carry a net positive charge at physiological pH. This positive charge gives them an affinity for negatively charged acidic dyes (e.g., eosin, acid fuchsin), making them acidophilic.</p>
+            <p>The interaction is governed by electrostatic attraction: opposite charges attract, leading to selective staining.</p>`
+        },
+        {
+            question: `Compare and contrast the staining properties of hematoxylin and eosin. What structures does each stain highlight, and why are they often used together in the H&E stain?`,
+            answer: `<h4>Model Answer</h4>
+            <p><strong>Hematoxylin:</strong> Behaves as a basic dye (cationic) and stains basophilic structures—negatively charged components such as nucleic acids (DNA and RNA) in the nucleus and ribosomes—purplish-blue.</p>
+            <p><strong>Eosin:</strong> Is an acidic dye (anionic) and stains acidophilic structures—positively charged components such as cytoplasm (proteins), collagen fibers, and red blood cells—pink.</p>
+            <p><strong>Why used together (H&E):</strong> Hematoxylin and eosin complement each other, providing contrast between the nucleus (purplish-blue) and the cytoplasm/collagen (pink). This dual staining allows clear differentiation of tissue components and is the most widely used general stain in histology and pathology for routine examination and diagnosis.</p>`
+        },
+        {
+            question: `Explain the principle behind the Periodic acid-Schiff (PAS) stain. What types of cellular structures are PAS-positive, and what does a positive result indicate about the tissue?`,
+            answer: `<h4>Model Answer</h4>
+            <p><strong>Principle:</strong> The PAS stain uses periodic acid to oxidize vicinal diols (adjacent hydroxyl groups) in complex carbohydrates to aldehydes. These aldehydes then react with Schiff reagent to produce a magenta (red) color.</p>
+            <p><strong>PAS-positive structures:</strong> Glycogen, mucins (in goblet cells), glycoproteins, glycolipids, brush borders, and basement membranes.</p>
+            <p><strong>What a positive result indicates:</strong> A PAS-positive result indicates the presence of complex carbohydrates in the tissue. This is useful for diagnosing conditions such as glycogen storage diseases, identifying mucin-producing tumors, and highlighting basement membranes (e.g., in kidney biopsies).</p>`
+        },
+        {
+            question: `Describe the Masson's trichrome stain and explain why it is useful for distinguishing different tissue components. What three colors result, and which structures does each color represent?`,
+            answer: `<h4>Model Answer</h4>
+            <p>Masson's trichrome stain is a three-color staining technique that uses three dyes to differentiate tissue components:</p>
+            <ul>
+                <li><strong>Basophilic structures (nuclei):</strong> Dark blue (or black), stained by iron hematoxylin.</li>
+                <li><strong>Collagen fibers:</strong> Green or light blue, stained by light green or aniline blue.</li>
+                <li><strong>Cytoplasm, keratin, muscle, and erythrocytes:</strong> Red, stained by acid fuchsin or ponceau.</li>
+            </ul>
+            <p><strong>Why useful:</strong> It clearly distinguishes collagen from muscle and cytoplasm, making it valuable for assessing fibrosis (e.g., in liver cirrhosis, where collagen appears blue/green) and for differentiating tissue types in pathology.</p>`
+        },
+        {
+            question: `Explain how the Feulgen stain specifically demonstrates DNA. What color does DNA appear, and what is the appearance of the background?`,
+            answer: `<h4>Model Answer</h4>
+            <p>The Feulgen stain specifically demonstrates DNA through acid hydrolysis, which removes purine bases and exposes aldehyde groups on the deoxyribose sugar of DNA. These aldehydes then react with Schiff reagent to produce a reddish-violet (magenta) color at sites of DNA.</p>
+            <p><strong>Color of DNA:</strong> Reddish-violet (magenta).</p>
+            <p><strong>Background appearance:</strong> Light green (when counterstained with light green). The contrast between the magenta DNA and light green background allows clear visualization and quantification of DNA (e.g., in breast carcinoma tissue for DNA content analysis).</p>`
+        },
+        {
+            question: `Describe the clinical application of the Ziehl-Neelsen stain. What organism does it detect, and what color does the organism appear against what background?`,
+            answer: `<h4>Model Answer</h4>
+            <p>The Ziehl-Neelsen stain (acid-fast stain) is used clinically to detect acid-fast organisms, most notably <strong>Mycobacterium tuberculosis</strong> (the causative agent of tuberculosis) and other mycobacteria (e.g., M. leprae).</p>
+            <p>The stain uses carbolfuchsin (red dye), which penetrates the waxy mycolic acid-rich cell walls of mycobacteria. Acid-fast bacteria resist decolorization by acid-alcohol and retain the red color, while non-acid-fast bacteria are decolorized and counterstained blue.</p>
+            <p><strong>Appearance:</strong> Mycobacteria appear as red (or pink) rods against a blue background (non-acid-fast bacteria and tissue cells). This stain is essential for diagnosing tuberculosis and leprosy from clinical specimens (e.g., sputum).</p>`
+        },
+        {
+            question: `Explain the purpose of the Congo red stain and describe its appearance in a tissue sample containing amyloid. What color does amyloid appear, and what color do nuclei appear?`,
+            answer: `<h4>Model Answer</h4>
+            <p><strong>Purpose:</strong> Congo red is used to demonstrate amyloid—an abnormal proteinaceous material that deposits in tissues in conditions such as amyloidosis, Alzheimer's disease, and certain cancers.</p>
+            <p><strong>Appearance:</strong> Amyloid stained with Congo red appears red (or pinkish-red) under light microscopy. When viewed under polarized light, it exhibits apple-green birefringence, which is diagnostic.</p>
+            <p><strong>Nuclei:</strong> Nuclei are typically counterstained blue (e.g., with hematoxylin), providing contrast against the red amyloid.</p>`
+        },
+        {
+            question: `Describe the Cresyl fast violet (Nissl) stain and its application in neurohistology. What structures are stained, and what colors are produced?`,
+            answer: `<h4>Model Answer</h4>
+            <p>The Cresyl fast violet (Nissl) stain is a basic dye used in neurohistology to visualize Nissl substance in neurons. Nissl bodies are clusters of rough endoplasmic reticulum rich in RNA, which are basophilic and stain with basic dyes.</p>
+            <p><strong>Structures stained:</strong> Nissl substance (rough ER) in the cytoplasm of neurons, and nuclei (which contain DNA).</p>
+            <p><strong>Colors:</strong> Nissl substance stains purple-dark blue, and nuclei also stain dark blue/purple. The background (neuropil) is relatively unstained or pale. This stain is used to identify neurons, assess their health (Nissl substance diminishes in certain neurodegenerative conditions), and study neuronal cytoarchitecture.</p>`
+        },
+        {
+            question: `Explain how the silver stain technique works and why it is particularly useful for staining delicate structures such as reticular fibers and neuronal processes.`,
+            answer: `<h4>Model Answer</h4>
+            <p>The silver stain technique works by impregnating tissue with silver salts (e.g., silver nitrate). Certain structures (argyrophilic or argentaffin) reduce silver ions to metallic silver, depositing black silver grains at those sites.</p>
+            <p><strong>Why useful for delicate structures:</strong> Reticular fibers (type III collagen) are argyrophilic and reduce silver, appearing black. Neuronal processes (axons and dendrites) can also be visualized with silver stains (e.g., Golgi method, Dafano method), revealing fine morphological details. Silver stains provide high contrast and are particularly effective for highlighting fine, delicate structures that are not well-visualized with routine stains like H&E.</p>`
+        },
+        {
+            question: `Describe the Giemsa-Wright stain and explain its use in hematology. What colors do nuclei, cytoplasm, and cytoplasmic granules appear?`,
+            answer: `<h4>Model Answer</h4>
+            <p>The Giemsa-Wright stain is a Romanowsky-type stain combining Giemsa and Wright stains, used primarily for staining blood and bone marrow smears in hematology.</p>
+            <p><strong>Colors:</strong></p>
+            <ul>
+                <li><strong>Nuclei:</strong> Dark purple (due to basic dyes binding to DNA/RNA).</li>
+                <li><strong>Cytoplasm:</strong> Light blue (due to acidic dyes binding to cytoplasmic proteins).</li>
+                <li><strong>Cytoplasmic granules:</strong> Specific colors depending on cell type—eosinophilic granules stain orange-red, basophilic granules stain dark blue, neutrophilic granules stain pale pink/violet.</li>
+            </ul>
+            <p><strong>Use in hematology:</strong> It allows differentiation of various blood cell types (e.g., neutrophils, eosinophils, basophils, lymphocytes, monocytes) and identification of blood parasites (e.g., malaria).</p>`
+        },
+        {
+            question: `Explain why different stains are needed to visualize different tissue components. Why can't a single stain reveal all structures in a tissue section?`,
+            answer: `<h4>Model Answer</h4>
+            <p>Different stains are needed because different tissue components have different chemical properties (charge, lipid solubility, carbohydrate content) and therefore bind different dyes. No single stain can bind to all components simultaneously with sufficient contrast.</p>
+            <p>For example, hematoxylin stains nucleic acids (basophilic) but not collagen; eosin stains proteins (acidophilic) but not DNA; PAS stains carbohydrates but not lipids; osmium stains lipids but not carbohydrates; Masson's trichrome distinguishes collagen from muscle; and silver stains reticular fibers. Each stain is designed to highlight specific components based on their chemical nature. A single stain cannot reveal all structures because the chemical diversity of tissue components requires different staining mechanisms for selective visualization.</p>`
+        },
+        {
+            question: `Describe the process of mounting a stained tissue section. Why is mounting necessary, and what might happen if a section were not properly mounted?`,
+            answer: `<h4>Model Answer</h4>
+            <p><strong>Process:</strong> After staining, the tissue section (on a glass slide) is covered with a mounting medium (e.g., resin or glycerol) and a coverslip. The mounting medium has a refractive index close to that of glass and tissue, providing optical clarity.</p>
+            <p><strong>Why necessary:</strong> Mounting preserves the stained section, protects it from damage (dust, scratches, dehydration), and provides optical clarity for microscopic examination. The mounting medium also prevents fading of the stain.</p>
+            <p><strong>If not properly mounted:</strong> The section could dry out and degrade, the stain could fade, the tissue could be damaged, and optical clarity would be poor (due to refractive index mismatches and air bubbles). Proper mounting is essential for accurate microscopic observation and long-term preservation of the slide.</p>`
+        },
+        {
+            question: `Explain the role of iron hematoxylin in histology. What structures does it stain, and what color do they appear?`,
+            answer: `<h4>Model Answer</h4>
+            <p>Iron hematoxylin is a nuclear stain in which hematoxylin is combined with an iron mordant (e.g., ferric chloride or iron alum). It is used as a general nuclear stain and is particularly valuable in trichrome staining procedures (e.g., Masson's trichrome).</p>
+            <p><strong>Structures stained:</strong> Nuclei (DNA) and other basophilic structures.</p>
+            <p><strong>Color:</strong> Dark blue to black. The iron mordant intensifies the staining and makes it more resistant to decolorization, providing crisp nuclear detail. Iron hematoxylin is often used in combination with acidic counterstains (e.g., eosin, acid fuchsin) in trichrome stains.</p>`
+        },
+        {
+            question: `Describe the Azan stain and explain what information it provides about tissue composition. What colors do nuclei, muscle, and connective tissue appear?`,
+            answer: `<h4>Model Answer</h4>
+            <p>The Azan stain is a trichrome staining technique (a variant of Mallory's trichrome) that uses azocarmine and aniline blue (or orange G) to differentiate tissue components.</p>
+            <p><strong>Colors:</strong></p>
+            <ul>
+                <li><strong>Nuclei:</strong> Red (stained by azocarmine).</li>
+                <li><strong>Muscle:</strong> Red (stained by azocarmine).</li>
+                <li><strong>Connective tissue (collagen):</strong> Blue (stained by aniline blue).</li>
+            </ul>
+            <p><strong>Information provided:</strong> The Azan stain distinguishes collagen from muscle and other tissue components, making it useful for assessing fibrosis, studying tissue architecture, and identifying pathological changes (e.g., in kidney, liver, and muscle biopsies).</p>`
+        },
+        {
+            question: `Explain why a blood smear may be examined with staining as the only form of preparation. How does this differ from the preparation required for most solid tissue specimens?`,
+            answer: `<h4>Model Answer</h4>
+            <p>A blood smear can be examined with staining as the only form of preparation because blood is a fluid suspension of cells. A drop of blood is spread directly onto a glass slide, air-dried, and stained (e.g., with Giemsa-Wright stain). No fixation, dehydration, clearing, embedding, or sectioning is needed because the cells are already separated and can be visualized directly on the slide.</p>
+            <p><strong>Difference from solid tissue:</strong> Solid tissue specimens are thick, opaque, and cohesive. They require fixation (to preserve structure), dehydration (to remove water), clearing (to replace alcohol with a paraffin-miscible solvent), embedding (to support the tissue), sectioning (to cut thin slices), and then staining. Blood smears bypass these steps because the cells are already in a single-cell layer on the slide.</p>`
+        },
+        {
+            question: `Compare the information obtained from a simple stain (such as hematoxylin alone) versus a combined or polychromatic stain (such as H&E or Masson's trichrome). Why might a researcher choose one over the other?`,
+            answer: `<h4>Model Answer</h4>
+            <p><strong>Simple stain (e.g., hematoxylin alone):</strong> Provides limited information—it stains nuclei (basophilic structures) purplish-blue, allowing visualization of nuclear morphology, distribution, and density. However, it does not distinguish cytoplasm, collagen, or other ECM components.</p>
+            <p><strong>Combined/polychromatic stain (e.g., H&E or Masson's trichrome):</strong> Provides more information by using multiple dyes to differentiate various tissue components. H&E distinguishes nuclei (purplish-blue) from cytoplasm and collagen (pink). Masson's trichrome distinguishes nuclei (dark blue), collagen (green/blue), and muscle/cytoplasm (red), providing detailed information about tissue architecture and fibrosis.</p>
+            <p><strong>Choice:</strong> A researcher might choose a simple stain for rapid screening or when only nuclear detail is needed (e.g., assessing cell proliferation). A combined stain is chosen when detailed tissue architecture, cell types, and ECM composition need to be evaluated (e.g., diagnosing fibrosis, differentiating tumor types, or studying tissue organization).</p>`
+        }
+    ];
+
+    /* =====================================================================
+       RANDOM SELECTION UTILITIES
+       ===================================================================== */
+    function shuffleArray(arr) {
+        const a = arr.slice();
+        for (let i = a.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+    }
+
+    function pickRandom(arr, n) {
+        return shuffleArray(arr).slice(0, Math.min(n, arr.length));
+    }
+
+    /* =====================================================================
+       RANDOMIZED SECTIONS
+       ===================================================================== */
+    const MCQS_TO_SHOW = 15;
+    const SAQS_TO_SHOW = 5;
+
+    const sectionA = pickRandom(sectionAPool, MCQS_TO_SHOW);
+    const sectionB = pickRandom(sectionBPool, SAQS_TO_SHOW);
+
+    /* =====================================================================
+       RENDERING FUNCTIONS
+       ===================================================================== */
+    function renderSectionA() {
+        const container = document.getElementById('container-A');
+        let html = '';
+        sectionA.forEach((q, i) => {
+            const qid = 'A-q' + (i + 1);
+            html += '<div class="question" id="q-' + qid + '">';
+            html += '<p><span class="q-badge">Q' + (i + 1) + '</span> ' + q.q + '</p>';
+            html += '<div class="options">';
+            q.options.forEach((opt, j) => {
+                const L = String.fromCharCode(65 + j);
+                html += '<label><input type="radio" name="' + qid + '" value="' + L + '"> <strong>' + L + ')</strong> ' + opt + '</label>';
+            });
+            html += '</div>';
+            html += '<div class="question-feedback" id="fb-' + qid + '"></div>';
+            html += '</div>';
+        });
+        container.innerHTML = html;
+        document.getElementById('count-A').textContent = sectionA.length;
+    }
+
+    function submitSectionA() {
+        let score = 0;
+        sectionA.forEach((q, i) => {
+            const qid = 'A-q' + (i + 1);
+            const radios = document.getElementsByName(qid);
+            let selected = null;
+            for (let r = 0; r < radios.length; r++) {
+                if (radios[r].checked) { selected = radios[r]; break; }
+            }
+            const correct = q.correct.toUpperCase();
+            if (selected && selected.value === correct) score++;
+
+            let html = '<div class="answer-block"><div class="answer-list">';
+            q.options.forEach((opt, j) => {
+                const L = String.fromCharCode(65 + j);
+                let cls = 'answer-item';
+                if (L === correct) cls += ' answer-correct';
+                if (selected && selected.value === L) {
+                    cls += ' user-choice';
+                    if (L !== correct) cls += ' answer-wrong';
+                }
+                const mark = (selected && selected.value === L) ? ' ◀ your answer' : '';
+                html += '<div class="' + cls + '">' + L + ') ' + opt + mark + '</div>';
+            });
+            html += '</div>';
+
+            const correctIdx = correct.charCodeAt(0) - 65;
+            const correctText = (correctIdx >= 0 && correctIdx < q.options.length) ? q.options[correctIdx] : '';
+
+            if (!selected) {
+                html += '<div class="explanation wrong">No answer selected. Correct answer: <strong>' +
+                        correct + ') ' + correctText + '</strong>.<br><br>' + q.explanation + '</div>';
+            } else if (selected.value === correct) {
+                html += '<div class="explanation">✅ <strong>Correct.</strong><br><br>' + q.explanation + '</div>';
+            } else {
+                html += '<div class="explanation wrong">❌ <strong>Incorrect.</strong> Correct answer: <strong>' +
+                        correct + ') ' + correctText + '</strong>.<br><br>' + q.explanation + '</div>';
+            }
+
+            const fb = document.getElementById('fb-' + qid);
+            if (fb) fb.innerHTML = html;
+        });
+
+        const total = sectionA.length;
+        const pct = Math.round((score / total) * 100);
+        const box = document.getElementById('result-A');
+        box.style.display = 'block';
+        document.getElementById('score-A').innerText = score + ' / ' + total + '  (' + pct + '%)';
+
+        document.querySelectorAll('#panel-A input[type="radio"]').forEach(r => r.disabled = true);
+    }
+
+    function renderSectionB() {
+        const container = document.getElementById('container-B');
+        let html = '';
+        sectionB.forEach((item, i) => {
+            const sqid = 'B-saq' + (i + 1);
+            html += '<div class="saq-block">';
+            html += '<div class="saq-title">Question ' + (i + 1) + '</div>';
+            html += '<div class="saq-text">' + item.question + '</div>';
+            html += '<button type="button" class="btn btn-sm" onclick="toggleAnswer(\'' + sqid + '\')"><i class="fas fa-eye"></i> Show Answer</button>';
+            html += '<div class="essay-answer" id="ans-' + sqid + '">' + item.answer + '</div>';
+            html += '</div>';
+        });
+        container.innerHTML = html;
+        document.getElementById('count-B').textContent = sectionB.length;
+    }
+
+    function toggleAnswer(qid) {
+        const el = document.getElementById('ans-' + qid);
+        if (el) el.classList.toggle('show');
+    }
+
+    /* ─── INIT ─── */
+    renderSectionA();
+    renderSectionB();
+
+    /* ─── TAB SWITCHING ─── */
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            const target = this.dataset.target;
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+            document.getElementById('panel-' + target).classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+    </script>
+
+</body>
+</html>

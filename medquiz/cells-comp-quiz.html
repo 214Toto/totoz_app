@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cell Structure & Function –  ToToZ Quiz</title>
+    <style>
+        :root {
+            --primary: #1a6b6b;
+            --accent: #2ea8a0;
+            --dark: #0f2a2a;
+            --light: #f4f8f7;
+            --radius: 12px;
+            --shadow: 0 4px 14px rgba(0, 30, 30, 0.08);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #edf3f2;
+            color: var(--dark);
+            min-height: 100vh;
+            padding-top: 72px;
+        }
+        header {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            background: linear-gradient(145deg, var(--primary), var(--dark));
+            color: #fff; padding: 0.6rem 0;
+            box-shadow: 0 4px 18px rgba(0, 20, 20, 0.25);
+        }
+        .header-inner {
+            max-width: 1000px; margin: 0 auto; padding: 0 1.5rem;
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 0.3rem;
+        }
+        .logo { display: flex; align-items: center; gap: 0.6rem; }
+        .logo i { font-size: 1.5rem; color: #8dd9d4; }
+        .logo h1 { font-size: 1.15rem; font-weight: 700; }
+        .badge {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 0.2rem 1rem; border-radius: 40px;
+            font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+            color: #b3e6e0;
+        }
+        .container { max-width: 920px; margin: 0 auto; padding: 0 1.2rem 2.5rem; }
+        .tab-bar { display: flex; gap: 0.5rem; margin: 0.5rem 0 1.5rem 0; flex-wrap: wrap; }
+        .tab-btn {
+            background: #dce8e8; border: none; padding: 0.5rem 1.8rem;
+            border-radius: 40px; font-weight: 600; font-size: 0.95rem;
+            color: var(--dark); cursor: pointer; transition: 0.2s;
+        }
+        .tab-btn:hover { background: #c0d6d6; }
+        .tab-btn.active {
+            background: var(--primary); color: #fff;
+            box-shadow: 0 2px 10px rgba(26, 107, 107, 0.25);
+        }
+        .tab-panel { display: block; }
+        .tab-panel.hidden { display: none; }
+        .section-title {
+            font-size: 1.25rem; font-weight: 700; color: var(--primary);
+            margin: 0 0 0.8rem 0; padding-bottom: 0.4rem;
+            border-bottom: 3px solid rgba(26, 107, 107, 0.18);
+            display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;
+        }
+        .section-title .count {
+            font-size: 0.7rem; font-weight: 600; background: var(--primary);
+            color: #fff; border-radius: 40px; padding: 0 0.7rem; line-height: 1.7;
+        }
+        .section-subtitle { color: #4f6e6e; font-size: 0.9rem; margin-bottom: 1rem; }
+        .refresh-note {
+            background: #e2f0ed; border-radius: 8px; padding: 0.5rem 1rem;
+            font-size: 0.85rem; color: #1a6b6b; margin-bottom: 1rem;
+            border-left: 4px solid var(--accent); display: flex; align-items: center; gap: 0.6rem;
+        }
+        .question {
+            background: #ffffff; border-radius: var(--radius);
+            padding: 1.1rem 1.2rem 0.2rem 1.2rem; margin-bottom: 1rem;
+            box-shadow: var(--shadow); border: 1px solid rgba(26, 107, 107, 0.05);
+        }
+        .question .q-badge {
+            display: inline-block; background: var(--primary); color: #fff;
+            border-radius: 40px; padding: 0 0.65rem; font-size: 0.7rem;
+            font-weight: 700; line-height: 1.6; margin-right: 0.4rem;
+        }
+        .question p { font-weight: 600; font-size: 0.97rem; margin-bottom: 0.4rem; color: var(--dark); }
+        .options label {
+            display: block; background: #fafcfc; border: 1px solid #dde8e8;
+            border-radius: 7px; padding: 0.4rem 0.85rem; margin-top: 0.4rem;
+            cursor: pointer; transition: all 0.15s; font-weight: 450; font-size: 0.92rem;
+        }
+        .options label:hover { background: #e8f5f4; border-color: var(--accent); }
+        .options input[type="radio"] { margin-right: 0.5rem; accent-color: var(--primary); }
+        .question-feedback { margin-top: 0.8rem; padding: 0.4rem 0 0.1rem 0; border-top: 1px dashed #dce6e6; }
+        .answer-block strong { display: block; margin-bottom: 3px; color: var(--primary); font-size: 0.78rem; text-transform: uppercase; }
+        .answer-list { display: flex; flex-direction: column; gap: 2px; }
+        .answer-item {
+            padding: 4px 10px; border-radius: 5px; border: 1px solid #e4edec;
+            background: #ffffff; font-weight: 500; font-size: 0.88rem;
+        }
+        .answer-correct { background: #e8f7ef; border-color: #a8d8c0; color: #0a4f3a; }
+        .answer-wrong { background: #fde9ea; border-color: #f5b8b8; color: #8a1f2b; }
+        .user-choice { outline: 2px dashed rgba(0, 0, 0, 0.06); }
+        .explanation {
+            margin-top: 5px; padding: 8px 13px; border-radius: 7px;
+            background: #f0f8f6; color: #065f4a; font-size: 0.88rem;
+            line-height: 1.55; border-left: 4px solid var(--accent);
+        }
+        .explanation.wrong { background: #fdf1f1; color: #7a1f1f; border-left-color: #e68080; }
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            color: #fff; border: none; padding: 0.55rem 1.8rem;
+            border-radius: var(--radius); font-weight: 600; font-size: 0.95rem;
+            cursor: pointer; transition: transform 0.15s, box-shadow 0.2s;
+            box-shadow: 0 4px 14px rgba(26, 107, 107, 0.25);
+        }
+        .btn:hover { transform: scale(1.02); box-shadow: 0 6px 24px rgba(26, 107, 107, 0.32); }
+        .btn:active { transform: scale(0.96); }
+        .btn-sm {
+            padding: 0.35rem 1.1rem; font-size: 0.82rem;
+            border-radius: 8px; margin-top: 0.5rem;
+        }
+        .submit-wrap { text-align: center; margin: 1.5rem 0 1.8rem; }
+        .result {
+            margin-top: 1.5rem; padding: 1.5rem 1.5rem 0.8rem;
+            background: #eaf6f4; border-radius: var(--radius);
+            text-align: center; display: none; border: 1px solid #b8dbd6;
+        }
+        .result h3 { font-size: 1.1rem; font-weight: 600; color: var(--dark); }
+        .score { font-size: 2.4rem; font-weight: 800; color: var(--primary); margin: 0.1rem 0 0.2rem; }
+        .text-muted { color: #4f6e6e; font-size: 0.9rem; }
+        .hidden { display: none !important; }
+        .essay-answer {
+            margin-top: 0.8rem; padding: 1rem 1.2rem;
+            background: #f0f8f6; border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            font-size: 0.92rem; line-height: 1.6;
+            display: none;
+        }
+        .essay-answer.show { display: block; }
+        .essay-answer h4 { color: var(--primary); margin-bottom: 0.4rem; font-size: 0.95rem; }
+        .essay-answer ul, .essay-answer ol { margin-left: 1.2rem; margin-bottom: 0.5rem; }
+        .essay-answer li { margin-bottom: 0.2rem; }
+        .saq-block {
+            background: #f7fbfa; border-radius: 10px; padding: 1rem 1.2rem;
+            margin-bottom: 1.5rem; border-left: 6px solid var(--primary);
+        }
+        .saq-block .saq-title {
+            font-size: 1.05rem; font-weight: 700; color: var(--primary);
+            margin-bottom: 0.6rem;
+        }
+        .saq-block .saq-text {
+            font-size: 0.93rem; line-height: 1.6; margin-bottom: 0.8rem;
+        }
+        @media (max-width: 700px) {
+            body { padding-top: 68px; }
+            .logo h1 { font-size: 0.95rem; }
+            .header-inner { padding: 0 1rem; flex-direction: column; align-items: stretch; gap: 0.2rem; }
+            .badge { align-self: flex-start; }
+            .question { padding: 0.9rem 0.9rem 0.1rem 0.9rem; }
+            .section-title { font-size: 1.05rem; }
+            .score { font-size: 2rem; }
+            .btn { padding: 0.5rem 1.2rem; font-size: 0.85rem; }
+            .tab-btn { padding: 0.4rem 1.2rem; font-size: 0.85rem; }
+        }
+        @media (max-width: 420px) {
+            .logo h1 { font-size: 0.8rem; }
+            .options label { font-size: 0.85rem; padding: 0.35rem 0.65rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-inner">
+            <div class="logo">
+                <i class="fas fa-microscope"></i>
+                <h1>Cell Structure & Function –  ToToZ Quiz</h1>
+            </div>
+            <span class="badge"><i class="fas fa-pencil-alt"></i> &nbsp;All Sections</span>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+
+            <div class="refresh-note">
+                <i class="fas fa-sync-alt"></i>
+                <span><strong>Random selection:</strong> Each refresh picks <strong>15 MCQs</strong> and <strong>5 SAQs</strong> from the full reservoir. Reload the page to get a new set.</span>
+            </div>
+
+            <div class="tab-bar">
+                <button class="tab-btn active" data-target="A">✅ Section A – MCQs</button>
+                <button class="tab-btn" data-target="B">📝 Section B – SAQs</button>
+            </div>
+
+            <!-- ==================== SECTION A ==================== -->
+            <div id="panel-A" class="tab-panel">
+                <div class="section-title">
+                    <i class="fas fa-list-ul"></i> Section A – Multiple Choice Questions
+                    <span class="count" id="count-A">0</span>
+                </div>
+                <p class="section-subtitle">Circle the most appropriate answer. Select an option for each question, then click <strong>Submit All MCQs</strong> below.</p>
+                <form id="form-A">
+                    <div id="container-A"></div>
+                    <div class="submit-wrap">
+                        <button type="button" class="btn" onclick="submitSectionA()">
+                            <i class="fas fa-check-circle"></i> Submit All MCQs
+                        </button>
+                    </div>
+                </form>
+                <div class="result" id="result-A">
+                    <h3><i class="fas fa-chart-simple"></i> Your Score</h3>
+                    <div class="score" id="score-A">0</div>
+                    <p class="text-muted">Review the feedback below each question.</p>
+                </div>
+            </div>
+
+            <!-- ==================== SECTION B ==================== -->
+            <div id="panel-B" class="tab-panel hidden">
+                <div class="section-title">
+                    <i class="fas fa-pen-fancy"></i> Section B – Short Answer Questions
+                    <span class="count" id="count-B">0</span>
+                </div>
+                <p class="section-subtitle">Answer ALL questions. Click <strong>Show Answer</strong> to reveal the model answer for each question.</p>
+                <div id="container-B"></div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+    /* =====================================================================
+       FULL RESERVOIR — SECTION A (50 MCQs, each with 5 options & paragraph explanations)
+       ===================================================================== */
+    const sectionAPool = [
+        {
+            q: `Which of the following best defines a cell?`,
+            options: [
+                `A group of tissues performing a specific function`,
+                `The basic structural, functional, and biological unit of all known living organisms`,
+                `A membrane-bound organelle containing genetic material`,
+                `A specialized structure found only in multicellular organisms`,
+                `A non-living entity that forms the building blocks of life`
+            ],
+            correct: `B`,
+            explanation: `A cell is universally defined as the basic structural, functional, and biological unit of all known living organisms. It is the smallest unit of life that can independently carry out all vital processes—metabolism, growth, response to stimuli, and reproduction. Option A describes a tissue or organ, option C describes a nucleus or organelle, option D incorrectly restricts cells to multicellular organisms (unicellular organisms are single cells), and option E is wrong because cells are living entities. This definition underscores the cell's role as the fundamental building block of all life.`
+        },
+        {
+            q: `Which of the following is NOT a difference between plant and animal cells?`,
+            options: [
+                `Plant cells have a cell wall; animal cells do not`,
+                `Plant cells have chloroplasts; animal cells do not`,
+                `Plant cells lack lysosomes; animal cells have lysosomes`,
+                `Plant cells have a large central vacuole; animal cells have numerous small vacuoles`,
+                `Plant cells lack a plasma membrane; animal cells have one`
+            ],
+            correct: `E`,
+            explanation: `Both plant and animal cells possess a plasma membrane—it is a universal feature of all cells, serving as the selective barrier that regulates material exchange. Therefore, statement E is false. The other options are genuine differences: plant cells have a rigid cell wall (made of cellulose) for structural support, contain chloroplasts for photosynthesis, typically have a large central vacuole for storage and turgor, and generally lack lysosomes (their digestive functions are performed by the vacuole). Animal cells lack a cell wall and chloroplasts, have small scattered vacuoles, and possess lysosomes.`
+        },
+        {
+            q: `The plasma membrane is described as a "selective barrier." What does this mean?`,
+            options: [
+                `It allows all substances to pass freely in and out of the cell`,
+                `It completely blocks all substances from entering or leaving the cell`,
+                `It regulates the flow of materials into and out of the cell, maintaining an appropriate internal environment`,
+                `It only allows water to pass through while blocking everything else`,
+                `It randomly selects which molecules to allow through based on size alone`
+            ],
+            correct: `C`,
+            explanation: `A selective barrier means the plasma membrane regulates what enters and exits the cell, allowing some substances to pass while restricting others. This selectivity is crucial for maintaining the appropriate internal environment for cellular activities—keeping nutrients in, excluding harmful substances, and allowing waste products to exit. It is not completely permeable (option A), completely impermeable (option B), or exclusively water-permeable (option D). The selection is not random but based on specific properties such as size, charge, lipid solubility, and the presence of transport proteins.`
+        },
+        {
+            q: `Which model of the plasma membrane describes it as a "dynamic membrane having a lipid bilayer with proteins embedded within it"?`,
+            options: [
+                `Overton Model`,
+                `Gorter and Grendel Model`,
+                `Davson-Danielli Model`,
+                `Singer & Nicolson Model`,
+                `Robertson Model`
+            ],
+            correct: `D`,
+            explanation: `The Singer & Nicolson model, proposed in 1972, is known as the fluid mosaic model. It describes the plasma membrane as a dynamic, fluid structure consisting of a lipid bilayer with proteins embedded within or attached to it—like a mosaic. This model replaced earlier static models by emphasizing membrane fluidity and protein mobility. The Davson-Danielli model (option C) proposed a sandwich-like structure with proteins coating both sides of the lipid bilayer, but this was later disproven. The Overton, Gorter-Grendel, and Robertson models were earlier proposals with different structural assumptions.`
+        },
+        {
+            q: `In the context of membrane lipids, what is the primary role of cholesterol?`,
+            options: [
+                `To form the hydrophobic tails of phospholipids`,
+                `To act as a fluid buffer, preventing the membrane from becoming too rigid in cold or too fluid in heat`,
+                `To serve as a receptor for signaling molecules`,
+                `To form channels for ion transport`,
+                `To act as a molecular "signature" for cell recognition`
+            ],
+            correct: `B`,
+            explanation: `Cholesterol is a crucial component of the plasma membrane that acts as a fluid buffer. At low temperatures, it prevents the phospholipid tails from packing too closely together, thereby preventing the membrane from becoming too rigid. At high temperatures, it restricts the movement of phospholipids, preventing the membrane from becoming too fluid. This buffering effect maintains membrane stability and optimal fluidity across a range of temperatures. Cholesterol does not form phospholipid tails (that is the role of fatty acids), does not act as receptors (that is the role of proteins), does not form ion channels (integral proteins do), and is not responsible for cell recognition (the glycocalyx serves that function).`
+        },
+        {
+            q: `Which of the following is a characteristic of integral (intrinsic) proteins?`,
+            options: [
+                `They are loosely attached to the cell membrane by electrostatic interactions`,
+                `They are not embedded in the cell membrane`,
+                `They are anchored to and embedded in the cell membrane through hydrophobic interactions`,
+                `They are only found on the inner surface of the plasma membrane`,
+                `They function solely as signaling proteins`
+            ],
+            correct: `C`,
+            explanation: `Integral (intrinsic) proteins are firmly embedded within the lipid bilayer, anchored by hydrophobic interactions between their hydrophobic amino acid regions and the hydrophobic tails of phospholipids. They may span the entire membrane (transmembrane proteins) or be partially embedded. They cannot be easily removed without disrupting the membrane. In contrast, peripheral (extrinsic) proteins are loosely attached to the membrane surface via electrostatic interactions (option A). Integral proteins are not exclusively on the inner surface, and they perform diverse functions including transport, signaling, and acting as receptors or antigens—not solely signaling.`
+        },
+        {
+            q: `The glycocalyx, which acts as a molecular "signature" enabling cells to recognize one another, is composed of:`,
+            options: [
+                `Phospholipids and cholesterol`,
+                `Integral proteins only`,
+                `Carbohydrate portions of glycolipids and glycoproteins`,
+                `Peripheral proteins only`,
+                `Nucleic acids and lipids`
+            ],
+            correct: `C`,
+            explanation: `The glycocalyx is the carbohydrate-rich layer on the outer surface of the plasma membrane. It is composed of the carbohydrate portions of glycolipids (carbohydrate attached to lipid) and glycoproteins (carbohydrate attached to protein). These carbohydrate chains vary in pattern from one cell to another, serving as a molecular "signature" that enables cells to recognize one another—a phenomenon critical for immune responses, tissue formation, and cell-cell interactions. Phospholipids and cholesterol form the lipid bilayer (not the glycocalyx), and integral and peripheral proteins are protein components, not the carbohydrate signature itself.`
+        },
+        {
+            q: `Which type of intercellular junction consists of intercellular channels in the plasma membrane of adjacent cells?`,
+            options: [
+                `Tight junction`,
+                `Desmosome`,
+                `Gap junction`,
+                `Hemidesmosome`,
+                `Adherens junction`
+            ],
+            correct: `C`,
+            explanation: `Gap junctions are communicating junctions that consist of intercellular channels connecting the cytoplasm of adjacent cells. These channels allow the direct passage of small molecules and ions between cells, enabling rapid communication and coordination. Tight junctions (option A) seal the space between cells to prevent leakage; desmosomes (option B) are anchoring junctions that tie cells together via intermediate filaments; hemidesmosomes (option D) anchor cells to the extracellular matrix; and adherens junctions (option E) connect cells via actin filaments. Only gap junctions form functional channels for direct cytoplasmic communication.`
+        },
+        {
+            q: `Gap junctions are composed of six connexon proteins arranged to form which structure?`,
+            options: [
+                `A belt-like junction`,
+                `A doughnut-shaped structure`,
+                `A cytoplasmic plaque`,
+                `A sandwich-like structure`,
+                `A lipid bilayer`
+            ],
+            correct: `B`,
+            explanation: `Gap junctions are formed by connexon proteins—each connexon consists of six connexin subunits arranged in a ring, creating a doughnut-shaped (or hexagonal) structure with a central pore. When connexons from adjacent cells align, they form a continuous channel that connects the cytoplasm of the two cells. This doughnut-shaped arrangement creates an aqueous pore through which ions and small molecules (up to about 1 kDa) can pass. The belt-like junction (option A) describes tight junctions; a cytoplasmic plaque (option C) is part of desmosomes; a sandwich-like structure (option D) describes the Davson-Danielli model; and a lipid bilayer (option E) is the membrane structure itself.`
+        },
+        {
+            q: `Which of the following is a function of gap junctions?`,
+            options: [
+                `Preventing leakage of fluid between cells`,
+                `Anchoring cells to the extracellular fluid`,
+                `Playing a role in cardiac muscle contraction and signal transfer in the brain`,
+                `Forming a continuous belt around the cell perimeter`,
+                `Connecting intermediate filaments to the extracellular matrix`
+            ],
+            correct: `C`,
+            explanation: `Gap junctions allow direct electrical and chemical communication between adjacent cells. In cardiac muscle, gap junctions (at intercalated discs) enable action potentials to spread rapidly from cell to cell, allowing the heart muscle to contract as a coordinated unit. In the brain, gap junctions between neurons and glial cells facilitate signal transfer and metabolic coupling. Preventing fluid leakage (option A) is the role of tight junctions; anchoring cells to the extracellular fluid (option B) is the role of hemidesmosomes; forming a belt (option D) describes tight junctions; and connecting intermediate filaments to the ECM (option E) describes hemidesmosomes.`
+        },
+        {
+            q: `Tight junctions are also known as:`,
+            options: [
+                `Macula adherens`,
+                `Zonula occludens`,
+                `Nexus`,
+                `Desmosomes`,
+                `Hemidesmosomes`
+            ],
+            correct: `B`,
+            explanation: `Tight junctions are also called zonula occludens (meaning "occluding belt"). This name reflects their belt-like structure that encircles the apical region of epithelial cells, sealing the space between adjacent cells to prevent the leakage of fluid and solutes. Macula adherens (option A) is another name for desmosomes; nexus (option C) is another name for gap junctions; desmosomes (option D) are anchoring junctions; and hemidesmosomes (option E) anchor cells to the extracellular matrix. Zonula occludens specifically describes the occluding, belt-like tight junction.`
+        },
+        {
+            q: `Which proteins link transmembrane proteins (occludin and claudin) with spectrin in tight junctions?`,
+            options: [
+                `Cadherin and integrin`,
+                `ZO-1 and ZO-2`,
+                `Connexon and cadherin`,
+                `Actin and myosin`,
+                `Keratin and desmoplakin`
+            ],
+            correct: `B`,
+            explanation: `In tight junctions, the transmembrane proteins occludin and claudin interact with cytoplasmic plaque proteins ZO-1 and ZO-2 (zonula occludens proteins). These ZO proteins serve as linkers, connecting the transmembrane proteins to the actin cytoskeleton (specifically spectrin, a cytoskeletal protein). This linkage is essential for the structural integrity and barrier function of tight junctions. Cadherin and integrin (option A) are involved in anchoring junctions; connexon (option C) forms gap junctions; actin and myosin (option D) are contractile proteins; and keratin and desmoplakin (option E) are involved in desmosomes.`
+        },
+        {
+            q: `What is the primary function of tight junctions?`,
+            options: [
+                `To allow communication between cells`,
+                `To anchor cells to the extracellular matrix`,
+                `To prevent leakage of fluid and regulate the movement of water and solutes between epithelial layers`,
+                `To provide structural support by linking intermediate filaments`,
+                `To form channels for the passage of ions`
+            ],
+            correct: `C`,
+            explanation: `Tight junctions form a seal between adjacent epithelial cells, preventing the leakage of fluid and solutes through the space between cells (the paracellular pathway). This creates a barrier that regulates what can pass between cells, contributing to the selective permeability of epithelial layers. This function is critical in organs like the gastrointestinal tract (preventing backflow of contents) and the blood-brain barrier. Allowing communication (option A) is the role of gap junctions; anchoring to ECM (option B) is hemidesmosomes; providing structural support via intermediate filaments (option D) is desmosomes; and forming ion channels (option E) is the role of gap junctions or ion channel proteins.`
+        },
+        {
+            q: `Where are tight junctions typically found?`,
+            options: [
+                `In the basal region of the cell`,
+                `In the apical region around the cell's circumference`,
+                `Throughout the entire cell membrane`,
+                `Only in muscle tissues`,
+                `Only in the epidermis of the skin`
+            ],
+            correct: `B`,
+            explanation: `Tight junctions are characteristically located in the apical region of epithelial cells, forming a belt-like band around the cell's circumference near its apical (top) surface. This strategic location allows them to seal the paracellular pathway and separate the apical (luminal) compartment from the basolateral compartment, which is essential for directional transport and barrier function. They are not found in the basal region (option A), throughout the entire membrane (option C), exclusively in muscle (option D), or only in the epidermis (option E). Their apical location is a defining feature of epithelial tight junctions.`
+        },
+        {
+            q: `Which type of anchoring junction ties a cell to another cell using cadherin and intermediate filaments?`,
+            options: [
+                `Hemidesmosome`,
+                `Adherens junction`,
+                `Desmosome`,
+                `Gap junction`,
+                `Tight junction`
+            ],
+            correct: `C`,
+            explanation: `Desmosomes (also called maculae adherens) are anchoring junctions that tie adjacent cells together. They use cadherin proteins (specifically desmoglein and desmocollin) as transmembrane linkers and connect to intermediate filaments (such as keratin) via cytoplasmic plaques. This provides strong mechanical strength to tissues subjected to stress, such as the epidermis of the skin and cardiac muscle. Hemidesmosomes (option A) tie cells to the ECM using integrins; adherens junctions (option B) use cadherins but connect to actin filaments; gap junctions (option D) are communicating junctions; and tight junctions (option E) seal the intercellular space.`
+        },
+        {
+            q: `Which type of anchoring junction ties a cell to the extracellular fluid (ECF) using integrins and intermediate filaments?`,
+            options: [
+                `Desmosome`,
+                `Hemidesmosome`,
+                `Adherens junction`,
+                `Gap junction`,
+                `Tight junction`
+            ],
+            correct: `B`,
+            explanation: `Hemidesmosomes are anchoring junctions that attach the basal surface of epithelial cells to the underlying extracellular matrix (ECM/ECF). They use integrins (specifically α6β4 integrin) as transmembrane linkers and connect to intermediate filaments (keratin) inside the cell. This attachment is essential for stable adhesion of epithelial sheets to basement membranes. Desmosomes (option A) tie cells to other cells; adherens junctions (option C) connect cells via actin filaments; gap junctions (option D) are communicating junctions; and tight junctions (option E) seal the space between cells. Hemidesmosomes are the cell-to-ECM anchoring junctions.`
+        },
+        {
+            q: `Desmosomes are also known as:`,
+            options: [
+                `Zonula occludens`,
+                `Maculae adherens`,
+                `Nexus`,
+                `Hemidesmosomes`,
+                `Gap junctions`
+            ],
+            correct: `B`,
+            explanation: `Desmosomes are also called maculae adherens (meaning "adhering spot"). The name reflects their spot-like (macula) rather than belt-like structure, as they form localized patches of strong adhesion between adjacent cells. Zonula occludens (option A) is the tight junction; nexus (option C) is the gap junction; hemidesmosomes (option D) anchor cells to the ECM; and gap junctions (option E) are communicating junctions. The term maculae adherens distinguishes desmosomes from the belt-like adherens junctions (zonula adherens) and tight junctions (zonula occludens).`
+        },
+        {
+            q: `What is the approximate gap between cells at a desmosome junction?`,
+            options: [
+                `10 nm`,
+                `20 nm`,
+                `30 nm`,
+                `40 nm`,
+                `50 nm`
+            ],
+            correct: `C`,
+            explanation: `At a desmosome junction, the intercellular gap (the space between the plasma membranes of adjacent cells) is approximately 30 nm. This gap is bridged by the extracellular domains of cadherin proteins (desmoglein and desmocollin), which interact in the extracellular space to hold the cells together. The cytoplasmic plaques on each side anchor the cadherins to intermediate filaments. This 30 nm gap is a characteristic structural feature of desmosomes, distinguishing them from tight junctions (which nearly obliterate the intercellular space) and gap junctions (which have a narrower gap of about 2-4 nm for channel formation).`
+        },
+        {
+            q: `In desmosomes, which protein joins the cytoplasmic plaques of two cells?`,
+            options: [
+                `Integrin`,
+                `Cadherin`,
+                `Connexon`,
+                `Occludin`,
+                `Claudin`
+            ],
+            correct: `B`,
+            explanation: `In desmosomes, cadherin proteins (specifically desmoglein and desmocollin) are the transmembrane linkers. Their extracellular domains join the cytoplasmic plaques of two adjacent cells by interacting across the intercellular space. The intracellular domains of cadherins attach to the cytoplasmic plaque, which in turn connects to intermediate filaments. Integrin (option A) is used in hemidesmosomes; connexon (option C) forms gap junctions; occludin and claudin (options D and E) are tight junction proteins. Cadherin is the defining adhesion molecule of desmosomes (and adherens junctions).`
+        },
+        {
+            q: `Desmosomes are found in which of the following tissues?`,
+            options: [
+                `Epidermis of skin and muscle tissues`,
+                `Gastrointestinal tract lining`,
+                `Cardiac muscle only`,
+                `Brain tissue only`,
+                `Plant cell walls`
+            ],
+            correct: `A`,
+            explanation: `Desmosomes are abundant in tissues that experience significant mechanical stress. They are prominently found in the epidermis of the skin (where they hold keratinocytes together) and in muscle tissues—both cardiac muscle (where they are part of intercalated discs) and skeletal muscle. They are also present in other epithelial tissues. While the gastrointestinal tract lining (option B) has epithelial cells with junctions, desmosomes are not exclusively or most characteristically found there; cardiac muscle only (option C) and brain tissue only (option D) are too restrictive; and plant cell walls (option E) do not contain desmosomes (plant cells have different junction structures).`
+        },
+        {
+            q: `Which of the following diseases is associated with desmosomes?`,
+            options: [
+                `Diabetes mellitus`,
+                `Pemphigus`,
+                `Hypertension`,
+                `Anemia`,
+                `Osteoporosis`
+            ],
+            correct: `B`,
+            explanation: `Pemphigus is an autoimmune disease in which antibodies attack desmosomal proteins (desmoglein), causing the desmosomes to break apart. This leads to the separation of epidermal cells (acantholysis) and the formation of painful blisters on the skin and mucous membranes. The document mentions pemphigus (and Hailey-Hailey disease) as examples of desmosome-related diseases. Diabetes mellitus (option A) is related to insulin, hypertension (option C) to blood pressure regulation, anemia (option D) to red blood cells, and osteoporosis (option E) to bone density—none of these are directly associated with desmosome dysfunction.`
+        },
+        {
+            q: `Which of the following is a characteristic of the Davson-Danielli model of the plasma membrane?`,
+            options: [
+                `Single layer of lipid`,
+                `Lipid bilayer`,
+                `Sandwich model with globular proteins on each side`,
+                `Fluid mosaic model`,
+                `Protein-lined channel model`
+            ],
+            correct: `C`,
+            explanation: `The Davson-Danielli model (proposed in 1935) described the plasma membrane as a "sandwich" structure: a lipid bilayer coated on both the outer and inner surfaces with globular proteins. This model was later replaced by the Singer & Nicolson fluid mosaic model. A single layer of lipid (option A) is incorrect—it is a bilayer; lipid bilayer (option B) is true but incomplete (the key feature is the protein coating); fluid mosaic model (option D) is the Singer & Nicolson model, not Davson-Danielli; and protein-lined channel model (option E) describes a different concept. The sandwich model with proteins on each side is the distinguishing characteristic of Davson-Danielli.`
+        },
+        {
+            q: `Phospholipids are described as having hydrophobic and hydrophilic properties. What does this mean?`,
+            options: [
+                `They are completely soluble in water`,
+                `They have a phosphate group (hydrophilic head) and a fatty acid tail (hydrophobic tail)`,
+                `They are only found in plant cells`,
+                `They repel both water and lipids`,
+                `They are rigid and immobile molecules`
+            ],
+            correct: `B`,
+            explanation: `Phospholipids are amphipathic molecules, meaning they have both hydrophilic (water-loving) and hydrophobic (water-fearing) regions. The hydrophilic head contains a phosphate group and is polar, interacting favorably with water. The hydrophobic tails are composed of fatty acid chains and are nonpolar, repelling water. This dual nature causes phospholipids to spontaneously arrange into a bilayer in aqueous environments, with heads facing outward toward water and tails facing inward, away from water. This property is fundamental to membrane structure. Phospholipids are not completely water-soluble (option A), are found in all cells (option C), do not repel both water and lipids (option D), and are not rigid (option E).`
+        },
+        {
+            q: `Which of the following is an example of an integral protein function?`,
+            options: [
+                `Acting as a signaling protein`,
+                `Acting as an ion channel, transport protein, receptor, or antigen`,
+                `Forming the glycocalyx`,
+                `Acting as an integrin`,
+                `Serving as a peripheral membrane protein`
+            ],
+            correct: `B`,
+            explanation: `Integral proteins are embedded within the lipid bilayer and perform a wide variety of functions. They can act as ion channels (allowing specific ions to pass), transport proteins (carrying molecules across the membrane), receptors (binding signaling molecules), and antigens (identifying the cell to the immune system). While signaling proteins (option A) can be integral, option B is more comprehensive and accurate. The glycocalyx (option C) is formed by carbohydrates, not integral proteins per se (though glycoproteins contribute). Integrins (option D) are a specific type of integral protein, but option B encompasses the broader range of functions. Peripheral proteins (option E) are not integral proteins.`
+        },
+        {
+            q: `Peripheral proteins are described as being:`,
+            options: [
+                `Embedded within the lipid bilayer`,
+                `Covalently bound to membrane components`,
+                `Loosely attached to the cell membrane by electrostatic interactions`,
+                `Anchored through hydrophobic interactions`,
+                `Only found on the outer surface of the membrane`
+            ],
+            correct: `C`,
+            explanation: `Peripheral (extrinsic) proteins are not embedded in the lipid bilayer. Instead, they are loosely attached to the membrane surface (either the inner or outer surface) through electrostatic interactions and hydrogen bonds with integral proteins or with the polar heads of phospholipids. Because they are not anchored by hydrophobic interactions, they can be relatively easily removed without disrupting the membrane. Embedded within the bilayer (option A) and anchored through hydrophobic interactions (option D) describe integral proteins; covalent binding (option B) is not the primary attachment mode; and being only on the outer surface (option E) is incorrect—peripheral proteins can be on either side.`
+        },
+        {
+            q: `Which of the following is NOT a type of anchoring junction?`,
+            options: [
+                `Desmosome`,
+                `Hemidesmosome`,
+                `Adherens junction`,
+                `Gap junction`,
+                `All of the above are anchoring junctions`
+            ],
+            correct: `D`,
+            explanation: `Gap junctions are communicating junctions, not anchoring junctions. They form channels that allow the direct passage of ions and small molecules between cells, facilitating communication and coordination. Anchoring junctions—which provide mechanical strength by connecting cells to each other or to the extracellular matrix—include desmosomes (cell-to-cell via intermediate filaments), hemidesmosomes (cell-to-ECM via intermediate filaments), and adherens junctions (cell-to-cell or cell-to-ECM via actin filaments). Therefore, gap junction is the exception among the listed options.`
+        },
+        {
+            q: `Intercellular junctions are mostly found in which tissue type?`,
+            options: [
+                `Muscle tissue`,
+                `Nerve tissue`,
+                `Epithelial tissue`,
+                `Connective tissue`,
+                `Adipose tissue`
+            ],
+            correct: `C`,
+            explanation: `Intercellular junctions are most abundant and prominent in epithelial tissue. Epithelial cells are tightly packed and form continuous sheets that line body surfaces and cavities, so they require extensive junctional complexes to maintain tissue integrity, regulate permeability, and coordinate function. Tight junctions, adherens junctions, desmosomes, and gap junctions are all well-represented in epithelial tissues. While junctions also occur in other tissues (e.g., intercalated discs in cardiac muscle), epithelial tissue is the classic and most widespread location for intercellular junctions. Muscle, nerve, connective, and adipose tissues have fewer or different types of junctions.`
+        },
+        {
+            q: `In adherens junctions, which cytoskeletal anchor is involved?`,
+            options: [
+                `Intermediate filaments`,
+                `Actin filaments`,
+                `Microtubules`,
+                `Keratin filaments`,
+                `Spectrin filaments`
+            ],
+            correct: `B`,
+            explanation: `Adherens junctions use cadherin proteins as transmembrane linkers and connect to actin filaments (microfilaments) in the cytoplasm. This linkage to the actin cytoskeleton allows adherens junctions to form a continuous belt (zonula adherens) around the cell, providing mechanical strength and helping to coordinate cell shape and movement. Intermediate filaments (option A) and keratin filaments (option D) are the cytoskeletal anchors for desmosomes and hemidesmosomes. Microtubules (option C) are not the primary anchor for adherens junctions. Spectrin (option E) is a cytoskeletal protein associated with the plasma membrane but not the defining anchor of adherens junctions.`
+        },
+        {
+            q: `Which of the following correctly pairs a junction with its transmembrane linker?`,
+            options: [
+                `Desmosome – Integrin`,
+                `Hemidesmosome – Cadherin`,
+                `Adherens junction – Cadherin/Integrins`,
+                `Gap junction – Cadherin`,
+                `Tight junction – Integrin`
+            ],
+            correct: `C`,
+            explanation: `Adherens junctions use cadherins (in cell-to-cell junctions) or integrins (in cell-to-ECM junctions) as transmembrane linkers, connecting to actin filaments. Desmosomes (option A) use cadherins, not integrins; hemidesmosomes (option B) use integrins, not cadherins; gap junctions (option D) use connexons (connexins), not cadherins; and tight junctions (option E) use occludin and claudin, not integrins. The pairing of adherens junction with cadherin/integrin is correct and reflects their dual role in cell-cell and cell-ECM adhesion.`
+        },
+        {
+            q: `The plasma membrane plays a key role in communication. Which of the following supports this statement?`,
+            options: [
+                `It contains cholesterol`,
+                `It has a lipid bilayer`,
+                `It contains receptors and signaling proteins`,
+                `It is a selective barrier`,
+                `It is flexible`
+            ],
+            correct: `C`,
+            explanation: `The plasma membrane's role in communication is primarily mediated by its protein components—specifically receptors and signaling proteins. Receptors on the cell surface bind specific signaling molecules (hormones, neurotransmitters, growth factors) and transmit signals into the cell. Signaling proteins participate in intracellular signaling cascades. Cholesterol (option A) and the lipid bilayer (option B) provide structural and permeability functions but are not directly involved in communication. The selective barrier property (option D) regulates material exchange but is not communication per se, and flexibility (option E) is a physical property. Receptors and signaling proteins are the key communication molecules.`
+        },
+        {
+            q: `Which model of the plasma membrane was the first to propose a lipid bilayer?`,
+            options: [
+                `Overton Model`,
+                `Gorter and Grendel Model`,
+                `Davson-Danielli Model`,
+                `Singer & Nicolson Model`,
+                `Unit Membrane Model`
+            ],
+            correct: `B`,
+            explanation: `The Gorter and Grendel model (1925) was the first to propose that the plasma membrane contains a lipid bilayer. By measuring the surface area of lipids extracted from red blood cells and comparing it to the cell surface area, they found that the lipids could form a bilayer—two molecules thick. This was a landmark finding, although their model did not account for proteins. The Overton model (option A) proposed that the membrane is lipid-based but not specifically a bilayer; Davson-Danielli (option C) built on the bilayer concept; Singer & Nicolson (option D) refined it into the fluid mosaic model; and the Unit Membrane Model (option E) was a later electron microscopy-based concept.`
+        },
+        {
+            q: `What is the function of the glycocalyx?`,
+            options: [
+                `To provide energy for the cell`,
+                `To act as a molecular signature for cell recognition`,
+                `To form tight junctions`,
+                `To anchor cells to the extracellular matrix`,
+                `To transport ions across the membrane`
+            ],
+            correct: `B`,
+            explanation: `The glycocalyx is the carbohydrate-rich layer on the outer surface of the plasma membrane, composed of the carbohydrate portions of glycolipids and glycoproteins. Its primary function is to serve as a molecular "signature" that enables cells to recognize one another. Because the carbohydrate patterns vary from cell to cell, the glycocalyx acts like a cellular ID tag, playing crucial roles in immune recognition, tissue formation, and cell-cell interactions. It does not provide energy (option A), form tight junctions (option C), anchor cells to ECM (option D—that is hemidesmosomes), or transport ions (option E—that is integral proteins).`
+        },
+        {
+            q: `Which of the following is true regarding gap junctions?`,
+            options: [
+                `They prevent leakage of fluid between cells`,
+                `They are found only in plant cells`,
+                `They consist of six connexon proteins forming a doughnut-shaped structure`,
+                `They are a type of anchoring junction`,
+                `They tie cells to the extracellular fluid`
+            ],
+            correct: `C`,
+            explanation: `Gap junctions are formed by connexon proteins—each connexon consists of six connexin subunits arranged in a ring, creating a doughnut-shaped structure with a central pore. When connexons from adjacent cells align, they form a continuous channel for communication. Preventing fluid leakage (option A) is the role of tight junctions; gap junctions are found in animal cells, not plant cells (option B); they are communicating junctions, not anchoring junctions (option D); and they do not tie cells to the ECM (option E—that is hemidesmosomes). The doughnut-shaped connexon arrangement is a defining structural feature of gap junctions.`
+        },
+        {
+            q: `Tight junctions are found in the apical region of cells lining which organ system?`,
+            options: [
+                `Respiratory tract`,
+                `Gastrointestinal tract`,
+                `Cardiovascular system`,
+                `Nervous system`,
+                `Skeletal system`
+            ],
+            correct: `B`,
+            explanation: `Tight junctions are prominently found in the apical region of epithelial cells lining the gastrointestinal tract. Here, they form a seal between adjacent epithelial cells, preventing the leakage of digestive fluids and regulating the absorption of nutrients and water. This barrier function is essential for maintaining the separation between the gut lumen and the internal environment. While tight junctions also exist in the respiratory tract (option A) and other epithelial tissues, the gastrointestinal tract is a classic and well-documented example. The cardiovascular, nervous, and skeletal systems are not primarily lined by tight-junction-containing epithelium in the same way.`
+        },
+        {
+            q: `Which of the following is a function of tight junctions?`,
+            options: [
+                `Allowing signal transfer in the brain`,
+                `Preventing mobility of transmembrane proteins`,
+                `Anchoring cells to the extracellular matrix`,
+                `Forming cytoplasmic plaques`,
+                `Joining intermediate filaments of adjacent cells`
+            ],
+            correct: `B`,
+            explanation: `In addition to their barrier function (preventing fluid leakage), tight junctions also restrict the mobility of transmembrane proteins by forming a fence-like barrier within the membrane. This helps maintain the distinct composition of the apical and basolateral membrane domains, which is essential for directional transport and cell polarity. Allowing signal transfer in the brain (option A) is a function of gap junctions; anchoring cells to ECM (option C) is hemidesmosomes; forming cytoplasmic plaques (option D) is part of desmosomes; and joining intermediate filaments (option E) is also a desmosome function. Preventing transmembrane protein mobility is a key but often overlooked function of tight junctions.`
+        },
+        {
+            q: `In the table of anchoring junctions, which junction ties the cell to the extracellular fluid (ECF)?`,
+            options: [
+                `Desmosome`,
+                `Adherens junction`,
+                `Hemidesmosome`,
+                `Gap junction`,
+                `Tight junction`
+            ],
+            correct: `C`,
+            explanation: `Hemidesmosomes are the anchoring junctions that tie cells to the extracellular matrix (ECM/ECF). They use integrins as transmembrane linkers and connect to intermediate filaments (keratin) inside the cell, providing stable adhesion of epithelial cells to the basement membrane. Desmosomes (option A) and adherens junctions (option B) primarily tie cells to other cells, not to the ECM (though adherens junctions can also mediate cell-ECM adhesion via integrins). Gap junctions (option D) are communicating junctions, and tight junctions (option E) are sealing junctions. Hemidesmosomes are specifically adapted for cell-to-ECM adhesion.`
+        },
+        {
+            q: `Which of the following statements about desmosomes is correct?`,
+            options: [
+                `They are communicating junctions`,
+                `They form a continuous belt around the cell`,
+                `They connect to intermediate filaments and form a cytoplasmic plaque`,
+                `They are found only in the gastrointestinal tract`,
+                `They consist of connexon proteins`
+            ],
+            correct: `C`,
+            explanation: `Desmosomes are anchoring junctions that connect to intermediate filaments (such as keratin) via cytoplasmic plaques. The plaque is a dense protein complex on the cytoplasmic side of the membrane that anchors the cadherin tails to the intermediate filaments. This structure provides strong mechanical strength. Desmosomes are not communicating junctions (option A—that is gap junctions); they form spot-like patches, not a continuous belt (option B—that is tight junctions or adherens junctions); they are found in many tissues, not only the GI tract (option D); and they do not consist of connexon proteins (option E—that is gap junctions).`
+        },
+        {
+            q: `Gap junctions help in signal transfer in which organ?`,
+            options: [
+                `Heart`,
+                `Liver`,
+                `Brain`,
+                `Lungs`,
+                `Kidneys`
+            ],
+            correct: `C`,
+            explanation: `The document specifically mentions that gap junctions play a role in signal transfer in the brain. In the brain, gap junctions connect neurons and glial cells, allowing the direct passage of ions and small signaling molecules (like cAMP and IP3) that facilitate electrical coupling and metabolic coordination. Gap junctions are also important in the heart (option A) for cardiac muscle contraction, but the document's specific mention of "signal transfer in the brain" points to the brain as the answer. The liver, lungs, and kidneys also have gap junctions, but the document highlights the brain's signal transfer function.`
+        },
+        {
+            q: `Which of the following is NOT a component of the plasma membrane?`,
+            options: [
+                `Phospholipids`,
+                `Cholesterol`,
+                `Proteins`,
+                `Carbohydrates`,
+                `Nucleic acids`
+            ],
+            correct: `E`,
+            explanation: `The plasma membrane is composed of phospholipids (forming the lipid bilayer), cholesterol (a lipid that modulates fluidity), proteins (integral and peripheral, performing diverse functions), and carbohydrates (attached to lipids and proteins forming the glycocalyx). Nucleic acids (DNA and RNA) are not structural components of the plasma membrane—they are found in the nucleus and cytoplasm. While nucleic acids may be present inside the cell, they are not part of the membrane itself. Therefore, nucleic acids are the exception.`
+        },
+        {
+            q: `The "fluid mosaic model" was proposed by:`,
+            options: [
+                `Overton`,
+                `Gorter and Grendel`,
+                `Davson and Danielli`,
+                `Singer and Nicolson`,
+                `Robertson`
+            ],
+            correct: `D`,
+            explanation: `The fluid mosaic model was proposed by S.J. Singer and G.L. Nicolson in 1972. It describes the plasma membrane as a fluid lipid bilayer with proteins embedded within or attached to it—like a mosaic. The "fluid" refers to the dynamic, mobile nature of the lipid and protein components, and the "mosaic" refers to the patchwork arrangement of proteins. This model replaced the earlier Davson-Danielli sandwich model (option C) and remains the accepted model today. Overton (option A), Gorter-Grendel (option B), and Robertson (option E) proposed earlier models with different structural assumptions.`
+        },
+        {
+            q: `Which of the following best describes the function of integral proteins that act as antigens?`,
+            options: [
+                `They transport ions across the membrane`,
+                `They serve as identification markers for the immune system`,
+                `They anchor the cell to the extracellular matrix`,
+                `They form gap junctions`,
+                `They act as fluid buffers`
+            ],
+            correct: `B`,
+            explanation: `Integral proteins that act as antigens serve as identification markers on the cell surface. These antigens (often glycoproteins) are recognized by the immune system, allowing it to distinguish "self" from "foreign" cells. This is crucial for immune tolerance (not attacking the body's own cells) and for immune responses against pathogens or abnormal cells. Ion transport (option A) is a different function of integral proteins; anchoring to ECM (option C) is the role of integrins (a specific type of integral protein, but not the antigen function); gap junction formation (option D) involves connexins; and acting as fluid buffers (option E) is the role of cholesterol.`
+        },
+        {
+            q: `What is the primary function of the plasma membrane's selective barrier property?`,
+            options: [
+                `To allow all substances to enter the cell`,
+                `To establish and maintain the appropriate environment for normal cellular activities`,
+                `To prevent the cell from communicating with other cells`,
+                `To provide structural support to the cell`,
+                `To generate energy for the cell`
+            ],
+            correct: `B`,
+            explanation: `The selective barrier property of the plasma membrane allows the cell to regulate its internal composition—taking in nutrients, excluding harmful substances, and expelling wastes—thereby establishing and maintaining the appropriate environment for normal cellular activities. This is essential for homeostasis. The membrane does not allow all substances to enter (option A), does not prevent communication (option C—it facilitates communication via receptors), does not primarily provide structural support (option D—that is the cytoskeleton or cell wall), and does not generate energy (option E—that is mitochondria). The selective barrier is fundamentally about maintaining the internal environment.`
+        },
+        {
+            q: `Which of the following is an example of a peripheral protein?`,
+            options: [
+                `Ion channel`,
+                `Transport protein`,
+                `Receptor`,
+                `Signaling protein`,
+                `Antigen`
+            ],
+            correct: `D`,
+            explanation: `Peripheral proteins are loosely attached to the membrane surface and include many signaling proteins that associate with the membrane to transmit signals from receptors to intracellular pathways. Ion channels (option A), transport proteins (option B), receptors (option C), and antigens (option E) are typically integral proteins because they need to be embedded in the membrane to perform their functions (channels need a pore through the membrane, receptors span the membrane to transmit signals, antigens are exposed on the cell surface). Signaling proteins, however, can be peripheral—they often dock on the membrane transiently to relay signals.`
+        },
+        {
+            q: `In the context of cell junctions, what does "zonula occludens" mean?`,
+            options: [
+                `Adhering belt`,
+                `Occluding belt`,
+                `Communicating junction`,
+                `Anchoring junction`,
+                `Desmosome`
+            ],
+            correct: `B`,
+            explanation: `Zonula occludens is Latin for "occluding belt." It refers to the tight junction, which forms a belt-like band around the apical region of epithelial cells, sealing the space between cells to prevent leakage (occlusion). The term "zonula" means belt or zone, and "occludens" means occluding or closing. Adhering belt (option A) is zonula adherens (adherens junction); communicating junction (option C) is a gap junction; anchoring junction (option D) is a broad category; and desmosome (option E) is macula adherens. The name directly reflects the tight junction's sealing, belt-like structure.`
+        },
+        {
+            q: `Which of the following is a disease associated with desmosomes?`,
+            options: [
+                `Hailey-Hailey disease`,
+                `Sickle cell anemia`,
+                `Cystic fibrosis`,
+                `Muscular dystrophy`,
+                `Alzheimer's disease`
+            ],
+            correct: `A`,
+            explanation: `Hailey-Hailey disease (familial benign chronic pemphigus) is a genetic disorder caused by mutations in a calcium pump (ATP2C1) that leads to desmosome dysfunction and the separation of epidermal cells, resulting in blistering. Along with pemphigus (an autoimmune desmosome disease), it is mentioned in the document as a desmosome-related condition. Sickle cell anemia (option B) is a hemoglobin disorder; cystic fibrosis (option C) is a chloride channel defect; muscular dystrophy (option D) involves muscle proteins; and Alzheimer's disease (option E) is a neurodegenerative disorder. Only Hailey-Hailey disease is directly linked to desmosome dysfunction.`
+        },
+        {
+            q: `What is the role of cadherin in desmosomes?`,
+            options: [
+                `It connects the cytoplasmic plaques of two cells`,
+                `It anchors the cell to the extracellular fluid`,
+                `It forms the channel for communication`,
+                `It acts as a fluid buffer`,
+                `It forms the glycocalyx`
+            ],
+            correct: `A`,
+            explanation: `In desmosomes, cadherin proteins (specifically desmoglein and desmocollin) are transmembrane linkers whose extracellular domains interact across the intercellular space to connect the cytoplasmic plaques of two adjacent cells. The intracellular domains of cadherins attach to the cytoplasmic plaque, which in turn connects to intermediate filaments. This cadherin-mediated connection is the core of desmosome adhesion. Anchoring to the ECF (option B) is the role of integrins in hemidesmosomes; forming a communication channel (option C) is the role of connexons in gap junctions; acting as a fluid buffer (option D) is the role of cholesterol; and forming the glycocalyx (option E) involves carbohydrates.`
+        },
+        {
+            q: `Which of the following is true about the gap junction?`,
+            options: [
+                `It is also known as macula adherens`,
+                `It is a type of anchoring junction`,
+                `It consists of six connexon proteins arranged to form a doughnut-shaped structure`,
+                `It prevents leakage of fluid`,
+                `It ties cells to the extracellular matrix`
+            ],
+            correct: `C`,
+            explanation: `Gap junctions are composed of connexon proteins—each connexon consists of six connexin subunits arranged in a ring, creating a doughnut-shaped structure with a central pore. When connexons from adjacent cells align, they form a continuous channel for communication. Macula adherens (option A) is the desmosome; gap junctions are communicating, not anchoring, junctions (option B); preventing fluid leakage (option D) is the role of tight junctions; and tying cells to the ECM (option E) is the role of hemidesmosomes. The doughnut-shaped connexon arrangement is the structural hallmark of gap junctions.`
+        },
+        {
+            q: `The pattern of carbohydrates in the glycocalyx varies from one cell to another. What is the significance of this variation?`,
+            options: [
+                `It allows cells to generate energy`,
+                `It enables cells to recognize one another`,
+                `It provides structural support to the cell`,
+                `It helps in the transport of ions`,
+                `It prevents the cell from becoming too rigid`
+            ],
+            correct: `B`,
+            explanation: `The variation in carbohydrate patterns in the glycocalyx is the basis of cell recognition. Because the carbohydrate chains differ from cell to cell (and from species to species), they act as a molecular "signature" or ID tag. This enables cells to recognize one another—critical for immune responses (distinguishing self from non-self), tissue formation (cells sorting into appropriate tissues), and cell-cell interactions (e.g., sperm-egg recognition). Energy generation (option A) is mitochondrial; structural support (option C) is the cytoskeleton or cell wall; ion transport (option D) is integral proteins; and preventing rigidity (option E) is cholesterol's role.`
+        },
+        {
+            q: `Which of the following is a function of adherens junctions?`,
+            options: [
+                `They form a continuous belt around the cell`,
+                `They prevent the mobility of transmembrane proteins`,
+                `They tie cells to other cells or the extracellular matrix using actin filaments`,
+                `They allow communication between cells`,
+                `They form the glycocalyx`
+            ],
+            correct: `C`,
+            explanation: `Adherens junctions use cadherins (for cell-cell adhesion) or integrins (for cell-ECM adhesion) as transmembrane linkers and connect to actin filaments in the cytoplasm. This linkage allows them to tie cells to other cells or to the extracellular matrix, providing mechanical strength and helping to coordinate cell shape and movement. While adherens junctions can form a continuous belt (zonula adherens) in epithelial cells, option A is less precise because desmosomes also form belt-like structures in some contexts (though typically spot-like). Preventing transmembrane protein mobility (option B) is a tight junction function; allowing communication (option D) is a gap junction function; and forming the glycocalyx (option E) is a carbohydrate function. Option C accurately describes the core adhesive function of adherens junctions.`
+        },
+        {
+            q: `Which of the following statements about the plasma membrane is FALSE?`,
+            options: [
+                `It forms the cell's flexible outer surface`,
+                `It separates the cell's internal environment from the external environment`,
+                `It is a selective barrier that regulates the flow of materials`,
+                `It plays a key role in communication`,
+                `It is a rigid, non-flexible structure`
+            ],
+            correct: `E`,
+            explanation: `The plasma membrane is a flexible, dynamic structure—not rigid. Its flexibility allows cells to change shape, move, and undergo processes like endocytosis and exocytosis. The fluid mosaic model emphasizes membrane fluidity. Statements A-D are all true: the membrane forms the cell's outer surface (A), separates internal from external environments (B), is a selective barrier (C), and plays a key role in communication via receptors and signaling proteins (D). The false statement is E, which contradicts the fundamental property of membrane flexibility.`
+        }
+    ];
+
+    /* =====================================================================
+       FULL RESERVOIR — SECTION B (25 SAQs)
+       ===================================================================== */
+    const sectionBPool = [
+        {
+            question: `Explain the difference between unicellular and multicellular organisms, and describe how cells in multicellular organisms specialize while still sharing a fundamental physiology.`,
+            answer: `<h4>Model Answer</h4>
+            <p><strong>Unicellular organisms</strong> consist of a single cell that independently carries out all life processes—metabolism, growth, response to stimuli, and reproduction. Examples include bacteria, protozoa, and some algae.</p>
+            <p><strong>Multicellular organisms</strong> are composed of many cells that work together. These cells specialize for particular functions (e.g., muscle cells for contraction, nerve cells for communication, epithelial cells for protection), forming tissues, organs, and organ systems.</p>
+            <p>Despite specialization, all cells in a multicellular organism share a fundamental physiology: they all possess a plasma membrane, cytoplasm, ribosomes, genetic material, and basic metabolic machinery. Specialization involves differential gene expression—cells activate specific sets of genes to perform their specialized roles while retaining the core cellular functions common to all cells.</p>`
+        },
+        {
+            question: `Describe the key structural differences between plant cells and animal cells.`,
+            answer: `<h4>Model Answer</h4>
+            <ul>
+                <li><strong>Cell wall:</strong> Plant cells have a rigid cell wall (made of cellulose); animal cells do not.</li>
+                <li><strong>Chloroplasts:</strong> Plant cells contain chloroplasts for photosynthesis; animal cells do not.</li>
+                <li><strong>Vacuoles:</strong> Plant cells typically have a large central vacuole; animal cells have numerous small vacuoles.</li>
+                <li><strong>Lysosomes:</strong> Animal cells have lysosomes; plant cells generally lack them (their vacuole performs digestive functions).</li>
+                <li><strong>Plasma membrane:</strong> Both cell types have a plasma membrane (this is a similarity, not a difference).</li>
+            </ul>`
+        },
+        {
+            question: `Explain why the plasma membrane is described as a "selective barrier" and discuss how this selectivity benefits the cell.`,
+            answer: `<h4>Model Answer</h4>
+            <p>The plasma membrane is described as a selective barrier because it regulates the passage of substances into and out of the cell—allowing some molecules to pass while restricting others. This selectivity is based on size, charge, lipid solubility, and the presence of specific transport proteins.</p>
+            <p><strong>Benefits:</strong> It maintains the cell's internal environment (homeostasis) by keeping essential nutrients and ions inside, excluding harmful substances, and allowing waste products to exit. It also enables the cell to concentrate certain molecules and maintain electrochemical gradients essential for nerve and muscle function.</p>`
+        },
+        {
+            question: `Compare and contrast the Davson-Danielli model and the Singer & Nicolson model of the plasma membrane. What key advancement did the Singer & Nicolson model represent?`,
+            answer: `<h4>Model Answer</h4>
+            <p><strong>Davson-Danielli model (1935):</strong> Proposed a "sandwich" structure—a lipid bilayer coated on both sides with globular proteins. It depicted the membrane as static and rigid.</p>
+            <p><strong>Singer & Nicolson model (1972) – Fluid Mosaic Model:</strong> Proposed that proteins are embedded within or attached to a fluid lipid bilayer, forming a mosaic pattern. The membrane is dynamic, with lipids and proteins able to move laterally.</p>
+            <p><strong>Key advancement:</strong> The fluid mosaic model introduced the concept of membrane fluidity and protein mobility, which better explained membrane behavior (e.g., cell fusion, receptor movement, endocytosis) than the static Davson-Danielli model.</p>`
+        },
+        {
+            question: `Describe the structure of a phospholipid molecule and explain how its hydrophobic and hydrophilic properties contribute to the formation of a lipid bilayer.`,
+            answer: `<h4>Model Answer</h4>
+            <p>A phospholipid molecule has a <strong>hydrophilic (water-loving) head</strong>—a phosphate group—and two <strong>hydrophobic (water-fearing) fatty acid tails</strong>.</p>
+            <p>In an aqueous environment, phospholipids spontaneously arrange themselves so that their hydrophobic tails face inward, away from water, while their hydrophilic heads face outward, interacting with water. This arrangement forms a <strong>lipid bilayer</strong>—two layers of phospholipids with tails sandwiched in the middle. This bilayer is the structural foundation of the plasma membrane and is stabilized by hydrophobic interactions and van der Waals forces.</p>`
+        },
+        {
+            question: `Explain the role of cholesterol in the plasma membrane and why it is described as a "fluid buffer."`,
+            answer: `<h4>Model Answer</h4>
+            <p>Cholesterol is a lipid molecule interspersed among the phospholipids in the plasma membrane. It is described as a <strong>fluid buffer</strong> because it modulates membrane fluidity:</p>
+            <ul>
+                <li>At <strong>low temperatures</strong>, it prevents phospholipids from packing too closely, preventing the membrane from becoming too rigid.</li>
+                <li>At <strong>high temperatures</strong>, it restricts phospholipid movement, preventing the membrane from becoming too fluid.</li>
+            </ul>
+            <p>This buffering effect maintains membrane stability and optimal fluidity across a range of temperatures, which is essential for membrane protein function and cellular processes.</p>`
+        },
+        {
+            question: `Distinguish between integral (intrinsic) and peripheral (extrinsic) proteins in terms of their location and how they are attached to the membrane.`,
+            answer: `<h4>Model Answer</h4>
+            <p><strong>Integral (intrinsic) proteins:</strong> Embedded within the lipid bilayer, anchored by hydrophobic interactions between their hydrophobic amino acid regions and the fatty acid tails of phospholipids. They may span the entire membrane (transmembrane) or be partially embedded. They cannot be easily removed without disrupting the membrane.</p>
+            <p><strong>Peripheral (extrinsic) proteins:</strong> Loosely attached to the membrane surface (inner or outer) through electrostatic interactions and hydrogen bonds with integral proteins or phospholipid heads. They are not embedded in the bilayer and can be relatively easily removed.</p>`
+        },
+        {
+            question: `What is the glycocalyx, and why is it described as a "molecular signature"? Explain its role in cell recognition.`,
+            answer: `<h4>Model Answer</h4>
+            <p>The <strong>glycocalyx</strong> is the carbohydrate-rich layer on the outer surface of the plasma membrane, composed of the carbohydrate portions of glycolipids and glycoproteins.</p>
+            <p>It is described as a <strong>molecular signature</strong> because the pattern of carbohydrates varies from one cell to another—like a cellular ID tag. This variation enables cells to recognize one another, which is crucial for:</p>
+            <ul>
+                <li>Immune recognition (distinguishing self from non-self)</li>
+                <li>Tissue formation (cells sorting into appropriate tissues)</li>
+                <li>Cell-cell interactions (e.g., sperm-egg recognition)</li>
+            </ul>`
+        },
+        {
+            question: `Describe the structure of a gap junction, including the role of connexon proteins, and explain its function in cardiac muscle contraction and brain signal transfer.`,
+            answer: `<h4>Model Answer</h4>
+            <p><strong>Structure:</strong> Gap junctions are composed of connexon proteins—each connexon consists of six connexin subunits arranged in a doughnut-shaped ring with a central pore. Connexons from adjacent cells align to form a continuous channel connecting the cytoplasm of the two cells.</p>
+            <p><strong>Function in cardiac muscle:</strong> Gap junctions at intercalated discs allow action potentials to spread rapidly from cell to cell, enabling the heart muscle to contract as a coordinated unit.</p>
+            <p><strong>Function in brain:</strong> Gap junctions between neurons and glial cells facilitate electrical coupling and the transfer of small signaling molecules (e.g., cAMP, IP3), contributing to signal transfer and metabolic coordination.</p>`
+        },
+        {
+            question: `Explain how tight junctions function to prevent leakage of fluid and regulate the movement of water and solutes between epithelial layers. Include the roles of ZO-1, ZO-2, occludin, and claudin.`,
+            answer: `<h4>Model Answer</h4>
+            <p>Tight junctions form a seal between adjacent epithelial cells by bringing their plasma membranes into close apposition, obliterating the intercellular space.</p>
+            <p><strong>Molecular components:</strong></p>
+            <ul>
+                <li><strong>Occludin and claudin:</strong> Transmembrane proteins that interact across the intercellular space to form the seal.</li>
+                <li><strong>ZO-1 and ZO-2:</strong> Cytoplasmic plaque proteins that link occludin and claudin to the actin cytoskeleton (spectrin).</li>
+            </ul>
+            <p>This seal prevents the paracellular leakage of fluid and solutes, forcing substances to pass through the cells (transcellular pathway), where their movement can be regulated. Tight junctions also regulate the movement of water and solutes between epithelial layers by controlling the permeability of the paracellular pathway.</p>`
+        },
+        {
+            question: `Describe the location and function of tight junctions in the gastrointestinal tract. Why is their presence important for the proper functioning of this organ system?`,
+            answer: `<h4>Model Answer</h4>
+            <p>In the gastrointestinal tract, tight junctions are located in the apical region of epithelial cells lining the gut lumen.</p>
+            <p><strong>Function:</strong> They form a seal between adjacent epithelial cells, preventing the leakage of digestive fluids and regulating the absorption of nutrients, water, and electrolytes.</p>
+            <p><strong>Importance:</strong> The tight junctions create a barrier that separates the gut lumen (external environment) from the internal environment. This prevents harmful substances (toxins, pathogens) from leaking between cells into the bloodstream, while allowing controlled absorption of nutrients. Their proper function is essential for maintaining the body's internal homeostasis and preventing inflammation and infection.</p>`
+        },
+        {
+            question: `Compare and contrast desmosomes and hemidesmosomes in terms of their transmembrane linkers, cytoskeletal anchors, and what they tie the cell to.`,
+            answer: `<h4>Model Answer</h4>
+            <table style="width:100%; border-collapse: collapse; margin: 0.5rem 0;">
+                <tr style="background: #e0f0ec;"><th style="padding: 6px; text-align: left; border: 1px solid #b8dbd6;">Feature</th><th style="padding: 6px; text-align: left; border: 1px solid #b8dbd6;">Desmosome</th><th style="padding: 6px; text-align: left; border: 1px solid #b8dbd6;">Hemidesmosome</th></tr>
+                <tr><td style="padding: 6px; border: 1px solid #b8dbd6;"><strong>Transmembrane linker</strong></td><td style="padding: 6px; border: 1px solid #b8dbd6;">Cadherin (desmoglein, desmocollin)</td><td style="padding: 6px; border: 1px solid #b8dbd6;">Integrin (α6β4)</td></tr>
+                <tr><td style="padding: 6px; border: 1px solid #b8dbd6;"><strong>Cytoskeletal anchor</strong></td><td style="padding: 6px; border: 1px solid #b8dbd6;">Intermediate filaments (keratin)</td><td style="padding: 6px; border: 1px solid #b8dbd6;">Intermediate filaments (keratin)</td></tr>
+                <tr><td style="padding: 6px; border: 1px solid #b8dbd6;"><strong>Ties cell to</strong></td><td style="padding: 6px; border: 1px solid #b8dbd6;">Another cell</td><td style="padding: 6px; border: 1px solid #b8dbd6;">Extracellular matrix (ECM/ECF)</td></tr>
+            </table>
+            <p>In summary, both use intermediate filaments as cytoskeletal anchors, but they differ in their transmembrane linkers (cadherin vs. integrin) and what they attach to (cell vs. ECM).</p>`
+        },
+        {
+            question: `Explain the role of cadherin and intermediate filaments in the formation of desmosomes. How does the cytoplasmic plaque contribute to this structure?`,
+            answer: `<h4>Model Answer</h4>
+            <p><strong>Cadherin:</strong> Cadherin proteins (desmoglein and desmocollin) are transmembrane linkers. Their extracellular domains interact across the intercellular space with cadherins on the adjacent cell, forming the adhesive connection. Their intracellular domains attach to the cytoplasmic plaque.</p>
+            <p><strong>Intermediate filaments:</strong> These cytoskeletal filaments (e.g., keratin) attach to the cytoplasmic plaque and extend into the cytoplasm, providing mechanical strength and anchoring the desmosome to the cell's internal framework.</p>
+            <p><strong>Cytoplasmic plaque:</strong> This is a dense protein complex on the cytoplasmic side of the membrane that anchors the cadherin tails to the intermediate filaments. It serves as a structural hub, connecting the adhesion molecules to the cytoskeleton and distributing mechanical stress across the cell.</p>`
+        },
+        {
+            question: `Discuss the clinical significance of desmosomes by explaining how their dysfunction can lead to blistering diseases such as pemphigus and Hailey-Hailey disease.`,
+            answer: `<h4>Model Answer</h4>
+            <p>Desmosomes provide strong adhesion between epithelial cells, especially in tissues subjected to mechanical stress (e.g., epidermis). When desmosomes are dysfunctional, cells separate (acantholysis), leading to blistering.</p>
+            <ul>
+                <li><strong>Pemphigus:</strong> An autoimmune disease in which antibodies attack desmoglein (a desmosomal cadherin), causing desmosomes to break apart. This leads to painful blisters on the skin and mucous membranes.</li>
+                <li><strong>Hailey-Hailey disease:</strong> A genetic disorder caused by mutations in a calcium pump (ATP2C1), leading to desmosome dysfunction and epidermal cell separation, resulting in chronic blistering.</li>
+            </ul>
+            <p>These diseases highlight the critical role of desmosomes in maintaining tissue integrity.</p>`
+        },
+        {
+            question: `Describe the three types of anchoring junctions and explain how each contributes to tissue integrity.`,
+            answer: `<h4>Model Answer</h4>
+            <ul>
+                <li><strong>Desmosomes:</strong> Tie cells to other cells using cadherins and intermediate filaments. They provide strong mechanical strength, especially in tissues subjected to stress (e.g., skin, cardiac muscle).</li>
+                <li><strong>Hemidesmosomes:</strong> Tie cells to the extracellular matrix (ECM) using integrins and intermediate filaments. They anchor epithelial sheets to the basement membrane, maintaining tissue architecture.</li>
+                <li><strong>Adherens junctions:</strong> Tie cells to other cells or the ECM using cadherins/integrins and actin filaments. They form belt-like structures (zonula adherens) that help coordinate cell shape and movement, contributing to tissue cohesion.</li>
+            </ul>
+            <p>Together, these junctions maintain tissue integrity by providing mechanical adhesion and connecting the cytoskeleton of adjacent cells or the ECM.</p>`
+        },
+        {
+            question: `Explain the difference between the apical and basal regions of an epithelial cell and discuss why tight junctions are typically found in the apical region.`,
+            answer: `<h4>Model Answer</h4>
+            <p>The <strong>apical region</strong> is the top surface of an epithelial cell, facing the lumen or external environment. The <strong>basal region</strong> is the bottom surface, attached to the basement membrane and underlying connective tissue.</p>
+            <p>Tight junctions are typically found in the apical region because they need to seal the paracellular pathway near the luminal surface, preventing leakage of contents from the lumen into the internal environment (and vice versa). This strategic location creates a barrier that separates the apical and basolateral compartments, which is essential for directional transport and maintaining tissue polarity.</p>`
+        },
+        {
+            question: `Intercellular junctions are "specializations of the cellular margins." Explain what this means and why these specializations are mostly found in epithelial tissues.`,
+            answer: `<h4>Model Answer</h4>
+            <p>"Specializations of the cellular margins" means that intercellular junctions are specialized structures located at the edges (margins) of cells where they contact neighboring cells or the extracellular matrix. These specialized regions contain specific proteins and cytoskeletal elements that mediate adhesion, communication, or sealing.</p>
+            <p>They are mostly found in epithelial tissues because epithelial cells are tightly packed into continuous sheets that line body surfaces and cavities. These sheets require extensive junctional complexes to maintain tissue integrity, regulate permeability, and coordinate function. Epithelial tissues are the primary barriers and linings of the body, so they rely heavily on intercellular junctions.</p>`
+        },
+        {
+            question: `Describe the role of adherens junctions in connecting cells and explain how they differ from desmosomes in terms of the cytoskeletal filaments involved.`,
+            answer: `<h4>Model Answer</h4>
+            <p><strong>Adherens junctions</strong> connect cells to other cells (or to the ECM) using cadherins (or integrins) as transmembrane linkers. They connect to <strong>actin filaments</strong> (microfilaments) in the cytoplasm. They often form a continuous belt (zonula adherens) around the cell, helping to coordinate cell shape and movement.</p>
+            <p><strong>Desmosomes</strong> also connect cells to other cells using cadherins, but they connect to <strong>intermediate filaments</strong> (e.g., keratin) via cytoplasmic plaques. They form spot-like patches (maculae adherens) and provide strong mechanical strength.</p>
+            <p><strong>Key difference:</strong> Adherens junctions use actin filaments (dynamic, involved in cell shape/movement), while desmosomes use intermediate filaments (stable, providing mechanical strength).</p>`
+        },
+        {
+            question: `Explain how the plasma membrane's role in communication is related to its protein components. Provide examples of proteins involved in this function.`,
+            answer: `<h4>Model Answer</h4>
+            <p>The plasma membrane's role in communication is primarily mediated by its protein components—specifically <strong>receptors</strong> and <strong>signaling proteins</strong>.</p>
+            <ul>
+                <li><strong>Receptors:</strong> Integral proteins on the cell surface that bind specific signaling molecules (hormones, neurotransmitters, growth factors). Binding triggers conformational changes that transmit signals into the cell.</li>
+                <li><strong>Signaling proteins:</strong> Proteins associated with the membrane (peripheral or integral) that participate in intracellular signaling cascades, relaying signals from receptors to downstream effectors.</li>
+            </ul>
+            <p>Examples include G protein-coupled receptors, receptor tyrosine kinases, and ion channel receptors. These proteins enable the cell to receive and respond to external signals, coordinating cellular activities with the environment and other cells.</p>`
+        },
+        {
+            question: `Discuss the importance of the plasma membrane's flexibility in the context of cell shape and function, contrasting it with the rigid cell wall found in plant cells.`,
+            answer: `<h4>Model Answer</h4>
+            <p>The plasma membrane's flexibility allows animal cells to change shape, move, and undergo dynamic processes such as endocytosis, exocytosis, cell division, and migration. This flexibility is essential for functions like immune cell crawling, neuronal growth cone extension, and muscle contraction.</p>
+            <p>In contrast, plant cells have a rigid cell wall (made of cellulose) outside the plasma membrane. This wall provides structural support and protects against osmotic stress, but it restricts cell shape changes and movement. Plant cells are typically fixed in shape, and their growth occurs through cell expansion (regulated by turgor pressure) rather than shape changes. The fluidity of the plasma membrane is retained in plant cells, but the cell wall imposes mechanical constraints that animal cells do not have.</p>`
+        },
+        {
+            question: `Explain how the structure of the phospholipid bilayer contributes to the selective permeability of the plasma membrane.`,
+            answer: `<h4>Model Answer</h4>
+            <p>The phospholipid bilayer is composed of phospholipids with hydrophilic heads facing outward and hydrophobic tails facing inward. This arrangement creates a hydrophobic core that acts as a barrier to most polar and charged molecules (ions, sugars, amino acids), while allowing small nonpolar molecules (O₂, CO₂) and lipid-soluble substances to pass through relatively easily.</p>
+            <p>This selective permeability is enhanced by membrane proteins (channels, transporters) that facilitate the passage of specific polar molecules and ions. The combination of the hydrophobic core (restricting free diffusion) and specific transport proteins (enabling selective passage) gives the membrane its selective permeability—allowing the cell to control its internal composition.</p>`
+        },
+        {
+            question: `Describe the function of integral proteins that act as ion channels and transport proteins. How do these proteins contribute to maintaining the cell's internal environment?`,
+            answer: `<h4>Model Answer</h4>
+            <p><strong>Ion channels:</strong> Integral proteins that form pores through the membrane, allowing specific ions (Na⁺, K⁺, Ca²⁺, Cl⁻) to pass down their electrochemical gradients. They can be gated (voltage-gated, ligand-gated) to control ion flow.</p>
+            <p><strong>Transport proteins:</strong> Integral proteins that carry specific molecules or ions across the membrane, often against their concentration gradient (active transport) using energy (ATP). Examples include the Na⁺/K⁺ pump, glucose transporters, and amino acid transporters.</p>
+            <p><strong>Contribution to internal environment:</strong> These proteins regulate the concentration of ions and molecules inside the cell, maintain electrochemical gradients (essential for nerve and muscle function), bring in nutrients, and remove waste products. This regulation is crucial for homeostasis and normal cellular activities.</p>`
+        },
+        {
+            question: `Explain why the Singer & Nicolson model is called the "fluid mosaic model." What does "fluid" and "mosaic" refer to in this context?`,
+            answer: `<h4>Model Answer</h4>
+            <p>The Singer & Nicolson model is called the <strong>fluid mosaic model</strong> because it describes the plasma membrane as a dynamic, fluid structure with a mosaic-like arrangement of proteins.</p>
+            <ul>
+                <li><strong>"Fluid":</strong> Refers to the lipid bilayer's dynamic nature—phospholipids and proteins can move laterally within the membrane, giving it fluidity. This fluidity allows for membrane flexibility, fusion, and protein mobility.</li>
+                <li><strong>"Mosaic":</strong> Refers to the patchwork arrangement of proteins embedded within or attached to the lipid bilayer—like tiles in a mosaic. The proteins are dispersed throughout the membrane, creating a mosaic pattern.</li>
+            </ul>`
+        },
+        {
+            question: `Compare the structure and function of gap junctions and tight junctions, highlighting how their different structures suit their distinct physiological roles.`,
+            answer: `<h4>Model Answer</h4>
+            <table style="width:100%; border-collapse: collapse; margin: 0.5rem 0;">
+                <tr style="background: #e0f0ec;"><th style="padding: 6px; text-align: left; border: 1px solid #b8dbd6;">Feature</th><th style="padding: 6px; text-align: left; border: 1px solid #b8dbd6;">Gap Junction</th><th style="padding: 6px; text-align: left; border: 1px solid #b8dbd6;">Tight Junction</th></tr>
+                <tr><td style="padding: 6px; border: 1px solid #b8dbd6;"><strong>Structure</strong></td><td style="padding: 6px; border: 1px solid #b8dbd6;">Connexon channels (doughnut-shaped pores) connecting cytoplasm of adjacent cells</td><td style="padding: 6px; border: 1px solid #b8dbd6;">Sealing belt of occludin/claudin proteins that obliterates the intercellular space</td></tr>
+                <tr><td style="padding: 6px; border: 1px solid #b8dbd6;"><strong>Function</strong></td><td style="padding: 6px; border: 1px solid #b8dbd6;">Communication—allows direct passage of ions and small molecules</td><td style="padding: 6px; border: 1px solid #b8dbd6;">Barrier—prevents leakage of fluid and solutes between cells</td></tr>
+                <tr><td style="padding: 6px; border: 1px solid #b8dbd6;"><strong>Physiological role</strong></td><td style="padding: 6px; border: 1px solid #b8dbd6;">Coordinates cardiac muscle contraction, brain signal transfer</td><td style="padding: 6px; border: 1px solid #b8dbd6;">Maintains epithelial barrier (e.g., GI tract, blood-brain barrier)</td></tr>
+            </table>
+            <p>The gap junction's channel structure suits its communication role, while the tight junction's sealing structure suits its barrier role.</p>`
+        },
+        {
+            question: `Gap junctions consist of six connexon proteins arranged to form a doughnut-shaped structure. Explain how this arrangement creates a functional channel between adjacent cells and why the size of gap junctions may vary in different cells.`,
+            answer: `<h4>Model Answer</h4>
+            <p>Each connexon consists of six connexin subunits arranged in a ring, creating a doughnut-shaped structure with a central pore. When a connexon from one cell aligns with a connexon from an adjacent cell, they form a continuous aqueous channel connecting the cytoplasm of the two cells. This channel allows ions and small molecules (up to ~1 kDa) to pass directly between cells, enabling electrical and chemical communication.</p>
+            <p>The size of gap junctions (number of connexon channels) varies in different cells because different tissues have different communication requirements. For example, cardiac muscle cells have many gap junctions to allow rapid spread of action potentials for coordinated contraction, while other cells may have fewer. The size and number of gap junctions can also be regulated dynamically in response to physiological signals.</p>`
+        }
+    ];
+
+    /* =====================================================================
+       RANDOM SELECTION UTILITIES
+       ===================================================================== */
+    function shuffleArray(arr) {
+        const a = arr.slice();
+        for (let i = a.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+    }
+
+    function pickRandom(arr, n) {
+        return shuffleArray(arr).slice(0, Math.min(n, arr.length));
+    }
+
+    /* =====================================================================
+       RANDOMIZED SECTIONS
+       ===================================================================== */
+    const MCQS_TO_SHOW = 15;
+    const SAQS_TO_SHOW = 5;
+
+    const sectionA = pickRandom(sectionAPool, MCQS_TO_SHOW);
+    const sectionB = pickRandom(sectionBPool, SAQS_TO_SHOW);
+
+    /* =====================================================================
+       RENDERING FUNCTIONS
+       ===================================================================== */
+    function renderSectionA() {
+        const container = document.getElementById('container-A');
+        let html = '';
+        sectionA.forEach((q, i) => {
+            const qid = 'A-q' + (i + 1);
+            html += '<div class="question" id="q-' + qid + '">';
+            html += '<p><span class="q-badge">Q' + (i + 1) + '</span> ' + q.q + '</p>';
+            html += '<div class="options">';
+            q.options.forEach((opt, j) => {
+                const L = String.fromCharCode(65 + j);
+                html += '<label><input type="radio" name="' + qid + '" value="' + L + '"> <strong>' + L + ')</strong> ' + opt + '</label>';
+            });
+            html += '</div>';
+            html += '<div class="question-feedback" id="fb-' + qid + '"></div>';
+            html += '</div>';
+        });
+        container.innerHTML = html;
+        document.getElementById('count-A').textContent = sectionA.length;
+    }
+
+    function submitSectionA() {
+        let score = 0;
+        sectionA.forEach((q, i) => {
+            const qid = 'A-q' + (i + 1);
+            const radios = document.getElementsByName(qid);
+            let selected = null;
+            for (let r = 0; r < radios.length; r++) {
+                if (radios[r].checked) { selected = radios[r]; break; }
+            }
+            const correct = q.correct.toUpperCase();
+            if (selected && selected.value === correct) score++;
+
+            let html = '<div class="answer-block"><div class="answer-list">';
+            q.options.forEach((opt, j) => {
+                const L = String.fromCharCode(65 + j);
+                let cls = 'answer-item';
+                if (L === correct) cls += ' answer-correct';
+                if (selected && selected.value === L) {
+                    cls += ' user-choice';
+                    if (L !== correct) cls += ' answer-wrong';
+                }
+                const mark = (selected && selected.value === L) ? ' ◀ your answer' : '';
+                html += '<div class="' + cls + '">' + L + ') ' + opt + mark + '</div>';
+            });
+            html += '</div>';
+
+            const correctIdx = correct.charCodeAt(0) - 65;
+            const correctText = (correctIdx >= 0 && correctIdx < q.options.length) ? q.options[correctIdx] : '';
+
+            if (!selected) {
+                html += '<div class="explanation wrong">No answer selected. Correct answer: <strong>' +
+                        correct + ') ' + correctText + '</strong>.<br><br>' + q.explanation + '</div>';
+            } else if (selected.value === correct) {
+                html += '<div class="explanation">✅ <strong>Correct.</strong><br><br>' + q.explanation + '</div>';
+            } else {
+                html += '<div class="explanation wrong">❌ <strong>Incorrect.</strong> Correct answer: <strong>' +
+                        correct + ') ' + correctText + '</strong>.<br><br>' + q.explanation + '</div>';
+            }
+
+            const fb = document.getElementById('fb-' + qid);
+            if (fb) fb.innerHTML = html;
+        });
+
+        const total = sectionA.length;
+        const pct = Math.round((score / total) * 100);
+        const box = document.getElementById('result-A');
+        box.style.display = 'block';
+        document.getElementById('score-A').innerText = score + ' / ' + total + '  (' + pct + '%)';
+
+        document.querySelectorAll('#panel-A input[type="radio"]').forEach(r => r.disabled = true);
+    }
+
+    function renderSectionB() {
+        const container = document.getElementById('container-B');
+        let html = '';
+        sectionB.forEach((item, i) => {
+            const sqid = 'B-saq' + (i + 1);
+            html += '<div class="saq-block">';
+            html += '<div class="saq-title">Question ' + (i + 1) + '</div>';
+            html += '<div class="saq-text">' + item.question + '</div>';
+            html += '<button type="button" class="btn btn-sm" onclick="toggleAnswer(\'' + sqid + '\')"><i class="fas fa-eye"></i> Show Answer</button>';
+            html += '<div class="essay-answer" id="ans-' + sqid + '">' + item.answer + '</div>';
+            html += '</div>';
+        });
+        container.innerHTML = html;
+        document.getElementById('count-B').textContent = sectionB.length;
+    }
+
+    function toggleAnswer(qid) {
+        const el = document.getElementById('ans-' + qid);
+        if (el) el.classList.toggle('show');
+    }
+
+    /* ─── INIT ─── */
+    renderSectionA();
+    renderSectionB();
+
+    /* ─── TAB SWITCHING ─── */
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            const target = this.dataset.target;
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+            document.getElementById('panel-' + target).classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+    </script>
+
+</body>
+</html>

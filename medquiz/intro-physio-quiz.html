@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cell Physiology - ToToZ Quiz</title>
+    <style>
+        :root {
+            --primary: #1a6b6b;
+            --accent: #2ea8a0;
+            --dark: #0f2a2a;
+            --light: #f4f8f7;
+            --radius: 12px;
+            --shadow: 0 4px 14px rgba(0, 30, 30, 0.08);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #edf3f2;
+            color: var(--dark);
+            min-height: 100vh;
+            padding-top: 72px;
+        }
+        header {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            background: linear-gradient(145deg, var(--primary), var(--dark));
+            color: #fff; padding: 0.6rem 0;
+            box-shadow: 0 4px 18px rgba(0, 20, 20, 0.25);
+        }
+        .header-inner {
+            max-width: 1000px; margin: 0 auto; padding: 0 1.5rem;
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 0.3rem;
+        }
+        .logo { display: flex; align-items: center; gap: 0.6rem; }
+        .logo i { font-size: 1.5rem; color: #8dd9d4; }
+        .logo h1 { font-size: 1.15rem; font-weight: 700; }
+        .badge {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 0.2rem 1rem; border-radius: 40px;
+            font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+            color: #b3e6e0;
+        }
+        .container { max-width: 920px; margin: 0 auto; padding: 0 1.2rem 2.5rem; }
+        .tab-bar { display: flex; gap: 0.5rem; margin: 0.5rem 0 1.5rem 0; flex-wrap: wrap; }
+        .tab-btn {
+            background: #dce8e8; border: none; padding: 0.5rem 1.8rem;
+            border-radius: 40px; font-weight: 600; font-size: 0.95rem;
+            color: var(--dark); cursor: pointer; transition: 0.2s;
+        }
+        .tab-btn:hover { background: #c0d6d6; }
+        .tab-btn.active {
+            background: var(--primary); color: #fff;
+            box-shadow: 0 2px 10px rgba(26, 107, 107, 0.25);
+        }
+        .tab-panel { display: block; }
+        .tab-panel.hidden { display: none; }
+        .section-title {
+            font-size: 1.25rem; font-weight: 700; color: var(--primary);
+            margin: 0 0 0.8rem 0; padding-bottom: 0.4rem;
+            border-bottom: 3px solid rgba(26, 107, 107, 0.18);
+            display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;
+        }
+        .section-title .count {
+            font-size: 0.7rem; font-weight: 600; background: var(--primary);
+            color: #fff; border-radius: 40px; padding: 0 0.7rem; line-height: 1.7;
+        }
+        .section-subtitle { color: #4f6e6e; font-size: 0.9rem; margin-bottom: 1rem; }
+        .refresh-note {
+            background: #e2f0ed; border-radius: 8px; padding: 0.5rem 1rem;
+            font-size: 0.85rem; color: #1a6b6b; margin-bottom: 1rem;
+            border-left: 4px solid var(--accent); display: flex; align-items: center; gap: 0.6rem;
+        }
+        .question {
+            background: #ffffff; border-radius: var(--radius);
+            padding: 1.1rem 1.2rem 0.2rem 1.2rem; margin-bottom: 1rem;
+            box-shadow: var(--shadow); border: 1px solid rgba(26, 107, 107, 0.05);
+        }
+        .question .q-badge {
+            display: inline-block; background: var(--primary); color: #fff;
+            border-radius: 40px; padding: 0 0.65rem; font-size: 0.7rem;
+            font-weight: 700; line-height: 1.6; margin-right: 0.4rem;
+        }
+        .question p { font-weight: 600; font-size: 0.97rem; margin-bottom: 0.4rem; color: var(--dark); }
+        .options label {
+            display: block; background: #fafcfc; border: 1px solid #dde8e8;
+            border-radius: 7px; padding: 0.4rem 0.85rem; margin-top: 0.4rem;
+            cursor: pointer; transition: all 0.15s; font-weight: 450; font-size: 0.92rem;
+        }
+        .options label:hover { background: #e8f5f4; border-color: var(--accent); }
+        .options input[type="radio"] { margin-right: 0.5rem; accent-color: var(--primary); }
+        .question-feedback { margin-top: 0.8rem; padding: 0.4rem 0 0.1rem 0; border-top: 1px dashed #dce6e6; }
+        .answer-block strong { display: block; margin-bottom: 3px; color: var(--primary); font-size: 0.78rem; text-transform: uppercase; }
+        .answer-list { display: flex; flex-direction: column; gap: 2px; }
+        .answer-item {
+            padding: 4px 10px; border-radius: 5px; border: 1px solid #e4edec;
+            background: #ffffff; font-weight: 500; font-size: 0.88rem;
+        }
+        .answer-correct { background: #e8f7ef; border-color: #a8d8c0; color: #0a4f3a; }
+        .answer-wrong { background: #fde9ea; border-color: #f5b8b8; color: #8a1f2b; }
+        .user-choice { outline: 2px dashed rgba(0, 0, 0, 0.06); }
+        .explanation {
+            margin-top: 5px; padding: 8px 13px; border-radius: 7px;
+            background: #f0f8f6; color: #065f4a; font-size: 0.88rem;
+            line-height: 1.55; border-left: 4px solid var(--accent);
+        }
+        .explanation.wrong { background: #fdf1f1; color: #7a1f1f; border-left-color: #e68080; }
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            color: #fff; border: none; padding: 0.55rem 1.8rem;
+            border-radius: var(--radius); font-weight: 600; font-size: 0.95rem;
+            cursor: pointer; transition: transform 0.15s, box-shadow 0.2s;
+            box-shadow: 0 4px 14px rgba(26, 107, 107, 0.25);
+        }
+        .btn:hover { transform: scale(1.02); box-shadow: 0 6px 24px rgba(26, 107, 107, 0.32); }
+        .btn:active { transform: scale(0.96); }
+        .btn-sm {
+            padding: 0.35rem 1.1rem; font-size: 0.82rem;
+            border-radius: 8px; margin-top: 0.5rem;
+        }
+        .submit-wrap { text-align: center; margin: 1.5rem 0 1.8rem; }
+        .result {
+            margin-top: 1.5rem; padding: 1.5rem 1.5rem 0.8rem;
+            background: #eaf6f4; border-radius: var(--radius);
+            text-align: center; display: none; border: 1px solid #b8dbd6;
+        }
+        .result h3 { font-size: 1.1rem; font-weight: 600; color: var(--dark); }
+        .score { font-size: 2.4rem; font-weight: 800; color: var(--primary); margin: 0.1rem 0 0.2rem; }
+        .text-muted { color: #4f6e6e; font-size: 0.9rem; }
+        .hidden { display: none !important; }
+        .essay-answer {
+            margin-top: 0.8rem; padding: 1rem 1.2rem;
+            background: #f0f8f6; border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            font-size: 0.92rem; line-height: 1.6;
+            display: none;
+        }
+        .essay-answer.show { display: block; }
+        .essay-answer h4 { color: var(--primary); margin-bottom: 0.4rem; font-size: 0.95rem; }
+        .essay-answer ul, .essay-answer ol { margin-left: 1.2rem; margin-bottom: 0.5rem; }
+        .essay-answer li { margin-bottom: 0.2rem; }
+        .saq-block {
+            background: #f7fbfa; border-radius: 10px; padding: 1rem 1.2rem;
+            margin-bottom: 1.5rem; border-left: 6px solid var(--primary);
+        }
+        .saq-block .saq-title {
+            font-size: 1.05rem; font-weight: 700; color: var(--primary);
+            margin-bottom: 0.6rem;
+        }
+        .saq-block .saq-text {
+            font-size: 0.93rem; line-height: 1.6; margin-bottom: 0.8rem;
+        }
+        @media (max-width: 700px) {
+            body { padding-top: 68px; }
+            .logo h1 { font-size: 0.95rem; }
+            .header-inner { padding: 0 1rem; flex-direction: column; align-items: stretch; gap: 0.2rem; }
+            .badge { align-self: flex-start; }
+            .question { padding: 0.9rem 0.9rem 0.1rem 0.9rem; }
+            .section-title { font-size: 1.05rem; }
+            .score { font-size: 2rem; }
+            .btn { padding: 0.5rem 1.2rem; font-size: 0.85rem; }
+            .tab-btn { padding: 0.4rem 1.2rem; font-size: 0.85rem; }
+        }
+        @media (max-width: 420px) {
+            .logo h1 { font-size: 0.8rem; }
+            .options label { font-size: 0.85rem; padding: 0.35rem 0.65rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-inner">
+            <div class="logo">
+                <i class="fas fa-microscope"></i>
+                <h1>Physiology Introduction –  ToToZ Quiz</h1>
+            </div>
+            <span class="badge"><i class="fas fa-pencil-alt"></i> &nbsp;All Sections</span>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+
+            <div class="refresh-note">
+                <i class="fas fa-sync-alt"></i>
+                <span><strong>Random selection:</strong> Each refresh picks <strong>15 MCQs</strong> and <strong>5 SAQs</strong> from the full reservoir. Reload the page to get a new set.</span>
+            </div>
+
+            <div class="tab-bar">
+                <button class="tab-btn active" data-target="A">✅ Section A – MCQs</button>
+                <button class="tab-btn" data-target="B">📝 Section B – SAQs</button>
+            </div>
+
+            <!-- ==================== SECTION A ==================== -->
+            <div id="panel-A" class="tab-panel">
+                <div class="section-title">
+                    <i class="fas fa-list-ul"></i> Section A – Multiple Choice Questions
+                    <span class="count" id="count-A">0</span>
+                </div>
+                <p class="section-subtitle">Circle the most appropriate answer. Select an option for each question, then click <strong>Submit All MCQs</strong> below.</p>
+                <form id="form-A">
+                    <div id="container-A"></div>
+                    <div class="submit-wrap">
+                        <button type="button" class="btn" onclick="submitSectionA()">
+                            <i class="fas fa-check-circle"></i> Submit All MCQs
+                        </button>
+                    </div>
+                </form>
+                <div class="result" id="result-A">
+                    <h3><i class="fas fa-chart-simple"></i> Your Score</h3>
+                    <div class="score" id="score-A">0</div>
+                    <p class="text-muted">Review the feedback below each question.</p>
+                </div>
+            </div>
+
+            <!-- ==================== SECTION B ==================== -->
+            <div id="panel-B" class="tab-panel hidden">
+                <div class="section-title">
+                    <i class="fas fa-pen-fancy"></i> Section B – Short Answer Questions
+                    <span class="count" id="count-B">0</span>
+                </div>
+                <p class="section-subtitle">Answer ALL questions. Click <strong>Show Answer</strong> to reveal the model answer for each question.</p>
+                <div id="container-B"></div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+    /* =====================================================================
+       FULL RESERVOIR — SECTION A (50 MCQs, each with 5 options & paragraph explanations)
+       ===================================================================== */
+    const sectionAPool = [
+        {
+            q: `Which level of structural organization is considered the smallest subdivision capable of carrying out all life processes?`,
+            options: [
+                `Chemical level`,
+                `Tissue level`,
+                `Cellular level`,
+                `Organ level`,
+                `Organ system level`
+            ],
+            correct: `C`,
+            explanation: `The cellular level is the smallest subdivision that can independently carry out all life processes. A cell is the basic structural and functional unit of life—it can perform metabolism, respond to stimuli, grow, and reproduce. While organelles and molecules perform specific tasks, they cannot sustain life on their own; they depend on the integrated environment of the cell. Tissues, organs, and organ systems are collections of cells working together, but none of these higher levels can exist without the fundamental capabilities of individual cells.`
+        },
+        {
+            q: `In the context of physiology, the control of chemical reactions within the body is primarily a function of which level of organization?`,
+            options: [
+                `Atoms and molecules`,
+                `Organelles`,
+                `Cells`,
+                `Tissues`,
+                `Organs`
+            ],
+            correct: `C`,
+            explanation: `Physiology examines how the body's structures function, and the cell is the central hub for controlling chemical reactions. Cells house enzymes, regulate pH and temperature, and manage energy production—all of which dictate the rate and direction of biochemical reactions. While molecules and organelles participate in reactions, the cell as a whole integrates and regulates them through feedback mechanisms, membrane transport, and signaling pathways. Tissues and organs are built from cells and rely on cellular control for their functions, making the cellular level the primary regulatory unit.`
+        },
+        {
+            q: `Which tissue type is characterized by a significant amount of extracellular matrix that contributes to connection, structure, and protection?`,
+            options: [
+                `Epithelial tissue`,
+                `Muscle tissue`,
+                `Nerve tissue`,
+                `Connective tissue`,
+                `Vascular tissue`
+            ],
+            correct: `D`,
+            explanation: `Connective tissue is defined by an abundant extracellular matrix (ECM)—a complex mixture of fibers (collagen, elastin, reticular fibers) and ground substance (glycoproteins, proteoglycans). This matrix provides structural support, connects and binds other tissues, protects organs, and facilitates nutrient exchange. Examples include bone (mineralized matrix), cartilage (flexible matrix), adipose tissue (lipid-filled cells), and blood (fluid matrix). Epithelial, muscle, and nerve tissues have far less ECM and are characterized by tightly packed cells specialized for covering, contraction, or communication, respectively.`
+        },
+        {
+            q: `A structure that consists of at least two different tissue types and performs a specific function related to the whole body is best defined as a(n):`,
+            options: [
+                `Cell`,
+                `Organelle`,
+                `Tissue`,
+                `Organ`,
+                `Organ system`
+            ],
+            correct: `D`,
+            explanation: `An organ is a discrete structure composed of two or more tissue types that work together to perform a specific physiological function. For example, the stomach contains epithelial (lining), muscle (contraction), nerve (signaling), and connective (support) tissues, all cooperating for digestion. Organelles are subcellular structures, cells are the basic unit, tissues are groups of similar cells, and organ systems are collections of organs. The key criteria for an organ are multiple tissue types and a defined role in the body.`
+        },
+        {
+            q: `Which organ system is primarily responsible for communication and control alongside the nervous system?`,
+            options: [
+                `Integumentary system`,
+                `Endocrine system`,
+                `Circulatory system`,
+                `Immune system`,
+                `Respiratory system`
+            ],
+            correct: `B`,
+            explanation: `The endocrine system, through glands and hormones, provides slow, long-lasting communication and control that complements the rapid, short-lived signals of the nervous system. Together they regulate growth, metabolism, reproduction, and homeostasis. The integumentary system protects and thermoregulates; the circulatory system transports; the immune system defends; and the respiratory system exchanges gases. The endocrine system's chemical messengers travel via the bloodstream to target cells, making it a primary control system.`
+        },
+        {
+            q: `The internal environment of the body is mostly composed of water. Which property of water helps it resist temperature changes?`,
+            options: [
+                `It is a polar solvent`,
+                `It has a low viscosity`,
+                `It has a high heat capacity`,
+                `It is a non-polar molecule`,
+                `It has a low boiling point`
+            ],
+            correct: `C`,
+            explanation: `Water has a high heat capacity, meaning it can absorb or release large amounts of heat with only small changes in its own temperature. This property is due to the extensive hydrogen bonding between water molecules, which must be broken to raise temperature. In the body, this helps stabilize internal temperature despite fluctuations in environmental temperature or metabolic heat production. Its polarity makes it a good solvent, low viscosity allows flow, and low boiling point is not relevant to thermal stability—in fact, water's high boiling point is a consequence of strong hydrogen bonds.`
+        },
+        {
+            q: `Which of the following is NOT an attribute of the internal environment that physiological systems work to maintain within narrow ranges?`,
+            options: [
+                `Amount of nutrients`,
+                `pH level`,
+                `Atmospheric pressure`,
+                `Amount of O₂ & CO₂`,
+                `Fluid volume`
+            ],
+            correct: `C`,
+            explanation: `Physiological systems maintain internal attributes such as nutrient levels, pH, oxygen and carbon dioxide concentrations, fluid volume, temperature, and waste products within narrow ranges. Atmospheric pressure, however, is an external environmental variable that the body does not directly regulate; it changes with altitude and weather. While the body can adapt to changes in atmospheric pressure (e.g., at high altitude), it is not an internal attribute held constant by homeostatic mechanisms. The other options are classic examples of internal variables subject to homeostatic control.`
+        },
+        {
+            q: `In a regulatory mechanism, which component is responsible for monitoring internal conditions and detecting changes?`,
+            options: [
+                `Effector`,
+                `Integrating center`,
+                `Sensor`,
+                `Controller`,
+                `Feedback loop`
+            ],
+            correct: `C`,
+            explanation: `The sensor (also called receptor) is the component that continuously monitors the internal environment and detects deviations from the set point. It sends this information to the integrating center. The effector produces the response, the integrating center (controller) processes information and issues commands, and the feedback loop is the pathway of communication. Sensors are often nerve endings or specialized cells that respond to specific stimuli such as temperature, pressure, or chemical concentrations.`
+        },
+        {
+            q: `What is the primary role of an effector in a regulatory mechanism?`,
+            options: [
+                `To detect changes in the environment`,
+                `To integrate information from sensors`,
+                `To respond to changes and return conditions to normal`,
+                `To provide a barrier between the interior and exterior`,
+                `To generate heat through contraction`
+            ],
+            correct: `C`,
+            explanation: `The effector is the component that executes the response to bring the internal environment back to its normal range. It receives signals from the integrating center and acts—for example, muscles may contract or shiver, glands may secrete hormones, or blood vessels may dilate or constrict. While heat generation by muscle contraction is one specific effector action, the general role is to produce the corrective response. Detection is the sensor's job, integration is the controller's, and barrier formation is a function of epithelial tissue.`
+        },
+        {
+            q: `Which type of tissue is specialized for high-speed communication and integration of information?`,
+            options: [
+                `Epithelial tissue`,
+                `Connective tissue`,
+                `Muscle tissue`,
+                `Nerve tissue`,
+                `Adipose tissue`
+            ],
+            correct: `D`,
+            explanation: `Nerve tissue is composed of neurons and glial cells. Neurons are uniquely specialized to generate and conduct electrical impulses (action potentials) at high speeds, allowing rapid communication between distant body parts. They also integrate information through synaptic connections and neurotransmitter release. Epithelial tissue covers and protects, connective tissue supports, muscle tissue contracts, and adipose tissue stores fat. The nervous system's speed and integrative capacity make nerve tissue the communication specialist.`
+        },
+        {
+            q: `The presence of cilia is a characteristic feature associated with which function of epithelial tissues?`,
+            options: [
+                `Secretion`,
+                `Absorption`,
+                `Protection`,
+                `Movement`,
+                `Connection`
+            ],
+            correct: `D`,
+            explanation: `Cilia are hair-like projections on the apical surface of certain epithelial cells (e.g., in the respiratory tract and fallopian tubes). They beat in coordinated waves to move substances—such as mucus, dust, or an ovum—across the epithelial surface. This is a movement function. While epithelial tissue also performs secretion, absorption, protection, and connection, cilia specifically facilitate movement of materials over the tissue.`
+        },
+        {
+            q: `Which organ system is responsible for gas exchange and pH balance?`,
+            options: [
+                `Urinary system`,
+                `Digestive system`,
+                `Respiratory system`,
+                `Circulatory system`,
+                `Integumentary system`
+            ],
+            correct: `C`,
+            explanation: `The respiratory system (lungs and airways) performs gas exchange: it brings oxygen into the body and eliminates carbon dioxide. By adjusting the rate and depth of breathing, it also regulates blood pH—CO₂ combines with water to form carbonic acid, so controlling CO₂ levels helps maintain acid-base balance. The urinary system also regulates pH but through kidney function and bicarbonate handling; however, the respiratory system is the primary rapid regulator of pH via CO₂ elimination. The digestive, circulatory, and integumentary systems have other primary roles.`
+        },
+        {
+            q: `The circulatory system is primarily responsible for which of the following functions?`,
+            options: [
+                `Protection from foreign substances`,
+                `Transportation of most materials throughout the body`,
+                `Perpetuation of the species`,
+                `Obtaining raw materials from the exterior`,
+                `Movement and support`
+            ],
+            correct: `B`,
+            explanation: `The circulatory system (heart, blood vessels, blood) serves as the body's transport network. It carries oxygen, nutrients, hormones, waste products, and immune cells throughout the body, linking all organ systems. Protection is mainly the immune system's role, perpetuation of the species is the reproductive system's, obtaining raw materials is the digestive and respiratory systems' job, and movement/support is the musculoskeletal system's function. The circulatory system's core function is bulk transport.`
+        },
+        {
+            q: `Which of the following best describes the term "homeostasis"?`,
+            options: [
+                `The continuous change of internal conditions`,
+                `A state of constancy of conditions within the body`,
+                `The process of cell division`,
+                `The interaction of organs to perform a single function`,
+                `The structural organization of the body`
+            ],
+            correct: `B`,
+            explanation: `Homeostasis is the maintenance of a relatively stable internal environment within narrow physiological limits, despite changes in the external environment. It is a dynamic equilibrium—conditions fluctuate slightly but are continually corrected by regulatory mechanisms. It is not continuous change (which would be instability), nor cell division, organ interaction, or structural organization. Homeostasis is essential for health; failure leads to disease.`
+        },
+        {
+            q: `The interaction among cells that leads to functions single cells cannot effectively do alone is a defining characteristic of which level of organization?`,
+            options: [
+                `Chemical`,
+                `Cellular`,
+                `Tissue`,
+                `Organ`,
+                `Organ system`
+            ],
+            correct: `C`,
+            explanation: `The tissue level is defined by groups of similar cells that work together to perform a common function more effectively than individual cells could alone. For example, muscle cells in cardiac tissue contract in a coordinated way to pump blood—something a single muscle cell cannot achieve. The chemical level involves atoms and molecules, the cellular level is individual cells, organs are multiple tissue types, and organ systems are multiple organs. The key phrase is "interaction among cells," which defines a tissue.`
+        },
+        {
+            q: `Which of the following is NOT a function of the integumentary system?`,
+            options: [
+                `Acting as a barrier between the interior and exterior of the body`,
+                `Thermoregulation`,
+                `Gas exchange`,
+                `Protection`,
+                `All of the above are functions`
+            ],
+            correct: `C`,
+            explanation: `The integumentary system (skin, hair, nails, glands) provides a protective barrier, participates in thermoregulation (sweating, vasodilation), and protects against pathogens and mechanical injury. Gas exchange is not a significant function of the skin in humans; it is the primary role of the respiratory system. While a small amount of gas exchange can occur through the skin, it is negligible and not a listed function. Therefore, gas exchange is the exception.`
+        },
+        {
+            q: `In the feedback model, the "output" of the system is represented by the activity of which component?`,
+            options: [
+                `Sensor`,
+                `Controller`,
+                `Effector`,
+                `Environmental condition`,
+                `Integrating center`
+            ],
+            correct: `C`,
+            explanation: `In a feedback loop, the output is the response produced by the effector. The sensor detects a change (input), the integrating center (controller) processes the signal and sends commands, and the effector carries out the response—which is the output that affects the internal environment. Feedback occurs when this output is sensed again, closing the loop. Environmental condition is the variable being regulated, not the output component.`
+        },
+        {
+            q: `Which organ system is responsible for protecting the body from foreign substances, other organisms, and cancer cells?`,
+            options: [
+                `Nervous system`,
+                `Endocrine system`,
+                `Immune system`,
+                `Musculoskeletal system`,
+                `Reproductive system`
+            ],
+            correct: `C`,
+            explanation: `The immune system comprises specialized cells (lymphocytes, macrophages), tissues (lymph nodes, spleen, thymus), and molecules (antibodies, cytokines) that defend against pathogens, foreign substances, and abnormal cells such as cancer cells. The nervous and endocrine systems control and communicate, the musculoskeletal system provides support and movement, and the reproductive system ensures species survival. Immune defense is the defining role of the immune system.`
+        },
+        {
+            q: `The musculoskeletal system contributes to homeostasis by generating heat through which process?`,
+            options: [
+                `Secretion`,
+                `Absorption`,
+                `Contraction`,
+                `Filtration`,
+                `Diffusion`
+            ],
+            correct: `C`,
+            explanation: `Muscle contraction is exothermic—it generates heat as a byproduct of ATP hydrolysis and cross-bridge cycling. This heat is essential for maintaining body temperature, especially during cold stress when shivering thermogenesis occurs. The musculoskeletal system also provides structure, support, protection, and movement. Secretion, absorption, filtration, and diffusion are not the primary heat-generating mechanisms of muscle tissue.`
+        },
+        {
+            q: `What is the approximate pH of the internal environment that physiological systems strive to maintain?`,
+            options: [
+                `6.8`,
+                `7.0`,
+                `7.4`,
+                `7.8`,
+                `8.0`
+            ],
+            correct: `C`,
+            explanation: `The normal pH of arterial blood and the internal environment is tightly regulated around 7.35–7.45, with 7.4 being the typical midpoint. This slightly alkaline pH is optimal for enzyme activity and cellular function. A pH of 7.0 is neutral, 6.8 is acidic (acidosis), and 7.8 is alkalotic. Physiological buffers (bicarbonate, phosphate, proteins) and organ systems (respiratory, urinary) work together to maintain this narrow range.`
+        },
+        {
+            q: `Which of the following is an example of an organ system that enables basic functions needed to maintain overall homeostasis?`,
+            options: [
+                `A single cell`,
+                `A molecule`,
+                `The nervous system`,
+                `A tissue`,
+                `An organelle`
+            ],
+            correct: `C`,
+            explanation: `The nervous system is an organ system—a collection of organs (brain, spinal cord, nerves) that together perform complex functions essential for homeostasis, including rapid communication, coordination, and control of other systems. A single cell, molecule, tissue, and organelle are lower levels of organization; they are not organ systems. Organ systems are the highest level of structural organization that directly maintains homeostasis.`
+        },
+        {
+            q: `The study of the biological function of humans is known as:`,
+            options: [
+                `Anatomy`,
+                `Histology`,
+                `Physiology`,
+                `Cytology`,
+                `Embryology`
+            ],
+            correct: `C`,
+            explanation: `Physiology is the study of how the body and its parts function—the biological processes, mechanisms, and interactions that sustain life. Anatomy studies structure, histology studies tissues, cytology studies cells, and embryology studies development. Physiology asks "how does it work?" while anatomy asks "what is it?" The two are closely related, as function often reflects structure.`
+        },
+        {
+            q: `Which of the following sequences correctly represents the levels of structural organization from simplest to most complex?`,
+            options: [
+                `Cells → Chemicals → Tissues → Organs → Organ Systems`,
+                `Chemicals → Cells → Tissues → Organs → Organ Systems`,
+                `Chemicals → Tissues → Cells → Organs → Organ Systems`,
+                `Tissues → Cells → Chemicals → Organs → Organ Systems`,
+                `Organs → Organ Systems → Cells → Tissues → Chemicals`
+            ],
+            correct: `B`,
+            explanation: `The correct hierarchy from simplest to most complex is: chemicals (atoms, molecules) → cells (the basic unit of life) → tissues (groups of similar cells) → organs (multiple tissue types) → organ systems (multiple organs working together). This order reflects increasing complexity and emergent properties. Option A incorrectly places cells before chemicals; options C, D, and E scramble the sequence.`
+        },
+        {
+            q: `Which tissue type is specialized for contraction and generates tension, movement, and heat?`,
+            options: [
+                `Epithelial tissue`,
+                `Connective tissue`,
+                `Muscle tissue`,
+                `Nerve tissue`,
+                `Osseous tissue`
+            ],
+            correct: `C`,
+            explanation: `Muscle tissue is uniquely specialized for contraction, which produces tension, generates movement (of body parts, substances within the body, or the whole body), and produces heat as a byproduct. There are three types: skeletal (voluntary movement), cardiac (heartbeat), and smooth (involuntary organ movement). Epithelial tissue covers, connective tissue supports, nerve tissue communicates, and osseous (bone) tissue is a type of connective tissue.`
+        },
+        {
+            q: `The urinary system is primarily involved in which set of functions?`,
+            options: [
+                `Gas exchange and pH balance`,
+                `Waste removal, water and ion balance`,
+                `Communication and control`,
+                `Obtaining raw materials from the exterior`,
+                `Movement and support`
+            ],
+            correct: `B`,
+            explanation: `The urinary system (kidneys, ureters, bladder, urethra) filters blood to remove metabolic wastes (urea, creatinine), regulates water and electrolyte balance, and maintains acid-base balance. While it contributes to pH balance, gas exchange is not its function—that is the respiratory system's role. Communication and control are nervous/endocrine functions, obtaining raw materials is digestive/respiratory, and movement/support is musculoskeletal. Waste removal and fluid/ion balance are the urinary system's primary responsibilities.`
+        },
+        {
+            q: `In a feedback loop, the return of output to the input part of a system is called:`,
+            options: [
+                `Integration`,
+                `Sensation`,
+                `Feedback`,
+                `Effection`,
+                `Regulation`
+            ],
+            correct: `C`,
+            explanation: `Feedback is the process by which the output of a system is fed back to the input, allowing the system to self-regulate. In negative feedback, the response opposes the initial change, promoting stability. In positive feedback, the response amplifies the change. Integration is the processing of information by the controller, sensation is the detection of stimuli, effection is the response, and regulation is the overall control process. Feedback is the specific loop-closing mechanism.`
+        },
+        {
+            q: `Which organ system is responsible for the perpetuation of the species?`,
+            options: [
+                `Endocrine system`,
+                `Reproductive system`,
+                `Immune system`,
+                `Digestive system`,
+                `Urinary system`
+            ],
+            correct: `B`,
+            explanation: `The reproductive system (gonads, ducts, accessory glands) produces gametes (sperm and ova) and facilitates their union, ensuring the continuation of the species. While the endocrine system regulates reproductive hormones, the reproductive system itself carries out the processes of gametogenesis, fertilization, and in females, gestation and childbirth. The immune, digestive, and urinary systems serve other essential functions but not species perpetuation.`
+        },
+        {
+            q: `The internal environment of the body is described as a polar solvent. What does this mean?`,
+            options: [
+                `It dissolves all substances equally`,
+                `It dissolves some substances but not others`,
+                `It cannot dissolve any substances`,
+                `It only dissolves non-polar molecules`,
+                `It repels water`
+            ],
+            correct: `B`,
+            explanation: `Water is a polar solvent because its molecules have partial positive and negative charges, allowing it to dissolve other polar substances (like salts, sugars, and many proteins) and form hydrogen bonds. However, it does not dissolve non-polar substances (like lipids and fats) effectively—hence the saying "like dissolves like." This selective solubility is crucial for maintaining compartmentalization in the body, such as cell membranes separating aqueous and lipid environments.`
+        },
+        {
+            q: `Which of the following is NOT a component of a regulatory mechanism?`,
+            options: [
+                `Sensor`,
+                `Integrating center`,
+                `Effector`,
+                `Feedback`,
+                `Environmental condition`
+            ],
+            correct: `E`,
+            explanation: `A regulatory mechanism consists of three core components: a sensor (detects changes), an integrating center (processes information and issues commands), and an effector (produces the response). Feedback is the process by which the output influences the input. The environmental condition is the variable being regulated—it is the stimulus, not a component of the regulatory system itself. The system acts to maintain the internal environment despite changes in environmental conditions.`
+        },
+        {
+            q: `The digestive system is primarily responsible for which of the following?`,
+            options: [
+                `Protecting the body from foreign substances`,
+                `Obtaining raw materials from the exterior`,
+                `Transportation of materials throughout the body`,
+                `Perpetuation of the species`,
+                `Communication and control`
+            ],
+            correct: `B`,
+            explanation: `The digestive system (mouth, esophagus, stomach, intestines, accessory organs) breaks down food and absorbs nutrients—raw materials such as glucose, amino acids, fatty acids, vitamins, and minerals—from the external environment into the internal environment. Protection is immune, transport is circulatory, perpetuation is reproductive, and communication/control is nervous/endocrine. The digestive system is the gateway for nutrient acquisition.`
+        },
+        {
+            q: `Which tissue type forms body surfaces and acts as a barrier?`,
+            options: [
+                `Connective tissue`,
+                `Muscle tissue`,
+                `Nerve tissue`,
+                `Epithelial tissue`,
+                `Reticular tissue`
+            ],
+            correct: `D`,
+            explanation: `Epithelial tissue covers all body surfaces—both external (skin) and internal (lining of cavities, organs, and ducts). It acts as a protective barrier, regulates what enters and exits (selective permeability), and performs secretion, absorption, and sensation. Connective tissue supports and connects, muscle tissue contracts, nerve tissue communicates, and reticular tissue is a type of connective tissue. The defining role of epithelium is covering and lining.`
+        },
+        {
+            q: `What is the approximate temperature of the internal environment that the body maintains?`,
+            options: [
+                `35°C`,
+                `36°C`,
+                `37°C`,
+                `38°C`,
+                `39°C`
+            ],
+            correct: `C`,
+            explanation: `The body maintains a core internal temperature of approximately 37°C (98.6°F), which is optimal for enzyme activity and cellular metabolism. This temperature is tightly regulated by thermoregulatory mechanisms involving the hypothalamus, skin, sweat glands, and blood vessels. Temperatures of 35°C or below indicate hypothermia, while 38°C or above indicate fever or hyperthermia—both are deviations from homeostasis.`
+        },
+        {
+            q: `The function of "integration" in the body is primarily associated with which tissue type?`,
+            options: [
+                `Epithelial tissue`,
+                `Connective tissue`,
+                `Muscle tissue`,
+                `Nerve tissue`,
+                `Adipose tissue`
+            ],
+            correct: `D`,
+            explanation: `Nerve tissue specializes in integration—the processing and combining of information from multiple sources to produce a coordinated response. Neurons receive inputs via dendrites, integrate them at the axon hillock, and generate output signals. This integrative capacity is essential for sensation, perception, thought, and motor control. Epithelial tissue covers, connective tissue supports, muscle tissue contracts, and adipose tissue stores fat—none perform integration.`
+        },
+        {
+            q: `Which of the following best describes an organelle?`,
+            options: [
+                `A group of cells with similar structure`,
+                `A structure within a cell that has a specific function`,
+                `A molecule composed of atoms`,
+                `A group of organs performing related functions`,
+                `The basic living unit of the body`
+            ],
+            correct: `B`,
+            explanation: `An organelle is a specialized subunit within a cell that performs a specific function—examples include mitochondria (energy production), ribosomes (protein synthesis), and the endoplasmic reticulum (protein and lipid processing). Organelles are subcellular structures, not groups of cells (tissues), molecules (chemical level), groups of organs (organ systems), or the basic unit of life (the cell itself). They are the "little organs" of the cell.`
+        },
+        {
+            q: `Which organ system is responsible for movement, structure, support, protection, and heat generation?`,
+            options: [
+                `Nervous system`,
+                `Endocrine system`,
+                `Musculoskeletal system`,
+                `Circulatory system`,
+                `Integumentary system`
+            ],
+            correct: `C`,
+            explanation: `The musculoskeletal system comprises bones, muscles, joints, tendons, and ligaments. It provides structure and support for the body, enables movement through muscle contraction acting on bones, protects internal organs (e.g., skull protects brain, rib cage protects heart and lungs), and generates heat through muscle contraction (especially during shivering). The nervous, endocrine, circulatory, and integumentary systems have different primary roles.`
+        },
+        {
+            q: `The "controller" in a regulatory mechanism is also known as the:`,
+            options: [
+                `Sensor`,
+                `Effector`,
+                `Integrating center`,
+                `Feedback loop`,
+                `Environmental condition`
+            ],
+            correct: `C`,
+            explanation: `The integrating center (also called the controller) is the component that receives signals from sensors, compares the actual value to the set point, and sends commands to effectors to produce a response. It is the "decision-maker" of the regulatory system. The sensor detects changes, the effector carries out the response, the feedback loop is the pathway, and the environmental condition is the variable being regulated.`
+        },
+        {
+            q: `Which of the following is a characteristic of the internal environment that is maintained by various physiological systems?`,
+            options: [
+                `Amount of sunlight`,
+                `Amount of wastes`,
+                `External temperature`,
+                `Atmospheric pressure`,
+                `Altitude`
+            ],
+            correct: `B`,
+            explanation: `Physiological systems regulate internal attributes such as the amount of metabolic wastes (e.g., urea, CO₂), nutrient levels, pH, temperature, and fluid volume. Amount of sunlight, external temperature, atmospheric pressure, and altitude are external environmental factors that the body can respond to but does not maintain as internal constants. The internal environment is the extracellular fluid bathing the cells, and its composition is homeostatically regulated.`
+        },
+        {
+            q: `Which tissue type incorporates large amounts of extracellular material in its structure and function?`,
+            options: [
+                `Epithelial tissue`,
+                `Muscle tissue`,
+                `Nerve tissue`,
+                `Connective tissue`,
+                `Nervous tissue`
+            ],
+            correct: `D`,
+            explanation: `Connective tissue is characterized by having an abundant extracellular matrix (ECM) relative to its cellular component. The ECM—composed of protein fibers (collagen, elastin) and ground substance—provides structural and functional support, connects tissues, stores nutrients, and facilitates transport. Examples include bone, cartilage, adipose tissue, and blood. Epithelial, muscle, and nerve tissues have cells that are more tightly packed with minimal ECM.`
+        },
+        {
+            q: `The primary function of the effector in a feedback loop is to:`,
+            options: [
+                `Monitor the internal environment`,
+                `Detect changes in the external environment`,
+                `Receive and integrate information`,
+                `Respond to changes to return conditions to normal`,
+                `Provide a barrier between the interior and exterior`
+            ],
+            correct: `D`,
+            explanation: `The effector is the component that produces the response to correct the deviation from the set point. For example, if body temperature rises, the effector (sweat glands) produces sweat to cool the body; if temperature falls, the effector (skeletal muscles) shivers to generate heat. Monitoring and detecting are sensor functions, integration is the controller's function, and barrier formation is an epithelial function.`
+        },
+        {
+            q: `Which of the following is NOT a major organ system ?`,
+            options: [
+                `Nervous System`,
+                `Endocrine System`,
+                `Skeletal System`,
+                `Respiratory System`,
+                `Urinary System`
+            ],
+            correct: `C`,
+            explanation: `The document lists major organ systems including the nervous, endocrine, respiratory, urinary, digestive, circulatory, immune, integumentary, musculoskeletal, and reproductive systems. "Skeletal system" is not listed as a separate system because it is typically considered part of the musculoskeletal system (or sometimes combined with the muscular system). The skeletal system is a major system in anatomy, but in the context of the document's classification, the musculoskeletal system is the named system. The other options are explicitly named.`
+        },
+        {
+            q: `The body's internal environment is mostly water. What percentage is approximately water?`,
+            options: [
+                `50%`,
+                `60%`,
+                `67%`,
+                `75%`,
+                `80%`
+            ],
+            correct: `C`,
+            explanation: `Water constitutes approximately 67% of total body weight in a typical adult human. This water is distributed between intracellular fluid (about 2/3 of total body water) and extracellular fluid (about 1/3), which includes plasma and interstitial fluid. The internal environment—the extracellular fluid—is the medium in which cells live and exchange nutrients and wastes. Percentages like 50% or 80% are less accurate for average adult body composition.`
+        },
+        {
+            q: `The function of "secretion" is associated with which type of tissue?`,
+            options: [
+                `Connective tissue`,
+                `Muscle tissue`,
+                `Nerve tissue`,
+                `Epithelial tissue`,
+                `Adipose tissue`
+            ],
+            correct: `D`,
+            explanation: `Epithelial tissue includes glandular epithelium, which is specialized for secretion. Glands (both exocrine and endocrine) are derived from epithelial cells that secrete substances such as hormones, enzymes, mucus, sweat, and saliva. While some connective tissue cells (e.g., mast cells) secrete substances, secretion is a primary, defining function of epithelial tissue. Muscle, nerve, and adipose tissues have other primary roles.`
+        },
+        {
+            q: `Which of the following is an attribute of the internal environment?`,
+            options: [
+                `Amount of nutrients`,
+                `Temperature`,
+                `pH`,
+                `Fluid volume`,
+                `All of the above`
+            ],
+            correct: `E`,
+            explanation: `The internal environment is characterized by numerous attributes that are homeostatically regulated within narrow ranges, including nutrient levels, temperature, pH, fluid volume, osmolarity, oxygen and carbon dioxide concentrations, and waste product levels. All the listed options are indeed attributes of the internal environment. Physiological systems work in concert to keep these variables within optimal ranges for cellular function.`
+        },
+        {
+            q: `The interaction among cells leads to functions single cells cannot effectively do alone. This statement best describes the importance of which level of organization?`,
+            options: [
+                `Chemical level`,
+                `Cellular level`,
+                `Tissue level`,
+                `Organ level`,
+                `Organ system level`
+            ],
+            correct: `C`,
+            explanation: `The tissue level emphasizes the importance of cell-cell interaction—cells of similar type group together to perform a common function more efficiently than isolated cells could. For example, cardiac muscle cells in heart tissue contract in a coordinated manner, generating a powerful pumping action that no single cell could achieve. The chemical level involves molecules, the cellular level is individual cells, organs are collections of tissues, and organ systems are collections of organs.`
+        },
+        {
+            q: `Which organ system is responsible for communication and control?`,
+            options: [
+                `Nervous System`,
+                `Endocrine System`,
+                `Both A and B`,
+                `Integumentary System`,
+                `Respiratory System`
+            ],
+            correct: `C`,
+            explanation: `Both the nervous system and the endocrine system are primarily responsible for communication and control. The nervous system uses electrical impulses and neurotransmitters for rapid, short-term responses, while the endocrine system uses hormones for slower, longer-lasting effects. Together they coordinate and regulate all body functions. The integumentary system protects and thermoregulates, and the respiratory system exchanges gases.`
+        },
+        {
+            q: `The "sensor" in a regulatory mechanism detects changes in:`,
+            options: [
+                `The external environment`,
+                `The internal environment`,
+                `The effector`,
+                `The integrating center`,
+                `The feedback loop`
+            ],
+            correct: `B`,
+            explanation: `The sensor (receptor) monitors the internal environment—the extracellular fluid—for deviations from the set point. It detects changes in variables such as temperature, pH, blood glucose, and osmolarity. While sensors can also detect external stimuli (like light or touch), in the context of homeostatic regulatory mechanisms, the sensor's role is to monitor internal conditions and send feedback to the integrating center.`
+        },
+        {
+            q: `Which of the following is a function of the circulatory system?`,
+            options: [
+                `Gas exchange`,
+                `Waste removal`,
+                `Transportation of most materials throughout the body`,
+                `Protection from foreign substances`,
+                `Perpetuation of the species`
+            ],
+            correct: `C`,
+            explanation: `The circulatory system (heart, blood vessels, blood) is the body's transport system. It carries oxygen, nutrients, hormones, waste products, immune cells, and many other substances throughout the body. While it assists in gas exchange by transporting gases to and from the lungs, the actual exchange occurs in the respiratory system. Waste removal is primarily the urinary system's function, protection is the immune system's role, and perpetuation is reproductive.`
+        },
+        {
+            q: `The term "feedback" refers to:`,
+            options: [
+                `The initial detection of a change`,
+                `The integration of information`,
+                `The return of output to the input part of a system`,
+                `The response of the effector`,
+                `The state of constancy of conditions`
+            ],
+            correct: `C`,
+            explanation: `Feedback is defined as the process by which the output of a system is returned to the input, allowing the system to monitor and adjust its own activity. In negative feedback, this return opposes the initial deviation, stabilizing the system. Detection is sensation, integration is processing, effector response is the action, and constancy is homeostasis. Feedback is the loop-closing mechanism that enables self-regulation.`
+        },
+        {
+            q: `Which of the following is NOT an example of a major organ system?`,
+            options: [
+                `Nervous System`,
+                `Endocrine System`,
+                `Cellular System`,
+                `Digestive System`,
+                `Immune System`
+            ],
+            correct: `C`,
+            explanation: `There is no "cellular system" in the hierarchy of structural organization. The major organ systems include the nervous, endocrine, digestive, immune, respiratory, urinary, circulatory, integumentary, musculoskeletal, and reproductive systems. The cellular level is a lower level of organization—cells are the basic units, and they are organized into tissues, which form organs, which form organ systems. A "cellular system" is not a recognized organ system.`
+        },
+        {
+            q: `The body maintains different attributes of the internal environment within narrow normal ranges. This is achieved through:`,
+            options: [
+                `The structural organization of the body`,
+                `Various physiological systems`,
+                `The chemical reactions within the body`,
+                `The interaction of cells`,
+                `The function of organelles`
+            ],
+            correct: `B`,
+            explanation: `Homeostasis—the maintenance of internal variables within narrow ranges—is achieved through the coordinated actions of various physiological systems (nervous, endocrine, respiratory, urinary, circulatory, etc.). While structural organization, chemical reactions, cellular interactions, and organelles all contribute to body function, it is the integrated activity of organ systems that directly regulates the internal environment. Physiological systems employ negative feedback loops to counteract deviations and maintain stability.`
+        }
+    ];
+
+    /* =====================================================================
+       FULL RESERVOIR — SECTION B (25 SAQs)
+       ===================================================================== */
+    const sectionBPool = [
+        {
+            question: `Define Human Physiology.`,
+            answer: `<h4>Model Answer</h4>
+            <p>Human physiology is the scientific study of the functions, mechanisms, and processes of the human body—how its cells, tissues, organs, and organ systems work and interact to sustain life. It examines the biological processes that enable communication, metabolism, movement, reproduction, and homeostasis, and how these processes are regulated and integrated to maintain a stable internal environment.</p>`
+        },
+        {
+            question: `List the five levels of structural organization in the human body, from simplest to most complex.`,
+            answer: `<h4>Model Answer</h4>
+            <ol>
+                <li>Chemical level (atoms and molecules)</li>
+                <li>Cellular level (cells—the basic unit of life)</li>
+                <li>Tissue level (groups of similar cells working together)</li>
+                <li>Organ level (multiple tissue types forming a discrete structure)</li>
+                <li>Organ system level (multiple organs cooperating for a common function)</li>
+            </ol>`
+        },
+        {
+            question: `What is the role of physiology in relation to chemical reactions within the body?`,
+            answer: `<h4>Model Answer</h4>
+            <p>Physiology governs and regulates the chemical reactions that occur within the body. Cells control the rates of biochemical reactions by regulating enzyme activity, maintaining optimal pH and temperature, and managing the availability of substrates and cofactors. Physiological processes such as membrane transport, signal transduction, and feedback mechanisms ensure that reactions occur at appropriate times, rates, and locations to support life. Without physiological control, chemical reactions would proceed unregulated and incompatible with cellular function.</p>`
+        },
+        {
+            question: `Why is the cell considered the smallest subdivision able to carry out all life processes?`,
+            answer: `<h4>Model Answer</h4>
+            <p>The cell is the smallest unit that can independently perform all activities necessary for life—metabolism (converting nutrients to energy), responding to stimuli, maintaining homeostasis, growing, and reproducing (in the case of single-celled organisms). Organelles and molecules perform specific tasks but cannot sustain life on their own because they lack the integrated environment and regulatory capacity of a whole cell. Therefore, the cell is the fundamental structural and functional unit of all living organisms.</p>`
+        },
+        {
+            question: `What are organelles, and what is their general function?`,
+            answer: `<h4>Model Answer</h4>
+            <p>Organelles are specialized, membrane-bound or non-membrane-bound structures within a cell that perform specific functions essential for cellular life. Examples include mitochondria (ATP production), ribosomes (protein synthesis), the endoplasmic reticulum (protein and lipid processing), the Golgi apparatus (protein modification and packaging), and lysosomes (digestion of waste). In general, organelles compartmentalize cellular processes, increase efficiency, and allow the cell to carry out complex biochemical reactions in an organized manner.</p>`
+        },
+        {
+            question: `How does the interaction among cells lead to functions that single cells cannot effectively do alone?`,
+            answer: `<h4>Model Answer</h4>
+            <p>When cells of similar type interact and coordinate their activities, they can achieve functions that are impossible for individual cells acting in isolation. For example, cardiac muscle cells in heart tissue contract in a synchronized wave, generating a powerful pumping action that no single muscle cell could produce. Coordination allows for division of labor, amplification of signals, mechanical strength, and complex behaviors such as thought (neural networks) or immune defense (coordinated attack by multiple immune cells). This principle underlies the tissue, organ, and organ system levels of organization.</p>`
+        },
+        {
+            question: `List three functions of epithelial tissues.`,
+            answer: `<h4>Model Answer</h4>
+            <ul>
+                <li>Protection (covering and lining body surfaces, acting as a barrier)</li>
+                <li>Secretion (glandular epithelium produces and releases substances like hormones, enzymes, and mucus)</li>
+                <li>Absorption (e.g., nutrient absorption in the intestines)</li>
+                <li>Filtration (e.g., in the kidneys)</li>
+                <li>Sensation (e.g., taste buds, touch receptors)</li>
+            </ul>
+            <p>(Any three of the above.)</p>`
+        },
+        {
+            question: `What is the extracellular matrix, and which tissue type is characterized by its presence?`,
+            answer: `<h4>Model Answer</h4>
+            <p>The extracellular matrix (ECM) is a complex network of protein fibers (such as collagen, elastin, and reticular fibers) and ground substance (glycoproteins and proteoglycans) that surrounds cells. It provides structural support, facilitates cell adhesion and communication, and regulates cell behavior. Connective tissue is the tissue type most characterized by an abundant ECM—the ECM is its defining feature, giving connective tissues their structural and functional properties (e.g., the hardness of bone, the flexibility of cartilage, the fluidity of blood).</p>`
+        },
+        {
+            question: `What are the primary functions of muscle tissue?`,
+            answer: `<h4>Model Answer</h4>
+            <p>Muscle tissue is specialized for contraction, which produces:</p>
+            <ul>
+                <li>Tension and movement (of body parts, substances within the body, or the whole body)</li>
+                <li>Heat generation (as a byproduct of contraction, important for thermoregulation)</li>
+                <li>Maintenance of posture and body support</li>
+                <li>Movement of materials through hollow organs (e.g., peristalsis in the digestive tract)</li>
+            </ul>`
+        },
+        {
+            question: `Which tissue type is specialized for high-speed communication and control/integration?`,
+            answer: `<h4>Model Answer</h4>
+            <p>Nerve tissue is specialized for high-speed communication and integration. Neurons generate and conduct electrical impulses (action potentials) rapidly over long distances, and they integrate information through synaptic connections and neurotransmitter release. This allows for rapid responses to stimuli, coordination of body functions, and complex processes such as sensation, thought, and motor control.</p>`
+        },
+        {
+            question: `Define an organ.`,
+            answer: `<h4>Model Answer</h4>
+            <p>An organ is a discrete structure composed of two or more different tissue types that work together to perform a specific physiological function. Examples include the heart (contains muscle, nerve, connective, and epithelial tissues), the stomach, and the lungs. Organs are the third level of structural organization, between tissues and organ systems.</p>`
+        },
+        {
+            question: `Define an organ system.`,
+            answer: `<h4>Model Answer</h4>
+            <p>An organ system is a group of organs that work together to perform a common physiological function or set of related functions. For example, the digestive system includes the mouth, esophagus, stomach, intestines, liver, and pancreas, all cooperating to process food and absorb nutrients. Organ systems represent the highest level of structural organization and collectively maintain homeostasis.</p>`
+        },
+        {
+            question: `Name three major organ systems and briefly state one function of each.`,
+            answer: `<h4>Model Answer</h4>
+            <ul>
+                <li><strong>Nervous system:</strong> rapid communication and control via electrical impulses (e.g., coordinating movement, sensation, and thought).</li>
+                <li><strong>Respiratory system:</strong> gas exchange—bringing oxygen into the body and eliminating carbon dioxide.</li>
+                <li><strong>Urinary system:</strong> removal of metabolic wastes and regulation of water and electrolyte balance.</li>
+                <li><strong>Circulatory system:</strong> transportation of materials (oxygen, nutrients, hormones, wastes) throughout the body.</li>
+                <li><strong>Immune system:</strong> defense against pathogens, foreign substances, and cancer cells.</li>
+            </ul>
+            <p>(Any three of the above.)</p>`
+        },
+        {
+            question: `What is the "internal environment" of the body?`,
+            answer: `<h4>Model Answer</h4>
+            <p>The internal environment refers to the extracellular fluid (ECF) that surrounds and bathes the body's cells. It consists of interstitial fluid (between cells) and plasma (within blood vessels). The composition of this fluid—its temperature, pH, nutrient levels, waste concentrations, and osmolarity—is maintained within narrow ranges by homeostatic mechanisms to provide an optimal environment for cellular function.</p>`
+        },
+        {
+            question: `List five attributes of the internal environment that are maintained within narrow normal ranges.`,
+            answer: `<h4>Model Answer</h4>
+            <ul>
+                <li>Temperature (approximately 37°C)</li>
+                <li>pH (approximately 7.4)</li>
+                <li>Amount of nutrients (glucose, amino acids, etc.)</li>
+                <li>Amount of O₂ and CO₂</li>
+                <li>Fluid volume and osmolarity</li>
+                <li>Amount of metabolic wastes</li>
+                <li>Ion concentrations (Na⁺, K⁺, Ca²⁺, Cl⁻)</li>
+            </ul>
+            <p>(Any five of the above.)</p>`
+        },
+        {
+            question: `Define homeostasis.`,
+            answer: `<h4>Model Answer</h4>
+            <p>Homeostasis is the maintenance of a relatively stable internal environment within narrow physiological limits, despite changes in the external environment. It is a dynamic equilibrium achieved through continuous regulatory mechanisms—primarily negative feedback loops—that detect deviations and trigger corrective responses. Homeostasis is essential for health; failure to maintain it leads to disease or death.</p>`
+        },
+        {
+            question: `Through what general mechanism does the body maintain homeostasis?`,
+            answer: `<h4>Model Answer</h4>
+            <p>The body maintains homeostasis primarily through negative feedback mechanisms. A sensor detects a deviation from the set point, an integrating center processes this information and compares it to the set point, and an effector produces a response that opposes the initial deviation, bringing the variable back toward normal. Positive feedback mechanisms exist but are less common and typically amplify a change (e.g., childbirth, blood clotting).</p>`
+        },
+        {
+            question: `List the three main components of a regulatory mechanism.`,
+            answer: `<h4>Model Answer</h4>
+            <ol>
+                <li><strong>Sensor (receptor):</strong> detects changes in the internal environment.</li>
+                <li><strong>Integrating center (controller):</strong> processes information from the sensor and issues commands.</li>
+                <li><strong>Effector:</strong> carries out the response to bring conditions back to normal.</li>
+            </ol>`
+        },
+        {
+            question: `Describe the role of the sensor in a regulatory mechanism.`,
+            answer: `<h4>Model Answer</h4>
+            <p>The sensor (receptor) continuously monitors the internal environment for deviations from the set point. It detects changes in variables such as temperature, pH, blood glucose, or osmolarity and converts this information into a signal (often electrical or chemical) that is sent to the integrating center. Sensors are often specialized nerve endings or cells that are sensitive to specific stimuli.</p>`
+        },
+        {
+            question: `Describe the role of the integrating center (controller) in a regulatory mechanism.`,
+            answer: `<h4>Model Answer</h4>
+            <p>The integrating center (controller) receives signals from sensors, compares the actual value of the variable to the set point, and determines the appropriate response. It then sends commands (via nerve impulses or hormones) to effectors to produce the corrective action. The integrating center is often the brain (especially the hypothalamus) or an endocrine gland, and it acts as the "decision-maker" of the regulatory system.</p>`
+        },
+        {
+            question: `Describe the role of the effector in a regulatory mechanism.`,
+            answer: `<h4>Model Answer</h4>
+            <p>The effector is the component that produces the response to correct the deviation from the set point. It receives commands from the integrating center and acts to restore the variable to its normal range. Examples include muscles (which may contract or shiver), glands (which may secrete hormones, sweat, or enzymes), and blood vessels (which may dilate or constrict). The effector's action is the output of the regulatory system.</p>`
+        },
+        {
+            question: `Define "feedback" in the context of regulatory mechanisms.`,
+            answer: `<h4>Model Answer</h4>
+            <p>Feedback is the process by which the output of a system is returned to the input, allowing the system to monitor and adjust its own activity. In negative feedback, the response opposes the initial change, stabilizing the internal environment. In positive feedback, the response amplifies the change, driving a process to completion. Feedback is the loop-closing mechanism that enables self-regulation and homeostasis.</p>`
+        },
+        {
+            question: `What is the primary function of the respiratory system?`,
+            answer: `<h4>Model Answer</h4>
+            <p>The primary function of the respiratory system is gas exchange: it brings oxygen from the atmosphere into the body and eliminates carbon dioxide produced by cellular metabolism. This occurs in the lungs across the alveolar-capillary membrane. Additionally, the respiratory system helps regulate blood pH by adjusting CO₂ elimination, and it participates in vocalization and olfaction.</p>`
+        },
+        {
+            question: `What is the primary function of the immune system?`,
+            answer: `<h4>Model Answer</h4>
+            <p>The primary function of the immune system is to protect the body from foreign substances, pathogens (bacteria, viruses, fungi, parasites), and abnormal cells such as cancer cells. It recognizes and distinguishes "self" from "non-self," mounts defensive responses (inflammation, antibody production, cell-mediated killing), and maintains immune memory for faster responses upon re-exposure.</p>`
+        },
+        {
+            question: `What is the primary function of the urinary system?`,
+            answer: `<h4>Model Answer</h4>
+            <p>The primary function of the urinary system is to filter the blood and remove metabolic wastes (urea, creatinine, uric acid) from the body, while regulating water and electrolyte balance, acid-base balance (pH), and blood pressure. The kidneys also produce hormones such as erythropoietin (stimulates red blood cell production) and renin (regulates blood pressure).</p>`
+        }
+    ];
+
+    /* =====================================================================
+       RANDOM SELECTION UTILITIES
+       ===================================================================== */
+    function shuffleArray(arr) {
+        const a = arr.slice();
+        for (let i = a.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+    }
+
+    function pickRandom(arr, n) {
+        return shuffleArray(arr).slice(0, Math.min(n, arr.length));
+    }
+
+    /* =====================================================================
+       RANDOMIZED SECTIONS
+       ===================================================================== */
+    const MCQS_TO_SHOW = 15;
+    const SAQS_TO_SHOW = 5;
+
+    const sectionA = pickRandom(sectionAPool, MCQS_TO_SHOW);
+    const sectionB = pickRandom(sectionBPool, SAQS_TO_SHOW);
+
+    /* =====================================================================
+       RENDERING FUNCTIONS
+       ===================================================================== */
+    function renderSectionA() {
+        const container = document.getElementById('container-A');
+        let html = '';
+        sectionA.forEach((q, i) => {
+            const qid = 'A-q' + (i + 1);
+            html += '<div class="question" id="q-' + qid + '">';
+            html += '<p><span class="q-badge">Q' + (i + 1) + '</span> ' + q.q + '</p>';
+            html += '<div class="options">';
+            q.options.forEach((opt, j) => {
+                const L = String.fromCharCode(65 + j);
+                html += '<label><input type="radio" name="' + qid + '" value="' + L + '"> <strong>' + L + ')</strong> ' + opt + '</label>';
+            });
+            html += '</div>';
+            html += '<div class="question-feedback" id="fb-' + qid + '"></div>';
+            html += '</div>';
+        });
+        container.innerHTML = html;
+        document.getElementById('count-A').textContent = sectionA.length;
+    }
+
+    function submitSectionA() {
+        let score = 0;
+        sectionA.forEach((q, i) => {
+            const qid = 'A-q' + (i + 1);
+            const radios = document.getElementsByName(qid);
+            let selected = null;
+            for (let r = 0; r < radios.length; r++) {
+                if (radios[r].checked) { selected = radios[r]; break; }
+            }
+            const correct = q.correct.toUpperCase();
+            if (selected && selected.value === correct) score++;
+
+            let html = '<div class="answer-block"><div class="answer-list">';
+            q.options.forEach((opt, j) => {
+                const L = String.fromCharCode(65 + j);
+                let cls = 'answer-item';
+                if (L === correct) cls += ' answer-correct';
+                if (selected && selected.value === L) {
+                    cls += ' user-choice';
+                    if (L !== correct) cls += ' answer-wrong';
+                }
+                const mark = (selected && selected.value === L) ? ' ◀ your answer' : '';
+                html += '<div class="' + cls + '">' + L + ') ' + opt + mark + '</div>';
+            });
+            html += '</div>';
+
+            const correctIdx = correct.charCodeAt(0) - 65;
+            const correctText = (correctIdx >= 0 && correctIdx < q.options.length) ? q.options[correctIdx] : '';
+
+            if (!selected) {
+                html += '<div class="explanation wrong">No answer selected. Correct answer: <strong>' +
+                        correct + ') ' + correctText + '</strong>.<br><br>' + q.explanation + '</div>';
+            } else if (selected.value === correct) {
+                html += '<div class="explanation">✅ <strong>Correct.</strong><br><br>' + q.explanation + '</div>';
+            } else {
+                html += '<div class="explanation wrong">❌ <strong>Incorrect.</strong> Correct answer: <strong>' +
+                        correct + ') ' + correctText + '</strong>.<br><br>' + q.explanation + '</div>';
+            }
+
+            const fb = document.getElementById('fb-' + qid);
+            if (fb) fb.innerHTML = html;
+        });
+
+        const total = sectionA.length;
+        const pct = Math.round((score / total) * 100);
+        const box = document.getElementById('result-A');
+        box.style.display = 'block';
+        document.getElementById('score-A').innerText = score + ' / ' + total + '  (' + pct + '%)';
+
+        document.querySelectorAll('#panel-A input[type="radio"]').forEach(r => r.disabled = true);
+    }
+
+    function renderSectionB() {
+        const container = document.getElementById('container-B');
+        let html = '';
+        sectionB.forEach((item, i) => {
+            const sqid = 'B-saq' + (i + 1);
+            html += '<div class="saq-block">';
+            html += '<div class="saq-title">Question ' + (i + 1) + '</div>';
+            html += '<div class="saq-text">' + item.question + '</div>';
+            html += '<button type="button" class="btn btn-sm" onclick="toggleAnswer(\'' + sqid + '\')"><i class="fas fa-eye"></i> Show Answer</button>';
+            html += '<div class="essay-answer" id="ans-' + sqid + '">' + item.answer + '</div>';
+            html += '</div>';
+        });
+        container.innerHTML = html;
+        document.getElementById('count-B').textContent = sectionB.length;
+    }
+
+    function toggleAnswer(qid) {
+        const el = document.getElementById('ans-' + qid);
+        if (el) el.classList.toggle('show');
+    }
+
+    /* ─── INIT ─── */
+    renderSectionA();
+    renderSectionB();
+
+    /* ─── TAB SWITCHING ─── */
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            const target = this.dataset.target;
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+            document.getElementById('panel-' + target).classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+    </script>
+
+</body>
+</html>
